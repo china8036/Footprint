@@ -5,7 +5,7 @@ Nmap (Network Mapper) 是一款用于网络发现和安全审计的网络安全�
 
 ## 基本用法 ##
 ```
-nmap [ <扫描类型> ...] [ <选项> ] { <扫描目标说明> }
+nmap [Scan Type(s)] [Options] {target specification}
 ```
 
 ## 核心功能 ##
@@ -37,65 +37,19 @@ Nmap提供多种机制来规避防火墙、IDS的的屏蔽和检查，便于秘�
 ## 扫描类型 ##
 
 
-- **-sS**: TCP SYN scan，只发送 SYN 数据包，接收 SYN + ACK，完成 TCP 的两次握手，nmap 默认使用该类型进行扫描；；
-	- 优点
-		- 没有完整 TCP 连接，不形成会话，不会在目标主机产生日志记录；
-		- 高效，速度快；
-		- 准确区分端口状态：open/closed/filtered；
-	- 结果分析
-		- 若目标 port 开启：
-				攻击方：发送 SYN；
-				目标：返回 SYN + ACK 或 SYN；
-				攻击方：发送 RST；
-		- 若目标 port 关闭：
-				攻击方：发送 SYN；
-				目标：返回 RST；
-		- 若目标 port 被过滤：
-				攻击方：发送 SYN；
-				目标：没有响应或返回 ICMP unreachable error (type 3)；
+- **-sS**: TCP SYN scan，nmap 默认使用该类型进行扫描；
 
 
 - **-sT**: TCP connect scan，会调用系统 connect()，完成完整的 TCP 三次握手，当 SYN scan 不可用时，nmap 默认使用该类型进行扫描；
-	- 优点：真实、结果可靠；
-	- 结果分析
-		- 若目标 port 开启：
-				攻击方：发送 SYN；
-				目标：返回 SYN + ACK；
-				攻击方：发送 ACK；
-				攻击方：发送 RST + ACK 结束连接；
-		- 若目标 port 关闭：
-				攻击方：发送 SYN ；
-				目标：返回 RST + ACK 结束连接；
 
 
 - **-sN**; **-sF**; **-sX**；
-	- **-sN**：TCP NULL scan，Does not set any bits (TCP flag header is 0)；
-	- **-sF**：TCP FIN scan，只发送 FIN 包；
-	- **-sX**：TCP XMAS scan，发送 FIN + PSH + URG；
-	
-	- 比较
-	TCP NULL, FIN, and Xmas scans 除了探测包中设置的 flags 不同，其它行为都基本相同；
-	- 结果分析
-		- 若目标 port 开启或被过滤，则目标无任何返回；
-			- 当接收到 ICMP unreachable error (type 3, code 0, 1, 2, 3, 9, 10, or 13) 时，说明 port 被过滤；
-		- 若目标 port 关闭，则目标返回 RST；
-	- 优点
-		- 防火墙可能会 drop SYN，但不会 drop FIN / PSH / URG，实用性强；
-		- 没有完成任何握手，不会在目标主机留下日志，隐蔽性强；
-	- 缺点
-		- 并不是所有的系统遵循 RFC 793。对于大多数 Microsoft Windows、Cisco设备、BSDI和IBM OS / 400，无论端口是否打开，系统都会向探针发送 RST 响应，因此这种扫描只适合基于 Unix 的系统；
-		- 无法区分打开的端口与某些被过滤的端口；
+	- **-sN**：TCP NULL scan；
+	- **-sF**：TCP FIN scan；
+	- **-sX**：TCP XMAS scan；
 
 
-- **-sA**：TCP ACK scan，发送 ACK 包；
-	- 与其它扫描不同，ACK scan 无法用于扫描端口，而是用于映射防火墙规则集，确定某些 TCP 端口是否被 firewall 过滤，速度慢；
-	- 结果分析
-		- 若目标 port 未被过滤：
-				攻击方：发送 ACK；
-				目标：返回 RST；
-		- 若目标 port 被过滤：
-				攻击方：发送 ACK；
-				目标：无响应或返回 ICMP error messages back (type 3, code 0, 1, 2, 3, 9, 10, or 13)；
+- **-sA**：TCP ACK scan
 
 
 - **-sW**：TCP Window scan
@@ -107,26 +61,10 @@ Nmap提供多种机制来规避防火墙、IDS的的屏蔽和检查，便于秘�
 	- The Maimon scan is named after its discoverer, Uriel Maimon. He described the technique in Phrack Magazine issue #49 (November 1996). Nmap, which included this technique, was released two issues later. This technique is exactly the same as NULL, FIN, and Xmas scans, except that the probe is FIN/ACK. According to RFC 793 (TCP), a RST packet should be generated in response to such a probe whether the port is open or closed. However, Uriel noticed that many BSD-derived systems simply drop the packet if the port is open.
 
 
-- **-sU**：UDP scan 用于扫描 UDP 端口的状态；
-	- UDP 扫描向每个目标端口发送 UDP 数据包，一般情况下包内不携带任何 payload（可使用`--data`，`--data-string`或`--data-length`选项指定 payload），但对于一些常见的端口（如 53 和 161)，会携带特定的有效载荷来提高响应速率；
-	UDP 扫描可以与 TCP 扫描（如 SYN 扫描等）同时使用；
-	
-	- 优点：有效穿过防火墙策略；
-	- 缺点
-		- 速度特别慢，可使用`--host-timeout`跳过响应过慢的主机扫描；
-		- 许多主机默认限制 ICMP 返回端口不可达消息（例如，Linux 2.4.20内核将目标不可达消息限制为每秒1个），结果可靠性较差；
-	- 结果分析
-		- 若目标 port 开启：
-				攻击方：发送 UDP 包；
-				目标：返回 UDP 响应；
-		- 若目标 port 关闭：
-				攻击方：发送 UDP 包；
-				目标：返回 ICMP port unreachable error (type 3, code 3)；
-		- 若目标 port 被过滤：
-				攻击方：发送 UDP 包；
-				目标：返回 ICMP unreachable errors (type 3, codes 0, 1, 2, 9, 10, or 13)；
-		- 若目标没有响应，则说明 port 为 open | filtered，可使用版本检测 (`-sV`) 进行进一步的区分；
-
+- **-sU**：UDP scan
+	- UDP 扫描向每个目标端口发送 UDP 数据包，一般情况下包内不携带任何 payload（可使用`--data`，`--data-string` 或 `--data-length` 选项指定 payload），但对于一些常见的端口（如 53 和 161)，会携带特定的有效载荷来提高响应速率；
+	- UDP 扫描可以与 TCP 扫描（如 SYN 扫描等）同时使用；
+	- 针对 UDP 扫描速度慢的问题，可使用`--host-timeout`跳过响应过慢的主机扫描；
 
 
 - **--scanflags**：Custom TCP scan
@@ -189,12 +127,20 @@ Nmap提供多种机制来规避防火墙、IDS的的屏蔽和检查，便于秘�
 
 
 - **-O**：开启 OS detection，发送 TCP and UDP 包，检测目标响应的 TCP/IP 协议栈指纹，与结果数据库 nmap-OS-DB 进行比对，从而推测操作系统信息；
-	- **-osscan-guess**：开启模糊猜测，适用于无法准确匹配结果指纹的情况；
-	eg: `nmap -O -osscan-guess 192.168.1.150`
+	- **--osscan-guess**：开启模糊猜测，适用于无法准确匹配结果指纹的情况；
+	eg: `nmap -O --osscan-guess 192.168.1.150`
+	- **--osscan-limit**: Limit OS detection to promising targets；
 
 
-- **-A**：全面扫描；
+- **-A**：全面扫描，Enable OS detection, version detection, script scanning, and traceroute；
 
+- **-6**： Enable IPv6 scanning；
+
+- **-sn**： Ping Scan - disable port scan，在 WAN 中使用 ping 扫描，在 LAN 中自动转换为使用 ARP 扫描；
+eg：扫描局域网内存活主机
+```
+nmap -sn 192.168.1.1-254
+```
 
 
 ## 扫描目标 ##
