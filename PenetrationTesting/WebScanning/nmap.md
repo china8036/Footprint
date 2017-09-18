@@ -54,6 +54,7 @@ Nmap提供多种机制来规避防火墙、IDS的的屏蔽和检查，便于秘�
 
 - **-sW**：TCP Window scan
 	- 窗口扫描与 ACK 扫描完全相同，但它能利用某些系统的实现细节来区分端口的 open / closed；
+	
 	This scan relies on an implementation detail of a minority of systems out on the Internet, so you can't always trust it. Systems that don't support it will usually return all ports closed. Of course, it is possible that the machine really has no open ports. If most scanned ports are closed but a few common port numbers (such as 22, 25, 53) are filtered, the system is most likely susceptible. Occasionally, systems will even show the exact opposite behavior. If your scan shows 1,000 open ports and three closed or filtered ports, then those three may very well be the truly open ones.
 
 
