@@ -219,7 +219,7 @@ nmap -O -v targetip
 
 
 ## 参考 ##
-https://nmap.org/book/man-port-scanning-techniques.html
+https://nmap.org/book/man-port-scanning-techniques.html  
 https://en.wikipedia.org/wiki/Nmap
 
 
