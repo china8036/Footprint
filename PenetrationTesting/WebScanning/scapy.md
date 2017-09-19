@@ -100,29 +100,29 @@ scapy支持两种使用方式：
 注意：不要使用这种方式导入包：`from scapy import *`；
 
 ### ls() ###
-ls() 函数显示scapy支持的所有协议；
+ls() 函数显示scapy支持的所有协议；     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/9cf9dead7895dcc563cb2a4e27c35229.jpg)
 
-ls() 函数的参数还可以是上面支持的协议中的任意一个的类型属性，也可以是任何一个具体的数据包，如ls(TCP),ls(newpacket)等；
+ls() 函数的参数还可以是上面支持的协议中的任意一个的类型属性，也可以是任何一个具体的数据包，如ls(TCP),ls(newpacket)等；     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/521839b3d93efdd63d47f27ce4ff8b3d.jpg)
 
 ### lsc() ###
-lsc() 列出scapy支持的所有的命令；
+lsc() 列出scapy支持的所有的命令；     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/f03037083219b2144844cd19ff2d17cb.jpg)
 
 ### conf ###
-conf变量保存了scapy的配置信息，可显示所有的配置信息；
+conf变量保存了scapy的配置信息，可显示所有的配置信息；     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/57c2f20652d1f6c3a12e639cc417db07.jpg)
 
 
 ### help() ###
-help()显示某一命令的使用帮助，如help(sniff)：
+help()显示某一命令的使用帮助，如help(sniff)：     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/dcf82802685db07ff4adc32d131b8d71.jpg)
 
 
 
 ### show() ###
-show() 显示指定数据包的详细信息；
+show() 显示指定数据包的详细信息；     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/1d4311cd12ebeecf4adf2de77bb0016f.jpg)
 
 
@@ -139,7 +139,7 @@ sprintf()输出某一层某个参数的取值，如果不存在就输出”??”
 - layer:协议层的名字，如Ether、IP、Dot11、TCP等；
 - filed:需要显示的参数；
 - nb:当有两个协议层有相同的参数名时，nb用于到达你想要的协议层；
-- r:是一个标志；当使用r标志时，意味着显示的是参数的原始值。例如，TCP标志中使用人类可阅读的字符串’SA’表示SYN和ACK标志，而其原始值是 18；
+- r:是一个标志；当使用r标志时，意味着显示的是参数的原始值。例如，TCP标志中使用人类可阅读的字符串’SA’表示SYN和ACK标志，而其原始值是 18；     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/23ce616bf3ddd858c8feb3e4ee2b4256.jpg)
 
 
@@ -196,7 +196,7 @@ Scapy的数据包创建是按照 TCP/IP 四层参考模型， Scapy为每一层�
 ```
 
 
-修改对象属性/数据包字段（没有修改的字段/属性则使用默认值）
+修改对象属性/数据包字段（没有修改的字段/属性则使用默认值）     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/a80e14abbe2679316ac52478b4501a96.jpg)
 
 
@@ -391,18 +391,18 @@ https://scapy.readthedocs.io/en/latest/usage.html#graphical-dumps-pdf-ps
 #### send() ####
 send() 发送三层数据包，没有接收响应的功能；
 
-例：
+例：     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/d8d25ec5be11e0e26a911cdfe96b6b45.jpg)
 
 #### sr() ####
 sr() 即 send and receive，用于发送三层数据包，并等待接收一个或多个的数据包响应，返回一个包含两个列表的tuple：第一个就是发送的数据包及其应答组成的列表，第二个是无应答数据包组成的列表；
 
-- sr() 返回结果的数据结构：
+- sr() 返回结果的数据结构：     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/500154f307d65dbde0d438f66a70c3aa.jpg)
 sr() 返回一个tuple：([(收到响应的请求包1，收到响应的响应包1), (收到响应的请求包2，收到响应的响应包2), ...], [未收到响应的请求包...])
 
 
-例：向www.baidu.org发送ttl分别由5到10的6个ICMP数据包
+例：向www.baidu.org发送ttl分别由5到10的6个ICMP数据包     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/fed39859c616ca34e6058c2dabb0f8e4.jpg)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/f7feda395a2de2dee0dda4d8b9b5a075.jpg)
@@ -513,7 +513,7 @@ Received 12 packets, got 4 answers, remaining 0 packets
 
 <!-- TODO -->
 Q：发送的包若是不止一个，则一直输出省略号，需要按control+c终止
-但在Windows中，按control+c会导致scapy退出，如何解决？？？
+但在Windows中，按control+c会导致scapy退出，如何解决？？？     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/27ad25a3144ae5207fba1f030831b522.jpg)
 
 
@@ -550,7 +550,7 @@ Sent 2 packets, received 2 packets. 100.0% hits.
 #### sendp() ####
 sendp() 发送二层数据包，没有响应接收功能；
 
-例：
+例：     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/94cbed730665b36703245cf42f731910.jpg)
 
 
@@ -567,7 +567,7 @@ srp() 用于发送二层数据包（如Ethernet、802.3），并等待接收一�
 
 srp1() 用于发送二层数据包（如Ethernet、802.3），并等待接收一个响应数据包；
 
-例：
+例：     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/90e60f3fbba41ff1e02e16b26106355a.jpg)
 
 
@@ -581,7 +581,7 @@ srp1() 用于发送二层数据包（如Ethernet、802.3），并等待接收一
 #### srploop() ####
 srploop() 用于循环发送二层数据包，并等待接收响应数据包；
 
-例：
+例：     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/f8620aeb8bc5e50d8819b7b628132d4f.jpg)
 
 
@@ -773,7 +773,7 @@ sniff(filter='tcp and port 80',prn=pktTCP)
 >>> ans.summary(lambda (s,r): r.sprintf("%IP.src% is alive") )
 ```
 
-例：ttl应该改为64
+例：ttl应该改为64     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/0217d8d487c0f448530608855fd98d35.jpg)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/07b103d78b0b46eceaca1daae3de6ee8.jpg)
@@ -793,6 +793,7 @@ sniff(filter='tcp and port 80',prn=pktTCP)
 ```
 >>> ans.summary(lambda (s,r): r.sprintf("%Ether.src% %ARP.psrc%"))
 ```
+
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/d7207a5ca8641d3fe834d29760927c34.jpg)
 
 
