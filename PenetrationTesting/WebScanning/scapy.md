@@ -512,8 +512,7 @@ Received 12 packets, got 4 answers, remaining 0 packets
 ```
 
 <!-- TODO -->
-Q：发送的包若是不止一个，则一直输出省略号，需要按control+c终止
-但在Windows中，按control+c会导致scapy退出，如何解决？？？     
+Q：发送的包若是不止一个，则一直输出省略号，需要按control+c终止或使用timeout，但在Windows中，按control+c会导致scapy退出，如何解决？？？     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/27ad25a3144ae5207fba1f030831b522.jpg)
 
 
@@ -1333,7 +1332,7 @@ ping of death 是一种向目标电脑发送错误封包的或恶意的ping指�
       inter=RandNum(10,40), loop=1 )
 ```
 
-使用double 802.1q encapsulation进行ARP缓存投毒：
+使用 double 802.1q encapsulation 进行ARP缓存投毒：
 ```
 >>> send( Ether(dst=clientMAC)/Dot1Q(vlan=1)/Dot1Q(vlan=2)
       /ARP(op="who-has", psrc=gateway, pdst=client),
@@ -1351,7 +1350,7 @@ ARP 欺骗攻击，通过向局域网中发送大量伪造了MAC和IP地址的AR
 ```
 vim /etc/sysctl.conf
 ```
-取消”#nett.ipv4.ip_forward=1”的注释；
+取消 ”#nett.ipv4.ip_forward=1” 的注释；
 增加流量转发规则：
 ```
 iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
@@ -1371,13 +1370,17 @@ srploop(ARP(op=2, pdst=attackIP, psrc="192.168.1.100", hdst="FF:FF:FF:FF:FF:FF",
 ## DDos ##
 ### SYN Flood Attack ###
 
-SYN Flood Attack / SYNDdos Attack / SYN 泛洪攻击是一种比较常用的DdoS方式之一，通过发送大量**伪造源 IP 地址**的 TCP 连接请求，使得目标主机建立大量 TCP 半连接而资源耗尽 (通常是CPU满负荷或者内存不足)；
+SYN Flood Attack / SYNDdos Attack / SYN 泛洪攻击是一种比较常用的DdoS方式之一，通过发送大量**伪造源 IP 地址**的 TCP 连接请求，**使得目标主机建立大量 TCP 半连接**而资源耗尽 (通常是CPU满负荷或者内存不足)；
 
 原理：
 - TCP连接需要完成三次握手：正常情况下客户端首先向服务端发送SYN报文，随后服务端回以SYN+ACK报文到达客户端，最后客户端向服务端发送ACK报文完成三次握手；
 
 - 而SYN泛洪攻击则是通过使用虚假的源 IP，导致客户端向服务器发送SYN报文之后，没有客户端能响应服务器回应的 SYN/ACK 报文(响应发送到了一个虚假的不存在的 IP 上，自然得不到响应)，也就是将 TCP 处在 “半连接” 状态；
 由于服务器在处理TCP请求时，会在协议栈留一块缓冲区来存储握手的过程，当然如果超过一定的时间内没有接收到客户端的报文，本次连接在协议栈中存储的数据将会被丢弃。攻击者如果利用这段时间发送大量的连接请求，全部挂起在半连接状态。这样将不断消耗服务器资源，直到拒绝服务；
+
+<!-- TODO Q：若使用 scapy 此类工具，不伪造源 IP 直接发送 SYN 包的情况下，本机收到 目标主机的 SYN/ACK 响应会自动回复 ACK？还是不回复？ -->
+
+
 
 例：
 ```python
