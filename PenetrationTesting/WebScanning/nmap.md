@@ -10,7 +10,7 @@
   * [扫描目标](#扫描目标)
   * [脚本引擎](#脚本引擎)
   * [常用用法](#常用用法)
-  * [Related Links](#related-links)
+  * [Related Links](#related-links)
 
 <!-- toc stop -->
 
