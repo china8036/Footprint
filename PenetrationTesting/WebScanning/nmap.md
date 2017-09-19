@@ -234,6 +234,6 @@ nmap -O -v targetip
 ```
 
 
-## 参考 ##
+## Related Links ##
 https://nmap.org/book/man-port-scanning-techniques.html  
 https://en.wikipedia.org/wiki/Nmap
