@@ -1,4 +1,34 @@
+
+
 <!-- toc -->
+
+* [CSS 网页定位与布局](#css-网页定位与布局)
+  * [Box Model](#box-model)
+  * [display 属性](#display-属性)
+    * [block](#block)
+    * [inline](#inline)
+    * [none](#none)
+    * [inline-block](#inline-block)
+    * [flex](#flex)
+    * [inline-flex](#inline-flex)
+  * [position 属性](#position-属性)
+    * [没有定位 static](#没有定位-static)
+    * [相对定位 relative](#相对定位-relative)
+    * [绝对定位 absolute](#绝对定位-absolute)
+    * [固定定位 fixed](#固定定位-fixed)
+    * [父级定位 inherit](#父级定位-inherit)
+  * [浮动定位](#浮动定位)
+    * [概述](#概述)
+    * [float 属性](#float-属性)
+    * [clear 属性](#clear-属性)
+    * [实例](#实例)
+  * [弹性布局：Flex](#弹性布局flex)
+    * [概述](#概述)
+    * [基本概念](#基本概念)
+    * [实例](#实例)
+
+<!-- toc stop -->
+
 
 
 # CSS 网页定位与布局 #
@@ -465,32 +495,3 @@ Webkit 内核的浏览器，必须加上-webkit前缀。
 ### 实例 ###
 使用弹性布局实现不定高宽的垂直居中：   
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/934f1d7b4b3dedab23e8494c4e2d32f1.jpg)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
