@@ -1,4 +1,4 @@
-# Technology note
+# Study Note
 
 This is a technology study note. 
 
