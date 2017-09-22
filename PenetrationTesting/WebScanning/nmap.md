@@ -9,10 +9,15 @@
   * [扫描选项](#扫描选项)
   * [扫描目标](#扫描目标)
   * [脚本引擎](#脚本引擎)
+    * [用法](#用法)
+    * [示例](#示例)
   * [常用用法](#常用用法)
+    * [存活主机发现](#存活主机发现)
+    * [单个主机扫描](#单个主机扫描)
   * [Related Links](#related-links)
 
 <!-- toc stop -->
+
 
 # nmap #
 
@@ -114,7 +119,13 @@ Nmap提供多种机制来规避防火墙、IDS的的屏蔽和检查，便于秘�
 	- SCTP COOKIE ECHO scan is a more advanced SCTP scan. It takes advantage of the fact that SCTP implementations should silently drop packets containing COOKIE ECHO chunks on open ports, but send an ABORT if the port is closed. The advantage of this scan type is that it is not as obvious a port scan than an INIT scan. Also, there may be non-stateful firewall rulesets blocking INIT chunks, but not COOKIE ECHO chunks. Don't be fooled into thinking that this will make a port scan invisible; a good IDS will be able to detect SCTP COOKIE ECHO scans too. The downside is that SCTP COOKIE ECHO scans cannot differentiate between open and filtered ports, leaving you with the state open|filtered in both cases.
 
 
+- **-sP**：ICMP 扫描
 
+- **-sn**：使用 IMCP 扫描
+例：使用 ICMP 扫描发现局域网内所有存活主机的 IP，不扫描 PORT；
+```
+nmap -sn 192.168.1.0/24
+```
 ## 扫描选项 ##
 - **-P** `<port>`：指定探测的端口，默认情况下，Nmap会扫描 1660 个常用的端口，可以覆盖大多数基本应用情况
 	- `-P 80, 8080, 22, 443, 445`
@@ -153,12 +164,7 @@ Nmap提供多种机制来规避防火墙、IDS的的屏蔽和检查，便于秘�
 
 - **-6**： Enable IPv6 scanning；
 
-- **-sn**： Ping Scan - disable port scan，在 WAN 中使用 ping 扫描，在 LAN 中自动转换为使用 ARP 扫描；
-eg：扫描局域网内存活主机
-```
-nmap -sn 192.168.1.1-254
-```
-
+- **-F**： 执行快速扫描模式，即只扫描常见端口而不扫描所有端口
 
 ## 扫描目标 ##
 - 单一主机
@@ -187,13 +193,59 @@ nmap -sn 192.168.1.1-254
 
 
 ## 脚本引擎 ##
+参考：http://www.vuln.cn/2444   
+
 Nmap Scripting Engine (NSE) 是 Nmap 最强大最灵活的特性之一，可以用于增强主机发现、端口扫描、版本侦测和操作系统侦测等功能，还可以用来扩展高级的功能如 web 扫描、漏洞发现和漏洞利用等；  
 Nmap使用 Lua 语言来作为 NSE 脚本语言，目前的 Nmap 脚本库已经支持 350 多个脚本。
 
 
-用法：`--scrpit=脚本名称`
+### 用法 ###
+- `-sC`: 等价于 `--script=default`，使用默认类别的脚本进行扫描，可更换其他类别 
+- `--script=<Lua scripts>`: <Lua scripts>使用某个或某类脚本进行扫描，支持通配符描述
+- `--script-args=<n1=v1,[n2=v2,...]>`: 为脚本提供默认参数
+- `--script-args-file=filename`: 使用文件来为脚本提供参数
+- `--script-trace`: 显示脚本执行过程中发送与接收的数据
+- `--script-updatedb`: 更新脚本数据库
+- `--script-help=<scripts>`: 显示脚本的帮助信息，其中<scripts>部分可以逗号分隔的文件或脚本类别
 
-例：
+
+
+nmap 的脚本默认目录为：/usr/share/nmap/scripts/
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/22/291c071fe78b648f1ff1aea5c24f0878.jpg)
+
+nmap 脚本根据前缀可分为以下类型，可根据需要设置 `--script=类别` 这种方式进行比较笼统的扫描
+- auth: 负责处理鉴权证书（绕开鉴权）的脚本  
+- broadcast: 在局域网内探查更多服务开启状况，如dhcp/dns/sqlserver等服务  
+- brute: 提供暴力破解方式，针对常见的应用如 http/snmp等  
+- default: 使用-sC或-A选项扫描时候默认的脚本，提供基本脚本扫描能力  
+- discovery: 对网络进行更多的信息，如SMB枚举、SNMP查询等  
+- dos: 用于进行拒绝服务攻击  
+- exploit: 利用已知的漏洞入侵系统  
+- external: 利用第三方的数据库或资源，例如进行whois解析  
+- fuzzer: 模糊测试的脚本，发送异常的包到目标机，探测出潜在漏洞 intrusive: 入侵性的脚本，此类脚本可能引发对方的IDS/IPS的记录或屏蔽  
+- malware: 探测目标机是否感染了病毒、开启了后门等信息  
+- safe: 此类与intrusive相反，属于安全性脚本  
+- version: 负责增强服务与版本扫描（Version Detection）功能的脚本  
+- vuln: 负责检查目标机是否有常见的漏洞（Vulnerability），如是否有 MS08_067
+
+
+### 示例 ###
+- 使用默认脚本
+`nmap -sC` 或 `nmap --script=default`
+默认的脚本扫描，主要是搜集各种应用服务的信息，收集到后，可再针对具体服务进行攻击。
+
+
+- 扫描局域网内的 DHCP 服务器
+使用 broadcast-dhcp-discover 脚本发送 DHCP 广播请求，并显示响应包的详细信息   
+```
+nmap --script broadcast-dhcp-discover
+```
+若已知 DHCP 服务器的 IP 和 PORT，可使用 dhcp-discover 脚本进行针对性扫描     
+```
+nmap -sU -p 67 --script=dhcp-discover 192.168.1.1
+```
+
+
 - 扫描 SQL 注入
 ```
 nmap -p 80 www.baidu.com  --script=sql.injection.nse
@@ -202,8 +254,6 @@ nmap -p 80 www.baidu.com  --script=sql.injection.nse
 ```
 nmap --script="http-*" www.baidu.com
 ```
-- 使用默认脚本
-`nmap -sC` 或 `nmap --script=default`
 
 
 - 使用 SMB 系列脚本
@@ -212,27 +262,75 @@ nmap --script="smb*"
 ```
 
 ## 常用用法 ##
-- 全面进攻性扫描（包括各种主机发现、端口扫描、版本扫描、OS扫描及默认脚本扫描）:
+
+### 存活主机发现 ###
+- 扫描局域网内所有存活的主机的 ip 和 对应的 mac 地址
+扫描存活主机 IP
 ```
-nmap -A -v targetip
+	$ nmap -sn 192.168.1.0/24
+	
+	Starting Nmap 7.40 ( https://nmap.org ) at 2017-09-21 20:00 HKT
+	Nmap scan report for K2.lan (192.168.1.1)
+	Host is up (0.00044s latency).
+	MAC Address: 8C:AB:8E:BC:35:E9 (Shanghai Feixun Communication)
+	Nmap scan report for 192.168.1.127
+	Host is up (0.000076s latency).
+	MAC Address: 00:0C:29:61:A5:BE (VMware)
+	Nmap scan report for JQ-PC.lan (192.168.1.203)
+	Host is up (0.000068s latency).
+	MAC Address: 14:DD:A9:23:76:D4 (Asustek Computer)
+	Nmap scan report for kali.lan (192.168.1.150)
+	Host is up.
+	Nmap done: 256 IP addresses (4 hosts up) scanned in 2.03 seconds
 ```
-- Ping 扫描
+扫描出存活的主机 ip 后，查看 ARP 缓存，获取每个 ip 对应的 mac 地址
 ```
-nmap -sn -v targetip
+	$ cat /proc/net/arp
+	
+	IP address       HW type     Flags       HW address            Mask     Device
+	192.168.1.203    0x1         0x2         14:dd:a9:23:76:d4     *        eth0
+	192.168.1.127    0x1         0x2         00:0c:29:61:a5:be     *        eth0
+	192.168.1.1      0x1         0x2         8c:ab:8e:bc:35:e9     *        eth0
 ```
-- 快速端口扫描
+查看本地 ARP 缓存也可使用： ```arp -na```；
+
+若 ARP 缓存中没有想查询 MAC 地址的 IP，可先 ping 后再查看 ARP 缓存：
 ```
-nmap -F -v targetip
+$ ping 192.168.1.66
+$ arp -n 192.168.1.66
 ```
+
+
+
+- 快速扫描网段内存活主机 ip、mac 地址和其开放的端口(-F 只扫描常见端口)(可使用 -Pn 以规避防火墙对 ICMP 扫描的 rule)
+```
+nmap -F 192.168.1.0/24
+```
+注意：若对整个网段的所有主机进行全端口扫描，可能会造成卡死，最好是先挑出个别 ip 后再进一步针对性扫描；
+
+### 单个主机扫描 ###
+
+- 扫描指定的主机的所有端口
+```
+nmap -p0-65535 -Pn targetip
+```
+
 - 版本扫描
 ```
 nmap -sV -v targetip 
 ```
+
+
 - 操作系统扫描
 ```
 nmap -O -v targetip
 ```
 
+
+- 全面进攻性扫描（包括各种主机发现、端口扫描、版本扫描、OS扫描及默认脚本扫描）:
+```
+nmap -A -v targetip
+```
 
 ## Related Links ##
 https://nmap.org/book/man-port-scanning-techniques.html  
