@@ -53,7 +53,7 @@ $ pip install scapy
 ```
 
 #### Windows ####
-https://scapy.readthedocs.io/en/latest/installation.html#windows 
+https://scapy.readthedocs.io/en/latest/installation.html#windows    
 Scapy 主要是为类 Unix 系统开发的，并且在这些平台上能正常工作，而在Windows下scapy需要安装一些额外的依赖包：
 - [Python](http://www.python.org/): [python-2.7.13.amd64.msi](https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi) (64bits) or [python-2.7.13.msi](https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi) (32bits). Afterinstallation, add the Python installation directory and its Scriptssubdirectory to your PATH. Depending on your Python version, the defaults wouldbe C:\Python27 and C:\Python27\Scriptsrespectively.
 - [Npcap](https://nmap.org/npcap/): [the latest version](https://nmap.org/npcap/#download). Default values arerecommanded. Scapy will also work with Winpcap.
