@@ -1,4 +1,17 @@
+
+
 <!-- toc -->
+
+* [Scaffolding Tool: Yeoman](#scaffolding-tool-yeoman)
+  * [安装](#安装)
+  * [使用](#使用)
+    * [安装 generators](#安装-generators)
+    * [使用 generators](#使用-generators)
+    * [其它命令](#其它命令)
+  * [自定义 Yeoman generators](#自定义-yeoman-generators)
+
+<!-- toc stop -->
+
 
 # Scaffolding Tool: Yeoman #
 http://yeoman.io/learning/index.html
@@ -41,7 +54,10 @@ npm install -g generator-xxx
 ### 使用 generators ###
 
 - 使用 generators 快速构建项目结构；
-例：使用 generator-webapp 构建一个项目结构：
+```
+yo <generator_name> [项目名]
+```
+例：使用 generator-webapp 构建一个项目结构（若省略项目名则以当前目录名作为项目名）：
 ```
 yo webapp
 ```

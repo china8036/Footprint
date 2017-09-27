@@ -1,4 +1,19 @@
+
+
 <!-- toc -->
+
+* [包管理工具：bower](#包管理工具bower)
+  * [安装 bower](#安装-bower)
+  * [使用 bower](#使用-bower)
+    * [安装包](#安装包)
+    * [使用包](#使用包)
+    * [搜索包](#搜索包)
+    * [更新包](#更新包)
+    * [卸载包](#卸载包)
+    * [其它](#其它)
+
+<!-- toc stop -->
+
 
 # 包管理工具：bower #
 https://segmentfault.com/a/1190000002971135   
@@ -140,6 +155,3 @@ bower list
 
 - .bowerrrc 文件
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/d159e6523defa3cc1edebd2dd7097142.jpg)
-
-
-

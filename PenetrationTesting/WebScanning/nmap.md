@@ -127,6 +127,9 @@ Nmap提供多种机制来规避防火墙、IDS的的屏蔽和检查，便于秘�
 nmap -sn 192.168.1.0/24
 ```
 ## 扫描选项 ##
+https://nmap.org/book/man-briefoptions.html
+
+
 - **-P** `<port>`：指定探测的端口，默认情况下，Nmap会扫描 1660 个常用的端口，可以覆盖大多数基本应用情况
 	- `-P 80, 8080, 22, 443, 445`
 	- `-P 1-65535`
@@ -166,6 +169,12 @@ nmap -sn 192.168.1.0/24
 - **-6**： Enable IPv6 scanning；
 
 - **-F**： 执行快速扫描模式，即只扫描常见端口而不扫描所有端口
+
+
+- ** --reason**: 显示端口处于特定状态的原因
+
+
+- **-n/-R**: Never do DNS resolution/Always resolve [default: sometimes]
 
 ## 扫描目标 ##
 - 单一主机
@@ -334,5 +343,6 @@ nmap -A -v targetip
 ```
 
 ## Related Links ##
-https://nmap.org/book/man-port-scanning-techniques.html  
-https://en.wikipedia.org/wiki/Nmap
+https://nmap.org/man/zh/index.html   
+https://nmap.org/book/man-port-scanning-techniques.html   
+https://en.wikipedia.org/wiki/Nmap    
