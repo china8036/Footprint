@@ -1,4 +1,16 @@
+
+
 <!-- toc -->
+
+* [单页面应用](#单页面应用)
+  * [概念](#概念)
+  * [使用 AngularJS 配置](#使用-angularjs-配置)
+  * [存在问题](#存在问题)
+    * [加载](#加载)
+    * [SEO](#seo)
+
+<!-- toc stop -->
+
 
 # 单页面应用 #
 单页应用的数据流方案探索 https://github.com/xufei/blog/issues/47 
@@ -52,9 +64,3 @@
 	- HTML快照会被爬虫处理
 	- 然后搜索结果会显示原来的URL
 更多关于这个过程的信息，可以去看看Google的 [AJAX爬虫](https://developers.google.com/webmasters/ajax-crawling/docs/getting-started)  和他们有关 [创建HTML快照的指南](https://developers.google.com/webmasters/ajax-crawling/docs/html-snapshot).
-
-
-
-
-
-
