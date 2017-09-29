@@ -124,43 +124,44 @@ https://www.cnblogs.com/libin-1/p/6439550.html
 在 https://gulpjs.com/plugins/ 上可以搜索 gulp 的各种 plugin；
 
 - 使用 gulp-uglify
-搜索 gulp-uglify，查看该 plugin 的主页 https://www.npmjs.com/package/gulp-uglify/，获取安装的帮助信息；   
-```
-npm install --save-dev gulp-uglify
-```
-修改 gulpfile.js
-```
-	var gulp = require('gulp');
-	var uglify = require('gulp-uglify');
-	var pump = require('pump');
-	 
-	gulp.task('compress', function (cb) {
-	  pump([
-	        gulp.src('lib/*.js'),
-	        uglify(),
-	        gulp.dest('dist')
-	    ],
-	    cb
-	  );
-	});
+	搜索 gulp-uglify，查看该 plugin 的主页 https://www.npmjs.com/package/gulp-uglify/，获取安装的帮助信息；   
+	```
+	npm install --save-dev gulp-uglify
+	```
+	修改 gulpfile.js
+	```javascript
+		var gulp = require('gulp');
+		var uglify = require('gulp-uglify');
+		var pump = require('pump');
+		gulp.task('compress', function (cb) {
+			pump([
+						gulp.src('lib/*.js'),
+						uglify(),
+						gulp.dest('dist')
+				],
+				cb
+			);
+		});
 ```
 
 - 其他插件
-```
-npm init     //- 会生成一个package.json文件
-npm install gulp --save-dev     //- gulp插件的核心
-npm install gulp-minify-css --save-dev     //- 压缩CSS文件
-npm install gulp-rev --save-dev         //- 对css、js文件名加MD5后缀
-npm install gulp-rev-collector --save-dev   //- 路径替换
-npm install gulp-clean --save-dev            //- 用于删除文件
-npm install gulp-uglify --save-dev            //- 压缩js代码
-npm install gulp-imagemin --save-dev      //- 压缩图片
-npm install gulp-base64 --save-dev        //- 把小图片转成base64字符串
-```
+	```
+	npm init     //- 会生成一个package.json文件
+	npm install gulp --save-dev     //- gulp插件的核心
+	npm install gulp-minify-css --save-dev     //- 压缩CSS文件
+	npm install gulp-rev --save-dev         //- 对css、js文件名加MD5后缀
+	npm install gulp-rev-collector --save-dev   //- 路径替换
+	npm install gulp-clean --save-dev            //- 用于删除文件
+	npm install gulp-uglify --save-dev            //- 压缩js代码
+	npm install gulp-imagemin --save-dev      //- 压缩图片
+	npm install gulp-base64 --save-dev        //- 把小图片转成base64字符串
+	```
 
 
 ## Gulp 搭配 Yeoman Generator：webapp ##
+
 https://github.com/yeoman/generator-webapp#readme
+
 ```
 Install: npm install --global yo gulp-cli bower generator-webapp
 Run yo webapp to scaffold your webapp
@@ -175,32 +176,31 @@ Run gulp serve:dist to preview the production build
 
 
 - 搭建 webapp 基本框架（自动安装了 gulp-uglify 等 plugin）
-```
-yo webapp
-```
+	```
+	yo webapp
+	```
 
 - 打开项目 index.html 并在开发时使用 browser-sync 实时监控文件变化自动刷新浏览器
-```
-gulp serve
-```
+	```
+	gulp serve
+	```
 
-- 打开项目 index.html 并在开发时使用 browser-sync 实时监控文件变化自动刷新浏览器且实时“编译”输出到 dist 目录
-```
-gulp serve:dist
-```
+-  preview the production build
+	```
+	gulp serve:dist
+	```
 
 - “编译”项目文件
-```
-gulp build
-```
+	```
+	gulp build
+	```
 
-- clean 且 “编译”项目文件
-```
-gulp
-```
+- clean and build your webapp for production
+	```
+	gulp
+	```
 
-
-
+<!-- TODO 怎么实时监控源文件变化并编译到dist？ -->
 
 ## 其它 ##
 

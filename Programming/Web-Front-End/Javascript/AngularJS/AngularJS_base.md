@@ -43,7 +43,7 @@
     - [路由](#%E8%B7%AF%E7%94%B1)
         - [ngRoute](#ngroute)
         - [uiRoute](#uiroute)
-            - [使用 $stateProvider 配置路由](#%E4%BD%BF%E7%94%A8-stateprovider-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1)
+            - [使用 $stateProvider 和 $urlRouterProvider 配置路由](#%E4%BD%BF%E7%94%A8-stateprovider-%E5%92%8C-urlrouterprovider-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1)
             - [页面跳转](#%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
             - [深层次嵌套视图](#%E6%B7%B1%E5%B1%82%E6%AC%A1%E5%B5%8C%E5%A5%97%E8%A7%86%E5%9B%BE)
             - [$state 匹配多个视图](#state-%E5%8C%B9%E9%85%8D%E5%A4%9A%E4%B8%AA%E8%A7%86%E5%9B%BE)
@@ -52,6 +52,8 @@
         - [指定定义](#%E6%8C%87%E5%AE%9A%E5%AE%9A%E4%B9%89)
             - [restrict 匹配模式](#restrict-%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F)
             - [replace](#replace)
+            - [templateUrl](#templateurl)
+            - [template](#template)
             - [scope 作用域](#scope-%E4%BD%9C%E7%94%A8%E5%9F%9F)
         - [内置指令](#%E5%86%85%E7%BD%AE%E6%8C%87%E4%BB%A4)
             - [布尔类型指令](#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E6%8C%87%E4%BB%A4)
@@ -612,7 +614,7 @@ ng-view 是由 ngRoute 模块提供的一个特殊指令，它的独特作用是
   ```javascript
   angular.module("myApp",[])
     .config(["$routeProvider", function($routeProvider){
-      //在这里定义路由
+      // 在这里定义路由
       $routeProvider
         .when('/',{
           templateUrl:'views/home.html',
@@ -669,7 +671,6 @@ ng-view 是由 ngRoute 模块提供的一个特殊指令，它的独特作用是
 		 	- redirectTo：路径替换；
 		 	- reloadOnSearch：如果设置为 true（默认），当 $location.search() 发生变化时会重新加载路由。如果设置为 false，那么当 URL 中的查询串部分发生变化时就不会重新加载路由。这个小窍门对路由嵌套和原地分页等需求非常有用；
 
-
 	- html5Mode     
 	https://www.oschina.net/translate/pretty-urls-in-angularjs-removing-the-hashtag      
 	Angular 默认通过操作锚点来进行客户端路由，即服务器端路由和客户端路由的 URL 以 # 分隔，因此通过路由的 URL 中会出现一个 # 号，例如 /foo/bar#/users/alice；    
@@ -710,43 +711,97 @@ UI-Router 是 Angular-UI 提供的客户端路由框架，它解决了原生的 
 - 视图不能嵌套。这意味着 $scope 会发生不必要的重新载入。这也是我们在 Onboard 中引入 ui-route 的原因；
 - 同一 URL 下不支持多个视图。这一需求也是常见的：我们希望导航栏用一个视图（和相应的控制器）、内容部分用另一个视图（和相应的控制器）；
 
-#### 使用 $stateProvider 配置路由
+#### 使用 $stateProvider 和 $urlRouterProvider 配置路由
 
 UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI 的状态，每个 $state 需要绑定一个 URL Pattern。 在控制器和模板中，通过改变 $state 来进行 URL 的跳转和路由；
 
-例：使用 $stateProvider 路由配置
-```javascript
-adminApp.config(function($stateProvider, $urlRouterProvider){  
-	$stateProvider
-		.state('aggreLive',{
-            url:'/aggreLive/',
-            templateUrl:'aggreLive.htm',
-            controller:'aggreLive'
-		})
-		.state('aggreVideo',{
-            url:'/aggreVideo/',
-            templateUrl:'aggreVideo.htm',
-            controller:'aggreVideo'
-		}) 
-		.state('aggreTeacher',{
-            url:'/aggreTeacher/',
-            templateUrl:'aggreTeacher.htm',
-            controller:'aggreTeacher'
-		})
-	$urlRouterProvider.otherwise('/aggreLive/');      
-})
-// 当访问 /aggreLive/ 时，aggre 这个 $state 被激活，载入对应的控制器和视图。
-```
+- 示例：uiRouter 基本使用   
+	router.js
+	```javascript
+	angular.module('app').config(['$stateProvider', '$urlRouterProvider',
+		function ($stateProvider, $urlRouterProvider) {
+		<!-- 指定路由 id 为 main -->
+		$stateProvider.state('main', {
+			url: '/main',
+			templateUrl: 'view/main.html',
+			controller: 'mainCtrl'
+		});
+		$urlRouterProvider.otherwise('main');
+
+	}]);
+	```
+	在 html 中使用`<ui-view>`或`<div ui-view>`作为占位标签，index.html：
+	```html
+	<ui-view></ui-view>
+
+	<!--AngularJS 1.6.6-->
+	<script src="https://cdn.bootcss.com/angular.js/1.6.6/angular.min.js"></script>
+	<script src="https://cdn.bootcss.com/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+
+	<!--customize script-->
+	<script src="scripts/app.js"></script>
+	<script src="scripts/config/router.js"></script>
+	```
+
+- stateProvider 中 URL 的写法
+	- '/home'：只匹配'/home'；
+	- '/user/:id'、'/user/{id}'：匹配'/user/1234'或'/user/'；
+	- '/message?before&after'：使用 URL Query 方式传参；
 
 #### 页面跳转
 
-在 ui-router 时，通常使用 $state 来完成页面跳转，而不是直接操作 URL。
+- 使用 ui-sref 指令
+	点击该指令配置的标签后，会跳转到对应的路由页面，且在跳转时支持参数传递
+	例：  
+	```javascript
+	<a ui-sref="main({id:1234})">
+	```
 
-例：
-```javascript
-$state.go('contacts');  // 指定 state 名，相当于跳转到 /contacts
-$state.go('contacts.detail', {contactId: 42});  // 相当于跳转到 /contacts/42
+- 使用 $state 服务
+	在 ui-router 时，可以使用 $state 来完成页面跳转，而不是直接操作 URL。    
+	例：   
+	页面跳转
+	```javascript
+	$state.go('contacts');  // 指定 state 名，相当于跳转到 /contacts
+	$state.go('contacts.detail', {id: 42}, {location: 'replace'});  // 跳转时传递参数，相当于跳转到 /contacts/42，{location: 'replace'}表示跳转时消除当前路径，进行会跳时就不会跳回当前页面
+	```
+	获取参数
+	```javascript
+	$state.params.id
+	// 或
+	$stateParams.id
+	```
+
+注意：可使用ui-router提供的指令`ui-sref-active`，指定标签被点击后的样式；    
+例： 
+```html
+<ul>
+	<li ui-sref-active="select" ui-sref="main">
+		<i class="icon-document"></i>
+		<span class="va-t">职位</span>
+	</li>
+	<li ui-sref-active="select" ui-sref="search">
+		<i class="con-search"></i>
+		<span class="va-t">搜索</span>
+	</li>
+	<li ui-sref-active="select" ui-sref="me">
+		<i class="icon-my"></i>
+		<span class="va-t">我</span>
+	</li>
+</ul>
 ```
+定义select样式：
+```less
+.foot {
+  li {
+    &.select {
+      background-color: @highlightBgColor;
+      color: @highlightColor;
+    }
+  }
+```
+
+
 
 #### 深层次嵌套视图
 
@@ -824,14 +879,18 @@ $stateProvider
 
 ### 指定定义
 
-通过 AngularJS 的。directive() 方法，我们可以传入一个字符串和一个函数来注册一个新指令。其中字符串是这个指令的名字，指令名应该是驼峰命名风格的，函数应该返回一个对象。
+- 通过 AngularJS 的 directive() 方法，我们可以传入一个字符串和一个函数来注册一个新指令；   
+	- 字符串是这个指令的名字，指令名是**驼峰命名**风格的，如：指令名 appHead 对应指令 app-head；
+	- 函数中应该返回一个对象，该对象为指令的具体配置；
+
+例：
 
 #### restrict 匹配模式
 
 restrict 匹配模式设置告诉 AngularJS 在编译 HTML 时用哪种声明格式来匹配指令定义：   
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/dee59c3124f6cf458b4786f070522bed.jpg)
 
-注意：推荐使用元素和属性模式，即将 restrict 属性设置为“AE“；
+注意：**推荐使用元素和属性模式，即将 restrict 属性设置为“AE“**；
 
 例：
 ```javascript
@@ -852,7 +911,7 @@ angular.module("app",[])
 通过浏览器工具可以看到浏览器渲染视图后使用的是我们自定义的标签，这样不利于 SEO：   
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/744762086084973c495384985d9b6180.jpg)
 
-我们可以通过设置 replace 属性为 true，将自定义标签从 html 中剔除以保证 SEO；
+我们可以通过设置 replace 属性为 true，使得指令加载模板后，将自定义标签从 html 中剔除以保证 SEO；
 
 ```javascript
 angular.module("app",[])
@@ -866,20 +925,30 @@ angular.module("app",[])
 ```
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/d31b65b0aac0f5fc022f5941077f0938.jpg)
 
+#### templateUrl
+
+templateUrl 为指令要加载的模板位置；
+
+注意：要被指令加载的模板只能有一个根元素，不能有任何兄弟节点；
+
+#### template
+
+temple 为指令要加载的模板 HTML 代码；
+
 #### scope 作用域
 
 每当一个指令被创建的时候，都会有这样一个选择，是继承自己的父作用域（一般是外部的 Controller 提供的作用域或者根作用域（$rootScope）），还是创建一个新的自己的作用域，当然 AngularJS 为我们指令的 scope 参数提供了三种选择，分别是：false,true,{}；默认情况下是 false。
 
-- scope = false
-当我们将 scope 设置为 false 的时候，我们创建的指令和父作用域（其实是同一个作用域）共享同一个 model 模型，所以在指令中修改模型数据，它会反映到父作用域的模型中。在这种情况下，在指令模板中可以直接使用父作用域中的变量，函数。
+- scope = false    
+	当我们将 scope 设置为 false 的时候，我们创建的指令和父作用域（其实是同一个作用域）共享同一个 model 模型，所以在指令中修改模型数据，它会反映到父作用域的模型中。在这种情况下，在指令模板中可以直接使用父作用域中的变量，函数。
 
-- scope = true
-当我们将 scope 设置为 true 的时候，我们就新创建了一个作用域，只不过这个作用域是继承了我们的父作用域；我觉得可以这样理解，我们新创建的作用域是一个新的作用域，只不过在初始化的时候，用了父作用域的属性和方法去填充我们这个新的作用域。它和父作用域不是同一个作用域。
+- scope = true      
+	当我们将 scope 设置为 true 的时候，我们就新创建了一个作用域，只不过这个作用域是继承了我们的父作用域；我觉得可以这样理解，我们新创建的作用域是一个新的作用域，只不过在初始化的时候，用了父作用域的属性和方法去填充我们这个新的作用域。它和父作用域不是同一个作用域。
 
-- scope = {}
-当我们将 scope 设置为{}时，意味着我们创建的一个新的与父作用域隔离的新的作用域，这使我们在不知道外部环境的情况下，就可以正常工作，不依赖外部环境。
-我们使用了隔离的作用域，不代表我们不可以使用父作用域的属性和方法，我们可以通过向 scope 的{}中传入特殊的前缀标识符（即 prefix）“@,&,=“，引用应用指令的元素的属性，来进行数据的绑定。
-	- 前缀标识符：
+- scope = {}     
+	当我们将 scope 设置为{}时，意味着我们创建的一个新的与父作用域隔离的新的作用域，这使我们在不知道外部环境的情况下，就可以正常工作，不依赖外部环境。
+	我们使用了隔离的作用域，不代表我们不可以使用父作用域的属性和方法，我们可以通过向 scope 的{}中传入特殊的前缀标识符（即 prefix）“@,&,=“，引用应用指令的元素的属性，来进行数据的绑定。
+	- 前缀标识符：   
 		- @
 		这是一个单项绑定的前缀标识符   
 		使用方法：在元素中使用属性，好比这样 `<div my-directive my-name="{{name}}"></div>`，注意，属性的名字要用 - 将两个单词连接，因为是数据的单项绑定所以要通过使用 `{{}}`来绑定数据。
@@ -890,49 +959,48 @@ angular.module("app",[])
 		这是一个绑定函数方法的前缀标识符   
 		使用方法：在元素中使用属性，好比这样 `<div my-directive change-my-age="changeAge()"></div>`，注意，属性的名字要用 - 将多个个单词连接。
 	- 注意：在新创建指令的作用域对象中，使用属性的名字进行绑定时，要使用驼峰命名标准，比如下面的代码：
-	例：
-	```javascript
-	angular.module("MyApp", [])
-	    .controller("MyController", function ($scope) {
-	    $scope.name = "dreamapple";
-	    $scope.age = 20;
-	    $scope.changeAge = function(){
-	        $scope.age = 0;
-	    }
-	})
-	    .directive("myDirective", function () {
-	    var obj = {
-	        restrict: "AE",
-	        scope: {
-	            name: '@myName',
-	            age: '=',
-	            changeAge: '&changeMyAge'
-	        },
-	        replace: true,
-	        template: "<div class='my-directive'>" +
-	            "<h3>下面部分是我们创建的指令生成的</h3>" +
-	            "我的名字是：<span ng-bind='name'></span><br/>" +
-	            "我的年龄是：<span ng-bind='age'></span><br/>" +
-	            "在这里修改名字：<input type='text' ng-model='name'><br/>" +
-	            "<button ng-click='changeAge()'>修改年龄</button>" +
-	            " </div>"
-	    }
-	    return obj;
-	});
-	```
-	html 代码
-	```html
-	<div ng-app="MyApp">
-	    <div class="container" ng-controller="MyController">
-	        <div class="my-info">我的名字是：<span ng-bind="name"></span>
-	
-	            <br/>我的年龄是：<span ng-bind="age"></span>
-	            <br />
-	        </div>
-	        <div class="my-directive" my-directive my-name="{{name}}" age="age"  change-my-age="changeAge()"></div>
-	    </div>
-	</div>
-	```
+		例：
+		```javascript
+		angular.module("MyApp", [])
+			.controller("MyController", function ($scope) {
+				$scope.name = "dreamapple";
+				$scope.age = 20;
+				$scope.changeAge = function(){
+						$scope.age = 0;
+				}
+			})
+			.directive("myDirective", function () {
+				var obj = {
+					restrict: "AE",
+					scope: {
+							name: '@myName',
+							age: '=',
+							changeAge: '&changeMyAge'
+					},
+					replace: true,
+					template: "<div class='my-directive'>" +
+							"<h3>下面部分是我们创建的指令生成的</h3>" +
+							"我的名字是：<span ng-bind='name'></span><br/>" +
+							"我的年龄是：<span ng-bind='age'></span><br/>" +
+							"在这里修改名字：<input type='text' ng-model='name'><br/>" +
+							"<button ng-click='changeAge()'>修改年龄</button>" +
+							" </div>"
+				}
+			return obj;
+		});
+		```
+		html 代码
+		```html
+		<div ng-app="MyApp">
+				<div class="container" ng-controller="MyController">
+						<div class="my-info">我的名字是：<span ng-bind="name"></span>
+								<br/>我的年龄是：<span ng-bind="age"></span>
+								<br />
+						</div>
+						<div class="my-directive" my-directive my-name="{{name}}" age="age"  change-my-age="changeAge()"></div>
+				</div>
+		</div>
+		```
 
 ### 内置指令
 
@@ -944,119 +1012,120 @@ AngularJS 提供了一系列的内置指令，其中一些指令重载了元素�
 
 AngularJS 提供了一组带有 ng- 前缀版本的布尔属性，通过运算表达式的值来决定在目标元素上是插入还是移除对应的属性。
 
-- ng-disabled 
+- ng-disabled    
 
-- ng-readonly
+- ng-readonly   
 
-- ng-checked
-例：
-```html
-<!-- 如果 checkbox 选中，则 checkProperty 为 true，初始为选中状态 -->
-    <label>checkProperty = {{ checkProperty }}</label>
-    <input type="checkbox" ng-checked="checkProperty" ng-init="checkProperty = true" ng-model="checkProperty">
-```
-- ng-selected
-对是否出现 option 标签的 selected 属性进行绑定
-例：
-```html
- <!-- 当 checkbox 选中后，select 会选择第二个 -->
-    <input type="checkbox" ng-model="isTwoFish">
-    <select>
-      <option>One Fish</option>
-      <option ng-selected="isTwoFish">Two Fish</option>
-    </select>
-```
-- ng-href
-ng-href 是用来取代 a 标签原有的 href 的。当使用当前作用域中的属性动态创建 URL 时，如果插值尚未生效，href 会指向 404，而 ng-href 会等到插值生效后再执行点击链接的行为。
-- ng-src 
-AngularJS 会告诉浏览器在 ng-src 对应的表达式生效之前不要加载图片。和 ng-href 类似；
+- ng-checked    
+	例：
+	```html
+	<!-- 如果 checkbox 选中，则 checkProperty 为 true，初始为选中状态 -->
+			<label>checkProperty = {{ checkProperty }}</label>
+			<input type="checkbox" ng-checked="checkProperty" ng-init="checkProperty = true" ng-model="checkProperty">
+	```
+- ng-selected    
+	对是否出现 option 标签的 selected 属性进行绑定
+	例：
+	```html
+	<!-- 当 checkbox 选中后，select 会选择第二个 -->
+			<input type="checkbox" ng-model="isTwoFish">
+			<select>
+				<option>One Fish</option>
+				<option ng-selected="isTwoFish">Two Fish</option>
+			</select>
+	```
+- ng-href    
+	ng-href 是用来取代 a 标签原有的 href 的。当使用当前作用域中的属性动态创建 URL 时，如果插值尚未生效，href 会指向 404，而 ng-href 会等到插值生效后再执行点击链接的行为。
+
+- ng-src   
+	AngularJS 会告诉浏览器在 ng-src 对应的表达式生效之前不要加载图片。和 ng-href 类似；
 
 #### 在指令中使用子作用域
 
-- ng-app
+- ng-app    
 
-- ng-controller
+- ng-controller   
 
-- ng-include
-使用 ng-include 可以加载、编译并包含外部 HTML 片段到当前的应用中。模板的 URL 被限制在与应用文档相同的域和协议下，可以通过白名单或包装成被信任的值来突破限制。
-使用 ng-include 时 AngularJS 会自动创建一个子作用域。如果我们想使用某个特定的作用域，必须在同一个 DOM 元素上添加 ng-controller 指令，这样当模板加载完成后，不会像往常一样从外部作用域继承并创建一个新的子作用域：
-例：
-```html
-<div ng-include="/myTempalteName.html" ng-c ng-init="name = 'world'">
-  hello {{ name }}
-</div>
-```
+- ng-include    
+	使用 ng-include 可以加载、编译并包含外部 HTML 片段到当前的应用中。模板的 URL 被限制在与应用文档相同的域和协议下，可以通过白名单或包装成被信任的值来突破限制。
+	使用 ng-include 时 AngularJS 会自动创建一个子作用域。如果我们想使用某个特定的作用域，必须在同一个 DOM 元素上添加 ng-controller 指令，这样当模板加载完成后，不会像往常一样从外部作用域继承并创建一个新的子作用域：    
+	例：
+	```html
+	<div ng-include="/myTempalteName.html" ng-c ng-init="name = 'world'">
+		hello {{ name }}
+	</div>
+	```
 
-- ng-switch
-```html
-<!-- 当输入 Liu 时会显示 Liu，其他时候显示 And The Winner is -->
-<input type="text" ng-model="person.name"/>
-<div ng-switch
-  <!-- 默认值 -->
-  <p ng-switch-default>And The Winner is</p>
-  <h1 ng-switch-when="Liu">{{ person.name }}</h1>
-</div>
-<script>
-	var app = angular.module("app",[]);
-</script> 
-```
-在 switch 被调用之前我们用 ng-switch-default 来输出默认值。
+- ng-switch    
+	```html
+	<!-- 当输入 Liu 时会显示 Liu，其他时候显示 And The Winner is -->
+	<input type="text" ng-model="person.name"/>
+	<div ng-switch
+		<!-- 默认值 -->
+		<p ng-switch-default>And The Winner is</p>
+		<h1 ng-switch-when="Liu">{{ person.name }}</h1>
+	</div>
+	<script>
+		var app = angular.module("app",[]);
+	</script> 
+	```
+	在 switch 被调用之前我们用 ng-switch-default 来输出默认值。
 
-- ng-view
-ng-view 指令用来设置将被路由管理和放置在 HTML 中的视图的位置。
+- ng-view    
+	ng-view 指令用来设置将被路由管理和放置在 HTML 中的视图的位置。
 
-- ng-if
-使用 ng-if 指令可以完全根据表达式的值在 DOM 中生成或移除一个元素。如果赋值给 ng-if 的表达式的值是 false，那对应的元素将会从 DOM 中移除，否则对应元素的一个的克隆将被重新插入 DOM 中。   
-注意 ng-if 同 ng-show 或 ng-hide 指令最本质的区别是，它不是通过 css 显示或隐藏 DOM 节点，而是真正生成或移除节点。当一个元素被 ng-if 从 DOM 中移除，同它关联的作用域也会被销毁，当它重新加入 DOM 中时，会通过原型继承从它的父作用域生成一个新的作用域；    
-注意：   
-并不是只有 Controller 可以创建作用域，ng-if 、ng-switch、ng-include 等指令也会动态（隐式地）产生新作用域；   
+- ng-if    
+	使用 ng-if 指令可以完全根据表达式的值在 DOM 中生成或移除一个元素。如果赋值给 ng-if 的表达式的值是 false，那对应的元素将会从 DOM 中移除，否则对应元素的一个的克隆将被重新插入 DOM 中。   
+	注意 ng-if 同 ng-show 或 ng-hide 指令最本质的区别是，它不是通过 css 显示或隐藏 DOM 节点，而是真正生成或移除节点。当一个元素被 ng-if 从 DOM 中移除，同它关联的作用域也会被销毁，当它重新加入 DOM 中时，会通过原型继承从它的父作用域生成一个新的作用域；    
+	注意：   
+	并不是只有 Controller 可以创建作用域，ng-if 、ng-switch、ng-include 等指令也会动态（隐式地）产生新作用域；   
 
-- ng-repeat
-ng-repeat 用来遍历一个集合或为集合中的每个元素生成一个模板实例。集合中的每个元素都会被赋予自己的模板和作用域。同时每个模板实例的作用域中都会暴露一些特殊的属性。
+- ng-repeat   
+	ng-repeat 用来遍历一个集合或为集合中的每个元素生成一个模板实例。集合中的每个元素都会被赋予自己的模板和作用域。同时每个模板实例的作用域中都会暴露一些特殊的属性。
 
-- ng-init
-ng-init 指令用来在指令被调用时设置内部作用域的初始状态。
+- ng-init   
+	ng-init 指令用来在指令被调用时设置内部作用域的初始状态。
 
-- ng-bind
-我们可以通过 ng-bind 指令实现和{{}}一样的功能。HTML 加载含有{{}}语法的元素后并不会立即渲染它们，导致未渲染内容闪烁。我们可以通过 ng-bind 将内容绑定来避免闪烁。   
-```html
-<span ng-bind="name"></span> 
-```
+- ng-bind   
+	我们可以通过 ng-bind 指令实现和{{}}一样的功能。HTML 加载含有{{}}语法的元素后并不会立即渲染它们，导致未渲染内容闪烁。我们可以通过 ng-bind 将内容绑定来避免闪烁。   
+	```html
+	<span ng-bind="name"></span> 
+	```
 
-- ng-bind-template
-同 ng-bind 类似，ng-bind-template 用来在视图中绑定多个表达式。
-```html
-<pre ng-bind-template="{{salutation}} {{name}}!"></pre>
-```
+- ng-bind-template   
+	同 ng-bind 类似，ng-bind-template 用来在视图中绑定多个表达式。
+	```html
+	<pre ng-bind-template="{{salutation}} {{name}}!"></pre>
+	```
 
-- ng-cloak
-除了使用 ng-bind 来避免未渲染元素闪烁，还可以在含有{{}}的元素上使用 ng-cloak 指令。ng-cloak 指令会将内部元素隐藏，直到路由调用相应的页面时才显示出来。
-```html
-<div id="template1" ng-cloak>{{ 'hello' }}</div> 
-```
+- ng-cloak   
+	除了使用 ng-bind 来避免未渲染元素闪烁，还可以在含有{{}}的元素上使用 ng-cloak 指令。ng-cloak 指令会将内部元素隐藏，直到路由调用相应的页面时才显示出来。
+	```html
+	<div id="template1" ng-cloak>{{ 'hello' }}</div> 
+	```
 
-- ng-model
-ng-model 指令用来将 input、select、textarea 或自定义表单控件同包含它们的作用域中的属性进行绑定。   
-它将当前作用域中运算表达式的值同给定的元素进行绑定。如果属性不存在，它会隐式创建并将其添加到当前作用域中。   
+- ng-model   
+	ng-model 指令用来将 input、select、textarea 或自定义表单控件同包含它们的作用域中的属性进行绑定。     
+	它将当前作用域中运算表达式的值同给定的元素进行绑定。如果属性不存在，它会隐式创建并将其添加到当前作用域中。   
 
-- ng-show/ng-hide
-ng-show 和 ng-hide 根据所给表达式的值来显示或隐藏 HTML 元素。
+- ng-show/ng-hide   
+	ng-show 和 ng-hide 根据所给表达式的值来显示或隐藏 HTML 元素。
 
-- ng-change
-这个指令会在表单输入发生变化时计算给定表达式的值，需要和 ng-model 配合来使用
+- ng-change   
+	这个指令会在表单输入发生变化时计算给定表达式的值，需要和 ng-model 配合来使用
 
-- ng-form
-ng-form 用来在一个表单内部嵌套另一个表单，普通的 HTML 的 form 标签是不允许嵌套了。
+- ng-form   
+	ng-form 用来在一个表单内部嵌套另一个表单，普通的 HTML 的 form 标签是不允许嵌套了。
 
-- ng-click
-ng-click 用来给指定元素绑定点击时调用的方法或者表达式；   
-ng-click 可以通过点击调用一个方法或 scope 中的表达式（直接用 onclick 无法调用 controller 里定义的函数）；
+- ng-click   
+	ng-click 用来给指定元素绑定点击时调用的方法或者表达式；     
+	ng-click 可以通过点击调用一个方法或 scope 中的表达式（直接用 onclick 无法调用 controller 里定义的函数）；
 
-- ng-submit
-ng-submit 用来将表达式同 onsubmit 事件进行绑定。这个指令同时会阻止浏览器默认行为，除非表单不含有 action 属性。
+- ng-submit    
+	ng-submit 用来将表达式同 onsubmit 事件进行绑定。这个指令同时会阻止浏览器默认行为，除非表单不含有 action 属性。
 
-- ng-class
-使用 ng-class 动态设置元素的类，方法是绑定一个代表所有需要添加的类的表达式。
+- ng-class    
+	使用 ng-class 动态设置元素的类，方法是绑定一个代表所有需要添加的类的表达式。
 
 ## 过滤器
 
@@ -1089,30 +1158,30 @@ $filter('filter')(array, expression, comparator)
 
 ### 内置过滤器
 
-- currency
-currency 过滤器可以将一个数值格式化为货币格式。
-```html
-<h2>{{ 123 | currency}}</h2><!-- $123.00 --> 
-```
-也可以自定义货币符号：
-```html
- <h2>{{ 123 | currency:"￥"}}</h2><!-- ￥123.00 --> 
-```
+- currency    
+	currency 过滤器可以将一个数值格式化为货币格式。
+	```html
+	<h2>{{ 123 | currency}}</h2><!-- $123.00 --> 
+	```
+	也可以自定义货币符号：
+	```html
+	<h2>{{ 123 | currency:"￥"}}</h2><!-- ￥123.00 --> 
+	```
 
-- date
-date 过滤器可以将日期格式化成需要的格式：
-```html
- <h1>date 过滤器</h1>
-      <h5>{{today }}</h5><!-- "2016-01-23T08:44:59.271Z" -->
-      <h5>{{today | date:'medium' }}</h5><!-- Jan 23, 2016 4:44:59 PM -->
-      <h5>{{today | date:'short' }}</h5><!-- 1/23/16 4:44 PM -->
-      <h5>{{today | date:'fullDate' }}</h5><!-- Saturday, January 23, 2016 -->
-      <h5>{{today | date:'longDate' }}</h5><!-- January 23, 2016 -->
-      <h5>{{today | date:'mediumDate' }}</h5><!-- Jan 23, 2016 -->
-      <h5>{{today | date:'shortDate' }}</h5><!-- 1/23/16 -->
-      <h5>{{today | date:'mediumTime' }}</h5><!-- 4:44:59 PM -->
-      <h5>{{today | date:'shortTime' }}</h5><!-- 4:44 PM -->
-```
+- date    
+	date 过滤器可以将日期格式化成需要的格式：
+	```html
+	<h1>date 过滤器</h1>
+		<h5>{{today }}</h5><!-- "2016-01-23T08:44:59.271Z" -->
+		<h5>{{today | date:'medium' }}</h5><!-- Jan 23, 2016 4:44:59 PM -->
+		<h5>{{today | date:'short' }}</h5><!-- 1/23/16 4:44 PM -->
+		<h5>{{today | date:'fullDate' }}</h5><!-- Saturday, January 23, 2016 -->
+		<h5>{{today | date:'longDate' }}</h5><!-- January 23, 2016 -->
+		<h5>{{today | date:'mediumDate' }}</h5><!-- Jan 23, 2016 -->
+		<h5>{{today | date:'shortDate' }}</h5><!-- 1/23/16 -->
+		<h5>{{today | date:'mediumTime' }}</h5><!-- 4:44:59 PM -->
+		<h5>{{today | date:'shortTime' }}</h5><!-- 4:44 PM -->
+	```
 
 ### 自定义过滤器
 

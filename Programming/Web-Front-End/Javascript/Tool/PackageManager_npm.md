@@ -42,78 +42,90 @@ npm -v
 npm install npm -g
 ```
 
-- 淘宝 NPM 镜像 
-http://npm.taobao.org/    
-由于国内网络因素限制，npm 的官方镜像是非常慢，因此可以使用淘宝的 NPM 镜像，淘宝 NPM 镜像是一个完整 npmjs.org 镜像，可以用此代替官方版本(只读)，同步频率目前为 10分钟 一次以保证尽量与官方服务同步。    
-可以使用淘宝定制的 cnpm (gzip 压缩支持) 命令行工具代替默认的 npm:
-```
-$ npm install -g cnpm --registry=https://registry.npm.taobao.org
-```
-这样就可以使用 cnpm 命令来安装模块了：
-```
-$ cnpm install [name]
-```
+- 淘宝 NPM 镜像    
+	http://npm.taobao.org/    
+	由于国内网络因素限制，npm 的官方镜像是非常慢，因此可以使用淘宝的 NPM 镜像，淘宝 NPM 镜像是一个完整 npmjs.org 镜像，可以用此代替官方版本(只读)，同步频率目前为 10分钟 一次以保证尽量与官方服务同步。    
+	可以使用淘宝定制的 cnpm (gzip 压缩支持) 命令行工具代替默认的 npm:
+	```
+	$ npm install -g cnpm --registry=https://registry.npm.taobao.org
+	```
+	这样就可以使用 cnpm 命令来安装模块了：
+	```
+	$ cnpm install [name]
+	```
 
+- 配置 npm 使用淘宝镜像    
+	运行 
+	```
+	npm config set registry https://registry.npm.taobao.org
+	```
+	然后 编辑 ~/.npmrc 加入下面内容
+	```
+	registry=https://registry.npm.taobao.org
+	sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
+	phantomjs_cdnurl=http://npm.taobao.org/mirrors/phantomjs
+	ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
+	```
 
 ## 使用 ##
 
 ### 安装包 ###
 
 - 安装最新版的package
-```
-npm install package
-```
+	```
+	npm install package
+	```
 - 安装指定版本的package
-```
-npm install package@版本号
-```
+	```
+	npm install package@版本号
+	```
 - 使用package.json进行安装
-如果我们的项目依赖了很多package，一个一个地安装那将是个体力活。我们可以将项目依赖的包都在package.json这个文件里声明，然后在package.json所在目录使用命令一次性安装全部package：
-```
-npm install
-```
-若在当前目录下找不到 package.json，运行此命令会报错；
+	如果我们的项目依赖了很多package，一个一个地安装那将是个体力活。我们可以将项目依赖的包都在package.json这个文件里声明，然后在package.json所在目录使用命令一次性安装全部package：
+	```
+	npm install
+	```
+	若在当前目录下找不到 package.json，运行此命令会报错；
 
 - 包安装模式
 	- 本地安装
-	会在当前目录创建一个新的文件夹 node_components，并将目标 package 下载到该文件夹中，且该 package 也只能在当前目录下使用：
-	```
-	npm install packagnpm install -g grunt-clie
-	```
-	例：
-	在当前目录下安装 grunt-cli （grunt命令行工具）：
-	```
-	npm install grunt-cli
-	```
-	安装结束后，当前目录下回多出一个 node_modules 目录，grunt-cli就安装在里面。同时注意控制台输出的信息：
-	```
-	grunt-cli@0.1.9 node_modules/grunt-cli
-	├── resolve@0.3.1
-	├── nopt@1.0.10 (abbrev@1.0.4)
-	└── findup-sync@0.1.2 (lodash@1.0.1, glob@3.1.21)
-	```
-	简单说明：   
-	grunt-cli@0.1.9：当前安装的package为grunt-cli，版本为0.19   
-	node_modules/grunt-cli：安装目录   
-	resolve@0.3.1：依赖的包有resolve、nopt、findup-sync，它们各自的版本、依赖在后面的括号里列出来   
+		会在当前目录创建一个新的文件夹 node_components，并将目标 package 下载到该文件夹中，且该 package 也只能在当前目录下使用：
+		```
+		npm install packagnpm install -g grunt-clie
+		```
+		例：
+		在当前目录下安装 grunt-cli （grunt命令行工具）：
+		```
+		npm install grunt-cli
+		```
+		安装结束后，当前目录下回多出一个 node_modules 目录，grunt-cli就安装在里面。同时注意控制台输出的信息：
+		```
+		grunt-cli@0.1.9 node_modules/grunt-cli
+		├── resolve@0.3.1
+		├── nopt@1.0.10 (abbrev@1.0.4)
+		└── findup-sync@0.1.2 (lodash@1.0.1, glob@3.1.21)
+		```
+		简单说明：   
+		grunt-cli@0.1.9：当前安装的package为grunt-cli，版本为0.19   
+		node_modules/grunt-cli：安装目录   
+		resolve@0.3.1：依赖的包有resolve、nopt、findup-sync，它们各自的版本、依赖在后面的括号里列出来   
 
 	- 全局安装
-	package会被下载到到特定的系统目录下，安装的 package 能够在所有目录下使用：
-	```
-	npm install -g package
-	```
-	例：
-	上边虽然安装了grunt-cli，但在其它目录下，使用grunt仍会提示grunt命令不存在，因为只进行了本地安装（只能在当前安装目录下使用）。因此，对于这种类型的package，更适合进行全局安装，使得在所有目录下都可以使用grunt命令：
-	```
-	npm install -g grunt-cli
-	```
-	可以在控制台输出中看到安装所在目录：
-	```
-	grunt-cli@0.1.9 /usr/local/lib/node_modules/grunt-cli
-	├── resolve@0.3.1
-	├── nopt@1.0.10 (abbrev@1.0.4)
-	└── findup-sync@0.1.2 (lodash@1.0.1, glob@3.1.21)
-	```
+		package会被下载到到特定的系统目录下，安装的 package 能够在所有目录下使用：
+		```
+		npm install -g package
+		```
+		例：
+		上边虽然安装了grunt-cli，但在其它目录下，使用grunt仍会提示grunt命令不存在，因为只进行了本地安装（只能在当前安装目录下使用）。因此，对于这种类型的package，更适合进行全局安装，使得在所有目录下都可以使用grunt命令：
+		```
+		npm install -g grunt-cli
+		```
+		可以在控制台输出中看到安装所在目录：
+		```
+		grunt-cli@0.1.9 /usr/local/lib/node_modules/grunt-cli
+		├── resolve@0.3.1
+		├── nopt@1.0.10 (abbrev@1.0.4)
+		└── findup-sync@0.1.2 (lodash@1.0.1, glob@3.1.21)
+		```
 
 
 ### 卸载包 ###
