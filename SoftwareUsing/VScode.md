@@ -38,3 +38,14 @@ https://jeasonstudio.gitbooks.io/vscode-cn-doc/content/
 
 
 
+<!-- TODO VS code -->
+- 实现保存的时候自动执行某些任务？如 pangu
+- 快捷键查询
+	- 删除 / 选择整行
+	- 打开设置
+	- 设置打开预览、关闭预览的快捷键
+	- 设置在浏览器打开 markdown 预览的快捷键
+	- 设置执行 pangu 的快捷键
+- TODO list 插件是怎么使用的？
+- 怎么在 VS code 中快速在当前目录打开 git-bash？
+- 怎么进行多行选择、任意区域选择？
