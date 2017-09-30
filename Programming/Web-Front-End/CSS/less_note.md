@@ -5,7 +5,8 @@
         - [混入](#%E6%B7%B7%E5%85%A5)
         - [嵌套](#%E5%B5%8C%E5%A5%97)
         - [变量与作用域](#%E5%8F%98%E9%87%8F%E4%B8%8E%E4%BD%9C%E7%94%A8%E5%9F%9F)
-        - [参数混入](#%E5%8F%82%E6%95%B0%E6%B7%B7%E5%85%A5)
+        - [函数](#%E5%87%BD%E6%95%B0)
+        - [文件导入](#%E6%96%87%E4%BB%B6%E5%AF%BC%E5%85%A5)
     - [Refer Links](#refer-links)
 
 # Less Note
@@ -35,6 +36,7 @@ Less 可以运行在 Node 或浏览器端；
   ```
   cdn address：https://cdn.bootcss.com/less.js/{version}/less.min.js   
   GitHub address：https://github.com/less/less.js/blob/master/dist/less.min.js   
+
 
 注意：     
 - 务必确保在 less.js 之前加载你的样式表，即 less.js 最后引入；
@@ -156,7 +158,7 @@ less 利用嵌套的书写方式，让我们在写后代选择器的时候有了
   基本原理等同于 JS 的作用域，由自身开始，不断向其父级进行变量的查找，直到查找到符合条件的变量为止；
 
 
-### 参数混入
+### 函数
 
 ```
 .border-radius( @radius: 10px) {
@@ -165,6 +167,13 @@ less 利用嵌套的书写方式，让我们在写后代选择器的时候有了
     border-radius: @radius;
 }
 ```
+
+### 文件导入
+
+```less
+@import "xxx.less"
+```
+
 
 
 ## Refer Links
