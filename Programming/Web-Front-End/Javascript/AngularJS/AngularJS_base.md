@@ -1,68 +1,75 @@
 - [AngularJS Base Note](#angularjs-base-note)
-    - [作用域与 $scope](#%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E-scope)
-        - [概述](#%E6%A6%82%E8%BF%B0)
-        - [$scope 生命周期](#scope-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
-        - [工具方法](#%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95)
-            - [$watch](#watch)
-            - [$digest](#digest)
-            - [$apply](#apply)
-    - [双向数据绑定](#%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A)
-        - [ng-moddel](#ng-moddel)
-        - [ng-bind](#ng-bind)
-    - [MVC](#mvc)
-        - [Controller](#controller)
-        - [Model](#model)
-        - [View](#view)
-            - [表达式](#%E8%A1%A8%E8%BE%BE%E5%BC%8F)
-    - [模块](#%E6%A8%A1%E5%9D%97)
-        - [概述](#%E6%A6%82%E8%BF%B0)
-        - [模块定义](#%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89)
-        - [模块加载](#%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD)
-            - [config](#config)
-            - [run](#run)
-        - [项目模块化](#%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9D%97%E5%8C%96)
-    - [服务](#%E6%9C%8D%E5%8A%A1)
-        - [概述](#%E6%A6%82%E8%BF%B0)
-        - [内置服务](#%E5%86%85%E7%BD%AE%E6%9C%8D%E5%8A%A1)
-            - [$location](#location)
-                - [path()](#path)
-                - [replace()](#replace)
-                - [absUrl()](#absurl)
-            - [$http](#http)
-                - [General usage](#general-usage)
-                - [Shortcut](#shortcut)
-            - [$cookies](#cookies)
-        - [服务定义](#%E6%9C%8D%E5%8A%A1%E5%AE%9A%E4%B9%89)
-    - [依赖注入](#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-        - [隐式依赖注入](#%E9%9A%90%E5%BC%8F%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-        - [显示依赖注入](#%E6%98%BE%E7%A4%BA%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-        - [行内依赖注入](#%E8%A1%8C%E5%86%85%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-        - [应用](#%E5%BA%94%E7%94%A8)
-            - [模块依赖注入](#%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-            - [控制器依赖注入](#%E6%8E%A7%E5%88%B6%E5%99%A8%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-    - [路由](#%E8%B7%AF%E7%94%B1)
-        - [ngRoute](#ngroute)
-        - [uiRoute](#uiroute)
-            - [使用 $stateProvider 和 $urlRouterProvider 配置路由](#%E4%BD%BF%E7%94%A8-stateprovider-%E5%92%8C-urlrouterprovider-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1)
-            - [页面跳转](#%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
-            - [深层次嵌套视图](#%E6%B7%B1%E5%B1%82%E6%AC%A1%E5%B5%8C%E5%A5%97%E8%A7%86%E5%9B%BE)
-            - [$state 匹配多个视图](#state-%E5%8C%B9%E9%85%8D%E5%A4%9A%E4%B8%AA%E8%A7%86%E5%9B%BE)
-    - [指令系统](#%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F)
-        - [生命周期](#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
-        - [指定定义](#%E6%8C%87%E5%AE%9A%E5%AE%9A%E4%B9%89)
-            - [restrict 匹配模式](#restrict-%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F)
-            - [replace](#replace)
-            - [templateUrl](#templateurl)
-            - [template](#template)
-            - [scope 作用域](#scope-%E4%BD%9C%E7%94%A8%E5%9F%9F)
-        - [内置指令](#%E5%86%85%E7%BD%AE%E6%8C%87%E4%BB%A4)
-            - [布尔类型指令](#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E6%8C%87%E4%BB%A4)
-            - [在指令中使用子作用域](#%E5%9C%A8%E6%8C%87%E4%BB%A4%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AD%90%E4%BD%9C%E7%94%A8%E5%9F%9F)
-    - [过滤器](#%E8%BF%87%E6%BB%A4%E5%99%A8)
-        - [使用过滤器](#%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8)
-        - [内置过滤器](#%E5%86%85%E7%BD%AE%E8%BF%87%E6%BB%A4%E5%99%A8)
-        - [自定义过滤器](#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8)
-    - [Refer Links](#refer-links)
+  - [作用域与 $scope](#%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E-scope)
+    - [概述](#%E6%A6%82%E8%BF%B0)
+    - [$scope 生命周期](#scope-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+    - [属性和工具方法](#%E5%B1%9E%E6%80%A7%E5%92%8C%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95)
+      - [属性](#%E5%B1%9E%E6%80%A7)
+      - [工具方法](#%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95)
+  - [双向数据绑定](#%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A)
+    - [ng-moddel](#ng-moddel)
+    - [ng-bind](#ng-bind)
+  - [MVC](#mvc)
+    - [Controller](#controller)
+    - [Model](#model)
+    - [View](#view)
+      - [表达式](#%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+  - [模块](#%E6%A8%A1%E5%9D%97)
+    - [概述](#%E6%A6%82%E8%BF%B0)
+    - [模块定义](#%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89)
+    - [模块加载](#%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD)
+      - [config](#config)
+      - [run](#run)
+    - [项目模块化](#%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9D%97%E5%8C%96)
+  - [服务](#%E6%9C%8D%E5%8A%A1)
+    - [概述](#%E6%A6%82%E8%BF%B0)
+    - [内置服务](#%E5%86%85%E7%BD%AE%E6%9C%8D%E5%8A%A1)
+      - [$location](#location)
+        - [path()](#path)
+        - [replace()](#replace)
+        - [absUrl()](#absurl)
+      - [$http](#http)
+        - [General usage](#general-usage)
+        - [Shortcut](#shortcut)
+      - [$cookies](#cookies)
+      - [$log](#log)
+    - [服务定义](#%E6%9C%8D%E5%8A%A1%E5%AE%9A%E4%B9%89)
+  - [依赖注入](#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+    - [隐式依赖注入](#%E9%9A%90%E5%BC%8F%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+    - [显示依赖注入](#%E6%98%BE%E7%A4%BA%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+    - [行内依赖注入](#%E8%A1%8C%E5%86%85%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+    - [应用](#%E5%BA%94%E7%94%A8)
+      - [模块依赖注入](#%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+      - [控制器依赖注入](#%E6%8E%A7%E5%88%B6%E5%99%A8%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+  - [路由](#%E8%B7%AF%E7%94%B1)
+    - [ngRoute](#ngroute)
+    - [uiRoute](#uiroute)
+      - [使用 $stateProvider 和 $urlRouterProvider 配置路由](#%E4%BD%BF%E7%94%A8-stateprovider-%E5%92%8C-urlrouterprovider-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1)
+      - [页面跳转](#%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
+      - [深层次嵌套视图](#%E6%B7%B1%E5%B1%82%E6%AC%A1%E5%B5%8C%E5%A5%97%E8%A7%86%E5%9B%BE)
+      - [$state 匹配多个视图](#state-%E5%8C%B9%E9%85%8D%E5%A4%9A%E4%B8%AA%E8%A7%86%E5%9B%BE)
+  - [指令系统](#%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F)
+    - [生命周期](#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+    - [指定定义](#%E6%8C%87%E5%AE%9A%E5%AE%9A%E4%B9%89)
+      - [restrict 匹配模式](#restrict-%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F)
+      - [replace](#replace)
+      - [templateUrl](#templateurl)
+      - [template](#template)
+      - [scope 作用域](#scope-%E4%BD%9C%E7%94%A8%E5%9F%9F)
+      - [controller、compile、link](#controller%E3%80%81compile%E3%80%81link)
+    - [内置指令](#%E5%86%85%E7%BD%AE%E6%8C%87%E4%BB%A4)
+      - [布尔类型指令](#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E6%8C%87%E4%BB%A4)
+      - [在指令中使用子作用域](#%E5%9C%A8%E6%8C%87%E4%BB%A4%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AD%90%E4%BD%9C%E7%94%A8%E5%9F%9F)
+  - [过滤器](#%E8%BF%87%E6%BB%A4%E5%99%A8)
+    - [使用过滤器](#%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8)
+    - [内置过滤器](#%E5%86%85%E7%BD%AE%E8%BF%87%E6%BB%A4%E5%99%A8)
+      - [currency](#currency)
+      - [number](#number)
+      - [date](#date)
+      - [lowercase/uppercase](#lowercaseuppercase)
+      - [limitTo](#limitto)
+      - [orderBy](#orderby)
+    - [自定义过滤器](#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8)
+  - [Refer Links](#refer-links)
 
 # AngularJS Base Note
 
@@ -97,18 +104,31 @@
 
 当 child scope 不再是必须的时候，child scope 的产⽣生者有责任通过 scope.$destroy() API 销毁它们（child scope）。这将会停止 $digest 的调用传播传播到 child scope 中，让被 child scope model 使用的内存可以被 gc 回收；
 
-### 工具方法
+### 属性和工具方法
 https://angularjs.shujuwajue.com/apply.html      
 https://angularjs.shujuwajue.com/watchfang_fa.html   
 http://angularjs.cn/A0a6    
 
-$scope 实际上是一个 POJO，即普通 JavaScript 对象，提供了一些工具方法（如 $apply、$watch 等），是 MVC 和双向数据绑定实现的基础；
+$scope 实际上是一个 POJO，即普通 JavaScript 对象，提供了一些属性和工具方法（如 $apply、$watch 等），是 MVC 和双向数据绑定实现的基础；
 
-#### $watch
+#### 属性
+- $id：唯一标识一个 $scope 对象的值，一般是一个数字；
+- $parent：当控制器发生嵌套或使用指令时，会使得作用域发生嵌套，$parent 指向父作用域；
+- $root：指向根作用域 $rootScope 对象；
 
-#### $digest
+#### 工具方法
 
-#### $apply
+- $watch：监控 $scope 中的属性，值发生变化时调用相应的回调函数；    
+	例：   
+	```javascript
+	$scope.$watch(‘test’, function (newVal, oldVal, scope) {
+	});
+	```
+	其中，test 为 $scope 对象中的某个属性的属性名，function 为该属性值发生改变时的回调函数，参数分别为改变后的值，改变前的值，$scope 对象；    
+	注意：过多的 $watch 函数会影响性能，因此应少用 $watch 函数；    
+
+- $on、$broadcast、$emit：定义自定义事件，通过 $broadcast 向下进行广播，传给子作用域，通过 $emit 向上进行广播，传给父级作用域，$on 用于接收事件；   
+- $digest：当双向数据绑定失效时，可调用此函数手动同步视图与 controller 的数据，一般用于在指令中使用原生方法（document.getXXX 等方法）操作 DOM 时；若在正常逻辑中调用会报错；   
 
 ## 双向数据绑定
 
@@ -421,6 +441,15 @@ angular.module('cookiesExample', ['ngCookies'])
   expireDate.setDate(expireDate.getDate() + 7);// 设置 cookie 保存 7 天
   $cookies.putObject("user", cookieDate, {'expires': expireDate});
 ```
+#### $log
+
+ng 提供 $log 这个服务用于向终端输出相关信息：
+```
+error()
+info()
+log()
+warn()
+```
 
 ### 服务定义
 
@@ -618,7 +647,7 @@ ng-view 是由 ngRoute 模块提供的一个特殊指令，它的独特作用是
       $routeProvider
         .when('/',{
           templateUrl:'views/home.html',
-          controller:'HomeController'
+          controller:'HomeController'// 指定 controller 后不再需要使用 ng-controller 进行 HTML 与 controller 的绑定
         })
         .when('/',{
           templateUrl:'views/login.html',
@@ -955,7 +984,7 @@ temple 为指令要加载的模板 HTML 代码；
 		使用方法：在元素中使用属性，如 `<div my-directive age="age"></div>`, 注意，数据的双向绑定要通过 = 前缀标识符实现，所以不可以使用 `{{}}`。
 		- &
 		这是一个绑定函数方法的前缀标识符   
-		使用方法：在元素中使用属性，如 `<div my-directive change-my-age="changeAge()"></div>`，注意，属性的名字要用 - 将多个个单词连接。
+		使用方法：在元素中使用属性，如 `<div my-directive change-my-age="changeAge()"></div>`，注意，属性的名字要用 - 将多个单词连接。
 	- 注意：在新创建指令的作用域对象中，使用属性的名字进行绑定时，要使用**驼峰命名**标准，比如下面的代码：
 		例：
 		```javascript
@@ -999,6 +1028,13 @@ temple 为指令要加载的模板 HTML 代码；
 				</div>
 		</div>
 		```
+
+#### controller、compile、link
+http://hudeyong926.iteye.com/blog/2073488
+
+https://checkcheckzz.gitbooks.io/angularjs-learning-notes/content/chapter18/18-8.html
+
+<!-- TODO -->
 
 ### 内置指令
 
@@ -1078,6 +1114,8 @@ AngularJS 提供了一组带有 ng- 前缀版本的布尔属性，通过运算�
 	注意 ng-if 同 ng-show 或 ng-hide 指令最本质的区别是，它不是通过 css 显示或隐藏 DOM 节点，而是真正生成或移除节点。当一个元素被 ng-if 从 DOM 中移除，同它关联的作用域也会被销毁，当它重新加入 DOM 中时，会通过原型继承从它的父作用域生成一个新的作用域；    
 	注意：   
 	并不是只有 Controller 可以创建作用域，ng-if 、ng-switch、ng-include 等指令也会动态（隐式地）产生新作用域；   
+	辨析：    
+	ng-if 控制元素是否存在，ng-show 控制元素是否显示；
 
 - ng-repeat   
 	ng-repeat 用来遍历一个集合或为集合中的每个元素生成一个模板实例。集合中的每个元素都会被赋予自己的模板和作用域。同时每个模板实例的作用域中都会暴露一些特殊的属性。
@@ -1128,11 +1166,11 @@ AngularJS 提供了一组带有 ng- 前缀版本的布尔属性，通过运算�
 
 ## 过滤器
 
-AngularJS 中过滤器的作用就是格式化展示数据，开发者可以自定义过滤规则，来创建过滤器。
+AngularJS 中过滤器一般用于格式化和过滤后展示数据，开发者可以自定义过滤规则，来创建过滤器。
 
 ### 使用过滤器
 
-在 HTML 中的模板{{}}内通过|符号来调用过滤器。 
+在 HTML 中的模板{{}}内通过 `|` 符号来调用过滤器，在过滤器中使用 `:` 连接过滤器参数；  
 例：字符转大写
 ```html
 {{name | uppercase}}
@@ -1157,49 +1195,106 @@ $filter('filter')(array, expression, comparator)
 
 ### 内置过滤器
 
-- currency    
-	currency 过滤器可以将一个数值格式化为货币格式。
-	```html
-	<h2>{{ 123 | currency}}</h2><!-- $123.00 --> 
-	```
-	也可以自定义货币符号：
-	```html
-	<h2>{{ 123 | currency:"￥"}}</h2><!-- ￥123.00 --> 
-	```
+过滤器可以链式调用，理论上没有数量限制；
 
-- date    
-	date 过滤器可以将日期格式化成需要的格式：
-	```html
-	<h1>date 过滤器</h1>
-		<h5>{{today }}</h5><!-- "2016-01-23T08:44:59.271Z" -->
-		<h5>{{today | date:'medium' }}</h5><!-- Jan 23, 2016 4:44:59 PM -->
-		<h5>{{today | date:'short' }}</h5><!-- 1/23/16 4:44 PM -->
-		<h5>{{today | date:'fullDate' }}</h5><!-- Saturday, January 23, 2016 -->
-		<h5>{{today | date:'longDate' }}</h5><!-- January 23, 2016 -->
-		<h5>{{today | date:'mediumDate' }}</h5><!-- Jan 23, 2016 -->
-		<h5>{{today | date:'shortDate' }}</h5><!-- 1/23/16 -->
-		<h5>{{today | date:'mediumTime' }}</h5><!-- 4:44:59 PM -->
-		<h5>{{today | date:'shortTime' }}</h5><!-- 4:44 PM -->
-	```
+#### currency    
+currency 过滤器可以将一个数值格式化为特定的货币格式：
+```html
+<h2>{{ 123 | currency}}</h2><!-- $123.00 --> 
+```
+参数：自定义货币符号（会自动添加到数字前）：保留几位小数（默认是保留两位小数）
+```html
+<h2>{{ 123 | currency:"￥":3}}</h2><!-- ￥123.000 --> 
+```
+
+#### number
+格式化数值：
+```html
+<h2>{{1234.56789 | number}}</h2>
+<!-- 默认保留 3 位小数：1234.568 -->
+<h2>{{1234.56789 | number:1}}</h2>
+<!-- 保留 1 位小数：1234.6 -->
+```
+
+#### date    
+date 过滤器可以将日期格式化成需要的格式：
+```html
+<h1>date 过滤器</h1>
+	<h5>{{today }}</h5><!-- "2016-01-23T08:44:59.271Z" -->
+	<h5>{{today | date:'medium' }}</h5><!-- Jan 23, 2016 4:44:59 PM -->
+	<h5>{{today | date:'short' }}</h5><!-- 1/23/16 4:44 PM -->
+	<h5>{{today | date:'fullDate' }}</h5><!-- Saturday, January 23, 2016 -->
+	<h5>{{today | date:'longDate' }}</h5><!-- January 23, 2016 -->
+	<h5>{{today | date:'mediumDate' }}</h5><!-- Jan 23, 2016 -->
+	<h5>{{today | date:'shortDate' }}</h5><!-- 1/23/16 -->
+	<h5>{{today | date:'mediumTime' }}</h5><!-- 4:44:59 PM -->
+	<h5>{{today | date:'shortTime' }}</h5><!-- 4:44 PM -->
+	<h5>{{today | date:'yyyy-MM-dd HH:mm:ss' }}</h5><!-- 2016-01-23 08:44:59 -->
+	<h5>{{1506997794 | date:'yyyy-MM-dd HH:mm:ss' }}</h5><!-- 直接将 unix 时间戳转换为指定格式 2017/10/3 10:29:46 -->
+	
+```
+
+#### lowercase/uppercase
+lowercase/uppercase 用于大小写的转换：
+```html
+{{'Abc | lowercase'}}
+<!-- abc -->
+{{'Abc | uppercase'}}
+<!-- ABC -->
+```
+
+#### limitTo
+limitTo 用于截取数组前 n 位元素进行显示：
+```html
+{{[1,2,3,4,5,6,7,8,9] | limitTo:4}}
+<!-- 1,2,3,4 -->
+{{abcdefghijk | limitTo:4}}
+<!-- abcd -->
+```
+
+#### orderBy
+orderBy 用于在 ng-repeat 中指定排序的列：
+```html
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Phone Number</th>
+		<th>Age</th>
+	</tr>
+	<tr ng-repeat="friend in friends | orderBy: 'age'"><!--age：按 age 升序排序，-age：按 age 降序排序 -->
+		<td>{{friend.name}}<td>
+		<td>{{friend.phone}}<td>
+		<td>{{friend.age}}<td>
+	</tr>
+</table>
+```
 
 ### 自定义过滤器
 
 例：时间格式自定义过滤器：
 ```javascript
-adminApp.filter('recommendSMSToDate',function(){ 
-return function(_res){ 
-var _date = new Date(_res); 
-var year = _date.getFullYear(); 
-var month = _date.getMonth() + 1; 
-var date = _date.getDate(); 
-var hour = _date.getHours(); 
-var minute = _date.getMinutes(); 
-var result = year + "-" + month + "-" + date + " " + hour + ":" + minute; 
-return result;   
-   	}
+angular.module('app').filter('recommendSMSToDate',function() { 
+	return function(_res){ // 第一个参数：要过滤 / 格式化的对象；第 2、3、4 个参数：使用过滤器时冒号后传入的参数
+		var _date = new Date(_res); 
+		var year = _date.getFullYear(); 
+		var month = _date.getMonth() + 1; 
+		var date = _date.getDate(); 
+		var hour = _date.getHours(); 
+		var minute = _date.getMinutes(); 
+		var result = year + "-" + month + "-" + date + " " + hour + ":" + minute; 
+		return result;   
+  }
 });
 // 将时间戳转化为格式：2016-5-3 10:54
 ```
+
+注意：若在不是HTML中的地方引用过滤器，引入依赖时需要在过滤器名后加上“Filter”后缀：
+```javascript
+angular.module('app').controller('mainCtrl', ['dateFilter', '$scope',  function (dateFilter, $scope) {
+	$scope.test = dateFilter(123456);
+}]);
+```
+
 
 ## Refer Links
 官方 API 文档：https://code.angularjs.org/1.6.4/docs/api 
