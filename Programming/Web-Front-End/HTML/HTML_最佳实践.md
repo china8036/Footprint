@@ -4,7 +4,15 @@
   - [编写标准的 HTML 代码](#%E7%BC%96%E5%86%99%E6%A0%87%E5%87%86%E7%9A%84-html-%E4%BB%A3%E7%A0%81)
   - [高可读性的 HTML](#%E9%AB%98%E5%8F%AF%E8%AF%BB%E6%80%A7%E7%9A%84-html)
     - [使用语义化的 HTML](#%E4%BD%BF%E7%94%A8%E8%AF%AD%E4%B9%89%E5%8C%96%E7%9A%84-html)
+    - [设置网页标题层级](#%E8%AE%BE%E7%BD%AE%E7%BD%91%E9%A1%B5%E6%A0%87%E9%A2%98%E5%B1%82%E7%BA%A7)
+    - [正确设计表单](#%E6%AD%A3%E7%A1%AE%E8%AE%BE%E8%AE%A1%E8%A1%A8%E5%8D%95)
+    - [精简 HTML 代码](#%E7%B2%BE%E7%AE%80-html-%E4%BB%A3%E7%A0%81)
+    - [抛弃块级元素和行内元素的概念](#%E6%8A%9B%E5%BC%83%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E5%92%8C%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E7%9A%84%E6%A6%82%E5%BF%B5)
   - [积极使用 HTML5](#%E7%A7%AF%E6%9E%81%E4%BD%BF%E7%94%A8-html5)
+    - [使用 HTML5 简化的定义方式](#%E4%BD%BF%E7%94%A8-html5-%E7%AE%80%E5%8C%96%E7%9A%84%E5%AE%9A%E4%B9%89%E6%96%B9%E5%BC%8F)
+    - [使用 HTML5 的新标签和新属性](#%E4%BD%BF%E7%94%A8-html5-%E7%9A%84%E6%96%B0%E6%A0%87%E7%AD%BE%E5%92%8C%E6%96%B0%E5%B1%9E%E6%80%A7)
+    - [不适用 HTML5 废弃的标签和属性](#%E4%B8%8D%E9%80%82%E7%94%A8-html5-%E5%BA%9F%E5%BC%83%E7%9A%84%E6%A0%87%E7%AD%BE%E5%92%8C%E5%B1%9E%E6%80%A7)
+    - [处理浏览器的兼容问题](#%E5%A4%84%E7%90%86%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%85%BC%E5%AE%B9%E9%97%AE%E9%A2%98)
   - [Refer Links](#refer-links)
 
 # HTML 最佳实践
@@ -32,27 +40,6 @@
 - 通过声明一个明确的字符编码，让浏览器轻松、快速的确定适合网页内容的渲染方式；
 
 - 通过 edge mode 来通知 IE 使用最新的兼容模式；
-
-- 根据 HTML5 规范，通常在引入 CSS 和 JavaScript 时不需要指明 type，因为 text/css 和 text/javascript 分别是他们的默认值；   
-  例：
-  ```html
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-      <!-- External CSS -->
-      <link rel="stylesheet" href="code-guide.css">
-      <title>Page title</title>
-    </head>
-    <body>
-      <img src="images/company-logo.png" alt="Company">
-      <h1 class="hello-world">Hello, world!</h1>
-      <!-- JavaScript -->
-      <script src="code-guide.js"></script>
-    </body>
-  </html>
-  ```
 
 - 尽量遵循 HTML 标准和语义，但是不应该以浪费实用性作为代价。任何时候都要用尽量小的复杂度和尽量少的标签来解决问题；
 
@@ -90,9 +77,9 @@
 
 ### 使用语义化的 HTML
 
-HTML 标签语义化是 Web 网页标准化的重要一欢，也是标准制定时重要的设计原则；
+- HTML 标签语义化是 Web 网页标准化的重要一欢，也是标准制定时重要的设计原则；
 
-HTML 标签语义化有助于第三方内容抓取工具更容易读懂页面代码，同时提高了页面代码可读性；
+- HTML 标签语义化有助于第三方内容抓取工具更容易读懂页面代码，同时提高了页面代码可读性；
 
 - 什么样的页面才是高语义化的页面呢？
   - 从页面外观上说，由于浏览器会对语义化的标签设计默认的样式，因此高语义化的页面中去除 CSS 样式后页面仍能保持良好的外观，并可正常阅读；
@@ -106,9 +93,157 @@ HTML 标签语义化有助于第三方内容抓取工具更容易读懂页面代
   - 为 HTML 标签设置必要的属性
     如 alt 和 title 属性的设置，即可提高 HTML 的语义；在`<img>`标签中 alt 属性可用于解释说明图片的额外信息，在`<a>`标签中 title 属性可用于添加额外的说明信息；
 
-  - 
+  - 样式与结构分离   
+    例：利用：before 和：after 伪类解决由于多余元素而破坏 HTML 代码语义的问题：
+    ```html
+    <div id="main">
+      <div class="f-l sidebar">xxx</div>
+      <div class="f-r content">xxx</div>
+      <div class="clear">xxx</div>
+    </div>
+    ```
+    对于 CSS：
+    ```css
+    .clear {
+      clear: both;
+    }
+    ```
+    应改为：
+    ```html
+    <div id="main clearfix">
+      <div class="sidebar">xxx</div>
+      <div class="content">xxx</div>
+    </div>
+    ```
+    对于 CSS：
+    ```css
+    .clearfix {
+      *zoom: 1;
+    }
+    .clearfix:before,
+    .clearfix:after {
+      display: table;
+      content: "";
+    }
+    .clearfix:after {
+      clear: both;
+    }
+    ```
+    类似的典型错误还有`<br/>`标签的滥用，`<br/>`标签仅仅用于**文本内容**中的换行，若要实现元素之间的换行或者增加行距，应通过设置 display、margin、padding、line-high 等样式来实现；
+
+  - 为空标签添加隐藏文字，用于说明标签功能
+    HTML 设计中，有时会把文字描述替换成为图片表达，这样的做法虽然美观，但降低了代码的语义。因此，建议给空标签添加一定的说明文字，并设置`text-indent: -9999px;`来达到隐藏文字的效果；
+
+### 设置网页标题层级
+
+搜索引擎会给`<hx>`标签中的内容设置更高的权重，因此，构建合理合适的页面标题结构是 HTML 页面语义化的一个重要环节；
+
+- 在页面内容的标题部分使用`<hx>`标签
+
+- 页面中只是用一个`<h1>`标签
+
+- `<hx>`标签使用过程中不要跳级
+
+- 不要单纯使用`<hx>`标签给内容设置样式
+
+### 正确设计表单
+
+- 使用`<label>`标签，并设置`<label>`标签的 for 属性
+  `<label>`标签用于为输入控件定义文本标签，即显示在空间旁的说明性文字；当用户点击该标签时，对应的输入空间也将获得焦点（需要将控件 id 赋值给`<label>`标签的 for 属性）；
+
+- 为输入控件设置合适的水印提示，即 placeholder 属性
+
+- 在必要情况下可设置控件的 tab 顺序
+  ```html
+  <input type="text" tabindex="2" />
+  ```
+
+- 使用 HTML5 引入的控件类型
+  HTML5 为输入控件引入了多种类型，如 url、email、date、search、number 等，各高级浏览器针对这些类型做了易用性的增强（尤其是移动浏览器），因此可积极使用这类 HTML5 引入的输入控件类型；    
+  在不支持的浏览器中，这些控件类型会以 text 类型的输入控件展现，因此无需担心兼容问题；
+
+示例：
+```html
+<form action="/service/user" method="post">
+  <fieldset>
+    <legend>Sign in to begin.</legend>
+
+    <label for="userName">UserName: </label>
+    <input type="text" id="userName" name="userName" />
+    <label for="password">Password: </label>
+    <input type="password" id="password" name="password" />
+  </fieldset>
+  <input type="submit" value="Login" />
+</form>
+```
+
+### 精简 HTML 代码
+
+- 删除多余容器
+  一般页面中最多的无用元素就是`<div>`和`<span>`；
+
+- 装饰性元素使用 CSS 替换实现
+  其中有一个很有用的技巧是使用：before 和：after 伪元素；
+
+- 避免使用 table 布局
+  高度语义化的布局中基本上不会使用 table 布局，实现相同的布局效果，table 布局会使用更多的标签；且 table 布局存在性能问题，table 中很小的改动会导致整个 table 的内容重绘或重排，降低了性能；
+
+### 抛弃块级元素和行内元素的概念
+
+块级元素和行内元素的概念，导致 HTML 的一系列标签从字面上与 CSS 样式有着很深的联系，有悖于 web 规范中倡导的表现与样式分离的核心思想；
+
+在 HTML5 新规范中，抛弃了 HTML4.01 中规定的内容模型，使开发者在开发中无须受到块级元素和行内元素对应的内容模型规则的约束，而是结合实际的页面设计需求，使用合乎语义的页面元素；
 
 ## 积极使用 HTML5
+
+### 使用 HTML5 简化的定义方式
+
+- 文档类型声明
+  ```html
+  <!DOCTYPE html>
+  ```
+
+- 页面编码声明
+  ```html
+  <meta charset="UTF-8">
+  ```
+
+- 样式与脚本文件引用
+  根据 HTML5 规范，通常在引入 CSS 和 JavaScript 时不需要指明 type，因为 text/css 和 text/javascript 分别是他们的默认值；   
+  例：
+  ```html
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+      <!-- External CSS -->
+      <link rel="stylesheet" href="code-guide.css">
+      <title>Page title</title>
+    </head>
+    <body>
+      <img src="images/company-logo.png" alt="Company">
+      <h1 class="hello-world">Hello, world!</h1>
+      <!-- JavaScript -->
+      <script src="code-guide.js"></script>
+    </body>
+  </html>
+  ```
+
+### 使用 HTML5 的新标签和新属性
+
+### 不适用 HTML5 废弃的标签和属性
+
+### 处理浏览器的兼容问题
+
+让旧浏览器可以识别 HTML5 中的新标签，最好的方式是直接使用成熟的兼容框架，如 html5shim；
+
+html5shim 使用：在页面的 head 部分引入 js 文件即可：
+```html
+<!-- [if lt IE 9]>
+<script src="html5shim.js"></script>
+<![endif] -->
+```
 
 ## Refer Links
 https://zoomzhao.github.io/code-guide/
