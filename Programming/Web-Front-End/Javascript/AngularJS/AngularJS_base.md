@@ -47,6 +47,7 @@
       - [页面跳转](#%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
       - [深层次嵌套视图](#%E6%B7%B1%E5%B1%82%E6%AC%A1%E5%B5%8C%E5%A5%97%E8%A7%86%E5%9B%BE)
       - [$state 匹配多个视图](#state-%E5%8C%B9%E9%85%8D%E5%A4%9A%E4%B8%AA%E8%A7%86%E5%9B%BE)
+    - [预载入Resolve](#%E9%A2%84%E8%BD%BD%E5%85%A5resolve)
   - [指令系统](#%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F)
     - [生命周期](#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
     - [指定定义](#%E6%8C%87%E5%AE%9A%E5%AE%9A%E4%B9%89)
@@ -774,8 +775,12 @@ UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI
 
 - stateProvider 中 URL 的写法
 	- '/home'：只匹配'/home'；
-	- '/user/:id'、'/user/{id}'：匹配'/user/1234'或'/user/'；
+	- '/user/:id'、'/user/{id}'：匹配'/user/1234'或'/user/'，不匹配'/user'；
 	- '/message?before&after'：使用 URL Query 方式传参；
+	- '/inbox/{inboxId:[0-9a-fA-F]{6}}'：使用正则表达式来匹配，限定id为6位16进制数字
+
+
+
 
 #### 页面跳转
 
@@ -898,6 +903,51 @@ $stateProvider
       }
 }
 ```
+
+<!-- TODO -->
+### 预载入Resolve
+使用预载入功能，开发者可以预先载入一系列依赖或者数据，然后注入到控制器中。在ngRoute中resolve选项可以允许开发者在路由到达前载入数据保证（promises）。在使用这个选项时比使用angular-route有更大的自由度。
+
+预载入选项需要一个对象，这个对象的key即要注入到控制器的依赖，这个对象的value为需要被载入的factory服务。
+
+如果传入的时字符串，angular-route会试图匹配已经注册的服务。如果传入的是函数，该函数将会被注入，并且该函数返回的值便是控制器的依赖之一。如果该函数返回一个数据保证（promise），这个数据保证将在控制器被实例化前被预先载入并且数据会被注入到控制器中。
+
+```javascript
+$stateProvider.state('home', {
+	resolve: {
+		//这个函数的值会被直接返回，因为它不是数据保证
+		person: function() {
+			return {
+				name: "Ari",
+				email: "ari@fullstack.io"
+			}
+		},
+		//这个函数为数据保证, 因此它将在控制器被实例化之前载入。
+		currentDetails: function($http) {
+			return $http({
+				method: 'JSONP',
+				url: '/current_details'
+			});
+		},
+		//前一个数据保证也可作为依赖注入到其他数据保证中！（这个非常实用）
+		facebookId: function($http, currentDetails) {
+			$http({
+				method: 'GET',
+				url: 'http://facebook.com/api/current_user',
+				params: {
+					email: currentDetails.data.emails[0]
+				}
+			})
+		}
+	},
+	//定义控制器
+	controller: function($scope, person, 
+								currentDetails, facebookId) {
+			$scope.person = person;
+	}
+})
+```
+
 
 ## 指令系统
 
