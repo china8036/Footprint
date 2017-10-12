@@ -32,6 +32,7 @@
         - [Shortcut](#shortcut)
       - [$cookies](#cookies)
       - [$log](#log)
+      - [$sce](#sce)
     - [服务定义](#%E6%9C%8D%E5%8A%A1%E5%AE%9A%E4%B9%89)
   - [依赖注入](#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
     - [隐式依赖注入](#%E9%9A%90%E5%BC%8F%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
@@ -47,7 +48,10 @@
       - [页面跳转](#%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
       - [深层次嵌套视图](#%E6%B7%B1%E5%B1%82%E6%AC%A1%E5%B5%8C%E5%A5%97%E8%A7%86%E5%9B%BE)
       - [$state 匹配多个视图](#state-%E5%8C%B9%E9%85%8D%E5%A4%9A%E4%B8%AA%E8%A7%86%E5%9B%BE)
-    - [预载入Resolve](#%E9%A2%84%E8%BD%BD%E5%85%A5resolve)
+    - [预载入 Resolve](#%E9%A2%84%E8%BD%BD%E5%85%A5-resolve)
+    - [使用 $transition 监控路由变化](#%E4%BD%BF%E7%94%A8-transition-%E7%9B%91%E6%8E%A7%E8%B7%AF%E7%94%B1%E5%8F%98%E5%8C%96)
+    - [onEnter](#onenter)
+    - [onExit](#onexit)
   - [指令系统](#%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F)
     - [生命周期](#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
     - [指定定义](#%E6%8C%87%E5%AE%9A%E5%AE%9A%E4%B9%89)
@@ -452,6 +456,22 @@ log()
 warn()
 ```
 
+#### $sce
+
+> $sce is a service that provides Strict Contextual Escaping services to AngularJS. SCE assists in writing code in way that (a) is secure by default and (b) makes auditing for security vulnerabilities such as XSS, clickjacking, etc. a lot easier.
+
+用例：在 iframe 中使用动态 src，直接使用 url 会报错：Can't Interpolate Error With Iframe
+```javascript
+$scope.url = $sce.trustAsResourceUrl($scope.global.url + 'web?Id=' + $state.params.id);
+```
+HTML
+```html
+<iframe class="pt-50" ng-src="{{url}}" frameborder="0">
+</iframe>
+```
+
+参考：https://solidfoundationwebdev.com/blog/posts/can-t-interpolate-error-with-iframe-and-ng-src-in-angularjs-1-x
+
 ### 服务定义
 
 - $provider.factory
@@ -777,10 +797,7 @@ UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI
 	- '/home'：只匹配'/home'；
 	- '/user/:id'、'/user/{id}'：匹配'/user/1234'或'/user/'，不匹配'/user'；
 	- '/message?before&after'：使用 URL Query 方式传参；
-	- '/inbox/{inboxId:[0-9a-fA-F]{6}}'：使用正则表达式来匹配，限定id为6位16进制数字
-
-
-
+	- '/inbox/{inboxId:[0-9a-fA-F]{6}}'：使用正则表达式来匹配，限定 id 为 6 位 16 进制数字
 
 #### 页面跳转
 
@@ -905,31 +922,31 @@ $stateProvider
 ```
 
 <!-- TODO -->
-### 预载入Resolve
-使用预载入功能，开发者可以预先载入一系列依赖或者数据，然后注入到控制器中。在ngRoute中resolve选项可以允许开发者在路由到达前载入数据保证（promises）。在使用这个选项时比使用angular-route有更大的自由度。
+### 预载入 Resolve
+使用预载入功能，开发者可以预先载入一系列依赖或者数据，然后注入到控制器中。在 ngRoute 中 resolve 选项可以允许开发者在路由到达前载入数据保证（promises）。在使用这个选项时比使用 angular-route 有更大的自由度。
 
-预载入选项需要一个对象，这个对象的key即要注入到控制器的依赖，这个对象的value为需要被载入的factory服务。
+预载入选项需要一个对象，这个对象的 key 即要注入到控制器的依赖，这个对象的 value 为需要被载入的 factory 服务。
 
-如果传入的时字符串，angular-route会试图匹配已经注册的服务。如果传入的是函数，该函数将会被注入，并且该函数返回的值便是控制器的依赖之一。如果该函数返回一个数据保证（promise），这个数据保证将在控制器被实例化前被预先载入并且数据会被注入到控制器中。
+如果传入的时字符串，angular-route 会试图匹配已经注册的服务。如果传入的是函数，该函数将会被注入，并且该函数返回的值便是控制器的依赖之一。如果该函数返回一个数据保证（promise），这个数据保证将在控制器被实例化前被预先载入并且数据会被注入到控制器中。
 
 ```javascript
 $stateProvider.state('home', {
 	resolve: {
-		//这个函数的值会被直接返回，因为它不是数据保证
+		// 这个函数的值会被直接返回，因为它不是数据保证
 		person: function() {
 			return {
 				name: "Ari",
 				email: "ari@fullstack.io"
 			}
 		},
-		//这个函数为数据保证, 因此它将在控制器被实例化之前载入。
+		// 这个函数为数据保证，因此它将在控制器被实例化之前载入。
 		currentDetails: function($http) {
 			return $http({
 				method: 'JSONP',
 				url: '/current_details'
 			});
 		},
-		//前一个数据保证也可作为依赖注入到其他数据保证中！（这个非常实用）
+		// 前一个数据保证也可作为依赖注入到其他数据保证中！（这个非常实用）
 		facebookId: function($http, currentDetails) {
 			$http({
 				method: 'GET',
@@ -940,13 +957,44 @@ $stateProvider.state('home', {
 			})
 		}
 	},
-	//定义控制器
+	// 定义控制器
 	controller: function($scope, person, 
 								currentDetails, facebookId) {
 			$scope.person = person;
 	}
 })
 ```
+
+### 使用 $transition 监控路由变化
+
+https://ui-router.github.io/ng1/docs/latest/classes/transition.transition-1.html
+
+
+### onEnter
+
+> onEnter(criteria: HookMatchCriteria, callback: TransitionStateHookFn, options?: HookRegOptions)
+
+The HookMatchCriteria is used to determine which Transitions the hook should be invoked for. onEnter hooks generally specify { entering: 'somestate' }. To match all Transitions, use an empty criteria object {}.
+
+
+例：
+```javascript
+angular.module('app').run(['$transitions', function ($transitions) {
+	$transitions.onEnter({entering: 'me'}, function (transition, state) {
+		var AuditService = trans.injector().get('AuditService');
+  	AuditService.log("Entered " + state.name + " module while transitioning to " + transition.to().name);
+	});
+}]);
+```
+
+
+### onExit
+
+> onExit(criteria: HookMatchCriteria, callback: TransitionStateHookFn, options?: HookRegOptions)
+
+The HookMatchCriteria is used to determine which Transitions the hook should be invoked for. onExit hooks generally specify { exiting: 'somestate' }. To match all Transitions, use an empty criteria object {}.
+
+
 
 
 ## 指令系统
@@ -1123,7 +1171,9 @@ AngularJS 提供了一组带有 ng- 前缀版本的布尔属性，通过运算�
 
 - ng-src   
 	AngularJS 会告诉浏览器在 ng-src 对应的表达式生效之前不要加载图片。和 ng-href 类似；
-	注意：ng-src 和 ng-href 是 AngularJS 内置指令中唯二只能用“{{}}”设置属性值的指令，其它指令基本上都支持表达式；
+	注意：ng-src 和 ng-href 是 AngularJS 内置指令中唯二只能用“{{}}”设置属性值的指令，其它指令基本上都支持表达式；     
+	- src 与 ng-src 的区别：    
+		src 是 HTML 的属性，{{}} 是 ng 的表达式，表达式可用于很多地方，包含属性，所以直接 src="{{vm.url}}" 其实就是使用 ng 的表达式给属性赋值，这种做法的缺点是当第一次加载模板的时候浏览器会去请求 “{{vm.url}}” 的地址，当 ng 编译模板后把 {{vm.url}} 替换成对应的 URL 后会再次请求真实的地址，所以为了避免第一次无效的请求
 
 #### 在指令中使用子作用域
 
@@ -1338,13 +1388,12 @@ angular.module('app').filter('recommendSMSToDate',function() {
 // 将时间戳转化为格式：2016-5-3 10:54
 ```
 
-注意：若在不是HTML中的地方引用过滤器，引入依赖时需要在过滤器名后加上“Filter”后缀：
+注意：若在不是 HTML 中的地方引用过滤器，引入依赖时需要在过滤器名后加上“Filter”后缀：
 ```javascript
 angular.module('app').controller('mainCtrl', ['dateFilter', '$scope',  function (dateFilter, $scope) {
 	$scope.test = dateFilter(123456);
 }]);
 ```
-
 
 ## Refer Links
 官方 API 文档：https://code.angularjs.org/1.6.4/docs/api 
