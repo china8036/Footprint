@@ -365,7 +365,7 @@ $http({
 	- url 路径；
 	- params：GET 请求的参数，如 data: {name:"12346",pwd:"123"}；
 	- data：post 请求的参数，如 data: {name:"12346",pwd:"123"}；
-	- headers 头信息，有缺省定义，如果自定义则会覆盖默认定义，如 headers: {'Content-Type': undefined}；
+	- headers: 头信息对象，有缺省定义，如果自定义则会覆盖默认定义，如 headers: {'Content-Type': undefined}；
 	- transformRequest 请求预处理函数，有缺省定义，如果自定义则会覆盖默认定义；
 	- transformResponse 响应预处理函数，有缺省定义，如果自定义则会覆盖默认定义；
 	- cache 缓存；
