@@ -30,6 +30,7 @@
       - [$http](#http)
         - [General usage](#general-usage)
         - [Shortcut](#shortcut)
+        - [文件上传](#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)
       - [$cookies](#cookies)
       - [$log](#log)
       - [$sce](#sce)
@@ -410,6 +411,49 @@ $http.post('/someUrl', data, config).then(successCallback, errorCallback);
 3)	params {key,value} 请求参数，将在 URL 上被拼接成？key=value；
 
 4)	data {key,value} 数据，将被放入请求内发送至服务器；
+
+##### 文件上传
+
+http://blog.csdn.net/u013360850/article/details/57421535
+
+HTML
+```html
+<form>
+	<input id="fileUpload" type="file"/>
+	<input ng-model="username" />
+	<input ng-model="password" />
+	<button ng-click="ok()">上传</button>
+</form>
+```
+JavaScript
+```javascript
+$scope.ok = function () {
+		var form = new FormData();
+
+		form.append('userfile', document.getElementById("fileUpload").files[0]);
+		form.append('username', $scope.username);
+		form.append('password', $scope.password);
+
+		$http({
+				method: 'POST',
+				url: '/addUser',
+				data: form,
+				headers: {
+					'Content-Type': undefined
+				},
+				transformRequest: angular.identity
+		}).then(function (resp) {
+				console.log('operation success');
+
+		}, function (resp) {
+				console.log('operation fail');
+
+		});
+};
+```
+注：
+- AngularJS 默认的'Content-Type'是 application/json ，通过设置'Content-Type': undefined，这样浏览器不仅帮我们把 Content-Type 设置为 multipart/form-data，还填充上当前的 boundary，如果手动设置为：'Content-Type': multipart/form-data，后台会抛出异常：the request was rejected because no multipart boundary was found，而 boundary 是随机生成的字符串，用来分隔文本的开始和结束
+- 通过设置 transformRequest: angular.identity ，anjularjs transformRequest function 将序列化我们的 formdata object，也可以不添加
 
 #### $cookies
 
@@ -969,13 +1013,11 @@ $stateProvider.state('home', {
 
 https://ui-router.github.io/ng1/docs/latest/classes/transition.transition-1.html
 
-
 ### onEnter
 
 > onEnter(criteria: HookMatchCriteria, callback: TransitionStateHookFn, options?: HookRegOptions)
 
 The HookMatchCriteria is used to determine which Transitions the hook should be invoked for. onEnter hooks generally specify { entering: 'somestate' }. To match all Transitions, use an empty criteria object {}.
-
 
 例：
 ```javascript
@@ -987,15 +1029,11 @@ angular.module('app').run(['$transitions', function ($transitions) {
 }]);
 ```
 
-
 ### onExit
 
 > onExit(criteria: HookMatchCriteria, callback: TransitionStateHookFn, options?: HookRegOptions)
 
 The HookMatchCriteria is used to determine which Transitions the hook should be invoked for. onExit hooks generally specify { exiting: 'somestate' }. To match all Transitions, use an empty criteria object {}.
-
-
-
 
 ## 指令系统
 
@@ -1263,6 +1301,9 @@ AngularJS 提供了一组带有 ng- 前缀版本的布尔属性，通过运算�
 
 - ng-class    
 	使用 ng-class 动态设置元素的类，方法是绑定一个代表所有需要添加的类的表达式。
+
+- ng-options
+	使用 ng-options 结合 select 标签可以创建动态的选择框，教程：https://www.cnblogs.com/wolf-sun/p/4614532.html 
 
 ## 过滤器
 
