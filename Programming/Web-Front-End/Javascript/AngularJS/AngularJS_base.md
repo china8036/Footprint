@@ -47,8 +47,10 @@
     - [uiRoute](#uiroute)
       - [使用 $stateProvider 和 $urlRouterProvider 配置路由](#%E4%BD%BF%E7%94%A8-stateprovider-%E5%92%8C-urlrouterprovider-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1)
       - [页面跳转](#%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
-      - [深层次嵌套视图](#%E6%B7%B1%E5%B1%82%E6%AC%A1%E5%B5%8C%E5%A5%97%E8%A7%86%E5%9B%BE)
-      - [$state 匹配多个视图](#state-%E5%8C%B9%E9%85%8D%E5%A4%9A%E4%B8%AA%E8%A7%86%E5%9B%BE)
+        - [使用 ui-sref 指令](#%E4%BD%BF%E7%94%A8-ui-sref-%E6%8C%87%E4%BB%A4)
+        - [使用 $state 服务](#%E4%BD%BF%E7%94%A8-state-%E6%9C%8D%E5%8A%A1)
+      - [嵌套视图](#%E5%B5%8C%E5%A5%97%E8%A7%86%E5%9B%BE)
+      - [$state 多视图](#state-%E5%A4%9A%E8%A7%86%E5%9B%BE)
     - [预载入 Resolve](#%E9%A2%84%E8%BD%BD%E5%85%A5-resolve)
     - [使用 $transition 监控路由变化](#%E4%BD%BF%E7%94%A8-transition-%E7%9B%91%E6%8E%A7%E8%B7%AF%E7%94%B1%E5%8F%98%E5%8C%96)
     - [onEnter](#onenter)
@@ -845,27 +847,12 @@ UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI
 
 #### 页面跳转
 
-- 使用 ui-sref 指令
-	点击该指令配置的标签后，会跳转到对应的路由页面，且在跳转时支持参数传递
-	例：  
-	```javascript
-	<a ui-sref="main({id:1234})">
-	```
-
-- 使用 $state 服务
-	在 ui-router 时，可以使用 $state 来完成页面跳转，而不是直接操作 URL。    
-	例：   
-	页面跳转
-	```javascript
-	$state.go('contacts');  // 指定 state 名，相当于跳转到 /contacts
-	$state.go('contacts.detail', {id: 42}, {location: 'replace'});  // 跳转时传递参数，相当于跳转到 /contacts/42，{location: 'replace'}表示跳转时消除当前路径，进行会跳时就不会跳回当前页面
-	```
-	获取参数
-	```javascript
-	$state.params.id
-	// 或
-	$stateParams.id
-	```
+##### 使用 ui-sref 指令
+点击该指令配置的标签后，会跳转到对应的路由页面，且在跳转时支持参数传递
+例：  
+```javascript
+<a ui-sref="main({id:1234})">
+```
 
 注意：可使用 ui-router 提供的指令`ui-sref-active`，指定标签被点击后的样式；    
 例： 
@@ -896,45 +883,87 @@ UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI
   }
 ```
 
-#### 深层次嵌套视图
-
-不同于 Angular 原生的 ng-route，ui-router 的视图可以嵌套，视图嵌套通常对应着 $state 的嵌套。 contacts.detail 是 contacts 的子 $state，contacts.detail.html 也将作为 contacts.html 的子页面：
-
-例：
-
-contacts.html 
-```html
-<h1>My Contacts</h1>
-<div ui-view></div>
-<!-- contacts.detail.html -->
-<span ng-bind='contactId'></span>
-```
-app-states.js
+##### 使用 $state 服务
+在 ui-router 时，可以使用 $state 来完成页面跳转，而不是直接操作 URL。    
+例：   
+页面跳转
 ```javascript
-$stateProvider
-    .state('contacts', {
-        url: '/contacts',
-        template: 'contacts.html',
-        controller: 'ContactCtrl'
-    })
-    .state('contacts.detail', {
-        url: "/contacts/:contactId",
-        templateUrl: 'contacts.detail.html',
-        controller: function ($stateParams) {
-            // If we got here from a url of /contacts/42
-            $stateParams.contactId === "42";
-        }
-    });
+$state.go('contacts');  // 指定 state 名，相当于跳转到 /contacts
+$state.go('contacts.detail', {id: 42}, {location: 'replace'});  // 跳转时传递参数，相当于跳转到 /contacts/42，{location: 'replace'}表示跳转时消除当前路径，进行会跳时就不会跳回当前页面
 ```
-上述 ui-view 的用法和 ng-view 看起来很相似，但不同的是 ui-view 可以配合 $state 进行任意层级的嵌套， 即 contacts.detail.html 中仍然可以包含一个 ui-view，它的 $state 可能是 contacts.detail.hobbies。
+获取参数
+```javascript
+$state.params.id
+// 或
+$stateParams.id
+```
+
+#### 嵌套视图
+https://www.cnblogs.com/xf110/p/6838343.html
+
+http://www.jruif.com/2015-05/【Angular 系列】ui-router- 多层 state 与多层 view 的解构 /
+
+嵌套视图指的是一个 ui-view 的一个状态下对应了一个 html，这个 html 里面又有一个 ui-view，视图嵌套通常对应着 $state 的嵌套；
+
+注意：   
+- 定义嵌套状态的时候，不用计较状态的先后循序，甚至可以在不同的模块中，在程序执行的时候，ui-route 会在父状态定义了之后定义子状态；    
+
+- ui-view 可以配合 $state 进行任意层级的嵌套；
+
+- 如果你只定义了一个单一的状态，就像 contacts.list，那么你必须定义一个叫做 contacts 的状态，否则你定义的 contacts.list 就不会执行；   
+- 当一个子 state 处于 active 状态时，其父级 state 也会隐含的变为 active，因为子状态将会导入自己的模板到他父级模板的 ui-view 中；
+
+- 子 state 不定义 url 时，将使用与父级 state 相同的 url，若定义了 url，实际 url 为父级 url+ 子 url；
+
+- 子 state 不定义 controller 时，将使用与父级相同的 controller；
+
+例：    
+路由配置
+```javascript
+.state('myOrderDetail', {
+	url: '/myOrderDetail/:orderId',
+	templateUrl: 'view/myOrderDetail.html',
+	controller: 'myOrderDetailCtrl'
+})
+.state('myOrderDetail.state', {
+	url: '/state',
+	templateUrl: 'view/myOrderDetail.state.html'
+})
+.state('myOrderDetail.detail', {
+	url: '/detail',
+	templateUrl: 'view/myOrderDetail.detail.html'
+})
+```
+index.html
+```html
+<ui-view></ui-view>
+```
+myOrderDetail.html
+```html
+<h1>myOrderDetail</h1>
+<div ui-sref="myOrderDetail.state">state</div>
+<div ui-sref="myOrderDetail.detail">detail</div>
+<ui-view></ui-view>
+```
+myOrderDetail.state.html
+```html
+<h2>myOrderDetail.state</h2>
+```
+myOrderDetail.detail.html
+```html
+<h2>myOrderDetail.detail</h2>
+```
+当访问 index.html 时，myOrderDetail.html 的内容会被渲染到 index.html 中的 ui-view 处（URL 为 /myOrderDetail/:orderId），点击跳转 div 后，myOrderDetail.state.html 和 myOrderDetail.detail.html 会被分别渲染到 myOrderDetail.html 中的 ui-view 处（URL 为 /myOrderDetail/:orderId/state 和 /myOrderDetail/:orderId/detail）；
+
 
 <!-- TODO -->
 嵌套视图采用特殊的语法标记：
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/9425e223da215424d219ab98a8a61070.jpg)
 
-#### $state 匹配多个视图
+#### $state 多视图
+http://bubkoo.com/2014/01/01/angular/ui-router/guide/multiple-named-views/
 
-在 ui-router 中，一个 $state 下可以有多个视图，它们有各自的模板和控制器。这一点也是 ng-route 所没有的， 给了前端路由极大的灵活性；
+多视图指的是一个 state 下包含了多个 ui-view，其中每个 ui-view 都有各自的模板和控制器；这一点也是 ng-route 所没有的， 给了前端路由极大的灵活性；
 
 例：
 index.html

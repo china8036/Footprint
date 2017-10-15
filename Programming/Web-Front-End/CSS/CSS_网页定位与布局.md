@@ -152,7 +152,55 @@ inline-block 即行内块元素；
 注意：
 - vertical-align 属性会影响到 inline-block 元素，可将它的值设置为 top；
 - 需要设置每一列的宽度；
-- 如果 HTML 源代码中元素之间有空格，那么列与列之间会产生空隙；
+- 如果 HTML 源代码中元素之间有空格、换行等任何空白，会导致渲染到浏览器中的元素之间有 4px 的空白间隙；
+  - 例：https://segmentfault.com/q/1010000008603072
+    html
+    ```html
+    <ul>
+      <li>订单状态</li>
+      <li>订单详情</li>
+    </ul>
+    ```
+    less
+    ```less
+    ul {
+      width: 100%;
+      li {
+        width: 50%;
+        display: inline-block;
+      }
+    }
+    ```
+    但实际效果是两个 li 无法并排在同一行，会被挤成两行，这就是由于空白间隙导致的，解决方法：
+    - HTML 代码中去除空白间隙：
+      ```html
+      <ul>
+        <li>订单状态</li><li>订单详情</li>
+      </ul>
+      ```
+    - 使用浮动，脱离文档流以消除间隙
+      ```less
+      ul {
+        width: 100%;
+        li {
+          width: 50%;
+          display: inline-block;
+          float: left;
+        }
+      }
+      ```
+    - 使用 font-size 除去所有空白
+      ```less
+      ul {
+        width: 100%;
+        font-size: 0;// 除去所有空白
+        li {
+          width: 50%;
+          display: inline-block;
+          font-size: 15px;// 正常显示 li 文字
+        }
+      }
+      ```
 
 ### flex ###
 使用 flex 布局；
