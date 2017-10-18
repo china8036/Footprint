@@ -4,8 +4,8 @@
   - [display 属性](#display-%E5%B1%9E%E6%80%A7)
     - [block](#block)
     - [inline](#inline)
-    - [none](#none)
     - [inline-block](#inline-block)
+    - [none](#none)
     - [flex](#flex)
     - [inline-flex](#inline-flex)
   - [position 属性](#position-%E5%B1%9E%E6%80%A7)
@@ -90,40 +90,46 @@ display 是 CSS 中最重要的用于控制布局的属性。每个元素都有�
 对于大多数元素它们的默认值通常是 block 或 inline 。一个 block 元素通常被叫做块级元素。一个 inline 元素通常被叫做行内元素。
 
 ### block ###
-块级元素，如 div、h1 或 p；
+块级元素，如 div、h1、p、form、table、pre、dl、ol、ul；
 
-块级元素会尽可能的充满全部 width，因此它们从上到下一个接一个地排列，框之间的垂直距离是由框的垂直外边距计算出来；
+块级元素会尽可能的充满全部 width，多个block元素会各自新起一行。默认情况下，block元素宽度自动填满其父元素宽度。因此它们从上到下一个接一个地排列，框之间的垂直距离是由框的垂直外边距计算出来；
+
+block元素可以设置width,height属性。块级元素即使设置了宽度,仍然是独占一行。
+
+block元素可以设置margin和padding属性。
 
 - 设置块元素水平居中的方法：
-可以通过设置块级元素的 width 以防止它从左到右撑满整个容器，然后再设置左右外边距为 auto 来使其水平居中（auto 即元素会占据你所指定的宽度，然后剩余的宽度会一分为二成为左右外边距）：
-```css
-#main {
-  width: 600px;
-  margin: 0 auto; 
-}
-```
-存在问题：当浏览器窗口比元素的宽度还要窄时，浏览器会显示一个水平滚动条来容纳页面；   
-解决方案：使用 max-width 替代 width 可以使浏览器更好地处理小窗口的情况（这点在移动设备上显得尤为重要）：
-```css
-#main {
-  max-width: 600px;
-  margin: 0 auto; 
-}
-```
+  可以通过设置块级元素的 width 以防止它从左到右撑满整个容器，然后再设置左右外边距为 auto 来使其水平居中（auto 即元素会占据你所指定的宽度，然后剩余的宽度会一分为二成为左右外边距）：
+  ```css
+  #main {
+    width: 600px;
+    margin: 0 auto; 
+  }
+  ```
+  存在问题：当浏览器窗口比元素的宽度还要窄时，浏览器会显示一个水平滚动条来容纳页面；   
+  解决方案：使用 max-width 替代 width 可以使浏览器更好地处理小窗口的情况（这点在移动设备上显得尤为重要）：
+  ```css
+  #main {
+    max-width: 600px;
+    margin: 0 auto; 
+  }
+  ```
 
 ### inline ###
-行内元素，如 span 和 strong；
+行内元素，如 span、strong、a、em、label、input、select、textarea、img、br；
 
-行内元素不会充满全部 width，因此它们在一行中水平布置。可以使用水平内边距、边框和外边距调整它们的间距。但是，垂直内边距、边框和外边距不影响行内框的高度。由一行形成的水平框称为行框（Line Box），行框的高度总是足以容纳它包含的所有行内框。不过，设置行高可以增加这个框的高度；
+inline元素不会独占一行，多个相邻的行内元素会排列在同一行里，直到一行排列不下，才会新换一行，其宽度随元素的内容而变化。
 
-### none ###
-在不删除元素的情况下隐藏元素，且不占用文档中的空间；
+inline元素设置width, height属性无效，但高度可以通过line-height来设置。
 
-注意：
-设置 ` visibility: hidden;` 只是将元素隐藏，同样会占用文档空间；
+inline元素的margin和padding属性，水平方向的padding-left, padding-right, margin-left, margin-right都产生边距效果；但竖直方向的padding-top, padding-bottom, margin-top, margin-bottom不会产生边距效果，设置无效。
+
 
 ### inline-block ###
 inline-block 即行内块元素；
+
+简单来说就是将对象呈现为inline对象，但是对象的内容作为block对象呈现。之后的内联对象会被排列在同一行内。比如我们可以给一个link（a元素）inline-block属性值，使其既具有block的宽度高度特性又具有inline的同行特性。
+
 
 例：
 ```css
@@ -201,6 +207,15 @@ inline-block 即行内块元素；
         }
       }
       ```
+
+
+
+### none ###
+在不删除元素的情况下隐藏元素，且不占用文档中的空间；
+
+注意：
+设置 ` visibility: hidden;` 只是将元素隐藏，同样会占用文档空间；
+
 
 ### flex ###
 使用 flex 布局；

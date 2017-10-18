@@ -1,14 +1,8 @@
-
-
-<!-- toc -->
-
-* [前端开发工具](#前端开发工具)
-  * [目录结构](#目录结构)
-  * [browser-sync](#browser-sync)
-  * [http-server](#http-server)
-  * [webpack](#webpack)
-
-<!-- toc stop -->
+- [前端开发工具](#%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7)
+  - [目录结构](#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
+  - [browser-sync](#browser-sync)
+  - [http-server](#http-server)
+  - [webpack](#webpack)
 
 # 前端开发工具 #
 

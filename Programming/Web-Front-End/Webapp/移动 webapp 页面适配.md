@@ -6,11 +6,15 @@
     - [REM](#rem)
   - [适配方法实现](#%E9%80%82%E9%85%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0)
     - [固定高度，宽度自适应](#%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%BA%A6%EF%BC%8C%E5%AE%BD%E5%BA%A6%E8%87%AA%E9%80%82%E5%BA%94)
-    - [固定宽度，viewport 缩放](#%E5%9B%BA%E5%AE%9A%E5%AE%BD%E5%BA%A6%EF%BC%8Cviewport-%E7%BC%A9%E6%94%BE)
+    - [固定宽度，viewport 动态缩放](#%E5%9B%BA%E5%AE%9A%E5%AE%BD%E5%BA%A6%EF%BC%8Cviewport-%E5%8A%A8%E6%80%81%E7%BC%A9%E6%94%BE)
     - [REM 做宽度，viewport 缩放](#rem-%E5%81%9A%E5%AE%BD%E5%BA%A6%EF%BC%8Cviewport-%E7%BC%A9%E6%94%BE)
       - [阿里 REM 解决方案](#%E9%98%BF%E9%87%8C-rem-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
       - [淘宝 REM 解决方案](#%E6%B7%98%E5%AE%9D-rem-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
-    - [媒体查询设置 font-size](#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E8%AE%BE%E7%BD%AE-font-size)
+    - [rem 做宽度，动态设置 font-size   viewport 不缩放](#rem-%E5%81%9A%E5%AE%BD%E5%BA%A6%EF%BC%8C%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE-font-size-viewport-%E4%B8%8D%E7%BC%A9%E6%94%BE)
+      - [媒体查询设置 font-size](#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E8%AE%BE%E7%BD%AE-font-size)
+      - [根据设备 clientWidth 动态设置 font-size](#%E6%A0%B9%E6%8D%AE%E8%AE%BE%E5%A4%87-clientwidth-%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE-font-size)
+      - [使用 vw 设置 font-size](#%E4%BD%BF%E7%94%A8-vw-%E8%AE%BE%E7%BD%AE-font-size)
+    - [全局使用 vw、vh、vm](#%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8-vw%E3%80%81vh%E3%80%81vm)
   - [参考](#%E5%8F%82%E8%80%83)
 
 # 移动 WebApp 页面适配 #
@@ -178,7 +182,7 @@ PC 端浏览器对 rem 单位支持并不友好，因此 rem 单位最好不用�
 
 这样设置之后，我们就可以不用管手机屏幕的尺寸进行开发了。
 
-### 固定宽度，viewport 缩放 ###
+### 固定宽度，viewport 动态缩放 ###
 
 设计图、页面宽度、viewport width 使用一个宽度，浏览器帮我们完成缩放。单位使用 px 即可。
 
@@ -186,15 +190,16 @@ PC 端浏览器对 rem 单位支持并不友好，因此 rem 单位最好不用�
 
 原理：
 
-这种方法需要根据屏幕宽度来动态生成`viewport`，生成的 viewport 基本是这样：
-
-```html
-<meta name="viewport" content="width=640,initial-scale=0.5,maximum-scale=0.5,minimum-scale=0.5,user-scalable=no">
+这种方法需要根据客户端 dpr 来动态生成`viewport`：
+```javascript
+var scale = 1 / window.devicePixelRatio;
+document.querySelector('meta[name="viewport"]').setAttribute('content','initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
 ```
 
-640 是我们根据设计图定下的，0.5 是根据屏幕宽度动态生成的。
+这样设置之后，客户端的 css 像素将自动缩放成为与设计图完全等比例的大小，代码中的 css 像素可以直接按照设计图的标注尺寸写死，使用 px 单位，不需要什么 rem，也不需要 vm，在不同的屏幕下会自动缩放。
 
-生成的 viewport 告诉浏览器网页的布局视口使用 640px，然后把页面缩放成 50%，这是绝对的等比例缩放。图片、文字等等所有元素都被缩放在手机屏幕中。
+缺点：     
+很多安卓机型和浏览器不支持 viewport 设置，并且内联文本元素是无法缩放的。
 
 ### REM 做宽度，viewport 缩放 ###
 https://www.zhihu.com/question/35710806
@@ -252,59 +257,50 @@ document.documentElement.style.fontSize = document.documentElement.clientWidth /
 缺点：   
 开头要引入一段 js 代码，单位都要改成 rem(font-size 可以用 px)，计算 rem 比较麻烦（可以引用预处理器，但是增加了编译过程，相对麻烦了点)。pc 和 mobile 要分开。
 
-###  媒体查询设置 font-size
+###  rem 做宽度，动态设置 font-size   viewport 不缩放
+
 https://www.cnblogs.com/gymmer/p/6883063.html
+
+http://www.zhangxinxu.com/wordpress/2016/08/vw-viewport-responsive-layout-typography/
+
+#### 媒体查询设置 font-size
+
+<!-- TODO 如果用这种方案怎么计算 css 像素？？？ -->
 
 使用媒体查询设置 html 的 font-size：
 ```less
 // 对 html 做媒体查询，定义基准的 font-size
 html {
-    font-size: 12px;
-}
-@media (min-width:320px){
-  html{
-    font-size: 14.2222px;
-  }
-}
-@media (min-width:360px){
-  html{
     font-size: 16px;
-  }
 }
-@media (min-width:375px){
-  html{
-    font-size: 16.6667px;
-  }
+// 使用 vw 作为单位进行媒体查询，使 font-size 变化更平滑
+@media screen and (min-width: 375px) {
+    html {
+        /* iPhone6 的 375px 尺寸作为 16px 基准，414px 正好 18px 大小，600 20px */
+        font-size: calc(100% + 2 * (100vw - 375px) / 39);// 百分比是为了适配 Safari 浏览器
+        font-size: calc(16px + 2 * (100vw - 375px) / 39);
+    }
 }
-@media (min-width:412px){
-  html{
-    font-size: 18.2857px;
-  }
+@media screen and (min-width: 414px) {
+    html {
+        /* 414px-1000px 每 100 像素宽字体增加 1px(18px-22px) */
+        font-size: calc(112.5% + 4 * (100vw - 414px) / 586);
+        font-size: calc(18px + 4 * (100vw - 414px) / 586);
+    }
 }
-@media (min-width:480px){
-  html{
-    font-size: 21.3333px;
-  }
+@media screen and (min-width: 600px) {
+    html {
+        /* 600px-1000px 每 100 像素宽字体增加 1px(20px-24px) */
+        font-size: calc(125% + 4 * (100vw - 600px) / 400);
+        font-size: calc(20px + 4 * (100vw - 600px) / 400);
+    }
 }
-@media (min-width:640px){
-  html{
-    font-size: 28.4444px;
-  }
-}
-@media (min-width:720px){
-  html{
-    font-size: 32px;
-  }
-}
-@media (min-width:768px){
-  html{
-    font-size: 34.1333px;
-  }
-}
-@media (min-width:1440px){
-  html{
-    font-size: 64px;
-  }
+@media screen and (min-width: 1000px) {
+    html {
+        /* 1000px 往后是每 100 像素 0.5px 增加 */
+        font-size: calc(137.5% + 6 * (100vw - 1000px) / 1000);
+        font-size: calc(22px + 6 * (100vw - 1000px) / 1000);
+    }
 }
 
 // CSS 单位使用 rem
@@ -312,6 +308,63 @@ p.intro {
     font-size: 1rem;
 }
 ```
+
+#### 根据设备 clientWidth 动态设置 font-size
+
+```javascript
+<script type="text/javascript">
+  (function (doc, win) {
+    var docEl = doc.documentElement,
+      resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+      recalc = function () {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+        docEl.style.fontSize = clientWidth / 7.5 + 'px';
+      };
+
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false);
+  })(document, window);
+</script>
+```
+若设计图以 ip6 为标准，则设计图 width=750，因为为了方便写代码时计算 css 像素的 rem 值，将客户端 html 的 font-size 动态设置为
+```javascript
+docEl.style.fontSize = clientWidth / 7.5 + 'px'
+```
+则**当要实现设计图上尺寸为 x px 的目标时，代码中的 css 像素为 x/100 rem**。
+
+解释：
+```
+要实现：         
+客户端尺寸 / 客户端宽度 = 设计图尺寸 / 设计图宽度 = 设计图尺寸 /750 = 设计图尺寸 /(100*7.5)
+因此：      
+客户端尺寸 = (客户端宽度 /7.5) * (设计图尺寸 /100) = 1 rem * (设计图尺寸 /100) 
+```
+#### 使用 vw 设置 font-size
+
+<!-- TODO 如果用这种方案怎么计算 css 像素？？？ -->
+
+```html
+html{
+  font-size:5vw;
+}
+```
+以此为基准，全局使用 rem 布局
+
+5vw 在 320（iphone4/iphone5） 屏幕上面 刚好是 16px ，也就是 1rem=16px
+
+于是
+
+在 iphone4/iphone5 1rem=16px      
+在 iphone6 1rem = 18.75px      
+在 iphone6 plus 1rem = 20.7px  
+
+则**当要实现设计图上尺寸为 x px 的目标时，代码中的 css 像素为 x/37.5 rem**。
+
+### 全局使用 vw、vh、vm
+
+缺点：目前兼容性还不如 rem；
 
 ## 参考 ##
 https://www.cnblogs.com/wenzheshen/p/6589459.html   
