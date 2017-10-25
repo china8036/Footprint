@@ -1,4 +1,54 @@
-<!-- toc -->
+- [JavaScript Note - ECMAScript](#javascript-note---ecmascript)
+  - [概述](#%E6%A6%82%E8%BF%B0)
+  - [基本语法](#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95)
+    - [区分大小写](#%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99)
+    - [注释](#%E6%B3%A8%E9%87%8A)
+    - [标识符](#%E6%A0%87%E8%AF%86%E7%AC%A6)
+  - [代码结构](#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
+    - [区块](#%E5%8C%BA%E5%9D%97)
+    - [if 结构](#if-%E7%BB%93%E6%9E%84)
+    - [switch 结构](#switch-%E7%BB%93%E6%9E%84)
+    - [while 循环](#while-%E5%BE%AA%E7%8E%AF)
+    - [for 循环](#for-%E5%BE%AA%E7%8E%AF)
+  - [变量](#%E5%8F%98%E9%87%8F)
+    - [变量定义](#%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89)
+    - [作用域](#%E4%BD%9C%E7%94%A8%E5%9F%9F)
+    - [变量提升](#%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87)
+  - [数据类型](#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)
+    - [类型检测](#%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B)
+      - [typeof](#typeof)
+      - [instanceof](#instanceof)
+    - [原始类型](#%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B)
+      - [null](#null)
+      - [undefined](#undefined)
+      - [Boolean](#boolean)
+      - [Number](#number)
+      - [String](#string)
+    - [Object](#object)
+      - [狭义 Object](#%E7%8B%AD%E4%B9%89-object)
+      - [数组 Array](#%E6%95%B0%E7%BB%84-array)
+      - [函数 Function](#%E5%87%BD%E6%95%B0-function)
+      - [包装类型](#%E5%8C%85%E8%A3%85%E7%B1%BB%E5%9E%8B)
+        - [Number](#number)
+        - [String](#string)
+        - [Boolean](#boolean)
+      - [Math](#math)
+      - [Date](#date)
+      - [RegExp](#regexp)
+      - [JSON](#json)
+      - [console](#console)
+      - [内置对象](#%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1)
+    - [数据类型转换](#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2)
+  - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
+  - [面向对象 OOP](#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-oop)
+    - [继承](#%E7%BB%A7%E6%89%BF)
+  - [匿名函数](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0)
+    - [递归](#%E9%80%92%E5%BD%92)
+    - [闭包](#%E9%97%AD%E5%8C%85)
+    - [仿块级作用域](#%E4%BB%BF%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F)
+    - [私有变量](#%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F)
+    - [立即调用的函数表达式](#%E7%AB%8B%E5%8D%B3%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+  - [Refer](#refer)
 
 # JavaScript Note - ECMAScript #
 
@@ -12,6 +62,7 @@ https://zh.wikipedia.org/wiki/JavaScript
 
 - ECMAScript 是一种语言标准（常见的 Web 环境实际上只是 ECMAScript 实现可能的宿主环境之一），而 JavaScript 是网景公司对 ECMAScript 标准的一种实现（除此之外还有 ActionScript、ScriptEase 等），所谓的 JavaScript 的版本，实际上即是指它实现了 ECMAScript 标准的哪个版本；
 为什么不直接把 JavaScript定为 标准呢？因为 JavaScript 是网景的注册商标。
+
 
 - 一般来说，完整的JavaScript包括以下几个部分：   
 	- ECMAScript（语言核心），描述了该语言的语法和基本对象
@@ -346,8 +397,8 @@ NaN
 var lang = "java";
 lang = lang + "script"
 ```
+
 先创建一个能容纳10个字符的新字符串，然后在这个字符串中填充 “java” 和 “script”，最后一步是销毁原来字符串 "java" 和字符串 “script”；
-- 
 
 
 
@@ -392,10 +443,10 @@ lang = lang + "script"
 	- valueOf()：返回对象的字符串、数值、布尔值表示；
 
 - 如果行首是一个大括号，它到底是表达式还是语句？
-```
-{ foo: 123 }
-```
-为了避免这种歧义，JavaScript规定，如果行首是大括号，一律解释为语句（即代码块）；如果要解释为表达式（即对象），必须在大括号前加上圆括号；
+	```
+	{ foo: 123 }
+	```
+	为了避免这种歧义，JavaScript规定，如果行首是大括号，一律解释为语句（即代码块）；如果要解释为表达式（即对象），必须在大括号前加上圆括号；
 
 - 属性
 	- 对象的每一个 “键名” 又称为 “属性”（property），它的 “键值” 可以是任何数据类型；
@@ -407,46 +458,53 @@ lang = lang + "script"
 	- 对象的属性之间用逗号分隔，最后一个属性后面可以加逗号（trailing comma），也可以不加；
 	- 属性可以动态创建，不必在对象声明时就指定；
 	- 读取对象的属性，有两种方法，一种是使用点运算符，还有一种是使用方括号运算符：
-	```javascrpit
-	var o = {
-		p: 'Hello World'
-	};
-	
-	o.p // "Hello World"
-	o['p'] // "Hello World"
-	```
-	注意：数值键名不能使用点运算符（因为会被当成小数点），只能使用方括号运算符；
+		```javascrpit
+		var o = {
+			p: 'Hello World'
+		};
+		
+		o.p // "Hello World"
+		o['p'] // "Hello World"
+		```
+		注意：数值键名不能使用点运算符（因为会被当成小数点），只能使用方括号运算符；
 	- 查看一个对象本身的所有属性，可以使用 Object.keys 方法；
-	```
-	var o = {
-		key1: 1,
-		key2: 2
-	};
+		```
+		var o = {
+			key1: 1,
+			key2: 2
+		};
 	
 	Object.keys(o);
 	// ['key1', 'key2']
 	```
 
 - delete 操作符用于删除对象的属性，删除成功后返回 true；
-注意：delete命令不能删除var命令声明的变量，只能用来删除属性；
+	注意：delete命令不能删除var命令声明的变量，只能用来删除属性；
 
 - in运算符用于检查对象是否包含某个属性（注意，检查的是键名，不是键值），如果包含就返回true，否则返回false；
-例：浏览器环境中检查变量是否已被声明：
-```javascript
-if ('a' in window) {
-	// 变量 a 声明过
-} else {
-	// 变量 a 未声明
-}
-```
-注意：in 运算符无法区分继承的属性，对继承的属性也返回 true；
+	例：浏览器环境中检查变量是否已被声明：
+	```javascript
+	if ('a' in window) {
+		// 变量 a 声明过
+	} else {
+		// 变量 a 未声明
+	}
+	```
+	注意：in 运算符无法区分继承的属性，对继承的属性也返回 true；
 
 - for...in 循环用于遍历一个对象的全部属性；
-注意：
-	- 遍历的是对象所有可遍历（enumerable）的属性，会跳过不可遍历的属性（如 toString 属性）；
-	- 不仅遍历对象自身的属性，还遍历继承的属性；
-	如果只想遍历对象本身的属性，可以使用 hasOwnProperty 方法，在循环内部判断一下是不是自身的属性；
-	- 一般情况下，都是只想遍历对象自身的属性，所以不推荐直接使用 for...in 循环；
+	注意：
+		- 遍历的是对象所有可遍历（enumerable）的属性，会跳过不可遍历的属性（如 toString 属性）；
+		- 不仅遍历对象自身的属性，还遍历继承的属性；
+		如果只想遍历对象本身的属性，可以使用 hasOwnProperty 方法，在循环内部判断一下是不是自身的属性；
+		- 一般情况下，都是只想遍历对象自身的属性，所以不推荐直接使用 for...in 循环；
+
+	JavaScript中遍历对象的多种方法：https://huixisheng.github.io/object-loop/
+	
+
+
+
+
 
 #### 数组 Array ####
 
