@@ -51,40 +51,34 @@ Gradle 基于 Groovy 语言开发，在安装包中集成了 Groovy 库；
 
 1)	Project
 
-构建产物（比如 Jar 包）或实施产物（将应用程序部署到生产环境），Project 由一些组件组成，如一个 Project 可以代表一个 JAR 库或者一个 WEB 应用程序，也可能包含其他项目生成的 JAR 包；
+    构建产物（比如 Jar 包）或实施产物（将应用程序部署到生产环境），Project 由一些组件组成，如一个 Project 可以代表一个 JAR 库或者一个 WEB 应用程序，也可能包含其他项目生成的 JAR 包；
 
-每个 gradle build 由一到多个 Project 组成；
+    每个 gradle build 由一到多个 Project 组成；
 
 2)	Task
 
-不可分的最小工作单元，执行构建工作（比如编译项目或执行测试），Task 可以是编译一些 Java 类，或者创建一个 JAR 包，或者是生成 JavaDoc，或者是发布文档到仓库，Task 作为原子工作存在；
+    不可分的最小工作单元，执行构建工作（比如编译项目或执行测试），Task 可以是编译一些 Java 类，或者创建一个 JAR 包，或者是生成 JavaDoc，或者是发布文档到仓库，Task 作为原子工作存在；
 
-每个 Project 由一到多个 Task 组成；
+    每个 Project 由一到多个 Task 组成；
 
-在 Gradle 项目目录下，查看可用 tasks 列表：
-```
-gradle task
-```
+    在 Gradle 项目目录下，查看可用 tasks 列表：
+    ```
+    gradle task
+    ```
 
 3)	Plugin
 
-在 Gradle 中，所有有用的特性都是由 Plugin 来提供的。添加 Plugin 到 Gradle 中其实就是添加了一些新的 task，域对象（如 SourceSet)，约定（如 Java source 默认放在 src/main/java 下)，同时也会扩展一些已经存在的类型。 Plugin 分两种：脚本插件 apply from: 'other.gradle'和二进制插件 apply plugin: 'java'；
+    在 Gradle 中，所有有用的特性都是由 Plugin 来提供的。添加 Plugin 到 Gradle 中其实就是添加了一些新的 task，域对象（如 SourceSet)，约定（如 Java source 默认放在 src/main/java 下)，同时也会扩展一些已经存在的类型。 Plugin 分两种：脚本插件 apply from: 'other.gradle'和二进制插件 apply plugin: 'java'；
 
 ### 配置
 
 可以通过配置文件对 Gradle 构建进行配置
 
-1)	Gradle 构建脚本（build.gradle）
+1)	Gradle 构建脚本（build.gradle）：指定了一个项目和它的任务
 
-指定了一个项目和它的任务
+2)	Gradle 属性文件（gradle.properties）：用来配置构建属性
 
-2)	Gradle 属性文件（gradle.properties）
-
-用来配置构建属性
-
-3)	Gradle 设置文件（gradle.settings）
-
-对于只有一个项目的构建而言是可选的，如果我们的构建中包含多于一个项目，那么它就是必须的，因为它描述了哪一个项目参与构建。每一个多项目的构建都必须在项目结构的根目录中加入一个设置文件
+3)	Gradle 设置文件（gradle.settings）：对于只有一个项目的构建而言是可选的，如果我们的构建中包含多于一个项目，那么它就是必须的，因为它描述了哪一个项目参与构建。每一个多项目的构建都必须在项目结构的根目录中加入一个设置文件
 
 ### build.gradle
 
@@ -123,7 +117,7 @@ dependencies {
 }
 ```
 
-引用一个外部依赖需要指定使用的 group, name 和 version 属性，三者缺一不可。那从哪里得知 JAR 包的这三个属性呢？我们可以从 mvnrepository（https://mvnrepository.com）中搜索到；
+引用一个外部依赖需要指定使用的 group, name 和 version 属性，三者缺一不可。那从哪里得知 JAR 包的这三个属性呢？我们可以从 mvnrepository (https://mvnrepository.com) 中搜索到；
 
 使用本地依赖
 Gradle 也可以从本地目录中引入 JAR 包依赖，可以单一引入指定的某一 JAR 包，也可以引入某目录下所有的 JAR 包
@@ -181,6 +175,8 @@ https://yrom.net/blog/2015/02/07/change-gradle-maven-repo-url/
 阿里云的 maven 库 http://maven.aliyun.com/nexus/content/groups/public/ ；
 
 自建的 Maven 私服；
+
+
 
 针对单个项目：
 
@@ -271,8 +267,11 @@ http://blog.csdn.net/kl28978113/article/details/53018225
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/644c6ee249567850e69050df3d090547.jpg)
 
 解决方式一：
+
 将 build.gradle 中的`mavenLocal()`都替换为`jcenter()`；
+
 解决方式二：
+
 将 build.gradle 中的 mavenLocal() 都替换为
 ```
 maven {
