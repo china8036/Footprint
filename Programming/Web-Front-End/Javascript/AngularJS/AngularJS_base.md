@@ -955,7 +955,6 @@ myOrderDetail.detail.html
 ```
 当访问 index.html 时，myOrderDetail.html 的内容会被渲染到 index.html 中的 ui-view 处（URL 为 /myOrderDetail/:orderId），点击跳转 div 后，myOrderDetail.state.html 和 myOrderDetail.detail.html 会被分别渲染到 myOrderDetail.html 中的 ui-view 处（URL 为 /myOrderDetail/:orderId/state 和 /myOrderDetail/:orderId/detail）；
 
-
 <!-- TODO -->
 嵌套视图采用特殊的语法标记：
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/9425e223da215424d219ab98a8a61070.jpg)
@@ -1058,6 +1057,28 @@ angular.module('app').run(['$transitions', function ($transitions) {
 }]);
 ```
 
+除此之外，还可以使用返回布尔值的 function 判断是否拦截路由：
+
+https://stackoverflow.com/questions/22537311/angular-ui-router-login-authentication
+
+```javascript
+angular.module('app').run(['$transitions', '$cookies', '$state', function ($transitions, $cookies, $state) {
+		$transitions.onEnter({
+			to: function (state) {
+				return state.name === 'me' || state.name === 'order';// 当 state 返回 true 时，invoke 回调下边的函数
+			}
+		}, function (transition, state) {
+			if ($cookies.get('Token') !== '' && $cookies.get('Mobileno') !== '') {
+				return $state.target('login');
+			}
+		})
+```
+注意：若要在回调函数中进行state重定向，直接执行`$state.go('xxx')`会报错Transition Rejection：     
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/1049ea009eefc654d564c266cd450d9e.jpg)
+
+要解决此问题，要使用上例中的方法，即`return $state.target('xxx');`，使用[TargetState](https://ui-router.github.io/ng1/docs/latest/classes/state.stateservice.html#target)。
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/5515e4ebeb63f37163de7f92d8783d67.jpg)
 ### onExit
 
 > onExit(criteria: HookMatchCriteria, callback: TransitionStateHookFn, options?: HookRegOptions)
