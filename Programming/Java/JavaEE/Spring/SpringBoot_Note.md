@@ -832,7 +832,9 @@ public enum Propagation {
  
 
 3)  配置 mybatis【appication.properties】             
+
     使用前缀为 mybatis 进行配置，可用配置如下：          
+    
     | **Property**               | **Description**                          |
     | -------------------------- | ---------------------------------------- |
     | `config-location`          | Location of MyBatis xml config file.     |
