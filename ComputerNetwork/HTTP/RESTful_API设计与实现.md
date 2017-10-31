@@ -196,6 +196,7 @@ RESTful 登录设计（基于 Spring 及 Redis 的 Token 鉴权）：http://www.
 
 3. 当用户退出登录、其他终端登录同一账号（被顶号）、长时间未进行操作时 Token 会失效，这时用户需要重新登录。
 
+
 ## Refer Links
 
 阮一峰：RESTful API 设计指南 http://www.ruanyifeng.com/blog/2014/05/restful_api.html
