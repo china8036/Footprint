@@ -150,7 +150,6 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
   
   3. 不利于 SEO，单页页面，数据在前端渲染，就意味着没有 SEO，或者需要使用变通的方案。
 
-
 存在几个重要的挑战：
   
   1. 前后端接口的约定。如果后端的接口一塌糊涂，如果后端的业务模型不够稳定，那么前端开发会很痛苦。这一块在业界有 API Blueprint 等方案来约定和沉淀接口，在阿里，不少团队也有类似尝试，通过接口规则、接口平台等方式来做。有了和后端一起沉淀的接口规则，还可以用来模拟数据，使得前后端可以在约定接口后实现高效并行开发。相信这一块会越做越好。
@@ -159,7 +158,7 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 
 单页应用是对原来 Ajax 组件的一种延伸，相较于传统的网页应用，将 MVC 前置到了浏览器端，浏览器就相当于 iOS 系统，单页应用就像是应用，与服务端仅仅通过 API 来沟通。**每种技术方案都有利弊，是否要使用单页应用技术，需要通过对产品需求（跨平台、SEO、性能、用户群属性？）、资源（工程师配比，能力？）时间要求等的评估来做出选择。**
 
-<!-- TODO: 以下部分待学习 NodeJS 后，再重新学习并总结，搞清楚NodeJS在这种模式下是承担一种什么样的角色 -->
+<!-- TODO: 以下部分待学习 NodeJS 后，再重新学习并总结，搞清楚 NodeJS 在这种模式下是承担一种什么样的角色 -->
 
 <!-- ## 引入 NodeJS
 
@@ -227,5 +226,13 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 Web 研发模式演变：https://github.com/lifesinger/blog/issues/184 
 
 淘宝前后端分离实践：http://2014.jsconf.cn/slides/herman-taobaoweb/#/
+<!-- TODO: 有具体的实现方案，包括模块化、组件化、使用 commonjs 打包等等 -->
 
-FED 前后端分离的思考与实践：http://taobaofed.org/blog/2014/04/04/practice-of-separation-of-front-end-from-back-end/
+淘宝 FED 前后端分离的思考与实践系列文章（一~六）：http://taobaofed.org/archives/2014/
+<!-- TODO: 非常多干货！！包括安全、架构、部署、etc -->
+
+前后端分离实践 - 部署方案：https://segmentfault.com/a/1190000009329474#articleHeader8
+<!-- TODO: 有 nginx、nodejs、tomcat 的详细部署方案 -->
+
+[网易前后端分离实践](https://github.com/genify/ita1024/blob/master/%E7%BD%91%E6%98%93%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E5%AE%9E%E8%B7%B5%20-%20%E4%BF%AE%E8%AE%A2%E7%89%88.md)
+<!-- TODO: 图片很形象生动，架构值得学习 -->

@@ -41,56 +41,60 @@
     - [数据类型转换](#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2)
   - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
   - [面向对象 OOP](#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-oop)
-    - [继承](#%E7%BB%A7%E6%89%BF)
+    - [封装](#%E5%B0%81%E8%A3%85)
+    - [`prototype` 和 `__proto__`](#prototype-%E5%92%8C-proto)
+      - [prototype](#prototype)
+        - [prototype 模式的相关方法](#prototype-%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95)
+          - [isPrototypeOf()](#isprototypeof)
+          - [hasOwnProperty()](#hasownproperty)
+          - [in 运算符](#in-%E8%BF%90%E7%AE%97%E7%AC%A6)
+      - [`__proto__`](#proto)
+    - [继承的实现：原型链](#%E7%BB%A7%E6%89%BF%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%8E%9F%E5%9E%8B%E9%93%BE)
   - [匿名函数](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0)
     - [递归](#%E9%80%92%E5%BD%92)
     - [闭包](#%E9%97%AD%E5%8C%85)
     - [仿块级作用域](#%E4%BB%BF%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F)
     - [私有变量](#%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F)
-    - [立即调用的函数表达式](#%E7%AB%8B%E5%8D%B3%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+    - [立即调用的函数表达式 (IIFE)](#%E7%AB%8B%E5%8D%B3%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F-iife)
   - [Refer](#refer)
 
-# JavaScript Note - ECMAScript #
+# JavaScript Note - ECMAScript 
 
-## 概述 ##
+## 概述
 https://zh.wikipedia.org/wiki/JavaScript
 
-> JavaScript，一种高级编程语言，通过解释执行，是一门动态类型，面向对象（基于原型）的直译语言。它已经由ECMA（欧洲电脑制造商协会）通过ECMAScript实现语言的标准化。
-> JavaScript是一门基于原型、函数先行的语言[5]，是一门多范式的语言，它支持面向对象编程，命令式编程，以及函数式编程。它提供语法来操控文本、数组、日期以及正则表达式等，**不支持I/O**，比如网络、存储和图形等，但这些都可以由它的宿主环境提供支持。
-> 在客户端，JavaScript在传统意义上被实现为一种解释语言，但在最近，它已经可以被即时编译（JIT）执行。
-
+> JavaScript，一种高级编程语言，通过解释执行，是一门动态类型，面向对象（基于原型）的直译语言。它已经由 ECMA（欧洲电脑制造商协会）通过 ECMAScript 实现语言的标准化。
+> JavaScript 是一门基于原型、函数先行的语言 [5]，是一门多范式的语言，它支持面向对象编程，命令式编程，以及函数式编程。它提供语法来操控文本、数组、日期以及正则表达式等，**不支持 I/O**，比如网络、存储和图形等，但这些都可以由它的宿主环境提供支持。
+> 在客户端，JavaScript 在传统意义上被实现为一种解释语言，但在最近，它已经可以被即时编译（JIT）执行。
 
 - ECMAScript 是一种语言标准（常见的 Web 环境实际上只是 ECMAScript 实现可能的宿主环境之一），而 JavaScript 是网景公司对 ECMAScript 标准的一种实现（除此之外还有 ActionScript、ScriptEase 等），所谓的 JavaScript 的版本，实际上即是指它实现了 ECMAScript 标准的哪个版本；
-为什么不直接把 JavaScript定为 标准呢？因为 JavaScript 是网景的注册商标。
+为什么不直接把 JavaScript 定为 标准呢？因为 JavaScript 是网景的注册商标。
 
-
-- 一般来说，完整的JavaScript包括以下几个部分：   
+- 一般来说，完整的 JavaScript 包括以下几个部分：   
 	- ECMAScript（语言核心），描述了该语言的语法和基本对象
 	- DOM（文档对象模型），描述处理网页内容的方法和接口
 	- BOM（浏览器对象模型），描述与浏览器进行交互的方法和接口
 
-## 基本语法 ##
+## 基本语法 
 
-JavaScript的语法和Java语言类似，每个语句以;结束，语句块用{...}；
+JavaScript 的语法和 Java 语言类似，每个语句以；结束，语句块用{...}；
 注：
-JavaScript并不强制要求在每个语句的结尾加 “;”，浏览器中负责执行 JavaScript 代码的引擎会自动在每个语句的结尾补上“;”；
-若分号前面可以没有任何内容，JavaScript引擎将其视为空语句；
+JavaScript 并不强制要求在每个语句的结尾加 “;”，浏览器中负责执行 JavaScript 代码的引擎会自动在每个语句的结尾补上“;”；
+若分号前面可以没有任何内容，JavaScript 引擎将其视为空语句；
 
-JavaScript程序的执行单位为行（line），也就是一行一行地执行。一般情况下，每一行就是一个语句。
+JavaScript 程序的执行单位为行（line），也就是一行一行地执行。一般情况下，每一行就是一个语句。
 
-
-### 区分大小写 ###
+### 区分大小写 
 JavaScript 严格区分大小写。
 
-
-### 注释 ###
+### 注释 
 ECMAScript 采用 C 风格的注释：
 
-行注释：以//开头直到行末的字符，JavaScript引擎会自动忽略注释；
+行注释：以 // 开头直到行末的字符，JavaScript 引擎会自动忽略注释；
 
-块注释：用/*...*/把多行字符包裹起来，把一大“块”视为一个注释；
+块注释：用 /*...*/ 把多行字符包裹起来，把一大“块”视为一个注释；
 
-### 标识符 ###
+### 标识符 
 标识符指的是变量、函数、函数参数、属性的命名；
 
 - 标识符命名规范
@@ -116,15 +120,14 @@ a+b  // 标识符不能包含加号
 -d  // 标识符不能包含减号或连词线
 ```
 
+## 代码结构 
 
-## 代码结构 ##
+### 区块 
+JavaScript 使用大括号，将多个相关的语句组合在一起，称为“区块”（block）；
 
-### 区块 ###
-JavaScript使用大括号，将多个相关的语句组合在一起，称为“区块”（block）；
+与大多数编程语言不一样，**JavaScript 的区块不构成单独的作用域（scope）**。也就是说，区块中的变量与区块外的变量，属于同一个作用域；
 
-与大多数编程语言不一样，**JavaScript的区块不构成单独的作用域（scope）**。也就是说，区块中的变量与区块外的变量，属于同一个作用域；
-
-### if 结构 ###
+### if 结构 
 ```javascript
 if (expression) {
 	statement;
@@ -135,8 +138,7 @@ if (expression) {
 }
 ```
 
-
-### switch 结构 ###
+### switch 结构 
 ```
 switch (fruit) {
   case "banana":
@@ -150,33 +152,22 @@ switch (fruit) {
 }
 ```
 
-### while 循环 ###
+### while 循环
 ```
 while (expression) {
   statement;
 }
 ```
 
-### for 循环 ###
+### for 循环 
 ```
 for (initialize; test; increment) {
   statement
 }
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-## 变量 ##
-### 变量定义 ###
+## 变量 
+### 变量定义 
 
 - ECMAScript 中，使用** var 操作符**定义的变量将成为定义该变量的作用域中的**局部变量**，若不使用 var 操作符，将创建一个**全局变量**；
 例：   
@@ -204,7 +195,7 @@ a = "hello";
 ```
 
 - 变量是对“值”的引用，使用变量等同于引用一个值；
-- 如果只是声明变量而没有赋值，则该变量的值是undefined。undefined是一个JavaScript关键字，表示“未定义”；
+- 如果只是声明变量而没有赋值，则该变量的值是 undefined。undefined 是一个 JavaScript 关键字，表示“未定义”；
 
 - 如果使用 var 重新声明一个已经存在的变量，是无效的，但若第二次声明的同时还赋值了，则会覆盖掉前面的值：
 ```javascript
@@ -218,18 +209,14 @@ a = "hello";
 	x = 2;
 ```
 
-
-### 作用域 ###
+### 作用域
 Javascript 只有两种作用域：
 - 一种是**全局作用域**，变量在整个程序中一直存在，所有地方都可以读取；
 - 另一种是**函数作用域**，变量只在函数内部存在；
 
 也就是说，在函数外部声明的变量全都是全局变量（global variable），在函数内部定义的变量，外部无法读取，称为“局部变量”（local variable）；
 
-
-
-
-### 变量提升 ###
+### 变量提升 
 在解析 JavaScript 脚本时，JavaScript 引擎的工作方式是：先解析所有使用 var 操作符声明的变量，然后再一行一行地运行其它代码。这造成的结果，就是所有的变量的声明语句，都会被提升到代码的头部，这就叫做**变量提升（hoisting）**；
 
 例：
@@ -244,16 +231,16 @@ Javascript 只有两种作用域：
 	a = 1;
 ```
 
-注意：变量提升**只对 var 操作符声明的变量有效**，如果一个变量不是用var命令声明的，就不会发生变量提升；
+注意：变量提升**只对 var 操作符声明的变量有效**，如果一个变量不是用 var 命令声明的，就不会发生变量提升；
 
-## 数据类型 ##
-ECMAScript 中有5种基本数据类型，以及1种复杂数据类型--Object；
+## 数据类型
+ECMAScript 中有 5 种基本数据类型，以及 1 种复杂数据类型 --Object；
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/23/86950679098abc59eb5f63113def8929.jpg)
 
-### 类型检测 ###
+### 类型检测
 http://www.imooc.com/video/5677
 
-#### typeof ####
+#### typeof 
 typeof 操作符返回一个字符串，表示变量的数据类型，可能返回的类型有：number、string、boolean、function、undefined 以及 object（不满足其它类型的情况都返回 object）；
 
 ```javascript
@@ -264,7 +251,7 @@ alert(typeof(messgae));// string
 
 注意：   
 - 由于 JavaScript 的历史原因，typeof null 会返回 object，但本质上 null 是一个类似于 undefined 的特殊值；
-- typeof对数组（array）和对象（object）的显示结果都是object，需要使用 instanceof 运算符区分；
+- typeof 对数组（array）和对象（object）的显示结果都是 object，需要使用 instanceof 运算符区分；
 ```javascript
 alert(typeof NaN);//number
 alert(typeof NaN);//object
@@ -272,18 +259,13 @@ alert(typeof NaN);//object
 
 - typeof 一般适用于原始数据类型的判断；
 
-
-#### instanceof ####
+#### instanceof 
 
 instanceof 是基于原型链的类型判断运算符，一般用于 Object 类型的判断；
 
+### 原始类型 
 
-
-
-
-### 原始类型 ###
-
-#### null ####
+#### null 
 - null 表示一个空对象指针，即 “没有对象”，该处不应该有值。典型用法是：
 	- 作为函数的参数，表示该函数的参数不是对象；
 	- 作为对象原型链的终点；
@@ -300,12 +282,12 @@ instanceof 是基于原型链的类型判断运算符，一般用于 Object 类�
 
 - 只要在保存对象的变量还没有真正保存对象之前，都应该明确地将该变量赋值为 null；
 
-#### undefined ####
-- undefined表示"未定义"，就是此处应该有一个值，但是还没有定义。典型用法是：
-	- 变量被声明了，但没有赋值时，就等于undefined；
-	- 调用函数时，应该提供的参数没有提供，该参数等于undefined；
-	- 对象没有赋值的属性，该属性的值为undefined；
-	- 函数没有返回值时，默认返回undefined；
+#### undefined
+- undefined 表示"未定义"，就是此处应该有一个值，但是还没有定义。典型用法是：
+	- 变量被声明了，但没有赋值时，就等于 undefined；
+	- 调用函数时，应该提供的参数没有提供，该参数等于 undefined；
+	- 对象没有赋值的属性，该属性的值为 undefined；
+	- 函数没有返回值时，默认返回 undefined；
 ```javascript
 	var i;
 	i // undefined
@@ -322,36 +304,32 @@ instanceof 是基于原型链的类型判断运算符，一般用于 Object 类�
 	x // undefined
 ```
 
-
 - 一般情况下不存在需要显示将一个变量赋值为 undefined 的情况，字面值 undefined 主要用于确定变量是否已被赋值，以及区分空对象指针与未经初始化的变量：
 ```javascript
 	var a;
 	alert(a);// undefined
 	alert(typeof a);// undefined
 	
-	alert(b);//产生异常：Uncaught ReferenceError: a is not defined
+	alert(b);// 产生异常：Uncaught ReferenceError: a is not defined
 	alert(typeof b);// undefined，对未声明的变量，只能执行 typeof 操作，且返回的是 undefined；
 ```
-
-
-
 
 - undefined 与 null 区分：
 	- undefined 派生自 null，因此：
 	```
 	alert(null == undefined) //true
 	```
-	- null 是一个表示”无”的对象，转为数值时为0；undefined 是一个表示”无”的原始值，转为数值时为 NaN；
+	- null 是一个表示”无”的对象，转为数值时为 0；undefined 是一个表示”无”的原始值，转为数值时为 NaN；
 	```
 	Number(undefined) // NaN
 	5 + undefined // NaN
 	```
 
-#### Boolean ####
+#### Boolean
 
 - Boolean 只有两个字面值：true 和 false；
 - Boolean 类型的字面值 true 和 false 是区分大小写的，True、False 等都不是 Boolean 值；
-- 与大多数语言不同，在 JavaScript 中，true 不一定等于1，false 不一定等于0；
+- 与大多数语言不同，在 JavaScript 中，true 不一定等于 1，false 不一定等于 0；
 
 - 如果 JavaScript 预期某个位置应该是布尔值，会将该位置上现有的值自动转为布尔值。转换规则是除了下面六个值被转为 false，其他值都视为 true：
 ```
@@ -364,8 +342,7 @@ NaN
 ```
 需要特别注意的是，**空数组（[]）和空对象（{}）对应的布尔值，都是 true**；
 
-
-#### Number ####
+#### Number 
 
 - Number 类型使用 IEEE754 标准来表示整数与浮点数值；
 - Number 类型可表示多种进制的整数：
@@ -373,8 +350,8 @@ NaN
 			var n = 55;
 	- 八进制数表示
 			var n = 070;//56
-			var n = 079;//超过八进制数的限制，将解析为79
-			var n = 080;//超过八进制数的限制，将解析为80
+			var n = 079;// 超过八进制数的限制，将解析为 79
+			var n = 080;// 超过八进制数的限制，将解析为 80
 	- 十六进制数表示
 			var n = 0xA;//10
 			var n = 0x1f;//31
@@ -383,12 +360,12 @@ NaN
 	- Number.MIN_VALUE 表示 ECMAScript 能表示的最小数值；
 	- Number.MAX_VALUE 表示 ECMAScript 能表示的最大数值；
 - NaN 表示一个错误的数值
-	- 任何数除以0都会返回 NaN；
+	- 任何数除以 0 都会返回 NaN；
 	- NaN 与任何值都不相等，包括 NaN 本身；
 
-#### String ####
+#### String
 
-- String 类型用于表示由零或多个16位 Unicode 字符组成的字符序列，即字符串；
+- String 类型用于表示由零或多个 16 位 Unicode 字符组成的字符序列，即字符串；
 - 字符串可以由双引号或单引号表示（在 ECMAScript 中双引号和单引号的解析方式基本完全相同）；
 - 任何字符串的长度可以通过其 length 属性获得；
 - String 类型的字面值是不可变的，也就是说要改变某个变量保存的字符串，必须先销毁原来的字符串，然后再用另一个包含心智的字符串填充该变量；
@@ -398,10 +375,7 @@ var lang = "java";
 lang = lang + "script"
 ```
 
-先创建一个能容纳10个字符的新字符串，然后在这个字符串中填充 “java” 和 “script”，最后一步是销毁原来字符串 "java" 和字符串 “script”；
-
-
-
+先创建一个能容纳 10 个字符的新字符串，然后在这个字符串中填充 “java” 和 “script”，最后一步是销毁原来字符串 "java" 和字符串 “script”；
 
 ### Object ###
 - 对象（object）是 JavaScript 的核心概念，也是最重要的数据类型；
@@ -409,9 +383,9 @@ lang = lang + "script"
 - 对象可分为三种类型：**狭义的对象（object）、数组（array）、函数（function）**；
 其中，狭义的对象和数组是两种不同的数据组合方式，而函数其实是处理数据的方法；
 
-- 需要明确的是，JavaScript的所有数据，都可以视为广义的对象。不仅数组和函数属于对象，就连原始类型的数据（数值、字符串、布尔值）也可以用对象方式调用；
+- 需要明确的是，JavaScript 的所有数据，都可以视为广义的对象。不仅数组和函数属于对象，就连原始类型的数据（数值、字符串、布尔值）也可以用对象方式调用；
 
-#### 狭义 Object ####
+#### 狭义 Object 
 - 对象是一种无序的数据集合，由若干个“键值对”（key-value）构成；
 
 - 对象的创建通常有三种方法：
@@ -424,7 +398,7 @@ lang = lang + "script"
 	- 对象通过 new 操作符创建：
 	```javascript
 	var o = new Object();
-	var 0 = new Object;//若构造函数不带参数，可省略括号，但不推荐省略括号
+	var 0 = new Object;// 若构造函数不带参数，可省略括号，但不推荐省略括号
 	```
 
 	- 使用 Object.create 方法创建（这种写法一般用在需要对象继承的场合）：
@@ -446,7 +420,7 @@ lang = lang + "script"
 	```
 	{ foo: 123 }
 	```
-	为了避免这种歧义，JavaScript规定，如果行首是大括号，一律解释为语句（即代码块）；如果要解释为表达式（即对象），必须在大括号前加上圆括号；
+	为了避免这种歧义，JavaScript 规定，如果行首是大括号，一律解释为语句（即代码块）；如果要解释为表达式（即对象），必须在大括号前加上圆括号；
 
 - 属性
 	- 对象的每一个 “键名” 又称为 “属性”（property），它的 “键值” 可以是任何数据类型；
@@ -479,9 +453,9 @@ lang = lang + "script"
 	```
 
 - delete 操作符用于删除对象的属性，删除成功后返回 true；
-	注意：delete命令不能删除var命令声明的变量，只能用来删除属性；
+	注意：delete 命令不能删除 var 命令声明的变量，只能用来删除属性；
 
-- in运算符用于检查对象是否包含某个属性（注意，检查的是键名，不是键值），如果包含就返回true，否则返回false；
+- in 运算符用于检查对象是否包含某个属性（注意，检查的是键名，不是键值），如果包含就返回 true，否则返回 false；
 	例：浏览器环境中检查变量是否已被声明：
 	```javascript
 	if ('a' in window) {
@@ -499,22 +473,18 @@ lang = lang + "script"
 		如果只想遍历对象本身的属性，可以使用 hasOwnProperty 方法，在循环内部判断一下是不是自身的属性；
 		- 一般情况下，都是只想遍历对象自身的属性，所以不推荐直接使用 for...in 循环；
 
-	JavaScript中遍历对象的多种方法：https://huixisheng.github.io/object-loop/
+	JavaScript 中遍历对象的多种方法：https://huixisheng.github.io/object-loop/
 	
 
+#### 数组 Array
 
-
-
-
-#### 数组 Array ####
-
-- 数组（array）是按次序排列的一组值，每个值的位置都有编号（从0开始），整个数组用方括号表示；
+- 数组（array）是按次序排列的一组值，每个值的位置都有编号（从 0 开始），整个数组用方括号表示；
 - 数组的创建方式一般有两种：
 	- 使用 Array 构造函数：
 	```javascript
 	var arr = new Array();
-	var arr = new Array(20);// 创建长度为20的数组，其中每一项的初始值都是 undefined
-	var arr = new Array("one", "two", "three");// 创建长度为3，且每一项都是字符串的数组
+	var arr = new Array(20);// 创建长度为 20 的数组，其中每一项的初始值都是 undefined
+	var arr = new Array("one", "two", "three");// 创建长度为 3，且每一项都是字符串的数组
 	var arr = Array();// 可省略 new 操作符
 	```
 	- 使用方括号 []：
@@ -525,7 +495,7 @@ lang = lang + "script"
 - 在 JavaScript 中，数组的长度可以通过 length 属性获取，且 length 属性是可写的，可通过该属性动态调整数组长度；
 - 本质上，数组属于一种特殊的对象。typeof 运算符会返回数组的类型是 object；
 - 数组的键名是数值类型，但也可以是表示数值的字符串类型（会自动进行隐式类型转换）；
-- 检查某个键名是否存在的运算符in，适用于对象，也适用于数组（数组是一种特殊对象）；
+- 检查某个键名是否存在的运算符 in，适用于对象，也适用于数组（数组是一种特殊对象）；
 ```javascript
 	var arr = [ 'a', 'b', 'c' ];
 	2 in arr  // true
@@ -536,12 +506,12 @@ lang = lang + "script"
 ```javascript
 	var a = [1, 2, 3];
 	
-	// for循环
+	// for 循环
 	for(var i = 0; i < a.length; i++) {
 	  console.log(a[i]);
 	}
 	
-	// while循环
+	// while 循环
 	var i = 0;
 	while (i < a.length) {
 	  console.log(a[i]);
@@ -559,10 +529,7 @@ lang = lang + "script"
 	})
 ```
 
-
-
-#### 函数 Function ####
-
+#### 函数 Function 
 
 - 函数是一个特殊的对象（可被调用且有独立作用域）；
 
@@ -574,7 +541,7 @@ lang = lang + "script"
 		console.log(s);
 	}
 	```
-	采用函数表达式声明函数时，function命令后面不带有函数名。如果加上函数名，该函数名只在函数体内部有效，在函数体外部无效；
+	采用函数表达式声明函数时，function 命令后面不带有函数名。如果加上函数名，该函数名只在函数体内部有效，在函数体外部无效；
 	- 使用函数表示式
 	```javascript
 	var print = function(s) {
@@ -609,7 +576,7 @@ lang = lang + "script"
 	fib(6) // 8
 ```
 
-- JavaScript 把函数当成一种数据类型，可以像其他类型的数据一样，进行赋值和传递，这为编程带来了很大的灵活性，体现了JavaScript作为 “**函数式语言**” 的本质，在JavaScript语言中又称函数为**第一等公民**；
+- JavaScript 把函数当成一种数据类型，可以像其他类型的数据一样，进行赋值和传递，这为编程带来了很大的灵活性，体现了 JavaScript 作为 “**函数式语言**” 的本质，在 JavaScript 语言中又称函数为**第一等公民**；
 ```javascript
 	function add(x, y) {
 	  return x + y;
@@ -648,7 +615,7 @@ lang = lang + "script"
 	f = function () {};
 	// 调用 f 的时候，f 只是被声明了，还没有被赋值，等于 undefined，所以会报错
 ```
-因此，如果同时采用function命令和赋值语句声明同一个函数，最后总是采用赋值语句的定义：
+因此，如果同时采用 function 命令和赋值语句声明同一个函数，最后总是采用赋值语句的定义：
 ```javascript
 	var f = function() {
 	  console.log('1');
@@ -663,7 +630,7 @@ lang = lang + "script"
 
 - 根据 ECMAScript 的规范，不得在非函数的代码块中声明函数，最常见的非函数的代码块就是 if 和 try 语句；
 - 函数内部的变量提升
-与全局作用域一样，函数作用域内部也会产生 “变量提升” 现象，var命令声明的变量，不管在什么位置，变量声明都会被提升到函数体的头部；
+与全局作用域一样，函数作用域内部也会产生 “变量提升” 现象，var 命令声明的变量，不管在什么位置，变量声明都会被提升到函数体的头部；
 ```javascript
 	function foo(x) {
 	  if (x > 100) {
@@ -687,10 +654,10 @@ lang = lang + "script"
 	  return a;
 	}
 	
-	f(1, 2, 3) // 1，运行时无论提供多少个参数（或者不提供参数），JavaScript都不会报错
+	f(1, 2, 3) // 1，运行时无论提供多少个参数（或者不提供参数），JavaScript 都不会报错
 	f(1) // 1
 	f() // undefined
-	f(undefined, 2) // 没有办法只省略靠前的参数，而保留靠后的参数。如果一定要省略靠前的参数，只有显式传入undefined
+	f(undefined, 2) // 没有办法只省略靠前的参数，而保留靠后的参数。如果一定要省略靠前的参数，只有显式传入 undefined
 	
 	f.length // 2
 ```
@@ -744,145 +711,279 @@ lang = lang + "script"
 	```
 
 - arguments 对象
-arguments对象包含了函数运行时的所有参数，这个对象只有在函数体内部，才可以使用；
-	- arguments[0]就是第一个参数，arguments[1]就是第二个参数，以此类推；
+arguments 对象包含了函数运行时的所有参数，这个对象只有在函数体内部，才可以使用；
+	- arguments[0] 就是第一个参数，arguments[1] 就是第二个参数，以此类推；
 	- arguments.length：函数调用时实际传递的参数；
 
-
-
-
-
-#### 包装类型 ####
+#### 包装类型 
 
 ECMAScript 中每个原始数据类型都存在对应的包装类型：String、Number、Boolean；
 
 例：
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/262f2e3b65b49ed14f28e707115801e0.jpg)
 
-
 - 为什么原始类型可以有 length 属性？为什么动态赋值一个属性 t 后又变成了 undefined？   
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/de3e87429742ba0aab805b2a4cc8b311.jpg)   
 当对一个原始数据类型的变量执行 “对象” 的操作时，ECMAScript 会自动创建一个对应的临时包装类型的对象并赋以相同的值，完成用户所需的 “对象” 操作后，又将该临时包装对象销毁。   
 因此，原始类型的字符串可以成功输出 length 属性并动态赋一个新的属性值，但赋值后该包装类即被销毁故为 undefined。
 
+##### Number
 
+##### String
 
+##### Boolean
 
-##### Number #####
+#### Math 
 
+#### Date
 
+#### RegExp
 
-##### String #####
+#### JSON 
 
+#### console
 
-##### Boolean #####
+#### 内置对象
 
-
-
-#### Math ####
-
-
-#### Date ####
-
-
-#### RegExp ####
-
-
-#### JSON ####
-
-
-#### console ####
-
-
-
-#### 内置对象 ####
-
-
-
-
-
-
-### 数据类型转换 ###
+### 数据类型转换 
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/636660656ff60630d6afaa4e0b37fe8a.jpg)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/5bcb6e749ea0564b0a70c68778cc8500.jpg)
 
-
-
-
-
-## 异常处理 ##
-
+## 异常处理
 
 ```javascript
-console.log("a");    //這是正確的
-console.log("b");    //這是正確的
-console.logg("c");   //这是错误的，并且到这里会停下来
-console.log("d");    //這是正確的
-console.log("e");    //這是正確的
+console.log("a");    // 這是正確的
+console.log("b");    // 這是正確的
+console.logg("c");   // 这是错误的，并且到这里会停下来
+console.log("d");    // 這是正確的
+console.log("e");    // 這是正確的
 
 /*解決辦法*/
-try{console.log("a");}catch(e){}    //這是正確的
-try{console.log("b");}catch(e){}    //這是正確的
-try{console.logg("c");}catch(e){}   //这是错误的，但是到这里不会停下来，而是跳过
-try{console.log("d");}catch(e){}    //這是正確的
-try{console.log("e");}catch(e){}    //這是正確的
+try{console.log("a");}catch(e){}    // 這是正確的
+try{console.log("b");}catch(e){}    // 這是正確的
+try{console.logg("c");}catch(e){}   // 这是错误的，但是到这里不会停下来，而是跳过
+try{console.log("d");}catch(e){}    // 這是正確的
+try{console.log("e");}catch(e){}    // 這是正確的
 ```
 
+## 面向对象 OOP
+参考：[Javascript 继承机制的设计思想](http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html )
 
+> 学习 Javascript，最难的地方是什么？
+> 
+> 我觉得，Object（对象）最难。因为 Javascript 的 Object 模型很独特，和其他语言都不一样，初学者不容易掌握。
 
+### 封装
 
+Javascript 是一种基于对象（object-based）的语言，你遇到的所有东西几乎都是对象。但是，它又不是一种真正的面向对象编程（OOP）语言，因为它的语法中没有 class（类）。
 
-## 面向对象 OOP ##
-Javascript继承机制的设计思想 http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html 
+为了解决从原型对象生成实例的问题，Javascript 提供了一个构造函数（Constructor）模式。
 
+所谓"构造函数"，其实就是一个普通函数，但是内部使用了 this 变量。对构造函数使用 new 运算符，就能生成实例，并且 this 变量会绑定在实例对象上。这类函数设计来和 new 操作符一起使用的。为了和一般的函数对象有所区别，这类函数的首字母一般都大写。
 
+例：
 
+猫的原型对象现在可以这样写，
+```
+var Cat = function (name,color) {
+　this.name=name;
+　this.color=color;
+	this.sayHello = function () {
+		alert('hello');
+	};
+}
+```
+生成实例对象：
+```
+var cat1 = new Cat("大毛","黄色");
+var cat2 = new Cat("二毛","黑色");
+alert(cat1.name); // 大毛
+alert(cat1.color); // 黄色
+```
+这时 cat1 和 cat2 会自动含有一个 constructor 属性，指向它们的构造函数。
+```
+alert(cat1.constructor == Cat); //true
+alert(cat2.constructor == Cat); //true
+```
+Javascript 还提供了一个 instanceof 运算符，验证原型对象与实例对象之间的关系。
+```
+alert(cat1 instanceof Cat); //true
+alert(cat2 instanceof Cat); //true
+```
 
-### 继承 ###
+### `prototype` 和 `__proto__`
 
+#### prototype
 
+通过 new 运算符使用构造函数生成实例对象，有一个缺点，那就是无法共享属性和方法，这就导致了每一次生成一个实例，都必须为重复的内容，多占用一些内存。这样既不环保，也缺乏效率。
 
+如，在 DOG 对象的构造函数中，设置一个实例对象的共有属性 species。
+```javascript
+function DOG(name){
+　　this.name = name;
+　　this.species = '犬科';
+}
+```
+然后，生成两个实例对象：
+```javascript
+var dogA = new DOG('大毛');
 
-## 匿名函数 ##
+var dogB = new DOG('二毛');
+```
+这两个对象的 species 属性是独立的，修改其中一个，不会影响到另一个。**每一个实例对象，都有自己的属性和方法的副本。这不仅无法做到数据共享，也是极大的资源浪费。**
 
-### 递归 ###
+因此，JavaScript 之父 Brendan Eich 为每一个构造函数设置了一个**prototype 属性**，这个属性指向一个对象（以下简称"prototype 对象"），这个对象的所有属性和方法，都会被构造函数的实例继承。**所有实例对象需要共享的属性和方法，都放在这个对象里面；那些不需要共享的属性和方法，就放在构造函数里面**。实例对象一旦创建，将自动引用 prototype 对象的属性和方法。也就是说，实例对象的属性和方法，分成两种，一种是本地的，另一种是引用的。
 
+例如：定义了`function Foo() {this.name='name';}`后，Foo 对象会自动包含 prototype 属性，该属性指向一个对象：      
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/2/f42e44b1e111bee2298a70ff0b7b28d6.jpg)
+prototype 对象默认会包含两个属性：constructor 和`__proto__`，其中`__proto__`有部分浏览器不支持。
 
-### 闭包 ###
-闭包（closure）是Javascript语言的一个难点，也是它的特色，很多高级应用都要依靠闭包实现；
+当我们的代码需要一个属性的时候，Javascript 的引擎会先看当前的这个对象中是否有这个属性，如果没有的话，就会查找他的 Prototype 对象是否有这个属性，一直继续下去，直到找到或是直到没有 Prototype 对象。
+
+例：
+```
+function DOG(name){
+　　this.name = name;
+}
+DOG.prototype = { species : '犬科' };
+var dogA = new DOG('大毛');
+var dogB = new DOG('二毛');
+
+alert(dogA.species); // 犬科
+alert(dogB.species); // 犬科
+```
+现在，species 属性放在 prototype 对象里，是两个实例对象共享的。只要修改了 prototype 对象，就会同时影响到两个实例对象。
+```
+DOG.prototype.species = '猫科';
+alert(dogA.species); // 猫科
+alert(dogB.species); // 猫科
+```
+
+由于所有的实例对象共享同一个 prototype 对象，那么从外界看起来，prototype 对象就好像是实例对象的原型，而实例对象则好像"继承"了 prototype 对象一样。
+
+- 辨析：prototype 和原型：
+	- prototype 是每个对象上预设的对象属性
+	- 原型，就相当于 Java、cpp 中的类，实例化后就是一个实例对象，通常是构造器的 prototype 属性
+
+##### prototype 模式的相关方法
+
+为了配合 prototype 属性，Javascript 定义了一些辅助方法，帮助我们使用它。
+
+###### isPrototypeOf()
+
+这个方法用来判断，某个 proptotype 对象和某个实例之间的关系。
+```javascript
+alert(Cat.prototype.isPrototypeOf(cat1)); //true
+alert(Cat.prototype.isPrototypeOf(cat2)); //true
+```
+###### hasOwnProperty()
+
+每个实例对象都有一个 hasOwnProperty() 方法，用来判断某一个属性到底是本地属性，还是继承自 prototype 对象的属性。
+```javascript
+alert(cat1.hasOwnProperty("name")); // true
+alert(cat1.hasOwnProperty("type")); // false
+```
+###### in 运算符
+
+in 运算符可以用来判断，某个实例是否含有某个属性，不管是不是本地属性。
+```javascript
+alert("name" in cat1); // true
+alert("type" in cat1); // true
+```
+in 运算符还可以用来遍历某个对象的所有属性。
+```javascript
+for (var prop in cat1) { 
+	alert("cat1["+prop+"]="+cat1[prop]); 
+}
+```
+
+#### `__proto__`
+
+prototype 是原型 / 构造函数的属性，而`__proto__`是实例对象的属性，指向原型 / 构造函数的 prototype 属性对象。
+
+### 继承的实现：原型链
+
+JavaScript 中没有“类”的概念，因此在 JavaScript 中，OOP 通过原型链实现继承。
+
+<!-- TODO: 三个视频都很重要，都要详细看然后记笔记 -->
+http://www.imooc.com/video/7053
+
+http://www.imooc.com/video/7054
+
+http://www.imooc.com/video/7055
+
+http://www.imooc.com/video/7680
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/2/fb1e1204ab4c117cf91100a4a6f2b4c8.jpg)
+
+注意：
+
+- 并不是所有的对象原型链上都有 Object.prototype
+		例：
+		```javascript
+		var obj=Object.create(null);
+
+		obj.__proto__//undefined
+		obj.toString()//undefined
+		```
+	
+- 并不是所有的对象都有 prototype 属性
+		例：
+		```javascript
+		function abc() {}
+		abc.prototype//abc{}
+		var bined = abc.bind(null);
+
+		typeof binded//"function"
+		binded.prototype//undefined
+		```
+
+## 匿名函数 
+
+### 递归
+
+### 闭包 
+闭包（closure）是 Javascript 语言的一个难点，也是它的特色，很多高级应用都要依靠闭包实现；
 
 http://javascript.ruanyifeng.com/grammar/function.html
 
+### 仿块级作用域 
 
+### 私有变量 
 
-### 仿块级作用域 ###
+### 立即调用的函数表达式 (IIFE)
 
-
-
-
-### 私有变量 ###
-
-
-
-### 立即调用的函数表达式 ###
 https://www.cnblogs.com/TomXu/archive/2011/12/31/2289423.html 
 
+通常情况下，只对匿名函数使用这种“立即执行的函数表达式”。它的目的有两个：一是不必为函数命名，避免了污染全局变量；二是 IIFE 内部形成了一个单独的作用域，可以封装一些外部无法读取的私有变量。
 
+例：
+```javascript
+// 写法一
+var tmp = newData;
+processData(tmp);
+storeData(tmp);
 
+// 写法二
+(function (){
+  var tmp = newData;
+  processData(tmp);
+  storeData(tmp);
+}());
+```
+上面代码中，写法二比写法一更好，因为完全避免了污染全局变量。
 
+## Refer
 
-
-
-
-
-
-
-## Refer ##
-阮一峰的JavaScript教程：   
+阮一峰的 JavaScript 教程：   
 http://javascript.ruanyifeng.com/    
 http://www.ruanyifeng.com/blog/javascript/    
+http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html         
+http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html          
+http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html          
+http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html            
 
 廖雪峰的 JavaScript 教程：   
 https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000   
@@ -893,38 +994,6 @@ http://www.w3school.com.cn/js/
 imooc JavaScript 深入浅出：    
 http://www.imooc.com/learn/277    
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+COOLSHELL JavaScript 面向对象编程：         
+https://coolshell.cn/articles/6441.html         
+https://coolshell.cn/articles/6668.html            
