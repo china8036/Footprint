@@ -848,7 +848,9 @@ UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI
 #### 页面跳转
 
 ##### 使用 ui-sref 指令
+
 点击该指令配置的标签后，会跳转到对应的路由页面，且在跳转时支持参数传递
+
 例：  
 ```javascript
 <a ui-sref="main({id:1234})">
@@ -884,7 +886,9 @@ UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI
 ```
 
 ##### 使用 $state 服务
+
 在 ui-router 时，可以使用 $state 来完成页面跳转，而不是直接操作 URL。    
+
 例：   
 页面跳转
 ```javascript
@@ -1041,6 +1045,8 @@ $stateProvider.state('home', {
 
 https://ui-router.github.io/ng1/docs/latest/classes/transition.transition-1.html
 
+https://ui-router.github.io/ng1/docs/latest/interfaces/transition.hookmatchcriteria.html
+
 ### onEnter
 
 > onEnter(criteria: HookMatchCriteria, callback: TransitionStateHookFn, options?: HookRegOptions)
@@ -1073,17 +1079,20 @@ angular.module('app').run(['$transitions', '$cookies', '$state', function ($tran
 			}
 		})
 ```
-注意：若要在回调函数中进行state重定向，直接执行`$state.go('xxx')`会报错Transition Rejection：     
+注意：若要在回调函数中进行 state 重定向，直接执行`$state.go('xxx')`会报错 Transition Rejection：     
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/1049ea009eefc654d564c266cd450d9e.jpg)
 
-要解决此问题，要使用上例中的方法，即`return $state.target('xxx');`，使用[TargetState](https://ui-router.github.io/ng1/docs/latest/classes/state.stateservice.html#target)。
+要解决此问题，要使用上例中的方法，即`return $state.target('xxx');`，使用 [TargetState](https://ui-router.github.io/ng1/docs/latest/classes/state.stateservice.html#target)。
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/5515e4ebeb63f37163de7f92d8783d67.jpg)
+
 ### onExit
 
 > onExit(criteria: HookMatchCriteria, callback: TransitionStateHookFn, options?: HookRegOptions)
 
 The HookMatchCriteria is used to determine which Transitions the hook should be invoked for. onExit hooks generally specify { exiting: 'somestate' }. To match all Transitions, use an empty criteria object {}.
+
+注：在 onExit 中若要使用返回布尔值的 function 判断是否拦截路由，应使用 from 而不是 to。
 
 ## 指令系统
 

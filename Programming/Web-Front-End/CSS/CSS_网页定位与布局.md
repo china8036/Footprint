@@ -18,7 +18,14 @@
     - [概述](#%E6%A6%82%E8%BF%B0)
     - [float 属性](#float-%E5%B1%9E%E6%80%A7)
     - [clear 属性](#clear-%E5%B1%9E%E6%80%A7)
-    - [实例 ###](#%E5%AE%9E%E4%BE%8B)
+    - [实例：圣杯布局与双飞翼布局](#%E5%AE%9E%E4%BE%8B%EF%BC%9A%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80%E4%B8%8E%E5%8F%8C%E9%A3%9E%E7%BF%BC%E5%B8%83%E5%B1%80)
+      - [圣杯布局](#%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80)
+        - [效果](#%E6%95%88%E6%9E%9C)
+        - [实现思路](#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF)
+        - [另一种实现方式](#%E5%8F%A6%E4%B8%80%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F)
+      - [双飞翼布局](#%E5%8F%8C%E9%A3%9E%E7%BF%BC%E5%B8%83%E5%B1%80)
+        - [实现思路](#%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF)
+      - [比较](#%E6%AF%94%E8%BE%83)
   - [弹性布局：Flex](#%E5%BC%B9%E6%80%A7%E5%B8%83%E5%B1%80%EF%BC%9Aflex)
     - [概述](#%E6%A6%82%E8%BF%B0)
     - [基本概念](#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
@@ -92,11 +99,11 @@ display 是 CSS 中最重要的用于控制布局的属性。每个元素都有�
 ### block ###
 块级元素，如 div、h1、p、form、table、pre、dl、ol、ul；
 
-块级元素会尽可能的充满全部 width，多个block元素会各自新起一行。默认情况下，block元素宽度自动填满其父元素宽度。因此它们从上到下一个接一个地排列，框之间的垂直距离是由框的垂直外边距计算出来；
+块级元素会尽可能的充满全部 width，多个 block 元素会各自新起一行。默认情况下，block 元素宽度自动填满其父元素宽度。因此它们从上到下一个接一个地排列，框之间的垂直距离是由框的垂直外边距计算出来；
 
-block元素可以设置width,height属性。块级元素即使设置了宽度,仍然是独占一行。
+block 元素可以设置 width,height 属性。块级元素即使设置了宽度，仍然是独占一行。
 
-block元素可以设置margin和padding属性。
+block 元素可以设置 margin 和 padding 属性。
 
 - 设置块元素水平居中的方法：
   可以通过设置块级元素的 width 以防止它从左到右撑满整个容器，然后再设置左右外边距为 auto 来使其水平居中（auto 即元素会占据你所指定的宽度，然后剩余的宽度会一分为二成为左右外边距）：
@@ -118,18 +125,16 @@ block元素可以设置margin和padding属性。
 ### inline ###
 行内元素，如 span、strong、a、em、label、input、select、textarea、img、br；
 
-inline元素不会独占一行，多个相邻的行内元素会排列在同一行里，直到一行排列不下，才会新换一行，其宽度随元素的内容而变化。
+inline 元素不会独占一行，多个相邻的行内元素会排列在同一行里，直到一行排列不下，才会新换一行，其宽度随元素的内容而变化。
 
-inline元素设置width, height属性无效，但高度可以通过line-height来设置。
+inline 元素设置 width, height 属性无效，但高度可以通过 line-height 来设置。
 
-inline元素的margin和padding属性，水平方向的padding-left, padding-right, margin-left, margin-right都产生边距效果；但竖直方向的padding-top, padding-bottom, margin-top, margin-bottom不会产生边距效果，设置无效。
-
+inline 元素的 margin 和 padding 属性，水平方向的 padding-left, padding-right, margin-left, margin-right 都产生边距效果；但竖直方向的 padding-top, padding-bottom, margin-top, margin-bottom 不会产生边距效果，设置无效。
 
 ### inline-block ###
 inline-block 即行内块元素；
 
-简单来说就是将对象呈现为inline对象，但是对象的内容作为block对象呈现。之后的内联对象会被排列在同一行内。比如我们可以给一个link（a元素）inline-block属性值，使其既具有block的宽度高度特性又具有inline的同行特性。
-
+简单来说就是将对象呈现为 inline 对象，但是对象的内容作为 block 对象呈现。之后的内联对象会被排列在同一行内。比如我们可以给一个 link（a 元素）inline-block 属性值，使其既具有 block 的宽度高度特性又具有 inline 的同行特性。
 
 例：
 ```css
@@ -208,14 +213,11 @@ inline-block 即行内块元素；
       }
       ```
 
-
-
 ### none ###
 在不删除元素的情况下隐藏元素，且不占用文档中的空间；
 
 注意：
 设置 ` visibility: hidden;` 只是将元素隐藏，同样会占用文档空间；
-
 
 ### flex ###
 使用 flex 布局；
@@ -251,7 +253,7 @@ CSS 定位 (Positioning) 属性定义了元素的定位方式；
 注意，在使用相对定位时，无论是否进行移动，元素仍然占据原来的空间。因此，移动元素会导致它覆盖其它框。
 
 ### 绝对定位 absolute ###
-元素框从文档流完全删除，生成绝对定位的元素，**相对本身最近的具有定位属性（除了static）的父元素**进行定位，元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定；
+元素框从文档流完全删除，生成绝对定位的元素，**相对本身最近的具有定位属性（除了 static）的父元素**进行定位，元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定；
 
 例：
 ```css
@@ -311,15 +313,46 @@ clear 属性被用于控制浮动，浮动布局中可使用 clear 属性规定�
 - both：在左右两侧均不允许浮动元素。
 - inherit：规定应该从父元素继承 clear 属性的值。
 
-### 实例 ###   
-（PC Web 常用布局结构）     
-圣杯布局（Holy Grail Layout）指的是一种最常见的网站布局。页面从上到下，分成三个部分：头部（header），躯干（body），尾部（footer）。其中躯干又水平分成三栏，从左到右为：导航、主栏、副栏。    
+### 实例：圣杯布局与双飞翼布局
+
+https://www.cnblogs.com/imwtr/p/4441741.html
+
+https://www.zhihu.com/question/21504052
+
+#### 圣杯布局
+
+##### 效果
+
+圣杯布局 (Holy Grail Layout) 的来历是 2006 年发在 a list part 上的[这篇文章](https://link.zhihu.com/?target=http%3A//www.alistapart.com/articles/holygrail/)，指的是一种最常见的网站布局。页面从上到下，分成三个部分：头部（header），躯干（body），尾部（footer）。其中躯干又水平分成三栏，从左到右为：导航、主栏、副栏。    
+
+左 (200px) 右 (220px) 宽度固定，中间自适应，container 部分高度保持一致：        
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/f89420c4c576045a8c2d19ecdf7592c7.jpg)
+
+##### 实现思路
+
+html 代码中  middle 部分首先要放在 container 的最前部分，然后是 left,right：
+
+    1. 将三者都 float:left , 再加上一个 position:relative （因为相对定位后面会用到）
+
+    2. middle 部分 width:100% 占满
+
+    3. 此时 middle 占满了，所以要把 left 拉到最左边，使用 margin-left:-100%
+
+    4. 这时 left 拉回来了，但会覆盖 middle 内容的左端，要把 middle 内容拉出来，所以在外围 container 加上 padding:0 220px 0 200px
+
+    5. middle 内容拉回来了，但 left 也跟着过来了，所以要还原，就对 left 使用相对定位 left:-200px  同理，right 也要相对定位还原 right:-220px
+
+    6. 到这里大概就自适应好了。如果想 container 高度保持一致可以给 left middle right 都加上 min-height:130px
+
+##### 另一种实现方式
+
 http://www.imooc.com/learn/57
+
 ```html
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>混合布局</title>
+    <title>圣杯布局</title>
     <style>
     body {
         margin: 0;
@@ -403,14 +436,60 @@ http://www.imooc.com/learn/57
 
 </html>
 ```
+效果：
+
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/afa1ec968fd859827b8ec8758a7deb05.jpg)
 
-## 弹性布局：Flex ##
+
+#### 双飞翼布局
+
+圣杯布局的实现方式有个问题，当面板的main部分比两边的子面板宽度小的时候,布局就会乱掉。因此也就有了双飞翼布局来克服这个问题。如果不增加任何标签，想实现更完美的布局非常困难，因此双飞翼布局在主面板上选择了添加一个标签。
+
+双飞翼据考源自淘宝UED玉伯，如果把三栏布局比作一只大鸟，可以把main看成是鸟的身体，sub和extra则是鸟的翅膀。
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/0ca2770f92ebd8bc4eeec93bad7095d8.jpg)
+
+##### 实现思路
+
+这个布局的实现思路是，先把最重要的身体部分放好，然后再将翅膀移动到适当的地方。
+
+左翅sub有200px,右翅extra..220px.. 身体main自适应未知
+
+    1. html代码中，main要放最前边，sub  extra
+
+    2. 将main  sub  extra 都float:left
+
+    3. 将main占满 width:100%
+
+    4. 此时main占满了，所以要把sub拉到最左边，使用margin-left:-100%  同理 extra使用margin-left:-220px（这时可以直接继续上边圣杯布局的步骤，也可以有所改动）
+
+    5. main内容被覆盖了吧，除了使用外围的padding，还可以考虑使用margin。给main增加一个内层div-- main-inner, 然后margin:0 220px 0 200px。
+
+    6. main正确展示
+
+
+#### 比较
+
+https://www.zhihu.com/question/21504052
+
+圣杯布局和双飞翼布局要实现的效果是一样的，就是两边顶宽，中间自适应的三栏布局，**中间栏要在放在文档流前面以优先渲染**。
+
+圣杯布局和双飞翼布局解决问题的方案在前一半是相同的，也就是三栏全部float浮动，但左右两栏加上负margin让其跟中间栏div并排，以形成三栏布局。
+
+不同在于解决”中间栏div内容不被遮挡“问题的思路不一样：
+- 圣杯布局，为了中间div内容不被遮挡，将中间div设置了左右padding-left和padding-right后，将左右两个div用相对布局position: relative并分别配合right和left属性，以便左右两栏div移动后不遮挡中间div。
+
+- 双飞翼布局，为了中间div内容不被遮挡，直接在中间div内部创建子div用于放置内容，在该子div里用margin-left和margin-right为左右两栏div留出位置。多了1个div，少用大致4个css属性（圣杯布局中间divpadding-left和padding-right这2个属性，加上左右两个div用相对布局position: relative及对应的right和left共4个属性，一共6个；而双飞翼布局子div里用margin-left和margin-right共2个属性，6-2=4），个人感觉比圣杯布局思路更直接和简洁，且响应式更好。
+  
+  简单说起来就是”双飞翼布局比圣杯布局多创建了一个div，但不用相对布局了“，而不是你题目中说的”去掉relative"就是双飞翼布局“。
+
+
+## 弹性布局：Flex 
 
 http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html  
 http://www.ruanyifeng.com/blog/2015/07/flex-examples.html  
 
-### 概述 ###
+### 概述
 传统布局模型（固定布局、流体布局）对于那些特殊布局非常不方便，比如，垂直居中就不容易实现；2009 年，W3C 提出了一种新的方案 ----Flex 布局，可以简便、完整、响应式地实现各种页面布局。目前，它已经得到了所有浏览器的支持，Flex 布局将成为未来布局的首选方案。
 
 Flex 是 Flexible Box 的缩写，意为"弹性布局"，用来为盒状模型提供最大的灵活性。

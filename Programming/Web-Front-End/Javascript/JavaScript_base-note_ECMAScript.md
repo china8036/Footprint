@@ -152,6 +152,26 @@ switch (fruit) {
 }
 ```
 
+ECMAScript 和 Java 中的 switch 语句有两点不同：
+- 在 ECMAScript 中，能用不是常量的值说明 case：
+	
+	例：
+	```javascript
+	var BLUE = "blue", RED = "red", GREEN  = "green";
+
+	switch (sColor) {
+		case BLUE: alert("Blue");
+			break;
+		case RED: alert("Red");
+			break;
+		case GREEN: alert("Green");
+			break;
+		default: alert("Other");
+	}
+	```
+
+- 在 ECMAScript 中，switch 语句可以用于字符串
+
 ### while 循环
 ```
 while (expression) {
