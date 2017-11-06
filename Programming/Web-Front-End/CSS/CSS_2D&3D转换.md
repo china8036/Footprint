@@ -160,11 +160,11 @@ matrix(a,b,c,d,e,f) 方法把所有 2D 转换方法组合在一起，使用六�
 
 - matrix方法中的6个参数对应的矩阵：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/5db8c7a808adc6a917dce99991d80536.jpg)
+  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/ef8adbd97daab0e6ce809d54041c26f8.jpg)
 
   当对坐标为(x, y)的元素进行转换时，实际上会进行以下计算：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/448fc4edfe5f705d472399f9c6289f95.jpg)
+  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/aca1e4b2948caf6d29be96c2111c4b89.jpg)
 
   其中，ax+cy+e表示变换后的水平坐标，bx+dy+f表示变换后的垂直位置。
 

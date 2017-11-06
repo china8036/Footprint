@@ -111,7 +111,7 @@
     vagrant box add metasploitable3-win2k8.box --name Metasploitable3
     ```
 
-    执行完毕后会在C:\user\xxx\.vagrant\boxes\Metasploitable3\0\中生成metasploitable3-win2k8-disk001.vmdk，至此，**可以直接复制该vmdk文件到其它地方，直接在virtualbox中使用现有虚拟硬盘新建虚拟机，即可使用**。
+    执行完毕后会在 `C:\user\xxx\vagrant\boxes\Metasploitable3\0\` 中生成 metasploitable3-win2k8-disk001.vmdk，至此，**可以直接复制该vmdk文件到其它地方，直接在virtualbox中使用现有虚拟硬盘新建虚拟机，即可使用**。
 
 6. 使用vagrant添加并运行虚拟机
 
