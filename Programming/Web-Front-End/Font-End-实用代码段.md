@@ -103,7 +103,7 @@ https://github.com/ruansongsong/H5Skills/blob/master/resources/textoverflow.md
     width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;  /* 超过容器部分显示省略号 */
-    white-space: nowrap; /* 使文本在一行上显示全部 */
+    white-space: nowrap; /* 使文本在一行上显示全部，不加此项效果出不来 */
 }
 ```
 多行文字超出显示省略号：

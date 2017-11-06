@@ -104,8 +104,11 @@ chromedriver 是 google 为网站开发人员提供的自动化测试接口，�
 ### 使用
 
 英文教程：https://selenium-python.readthedocs.io/index.html 
+
 中文教程：https://selenium-python-zh.readthedocs.io/en/latest/index.html 
+
 官方 API 文档：https://seleniumhq.github.io/selenium/docs/api/py/api.html 
+
 python selenium 教程：https://huilansame.github.io/huilansame.github.io/category/ 
 
 #### 获取 webdriver 对象
@@ -118,14 +121,14 @@ from selenium import webdriver
 driver=webdriver.Chrome (executable_path = 'D:\\software\\web\\webDriver\\chromedriver_win32\\chromedriver.exe') 
 
 # 指定 phantomjs.exe 路径，若已添加到环境变量中则参数为空即可
-driver=webdriver.PhantomJS(executable_path = ‘D:\\software\\web\\phantomJS\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe’)
+driver=webdriver.PhantomJS(executable_path = 'D:\\software\\web\\phantomJS\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
 
 # 其他浏览器 webdriver 对象的获取类似
 ```
 
 #### 设置 request header
 
-https://www.urlteam.org/2017/02/selenium%E8%AE%BE%E7%BD%AEchrome%E5%92%8Cphantomjs%E7%9A%84%E8%AF%B7%E6%B1%82%E5%A4%B4%E4%BF%A1%E6%81%AF/ 
+[参考文章](https://www.urlteam.org/2017/02/selenium%E8%AE%BE%E7%BD%AEchrome%E5%92%8Cphantomjs%E7%9A%84%E8%AF%B7%E6%B1%82%E5%A4%B4%E4%BF%A1%E6%81%AF/ )
 
 ##### 设置 phantomjs 请求头
 ```python
