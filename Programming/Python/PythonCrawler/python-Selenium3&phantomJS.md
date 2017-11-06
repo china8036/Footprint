@@ -36,16 +36,16 @@
         - [显式等待](#%E6%98%BE%E5%BC%8F%E7%AD%89%E5%BE%85)
           - [使用 expected_conditions 模块中的预定义条件](#%E4%BD%BF%E7%94%A8-expectedconditions-%E6%A8%A1%E5%9D%97%E4%B8%AD%E7%9A%84%E9%A2%84%E5%AE%9A%E4%B9%89%E6%9D%A1%E4%BB%B6)
           - [使用 lambda 表达式](#%E4%BD%BF%E7%94%A8-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F)
-      - [调用JavaScript](#%E8%B0%83%E7%94%A8javascript)
+      - [调用 JavaScript](#%E8%B0%83%E7%94%A8-javascript)
       - [关闭浏览器](#%E5%85%B3%E9%97%AD%E6%B5%8F%E8%A7%88%E5%99%A8)
       - [程序结构](#%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84)
   - [PhantomJS](#phantomjs)
     - [介绍](#%E4%BB%8B%E7%BB%8D)
     - [安装](#%E5%AE%89%E8%A3%85)
     - [使用](#%E4%BD%BF%E7%94%A8)
-      - [REPL环境](#repl%E7%8E%AF%E5%A2%83)
-      - [webpage模块](#webpage%E6%A8%A1%E5%9D%97)
-      - [system模块](#system%E6%A8%A1%E5%9D%97)
+      - [REPL 环境](#repl-%E7%8E%AF%E5%A2%83)
+      - [webpage 模块](#webpage-%E6%A8%A1%E5%9D%97)
+      - [system 模块](#system-%E6%A8%A1%E5%9D%97)
       - [应用](#%E5%BA%94%E7%94%A8)
         - [过滤资源](#%E8%BF%87%E6%BB%A4%E8%B5%84%E6%BA%90)
         - [截图](#%E6%88%AA%E5%9B%BE)
@@ -815,7 +815,6 @@ driver.quit()
 # 在抛出 TimeoutException 异常之前将等待 10 秒或者在 10 秒内发现了查找的元素。 WebDriverWait 默认情况下会每 500 毫秒调用一次 ExpectedCondition 直到结果成功返回。ExpectedCondition 成功的返回结果是一个布尔类型的 true 或是不为 null 的返回值
 ```
 
-
 ###### 使用 lambda 表达式
 
 例：
@@ -829,71 +828,69 @@ WebDriverWait(driver_item, 10).until(lambda driver: driver.find_element_by_xpath
 WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_xpath('xpath 表达式').is_displayed())
 ```
 
-#### 调用JavaScript
+#### 调用 JavaScript
 1. 	
   ```python
-  # execute_async_script()方法是异步方法，它不会阻塞主线程执行
+  # execute_async_script() 方法是异步方法，它不会阻塞主线程执行
   driver.execute_async_script(js)
   ```
 
 2. 
 
   ```python
-  # execute_script()是同步方法，用它执行js代码会阻塞主线程执行，直到js代码执行完毕
+  # execute_script() 是同步方法，用它执行 js 代码会阻塞主线程执行，直到 js 代码执行完毕
   # execute_script() 方法如果有返回值，有以下几种情况：
-  # 如果返回一个页面元素（document element), 这个方法就会返回一个WebElement
-  # 如果返回浮点数字，这个方法就返回一个double类型的数字
-  # 返回非浮点数字，方法返回Long类型数字
-  # 返回boolean类型，方法返回Boolean类型
-  # 如果返回一个数组，方法会返回一个List<Object>
+  # 如果返回一个页面元素（document element), 这个方法就会返回一个 WebElement
+  # 如果返回浮点数字，这个方法就返回一个 double 类型的数字
+  # 返回非浮点数字，方法返回 Long 类型数字
+  # 返回 boolean 类型，方法返回 Boolean 类型
+  # 如果返回一个数组，方法会返回一个 List<Object>
   # 其他情况，返回一个字符串
-  # 如果没有返回值，此方法就会返回null
+  # 如果没有返回值，此方法就会返回 null
   driver.execute_script(js)
 
-  # 传入WebElement作为参数执行JS
+  # 传入 WebElement 作为参数执行 JS
   div = driver.findElemnt(By.id("myDiv")); 
   driver.execute_script("arguments[0].setAttribute('style', arguments[1])", div, "height: 1000px");
   ```
   例：
   ```python
   # 修改标签体内容
-  driver.execute_script('arguments[0].innerHTML = arguments[1]', title_element, data[i-1][0])
+  driver.execute_script('arguments[0].innerHTML = arguments[1]', title_element, data[i-1](0))
   ```
-
 
 #### 关闭浏览器
 
 ```python
 driver.quit()
-或driver.close()
+或 driver.close()
 # 若不主动关闭浏览器，程序会一直运行
 ```
 
 #### 程序结构
 
-一个页面对象表示在你测试的WEB应用程序的用户界面上的区域。
+一个页面对象表示在你测试的 WEB 应用程序的用户界面上的区域。
 
-使用页面对象模式的好处:
+使用页面对象模式的好处：
 - 创建可复用的代码以便于在多个测试用例间共享；
 - 减少重复的代码量；
 - 如果用户界面变化，只需要修改一处；
 
 <!-- TODO: https://selenium-python-zh.readthedocs.io/en/latest/page-objects.html  -->
 
-
 ## PhantomJS
 
 ### 介绍
 
-phantomJS是一个基于webkit的“无头浏览器”，原生支持多种web 标准：DOM 操作，CSS选择器，JSON，Canvas 以及SVG。
+phantomJS 是一个基于 webkit 的“无头浏览器”，原生支持多种 web 标准：DOM 操作，CSS 选择器，JSON，Canvas 以及 SVG。
 
-PhantomJS的功能，就是提供一个浏览器环境的命令行接口，可以像浏览器解析网页，但不提供图形界面，功能非常强大，比如生成网页的截图、抓取网页数据等。
+PhantomJS 的功能，就是提供一个浏览器环境的命令行接口，可以像浏览器解析网页，但不提供图形界面，功能非常强大，比如生成网页的截图、抓取网页数据等。
 
 ### 安装
 
-PhantomJS安装方法有两种，一种是下载源码之后自己来编译，另一种是直接下载编译好的二进制文件。编译需要的时间太长，而且需要挺多的磁盘空间。官方推荐直接下载二进制文件即可。
+PhantomJS 安装方法有两种，一种是下载源码之后自己来编译，另一种是直接下载编译好的二进制文件。编译需要的时间太长，而且需要挺多的磁盘空间。官方推荐直接下载二进制文件即可。
 
-下载二进制文件phantomJS.exe，然后将路径加入系统环境变量即可。
+下载二进制文件 phantomJS.exe，然后将路径加入系统环境变量即可。
 
 安装完成之后命令行输入
 ```
@@ -902,30 +899,28 @@ phantomjs -v
 
 如果正常显示版本号，那么证明安装成功了。
 
-
-
 ### 使用
 
 http://javascript.ruanyifeng.com/tool/phantomjs.html
 
-#### REPL环境
+#### REPL 环境
 
-phantomjs提供了一个完整的REPL(交互式编程)环境，允许用户通过命令行与PhantomJS互动。在命令行中键入phantomjs，进入该环境后便可输入Javascript命令进行交互。使用ctrl+c可以退出该环境。
+phantomjs 提供了一个完整的 REPL（交互式编程) 环境，允许用户通过命令行与 PhantomJS 互动。在命令行中键入 phantomjs，进入该环境后便可输入 Javascript 命令进行交互。使用 ctrl+c 可以退出该环境。
 
-#### webpage模块
+#### webpage 模块
 
-webpage模块是PhantomJS的核心模块，用于网页操作。
+webpage 模块是 PhantomJS 的核心模块，用于网页操作。
 ```javascript
 var webPage = require('webpage');
 var page = webPage.create();
-//加载PhantomJS的webpage模块，并创建一个实例
+// 加载 PhantomJS 的 webpage 模块，并创建一个实例
 ```
 
-webpage属性和方法：
+webpage 属性和方法：
 
 - open()
 
-  open方法用于打开具体的网页。
+  open 方法用于打开具体的网页。
   ```javascript
   var page = require('webpage').create();
 
@@ -935,10 +930,9 @@ webpage属性和方法：
   });
   ```
 
-
 - evaluate()
 
-  evaluate方法用于打开网页以后，在页面中执行JavaScript代码。
+  evaluate 方法用于打开网页以后，在页面中执行 JavaScript 代码。
   ```javascript
   var page = require('webpage').create();
 
@@ -951,10 +945,9 @@ webpage属性和方法：
   });
   ```
 
-
 - includeJs()
 
-  includeJs方法用于页面加载外部脚本，加载结束后就调用指定的回调函数。
+  includeJs 方法用于页面加载外部脚本，加载结束后就调用指定的回调函数。
   ```javascript
   var page = require('webpage').create();
   page.open('http://www.sample.com', function() {
@@ -965,13 +958,12 @@ webpage属性和方法：
       phantom.exit()
     });
   });
-  //上面的例子在页面中注入jQuery脚本，然后点击所有的按钮。需要注意的是，由于是异步加载，所以phantom.exit()语句要放在page.includeJs()方法的回调函数之中，否则页面会过早退出。
+  // 上面的例子在页面中注入 jQuery 脚本，然后点击所有的按钮。需要注意的是，由于是异步加载，所以 phantom.exit() 语句要放在 page.includeJs() 方法的回调函数之中，否则页面会过早退出。
   ```
-
 
 - render()
 
-  render方法用于将网页保存成图片，参数就是指定的文件名。该方法根据后缀名，将网页保存成不同的格式，目前支持PNG、GIF、JPEG和PDF。
+  render 方法用于将网页保存成图片，参数就是指定的文件名。该方法根据后缀名，将网页保存成不同的格式，目前支持 PNG、GIF、JPEG 和 PDF。
   ```javascript
   var webPage = require('webpage');
   var page = webPage.create();
@@ -982,49 +974,46 @@ webpage属性和方法：
     phantom.exit();
   });
   ```
-  该方法还可以接受一个配置对象，format字段用于指定图片格式，quality字段用于指定图片质量，最小为0，最大为100。
-
+  该方法还可以接受一个配置对象，format 字段用于指定图片格式，quality 字段用于指定图片质量，最小为 0，最大为 100。
 
 - viewportSize,zoomFactor
 
-  viewportSize属性指定浏览器视口的大小，即网页加载的初始浏览器窗口大小；viewportSize的Height字段必须指定，不可省略。
+  viewportSize 属性指定浏览器视口的大小，即网页加载的初始浏览器窗口大小；viewportSize 的 Height 字段必须指定，不可省略。
 
-  zoomFactor属性用来指定渲染时（render方法和renderBase64方法）页面的放大系数，默认是1（即100%）。
-
+  zoomFactor 属性用来指定渲染时（render 方法和 renderBase64 方法）页面的放大系数，默认是 1（即 100%）。
 
 - onResourceRequested
 
-  scriptonResourceRequested属性用来指定一个回调函数，当页面请求一个资源时，会触发这个回调函数。它的第一个参数是HTTP请求的元数据对象，第二个参数是发出的网络请求对象。
+  scriptonResourceRequested 属性用来指定一个回调函数，当页面请求一个资源时，会触发这个回调函数。它的第一个参数是 HTTP 请求的元数据对象，第二个参数是发出的网络请求对象。
 
-  HTTP请求包括以下字段。
+  HTTP 请求包括以下字段。
     - id：所请求资源的编号
-    - method：使用的HTTP方法
+    - method：使用的 HTTP 方法
     - url：所请求的资源 URL
-    - time：一个包含请求时间的Date对象
-    - headers：HTTP头信息数组
+    - time：一个包含请求时间的 Date 对象
+    - headers：HTTP 头信息数组
   网络请求对象包含以下方法。
-    - abort()：终止当前的网络请求，这会导致调用onResourceError回调函数。
-    - changeUrl(newUrl)：改变当前网络请求的URL。
-    - setHeader(key, value)：设置HTTP头信息。
-
+    - abort()：终止当前的网络请求，这会导致调用 onResourceError 回调函数。
+    - changeUrl(newUrl)：改变当前网络请求的 URL。
+    - setHeader(key, value)：设置 HTTP 头信息。
 
 - onResourceReceived
 
-  scriptonResourceReceived属性用于指定一个回调函数，当网页收到所请求的资源时，就会执行该回调函数。它的参数就是服务器发来的HTTP回应的元数据对象，包括以下字段。
+  scriptonResourceReceived 属性用于指定一个回调函数，当网页收到所请求的资源时，就会执行该回调函数。它的参数就是服务器发来的 HTTP 回应的元数据对象，包括以下字段。
     - id：所请求的资源编号
-    - url：所请求的资源的URL r- time：包含HTTP回应时间的Date对象
-    - headers：HTTP头信息数组
+    - url：所请求的资源的 URL r- time：包含 HTTP 回应时间的 Date 对象
+    - headers：HTTP 头信息数组
     - bodySize：解压缩后的收到的内容大小
     - contentType：接到的内容种类
-    - redirectURL：重定向URL（如果有的话）
-    - stage：对于多数据块的HTTP回应，头一个数据块为start，最后一个数据块为end。
-    - status：HTTP状态码，成功时为200。
-    - statusText：HTTP状态信息，比如OK。
-      如果HTTP回应非常大，分成多个数据块发送，onResourceReceived会在收到每个数据块时触发回调函数。
+    - redirectURL：重定向 URL（如果有的话）
+    - stage：对于多数据块的 HTTP 回应，头一个数据块为 start，最后一个数据块为 end。
+    - status：HTTP 状态码，成功时为 200。
+    - statusText：HTTP 状态信息，比如 OK。
+      如果 HTTP 回应非常大，分成多个数据块发送，onResourceReceived 会在收到每个数据块时触发回调函数。
 
-#### system模块
+#### system 模块
 
-system模块可以加载操作系统变量，system.args就是参数数组。
+system 模块可以加载操作系统变量，system.args 就是参数数组。
 
 例：
 
@@ -1049,7 +1038,7 @@ page.open(address, function (status) {
         t = Date.now() - t;
         console.log('Loading time ' + t + ' ms');
     }
-    phantom.exit();//phantom.exit();这句话非常重要，否则程序将永远不会终止。
+    phantom.exit();//phantom.exit(); 这句话非常重要，否则程序将永远不会终止。
 });
 ```
 命令行
@@ -1058,7 +1047,7 @@ $ phantomjs page.js http://www.google.com
 ```
 #### 应用
 
-详见http://cuiqingcai.com/2577.html
+详见 http://cuiqingcai.com/2577.html
 
 ##### 过滤资源
 
@@ -1067,9 +1056,6 @@ $ phantomjs page.js http://www.google.com
 ##### 抓取图片
 
 ##### 生成网页
-
-
-
 
 ## Refer Links
 
