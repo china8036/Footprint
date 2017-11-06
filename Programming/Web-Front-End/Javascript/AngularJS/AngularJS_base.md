@@ -1096,6 +1096,8 @@ The HookMatchCriteria is used to determine which Transitions the hook should be 
 
 ## 指令系统
 
+指令是 AngularJS 的灵魂、最重要的元素；
+
 ### 生命周期
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/d31baf17e0e61ff3117bc42224bc42b8.jpg)
 

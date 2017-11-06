@@ -87,12 +87,7 @@
    
 - 原则
   - 使用高语义化的 HTML 标签  
-    - 使用频率较高的语义标签有：`<p>`、`<em>`、`<strong>`、`<table>`、`<site>`、`<blockquote>`、`<header>`、`<footer>`、`<article>`、`<section>`、`<nav>`、`<aside>` 等；
-    - 例：   
-      由于`<div>`和`<span>`标签是最没有语义的两个标签，因此在使用此类标签时应使用更具语义的标签代替，如 `ul`、`ol`等；    
-      **段落使用 p，引用使用 q 和 blockquote，强调用 em 和 strong，术语定义用 dl，无序列表用 ul，有序列表用 ol，文章用 article，导航用 nav，分节用 section，按钮用 input[type=button]**；  
-      建议的布局模式：        
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/15/2dceb671dc9003016703a694fb66162d.jpg)
+    - 使用频率较高的语义标签有：`<p>`、`<em>`、`<strong>`、`<table>`、`<site>`、`<blockquote>`、`<header>`、`<footer>`、`<article>`、`<section>`、`<nav>`、`<aside>`、`<main>` 等；
 
   - 为 HTML 标签设置必要的属性
     如 alt 和 title 属性的设置，即可提高 HTML 的语义；在`<img>`标签中 alt 属性可用于解释说明图片的额外信息，在`<a>`标签中 title 属性可用于添加额外的说明信息；

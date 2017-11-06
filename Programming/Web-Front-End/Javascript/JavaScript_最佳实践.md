@@ -72,6 +72,9 @@
   但不应在全局中启用严格模式，因为无法保证其它模块的代码也是符合严格模式的；
 
 ## Refer Links
+
 https://zoomzhao.github.io/code-guide/
 
 《Web 前端开发最佳实践》 党建 著
+
+http://yincheng.site/less-coupling

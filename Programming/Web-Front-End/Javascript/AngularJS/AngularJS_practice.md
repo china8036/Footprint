@@ -1,6 +1,7 @@
-<!-- toc -->
+- [AngularJS 开发实践](#angularjs-%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5)
 
-# AngularJS 开发实践 #
+
+# AngularJS 开发实践 
 
 
 - 服务：从服务器加载和保存数据
