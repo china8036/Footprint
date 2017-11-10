@@ -19,20 +19,26 @@
     - [HTML5 调用手机摄像机、相册功能](#html5-%E8%B0%83%E7%94%A8%E6%89%8B%E6%9C%BA%E6%91%84%E5%83%8F%E6%9C%BA%E3%80%81%E7%9B%B8%E5%86%8C%E5%8A%9F%E8%83%BD)
     - [使用 canvas 进行图片压缩](#%E4%BD%BF%E7%94%A8-canvas-%E8%BF%9B%E8%A1%8C%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9)
   - [使用 history 和 window.onpopstate 让 ajax 分页支持前进、后退](#%E4%BD%BF%E7%94%A8-history-%E5%92%8C-windowonpopstate-%E8%AE%A9-ajax-%E5%88%86%E9%A1%B5%E6%94%AF%E6%8C%81%E5%89%8D%E8%BF%9B%E3%80%81%E5%90%8E%E9%80%80)
-  - [不指定高度，实现固定&自适应的高宽比](#%E4%B8%8D%E6%8C%87%E5%AE%9A%E9%AB%98%E5%BA%A6%EF%BC%8C%E5%AE%9E%E7%8E%B0%E5%9B%BA%E5%AE%9A%E8%87%AA%E9%80%82%E5%BA%94%E7%9A%84%E9%AB%98%E5%AE%BD%E6%AF%94)
+  - [不指定高度，实现固定 & 自适应的高宽比](#%E4%B8%8D%E6%8C%87%E5%AE%9A%E9%AB%98%E5%BA%A6%EF%BC%8C%E5%AE%9E%E7%8E%B0%E5%9B%BA%E5%AE%9A-%E8%87%AA%E9%80%82%E5%BA%94%E7%9A%84%E9%AB%98%E5%AE%BD%E6%AF%94)
     - [固定高宽比](#%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%AE%BD%E6%AF%94)
       - [使用 max-height](#%E4%BD%BF%E7%94%A8-max-height)
       - [使用基于宽度的百分比来设置 padding](#%E4%BD%BF%E7%94%A8%E5%9F%BA%E4%BA%8E%E5%AE%BD%E5%BA%A6%E7%9A%84%E7%99%BE%E5%88%86%E6%AF%94%E6%9D%A5%E8%AE%BE%E7%BD%AE-padding)
         - [padding](#padding)
         - [padding & 伪元素](#padding-%E4%BC%AA%E5%85%83%E7%B4%A0)
         - [padding & calc()](#padding-calc)
-        - [padding & CSS变量](#padding-css%E5%8F%98%E9%87%8F)
-      - [使用视窗单位vw](#%E4%BD%BF%E7%94%A8%E8%A7%86%E7%AA%97%E5%8D%95%E4%BD%8Dvw)
+        - [padding & CSS 变量](#padding-css-%E5%8F%98%E9%87%8F)
+      - [使用视窗单位 vw](#%E4%BD%BF%E7%94%A8%E8%A7%86%E7%AA%97%E5%8D%95%E4%BD%8D-vw)
         - [vw](#vw)
         - [vw & CSS Grid](#vw-css-grid)
     - [自适应高宽比](#%E8%87%AA%E9%80%82%E5%BA%94%E9%AB%98%E5%AE%BD%E6%AF%94)
-  - [Retina屏中实现1px的border](#retina%E5%B1%8F%E4%B8%AD%E5%AE%9E%E7%8E%B01px%E7%9A%84border)
-  - [outline圆角实现](#outline%E5%9C%86%E8%A7%92%E5%AE%9E%E7%8E%B0)
+  - [Retina 屏中实现 1px 的 border](#retina-%E5%B1%8F%E4%B8%AD%E5%AE%9E%E7%8E%B0-1px-%E7%9A%84-border)
+  - [outline 圆角实现](#outline-%E5%9C%86%E8%A7%92%E5%AE%9E%E7%8E%B0)
+  - [Android 平台中弹出虚拟键盘对布局的影响](#android-%E5%B9%B3%E5%8F%B0%E4%B8%AD%E5%BC%B9%E5%87%BA%E8%99%9A%E6%8B%9F%E9%94%AE%E7%9B%98%E5%AF%B9%E5%B8%83%E5%B1%80%E7%9A%84%E5%BD%B1%E5%93%8D)
+    - [破坏 fixed 布局](#%E7%A0%B4%E5%9D%8F-fixed-%E5%B8%83%E5%B1%80)
+    - [改变 viewport，导致 vh 变小](#%E6%94%B9%E5%8F%98-viewport%EF%BC%8C%E5%AF%BC%E8%87%B4-vh-%E5%8F%98%E5%B0%8F)
+  - [输入长度限制监控](#%E8%BE%93%E5%85%A5%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E7%9B%91%E6%8E%A7)
+    - [非直接的文字输入](#%E9%9D%9E%E7%9B%B4%E6%8E%A5%E7%9A%84%E6%96%87%E5%AD%97%E8%BE%93%E5%85%A5)
+    - [emoji 表情的输入](#emoji-%E8%A1%A8%E6%83%85%E7%9A%84%E8%BE%93%E5%85%A5)
 
 # JavaScript 实用代码段
 
@@ -231,6 +237,8 @@ Sticky Footer 效果：
     <div class="footer"><!-- 需要做到 Sticky Footer 效果的页脚 --></div>
 </div>
 ```
+
+说明：使用这个布局的前提，就是 footer 要在总的 div 容器之外，footer 使用一个层，其它所有内容使用一个总的层。如果确实需要到添加其它同级层，那这个同级层就必须使用 position:absolute 进行绝对定位。
 
 - 方案一：absolute
 
@@ -591,9 +599,7 @@ var compress = function (res) {
 
 http://yincheng.site/h5-history
 
-
-
-## 不指定高度，实现固定&自适应的高宽比
+## 不指定高度，实现固定 & 自适应的高宽比
 
 https://www.w3cplus.com/css/flexible-images.html
 
@@ -615,8 +621,6 @@ img { max-width: 100%; height: auto; }
 
 #### 使用基于宽度的百分比来设置 padding
 
-
-
 主要的原理是基于元素的 padding-top 或 padding-bottom 是根据元素的 width 进行计算的。假设你有一个 div 容器，它的宽度是 500px，你想让其高度也是和宽度一样，也就是说宽高比例是 1:1。这个时候借助 padding-top 或者 padding-bottom 的值为 100%，就可以计算出容器 div 的高度是 500px。如果我们的 padding-bottom 或 padding-top 不是 100%，而是 56.25%，其实这就是一个完美的宽高比 16:9，也就是 9 / 16 * 100% = 56.25%。
 
 一般情况之下，我们知道图片的尺寸大小，根据纵横比例，我们可以通过下面的公式计算出内距 padding-top 或 padding-bottom 的百分比值：
@@ -625,7 +629,6 @@ padding-top 或 padding-bottom = （背景图片高度 / 背景图片宽度) * 1
 ```
 
 这种方案有一个必要条件，容器 div 的 height 为 0，同时 box-sizing 为 border-box，不然的话，容器不能带有 border。
-
 
 ##### padding
 
@@ -664,10 +667,9 @@ padding-top 或 padding-bottom = （背景图片高度 / 背景图片宽度) * 1
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/e9ec48ae872e138f84f81e9edd9385fd.jpg)
 
-
 ##### padding & 伪元素
 
-就这种方法而言，如果在 div 容器设置了 padding-top（或者 padding-bottom）会造成容器的内容往盒子外推，此时设置了若 `overflow:hidden`，溢出的内容就会看不见了。若把 overflow:hidden 换成 overflow:auto。但也是美中不足，会出现滚动条。因此，可**借助CSS的伪元素来做容器的高宽比例**：
+就这种方法而言，如果在 div 容器设置了 padding-top（或者 padding-bottom）会造成容器的内容往盒子外推，此时设置了若 `overflow:hidden`，溢出的内容就会看不见了。若把 overflow:hidden 换成 overflow:auto。但也是美中不足，会出现滚动条。因此，可**借助 CSS 的伪元素来做容器的高宽比例**：
 
 https://codepen.io/airen/pen/XbVBZo
 
@@ -679,16 +681,15 @@ https://codepen.io/airen/pen/Rgomao
 
 https://www.w3cplus.com/css/aspect-ratio.html
 
-##### padding & CSS变量
+##### padding & CSS 变量
 
 https://www.w3cplus.com/css/aspect-ratio-boxes.html
 
-
-#### 使用视窗单位vw
+#### 使用视窗单位 vw
 
 ##### vw
 
-16:9对应的就是100vw * 9 / 16 = 56.25vw。这个值可以用在padding-top或者padding-bottom中。但这里演示的不再是padding了，而是把这个值给height。
+16:9 对应的就是 100vw * 9 / 16 = 56.25vw。这个值可以用在 padding-top 或者 padding-bottom 中。但这里演示的不再是 padding 了，而是把这个值给 height。
 
 ```css
 .aspectration[data-ratio="16:9"] {
@@ -701,7 +702,6 @@ https://www.w3cplus.com/css/aspect-ratio-boxes.html
 
 https://www.w3cplus.com/css/aspect-ratio.html
 
-
 ### 自适应高宽比
 
 效果示意图：
@@ -712,21 +712,142 @@ https://www.w3cplus.com/css/aspect-ratio.html
 
 实现方法：https://www.w3cplus.com/css/flexible-images.html
 
-
-
-
-## Retina屏中实现1px的border
+## Retina 屏中实现 1px 的 border
 
 https://www.w3cplus.com/css/fix-1px-for-retina.html
 
-## outline圆角实现
+## outline 圆角实现
 
 http://www.zhangxinxu.com/wordpress/2015/04/css3-radius-outline/
 
-outline没有类似于borderborder-radius属性（只有`-moz-outline-radius`，仅适用于Firefox），但可以通过设置box-shadow来模拟outline的圆角效果：
+outline 没有类似于 borderborder-radius 属性（只有`-moz-outline-radius`，仅适用于 Firefox），但可以通过设置 box-shadow 来模拟 outline 的圆角效果：
 ```css
 img {
   border-radius: 1px;
   box-shadow: 0 0 0 30px #cd0000;
 }
 ```
+
+## Android 平台中弹出虚拟键盘对布局的影响
+
+问题：
+
+- 弹出虚拟键盘后，导致了 viewport 的 height 变小。
+
+- 移动端虚拟键盘出现的条件是：文本框（文本类）获得焦点，但是文本框获得焦点未必会弹出键盘；收起虚拟键盘的条件是：文本框失焦
+
+### 破坏 fixed 布局
+
+http://www.jianshu.com/p/d535e643e59c
+
+http://www.alloyteam.com/2017/03/moves-the-input-box-fill-series-a/
+
+Html5 登录表单，但是登录表单下面有内容是固定在页面最底部。这种布局下，当键盘弹出输入时，ios 手机上是没问题的，但是在安卓手机上，键盘弹出后，页面底部的内容会挡住 form 表单。
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/11/3a77793976020086f983f7d8296f937b.jpg)
+
+- 解决方案 1：采用 css sticky footer 布局
+
+  ```html
+  <div id="wrap">
+      <div id="main" class="clearfix">
+          <div id="content">
+          </div>
+      </div>
+  </div>
+  <div id="footer">
+  </div>
+  ```
+
+  ```css
+  html, body, #wrap {
+    height: 100%;
+  }
+  body > #wrap {
+    height: auto;
+    min-height: 100%;
+  }
+  #main {
+    padding-bottom: 150px;
+  }  /* 必须使用和 footer 相同的高度 */
+  #footer {
+    position: relative;
+    margin-top: -150px; /* footer 高度的负值 */
+    height: 150px;
+    clear:both;
+  }
+
+  /*对 main 进行 clearfix*/
+  .clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  .clearfix {
+    display: inline-block;
+  }
+  /* Hides from IE-mac \*/
+  * html .clearfix { 
+    height: 1%;
+  }
+  .clearfix {
+    display: block;
+  }
+  /* End hide from IE-mac */
+  ```
+
+- 解决方案 2：监控键盘行为，键盘弹出时候将 fixed 元素设置为 static，键盘消失时候将 fixed 元素设置为 fixed
+
+  https://www.cnblogs.com/yexiaochai/p/3561939.html
+
+### 改变 viewport，导致 vh 变小
+
+移动端若要使用视窗单位，最好统一使用 vw。
+
+## 输入长度限制监控
+
+### 非直接的文字输入
+
+当输入汉字时必然会是非直接输入，需要我们点选才能正式输入。
+
+当我们字数限制为 16 个字，需要实时检查是否到 16 字。输入文字时，当有非直接的文字输入时，监听 keydown 事件和 input 事件都会直接触发判断字数逻辑，会截断我们正在输入的文字。
+
+解决办法：
+
+监听 compositionend（当直接的文字输入时触发）这时，当没选中中文的时候不会进行字数判断：
+```javascript
+$('#input').on('compositionend', function(e) {
+  var len = $(this).val().length;
+  if (len > 16) {
+    // 提示超过 16 字
+  }
+});
+```   
+
+### emoji 表情的输入
+
+当输入 emoji 的时候，但是，当输入 emoji 表情的时候，js 中判断 emoji 表情的 length 为 2，因此 emoji 正常应该最多只能输入 8 个，但是 ios 端却把 emoji 的 length 算为 1，可以输入 16 个 emoji。这样就导致了两端的体验不同。因此需要在 js 中来进行字数限制。
+
+再加上汉字的非直接输入问题，那么就加入一个标记位，来判断是否是直接的文字输入。然后监听 input，限制字数，当超过字数限制的时候，把前 16 个字截断显示出来就 ok 了。
+
+```javascript
+var cpLock;
+$('#input').on('compositionstart', function(e) {
+  cpLock = true；
+});
+$('#input').on('compositionend', function(e) {
+  cpLock = false;
+});
+$('#input').on('input', function(e) {
+  if (!cpLock) {
+    if (e.target.value.length - 17 >= 0) {
+      var txt = $(e.target).val().substring(0, 16);
+      $(e.target).val(txt);
+      // 超过 16 字提示
+    }
+  }
+});
+```
+ 
