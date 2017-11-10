@@ -14,10 +14,11 @@
       - [媒体查询设置 font-size](#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E8%AE%BE%E7%BD%AE-font-size)
       - [根据设备 clientWidth 动态设置 font-size](#%E6%A0%B9%E6%8D%AE%E8%AE%BE%E5%A4%87-clientwidth-%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE-font-size)
       - [使用 vw 设置 font-size](#%E4%BD%BF%E7%94%A8-vw-%E8%AE%BE%E7%BD%AE-font-size)
-    - [全局使用 vw、vh、vm](#%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8-vw%E3%80%81vh%E3%80%81vm)
+    - [全局使用视窗单位 vw](#%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8%E8%A7%86%E7%AA%97%E5%8D%95%E4%BD%8D-vw)
+      - [FAQs](#faqs)
   - [参考](#%E5%8F%82%E8%80%83)
 
-# 移动 WebApp 页面适配 #
+# 移动 WebApp 页面适配
 
 >   做过 PC 页面的人聊的最多的就是『兼容』，这是因为浏览器之间的差异引起的，不再多说。而移动端是基本没有『兼容』的问题的，全是 CSS3，简直不要太开心。可是『适配』问题随之而来。
 >
@@ -343,7 +344,7 @@ docEl.style.fontSize = clientWidth / 7.5 + 'px'
 ```
 #### 使用 vw 设置 font-size
 
-<!-- TODO 如果用这种方案怎么计算 css 像素？？？ -->
+<!-- TODO: 如果用这种方案怎么计算 css 像素？？？ -->
 
 ```html
 html{
@@ -362,11 +363,68 @@ html{
 
 则**当要实现设计图上尺寸为 x px 的目标时，代码中的 css 像素为 x/37.5 rem**。
 
-### 全局使用 vw、vh、vm
+### 全局使用视窗单位 vw
 
-缺点：目前兼容性还不如 rem；
+参考：https://www.w3cplus.com/css/vw-for-layout.html
 
-## 参考 ##
+首先在`<head>`中添加viewport设置：
+```html
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+```
+
+- 目前出视觉设计稿，我们都是使用750px宽度的，从上面的原理来看，那么100vw = 750px，即1vw = 7.5px。因此，我们可以根据设计图上的px值直接转换成对应的vw值。为简化计算过程，直接在代码中使用设计稿中的px作为单位而不需要进行任何的计算，可使用PostCSS的插件[postcss-px-to-viewport](https://github.com/evrone/postcss-px-to-viewport)。
+
+
+  那么在哪些地方可以使用vw来适配我们的页面。根据相关的测试：
+    - 容器适配，可以使用vw
+    - 文本的适配，可以使用vw
+    - 大于1px的边框、圆角、阴影都可以使用vw
+    - 内距和外距，可以使用vw
+
+
+
+- 为了更好的实现容器的长宽比缩放，特别是针对于`img`、`vedio`和`iframe`元素，可使用PostCSS插件[postcss-aspect-ratio-mini](https://github.com/yisibl/postcss-aspect-ratio-mini)来实现，在实际使用中，只需要把对应的宽高的比例写进去即可。
+
+
+- 为了解决Retina屏中的1px问题，可使用PostCSS插件[postcss-write-svg](https://github.com/jonathantneal/postcss-write-svg)，自动生成`border-image`或者`background-image`的图片。
+
+- 降级处理：若业务需要兼容不支付vw的机型，有两种方式可以进行降级处理：
+
+  - CSS Houdini：通过CSS Houdini针对vw做处理，调用CSS Typed OM Level1 提供的[CSSUnitValue API](https://www.w3.org/TR/css-typed-om-1/#numericvalue-serialization)。
+  - CSS Polyfill：通过相应的Polyfill做相应的处理，目前针对于vw单位的Polyfill主要有：vminpoly、Viewport Units Buggyfill、vunits.js和Modernizr。个人推荐采用[Viewport Units Buggyfill](https://github.com/rodneyrehm/viewport-units-buggyfill)
+
+
+- 缺陷：
+
+  - 兼容性问题，可通过[css test](http://css3test.com/)进行测试
+
+  - 当容器使用vw单位，margin采用px单位时，很容易造成整体宽度超过100vw，从而影响布局效果。
+    - 对于类似这样的现象，我们可以采用相关的技术进行规避。比如将margin换成padding，并且配合box-sizing。
+    - 只不过这不是最佳方案，随着将来浏览器或者应用自身的Webview对calc()函数的支持之后，碰到vw和px混合使用的时候，可以结合calc()函数一起使用，这样就可以完美的解决。
+
+  - px转换成vw单位，多少还会存在一定的像素差，毕竟很多时候无法完全整除。
+
+  - 若在PC端浏览器查看，无法使用ctrl+滚轮缩放网页大小
+    <!-- TODO: 如何解决此问题？？ -->
+
+#### FAQs
+
+- 用vh布局的时候，手机浏览器顶部的搜索栏那一块有时候会消失，从而影响viewport，这应该怎么办？元素的宽高会变？
+  - 应该用vh还是vw？还是结合使用？
+  
+  - 影响vh的因素太多了 就比如现在越来越多的高度超过16：9的手机 使用vh并不靠谱。所以不管是宽度还是高度 都以viewport宽度作为参照 使用vw单位 就不会有这个问题。
+
+  - 一般场景下不需要使用vh。对于Web应用或者说Web页面，一般情况是**不建议给元素显式的指定高度**，以免宽度缩放后导致元素内容换行而overflow。如果业务需要，才会去指定高度的，那么指定的高度是需要和容器的宽度成一定的比例，那么就应该考虑宽高比相关的方案。
+
+- font-size直接用VW么，这样会不会有小数字体的问题呢？只要不是使用固定单位，都会有你所说的这种现象存在
+
+- 用vw是最好的选择吗？还是vmin或vmax呢？得搞清楚vmin和vmax应该在哪个场景中使用。使用他们的意义是什么？
+
+
+## 参考
+
+CSS3 浏览器支持测试：http://css3test.com/
+
 https://www.cnblogs.com/wenzheshen/p/6589459.html   
 
 http://web.jobbole.com/90084/
@@ -380,3 +438,9 @@ https://zhuanlan.zhihu.com/p/26141351
 https://www.w3cplus.com/css/vw-for-layout.html
 
 http://www.alloyteam.com/2016/03/mobile-web-adaptation-tool-rem/ 
+
+Sass基础——Rem与Px的转换：https://www.w3cplus.com/preprocessor/sass-px-to-rem-with-mixin-and-function.html
+
+再聊移动端页面的适配: https://www.w3cplus.com/css/vw-for-layout.html
+
+再谈Retina下1px的解决方案: https://www.w3cplus.com/css/fix-1px-for-retina.html

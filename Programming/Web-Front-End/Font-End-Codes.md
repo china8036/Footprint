@@ -16,7 +16,23 @@
     - [垂直居中](#%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD)
     - [水平垂直居中](#%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD)
   - [图片上传相关](#%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3)
+    - [HTML5 调用手机摄像机、相册功能](#html5-%E8%B0%83%E7%94%A8%E6%89%8B%E6%9C%BA%E6%91%84%E5%83%8F%E6%9C%BA%E3%80%81%E7%9B%B8%E5%86%8C%E5%8A%9F%E8%83%BD)
+    - [使用 canvas 进行图片压缩](#%E4%BD%BF%E7%94%A8-canvas-%E8%BF%9B%E8%A1%8C%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9)
   - [使用 history 和 window.onpopstate 让 ajax 分页支持前进、后退](#%E4%BD%BF%E7%94%A8-history-%E5%92%8C-windowonpopstate-%E8%AE%A9-ajax-%E5%88%86%E9%A1%B5%E6%94%AF%E6%8C%81%E5%89%8D%E8%BF%9B%E3%80%81%E5%90%8E%E9%80%80)
+  - [不指定高度，实现固定&自适应的高宽比](#%E4%B8%8D%E6%8C%87%E5%AE%9A%E9%AB%98%E5%BA%A6%EF%BC%8C%E5%AE%9E%E7%8E%B0%E5%9B%BA%E5%AE%9A%E8%87%AA%E9%80%82%E5%BA%94%E7%9A%84%E9%AB%98%E5%AE%BD%E6%AF%94)
+    - [固定高宽比](#%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%AE%BD%E6%AF%94)
+      - [使用 max-height](#%E4%BD%BF%E7%94%A8-max-height)
+      - [使用基于宽度的百分比来设置 padding](#%E4%BD%BF%E7%94%A8%E5%9F%BA%E4%BA%8E%E5%AE%BD%E5%BA%A6%E7%9A%84%E7%99%BE%E5%88%86%E6%AF%94%E6%9D%A5%E8%AE%BE%E7%BD%AE-padding)
+        - [padding](#padding)
+        - [padding & 伪元素](#padding-%E4%BC%AA%E5%85%83%E7%B4%A0)
+        - [padding & calc()](#padding-calc)
+        - [padding & CSS变量](#padding-css%E5%8F%98%E9%87%8F)
+      - [使用视窗单位vw](#%E4%BD%BF%E7%94%A8%E8%A7%86%E7%AA%97%E5%8D%95%E4%BD%8Dvw)
+        - [vw](#vw)
+        - [vw & CSS Grid](#vw-css-grid)
+    - [自适应高宽比](#%E8%87%AA%E9%80%82%E5%BA%94%E9%AB%98%E5%AE%BD%E6%AF%94)
+  - [Retina屏中实现1px的border](#retina%E5%B1%8F%E4%B8%AD%E5%AE%9E%E7%8E%B01px%E7%9A%84border)
+  - [outline圆角实现](#outline%E5%9C%86%E8%A7%92%E5%AE%9E%E7%8E%B0)
 
 # JavaScript 实用代码段
 
@@ -497,6 +513,220 @@ http://yincheng.site/crop-upload-photo
 
 图片上传涉及的功能，第一个是支持拖拽，第二个压缩，第三个是裁剪编辑，第四个是上传和上传进度显示。
 
+### HTML5 调用手机摄像机、相册功能
+
+https://www.w3.org/TR/html-media-capture/
+
+http://blog.csdn.net/taohai123/article/details/53302405
+
+https://imys.net/20150916/webapp-input-use-camera.html
+
+不需要特殊环境，使用 input 标签 type 值为 file，可以调用系统默认的照相机、相册、摄像机、录音功能：
+
+```html
+<!-- capture=camera，调用手机相机功能 -->
+<input type="file" accept="image/*;" capture="camera" >
+<!-- capture=camcorder，调用手机摄像功能 -->
+<input type="file" accept="video/*" capture="camcorder" > 
+<!-- capture=microphone，调用手机录音功能 -->
+<input type="file" accept="audio/*" capture="microphone" >
+```
+
+- accept 表示打开的系统文件目录
+
+  NOTE: 若不将 accept 值设置为`image/*`，而是`image/jpeg`、`image/png`等值，则无法在手机端唤起相册
+
+- capture 表示的是系统所捕获的默认设备，camera：照相机；camcorder：摄像机；microphone：录音；
+  
+  - 若不为 capture 赋值，则由移动设备自动选择捕获哪种设备，如：
+    ```html
+    <input type="file" accept="image/*" capture>
+    ```
+  - 如果不加上 capture, 则只会显示相应的，例如上述三种依次是：拍照或图库，录像或图库，录像或拍照或图库，加上 capture 之后不会调用图库。
+
+- 其中还有一个属性 multiple，支持多选，当支持多选时，multiple 优先级高于 capture，所以只用写成：
+  ```html
+  <input type="file" accept="image/*" multiple>
+  ```
+
+### 使用 canvas 进行图片压缩
+<!-- TODO: -->
+
+https://imys.net/20150916/webapp-input-use-camera.html
+
+```javascript
+document.getElementById('file').addEventListener('change', function() {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        compress(this.result);
+    };
+    reader.readAsDataURL(this.files[0]);
+}, false);
+
+// 省略了一些校监操作，如文件类型约束和文件大小判断（小于一定值可以不压缩）
+var compress = function (res) {
+    var img = new Image(),
+        maxH = 160;
+    img.onload = function () {
+        var cvs = document.createElement('canvas'),
+            ctx = cvs.getContext('2d');
+        if(img.height > maxH) {
+            img.width *= maxH / img.height;
+            img.height = maxH;
+        }
+        cvs.width = img.width;
+        cvs.height = img.height;
+        ctx.clearRect(0, 0, cvs.width, cvs.height);
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        // 尺寸按比例缩放，然后把图片绘到画布上，最后调用 toDataURL 方法压缩图像质量
+        // 该方法返回 base64 图像编码
+        var dataUrl = cvs.toDataURL('image/jpeg', 0.6);
+        // 上传略
+    }
+    img.src = res;
+}
+```
+
 ## 使用 history 和 window.onpopstate 让 ajax 分页支持前进、后退
 
 http://yincheng.site/h5-history
+
+
+
+## 不指定高度，实现固定&自适应的高宽比
+
+https://www.w3cplus.com/css/flexible-images.html
+
+https://www.w3cplus.com/css/aspect-ratio-boxes.html
+
+https://www.w3cplus.com/css/aspect-ratio.html
+
+### 固定高宽比
+
+效果示意图：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/0444d75425397180d543c116217eb143.jpg)
+
+#### 使用 max-height
+
+```css
+img { max-width: 100%; height: auto; }
+```
+
+#### 使用基于宽度的百分比来设置 padding
+
+
+
+主要的原理是基于元素的 padding-top 或 padding-bottom 是根据元素的 width 进行计算的。假设你有一个 div 容器，它的宽度是 500px，你想让其高度也是和宽度一样，也就是说宽高比例是 1:1。这个时候借助 padding-top 或者 padding-bottom 的值为 100%，就可以计算出容器 div 的高度是 500px。如果我们的 padding-bottom 或 padding-top 不是 100%，而是 56.25%，其实这就是一个完美的宽高比 16:9，也就是 9 / 16 * 100% = 56.25%。
+
+一般情况之下，我们知道图片的尺寸大小，根据纵横比例，我们可以通过下面的公式计算出内距 padding-top 或 padding-bottom 的百分比值：
+```
+padding-top 或 padding-bottom = （背景图片高度 / 背景图片宽度) * 100%
+```
+
+这种方案有一个必要条件，容器 div 的 height 为 0，同时 box-sizing 为 border-box，不然的话，容器不能带有 border。
+
+
+##### padding
+
+例：
+```html
+<div class="figure"> 
+  <div class="inner"> 
+    <div class="image-wrapper">
+    </div> 
+    <p class="figcaption">Lo, the robot walks</p> 
+  </div>
+</div>
+```
+
+```less
+.figure {
+  margin: .5em; // 背景图像宽度必须宽度为 700px max-width: 700px; // 图片的宽度 
+  .inner {
+    border: 10px solid hsla(333, 50%, 60%, .8);
+    border-radius: 10px;
+  }
+  .image-wrapper {
+    background: url("http://w3cplus-cdn2.u.qiniudn.com/sites/default/files/blogs/2014/1401/flexible-image.jpg") no-repeat center;
+    background-size: cover;
+    padding-top: 66.7142857%; // 467px / 700px = 0.667142857 
+  } 
+  p {
+    background-color: hsla(333, 50%, 60%, .8);
+    padding: 10px 10px 0;
+    color: #fff;
+  }
+}
+```
+
+效果：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/e9ec48ae872e138f84f81e9edd9385fd.jpg)
+
+
+##### padding & 伪元素
+
+就这种方法而言，如果在 div 容器设置了 padding-top（或者 padding-bottom）会造成容器的内容往盒子外推，此时设置了若 `overflow:hidden`，溢出的内容就会看不见了。若把 overflow:hidden 换成 overflow:auto。但也是美中不足，会出现滚动条。因此，可**借助CSS的伪元素来做容器的高宽比例**：
+
+https://codepen.io/airen/pen/XbVBZo
+
+https://codepen.io/airen/pen/Rgomao
+
+通过这种处理方式，如果内容不超出容器的时候，容器的大小还具有对应的宽高比，如果内容超出容器的时候，会扩展容器的高度，让内容能足已展示。
+
+##### padding & calc()
+
+https://www.w3cplus.com/css/aspect-ratio.html
+
+##### padding & CSS变量
+
+https://www.w3cplus.com/css/aspect-ratio-boxes.html
+
+
+#### 使用视窗单位vw
+
+##### vw
+
+16:9对应的就是100vw * 9 / 16 = 56.25vw。这个值可以用在padding-top或者padding-bottom中。但这里演示的不再是padding了，而是把这个值给height。
+
+```css
+.aspectration[data-ratio="16:9"] {
+  width: 100vw;
+  height: 56.25vw; 
+}
+```
+
+##### vw & CSS Grid
+
+https://www.w3cplus.com/css/aspect-ratio.html
+
+
+### 自适应高宽比
+
+效果示意图：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/e0830742a2f064f527fc5045f6f179e3.jpg)
+
+在固定纵横比例的基础之上，做进一步的调整。假设我们在宽屏的 PC 上显示大的图片，而在移动设备上，我们不想使用相同的纵横比或图像变得太小。当然我们也不想使用完全相同的高度或让图像变得太高。我们更希望当宽度变小时，其高度也变得更小。而我们也把这种称为流体纵横比例。
+
+实现方法：https://www.w3cplus.com/css/flexible-images.html
+
+
+
+
+## Retina屏中实现1px的border
+
+https://www.w3cplus.com/css/fix-1px-for-retina.html
+
+## outline圆角实现
+
+http://www.zhangxinxu.com/wordpress/2015/04/css3-radius-outline/
+
+outline没有类似于borderborder-radius属性（只有`-moz-outline-radius`，仅适用于Firefox），但可以通过设置box-shadow来模拟outline的圆角效果：
+```css
+img {
+  border-radius: 1px;
+  box-shadow: 0 0 0 30px #cd0000;
+}
+```

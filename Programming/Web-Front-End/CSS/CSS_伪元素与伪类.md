@@ -9,6 +9,7 @@
     - [锚伪类](#%E9%94%9A%E4%BC%AA%E7%B1%BB)
     - [:first-child](#first-child)
     - [:lang](#lang)
+    - [表单相关伪类](#%E8%A1%A8%E5%8D%95%E7%9B%B8%E5%85%B3%E4%BC%AA%E7%B1%BB)
   - [伪类与伪元素的比较](#%E4%BC%AA%E7%B1%BB%E4%B8%8E%E4%BC%AA%E5%85%83%E7%B4%A0%E7%9A%84%E6%AF%94%E8%BE%83)
   - [Refer Links](#refer-links)
 
@@ -29,7 +30,12 @@
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/0051da13a17ca02b9aeab3bcb087d4d6.jpg)
 
 NOTE：
+
 - img/input 等单标签是没有 before/after 伪元素的，因为它们本身不可以有子元素，如果你给 img 添加一个 before，那么会被浏览器忽略。
+
+- 伪元素默认是行内元素
+
+- 伪元素不存在于 DOM 文档中，无法被鼠标选中，但可以通过 JavaScript 和 CSS 操作 
 
 ### :first-line
 
@@ -61,11 +67,11 @@ NOTE:"first-letter" 伪元素只能用于块级元素。
 
 ### :before 与：after
 
-":before" 伪元素可以在元素的内容前面插入新内容。
+":before" 伪元素可以在元素的内容前面插入新内容，新内容会作为已选中元素的第一个子元素。
 
-":after" 伪元素可以在元素的内容之后插入新内容。
+":after" 伪元素可以在元素的内容之后插入新内容，新内容会作为已选中元素的最后一个子元素。
 
-例：在每个 <h1> 元素前面插入一幅图片
+例：在每个 `<h1>` 元素前面插入一幅图片
 ```css
 h1:before {
   content:url(logo.gif);
@@ -111,13 +117,15 @@ h1:before {
 
 #### 实用技巧
 
+[我不知道你知不知道我知道的伪元素小技巧](https://juejin.im/post/5a0029a45188254dd935cc40?utm_medium=fe&utm_source=weixinqun)
+
 - 清除浮动
 
   不少人的解决办法是添加一个空的 div 应用 `clear:both;` 属性。若使用伪元素，无需增加没有意义的元素即可实现相同效果：
   ```css
   /* .clear-fix { *overflow: hidden; *zoom: 1; } */
   .clear-fix:after {
-    display: table;/*行内元素是inline的，所以要改变它的display，很多人都忽略了before/after是一个行内元素。*/
+    display: table;/*行内元素是 inline 的，所以要改变它的 display，很多人都忽略了 before/after 是一个行内元素。*/
     content: "";
     width: 0;
     clear: both;
@@ -167,7 +175,9 @@ h1:before {
       left: 0;
   }
   ```
-  NOTE：页面中的视觉辅助性元素都推荐使用伪元素画。
+  
+  NOTE：**页面中的视觉辅助性元素都推荐使用伪元素画**。
+
 
 
 ## 伪类
@@ -244,6 +254,54 @@ NOTE:
 </html>
 ```
 
+### 表单相关伪类
+
+[美化表单的CSS高级技巧](https://www.w3cplus.com/css/advanced-css-form-styling.html)
+
+- :placeholder-shown:检测用户当前是否可见placeholder，可见时元素被匹配
+
+  可以轻松地作为一个渐进的增强工作，但目前[浏览器支持情况较差](https://caniuse.com/#feat=css-placeholder-shown)
+
+  例：
+  
+  ![image](https://www.w3cplus.com/sites/default/files/blogs/2017/1711/placeholder-shown.gif)
+
+  ```css
+  .form-group { 
+    position: relative; 
+    padding-top: 1.5rem; 
+  } 
+  label { 
+    position: absolute; 
+    top: 0; 
+    font-size: var(--font-size-small); 
+    opacity: 1; 
+    transform: translateY(0); 
+    transition: all 0.2s ease-out; 
+  } 
+  input:placeholder-shown + label { 
+    opacity: 0; 
+    transform: translateY(1rem); 
+  }
+  ```
+
+- :required：如果规定了require的input没有输入任何内容，提交表单时，该伪类的元素会被匹配
+
+- :optional
+
+- :disabled
+
+- :read-only
+
+- :valid
+
+- :invalid
+
+- :in-range/:out-of-range
+
+- :checked
+
+
 ## 伪类与伪元素的比较
 
 > CSS 伪元素用于将特殊的效果添加到某些选择器。
@@ -272,3 +330,5 @@ http://www.alloyteam.com/2016/05/summary-of-pseudo-classes-and-pseudo-elements/
 http://yincheng.site/using-before-after
 
 http://blog.dimpurr.com/css-before-after/
+
+https://www.w3cplus.com/css/advanced-css-form-styling.html

@@ -9,6 +9,7 @@
 ## 目录结构 ##
 
 一个完整的前端项目目录结构实例：   
+
 <img src="http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/c5870a89bb08a6a2900d39911aa67f50.jpg" style="height:400px"/>
 
 
