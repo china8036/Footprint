@@ -39,6 +39,13 @@
   - [输入长度限制监控](#%E8%BE%93%E5%85%A5%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E7%9B%91%E6%8E%A7)
     - [非直接的文字输入](#%E9%9D%9E%E7%9B%B4%E6%8E%A5%E7%9A%84%E6%96%87%E5%AD%97%E8%BE%93%E5%85%A5)
     - [emoji 表情的输入](#emoji-%E8%A1%A8%E6%83%85%E7%9A%84%E8%BE%93%E5%85%A5)
+  - [去除容器内 img 下方的空白](#%E5%8E%BB%E9%99%A4%E5%AE%B9%E5%99%A8%E5%86%85-img-%E4%B8%8B%E6%96%B9%E7%9A%84%E7%A9%BA%E7%99%BD)
+  - [表单输入验证](#%E8%A1%A8%E5%8D%95%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81)
+    - [validity 对象](#validity-%E5%AF%B9%E8%B1%A1)
+    - [实践](#%E5%AE%9E%E8%B7%B5)
+  - [平滑滚动的实现](#%E5%B9%B3%E6%BB%91%E6%BB%9A%E5%8A%A8%E7%9A%84%E5%AE%9E%E7%8E%B0)
+    - [通过CSS实现](#%E9%80%9A%E8%BF%87css%E5%AE%9E%E7%8E%B0)
+    - [通过JavaScript实现](#%E9%80%9A%E8%BF%87javascript%E5%AE%9E%E7%8E%B0)
 
 # JavaScript 实用代码段
 
@@ -850,4 +857,388 @@ $('#input').on('input', function(e) {
   }
 });
 ```
- 
+
+## 去除容器内 img 下方的空白
+
+容器内图片下方的空白，是由 vertical-align 和 line-height 影响所造成，详细参见[这篇文章](http://www.zhangxinxu.com/wordpress/2015/08/css-deep-understand-vertical-align-and-line-height/)。
+
+示意图：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/12/2932ba02399fa7c6ca8956f861751f11.jpg)
+
+解决方法：
+
+- 让 vertical-align 失效
+
+  图片默认是 inline 水平的，而 vertical-align 对块状水平的元素无感。因此，我们只要让图片 display 水平为 block 就可以了，我们可以直接设置 display 或者浮动、绝对定位等（如果布局允许）。例如：
+  ```css
+  img { display: block; }
+  ```
+
+- 使用其他 vertical-align 值
+
+  告别 baseline, 取用其他属性值，比方说 bottom/middle/top 都是可以的。
+  ```less
+  vertical-align:bottom;
+  //vertical-align:middle;
+  //vertical-align:top;
+  ```
+
+- 直接修改 line-height 值
+
+  下面的空隙高度，实际上是文字计算后的行高值和字母 x 下边缘的距离。因此，只要行高足够小，实际文字占据的高度的底部就会在 x 的上面，下面没有了高度区域支撑，自然，图片就会有容器底边贴合在一起了。比方说，我们设置行高 5 像素：
+  ```css
+  div { line-height: 5px; }
+  ```
+
+- line-height 为相对单位，font-size 间接控制
+
+  如果 line-height 是相对单位，例如 line-height:1.6 或者 line-height:160% 之类，也可以使用 font-size 间接控制，比方说来个狠的，font-size 设为大鸡蛋 0, 本质上还是改变 line-height 值。
+  ```css
+  div { font-size: 0; }
+  ```
+
+## 表单输入验证
+
+https://www.w3cplus.com/blog/tags/627.html
+
+https://www.w3schools.com/js/js_validation_api.asp
+
+https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
+
+一个好的表单输入验证用户体验是：当用户离开一个字段时，即时的显示出错误信息，并在用户修复它之前一直保持错误信息的显示。
+
+通过组合输入类型 （例如，<input type='email'>) 和验证属性 （像 required 和 pattern) 来使用原生的浏览器表单验证机制来进行表单输入验证简单轻便，但这种方式存在一些缺点：
+
+- 你可以通过 :invalid 伪选择器对出现错误的字段域设置样式，但是你并不能对错误信息本身设置样式。
+- 各浏览器之间的行为也不一致
+
+因此，我们可以使用浏览器原生的 JavaScript API，来自定义表单验证的行为。
+
+### validity 对象
+
+每个 input 元素都包含了一个 validity 对象，该对象以布尔值 (true/false) 的形式提供了一系列关于表单域的信息：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/11/1a773b00fe60ad3f53dcf9ab1c0879be.jpg)
+
+该对象包含以下属性：
+
+| Property          | Description                              |
+| ----------------- | ---------------------------------------- |
+| `valid`           | 当字段通过验证时，属性值为 `true`。                    |
+| `valueMissing`    | 当一个必填字段为空时，属性值为 `true`。                  |
+| `typeMismatch`    | 当字段的 `type` 是 `email`或者 `url`但是输入的 `value` 不是正确的类型时，属性值为`true`。 |
+| `tooShort`        | 当一个字段设置了 `minLength` 属性，且输入的 `value` 的长度小于设定值时，属性值为 `true`。 |
+| `tooLong`         | 当一个字段设置了 `maxLength` 属性，且输入的 `value`的长度值大于设定值时，属性值为`true`。 |
+| `patternMismatch` | 当一个字段包含 `pattern` 属性，且输入的 `value` 与 pattern 不匹配时，属性值为 `true`。 |
+| `badInput`        | 当输入类型 `type` 值是 `number` ，且输入的`value`值不是一个数字时，属性值为 `true`。 |
+| `stepMismatch`    | 当字段拥有 `step` 属性，且输入的 `value` 值不符合设定的间隔值时，该属性值为 `true`。 |
+| `rangeOverflow`   | 当字段拥有 `max` 属性，且输入的数字 `value` 值大于设定的最大值时，该属性的值为`true`。 |
+
+### 实践
+
+1. 禁用原生表单验证
+
+      给表单添加 novalidate 属性来禁用浏览器原生的验证方式，从而阻止原生的错误提示信息显示；
+
+      最好的方法是，使用 JavaScript 来添加这个属性，如果我们的脚本在加载过程中出现错误，也可以保证浏览器原生的表单验证方式可以正常运行。
+
+      ```javascript
+      // 当 JS 加载时，为标注了 validate 的元素添加 novalidate 属性（可能存在部分 input 不需要进行验证） 
+      var forms = document.querySelectorAll('.validate');
+      for (var i = 0; i < forms.length; i++) { 
+         forms[i].setAttribute('novalidate', true); 
+      }
+      ```
+
+2. 当用户离开一个字段时，对该字段进行验证
+
+      为了实现这个功能，我们需要注册事件监听器。
+
+      我们可以通过事件冒泡（或者事件传播) 的机制来监听所有的 blur 事件，从而不用为每一个字段都添加一个监听器。
+      ```javascript
+      // 监听所有的失去焦点的事件
+      document.addEventListener('blur', function (event) {
+
+          // 只有当该字段是要验证的表单时才运行
+          if (!event.target.form.classList.contains('validate')) return;
+
+          // 验证字段
+          // 如果 error 的值是 true, 那么这个字段就是符合验证规则的。否则，就会抛出错误。
+          var error = event.target.validity;
+          console.log(error);
+
+      }, true);
+      ```
+
+3. 捕获错误
+
+      一旦我们知道产生了一个错误，那弄清楚这个错误的具体信息，对于我们来说是非常有用的。我们可以使用其他 Validity State 属性来获取这些信息。
+
+      如果没有错误，我们就返回 null。 否则，我们就检测每一个 Validity State 属性，直到找到错误。如果我们找到了这个属性，我们就返回一个包含错误信息的字符串。
+
+      ```javascript
+      // 验证字段
+      var hasError = function (field) {
+
+          // 不验证 submits, buttons, file 和 reset inputs, 以及被禁用的字段
+          if (field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') return;
+
+          // 获取 validity
+          var validity = field.validity;
+
+          // 如果通过验证，就返回 null
+          if (validity.valid) return;
+
+          // 如果是必填字段但是字段为空时
+          if (validity.valueMissing) return 'Please fill out this field.';
+
+          // 如果输入的类型不正确
+          if (validity.typeMismatch) {
+              // Email
+              if (field.type === 'email') return 'Please enter an email address.';
+
+              // URL
+              if (field.type === 'url') return 'Please enter a URL.';
+
+          }
+
+          // 如果输入的字符数太短，检测出这个字段本身设定的长度以及字段实际的长度并将这些信息包含在提示中
+          if (validity.tooShort) return 'Please lengthen this text to ' + field.getAttribute('minLength') + ' characters or more. You are currently using ' + field.value.length + ' characters.';
+
+          // 如果输入的字符数太长，检测出这个字段本身设定的长度以及字段实际的长度并将这些信息包含在提示中
+          if (validity.tooLong) return 'Please short this text to no more than ' + field.getAttribute('maxLength') + ' characters. You are currently using ' + field.value.length + ' characters.';
+
+          // 如果数字输入类型输入的值不是数字
+          if (validity.badInput) return 'Please enter a number.';
+
+          // 如果数字值与步进间隔不匹配
+          if (validity.stepMismatch) return 'Please select a valid value.';
+
+          // 如果数字字段值超过 max 的值
+          if (validity.rangeOverflow) return 'Please select a smaller value.';
+
+          // 如果数字字段的值小于 min 的值
+          if (validity.rangeUnderflow) return 'Please select a larger value.';
+
+          // 如果模式不匹配，并且这个字段有一个 title, 我们就用 title 属性的值作为我们的错误信息，就像原生的浏览器行为一样
+          if (validity.patternMismatch) {
+              // 如果包含模式信息，返回自定义错误
+              if (field.hasAttribute('title')) return field.getAttribute('title');
+              // 否则，返回一般错误
+              return 'Please match the requested format.';
+
+          }
+
+          // 如果没有一个属性的值是 true 但是 validity 的属性值却是 false 时，我们就返回一个通用的 "catchall" 错误信息
+          return 'The value you entered for this field is invalid.';
+
+      };
+      // 监听所有的失去焦点的事件
+      document.addEventListner('blur', function (event) {
+
+          // 只有当该字段是要验证的表单时才运行
+          if (!event.target.form.classList.contains('validate')) return;
+
+          // 验证字段
+          var error = hasError(event.target);
+
+      }, true);
+      ```
+
+4. 显示错误信息
+
+      一旦我们捕获到错误，我们就可以在字段的下面将它显示出来。我们可以创建一个 showError() 函数来实现这个功能，传入表单字段和错误信息，然后在我们的事件监听器里调用它。
+      ```javascript
+      // 监听所有的 blur 事件
+      document.addEventListener('blur', function (event) {
+
+          // 只有当该字段是要验证的表单时才运行
+          if (!event.target.form.classList.contains('validate')) return;
+
+          // 验证字段
+          var error = hasError(event.target);
+
+          // 如果有错误，就把它显示出来
+          if (error) {
+              showError(event.target, error);
+          }
+
+      }, true);
+
+      var showError = function (field, error) {
+
+          // 将错误类添加到字段
+          field.classList.add('error');
+
+          // 获取字段 id 或者 name
+          var id = field.id || field.name;
+          if (!id) return;
+
+          // 检查错误消息字段是否已经存在
+          // 如果没有，就创建一个
+          // 使用 querySelector 方法，只在当前的表单字段上搜索错误信息，而不是整个 document
+          var message = field.form.querySelector('.error-message#error-for-' + id );
+          if (!message) {
+              message = document.createElement('div');
+              message.className = 'error-message';
+              message.id = 'error-for-' + id;
+              field.parentNode.insertBefore( message, field.nextSibling );
+          }
+
+          // 为了确保屏幕浏览器或以及其它的辅助技术知道我们的错误信息与字段是相关联的，需要添加一个 aria-describedby
+          // 添加 ARIA role 到字段
+          field.setAttribute('aria-describedby', 'error-for-' + id);
+
+          // 更新错误信息
+          message.innerHTML = error;
+
+          // 显示错误信息
+          message.style.display = 'block';
+          message.style.visibility = 'visible';
+
+      };
+      ```
+
+      设置错误信息样式：
+      ```css
+      .error {
+          border-color: red;
+      }
+
+      .error-message {
+          color: red;
+          font-style: italic;
+      }
+      ```
+
+5. 隐藏错误信息
+
+      当字段验证通过，我们希望移除这个错误信息。所以，让我们来创建另外一个函数， removeError(), 并且传入字段。我们仍然在事件监听器中调用这个函数。
+      ```javascript
+      // 移除错误信息
+      var removeError = function (field) {
+
+        // 删除字段的错误类
+        field.classList.remove('error');
+
+        // 移除字段的 ARIA role
+        field.removeAttribute('aria-describedby');
+
+        // 获取字段的 id 或者 name
+        var id = field.id || field.name;
+        if (!id) return;
+
+        // 检查 DOM 中是否有错误消息
+        // 使用 querySelector 方法，只在当前的表单字段上搜索错误信息，而不是整个 document
+        var message = field.form.querySelector('.error-message#error-for-' + id + '');
+        if (!message) return;
+
+        // 如果是这样的话，就隐藏它
+        message.innerHTML = '';
+        message.style.display = 'none';
+        message.style.visibility = 'hidden';
+      };
+
+      // 监听所有的 blur 事件
+      document.addEventListener('blur', function (event) {
+
+        // 只有当该字段是要验证的表单时才运行
+        if (!event.target.form.classList.contains('validate')) return;
+
+        // 验证字段
+        var error = event.target.validity;
+
+        // 如果有错误，显示出来
+        if (error) {
+          showError(event.target, error);
+          return;
+        }
+
+        // 否则，移除所有存在的错误信息
+        removeError(event.target);
+
+      }, true);
+      ```
+
+6. 在提交表单时检查所有的字段
+
+      当用户提交表单时，我们要对表单里的每一个字段进行验证，并且在不合法的字段下面显示错误信息。我们也需要给出现错误的字段默认获得焦点，这样用户就能第一时间的去修复它们。
+
+      更好的用户体验是直接将页面滚动到出现错误信息的第一个元素处，并 focus 在出现错误信息的 input 中。
+
+      ```javascript
+      // 在提交时检查所有的字段
+      document.addEventListener('submit', function (event) {
+
+          // 只能运行在标记为验证的表单上
+          if (!event.target.classList.contains('validate')) return;
+
+          // 获取所有的表单元素
+          var fields = event.target.elements;
+
+          // 验证每一个字段
+          // 将具有错误的第一个字段存储到变量中以便稍后我们将其默认获得焦点
+          var error, hasErrors;
+          for (var i = 0; i < fields.length; i++) {
+              error = hasError(fields[i]);
+              if (error) {
+                  showError(fields[i], error);
+                  if (!hasErrors) {
+                      hasErrors = fields[i];
+                  }
+              }
+          }
+
+          // 如果有错误，停止提交表单并使出现错误的第一个元素获得焦点 
+          if (hasErrors) {
+              event.preventDefault();
+              hasErrors.focus();
+          }
+
+          // 否则，正常提交表单
+          // 您也可以在此处填入 Ajax 表单提交过程
+      }, false);
+      ```
+
+7. 使用 Polyfill 兼容 IE 和 Edge
+
+      https://www.w3cplus.com/css/form-validation-part-3-a-validity-state-api-polyfill.html
+
+
+## 平滑滚动的实现
+
+https://iwenku.net/?article_167.html
+
+http://www.zcfy.cc/article/smooth-page-scroll-in-5-lines-of-javascript-406.html
+
+### 通过CSS实现
+
+需要给“平滑滚动”的元素（通常是body）应用`scroll-behavior: smooth`:
+```css
+body {
+    scroll-behavior: smooth;
+}
+```
+但在浏览器兼容这方面可以发现也就firefox支持，在7.36%的浏览器上可以使用这个属性，目前来说还只是一个小众的属性，不推荐使用。
+
+### 通过JavaScript实现
+
+由于CSS的属性兼容性较差，因此一般平滑滚动的实现都是通过JavaScript的window.scrollTo方法来实现：
+```javascript
+window.scrollTo({"behavior": "smooth", "top": element.offsetTop, "left": element.offsetLeft});
+```
+
+例：
+```javascript
+var anchorLink = document.querySelector("a[href='#destination']"),
+target = document.getElementById("destination");
+anchorLink.addEventListener("click", function(e) {
+    if (window.scrollTo) {
+        e.preventDefault();
+        window.scrollTo({"behavior": "smooth", "top": target.offsetTop});
+    }
+})
+```
+
+TODO: 在微信浏览器上两种方式都无法是是实现

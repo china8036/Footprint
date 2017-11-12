@@ -74,7 +74,7 @@ p ~ ul { background:#ff0; }
 | E[att]      | 匹配所有具有 att 属性的 E 元素，不考虑它的值。（注意：E 在此处可以省略，比如"[cheacked]"。以下同。） |                                                                                                    |
 | E[att=val]  | 匹配所有 att 属性等于"val"的 E 元素                                      |                                                                                                    |
 | E[att~=val] | 匹配所有 att 属性具有多个空格分隔的值、其中一个值等于"val"的 E 元素                      |                                                                                                    |
-| E[att\|=val]  | 匹配所有 att 属性具有多个连字号分隔（hyphen-separated）的值、其中一个值以"val"开头的 E 元素，主要用于 lang 属性，比如"en"、"en-us"、"en-gb"等等 |
+| E[att\|=val]  | 匹配所有 att 属性具有多个连字号分隔（hyphen-separated）的值，其中一个值以"val"开头的 E 元素，主要用于 lang 属性，比如"en"、"en-us"、"en-gb"等等 |
 | E[att^="val"] | 属性 att 的值以"val"开头的元素   |
 | E[att$="val"] | 属性 att 的值以"val"结尾的元素   |
 | E[att*="val"] | 属性 att 的值包含"val"字符串的元素 |
