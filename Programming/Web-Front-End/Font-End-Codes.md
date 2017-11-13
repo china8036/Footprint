@@ -11,6 +11,7 @@
   - [使用：invalid 实现输入不合法时改变按钮样式](#%E4%BD%BF%E7%94%A8%EF%BC%9Ainvalid-%E5%AE%9E%E7%8E%B0%E8%BE%93%E5%85%A5%E4%B8%8D%E5%90%88%E6%B3%95%E6%97%B6%E6%94%B9%E5%8F%98%E6%8C%89%E9%92%AE%E6%A0%B7%E5%BC%8F)
   - [隐藏一个元素的实现方法](#%E9%9A%90%E8%97%8F%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95)
   - [三角形画法](#%E4%B8%89%E8%A7%92%E5%BD%A2%E7%94%BB%E6%B3%95)
+  - [圆形画法](#%E5%9C%86%E5%BD%A2%E7%94%BB%E6%B3%95)
   - [居中](#%E5%B1%85%E4%B8%AD)
     - [水平居中](#%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD)
     - [垂直居中](#%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD)
@@ -410,6 +411,15 @@ div:after {
   border: 20px solid transparent;
   border-bottom-color: red;
 }
+```
+
+
+
+## 圆形画法
+
+将 border-rasius 的属性值设置为元素几何中心到顶点的距离，即：
+```css
+border-radius: 50%
 ```
 
 ## 居中
