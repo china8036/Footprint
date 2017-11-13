@@ -16,7 +16,7 @@
       - [页面源码](#%E9%A1%B5%E9%9D%A2%E6%BA%90%E7%A0%81)
       - [页面操作](#%E9%A1%B5%E9%9D%A2%E6%93%8D%E4%BD%9C)
         - [获取元素对象（定位)](#%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E5%AF%B9%E8%B1%A1%EF%BC%88%E5%AE%9A%E4%BD%8D)
-          - [常见 NoSuchElement 异常解决方法](#%E5%B8%B8%E8%A7%81-nosuchelement-%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95)
+          - [抛出 NoSuchElement 异常可能存在的问及其解决方法](#%E6%8A%9B%E5%87%BA-nosuchelement-%E5%BC%82%E5%B8%B8%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95)
           - [元素对象常用属性](#%E5%85%83%E7%B4%A0%E5%AF%B9%E8%B1%A1%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7)
         - [模拟输入](#%E6%A8%A1%E6%8B%9F%E8%BE%93%E5%85%A5)
         - [滚动到页面底部](#%E6%BB%9A%E5%8A%A8%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%BA%95%E9%83%A8)
@@ -38,6 +38,8 @@
           - [使用 lambda 表达式](#%E4%BD%BF%E7%94%A8-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F)
       - [调用 JavaScript](#%E8%B0%83%E7%94%A8-javascript)
       - [关闭浏览器](#%E5%85%B3%E9%97%AD%E6%B5%8F%E8%A7%88%E5%99%A8)
+        - [close](#close)
+        - [quit](#quit)
       - [程序结构](#%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84)
   - [PhantomJS](#phantomjs)
     - [介绍](#%E4%BB%8B%E7%BB%8D)
@@ -78,10 +80,10 @@ Selenium 测试直接运行在浏览器中，就像真实用户操作一样。Se
 Selenium3 将 Webdriver 从各个浏览器中分离出来了，所以对浏览器进行自动化测试时，需要单独安装对应浏览器的 Webdriver，安装过程：将浏览器程序和 webdriver 程序的路径加入系统环境变量即可。
 
 例如：
-- 使用 selenium 操作 webkit 核浏览器（如 chrome) 时，需要安装 chromeDriver.exe；
+- 使用 selenium 操作 webkit 核浏览器（如 chrome) 时，需要安装 [chromeDriver.exe](https://sites.google.com/a/chromium.org/chromedriver/downloads)；
 - 使用 selenium 操作 IE 浏览器时，需要安装 IEDriver.exe；
-- 使用 selenium 操作 Edge 浏览器时，需要安装 MicrosoftWebDriver.exe；
-- 使用 selenium 操作 firefox 浏览器时，需要安装 geckodriver.exe；
+- 使用 selenium 操作 Edge 浏览器时，需要安装 [MicrosoftWebDriver.exe](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)；
+- 使用 selenium 操作 firefox 浏览器时，需要安装 [geckodriver.exe](https://github.com/mozilla/geckodriver/releases)；
 
 ### 工作原理
 
@@ -305,7 +307,7 @@ find_elements_by_css_selector
   # 先用 xpath 定位找到一个元素节点，再以该节点为根节点用 name 找到另一个节点
   ```
 
-###### 常见 NoSuchElement 异常解决方法
+###### 抛出 NoSuchElement 异常可能存在的问及其解决方法
 
 http://blog.csdn.net/mrlevo520/article/details/51954203 
 
@@ -362,12 +364,14 @@ http://blog.csdn.net/mrlevo520/article/details/51926145
 ##### 模拟输入
 
 - 向文本框 text/textarea 标签输入文本：
+
+  https://selenium-python.readthedocs.io/navigating.html#filling-in-forms 
+  
   ```python
   element.send_keys("some text") # enter some text into a text field
   element.clear() # clear the contents of a text field or textarea
   ```
 
-  https://selenium-python.readthedocs.io/navigating.html#filling-in-forms 
 
 - 键盘按键输入：使用 Keys 类
 
@@ -396,12 +400,14 @@ http://blog.csdn.net/mrlevo520/article/details/51926145
 - 鼠标操作输入：使用 ActionChains 类
 
   ActionChains 的基本执行原理：当你调用 ActionChains 的方法时，不会立即执行，而是会将所有的操作按顺序存放在一个队列里，当你调用 perform() 方法时，队列中的时间会依次执行。
+
+  导入依赖：
   ```python
   from selenium.webdriver.common.action_chains import ActionChains
   ```
   - [ActionChains 类方法列表](https://huilansame.github.io/huilansame.github.io/archivers/mouse-and-keyboard-actionchains )
 
-  - 常用 ActionChains 类方法：
+  - ActionChains 常用的类方法：
     
     - context_click()：右击
       ```python
@@ -864,10 +870,21 @@ WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_xpath('xpa
 
 #### 关闭浏览器
 
+selenium关闭窗口有两个方法，close与quit。
+
+##### close
+
+close用于关闭当前窗口：
+```python
+driver.close()
+# 若不主动关闭浏览器，程序会一直运行
+```
+
+##### quit
+
+quit用于退出驱动并关闭所有关联的窗口：
 ```python
 driver.quit()
-或 driver.close()
-# 若不主动关闭浏览器，程序会一直运行
 ```
 
 #### 程序结构
