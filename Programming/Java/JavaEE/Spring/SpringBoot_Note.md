@@ -116,7 +116,7 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
 
 勾选所需依赖，finish；
 
-参见[IDEA 中三种 gradle 模式的区别]() TODO:
+参见[IDEA 中三种 gradle 模式的区别](https://github.com/firejq/StudyNote/blob/master/Programming/Java/JavaEE/Tool/Gradle-Note.md#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB) 
 
 创建项目后，一般需要做如下修改：
 
@@ -1876,13 +1876,46 @@ Spring Boot 提供了一个 tools 工具，该工具可以方便的让我们将�
 
 #### 打包为 war 包
 
-打包为 jar 包时，包含了内置的 tomcat 服务器，若希望使用专门的 tomcat 服务器或者其它服务器，可将项目打包为 war 包后部署；
 
 https://docs.spring.io/spring-boot/docs/current/reference/html/howto-traditional-deployment.html 
 
 https://my.oschina.net/alexnine/blog/540651 
 
 http://www.jianshu.com/p/b3be5e54d836 
+
+打包为 jar 包时，包含了内置的 tomcat 服务器，若希望使用独立的 tomcat 服务器或者其它容器服务器，则需要将项目打包为 war 包后再部署到容器中；
+
+需要注意的是这样部署的request url需要在端口后加上项目的名字才能正常访问。spring-boot更加强大的一点就是：即便项目是以上配置，依然可以用内嵌的tomcat来调试，启动命令和以前没变，还是：mvn spring-boot:run。
+
+如果需要在springboot中加上request前缀，需要在application.properties中添加server.contextPath=/prefix/即可。其中prefix为前缀名。这个前缀会在war包中失效，取而代之的是war包名称，如果war包名称和prefix相同的话，那么调试环境和正式部署环境就是一个request地址了。
+
+
+
+
+- 构建项目，生成war包
+    指定war包名：
+    ```
+    war {
+        baseName = "gradle-simple"
+    }
+    ```
+    执行
+    ```
+    gradle clean war
+    ```
+    生成的war文件名为gradle-simple.war
+
+    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/87588085a964930d463d1e5459a74b1f.jpg)
+
+    若要生成zip文件：
+    ```
+    war {
+        baseName = "gradle-simple"
+        extension = "zip"
+    }
+    ```
+    则生成的zip文件名为gradle-simple.zip，解压zip文件至外部容器即可。
+
 
 #### 打包为 docker 镜像
 
