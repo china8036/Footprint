@@ -1,4 +1,4 @@
-- [Spring Boot 配置收录](#spring-boot-%E9%85%8D%E7%BD%AE%E6%94%B6%E5%BD%95)
+- [Spring Boot 配置 application.yml 收录](#spring-boot-%E9%85%8D%E7%BD%AE-applicationyml-%E6%94%B6%E5%BD%95)
   - [mvc](#mvc)
     - [mvc](#mvc)
     - [messages](#messages)
@@ -46,7 +46,8 @@
     - [sendgrid](#sendgrid)
     - [social](#social)
 
-# Spring Boot 配置收录
+    
+# Spring Boot 配置 application.yml 收录
 
 原文：https://segmentfault.com/a/1190000004315890 
 

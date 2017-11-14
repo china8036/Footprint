@@ -11,7 +11,7 @@
     - [使用镜像 maven 库](#%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F-maven-%E5%BA%93)
     - [修改本地仓库位置](#%E4%BF%AE%E6%94%B9%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%BD%8D%E7%BD%AE)
     - [IDEA 中使用 Gradle](#idea-%E4%B8%AD%E4%BD%BF%E7%94%A8-gradle)
-      - [IDEA 中三种 gradle 的区别](#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E7%9A%84%E5%8C%BA%E5%88%AB)
+      - [IDEA 中三种 gradle 模式的区别](#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB)
       - [Unindexed remote maven repositories](#unindexed-remote-maven-repositories)
     - [优化 Gradle](#%E4%BC%98%E5%8C%96-gradle)
     - [将 pom.xml 转化为 build.gradle](#%E5%B0%86-pomxml-%E8%BD%AC%E5%8C%96%E4%B8%BA-buildgradle)
@@ -43,7 +43,15 @@ Gradle 基于 Groovy 语言开发，在安装包中集成了 Groovy 库；
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/6fa72c1fd3503910c60684780886a502.jpg)
 
-将 GRADLE_HOME 添加
+
+将 `GRADLE_HOME` 和 `GRADLE_USER_HOME` 添加到环境变量中：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/c5dde8f563f1082aea0ed0442997dd64.jpg)
+
+将 /bin 目录添加到环境变量的路径中：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/4f9148298ddc210a3d8e10202a30e107.jpg)
+
 
 ## 使用
 
@@ -74,11 +82,11 @@ Gradle 基于 Groovy 语言开发，在安装包中集成了 Groovy 库；
 
 可以通过配置文件对 Gradle 构建进行配置
 
-1)	Gradle 构建脚本（build.gradle）：指定了一个项目和它的任务
+1)	Gradle 构建脚本（build.gradle）：指定了一个项目和它的任务。
 
-2)	Gradle 属性文件（gradle.properties）：用来配置构建属性
+2)	Gradle 属性文件（gradle.properties）：用来配置构建属性。
 
-3)	Gradle 设置文件（gradle.settings）：对于只有一个项目的构建而言是可选的，如果我们的构建中包含多于一个项目，那么它就是必须的，因为它描述了哪一个项目参与构建。每一个多项目的构建都必须在项目结构的根目录中加入一个设置文件
+3)	Gradle 设置文件（gradle.settings）：对于只有一个项目的构建而言是可选的，如果我们的构建中包含多于一个项目，那么它就是必须的，因为它描述了哪一个项目参与构建。每一个多项目的构建都必须在项目结构的根目录中加入一个设置文件。
 
 ### build.gradle
 
@@ -155,12 +163,16 @@ repositories {                              // 定义 ivy 协议类型的仓库
 
 ```
 
+NOTE：**由于网络问题，经过测试只有jcenter仓库速度较为稳定**。
+
 ### 使用 Gradle Wrapper 构建项目
 
-Gradle Wrapper 是开始一个 Gradle 构建的首选方式。它包含了 windows 批处理以及 OS X 和 Linux 的 Shell 脚本。这些脚本允许我们在没有安装 Gradle 的系统上执行 Gradle 构建。要实现这个功能，我们需要在我们的 build.gradle 文件中增加以下代码：
+Gradle Wrapper 是开始一个 Gradle 构建的首选方式。它包含了 windows 批处理以及 OS X 和 Linux 的 Shell 脚本。这些脚本允许我们在没有安装 Gradle 的系统上执行 Gradle 构建。
+
+要实现这个功能，我们需要在我们的 build.gradle 文件中增加以下代码：
 ```
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
+	gradleVersion = '4.3.1'
 }
 ```
 
@@ -170,11 +182,11 @@ https://yrom.net/blog/2015/02/07/change-gradle-maven-repo-url/
 
 切换到国内的 Maven 镜像仓库，如：
 
-开源中国的 Maven 库 http://maven.oschina.net/content/groups/public/ ；
+- 开源中国的 Maven 库 http://maven.oschina.net/content/groups/public/ ；
 
-阿里云的 maven 库 http://maven.aliyun.com/nexus/content/groups/public/ ；
+- 阿里云的 maven 库 http://maven.aliyun.com/nexus/content/groups/public/ ；
 
-自建的 Maven 私服；
+- 自建的 Maven 私服；
 
 
 
@@ -195,7 +207,7 @@ allprojects {
 }
 ```
 
-在 USER_HOME/.gradle/ 中创建 init.gralde：
+在 `GRADLE_USER_HOME/.gradle/` 中创建 init.gralde：
 ```
 allprojects{
     repositories {
@@ -221,19 +233,19 @@ allprojects{
 
 http://blog.csdn.net/kl28978113/article/details/53018225 
 
-将 C:Users/ower/.gradle 的默认目录复制到 xxxx/gradle_repo/.gradle，删除 C:Users/ower/.gradle，然后设置系统环境变量：      
+将 C:Users/ower/.gradle 的默认目录复制到 xxxx/gradle_repo/.gradle，删除 C:Users/ower/.gradle，然后设置系统环境变量： 
+
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/aae83817483868a4571b774d9eeccdd9.jpg)
 
 重启计算机后生效；
 
 ### IDEA 中使用 Gradle
 
-#### IDEA 中三种 gradle 的区别
+#### IDEA 中三种 gradle 模式的区别
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/7d7e7dcb30d109bd397a6b8ae03ce597.jpg)
 
-- Using the default gradle wrapper（官方推荐）      
-  https://github.com/RichardNi/mynote/blob/master/note/java/gradle/%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8idea%E5%AF%BC%E5%85%A5gradle%E5%B7%A5%E7%A8%8B%E5%BE%88%E6%85%A2.md 
+- [Using the default gradle wrapper（官方推荐）](https://github.com/RichardNi/mynote/blob/master/note/java/gradle/%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8idea%E5%AF%BC%E5%85%A5gradle%E5%B7%A5%E7%A8%8B%E5%BE%88%E6%85%A2.md)       
 
   由 Gradle 控制自身版本，使用的版本号可在 gradle/wrapper/gradle-wrapper.properties 中查看；
 

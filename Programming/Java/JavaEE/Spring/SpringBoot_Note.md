@@ -1,6 +1,7 @@
 - [Spring Boot Note](#spring-boot-note)
   - [概述](#%E6%A6%82%E8%BF%B0)
   - [Spring Boot CLI 安装](#spring-boot-cli-%E5%AE%89%E8%A3%85)
+  - [在 IDEA 中创建使用 gradle 的 spring boot 项目](#%E5%9C%A8-idea-%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%BD%BF%E7%94%A8-gradle-%E7%9A%84-spring-boot-%E9%A1%B9%E7%9B%AE)
   - [运行 spring boot 项目](#%E8%BF%90%E8%A1%8C-spring-boot-%E9%A1%B9%E7%9B%AE)
   - [Spring Boot 配置选项](#spring-boot-%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9)
     - [常用配置](#%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE)
@@ -68,13 +69,14 @@
       - [打包为 jar 包](#%E6%89%93%E5%8C%85%E4%B8%BA-jar-%E5%8C%85)
         - [maven 版本](#maven-%E7%89%88%E6%9C%AC)
         - [gradle 版本](#gradle-%E7%89%88%E6%9C%AC)
+        - [打包为可执行的 jar 包](#%E6%89%93%E5%8C%85%E4%B8%BA%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9A%84-jar-%E5%8C%85)
       - [打包为 war 包](#%E6%89%93%E5%8C%85%E4%B8%BA-war-%E5%8C%85)
       - [打包为 docker 镜像](#%E6%89%93%E5%8C%85%E4%B8%BA-docker-%E9%95%9C%E5%83%8F)
   - [定时任务](#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1)
-    - [使用Schedule](#%E4%BD%BF%E7%94%A8schedule)
-    - [使用Quartz](#%E4%BD%BF%E7%94%A8quartz)
-  - [使用Shiro](#%E4%BD%BF%E7%94%A8shiro)
-  - [使用Spring Security](#%E4%BD%BF%E7%94%A8spring-security)
+    - [使用 Schedule](#%E4%BD%BF%E7%94%A8-schedule)
+    - [使用 Quartz](#%E4%BD%BF%E7%94%A8-quartz)
+  - [使用 Shiro](#%E4%BD%BF%E7%94%A8-shiro)
+  - [使用 Spring Security](#%E4%BD%BF%E7%94%A8-spring-security)
   - [Refer Links](#refer-links)
 
 # Spring Boot Note
@@ -86,13 +88,13 @@
 传统的 spring 有很多 xml 配置，例如：dataSource、transactionManager、AOP、bean 等等 xml 的配置。即便用注解，也要在 xml 中配置 component-scan 等。         
 但在 spring boot，遵循“约定大于配置”，所以尽可能的避免了 xml 配置。
 
-<!-- TODO spring 官方提供的前端模板是 thymeleaf，但只要了解即可，不推荐使用，因为在最新的开发模式中，前后端完全分离，后端只需要提供 RESTful 接口，传递如 json 格式的数据给前端即可；而且使用模板会给性能上带来很大的损耗。
+<!-- TODO: spring 官方提供的前端模板是 thymeleaf，但只要了解即可，不推荐使用，因为在最新的开发模式中，前后端完全分离，后端只需要提供 RESTful 接口，传递如 json 格式的数据给前端即可；而且使用模板会给性能上带来很大的损耗。
 具体应该怎么做？？http://blog.didispace.com/springbootweb/ ？
  -->
 
-<!-- TODO @RestController=@Response+@Controller -->
+<!-- TODO: @RestController=@Response+@Controller -->
 
-<!-- TODO 降耦合原则：项目尽量不要出现任何重复的代码，便于维护 -->
+<!-- TODO: 降耦合原则：项目尽量不要出现任何重复的代码，便于维护 -->
 
 ## Spring Boot CLI 安装
 
@@ -105,6 +107,85 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
 验证安装成功：
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/a7b5433aa57776d7f28c698ef7407435.jpg)
+
+## 在 IDEA 中创建使用 gradle 的 spring boot 项目
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/e31d28feff47bbdf73b514febb75a56e.jpg)
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/d3c41c341a0df3530ee6373575e3d01e.jpg)
+
+勾选所需依赖，finish；
+
+参见[IDEA 中三种 gradle 模式的区别]() TODO:
+
+创建项目后，一般需要做如下修改：
+
+- 修改gradle版本：
+    - 修改build.gradle，添加：
+        ```
+        task wrapper(type: Wrapper) {
+            gradleVersion = '4.3.1'
+        }
+        ```
+    - 修改gradle-wrapper.properties
+        
+        ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/512094e33bac92160172037e9d046c94.jpg)
+
+        ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/9febe52aa058b2832eb8db6d401f409f.jpg)
+
+- 修改仓库地址：
+    - 修改build.gradle
+        ```
+        repositories {
+            jcenter()
+            maven { url "https://repo.spring.io/snapshot" }
+            maven { url "https://repo.spring.io/milestone" }
+        }
+        ```
+
+
+- 完整build.gradle示例如下：
+    ```groovy
+    buildscript {
+        ext {
+            springBootVersion = '1.5.6.RELEASE'
+        }
+        repositories {
+            jcenter()
+        }
+        dependencies {
+            classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 1.8
+
+    repositories {	
+        jcenter()
+    }
+
+    dependencies {
+        // spring boot
+        compile('org.springframework.boot:spring-boot-starter-web')
+        // spring boot test
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+    }
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '4.3.1'
+    }
+
+    jar {
+        version = '0.0.1-SNAPSHOT'
+        baseName = 'testDemo'
+    }
+
+    ```
 
 ## 运行 spring boot 项目
 
@@ -232,15 +313,15 @@ logging.file，设置文件，可以是绝对路径，也可以是相对路径�
 logging.path，设置目录，会在该目录下创建 spring.log 文件，并写入日志内容，如：logging.path=/var/log；
 ```
 
-如果只配置 logging.file，会在项目的当前路径下生成一个 xxx.log 日志文件。
+- 如果只配置 logging.file，会在项目的当前路径下生成一个 xxx.log 日志文件。
 
-如果只配置 logging.path，在 /var/log 文件夹生成一个日志文件为 spring.log
+- 如果只配置 logging.path，在 /var/log 文件夹生成一个日志文件为 spring.log
 
 注：
 
-二者不能同时使用，如若同时使用，则只有 logging.file 生效；
+- 二者不能同时使用，如若同时使用，则只有 logging.file 生效；
 
-默认情况下，日志文件的大小达到 10MB 时会切分一次，产生新的日志文件；
+- 默认情况下，日志文件的大小达到 10MB 时会切分一次，产生新的日志文件；
 
 例：
 ```
@@ -253,7 +334,7 @@ logging.file = D:/mylog/log.log
 2016-04-13 08:23:50.120  INFO 37397 --- [main] org.hibernate.Version: HHH000412: Hibernate Core {4.3.11.Final}
 ```
 输出内容元素具体如下：
-
+```
 时间日期 — 精确到毫秒
 
 日志级别 — ERROR, WARN, INFO, DEBUG or TRACE
@@ -267,7 +348,7 @@ logging.file = D:/mylog/log.log
 Logger 名 — 通常使用源代码的类名
 
 日志内容
-
+```
 #### 自定义日志框架配置
 由于日志服务一般都在 ApplicationContext 创建前就初始化了，它并不是必须通过 Spring 的配置文件控制。因此通过系统属性和传统的 Spring Boot 外部配置文件依然可以很好的支持日志控制和管理。
 
@@ -362,7 +443,7 @@ spring boot 默认配置的静态资源目录如下：
 优先级顺序为：`META-INF/resources > resources > static > public`
 
 即：         
-服务器启动后这四个文件夹若同时存在，则他们目录下的所有文件都相当于放在了 web 服务器的 www 中，若存在同名文件，则只访问优先级最高的文件，其它同名文件会被覆盖；
+服务器启动后，这四个文件夹若同时存在，则他们目录下的所有文件都相当于放在了 web 服务器的 www 中，若存在同名文件，则只访问优先级最高的文件，其它同名文件会被覆盖；
 
 使用 webjar 管理静态资源：http://www.jianshu.com/p/d127c4f78bb8 
 
@@ -371,7 +452,9 @@ spring boot 默认配置的静态资源目录如下：
 templates 文件夹下的模板文件无法直接访问，要访问这些页面，有两种方法：
 
 - 不使用模板引擎，自己配置 spring mvc 的 viewResolve；         
+  
   https://segmentfault.com/a/1190000007008637 
+  
   https://stackoverflow.com/questions/29953245/configure-viewresolver-with-spring-boot-and-annotations-gives-no-mapping-found-f 
 
   ```java
@@ -677,6 +760,7 @@ Spring Data REST 构建在 Spring Data repositories 之上，并自动将其导�
     ```
 
 2)	配置
+    
     在【application.properties】中可通过以 spring.data.rest 为前缀的配置项对 Spring Data REST 进行配置；
     - 更改根 URI
       默认情况下，Spring Data REST 以根 URI“/”提供 REST 资源，可在【application.properties】中修改：
@@ -857,16 +941,15 @@ public enum Propagation {
     ```
 
 4)	编写实体类
-    注意：实体类必须有无参构造函数，否则 mybatis 无法完成映射；
+    
+    注意：**实体类必须有无参构造函数，否则 mybatis 无法完成映射**；
 
 5)	编写 mapper 接口【使用注解的方式】
     ```java
     @Mapper
     public interface TestMapper {
-
       @Select("SELECT * FROM test_1200 WHERE id = #{id}")
       Record findById(@Param("id") Long id);
-
     }
     ```
     编写完 mapper 接口即完成了 DAO 层的开发工作；         
@@ -881,10 +964,9 @@ public enum Propagation {
     // 使用该注解，会自动配置 spring boot 上下文环境并使用 Transactional 开启 Rollback，若要关闭回滚，@Rollback(false)
     @SpringBootTest
     public class UserMapperTest {
-
       @Autowired
       private UserMapper UserMapper;
-    // 将 mapper 接口直接注入后即可使用
+      // 将 mapper 接口直接注入后即可使用
 
       @Test
       public void testQuery() throws Exception {
@@ -902,12 +984,11 @@ public enum Propagation {
 #### @Insert
 基本使用：
 ```java
-public interface StudentMapper
-{
-@Insert("INSERT INTO STUDENTS(STUD_ID,NAME,EMAIL,ADDR_ID, PHONE)
-VALUES(#{studId},#{name},#{email},#{address.addrId},#{phone})")
+public interface StudentMapper {
+    @Insert("INSERT INTO STUDENTS(STUD_ID,NAME,EMAIL,ADDR_ID, PHONE)
+        VALUES(#{studId},#{name},#{email},#{address.addrId},#{phone})")
 	// 使用了 @Insert 注解的 insertMethod() 方法将返回 insert 语句执行后影响的行数
-int insertStudent(Student student);
+    int insertStudent(Student student);
 }
 ```
 
@@ -984,10 +1065,10 @@ d)	通过使用在 SQL 语句中定义别名完成映射；
 @Select("SELECT * FROM STUDENTS")
 // column 对于数据表中的列名，property 对于 JavaBean 的属性名
 @Results({
-@Result(id = true, column = "stud_id", property = "studId"),
-@Result(column = "name", property = "name"),
-@Result(column = "email", property = "email"),
-@Result(column = "addr_id", property = "address.addrId")
+    @Result(id = true, column = "stud_id", property = "studId"),
+    @Result(column = "name", property = "name"),
+    @Result(column = "email", property = "email"),
+    @Result(column = "addr_id", property = "address.addrId")
 })
 List<Student> findAllStudents();
 ```
@@ -1052,7 +1133,7 @@ Tutor findTutorById(int tutorId);
 ### 使用 mybatis-generator
 http://www.jianshu.com/p/188622950cc6 
 
-由于 mybatis-generator 官方使用的是 maven plugin，因此针对 gradle，使用第三方解决方案 https://plugins.gradle.org/plugin/com.arenagod.gradle.MybatisGenerator ，即使用第三方插件 https://github.com/kimichen13/mybatis-generator-plugin ；
+由于 mybatis-generator 官方使用的是 maven plugin，因此针对 gradle，使用[第三方解决方案](https://plugins.gradle.org/plugin/com.arenagod.gradle.MybatisGenerator) ，即使用[第三方插件](https://github.com/kimichen13/mybatis-generator-plugin) ；
 
 1)	配置【build.gradle】        
     添加以下内容：
@@ -1357,7 +1438,7 @@ lombok 是一套代码模板解决方案，将极大提升开发的效率；
 
     | 注解                                       | 说明                                       |
     | ---------------------------------------- | ---------------------------------------- |
-    | @Data                                    | 自动生成 @ToString, @EqualsAndHashCode, @Getter on all fields, and @Setter on all  non-final fields, and @RequiredArgsConstructor；  注意：不会自动生成全参 / 无参构造方法，因此通常要与 @AllArgsConstructor、@NoArgsConstructor 一起使用； |
+    | @Data                                    | 自动生成 @ToString, @EqualsAndHashCode, @Getter on all fields, and @Setter on all  non-final fields, and @RequiredArgsConstructor；  <br>注意：**不会自动生成全参 / 无参构造方法，因此通常要与 @AllArgsConstructor、@NoArgsConstructor 一起使用**； |
     | @Getter                                  | 自动生成 Getter 方法                             |
     | @Setter                                  | 自动生成 Setter 方法                             |
     | @ToString                                | 自动覆盖 toString 方法                           |
@@ -1762,6 +1843,37 @@ gradle clean build
 java -jar xxxx.jar
 ```
 
+##### 打包为可执行的 jar 包
+
+http://blog.geekidentity.com/spring/spring_boot_production_deploy/
+
+除了使用 java -jar 运行 Spring Boot 应用程序外，还可以为 Unix 系统打包完全可执行的应用程序。 这使得在常见的生产环境中安装和管理 Spring Boot 应用程序非常容易。
+
+Spring Boot 提供了一个 tools 工具，该工具可以方便的让我们将程序部署到生产环境。
+
+- maven 配置：
+    ```xml
+    <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+            <executable>true</executable>
+        </configuration>
+    </plugin>
+    ```
+
+- gradle 配置
+
+    ```xml
+    springBoot {
+        executable = true
+    }
+    ```
+
+这样的配置实际上是 Spring Boot tools 在打包的过程中将 bash 脚本及一些辅助进行启动的 Java 代码打包到我们的项目中，然后，就可以通过键入`./my-application.jar`（其中 my-application 是您工程的 artifact 的名称）来运行应用程序。
+
+在此基础上，还可以通过 Linux 系统中的 init.d 或 systemd 将 Spring Boot 应用程序作为 Unix / Linux 服务启动，从而更加方便和稳定。
+
 #### 打包为 war 包
 
 打包为 jar 包时，包含了内置的 tomcat 服务器，若希望使用专门的 tomcat 服务器或者其它服务器，可将项目打包为 war 包后部署；
@@ -1776,19 +1888,18 @@ http://www.jianshu.com/p/b3be5e54d836
 
 https://waylau.com/docker-spring-boot-gradle/ 
 
-
 ## 定时任务
 
-### 使用Schedule
+### 使用 Schedule
 
 1)	引入依赖
-    spring boot的定时任务依赖于springboot starter，但若使用了springboot starter web则无须再添加（已包含）；
+    spring boot 的定时任务依赖于 springboot starter，但若使用了 springboot starter web 则无须再添加（已包含）；
 
 2)	启动类启用定时任务
-    在启动类上面加上@EnableScheduling即可开启定时任务；
+    在启动类上面加上 @EnableScheduling 即可开启定时任务；
 
 3)	创建定时任务
-    在能被spring扫描后注入的类（如@Service、@Component）中创建定时任务，并用@Scheduled注解标记，项目启动会自动执行使用了该注解的方法；
+    在能被 spring 扫描后注入的类（如 @Service、@Component）中创建定时任务，并用 @Scheduled 注解标记，项目启动会自动执行使用了该注解的方法；
     
     例：
 
@@ -1806,88 +1917,83 @@ https://waylau.com/docker-spring-boot-gradle/
     }
     ```
 
-    @Scheduled的参数可接收两种类型：
+    @Scheduled 的参数可接收两种类型：
 
-    - cron表达式：
+    - cron 表达式：
 
-      注：cron一共有7位，但是最后一位是年，可以留空，所以我们可以写6位：
-      * 第一位，表示秒，取值0-59
-      * 第二位，表示分，取值0-59
-      * 第三位，表示小时，取值0-23
-      * 第四位，日期天/日，取值1-31
-      * 第五位，日期月份，取值1-12
-      * 第六位，星期，取值1-7，星期一，星期二...，注：不是第1周，第二周的意思，1 是星期天，2是星期一……
-      * 第7为，年份，可以留空，取值1970-2099
+      注：cron 一共有 7 位，但是最后一位是年，可以留空，所以我们可以写 6 位：
+      * 第一位，表示秒，取值 0-59
+      * 第二位，表示分，取值 0-59
+      * 第三位，表示小时，取值 0-23
+      * 第四位，日期天 / 日，取值 1-31
+      * 第五位，日期月份，取值 1-12
+      * 第六位，星期，取值 1-7，星期一，星期二。..，注：不是第 1 周，第二周的意思，1 是星期天，2 是星期一……
+      * 第 7 为，年份，可以留空，取值 1970-2099
 
       特殊符号：
-      -	(*)星号：可以理解为每的意思，每秒，每分，每天，每月，每年...；
-      -	(?)问号：问号只能出现在日期和星期这两个位置，表示这个位置的值不确定，每天3点执行，所以第六位星期的位置，我们是不需要关注的，就是不确定的值。同时：日期和星期是两个相互排斥的元素，通过问号来表明不指定值。比如，1月10日，比如是星期1，如果在星期的位置是另指定星期二，就前后冲突矛盾了；
-      -	(-)减号：表达一个范围，如在小时字段中使用“10-12”，则表示从10到12点，即10,11,12；
-      -	(,)逗号：表达一个列表值，如在星期字段中使用“1,2,4”，则表示星期一，星期二，星期四；
-      -	(/)斜杠：如：x/y，x是开始值，y是步长，比如在第一位（秒） 0/15就是，从0秒开始，每15秒，最后就是0，15，30，45，60    另：*/y，等同于0/y；
+      -	(*) 星号：可以理解为每的意思，每秒，每分，每天，每月，每年。..；
+      -	(?) 问号：问号只能出现在日期和星期这两个位置，表示这个位置的值不确定，每天 3 点执行，所以第六位星期的位置，我们是不需要关注的，就是不确定的值。同时：日期和星期是两个相互排斥的元素，通过问号来表明不指定值。比如，1 月 10 日，比如是星期 1，如果在星期的位置是另指定星期二，就前后冲突矛盾了；
+      -	(-) 减号：表达一个范围，如在小时字段中使用“10-12”，则表示从 10 到 12 点，即 10,11,12；
+      -	(,) 逗号：表达一个列表值，如在星期字段中使用“1,2,4”，则表示星期一，星期二，星期四；
+      -	(/) 斜杠：如：x/y，x 是开始值，y 是步长，比如在第一位（秒） 0/15 就是，从 0 秒开始，每 15 秒，最后就是 0，15，30，45，60    另：*/y，等同于 0/y；
 
       例：
       ```
-      0 0 3 * * ?     每天3点执行
-      0 5 3 * * ?     每天3点5分执行
-      0 5 3 ? * *     每天3点5分执行，与上面作用相同
-      0 5/10 3 * * ?  每天3点的 5分，15分，25分，35分，45分，55分这几个时间点执行
-      0 10 3 ? * 1    每周星期天，3点10分 执行，注：1表示星期天    
+      0 0 3 * * ?     每天 3 点执行
+      0 5 3 * * ?     每天 3 点 5 分执行
+      0 5 3 ? * *     每天 3 点 5 分执行，与上面作用相同
+      0 5/10 3 * * ?  每天 3 点的 5 分，15 分，25 分，35 分，45 分，55 分这几个时间点执行
+      0 10 3 ? * 1    每周星期天，3 点 10 分 执行，注：1 表示星期天    
       0 10 3 ? * 1#3  每个月的第三个星期，星期天 执行，#号只能出现在星期的位置
       ```
 
-    - fixedRate风格，单位是毫秒：    
+    - fixedRate 风格，单位是毫秒：    
     
       例：
       ```
-      @Scheduled(fixedRate = 6000) ：上一次开始执行时间点之后6秒再执行，即每隔多久执行一次，不论你业务执行花费了多少时间
-      @Scheduled(fixedDelay = 6000) ：上一次执行完毕时间点之后6秒再执行，即每次执行完毕后多久再执行一次
-      @Scheduled(initialDelay=1000, fixedRate=6000) ：第一次延迟1秒后执行，之后按fixedRate的规则每6秒执行一次
+      @Scheduled(fixedRate = 6000) ：上一次开始执行时间点之后 6 秒再执行，即每隔多久执行一次，不论你业务执行花费了多少时间
+      @Scheduled(fixedDelay = 6000) ：上一次执行完毕时间点之后 6 秒再执行，即每次执行完毕后多久再执行一次
+      @Scheduled(initialDelay=1000, fixedRate=6000) ：第一次延迟 1 秒后执行，之后按 fixedRate 的规则每 6 秒执行一次
       ```
 
       注：http://412887952-qq-com.iteye.com/blog/2369020 
 
-      若是在应用服务器集群中，spring Schedule会出现任务多次被调度执行的情况，因为集群的节点之间是不会共享任务信息的，每个节点上的任务都会按时执行。比如我们部署了3个实例，三个实例一启动，就会把定时任务都启动，那么在同一个时间点，定时任务会一起执行，也就是会执行3次，这样很可能会导致我们的业务出现错误。
+      若是在应用服务器集群中，spring Schedule 会出现任务多次被调度执行的情况，因为集群的节点之间是不会共享任务信息的，每个节点上的任务都会按时执行。比如我们部署了 3 个实例，三个实例一启动，就会把定时任务都启动，那么在同一个时间点，定时任务会一起执行，也就是会执行 3 次，这样很可能会导致我们的业务出现错误。
       
       解决方案：     
-      逻辑分离，就是我们将真正要定时任务处理的逻辑，写成rest服务，或者rpc服务，然后我们可以新建一个单独的定时任务项目，这个项目应该是没有任何的业务代码的，他纯粹只有定时任务功能，几点启动，或者每隔多少时间启动，启动后，通过rest或者rpc的方式，调用真正处理逻辑的服务。同时，我们甚至可以不用新建一个项目，我们通过linux的cron就可以进行。同时，这种方式还有一个好处，比如有些时候，我们的定时任务也会因为某些原因出现问题，没有执行，那么我们就可以通过curl 或者wget等等很多方式，再次定时任务的执行。
+      逻辑分离，就是我们将真正要定时任务处理的逻辑，写成 rest 服务，或者 rpc 服务，然后我们可以新建一个单独的定时任务项目，这个项目应该是没有任何的业务代码的，他纯粹只有定时任务功能，几点启动，或者每隔多少时间启动，启动后，通过 rest 或者 rpc 的方式，调用真正处理逻辑的服务。同时，我们甚至可以不用新建一个项目，我们通过 linux 的 cron 就可以进行。同时，这种方式还有一个好处，比如有些时候，我们的定时任务也会因为某些原因出现问题，没有执行，那么我们就可以通过 curl 或者 wget 等等很多方式，再次定时任务的执行。
 
-
-### 使用Quartz
+### 使用 Quartz
 
 https://www.cnblogs.com/javanoob/p/springboot_schedule.html 
 
 https://www.cnblogs.com/lic309/p/4089633.html 
 
-Quartz是一个功能完善的任务调度框架，特别牛叉的是它支持集群环境下的任务调度，当然代价也很大，需要将任务调度状态序列化到数据库。Quartz框架需要10多张表协同，配置繁多。
+Quartz 是一个功能完善的任务调度框架，特别牛叉的是它支持集群环境下的任务调度，当然代价也很大，需要将任务调度状态序列化到数据库。Quartz 框架需要 10 多张表协同，配置繁多。
 
-## 使用Shiro
+## 使用 Shiro
 
 官方网站：http://shiro.apache.org/ 
 
 中文文档：https://waylau.gitbooks.io/apache-shiro-1-2-x-reference/content/ 
 
-Shiro是Apache下的一个开源项目，我们称之为Apache Shiro。它是一个很易用与Java项目的的安全框架，提供了认证、授权、加密、会话管理，与 Spring Security 一样都是做一个权限的安全框架，但是与Spring Security 相比，在于 Shiro 使用了比较简单易懂易于使用的授权方式。
+Shiro 是 Apache 下的一个开源项目，我们称之为 Apache Shiro。它是一个很易用与 Java 项目的的安全框架，提供了认证、授权、加密、会话管理，与 Spring Security 一样都是做一个权限的安全框架，但是与 Spring Security 相比，在于 Shiro 使用了比较简单易懂易于使用的授权方式。
 
-Apache Shiro 的三大核心组件:     
+Apache Shiro 的三大核心组件：
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/1f1f5f6d266496add107c8532ab1cac7.jpg)
 
-Apache Shiro 核心通过 Filter 来实现，通过URL规则来进行过滤和权限校验，所以我们需要定义一系列关于URL的规则和访问权限。
+Apache Shiro 核心通过 Filter 来实现，通过 URL 规则来进行过滤和权限校验，所以我们需要定义一系列关于 URL 的规则和访问权限。
 
-另外我们可以通过Shiro 提供的会话管理来获取Session中的信息。Shiro 也提供了缓存支持，使用 CacheManager 来管理。
+另外我们可以通过 Shiro 提供的会话管理来获取 Session 中的信息。Shiro 也提供了缓存支持，使用 CacheManager 来管理。
 
-
-1)	引入依赖shiro-spring
+1)	引入依赖 shiro-spring
     ```
     compile group: 'org.apache.shiro', name: 'shiro-spring', version: "${ShiroVersion}"
     ```
 
-## 使用Spring Security
+## 使用 Spring Security
 
 官方教程 https://docs.spring.io/spring-security/site/docs/current/guides/html5/helloworld-boot.html 
-
-
-
 
 ## Refer Links
 
