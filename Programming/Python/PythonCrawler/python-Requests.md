@@ -370,6 +370,7 @@ Requests 中也有一个内置的 JSON 解码器：.json() 方法；
 r = requests.get('https://github.com/timeline.json')
 print(r.json())
 ```
+
 如果 JSON 解码失败， r.json() 就会抛出一个异常。例如，相应内容是 401 (Unauthorized)，尝试访问 r.json 将会抛出 ValueError: No JSON object could be decoded 异常。
 
 #### 原始套接字响应

@@ -342,13 +342,13 @@ http://blog.csdn.net/mrlevo520/article/details/51926145
 
 - 定位元素在 frame 中
 
-  使用`switch_to_frame()`
+  使用`switch_to.frame()`
 
 - 发生页面重定向
 
   - 客户端重定向
     ```python
-    driver.switch_to_window(driver.window_handles[-1])
+    driver.switch_to.window(driver.window_handles[-1])
     ```
   - 服务器端重定向
     <!-- TODO: -->
@@ -524,49 +524,121 @@ https://www.cnblogs.com/kongzhongqijing/p/3534197.html
 
 ###### frame 切换
 
-```python
-# 切换 frame，使焦点切换到一个 id 为 frameResult 的 frame 上，参数为 frame 的 id
-# 当网页使用 ajax 加载 frame 时，直接 find_element 或者获取 page_source 都无法抓取 frame 中的元素，应当先切换到该 frame 中，才能对该 frame 中的元素进行操作
-# 若有多层嵌套的 frame，要抓取最里层的 frame 中的元素时，需要先调用多次 switch_to_frame，将焦点一层层切换到最里层的 frame，才能对其中的元素进行操作
-driver.switch_to_frame("innerFrame")
-driver.switch_to_frame(“in_innerFrame”)
-```
+http://blog.csdn.net/huilan_same/article/details/52200586
+
+- 基本操作
+  ```python
+  # 切换 frame，使焦点切换到一个 id 为 frameResult 的 frame 上，参数为 frame_reference
+  # 当网页使用 ajax 加载 frame 时，直接 find_element 或者获取 page_source 都无法抓取 frame 中的元素，应当先切换到该 frame 中，才能对该 frame 中的元素进行操作
+  # 若有多层嵌套的 frame，要抓取最里层的 frame 中的元素时，需要先调用多次 switch_to.frame，将焦点一层层切换到最里层的 frame，才能对其中的元素进行操作
+  driver.switch_to.frame(0)  # 1.用frame的index来定位，第一个是0
+  driver.switch_to.frame("frame1")  # 2.用id来定位
+  driver.switch_to.frame("myframe")  # 3.用name来定位
+  driver.switch_to.frame(driver.find_element_by_xpath("//iframe[contains(@src,'myframe')]"))  # 4.用WebElement对象来定位
+  # 传入整型参数即判定为用index定位，传入str参数则判定为用id/name定位
+  ```
+
+- 从frame中切回主文档
+  
+  切到frame中之后，我们便不能继续操作主文档的元素，这时如果想操作主文档内容，则需切回主文档：
+  ```python
+  driver.switch_to.default_content()
+  ```
+
+- 嵌套frame的操作
+
+  有时候我们会遇到嵌套的frame，如下：
+  ```html
+  <html>
+      <iframe id="frame1">
+          <iframe id="frame2" / >
+      </iframe>
+  </html>
+  ```
+  则从主文档切到frame2，一层层切进去
+  ```python
+  driver.switch_to.frame("frame1")
+  driver.switch_to.frame("frame2")
+  ```
+  从frame2再切回frame1，这里selenium给我们提供了一个方法能够从子frame切回到父frame，而不用我们切回主文档再切进来:
+  ```python
+  driver.switch_to.parent_frame()  # 如果当前已是主文档，则无效果
+  ```
+
 
 ###### window 切换
 
 ```python
 # 当浏览器中有多个窗口时，实现窗口的切换，参数为窗口名或窗口的句柄：
-driver.switch_to_window("windowName")
-driver.switch_to_window(driver.window_handles[-1]) 
+driver.switch_to.window("windowName")
+driver.switch_to.window(driver.window_handles[-1]) 
 ```
 
 ```python
 # 可以使用 driver.window_handles 属性来获取当前 driver 所有窗口的操作句柄（以列表形式返回）
 # 获得当前最后的窗口，通过遍历，switch 到最后 / 最新一个窗口
 for handle in driver.window_handles:
-driver.switch_to_window(handle) 
+driver.switch_to.window(handle) 
 # 等效于
-driver.switch_to_window(driver.window_handles[-1])
+driver.switch_to.window(driver.window_handles[-1])
 ```
 
 ```python
 # 切换到当前的第二个窗口
-switch_to_window(driver.window_handles[2])
+switch_to.window(driver.window_handles[2])
 ```
 
 ```python
-# 当请求发生客户端重定向时，页面已经跳转到新的 url，但是 driver 所绑定的仍是重定向前页面的 DOM，此时相当于是开了一个新的窗口，因此必须要 switch_to_window 才能获取新页面的 DOM 元素
+# 当请求发生客户端重定向时，页面已经跳转到新的 url，但是 driver 所绑定的仍是重定向前页面的 DOM，此时相当于是开了一个新的窗口，因此必须要 switch_to.window 才能获取新页面的 DOM 元素
 # driver.window_handles[-1] 表示最新出现的窗口的句柄
-driver.switch_to_window(driver.window_handles[-1])
+driver.switch_to.window(driver.window_handles[-1])
 ```
 
 ##### 弹窗处理
 
 ```python
 # 获取弹窗对象
-alert = driver.switch_to_alert()
+alert = driver.switch_to.alert()
 # This will return the currently open alert object. With this object you can now accept, dismiss, read its contents or even type into a prompt. This interface works equally well on alerts, confirms, prompts.
 ```
+
+
+- 文件下载：路径选择框的处理
+
+  http://blog.csdn.net/huilan_same/article/details/52789954
+
+  chrome下解决方案：
+
+  处理弹出的文件下载框，跟上传类似，可以用autoit和win32api解决，更简单的方法是指定下载路径，不弹出弹框，直接下载到指定路径：
+
+  设置其options：
+  ```
+  download.default_directory：设置下载路径
+  profile.default_content_settings.popups：设置为 0 禁止弹出窗口
+  ```
+  ```python
+  from selenium import webdriver
+  from time import sleep
+
+
+  options = webdriver.ChromeOptions()
+  prefs = {'profile.default_content_settings.popups': 0, 'download.default_directory': 'd:\\'}
+  options.add_experimental_option('prefs', prefs)
+
+  driver = webdriver.Chrome(executable_path='D:\\chromedriver.exe', chrome_options=options)
+  driver.get('http://sahitest.com/demo/saveAs.htm')
+  driver.find_element_by_xpath('//a[text()="testsaveas.zip"]').click()
+  sleep(3)
+  driver.quit()
+  ```
+
+- 文件上传：文件选择框的处理
+
+  http://blog.csdn.net/huilan_same/article/details/52439546
+
+
+
+
 
 ##### 历史记录
 
@@ -839,6 +911,7 @@ WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_xpath('xpa
 
 #### 调用 JavaScript
 1. 	
+  
   ```python
   # execute_async_script() 方法是异步方法，它不会阻塞主线程执行
   driver.execute_async_script(js)
@@ -849,7 +922,7 @@ WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_xpath('xpa
   ```python
   # execute_script() 是同步方法，用它执行 js 代码会阻塞主线程执行，直到 js 代码执行完毕
   # execute_script() 方法如果有返回值，有以下几种情况：
-  # 如果返回一个页面元素（document element), 这个方法就会返回一个 WebElement
+  # 如果返回一个页面元素(document element), 这个方法就会返回一个 WebElement
   # 如果返回浮点数字，这个方法就返回一个 double 类型的数字
   # 返回非浮点数字，方法返回 Long 类型数字
   # 返回 boolean 类型，方法返回 Boolean 类型

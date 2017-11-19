@@ -1,7 +1,7 @@
 - [Spring MVC Note](#spring-mvc-note)
   - [@RequestBody](#requestbody)
   - [@ResponseBody](#responsebody)
-  - [响应 JSON 数据](#%E5%93%8D%E5%BA%94-json-%E6%95%B0%E6%8D%AE)
+    - [响应 JSON 数据](#%E5%93%8D%E5%BA%94-json-%E6%95%B0%E6%8D%AE)
     - [响应 XML 数据](#%E5%93%8D%E5%BA%94-xml-%E6%95%B0%E6%8D%AE)
     - [Accpect 与 produces](#accpect-%E4%B8%8E-produces)
     - [ContentType 与 consumes](#contenttype-%E4%B8%8E-consumes)
@@ -10,6 +10,15 @@
     - [自定义 HttpMessageConverter](#%E8%87%AA%E5%AE%9A%E4%B9%89-httpmessageconverter)
   - [@RequestMapping](#requestmapping)
     - [支持的方法参数类型](#%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B)
+      - [HttpServlet](#httpservlet)
+      - [WebRequest](#webrequest)
+      - [InputStream、OutputStream、Reader、Writer](#inputstream%E3%80%81outputstream%E3%80%81reader%E3%80%81writer)
+      - [@PathVariable、@RequestParam、@CookieValue、@RequestHeader](#pathvariable%E3%80%81requestparam%E3%80%81cookievalue%E3%80%81requestheader)
+      - [@ModelAttribute](#modelattribute)
+      - [Model 和 ModelMap](#model-%E5%92%8C-modelmap)
+      - [实体类](#%E5%AE%9E%E4%BD%93%E7%B1%BB)
+      - [MultipartFile](#multipartfile)
+      - [Errors 和 BindingResult](#errors-%E5%92%8C-bindingresult)
     - [支持的返回类型](#%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B)
   - [@SessionAttributes](#sessionattributes)
   - [处理 PUT/DELETE/PATCH 请求](#%E5%A4%84%E7%90%86-putdeletepatch-%E8%AF%B7%E6%B1%82)
@@ -29,7 +38,7 @@ POST 模式下，使用 @RequestBody 绑定请求对象，Spring 会帮你进行
 
 GET 模式下，可以使用 @ResponseBody 注解，Controller 返回的 Java 对象可以自动被转换成对应的 XML 或者 JSON 数据。同时使用 @PathVariable 绑定输入参数，非常适合 Restful 风格，且隐藏了参数与路径的关系，可以提升网站的安全性，静态化页面，降低恶意攻击风险。
 
-## 响应 JSON 数据
+### 响应 JSON 数据
 
 例：
 
@@ -58,9 +67,21 @@ public class BookController {
 }
 ```
 
+除此之外，可用过 produces 参数显示指定返回 json 格式：
+```java
+@RestController
+public class BookController {
+    @GetMapping(value = "/book/{bookId}", produces = {"application/json;charset=UTF-8"})
+    public Book getBook(@PathVariable("bookId") Integer bookId) {
+        return new Book(bookId, "book" + bookId);
+    }
+}
+```
+则控制器会直接返回 POJO，POJO 自动转化为 json 格式。
+
 ### 响应 XML 数据
 
-JSON 可直接自动转换，XML 需要在 entity 中标注 @XmlRootElement 和 @XmlElement 等。
+**JSON 可直接自动转换，而 XML 需要在 entity 中标注 @XmlRootElement 和 @XmlElement 等**。
 
 如果我们需要将 Book 对象以 XML 的形式返回，则需要给 Book 对象添加 @XmlRootElement 注解，让 spring 内部能够解析 XML 对象。
 ```java
@@ -110,7 +131,7 @@ public class Book {
 
   通常情况下，我们的服务端返回的形式一般是固定的，即限定了是 JSON，XML 中的一种，不建议依赖于客户端添加 Accept 的信息，而是在服务端限定 produces 类型。
 
-  - produce
+  - produces
 
     produces 是 Spring 为我们提供的注解参数，代表着服务端能够支持返回的媒体类型，我们注意到 produces 后跟随的是一个数组类型，也就意味着服务端支持多种媒体类型的响应。
   
@@ -182,23 +203,57 @@ public interface HttpMessageConverter<T> {
 
 ### 支持的方法参数类型
 
-- HttpServlet 对象，主要包括 HttpServletRequest 、HttpServletResponse 和 HttpSession 对象。 这些参数 Spring 在调用处理器方法的时候会自动给它们赋值，所以当在处理器方法中需要使用到这些对象的时候，可以直接在方法上给定一个方法参数的申明，然后在方法体里面直接用就可以了。但是有一点需要注意的是在使用 HttpSession 对象的时候，如果此时 HttpSession 对象还没有建立起来的话就会有问题。
+#### HttpServlet
 
-- Spring 自己的 WebRequest 对象。 使用该对象可以访问到存放在 HttpServletRequest 和 HttpSession 中的属性值。
+HttpServlet 对象，主要包括 HttpServletRequest 、HttpServletResponse 和 HttpSession 对象。 这些参数 Spring 在调用处理器方法的时候会自动给它们赋值，所以当在处理器方法中需要使用到这些对象的时候，可以直接在方法上给定一个方法参数的申明，然后在方法体里面直接用就可以了。但是有一点需要注意的是在使用 HttpSession 对象的时候，如果此时 HttpSession 对象还没有建立起来的话就会有问题。
 
-- InputStream 、OutputStream 、Reader 和 Writer 。 InputStream 和 Reader 是针对 HttpServletRequest 而言的，可以从里面取数据；OutputStream 和 Writer 是针对 HttpServletResponse 而言的，可以往里面写数据。
 
-- 使用 @PathVariable 、@RequestParam 、@CookieValue 和 @RequestHeader 标记的参数。
+#### WebRequest
 
-- 使用 @ModelAttribute 标记的参数。
+Spring 自己的 WebRequest 对象。 使用该对象可以访问到存放在 HttpServletRequest 和 HttpSession 中的属性值。
 
-- java.util.Map 、Spring 封装的 Model 和 ModelMap 。 这些都可以用来封装模型数据，用来给视图做展示。
+#### InputStream、OutputStream、Reader、Writer
 
-- 实体类。 可以用来接收上传的参数。
+InputStream 、OutputStream 、Reader 和 Writer 。 InputStream 和 Reader 是针对 HttpServletRequest 而言的，可以从里面取数据；OutputStream 和 Writer 是针对 HttpServletResponse 而言的，可以往里面写数据。
 
-- Spring 封装的 MultipartFile 。 用来接收上传文件的。
+#### @PathVariable、@RequestParam、@CookieValue、@RequestHeader
 
-- Spring 封装的 Errors 和 BindingResult 对象。 这两个对象参数必须紧接在需要验证的实体对象参数之后，它里面包含了实体对象的验证结果。
+使用 @PathVariable 、@RequestParam 、@CookieValue 和 @RequestHeader 标记的参数。
+
+#### @ModelAttribute
+
+使用 @ModelAttribute 标记的参数。
+
+例：Activity是一个Java Bean
+```java
+	@PostMapping()
+	public ResponseEntity<?> activityCreate(@ModelAttribute Activity activity) {
+		try {
+			saveUploadedFiles(activity.getActivityPoster());
+		} catch (IOException e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
+		return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+	}
+```
+
+####  Model 和 ModelMap 
+
+java.util.Map 、Spring 封装的 Model 和 ModelMap 。 这些都可以用来封装模型数据，用来给视图做展示。
+
+
+#### 实体类
+
+实体类。 可以用来接收上传的参数。
+
+#### MultipartFile
+
+Spring 封装的 MultipartFile 。 用来接收上传文件的。
+
+#### Errors 和 BindingResult
+
+Spring 封装的 Errors 和 BindingResult 对象。 这两个对象参数必须紧接在需要验证的实体对象参数之后，它里面包含了实体对象的验证结果。
 
 ### 支持的返回类型
 参见：http://blog.csdn.net/mafan121/article/details/45060135
@@ -219,6 +274,8 @@ public interface HttpMessageConverter<T> {
 
 - 除以上几种情况之外的其他任何返回类型都会被当做模型中的一个属性来处理，而返回的视图还是由 RequestToViewNameTranslator 来决定，添加到模型中的属性名称可以在该方法上用 `@ModelAttribute(“attributeName”)` 来定义，否则将使用返回类型的类名称的首字母小写形式来表示。使用 `@ModelAttribute` 标记的方法会在 `@RequestMapping` 标记的方法执行之前执行。
 
+- [`ResponseEntity<T>`对象](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html)
+
 TODO：
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/e4466d1a68c785fd36106ce04b925392.jpg)
 
@@ -227,6 +284,11 @@ SpringMVC 未指定跳转页面时，有 @ResponseBody 注解则会根据请求�
 ## @SessionAttributes
 
 @SessionAttributes 一般是标记在 Controller 类上的，可以通过名称、类型或者名称加类型的形式来指定哪些属性是需要存放在 session 中的。
+
+
+
+
+
 
 ## 处理 PUT/DELETE/PATCH 请求
 

@@ -3,10 +3,14 @@
   - [Spring Boot CLI 安装](#spring-boot-cli-%E5%AE%89%E8%A3%85)
   - [在 IDEA 中创建使用 gradle 的 spring boot 项目](#%E5%9C%A8-idea-%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%BD%BF%E7%94%A8-gradle-%E7%9A%84-spring-boot-%E9%A1%B9%E7%9B%AE)
   - [运行 spring boot 项目](#%E8%BF%90%E8%A1%8C-spring-boot-%E9%A1%B9%E7%9B%AE)
-  - [Spring Boot 配置选项](#spring-boot-%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9)
+  - [配置风格](#%E9%85%8D%E7%BD%AE%E9%A3%8E%E6%A0%BC)
+  - [application.yml / application.propertities](#applicationyml-applicationpropertities)
     - [常用配置](#%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE)
       - [.properties](#properties)
       - [.yml](#yml)
+  - [Spring EL](#spring-el)
+  - [配置CORS](#%E9%85%8D%E7%BD%AEcors)
+  - [文件上传](#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)
   - [日志管理](#%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86)
     - [配置](#%E9%85%8D%E7%BD%AE)
       - [配置日志级别【格式：logging.level. 包名 = 级别】：](#%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB%E3%80%90%E6%A0%BC%E5%BC%8F%EF%BC%9Alogginglevel-%E5%8C%85%E5%90%8D-%E7%BA%A7%E5%88%AB%E3%80%91%EF%BC%9A)
@@ -189,11 +193,19 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
 
 ## 运行 spring boot 项目
 
+
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/3606cffe1d51ec0a0f19fb5e4489f8df.jpg)
 
 出现 Started TestdemoApplication in 2.916 seconds (JVM running for 3.43) 字样，表明 spring boot 启动成功；
 
-## Spring Boot 配置选项
+## 配置风格
+
+在spring boot一般采用Java配置和注解混合配置，其中：全局配置采用Java配置（如数据库、MVC配置），业务Bean的配置采用注解配置（@Service、@Controller等）。
+
+
+## application.yml / application.propertities
+
+Spring Boot 采用一个全局的配置文件：application.yml / application.propertities，放置于src/main/resources或类路径下的/config中。
 
 ### 常用配置
 
@@ -285,6 +297,211 @@ banner:
     location: classpath:banner.txt
 
 ```
+
+## Spring EL
+
+Spring EL即Spring表达式语言，支持在xml和注解中使用表达式。
+
+Spring主要在注解@Value的参数中使用表达式。
+
+例：
+```java
+public class ELTest {
+
+    //字符串
+    @Value("I love u")
+    private String normal;
+
+    //系统属性
+    @Value("#{systemProperties['os.name']}")
+    private String osName;
+
+    //计算结果
+    @Value("#{T(java.lang.Math).random()*100.0}")
+    private double randomNumber;
+
+    //其它Bean的属性
+    @Value("#{otherBean.something}")
+    private String something;
+
+    //文件资源
+    @Value("classpath:com/firejq/web/file.txt")
+    private Resouorce testFile;
+
+    //网址资源
+    @Value("http://www.baidu.com")
+    private Resource testUrl;
+
+    //配置文件属性，在spring boot中默认读取application.propertities/application.yml中的属性
+    @Value("${book.name}")
+    private String bookName;
+}
+
+```
+
+
+## 配置CORS
+
+https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-cors
+
+https://spring.io/guides/gs/rest-service-cors/
+
+在controller中配置：
+```java
+@CrossOrigin(origins = "http://domain2.com", maxAge = 3600)
+@RestController
+@RequestMapping("/account")
+public class AccountController {
+
+        @RequestMapping("/{id}")
+        public Account retrieve(@PathVariable Long id) {
+                // ...
+        }
+
+        @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
+        public void remove(@PathVariable Long id) {
+                // ...
+        }
+}
+```
+
+全局配置：
+```java
+@Configuration
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://domain2.com")
+                        .allowedMethods("PUT", "DELETE")
+                        .allowedHeaders("header1", "header2", "header3")
+                        .exposedHeaders("header1", "header2")
+                        .allowCredentials(false).maxAge(3600);
+        }
+}
+```
+
+
+## 文件上传
+
+http://www.leftso.com/blog/232.html
+
+http://www.028888.net/archives/2016_09_1601.html
+
+https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html
+
+例：
+
+下面的例子演示了上传文件的三种可能方式:
+- 单个文件上传 – MultipartFile
+- 多个文件上传– MultipartFile[]
+- Map file upload to a Model – @ModelAttribute
+
+```java
+
+@RestController
+public class RestUploadController {
+
+    private final Logger logger = LoggerFactory.getLogger(RestUploadController.class);
+
+    //Save the uploaded file to this folder
+    private static String UPLOADED_FOLDER = "F://temp//";
+
+    // 3.1.1 Single file upload
+    @PostMapping("/api/upload")
+    // If not @RestController, uncomment this
+    //@ResponseBody
+    public ResponseEntity<?> uploadFile(
+            @RequestParam("file") MultipartFile uploadfile) {
+
+        logger.debug("Single file upload!");
+
+        if (uploadfile.isEmpty()) {
+            return new ResponseEntity("please select a file!", HttpStatus.OK);
+        }
+
+        try {
+
+            saveUploadedFiles(Arrays.asList(uploadfile));
+
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity("Successfully uploaded - " +
+                uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
+
+    }
+
+    // 3.1.2 Multiple file upload
+    @PostMapping("/api/upload/multi")
+    public ResponseEntity<?> uploadFileMulti(
+            @RequestParam("extraField") String extraField,
+            @RequestParam("files") MultipartFile[] uploadfiles) {
+
+        logger.debug("Multiple file upload!");
+
+        // Get file name
+        String uploadedFileName = Arrays.stream(uploadfiles).map(x -> x.getOriginalFilename())
+                .filter(x -> !StringUtils.isEmpty(x)).collect(Collectors.joining(" , "));
+
+        if (StringUtils.isEmpty(uploadedFileName)) {
+            return new ResponseEntity("please select a file!", HttpStatus.OK);
+        }
+
+        try {
+
+            saveUploadedFiles(Arrays.asList(uploadfiles));
+
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity("Successfully uploaded - "
+                + uploadedFileName, HttpStatus.OK);
+
+    }
+
+    // 3.1.3 maps html form to a Model
+    @PostMapping("/api/upload/multi/model")
+    public ResponseEntity<?> multiUploadFileModel(@ModelAttribute UploadModel model) {
+
+        logger.debug("Multiple file upload! With UploadModel");
+
+        try {
+
+            saveUploadedFiles(Arrays.asList(model.getFiles()));
+
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity("Successfully uploaded!", HttpStatus.OK);
+
+    }
+
+    //save file
+    private void saveUploadedFiles(List<MultipartFile> files) throws IOException {
+
+        for (MultipartFile file : files) {
+
+            if (file.isEmpty()) {
+                continue; //next pls
+            }
+
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+        }
+
+    }
+}
+```
+
+
 
 ## 日志管理
 
@@ -893,9 +1110,9 @@ public enum Propagation {
 
 ## 结合 Mybatis
 
-官方文档 http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/ 
+[官方文档](http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 
-如何优雅使用 mybatis：http://www.ityouknow.com/springboot/2016/11/06/springboot（六)- 如何优雅的使用 mybatis.html 
+[如何优雅使用 mybatis](http://www.ityouknow.com/springboot/2016/11/06/springboot(%E5%85%AD)-%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E4%BD%BF%E7%94%A8mybatis.html)
 
 ### 基本操作
 
@@ -905,7 +1122,7 @@ public enum Propagation {
 
     compile group: 'mysql', name: 'mysql-connector-java'
     ```
- 
+
 
 2)  配置数据库连接【appication.properties】
     ```
@@ -913,7 +1130,7 @@ public enum Propagation {
     spring.datasource.username=root
     spring.datasource.password=root
     ```
- 
+
 
 3)  配置 mybatis【appication.properties】             
 
@@ -1891,7 +2108,6 @@ http://www.jianshu.com/p/b3be5e54d836
 
 
 
-
 - 构建项目，生成war包
     指定war包名：
     ```
@@ -1915,6 +2131,13 @@ http://www.jianshu.com/p/b3be5e54d836
     }
     ```
     则生成的zip文件名为gradle-simple.zip，解压zip文件至外部容器即可。
+
+
+NOTE：
+
+- 若使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`的依赖设置，会导致开发期间项目无法运行，提示Unregistering JMX-exposed beans on shutdown，这是因为内置的tomcat容器无法启动，因此运行自动停止。
+
+    - 解决方法：开发期间使用`compile('org.springframework.boot:spring-boot-starter-tomcat')`，项目上线时编译才使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`
 
 
 #### 打包为 docker 镜像
