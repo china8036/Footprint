@@ -9,8 +9,9 @@
       - [.properties](#properties)
       - [.yml](#yml)
   - [Spring EL](#spring-el)
-  - [配置CORS](#%E9%85%8D%E7%BD%AEcors)
+  - [配置 CORS](#%E9%85%8D%E7%BD%AE-cors)
   - [文件上传](#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)
+    - [上传为空导致异常](#%E4%B8%8A%E4%BC%A0%E4%B8%BA%E7%A9%BA%E5%AF%BC%E8%87%B4%E5%BC%82%E5%B8%B8)
   - [日志管理](#%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86)
     - [配置](#%E9%85%8D%E7%BD%AE)
       - [配置日志级别【格式：logging.level. 包名 = 级别】：](#%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB%E3%80%90%E6%A0%BC%E5%BC%8F%EF%BC%9Alogginglevel-%E5%8C%85%E5%90%8D-%E7%BA%A7%E5%88%AB%E3%80%91%EF%BC%9A)
@@ -19,6 +20,16 @@
       - [自定义日志框架配置](#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E9%85%8D%E7%BD%AE)
       - [代码中使用](#%E4%BB%A3%E7%A0%81%E4%B8%AD%E4%BD%BF%E7%94%A8)
   - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
+    - [使用 [@ControllerAdvice](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html) 进行统一异常处理](#%E4%BD%BF%E7%94%A8-controlleradvicehttpsdocsspringiospring-frameworkdocscurrentjavadoc-apiorgspringframeworkwebbindannotationcontrolleradvicehtml-%E8%BF%9B%E8%A1%8C%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
+      - [实例 1](#%E5%AE%9E%E4%BE%8B-1)
+      - [实例 2：处理数据校验异常](#%E5%AE%9E%E4%BE%8B-2%EF%BC%9A%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E5%BC%82%E5%B8%B8)
+  - [使用 validation 进行数据校验](#%E4%BD%BF%E7%94%A8-validation-%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C)
+    - [捕获异常处理校验失败](#%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%A0%A1%E9%AA%8C%E5%A4%B1%E8%B4%A5)
+    - [使用 BindingResult 处理校验错误](#%E4%BD%BF%E7%94%A8-bindingresult-%E5%A4%84%E7%90%86%E6%A0%A1%E9%AA%8C%E9%94%99%E8%AF%AF)
+    - [使用 groups 属性进行分组校验](#%E4%BD%BF%E7%94%A8-groups-%E5%B1%9E%E6%80%A7%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84%E6%A0%A1%E9%AA%8C)
+    - [使用 [@ScriptAssert](https://docs.jboss.org/hibernate/validator/6.0/api/org/hibernate/validator/constraints/ScriptAssert.html) 自定义校验逻辑](#%E4%BD%BF%E7%94%A8-scriptasserthttpsdocsjbossorghibernatevalidator60apiorghibernatevalidatorconstraintsscriptasserthtml-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E9%80%BB%E8%BE%91)
+    - [自定义校验注解](#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3)
+    - [手动校验](#%E6%89%8B%E5%8A%A8%E6%A0%A1%E9%AA%8C)
   - [静态资源目录](#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%9B%AE%E5%BD%95)
   - [模板页面目录](#%E6%A8%A1%E6%9D%BF%E9%A1%B5%E9%9D%A2%E7%9B%AE%E5%BD%95)
   - [使用 spring boot data JPA](#%E4%BD%BF%E7%94%A8-spring-boot-data-jpa)
@@ -120,25 +131,25 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
 
 勾选所需依赖，finish；
 
-参见[IDEA 中三种 gradle 模式的区别](https://github.com/firejq/StudyNote/blob/master/Programming/Java/JavaEE/Tool/Gradle-Note.md#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB) 
+参见 [IDEA 中三种 gradle 模式的区别](https://github.com/firejq/StudyNote/blob/master/Programming/Java/JavaEE/Tool/Gradle-Note.md#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB) 
 
 创建项目后，一般需要做如下修改：
 
-- 修改gradle版本：
-    - 修改build.gradle，添加：
+- 修改 gradle 版本：
+    - 修改 build.gradle，添加：
         ```
         task wrapper(type: Wrapper) {
             gradleVersion = '4.3.1'
         }
         ```
-    - 修改gradle-wrapper.properties
+    - 修改 gradle-wrapper.properties
         
         ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/512094e33bac92160172037e9d046c94.jpg)
 
         ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/9febe52aa058b2832eb8db6d401f409f.jpg)
 
 - 修改仓库地址：
-    - 修改build.gradle
+    - 修改 build.gradle
         ```
         repositories {
             jcenter()
@@ -147,8 +158,7 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
         }
         ```
 
-
-- 完整build.gradle示例如下：
+- 完整 build.gradle 示例如下：
     ```groovy
     buildscript {
         ext {
@@ -193,19 +203,17 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
 
 ## 运行 spring boot 项目
 
-
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/3606cffe1d51ec0a0f19fb5e4489f8df.jpg)
 
 出现 Started TestdemoApplication in 2.916 seconds (JVM running for 3.43) 字样，表明 spring boot 启动成功；
 
 ## 配置风格
 
-在spring boot一般采用Java配置和注解混合配置，其中：全局配置采用Java配置（如数据库、MVC配置），业务Bean的配置采用注解配置（@Service、@Controller等）。
-
+在 spring boot 一般采用 Java 配置和注解混合配置，其中：全局配置采用 Java 配置（如数据库、MVC 配置），业务 Bean 的配置采用注解配置（@Service、@Controller 等）。
 
 ## application.yml / application.propertities
 
-Spring Boot 采用一个全局的配置文件：application.yml / application.propertities，放置于src/main/resources或类路径下的/config中。
+Spring Boot 采用一个全局的配置文件：application.yml / application.propertities，放置于 src/main/resources 或类路径下的 /config 中。
 
 ### 常用配置
 
@@ -300,53 +308,52 @@ banner:
 
 ## Spring EL
 
-Spring EL即Spring表达式语言，支持在xml和注解中使用表达式。
+Spring EL 即 Spring 表达式语言，支持在 xml 和注解中使用表达式。
 
-Spring主要在注解@Value的参数中使用表达式。
+Spring 主要在注解 @Value 的参数中使用表达式。
 
 例：
 ```java
 public class ELTest {
 
-    //字符串
+    // 字符串
     @Value("I love u")
     private String normal;
 
-    //系统属性
+    // 系统属性
     @Value("#{systemProperties['os.name']}")
     private String osName;
 
-    //计算结果
+    // 计算结果
     @Value("#{T(java.lang.Math).random()*100.0}")
     private double randomNumber;
 
-    //其它Bean的属性
+    // 其它 Bean 的属性
     @Value("#{otherBean.something}")
     private String something;
 
-    //文件资源
+    // 文件资源
     @Value("classpath:com/firejq/web/file.txt")
     private Resouorce testFile;
 
-    //网址资源
+    // 网址资源
     @Value("http://www.baidu.com")
     private Resource testUrl;
 
-    //配置文件属性，在spring boot中默认读取application.propertities/application.yml中的属性
+    // 配置文件属性，在 spring boot 中默认读取 application.propertities/application.yml 中的属性
     @Value("${book.name}")
     private String bookName;
 }
 
 ```
 
-
-## 配置CORS
+## 配置 CORS
 
 https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-cors
 
 https://spring.io/guides/gs/rest-service-cors/
 
-在controller中配置：
+在 controller 中配置：
 ```java
 @CrossOrigin(origins = "http://domain2.com", maxAge = 3600)
 @RestController
@@ -383,7 +390,6 @@ public class WebConfig implements WebMvcConfigurer {
 }
 ```
 
-
 ## 文件上传
 
 http://www.leftso.com/blog/232.html
@@ -394,7 +400,7 @@ https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/
 
 例：
 
-下面的例子演示了上传文件的三种可能方式:
+下面的例子演示了上传文件的三种可能方式：
 - 单个文件上传 – MultipartFile
 - 多个文件上传– MultipartFile[]
 - Map file upload to a Model – @ModelAttribute
@@ -501,7 +507,74 @@ public class RestUploadController {
 }
 ```
 
+### 上传为空导致异常
 
+http://blog.csdn.net/qq724581322/article/details/51332799
+
+http://1194867672-qq-com.iteye.com/blog/1740406
+
+http://younian.net.cn/article/117
+
+若客户端没有上传文件就提交了表单，会导致 spring 抛出异常：
+```
+ nested exception is java.lang.IllegalStateException: Cannot convert value of type [java.lang.String] to required type [org.springframework.web.multipart.MultipartFile]: no matching editors or conversion strategy found
+```
+- 原因在于：
+
+    在同步提交的时候，Spring 把空上传是做 null 来处理的，而在异步提交的时候，Spring 把文件域的值当作空字符串看待的。在 Spring 做请求转换的时候（request–>MultipartHttpServletRequest）底层的 TypeConverter 接口实现对 null 和""是做了不同操作的。
+
+- 解决方法：
+
+    - 设置表单的文件字段名与实体类的 MultipartFile 属性名不一致，在 controller 中利用 HttpServlet 先判空后再手动赋值
+
+
+    - 在客户端上传之前判断有没有选择文件，没有的话就不添加文件字段；同时在服务端执行文件保存时先判空
+        
+        客户端
+        ```javscript
+		if (typeof activityPoster !== 'undefined') {//若没上传图片，则不添加此字段
+			formData.append('activityPoster', activityPoster);
+		}
+        ```
+        
+        服务端
+        ```java
+        if (activity.getActivityPoster() != null) {
+            //保存文件操作
+        }
+        ```
+
+    - 采用spring提供的上传文件的方法
+
+    ```java
+    @RequestMapping("springUpload")
+    public String  springUpload(HttpServletRequest request) throws IllegalStateException, IOException {
+         long  startTime=System.currentTimeMillis();
+         //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
+        CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
+                request.getSession().getServletContext());
+        //检查form中是否有enctype="multipart/form-data"
+        if(multipartResolver.isMultipart(request)) {
+            //将request变成多部分request
+            MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
+           //获取multiRequest 中所有的文件名
+            Iterator iter=multiRequest.getFileNames();
+             
+            while(iter.hasNext()) {
+                //一次遍历所有文件
+                MultipartFile file=multiRequest.getFile(iter.next().toString());
+                if(file!=null) {
+                    String path="E:/springUpload"+file.getOriginalFilename();
+                    //上传
+                    file.transferTo(new File(path));
+                }    
+            }
+        }
+        long  endTime=System.currentTimeMillis();
+        System.out.println("方法三的运行时间："+String.valueOf(endTime-startTime)+"ms");
+        return "/success"; 
+    }
+    ```
 
 ## 日志管理
 
@@ -643,11 +716,539 @@ this.logger.error(“xxxxx”)
 
 ## 异常处理
 
-统一异常处理：
+http://blog.didispace.com/springbootexception/
 
-异常由内向外抛：DAO->service->controller，最后统一由 handle 包中的 @controllerAdvice 类处理
+http://blog.csdn.net/kinginblue/article/details/70186586
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/7a9ba77e239ea9fdac86f7f8b270372e.jpg)
+Spring Boot 提供了一个默认的映射：/error，当处理中抛出异常之后，会转到该请求中处理，并且该请求有一个全局的错误页面用来展示异常内容。
+
+```java
+@RequestMapping("/hello")
+public String hello() throws Exception {
+    throw new Exception("error!");
+}
+```
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/21/22b8a87d9ae20a9a2d5454aeda792da5.jpg)
+
+虽然 Spring Boot 中实现了默认的 error 映射，但是在实际应用中，我们一般需要根据实际需求实现自定义的异常提示界面或者返回 json 格式的异常信息。
+
+### 使用 [@ControllerAdvice](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html) 进行统一异常处理
+
+在 spring 3.2 中，新增了 @ControllerAdvice 注解，可以用于定义 @ExceptionHandler、@InitBinder、@ModelAttribute，并应用到所有 @RequestMapping 中。
+
+@ExceptionHandler 拦截了异常，我们可以通过该注解实现自定义异常处理。其中，@ExceptionHandler 配置的 value 指定需要拦截的异常类型，异常的抛出可以是来自 @Service、@Controller 等。
+
+例：
+```java
+
+/**
+ * controller 增强器
+ * @author sam
+ * @since 2017/7/17
+ */
+@ControllerAdvice
+public class MyControllerAdvice {
+
+    /**
+     * 应用到所有 @RequestMapping 注解方法，在其执行之前初始化数据绑定器
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {}
+
+    /**
+     * 把值绑定到 Model 中，使全局 @RequestMapping 可以获取到该值
+     * @param model
+     */
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        model.addAttribute("author", "Magical Sam");
+    }
+
+    /**
+     * 全局异常捕捉处理
+     * @param ex
+     * @return
+     */
+    @ResponseBody
+    @ExceptionHandler(value = Exception.class)
+    public Map errorHandler(Exception ex) {
+        Map map = new HashMap();
+        map.put("code", 100);
+        map.put("msg", ex.getMessage());
+        return map;
+    }
+
+}
+```
+
+以下以返回 json 格式的异常信息为例，当我们要实现 RESTful API 时，抛出异常时我们需要返回 JSON 格式的异常信息：
+#### 实例 1
+
+创建统一的 JSON 返回对象，code：消息类型，message：消息内容，url：请求的 url，data：请求返回的数据：
+```java
+public class ErrorInfo<T> {
+    public static final Integer OK = 0;
+    public static final Integer ERROR = 100;
+    private Integer code;
+    private String message;
+    private String url;
+    private T data;
+    // 省略 getter 和 setter
+}
+```
+创建一个自定义异常类，用来实验捕获该异常，并返回 json：
+```java
+public class MyException extends Exception {
+    public MyException(String message) {
+        super(message);
+    }
+    
+}
+```
+在 controller 中抛出 MyException 异常：
+```java
+@RestController
+public class HelloController {
+    @RequestMapping("/json")
+    public String json() throws MyException {
+        throw new MyException("发生错误");
+    }
+}
+```
+为 MyException 异常创建对应的统一处理：
+```java
+@RestControllerAdvice()
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(value = MyException.class)
+    public ResponseEntity<?> jsonErrorHandler(HttpServletRequest req, MyException e) throws Exception {
+        ErrorInfo<String> r = new ErrorInfo<>();
+        r.setMessage(e.getMessage());
+        r.setCode(ErrorInfo.ERROR);
+        r.setData("Some Data");
+        r.setUrl(req.getRequestURL().toString());
+        return new ResponseEntity<>(r, HttpStatus.BAD_REQUEST);
+    }
+}
+```
+<!-- TODO: 在开发中，统一将异常由内向外抛：DAO->service->controller，最后统一由 handle 包中的 @controllerAdvice 类进行处理。 -->
+
+NOTE:
+
+- 若要渲染到 error.html 中，更改 @ControllerAdvise 即可：
+    ```java
+    @ControllerAdvice
+    class GlobalExceptionHandler {
+        public static final String DEFAULT_ERROR_VIEW = "error";
+        @ExceptionHandler(value = Exception.class)
+        public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("exception", e);
+            mav.addObject("url", req.getRequestURL());
+            mav.setViewName(DEFAULT_ERROR_VIEW);
+            return mav;
+        }
+    }
+    ```
+
+- 优点：将 Controller 层的异常和数据校验的异常进行统一处理，减少模板代码，减少编码量，提升扩展性和可维护性。
+- 缺点：只能处理 Controller 层未捕获（往外抛）的异常，对于 Interceptor（拦截器）层的异常，Spring 框架层的异常，就无能为力了。
+
+#### 实例 2：处理数据校验异常
+
+在 Dog 类中的字段上的注解数据校验规则：
+```java
+@Data
+public class Dog {
+
+    @NotNull(message = "{Dog.id.non}", groups = {Update.class})
+    @Min(value = 1, message = "{Dog.age.lt1}", groups = {Update.class})
+    private Long id;
+
+    @NotBlank(message = "{Dog.name.non}", groups = {Add.class, Update.class})
+    private String name;
+
+    @Min(value = 1, message = "{Dog.age.lt1}", groups = {Add.class, Update.class})
+    private Integer age;
+}
+```
+SpringMVC 中对于 RESTFUL 的 Json 接口来说，数据绑定和校验，是这样的：
+```java
+@PatchMapping(value = "")
+AppResponse update(@Validated(Update.class) @RequestBody Dog dog){
+    AppResponse resp = new AppResponse();
+
+    // 执行业务
+    Dog newDog = dogService.update(dog);
+
+    // 返回数据
+    resp.setData(newDog);
+
+    return resp;
+}
+```
+当使用了 @Validated + @RequestBody 注解但是没有在绑定的数据对象后面跟上 Errors 类型的参数声明的话，Spring MVC 框架会抛出 MethodArgumentNotValidException 异常。
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    // 所有的 Controller 层的异常的日志记录
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    /**
+     * 处理所有不可知的异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    AppResponse handleException(Exception e){
+        LOGGER.error(e.getMessage(), e);
+
+        AppResponse response = new AppResponse();
+        response.setFail("操作失败！");
+        return response;
+    }
+
+    /**
+     * 处理所有接口数据验证异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    AppResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
+        LOGGER.error(e.getMessage(), e);
+
+        AppResponse response = new AppResponse();
+        response.setFail(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        return response;
+    }
+}
+```
+
+## 使用 validation 进行数据校验
+
+[使用 spring validation 完成数据后端校验](https://www.cnkirito.moe/2017/08/16/%E4%BD%BF%E7%94%A8spring%20validation%E5%AE%8C%E6%88%90%E6%95%B0%E6%8D%AE%E5%90%8E%E7%AB%AF%E6%A0%A1%E9%AA%8C/)
+
+[Spring boot 使用总结（三）校验](http://www.jianshu.com/p/a9b1e2f7a749)
+
+[Spring4 新特性——集成 Bean Validation 1.1(JSR-349) 到 SpringMVC](http://jinnianshilongnian.iteye.com/blog/1990081)
+
+从 Spring3 起，spring 支持 JSR-303 验证框架，JSR-303 是 Java EE 6 中的一项子规范，也称为 BeanValidation。
+
+### 捕获异常处理校验失败
+
+1. 在 POJO 中添加注解定义校验规则：
+
+    常见的校验注解：
+
+    | 限制                        | 说明                                       |
+    | ------------------------- | ---------------------------------------- |
+    | @Null                     | 限制只能为 null                                |
+    | @NotNull                  | 限制必须不为 null                               |
+    | @AssertFalse              | 限制必须为 false                               |
+    | @AssertTrue               | 限制必须为 true                                |
+    | @DecimalMax(value)        | 限制必须为一个不大于指定值的数字                         |
+    | @DecimalMin(value)        | 限制必须为一个不小于指定值的数字                         |
+    | @Digits(integer,fraction) | 限制必须为一个小数，且整数部分的位数不能超过 integer，小数部分的位数不能超过 fraction |
+    | @Future                   | 限制必须是一个将来的日期                             |
+    | @Max(value)               | 限制必须为一个不大于指定值的数字                         |
+    | @Min(value)               | 限制必须为一个不小于指定值的数字                         |
+    | @Past                     | 限制必须是一个过去的日期                             |
+    | @Pattern(regex=,flag=)           | 限制必须符合指定的正则表达式                           |
+    | @Size(max,min)            | 限制字符长度必须在 min 到 max 之间                       |
+    | @Past                     | 验证注解的元素值（日期类型）比当前时间早                     |
+    | @NotEmpty                 | 验证注解的元素值不为 null 且不为空（字符串长度不为 0、集合大小不为 0）     |
+    | @NotBlank                 | 验证注解的元素值不为空（不为 null、去除首位空格后长度为 0），不同于 @NotEmpty，@NotBlank 只应用于字符串且在比较时会去除字符串的空格 |
+    | @Email                    | 验证注解的元素值是 Email，也可以通过正则表达式和 flag 指定自定义的 email 格式 |
+    | @Length(min=,max=)        | 被注释的字符串的大小必须在指定的范围内   |
+    | @Range(min=,max=,message=)|被注释的元素必须在合适的范围内   |
+
+    例：
+    ```java
+    @Pattern(regexp="^[a-zA-Z0-9]+$",message="格式错误")
+    @Size(min=3,max=20,message="长度错误")
+
+    public class User {
+        private Integer id;
+        @NotBlank(message = "不能为空")
+        private String name;
+        private String username;
+    }
+    ```
+
+    NOTE:
+    - 每一个注解都包含了 message 字段，用于校验失败时作为提示信息
+
+    - @NotNull、@NotEmpty、@NotBlank 的区别
+        - @NotNull：不能为 null，但可以为 empty
+        - @NotEmpty：加了 @NotEmpty 的 String 类、Collection、Map、数组，是不能为 null 并且长度必须大于 0 的（String、Collection、Map 的 isEmpty() 方法）
+        - @NotBlank：只能作用在 String 上，不能为 null，而且调用 trim() 后，长度必须大于 0
+        - 例子：
+            ```
+            1.String name = null;
+
+            @NotNull: false
+
+            @NotEmpty:false
+
+            @NotBlank:false
+
+            2.String name = "";
+
+            @NotNull:true
+
+            @NotEmpty: false
+
+            @NotBlank: false
+
+            3.String name = " ";
+
+            @NotNull: true
+
+            @NotEmpty: true
+
+            @NotBlank: false
+
+            4.String name = "Great answer!";
+
+            @NotNull: true
+
+            @NotEmpty:true
+
+            @NotBlank:true
+
+            ```
+
+2. 在 Controller 中请求参数上添加 @Validated 标签开启验证：
+    ```java
+    @RequestMapping(method = RequestMethod.POST)
+    public User create(@RequestBody @Validated User user) {
+        return userService.create(user);
+    }
+    ```
+
+3. 自定义异常处理器，捕获错误信息
+
+    当校验不通过时，[若 controller 参数中使用 @RequestBody 进行 Bean 的绑定，会抛出 MethodArgumentNotValidException 异常；若使用 @ModelAttribute 进行 Bean 的绑定，spring 会抛出 BindException 异常](https://jira.spring.io/browse/SPR-10157)；
+    
+    需要捕获该异常并进行处理：
+    ```java
+    @RestControllerAdvice
+    @Log4j
+    public class GlobalExceptionHandler {
+        /**
+        * 处理数据验证异常
+        * @param e
+        * @return
+        */
+        @ExceptionHandler(BindException.class)
+        AppResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+            log.error(e.getMessage(), e);
+
+            AppResponse response = new AppResponse();
+            response.setFail(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+            return response;
+        }
+    }
+    ```
+    NOTE:
+    
+    spring validation 不会在第一个错误发生后立即停止，而是继续试错，告诉我们所有的错误。
+
+### 使用 BindingResult 处理校验错误
+
+在 controller 中：
+```java
+@Controller
+public class FooController {
+    @RequestMapping("/foo")
+    public String foo(@Validated Foo foo, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                //...
+            }
+            return "fail";
+        }
+        return "success";
+    }
+}
+```
+参数 Foo 前加上 @Validated 注解，表明需要 spring 对其进行校验，而校验结果的信息会存放到其后的 BindingResult 中。注意，@Validated 和 BindingResult 必须相邻（一一对应），如果有多个参数需要校验，应一个校验类对应一个校验结果，形式可以如下：
+```java
+foo(@Validated Foo foo, BindingResult fooBindingResult ，@Validated Bar bar, BindingResult barBindingResult);
+```
+
+### 使用 groups 属性进行分组校验
+
+如果 Student bean 想要用于两个不同的请求中，每个请求有不同的校验需求，例如一个请求只需要校验 name 字段，一个请求需要校验 name 和 age 两个字段，那该怎么做呢？
+
+使用注解的 groups 属性可以很好的解决这个问题，如下所示：
+
+```java
+public class Student {
+    // 使用 groups 属性来给分组命名，然后在需要的地方指定命令即可
+    @NotBlank(groups=NAME.class)
+    private String name;
+    @Min(value=3,groups=AGE.class)
+    private int age;
+    @NotBlank
+    private String classess;
+
+    // setter and getter
+
+    public interface NAME{};
+
+    public interface AGE{};
+}
+```
+根据需要在 @Validated 属性中指定需要校验的分组名，可以指定 1 到多个。指定到的分组名会全部进行校验，不指定的不校验：
+```java
+@RestController
+public class ValidateController {
+
+    @RequestMapping(value="testStudent")
+    public void testStudent(@Validated Student student) {
+
+    }
+    @RequestMapping(value="testStudent1")
+    public void testStudent1(@Validated(NAME.class) Student student) {
+
+    }
+    @RequestMapping(value="testStudent2")
+    public void testStudent2(@Validated({NAME.class, AGE.class}) Student student) {
+
+    }
+}
+
+```
+
+### 使用 [@ScriptAssert](https://docs.jboss.org/hibernate/validator/6.0/api/org/hibernate/validator/constraints/ScriptAssert.html) 自定义校验逻辑
+
+如果需要校验的业务逻辑比较复杂，简单的 @NotBlank，@Min 注解已经无法满足需求了，这时可以使用 @ScriptAssert 和 @ParameterScriptAssert  来指定进行校验的方法，通过方法来进行复杂业务逻辑的校验，然后返回 true 或 false 来表明是否校验成功。
+
+@ScriptAssert 注解用于类级别，@ParameterScriptAssert 注解用于[方法级别](https://www.cnblogs.com/resentment/p/6341485.html)。
+
+```java
+// 通过 script 属性指定进行校验的方法，传递校验的参数，
+// 依然可以通过 groups 属性指定分组名称
+@ScriptAssert(lang="javascript",script="com.learn.validate.domain.Student.checkParams(_this.name,_this.age,_this.classes)", groups=CHECK.class)
+public class Student {
+    @NotBlank(groups=NAME.class)
+    private String name;
+    @Min(value=3,groups=AGE.class)
+    private int age;
+    @NotBlank
+    private String classess;
+
+    // setter and getter
+
+    public interface NAME{};
+
+    public interface AGE{};
+
+    public interface CHECK{};
+
+    // 注意进行校验的方法要写成静态方法，否则会出现 TypeError: xxx is not a function 的错误
+    public static boolean checkParams(String name,int age,String classes) {
+        if(name!=null&&age>8&classes!=null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+```
+在需要的地方，通过分组名称进行调用
+```java
+@RestController
+public class ValidateController {
+    @RequestMapping(value="testStudent3")
+    public void testStudent3(@Validated(CHECK.class) Student student) {
+
+    }
+}
+```
+
+
+### 自定义校验注解
+
+业务需求总是比框架提供的这些简单校验要复杂的多，我们可以自定义校验来满足我们的需求。自定义spring validation非常简单，主要分为两步。
+
+1. 添加自定义注解
+    ```java
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
+    @Retention(RUNTIME)
+    @Documented
+    @Constraint(validatedBy = {CannotHaveBlankValidator.class})//指定了真正的验证者类
+    public @interface CannotHaveBlank {
+        //默认错误消息
+        String message() default "不能包含空格";
+        //分组
+        Class<?>[] groups() default {};
+        //负载
+        Class<? extends Payload>[] payload() default {};
+        //指定多个时使用
+        @Target({FIELD, METHOD, PARAMETER, ANNOTATION_TYPE})
+        @Retention(RUNTIME)
+        @Documented
+        @interface List {
+            CannotHaveBlank[] value();
+        }
+    }
+    ```
+
+
+2. 编写校验者类
+    ```java
+    public class CannotHaveBlankValidator implements ConstraintValidator<CannotHaveBlank, String> {
+        @Override
+        public void initialize(CannotHaveBlank constraintAnnotation) {
+        }
+        
+        @Override
+        // 参数ConstraintValidatorContext 这个上下文包含了认证中所有的信息，我们可以利用这个上下文实现获取默认错误提示信息，禁用错误提示信息，改写错误提示信息等操作
+        public boolean isValid(String value, ConstraintValidatorContext context) {
+            //null时不进行校验
+            if (value != null && value.contains(" ")) {
+                //获取默认提示信息
+                String defaultConstraintMessageTemplate = context.getDefaultConstraintMessageTemplate();
+                System.out.println("default message :" + defaultConstraintMessageTemplate);
+                //禁用默认提示信息
+                context.disableDefaultConstraintViolation();
+                //设置提示语
+                context.buildConstraintViolationWithTemplate("can not contains blank").addConstraintViolation();
+                return false;
+            }
+            return true;
+        }
+    }
+    ```
+
+### 手动校验
+
+可能在某些场景下需要我们手动校验，即使用校验器对需要被校验的实体发起validate，同步获得校验结果。理论上我们既可以使用Hibernate Validation提供Validator，也可以使用Spring对其的封装。在spring构建的项目中，提倡使用经过spring封装过后的方法：
+
+```java
+@Autowired
+Validator globalValidator;
+
+@RequestMapping("/validate")
+public String validate() {
+    Foo foo = new Foo();
+    foo.setAge(22);
+    foo.setEmail("000");
+    Set<ConstraintViolation<Foo>> set = globalValidator.validate(foo);
+    for (ConstraintViolation<Foo> constraintViolation : set) {
+        System.out.println(constraintViolation.getMessage());
+    }
+    return "success";
+}
+```
+
 
 ## 静态资源目录
 
@@ -1123,14 +1724,12 @@ public enum Propagation {
     compile group: 'mysql', name: 'mysql-connector-java'
     ```
 
-
 2)  配置数据库连接【appication.properties】
     ```
     spring.datasource.url=jdbc:mysql://127.0.0.1:3306/wincc?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false
     spring.datasource.username=root
     spring.datasource.password=root
     ```
-
 
 3)  配置 mybatis【appication.properties】             
 
@@ -2093,7 +2692,6 @@ Spring Boot 提供了一个 tools 工具，该工具可以方便的让我们将�
 
 #### 打包为 war 包
 
-
 https://docs.spring.io/spring-boot/docs/current/reference/html/howto-traditional-deployment.html 
 
 https://my.oschina.net/alexnine/blog/540651 
@@ -2102,14 +2700,12 @@ http://www.jianshu.com/p/b3be5e54d836
 
 打包为 jar 包时，包含了内置的 tomcat 服务器，若希望使用独立的 tomcat 服务器或者其它容器服务器，则需要将项目打包为 war 包后再部署到容器中；
 
-需要注意的是这样部署的request url需要在端口后加上项目的名字才能正常访问。spring-boot更加强大的一点就是：即便项目是以上配置，依然可以用内嵌的tomcat来调试，启动命令和以前没变，还是：mvn spring-boot:run。
+需要注意的是这样部署的 request url 需要在端口后加上项目的名字才能正常访问。spring-boot 更加强大的一点就是：即便项目是以上配置，依然可以用内嵌的 tomcat 来调试，启动命令和以前没变，还是：mvn spring-boot:run。
 
-如果需要在springboot中加上request前缀，需要在application.properties中添加server.contextPath=/prefix/即可。其中prefix为前缀名。这个前缀会在war包中失效，取而代之的是war包名称，如果war包名称和prefix相同的话，那么调试环境和正式部署环境就是一个request地址了。
+如果需要在 springboot 中加上 request 前缀，需要在 application.properties 中添加 server.contextPath=/prefix/ 即可。其中 prefix 为前缀名。这个前缀会在 war 包中失效，取而代之的是 war 包名称，如果 war 包名称和 prefix 相同的话，那么调试环境和正式部署环境就是一个 request 地址了。
 
-
-
-- 构建项目，生成war包
-    指定war包名：
+- 构建项目，生成 war 包
+    指定 war 包名：
     ```
     war {
         baseName = "gradle-simple"
@@ -2119,26 +2715,24 @@ http://www.jianshu.com/p/b3be5e54d836
     ```
     gradle clean war
     ```
-    生成的war文件名为gradle-simple.war
+    生成的 war 文件名为 gradle-simple.war
 
     ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/87588085a964930d463d1e5459a74b1f.jpg)
 
-    若要生成zip文件：
+    若要生成 zip 文件：
     ```
     war {
         baseName = "gradle-simple"
         extension = "zip"
     }
     ```
-    则生成的zip文件名为gradle-simple.zip，解压zip文件至外部容器即可。
-
+    则生成的 zip 文件名为 gradle-simple.zip，解压 zip 文件至外部容器即可。
 
 NOTE：
 
-- 若使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`的依赖设置，会导致开发期间项目无法运行，提示Unregistering JMX-exposed beans on shutdown，这是因为内置的tomcat容器无法启动，因此运行自动停止。
+- 若使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`的依赖设置，会导致开发期间项目无法运行，提示 Unregistering JMX-exposed beans on shutdown，这是因为内置的 tomcat 容器无法启动，因此运行自动停止。
 
     - 解决方法：开发期间使用`compile('org.springframework.boot:spring-boot-starter-tomcat')`，项目上线时编译才使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`
-
 
 #### 打包为 docker 镜像
 

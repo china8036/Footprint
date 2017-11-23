@@ -620,7 +620,6 @@ alert = driver.switch_to.alert()
   from selenium import webdriver
   from time import sleep
 
-
   options = webdriver.ChromeOptions()
   prefs = {'profile.default_content_settings.popups': 0, 'download.default_directory': 'd:\\'}
   options.add_experimental_option('prefs', prefs)

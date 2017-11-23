@@ -30,7 +30,28 @@
 
 @RequestBody 将 HTTP 请求正文转换为适合的 HttpMessageConverter 对象。
 
-POST 模式下，使用 @RequestBody 绑定请求对象，Spring 会帮你进行协议转换，将 Json、Xml 协议转换成你需要的对象。
+
+
+- 作用： 
+
+    - 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；
+
+    - 再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上。
+
+- 使用：
+    - GET、POST方式提时， 根据request header Content-Type的值来判断:
+        - application/x-www-form-urlencoded， 可选（即非必须，因为这种情况的数据@RequestParam, @ModelAttribute也可以处理，当然@RequestBody也能处理）；
+        - multipart/form-data, 不能处理（即使用@RequestBody不能处理这种格式的数据）；
+        - 其他格式， 必须（其他格式包括application/json, application/xml等。这些格式的数据，必须使用@RequestBody来处理）(POST 模式下，使用 @RequestBody 绑定请求对象，Spring 会帮你进行协议转换，将 Json、Xml 协议转换成你需要的对象。)；
+
+    - PUT方式提交时， 根据request header Content-Type的值来判断:
+        - application/x-www-form-urlencoded， 必须；
+        - multipart/form-data, 不能处理；
+        - 其他格式， 必须；
+
+- 说明：
+    
+    request的body部分的数据编码格式由header部分的Content-Type指定；
 
 ## @ResponseBody
 
