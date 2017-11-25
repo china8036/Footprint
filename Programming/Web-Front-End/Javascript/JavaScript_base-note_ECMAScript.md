@@ -28,6 +28,8 @@
       - [狭义 Object](#%E7%8B%AD%E4%B9%89-object)
       - [数组 Array](#%E6%95%B0%E7%BB%84-array)
       - [函数 Function](#%E5%87%BD%E6%95%B0-function)
+        - [函数参数](#%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0)
+        - [原型对象](#%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1)
       - [包装类型](#%E5%8C%85%E8%A3%85%E7%B1%BB%E5%9E%8B)
         - [Number](#number)
         - [String](#string)
@@ -40,16 +42,6 @@
       - [内置对象](#%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1)
     - [数据类型转换](#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2)
   - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
-  - [面向对象 OOP](#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-oop)
-    - [封装](#%E5%B0%81%E8%A3%85)
-    - [`prototype` 和 `__proto__`](#prototype-%E5%92%8C-proto)
-      - [prototype](#prototype)
-        - [prototype 模式的相关方法](#prototype-%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95)
-          - [isPrototypeOf()](#isprototypeof)
-          - [hasOwnProperty()](#hasownproperty)
-          - [in 运算符](#in-%E8%BF%90%E7%AE%97%E7%AC%A6)
-      - [`__proto__`](#proto)
-    - [继承的实现：原型链](#%E7%BB%A7%E6%89%BF%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%9A%E5%8E%9F%E5%9E%8B%E9%93%BE)
   - [匿名函数](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0)
     - [递归](#%E9%80%92%E5%BD%92)
     - [闭包](#%E9%97%AD%E5%8C%85)
@@ -551,6 +543,8 @@ lang = lang + "script"
 
 #### 函数 Function 
 
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function
+
 - 函数是一个特殊的对象（可被调用且有独立作用域）；
 
 - JavaScript 中声明一个函数通常有三种方法：
@@ -584,116 +578,124 @@ lang = lang + "script"
 	```
 
 - 在 JavaScript 中不存在函数重载，因此若重复声明一个函数，后面的声明就会覆盖前面的声明；
+
 - 函数中的 return 语句不是必需的，如果没有 return 的话，该函数就不返回任何值，或者说返回 undefined；
+
 - JavaScript 支持函数的递归（recursion）调用
-```javascript
-	function fib(num) {
-	  if (num === 0) return 0;
-	  if (num === 1) return 1;
-	  return fib(num - 2) + fib(num - 1);
-	}
-	
-	fib(6) // 8
-```
+	```javascript
+		function fib(num) {
+			if (num === 0) return 0;
+			if (num === 1) return 1;
+			return fib(num - 2) + fib(num - 1);
+		}
+		
+		fib(6) // 8
+	```
 
 - JavaScript 把函数当成一种数据类型，可以像其他类型的数据一样，进行赋值和传递，这为编程带来了很大的灵活性，体现了 JavaScript 作为 “**函数式语言**” 的本质，在 JavaScript 语言中又称函数为**第一等公民**；
-```javascript
-	function add(x, y) {
-	  return x + y;
-	}
-	
-	// 将函数赋值给一个变量
-	var operator = add;
-	
-	// 将函数作为参数和返回值
-	function a(op){
-	  return op;
-	}
-	a(add)(1, 1)
-	// 2
-```
+	```javascript
+		function add(x, y) {
+			return x + y;
+		}
+		
+		// 将函数赋值给一个变量
+		var operator = add;
+		
+		// 将函数作为参数和返回值
+		function a(op){
+			return op;
+		}
+		a(add)(1, 1)
+		// 2
+	```
 
 - **函数名提升**
-由于 JavaScript 引擎将函数名视同变量名，因此采用 function 命令声明函数时，整个函数会像变量声明的提升一样，被提升到代码头部；
-```javascript
-	// 下面的代码不会报错
-	f();
-	function f() {}
-	// 实际上等同于
-	function f() {}
-	f();
-```
-但若采用赋值语句定义函数，则效果会不同
-```javascript
-	// 下面的代码会报错
-	f();
-	var f = function (){};
-	// TypeError: undefined is not a function
-	// 实际上等同于
-	var f;
-	f();
-	f = function () {};
-	// 调用 f 的时候，f 只是被声明了，还没有被赋值，等于 undefined，所以会报错
-```
-因此，如果同时采用 function 命令和赋值语句声明同一个函数，最后总是采用赋值语句的定义：
-```javascript
-	var f = function() {
-	  console.log('1');
-	}
 	
-	function f() {
-	  console.log('2');
-	}
-	
-	f() // 1
-```
+	由于 JavaScript 引擎将函数名视同变量名，因此采用 function 命令声明函数时，整个函数会像变量声明的提升一样，被提升到代码头部；
+	```javascript
+		// 下面的代码不会报错
+		f();
+		function f() {}
+		// 实际上等同于
+		function f() {}
+		f();
+	```
+	但若采用赋值语句定义函数，则效果会不同
+	```javascript
+		// 下面的代码会报错
+		f();
+		var f = function (){};
+		// TypeError: undefined is not a function
+		// 实际上等同于
+		var f;
+		f();
+		f = function () {};
+		// 调用 f 的时候，f 只是被声明了，还没有被赋值，等于 undefined，所以会报错
+	```
+	因此，如果同时采用 function 命令和赋值语句声明同一个函数，最后总是采用赋值语句的定义：
+	```javascript
+		var f = function() {
+			console.log('1');
+		}
+		
+		function f() {
+			console.log('2');
+		}
+		
+		f() // 1
+	```
 
 - 根据 ECMAScript 的规范，不得在非函数的代码块中声明函数，最常见的非函数的代码块就是 if 和 try 语句；
+
 - 函数内部的变量提升
-与全局作用域一样，函数作用域内部也会产生 “变量提升” 现象，var 命令声明的变量，不管在什么位置，变量声明都会被提升到函数体的头部；
-```javascript
-	function foo(x) {
-	  if (x > 100) {
-	    var tmp = x - 100;
-	  }
-	}
-```
-等同于
-```javascript
-	function foo(x) {
-	  var tmp;
-	  if (x > 100) {
-	    tmp = x - 100;
-	  };
-	}
-```
+	
+	与全局作用域一样，函数作用域内部也会产生 “变量提升” 现象，var 命令声明的变量，不管在什么位置，变量声明都会被提升到函数体的头部；
+	```javascript
+		function foo(x) {
+			if (x > 100) {
+				var tmp = x - 100;
+			}
+		}
+	```
+	等同于
+	```javascript
+		function foo(x) {
+			var tmp;
+			if (x > 100) {
+				tmp = x - 100;
+			};
+		}
+	```
+
+##### 函数参数
 
 - 调用函数时，函数参数不是必需的，Javascript 允许省略参数，被省略的参数的值为 undefined
-```javascript
-	function f(a, b) {
-	  return a;
-	}
-	
-	f(1, 2, 3) // 1，运行时无论提供多少个参数（或者不提供参数），JavaScript 都不会报错
-	f(1) // 1
-	f() // undefined
-	f(undefined, 2) // 没有办法只省略靠前的参数，而保留靠后的参数。如果一定要省略靠前的参数，只有显式传入 undefined
-	
-	f.length // 2
-```
+	```javascript
+		function f(a, b) {
+			return a;
+		}
+		
+		f(1, 2, 3) // 1，运行时无论提供多少个参数（或者不提供参数），JavaScript 都不会报错
+		f(1) // 1
+		f() // undefined
+		f(undefined, 2) // 没有办法只省略靠前的参数，而保留靠后的参数。如果一定要省略靠前的参数，只有显式传入 undefined
+		
+		f.length // 2
+	```
 
 - 函数参数默认值
-通过下面的方法，可以为函数的参数设置默认值：
-```javascript
-	function f(a) {
-	  (a !== undefined && a !== null) ? a = a : a = 1;
-	  return a;
-	}
 	
-	f() // 1
-	f('') // ""
-	f(0) // 0
-```
+	通过下面的方法，可以为函数的参数设置默认值：
+	```javascript
+		function f(a) {
+			(a !== undefined && a !== null) ? a = a : a = 1;
+			return a;
+		}
+		
+		f() // 1
+		f('') // ""
+		f(0) // 0
+	```
 
 - 传参方式
 	- 函数参数如果是原始类型的值（数值、字符串、布尔值），传递方式是传值传递（passes by value）。这意味着，在函数体内修改参数值，不会影响到函数外部；
@@ -730,11 +732,98 @@ lang = lang + "script"
 	obj // [1, 2, 3]
 	```
 
-- arguments 对象
-arguments 对象包含了函数运行时的所有参数，这个对象只有在函数体内部，才可以使用；
-	- arguments[0] 就是第一个参数，arguments[1] 就是第二个参数，以此类推；
-	- arguments.length：函数调用时实际传递的参数；
+##### 原型对象
 
+- 属性
+
+	- Function.arguments
+		
+		arguments 对象以数组形式包含了函数运行时的所有参数，这个对象只有在函数体内部，才可以使用；
+			- arguments[0] 就是第一个参数，arguments[1] 就是第二个参数，以此类推；
+			- arguments.length：函数调用时实际传递的参数；
+
+	- Function.prototype.constructor
+		
+		声明函数的原型构造方法
+
+- 方法
+
+	- Function.prototype.toString()
+		
+		获取函数的实现源码的字符串。覆盖了 Object.prototype.toString 方法。
+
+
+
+	- Function.prototype.call() 和 Function.prototype.apply()
+
+		https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call
+
+		https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply
+
+		https://www.zhihu.com/question/20289071
+
+		call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了**动态改变函数体内部 this 的指向，在一个对象的上下文中应用另一个对象的方法**。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。
+
+		**二者的作用完全一样，只是接受参数的方式不太一样：call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里**。
+
+		例如：
+
+		有一个函数 func1 定义如下：
+		```javascript
+		var func1 = function(arg1, arg2) {};
+		```
+		就可以通过 `func1.call(this, arg1, arg2);` 或者 `func1.apply(this, [arg1, arg2]);` 来调用。
+
+		其中 this 是你想指定的上下文，他可以是任何一个 JavaScript 对象 (JavaScript 中一切皆对象)。
+
+		- call 和 apply 该用哪个？
+
+			JavaScript 中，某个函数的参数数量是不固定的，因此要说适用条件的话
+			- 当参数数量明确知道时，用 call;
+			- 当参数数量不确定的时候，用 apply，然后把参数 push 进数组传递进去。若在函数内部也可以通过 arguments 这个数组来遍历所有的参数。
+
+		- 应用实例
+
+			通过 `document.getElementsByTagName` 选择的 dom 节点是一种类似 array 的 array，但它不能应用 Array 下的 push,pop 等方法。因此，我们可以通过：
+			```javascript
+			var domNodes =  Array.prototype.slice.call(document.getElementsByTagName("*"));
+			```
+			这样 domNodes 就可以应用 Array 下的所有方法了。
+
+
+
+	- Function.prototype.bind()
+
+		https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+	
+		bind() 方法会创建一个新函数，称为绑定函数。当调用这个绑定函数时，绑定函数会以创建它时传入 bind() 方法的第一个参数作为 this, 传入 bind() 方法的第二个以及以后的参数加上绑定函数运行时本身的参数按照顺序作为原函数的参数来调用原函数。
+
+		apply 、 call 、bind 三者都是用来改变函数的 this 对象的指向的；区别在于 bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。
+
+		NOTE:
+		```javascript
+		var bar = function(){
+				console.log(this.x);
+		}
+		var foo = {
+				x:3
+		}
+		var sed = {
+				x:4
+		}
+		var func = bar.bind(foo).bind(sed);
+		func(); //?
+		
+		var fiv = {
+				x:5
+		}
+		var func = bar.bind(foo).bind(sed).bind(fiv);
+		func(); //?
+		```
+		答案是，两次都仍将输出 3 ，而非期待中的 4 和 5 。原因是，在 Javascript 中，多次 bind() 是无效的。更深层次的原因， bind() 的实现，相当于使用函数在内部包了一个 call / apply ，第二次 bind() 相当于再包住第一次 bind() , 故第二次以后的 bind 是无法生效的。
+
+
+		
 #### 包装类型 
 
 ECMAScript 中每个原始数据类型都存在对应的包装类型：String、Number、Boolean；
@@ -788,177 +877,6 @@ try{console.log("d");}catch(e){}    // 這是正確的
 try{console.log("e");}catch(e){}    // 這是正確的
 ```
 
-## 面向对象 OOP
-参考：[Javascript 继承机制的设计思想](http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html )
-
-> 学习 Javascript，最难的地方是什么？
-> 
-> 我觉得，Object（对象）最难。因为 Javascript 的 Object 模型很独特，和其他语言都不一样，初学者不容易掌握。
-
-### 封装
-
-Javascript 是一种基于对象（object-based）的语言，你遇到的所有东西几乎都是对象。但是，它又不是一种真正的面向对象编程（OOP）语言，因为它的语法中没有 class（类）。
-
-为了解决从原型对象生成实例的问题，Javascript 提供了一个构造函数（Constructor）模式。
-
-所谓"构造函数"，其实就是一个普通函数，但是内部使用了 this 变量。对构造函数使用 new 运算符，就能生成实例，并且 this 变量会绑定在实例对象上。这类函数设计来和 new 操作符一起使用的。为了和一般的函数对象有所区别，**这类函数的首字母一般都大写**。
-
-例：
-
-猫的原型对象现在可以这样写：
-```
-var Cat = function (name,color) {
-　this.name=name;
-　this.color=color;
-	this.sayHello = function () {
-		alert('hello');
-	};
-}
-```
-生成实例对象：
-```
-var cat1 = new Cat("大毛","黄色");
-var cat2 = new Cat("二毛","黑色");
-alert(cat1.name); // 大毛
-alert(cat1.color); // 黄色
-```
-这时 cat1 和 cat2 会自动含有一个 constructor 属性，指向它们的构造函数。
-```
-alert(cat1.constructor == Cat); //true
-alert(cat2.constructor == Cat); //true
-```
-Javascript 还提供了一个 instanceof 运算符，验证原型对象与实例对象之间的关系。
-```
-alert(cat1 instanceof Cat); //true
-alert(cat2 instanceof Cat); //true
-```
-
-### `prototype` 和 `__proto__`
-
-#### prototype
-
-通过 new 运算符使用构造函数生成实例对象，有一个缺点，那就是无法共享属性和方法，这就导致了每一次生成一个实例，都必须为重复的内容，多占用一些内存。这样既不环保，也缺乏效率。
-
-如，在 DOG 对象的构造函数中，设置一个实例对象的共有属性 species。
-```javascript
-function DOG(name){
-　　this.name = name;
-　　this.species = '犬科';
-}
-```
-然后，生成两个实例对象：
-```javascript
-var dogA = new DOG('大毛');
-
-var dogB = new DOG('二毛');
-```
-这两个对象的 species 属性是独立的，修改其中一个，不会影响到另一个。**每一个实例对象，都有自己的属性和方法的副本。这不仅无法做到数据共享，也是极大的资源浪费。**
-
-因此，JavaScript 之父 Brendan Eich 为每一个构造函数设置了一个**prototype 属性**，这个属性指向一个对象（以下简称"prototype 对象"），这个对象的所有属性和方法，都会被构造函数的实例继承。**所有实例对象需要共享的属性和方法，都放在这个对象里面；那些不需要共享的属性和方法，就放在构造函数里面**。实例对象一旦创建，将自动引用 prototype 对象的属性和方法。也就是说，实例对象的属性和方法，分成两种，一种是本地的，另一种是引用的。
-
-例如：定义了`function Foo() {this.name='name';}`后，Foo 对象会自动包含 prototype 属性，该属性指向一个对象：      
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/2/f42e44b1e111bee2298a70ff0b7b28d6.jpg)
-prototype 对象默认会包含两个属性：constructor 和`__proto__`，其中`__proto__`有部分浏览器不支持。
-
-当我们的代码需要一个属性的时候，Javascript 的引擎会先看当前的这个对象中是否有这个属性，如果没有的话，就会查找他的 Prototype 对象是否有这个属性，一直继续下去，直到找到或是直到没有 Prototype 对象。
-
-例：
-```
-function DOG(name){
-　　this.name = name;
-}
-DOG.prototype = { species : '犬科' };
-var dogA = new DOG('大毛');
-var dogB = new DOG('二毛');
-
-alert(dogA.species); // 犬科
-alert(dogB.species); // 犬科
-```
-现在，species 属性放在 prototype 对象里，是两个实例对象共享的。只要修改了 prototype 对象，就会同时影响到两个实例对象。
-```
-DOG.prototype.species = '猫科';
-alert(dogA.species); // 猫科
-alert(dogB.species); // 猫科
-```
-
-由于所有的实例对象共享同一个 prototype 对象，那么从外界看起来，prototype 对象就好像是实例对象的原型，而实例对象则好像"继承"了 prototype 对象一样。
-
-- 辨析：prototype 和原型：
-	- prototype 是每个对象上预设的对象属性
-	- 原型，就相当于 Java、cpp 中的类，实例化后就是一个实例对象，通常是构造器的 prototype 属性
-
-##### prototype 模式的相关方法
-
-为了配合 prototype 属性，Javascript 定义了一些辅助方法，帮助我们使用它。
-
-###### isPrototypeOf()
-
-这个方法用来判断，某个 proptotype 对象和某个实例之间的关系。
-```javascript
-alert(Cat.prototype.isPrototypeOf(cat1)); //true
-alert(Cat.prototype.isPrototypeOf(cat2)); //true
-```
-###### hasOwnProperty()
-
-每个实例对象都有一个 hasOwnProperty() 方法，用来判断某一个属性到底是本地属性，还是继承自 prototype 对象的属性。
-```javascript
-alert(cat1.hasOwnProperty("name")); // true
-alert(cat1.hasOwnProperty("type")); // false
-```
-###### in 运算符
-
-in 运算符可以用来判断，某个实例是否含有某个属性，不管是不是本地属性。
-```javascript
-alert("name" in cat1); // true
-alert("type" in cat1); // true
-```
-in 运算符还可以用来遍历某个对象的所有属性。
-```javascript
-for (var prop in cat1) { 
-	alert("cat1["+prop+"]="+cat1[prop]); 
-}
-```
-
-#### `__proto__`
-
-prototype 是原型 / 构造函数的属性，而`__proto__`是实例对象的属性，指向原型 / 构造函数的 prototype 属性对象。
-
-### 继承的实现：原型链
-
-JavaScript 中没有“类”的概念，因此在 JavaScript 中，OOP 通过原型链实现继承。
-
-<!-- TODO: 三个视频都很重要，都要详细看然后记笔记 -->
-http://www.imooc.com/video/7053
-
-http://www.imooc.com/video/7054
-
-http://www.imooc.com/video/7055
-
-http://www.imooc.com/video/7680
-
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/2/fb1e1204ab4c117cf91100a4a6f2b4c8.jpg)
-
-注意：
-
-- 并不是所有的对象原型链上都有 Object.prototype
-		例：
-		```javascript
-		var obj=Object.create(null);
-
-		obj.__proto__//undefined
-		obj.toString()//undefined
-		```
-	
-- 并不是所有的对象都有 prototype 属性
-		例：
-		```javascript
-		function abc() {}
-		abc.prototype//abc{}
-		var bined = abc.bind(null);
-
-		typeof binded//"function"
-		binded.prototype//undefined
-		```
 
 ## 匿名函数 
 

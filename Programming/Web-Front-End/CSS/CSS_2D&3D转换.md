@@ -46,7 +46,7 @@
 
   默认值为 `50% 50% 0`，即元素的中心点，定位的坐标原点在元素的左上角
 
-  例：`transform-origin: 50px 70px;` 则中心点位置有中间移到了距离左侧50像素，顶部70像素的地方：
+  例：`transform-origin: 50px 70px;` 则中心点位置有中间移到了距离左侧 50 像素，顶部 70 像素的地方：
 
   ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/f783c1dff9c4a41421bdd82ebbf40231.jpg)
   
@@ -145,6 +145,11 @@ div {
 }
 ```
 
+- NOTE：skew(90deg) 的一个坑点
+  - 目标：要实现元素本来`skew(90deg)`，也就是“视觉上消失”，当鼠标 hover 时通过再次`skew(90deg)`让元素累计`skew(180deg)`从而“现身”
+
+    坑点：当 hover 触发时，skew 变换不会**累计**，也就是说当鼠标 hover 时通过再次`skew(90deg)`时，元素也就才`skew(90deg)`，依旧是“视觉上消失”。因此要实现目标效果，应使得 hover 时`skew(180deg)`.
+    
 #### skewX(angle)	
 
 定义 2D 倾斜转换，沿着 X 轴。
@@ -155,38 +160,36 @@ div {
 
 ### matrix()
 
-matrix(a,b,c,d,e,f) 方法把所有 2D 转换方法组合在一起，使用六个值的矩阵定义 2D 转换，本质上其它各种转换都是应用matrix()方法来实现的，只是类似于`transform:rotate`这种表现形式，我们更容易理解，记忆与上手。
+matrix(a,b,c,d,e,f) 方法把所有 2D 转换方法组合在一起，使用六个值的矩阵定义 2D 转换，本质上其它各种转换都是应用 matrix() 方法来实现的，只是类似于`transform:rotate`这种表现形式，我们更容易理解，记忆与上手。
 
-
-- matrix方法中的6个参数对应的矩阵：
+- matrix 方法中的 6 个参数对应的矩阵：
 
   ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/ef8adbd97daab0e6ce809d54041c26f8.jpg)
 
-  当对坐标为(x, y)的元素进行转换时，实际上会进行以下计算：
+  当对坐标为 (x, y) 的元素进行转换时，实际上会进行以下计算：
 
   ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/aca1e4b2948caf6d29be96c2111c4b89.jpg)
 
-  其中，ax+cy+e表示变换后的水平坐标，bx+dy+f表示变换后的垂直位置。
+  其中，ax+cy+e 表示变换后的水平坐标，bx+dy+f 表示变换后的垂直位置。
 
 - 实例解析：
   ```css
   transform: matrix(1, 0, 0, 1, 30, 30); /* a=1, b=0, c=0, d=1, e=30, f=30 */
   ```
-  根据这个矩阵偏移元素的中心点，假设是(0, 0)，即x=0, y=0。
+  根据这个矩阵偏移元素的中心点，假设是 (0, 0)，即 x=0, y=0。
 
-  于是，变换后的x坐标就是`ax+cy+e=1*0+0*0+30=30`, y坐标就是`bx+dy+f=0*0+1*0+30=30`.
+  于是，变换后的 x 坐标就是`ax+cy+e=1*0+0*0+30=30`, y 坐标就是`bx+dy+f=0*0+1*0+30=30`.
 
-  于是，中心点坐标从(0, 0)变成了(30, 30)，即元素的所有像素都向右平移了30px，再向下平移了30px。
+  于是，中心点坐标从 (0, 0) 变成了 (30, 30)，即元素的所有像素都向右平移了 30px，再向下平移了 30px。
 
 - 实际上：
   - `transform: matrix(1, 0, 0, 1, a, b);`就等同于`transform: translate(apx, bpx);`
 
-    translate, rotate等方法都是需要单位的，而matrix方法e, f参数的单位可以省略。
+    translate, rotate 等方法都是需要单位的，而 matrix 方法 e, f 参数的单位可以省略。
 
   - `transform:matrix(sx, 0, 0, sy, 0, 0);`，等同于`transform: scale(sx, sy);`
 
-  - 其余变换类似......
-
+  - 其余变换类似。.....
 
 例：使用 matrix 方法将 div 元素旋转 30 度
 ```css
