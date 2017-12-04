@@ -1,9 +1,7 @@
 - [CSS](#css)
   - [vertical-align & line-height](#vertical-align-line-height)
 
-
 # CSS 各种知识点 NOTE
-
 
 ## vertical-align & line-height
 
@@ -12,8 +10,6 @@ http://www.zhangxinxu.com/wordpress/2015/08/css-deep-understand-vertical-align-a
 https://zhuanlan.zhihu.com/p/25808995
 
 https://zhuanlan.zhihu.com/p/25808995
-
-
 
 - vertical-align 属性设置元素的垂直对齐方式。
 
@@ -59,11 +55,18 @@ https://zhuanlan.zhihu.com/p/25808995
 
   ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/4ad4ab8395f114b25ce83fe6ba9e8c6b.jpg)
 
-
-
 对于所有 display 值以 inline- 开头的元素（如 img / input / svg），其高度是基于 height、margin 和 border 属性的和；如果你将其 height 设置为 auto 的话，那么其高度的取值就是 line-height。
-
 
 ## padding 和 margin
 
 padding 和 margin 属性使用`%`作为单位时，长度基准是父元素的**宽度**的百分比。
+
+## 锚点定位的本质
+
+锚点定位的本质：**改变容器的滚动高度**。
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/30/149ea942f140e08ad92c63b73d3e14da.jpg)
+
+锚点定位触发条件：
+- URL 地址中的锚链与锚点元素
+- 可 focus 的锚点元素处于 focus 状态
