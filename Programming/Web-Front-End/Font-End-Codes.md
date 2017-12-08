@@ -47,6 +47,7 @@
   - [平滑滚动的实现](#%E5%B9%B3%E6%BB%91%E6%BB%9A%E5%8A%A8%E7%9A%84%E5%AE%9E%E7%8E%B0)
     - [通过CSS实现](#%E9%80%9A%E8%BF%87css%E5%AE%9E%E7%8E%B0)
     - [通过JavaScript实现](#%E9%80%9A%E8%BF%87javascript%E5%AE%9E%E7%8E%B0)
+  - [判断是否已滑到底部](#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%B7%B2%E6%BB%91%E5%88%B0%E5%BA%95%E9%83%A8)
 
 # JavaScript 实用代码段
 
@@ -1252,3 +1253,22 @@ anchorLink.addEventListener("click", function(e) {
 ```
 
 TODO: 在微信浏览器上两种方式都无法是是实现
+
+
+
+## 判断是否已滑到底部
+
+```javascript
+document.getElementById('my-order-list').addEventListener('scroll', function (event) {
+
+  var element = event.target;
+  //console.log('scroll is triggered');
+  //console.log(element.scrollTop);
+  //console.log(element.clientHeight);
+  //console.log(element.scrollHeight);
+  if (element.scrollTop + element.clientHeight >= element.scrollHeight) {
+    console.log('触发加载函数');
+    //....
+  }
+});
+```

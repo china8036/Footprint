@@ -2,11 +2,10 @@
   - [目录结构](#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
   - [browser-sync](#browser-sync)
   - [http-server](#http-server)
-  - [webpack](#webpack)
 
-# 前端开发工具 #
+# 前端开发工具 
 
-## 目录结构 ##
+## 目录结构
 
 一个完整的前端项目目录结构实例：   
 
@@ -21,7 +20,7 @@
 	- e2e：集成测试代码
 	- unit：单元测试代码
 
-## browser-sync ##
+## browser-sync 
 
 在项目根目录下：
 ```
@@ -30,7 +29,7 @@ browser-sync start --server --files "*.*"
 注意：不可在系统根目录下运行，会导致监控的文件过多而造成系统卡慢；
 
 
-## http-server ##
+## http-server 
 http-server 可以将本地的任何目录映射到 127.0.0.1 上；
 
 - 安装
@@ -43,4 +42,3 @@ npm install -g http-server
 
 
 
-## webpack ##

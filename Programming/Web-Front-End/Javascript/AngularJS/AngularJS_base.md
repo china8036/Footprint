@@ -1231,6 +1231,7 @@ http://hudeyong926.iteye.com/blog/2073488
 
 https://checkcheckzz.gitbooks.io/angularjs-learning-notes/content/chapter18/18-8.html
 
+https://xgfe.github.io/2016/08/12/y8n/angular-directive-attributes/
 <!-- TODO -->
 
 ### 内置指令

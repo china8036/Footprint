@@ -12,9 +12,9 @@
       - [animation-fill-mode](#animation-fill-mode)
     - [实例](#%E5%AE%9E%E4%BE%8B)
   - [Browser Compatibility](#browser-compatibility)
-  - [CSS动画实践](#css%E5%8A%A8%E7%94%BB%E5%AE%9E%E8%B7%B5)
+  - [CSS 动画实践](#css-%E5%8A%A8%E7%94%BB%E5%AE%9E%E8%B7%B5)
     - [实践例子](#%E5%AE%9E%E8%B7%B5%E4%BE%8B%E5%AD%90)
-    - [CSS动画于JavaScript动画的比较](#css%E5%8A%A8%E7%94%BB%E4%BA%8Ejavascript%E5%8A%A8%E7%94%BB%E7%9A%84%E6%AF%94%E8%BE%83)
+    - [CSS 动画于 JavaScript 动画的比较](#css-%E5%8A%A8%E7%94%BB%E4%BA%8E-javascript-%E5%8A%A8%E7%94%BB%E7%9A%84%E6%AF%94%E8%BE%83)
   - [Refer Links](#refer-links)
 
 # CSS 动画
@@ -24,7 +24,6 @@
 ## CSS Transition
 
 Transitions：用于**实现简单的动画，只有起始两帧过渡**。**多用于页面的交互操作**，使交互效果更生动活泼。
-
 
 ### transition
 
@@ -49,7 +48,6 @@ img{
 }
 ```
 
-
 - 可以指定 transition 适用的属性，比如只适用于 height：
   ```css
   img{
@@ -65,6 +63,8 @@ img{
   }
   ```
   这样，height 和 width 的变化是同时进行的（效果跟不指定它们没有差别）
+
+- [在变化某个目标属性时，前提是浏览器已经得知这个属性需要加动画，否则动画无法执行](https://www.zhihu.com/question/36375965)。
 
 ### transition-delay
 
@@ -121,7 +121,7 @@ img{
 
 http://joveyzheng.com/2016/03/16/css-cubic-bezier/
 
-timing-function 属性的取值中，支持使用cubic-bezier函数，自定义[三次贝塞尔曲线](http://cubic-bezier.com)--即速度变化曲线：
+timing-function 属性的取值中，支持使用 cubic-bezier 函数，自定义[三次贝塞尔曲线](http://cubic-bezier.com)-- 即速度变化曲线：
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/de8db216df9f16f33170b67a94403338.jpg)
 
@@ -137,16 +137,13 @@ timing-function 属性的取值中，支持使用cubic-bezier函数，自定义[
   
   最直接的理解是，将以一条直线放在范围只有 1 的坐标轴中，并从中间拿出两个点来拉扯（X 轴的取值区间是 [0, 1]，Y 轴任意），最后形成的曲线就是动画的速度曲线。
 
-
-
-
 #### steps()
 
 https://idiotwu.me/understanding-css3-timing-function-steps/
 
-timing-function 属性的取值中，还支持使用steps()函数。
+timing-function 属性的取值中，还支持使用 steps() 函数。
 
-steps 函数指定了一个阶跃函数，第一个参数指定了时间函数中的间隔数量（必须是正整数，可使用[动画帧数计算器](http://tid.tenpay.com/labs/css3_keyframes_calculator.html)计算），即把动画分为 n 步阶段性展示；第二个参数可选，接受 start 和 end 两个值，指定在每个间隔的起点或是终点发生阶跃变化，默认为 end。
+steps 函数指定了一个阶跃函数，第一个参数指定了时间函数中的间隔数量（必须是正整数，可使用[动画帧数计算器](http://tid.tenpay.com/labs/css3_keyframes_calculator.html) 计算），即把动画分为 n 步阶段性展示；第二个参数可选，接受 start 和 end 两个值，指定在每个间隔的起点或是终点发生阶跃变化，默认为 end。
 
 例：
 - steps(3, start)
@@ -160,9 +157,6 @@ steps 函数指定了一个阶跃函数，第一个参数指定了时间函数�
   ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/ec5d83197347b743a264dbc5a2583e4c.jpg)
 
   当指定跃点为 end，动画则在每个计时周期的终点发生阶跃（即图中空心圆 → 实心圆）。由于第一次阶跃发生在第一个计时周期结束时（1s），所以我们看到的初态为 0% 的状态；而在整个动画周期完成处（3s），虽然发生阶跃跳到了 100% 的状态，但同时动画结束，所以 100% 的状态不可视。因此在视觉上动画的过程为 0 → 1/3 → 2/3（回忆一下数电里的异步清零，当所有输出端都为高电平的时候触发清零，所以全为高电平是暂态）。
-
-
-
 
 ### NOTE
 
@@ -180,17 +174,11 @@ steps 函数指定了一个阶跃函数，第一个参数指定了时间函数�
 
 - 一条 transition 规则，只能定义一个属性的变化，不能涉及多个属性。
 
-
-
-
-
 ## CSS Animation
 
 针对 transition 的多个局限性，CSS 提出了 Animation。
 
 Keyframes animation：用于**实现较为复杂的动画**，**一般关键帧较多**。
-
-
 
 ### @keyframes
 
@@ -223,7 +211,7 @@ Keyframes animation：用于**实现较为复杂的动画**，**一般关键帧�
   }
   ```
 
-- @keyframes定义中，可把多个相同的关键帧状态写在一行：
+- @keyframes 定义中，可把多个相同的关键帧状态写在一行：
   ```css
   @keyframes pound {
     from，to { transform: none; }
@@ -231,7 +219,7 @@ Keyframes animation：用于**实现较为复杂的动画**，**一般关键帧�
   }
   ```
 
-- 浏览器从一个状态向另一个状态过渡，是平滑过渡。使用steps函数可以实现分步过渡：
+- 浏览器从一个状态向另一个状态过渡，是平滑过渡。使用 steps 函数可以实现分步过渡：
 
   例：
   ```css
@@ -240,9 +228,6 @@ Keyframes animation：用于**实现较为复杂的动画**，**一般关键帧�
   }
   ```
   例：[打字机动画](http://dabblet.com/gist/1745856)
-
-
-
 
 ### animation
 
@@ -309,7 +294,6 @@ animation-fill-mode 属性规定动画在播放之前或之后，其动画效果
   }
   ```
 
-
 - [打字机动画](http://dabblet.com/gist/1745856)
   ```css
   /**
@@ -332,8 +316,6 @@ animation-fill-mode 属性规定动画在播放之前或之后，其动画效果
               blink-caret .5s step-end infinite alternate;
   }
   ```
-
-
 
 ## Browser Compatibility
 
@@ -379,35 +361,31 @@ animation-fill-mode 属性规定动画在播放之前或之后，其动画效果
   }
   ```
 
+## CSS 动画实践
 
-## CSS动画实践
+需求中常见的 css3 动画一般有**补间动画 / 关键帧动画**和**逐帧动画**两种：
 
+- 补间动画 / 关键帧动画
 
-需求中常见的css3动画一般有**补间动画/关键帧动画**和**逐帧动画**两种：
-
-- 补间动画/关键帧动画
-
-  常用于实现位移、颜色（透明度）、大小、旋转、倾斜等变化。一般有Transitions和Keyframes animation两种方法实现补间动画（平滑动画）。
+  常用于实现位移、颜色（透明度）、大小、旋转、倾斜等变化。一般有 Transitions 和 Keyframes animation 两种方法实现补间动画（平滑动画）。
 
 - 逐帧动画
 
-  当animation的timing-function使用steps时，可实现没有补间（平滑过度），只有关键帧之间的跳跃的动画效果。
+  当 animation 的 timing-function 使用 steps 时，可实现没有补间（平滑过度），只有关键帧之间的跳跃的动画效果。
 
-  逐帧动画可用于loading动画，但更多的用于Sprite精灵动画（人物运动）。精灵动画把所有帧都放在一起，通过CSS3的animation控制background-position。
+  逐帧动画可用于 loading 动画，但更多的用于 Sprite 精灵动画（人物运动）。精灵动画把所有帧都放在一起，通过 CSS3 的 animation 控制 background-position。
 
-
-使用CSS实现动画效果的优缺点：
+使用 CSS 实现动画效果的优缺点：
 - 优点：
   - 简单、高效
   - 声明式的
   - 不依赖于主线程，采用硬件加速（GPU）
-  - 简单的控制keyframe animation播放和暂停
+  - 简单的控制 keyframe animation 播放和暂停
 
 - 缺点：
   - 不能动态修改或定义动画内容
   - 不同的动画无法实现同步
   - 多个动画彼此无法堆叠
-
 
 ### 实践例子
 
@@ -417,13 +395,9 @@ https://aotu.io/notes/2016/05/06/Guide-To-Tween-Animation/index.html
 
 https://webdesign.tutsplus.com/tutorials/a-beginners-introduction-to-css-animation--cms-21068
 
-### CSS动画于JavaScript动画的比较
+### CSS 动画于 JavaScript 动画的比较
 
 [Javascript 可以比 CSS transition 性能更好](http://zencode.in/19.CSS-vs-JS%E5%8A%A8%E7%94%BB%EF%BC%9A%E8%B0%81%E6%9B%B4%E5%BF%AB%EF%BC%9F.html)
-
-
-
-
 
 ## Refer Links
 
@@ -435,3 +409,4 @@ http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html
 
 https://idiotwu.me/understanding-css3-timing-function-steps/
 
+[CSS3 热身实战——过渡与动画（实现炫酷下拉，手风琴，无缝滚动）](http://web.jobbole.com/91973/)
