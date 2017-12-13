@@ -48,6 +48,7 @@
     - [通过CSS实现](#%E9%80%9A%E8%BF%87css%E5%AE%9E%E7%8E%B0)
     - [通过JavaScript实现](#%E9%80%9A%E8%BF%87javascript%E5%AE%9E%E7%8E%B0)
   - [判断是否已滑到底部](#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%B7%B2%E6%BB%91%E5%88%B0%E5%BA%95%E9%83%A8)
+  - [ios中z-index失效的解决方案](#ios%E4%B8%ADz-index%E5%A4%B1%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
 
 # JavaScript 实用代码段
 
@@ -1271,4 +1272,12 @@ document.getElementById('my-order-list').addEventListener('scroll', function (ev
     //....
   }
 });
+```
+
+## ios中z-index失效的解决方案
+
+http://www.zhangxinxu.com/wordpress/2016/08/safari-3d-transform-z-index/
+
+```less
+transform: translateZ(120px); //像素自由设置
 ```

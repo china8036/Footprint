@@ -5,6 +5,7 @@
   - [entry](#entry)
   - [output](#output)
   - [loader](#loader)
+    - [使用](#%E4%BD%BF%E7%94%A8)
   - [plugin](#plugin)
   - [实践：构建一个 gulp 与 webpack 相配合的前端工作流](#%E5%AE%9E%E8%B7%B5%EF%BC%9A%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA-gulp-%E4%B8%8E-webpack-%E7%9B%B8%E9%85%8D%E5%90%88%E7%9A%84%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E6%B5%81)
   - [Refer Links](#refer-links)
@@ -16,6 +17,10 @@
 ### 定义
 
 > 本质上，webpack 是一个现代 JavaScript 应用程序的模块打包器 (module bundler)。当 webpack 处理应用程序时，它会递归地构建一个依赖关系图 (dependency graph)，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 bundle。
+
+Webpack 的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack 将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 处理它们，最后打包为一个（或多个）浏览器可识别的 JavaScript 文件。
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/9/3cb68f2ed60b66aa68fae54f2381b648.jpg)
 
 ### webpack 与 gulp、Browserify 的关系
 
@@ -39,17 +44,29 @@ output 属性告诉 webpack 在哪里输出它所创建的 bundles，以及如�
 
 ## loader
 
-loader 让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处理的有效模块，然后你就可以利用 webpack 的打包能力，对它们进行处理。
+Loaders 是 webpack 提供的最激动人心的功能之一了。通过使用不同的 loader，webpack 有能力调用外部的脚本或工具，实现对不同格式的文件的处理，比如转换 scss 为 css，或者把下一代的 JS 文件（ES6，ES7) 转换为现代浏览器兼容的 JS 文件，对 React 的开发而言，合适的 Loaders 可以把 React 的中用到的 JSX 文件转换为 JS 文件。
 
-本质上，webpack loader 将所有类型的文件，转换为应用程序的依赖图可以直接引用的模块。
+本质上，webpack loader 将所有类型的文件，转换为应用程序的依赖图可以直接引用的 JavaScript 模块，然后你就可以利用 webpack 的打包能力，对它们进行处理。
 
 在更高层面，在 webpack 的配置中 loader 有两个目标：
 - 识别出应该被对应的 loader 进行转换的那些文件。（使用 test 属性)
 - 转换这些文件，从而使其能够被添加到依赖图中（并且最终添加到 bundle 中）(use 属性)
 
+### 使用
+
+Loaders 需要单独安装并且需要在 webpack.config.js 中的 modules 关键字下进行配置，Loaders 的配置包括以下几方面：
+- test：一个用以匹配 loaders 所处理文件的拓展名的正则表达式（必须）
+- loader：loader 的名称（必须）
+- include/exclude: 手动添加必须处理的文件（文件夹）或屏蔽不需要处理的文件（文件夹）（可选）；
+- query：为 loaders 提供额外的设置选项（可选）
+
 ## plugin
 
 loader 被用于转换某些类型的模块，而插件则可以用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量。插件接口功能极其强大，可以用来处理各种各样的任务。
+
+Loaders 和 Plugins 常常被弄混，但是他们其实是完全不同的东西，可以这么来说，loaders 是在打包构建过程中用来处理源文件的（JSX，Scss，Less..），一次处理一个，插件并不直接操作单个文件，它直接对整个构建过程其作用。
+
+Webpack 有很多内置插件，同时也有很多第三方插件，可以让我们完成更加丰富的功能。
 
 ## 实践：构建一个 gulp 与 webpack 相配合的前端工作流
 
@@ -78,6 +95,8 @@ https://segmentfault.com/a/1190000004249679
 ## Refer Links
 
 [webpack 中文文档](https://doc.webpack-china.org/concepts/)
+
+[入门 Webpack，看这篇就够了](https://segmentfault.com/a/1190000006178770)
 
 [gulp + webpack 构建多页面前端项目](https://github.com/fwon/blog/issues/17)
 
