@@ -435,7 +435,7 @@ type(comment)
 
 ### CSS 选择器
 
-在写 CSS 时，**标签名不加任何修饰，类名前加。，id 名前加 #**，在这里也可以利用类似的方法来筛选元素，用到的方法是 soup.select()，返回类型是 list，可以遍历形式输出，然后用 get_text() 方法来获取它的内容；
+在写 CSS 时，**标签名不加任何修饰，类名前加。，id 名前加 #**，在这里也可以利用类似的方法来筛选元素，用到的方法是 soup.select()，返回类型是 list，可以遍历形式输出，然后用 [get_text()](https://beautifulsoup.readthedocs.io/zh_CN/latest/#get-text) 方法来获取它的文本内容；
 
 - 通过标签名查找
   ```python
@@ -482,6 +482,6 @@ type(comment)
 
 ## Refer Links
 
-Beautiful Soup 4.4.0 文档：https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/# 
+Beautiful Soup 中文文档：https://beautifulsoup.readthedocs.io/zh_CN/latest/
 
 静觅 » Python 爬虫利器二之 Beautiful Soup 的用法 http://cuiqingcai.com/1319.html 
