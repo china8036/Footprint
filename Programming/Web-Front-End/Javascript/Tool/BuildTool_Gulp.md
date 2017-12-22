@@ -5,9 +5,37 @@
   - [使用插件](#%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6)
   - [Gulp 搭配 Yeoman Generator：webapp](#gulp-%E6%90%AD%E9%85%8D-yeoman-generator%EF%BC%9Awebapp)
   - [其它](#%E5%85%B6%E5%AE%83)
-    - [使用 ES6](#%E4%BD%BF%E7%94%A8-es6)
     - [部署项目任务](#%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E4%BB%BB%E5%8A%A1)
     - [指定一个 gulpfile 的路径](#%E6%8C%87%E5%AE%9A%E4%B8%80%E4%B8%AA-gulpfile-%E7%9A%84%E8%B7%AF%E5%BE%84)
+  - [常用插件](#%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6)
+    - [gulp-load-plugins](#gulp-load-plugins)
+    - [文件操作](#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C)
+      - [清理文件夹：del](#%E6%B8%85%E7%90%86%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9Adel)
+      - [合并文件：gulp-concat](#%E5%90%88%E5%B9%B6%E6%96%87%E4%BB%B6%EF%BC%9Agulp-concat)
+      - [重命名：gulp-rename](#%E9%87%8D%E5%91%BD%E5%90%8D%EF%BC%9Agulp-rename)
+      - [以 Hash 命名：gulp-rev、gulp-rev-replace](#%E4%BB%A5-hash-%E5%91%BD%E5%90%8D%EF%BC%9Agulp-rev%E3%80%81gulp-rev-replace)
+    - [图片处理](#%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86)
+      - [压缩：gulp-imagemin](#%E5%8E%8B%E7%BC%A9%EF%BC%9Agulp-imagemin)
+    - [CSS 处理](#css-%E5%A4%84%E7%90%86)
+      - [风格检查：CSSLint、sass-lint](#%E9%A3%8E%E6%A0%BC%E6%A3%80%E6%9F%A5%EF%BC%9Acsslint%E3%80%81sass-lint)
+      - [预编译：gulp-less、gulp-sass](#%E9%A2%84%E7%BC%96%E8%AF%91%EF%BC%9Agulp-less%E3%80%81gulp-sass)
+      - [兼容前缀：gulp-autoprefixer](#%E5%85%BC%E5%AE%B9%E5%89%8D%E7%BC%80%EF%BC%9Agulp-autoprefixer)
+      - [移除未使用的 CSS 选择器：gulp-uncss](#%E7%A7%BB%E9%99%A4%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%9A%84-css-%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%9Agulp-uncss)
+      - [压缩：gulp-cssmin](#%E5%8E%8B%E7%BC%A9%EF%BC%9Agulp-cssmin)
+      - [图片 Base64：gulp-base64](#%E5%9B%BE%E7%89%87-base64%EF%BC%9Agulp-base64)
+    - [JavaScript 处理](#javascript-%E5%A4%84%E7%90%86)
+      - [风格检查：gulp-eslint](#%E9%A3%8E%E6%A0%BC%E6%A3%80%E6%9F%A5%EF%BC%9Agulp-eslint)
+      - [使用 ES6：gulp-babel](#%E4%BD%BF%E7%94%A8-es6%EF%BC%9Agulp-babel)
+      - [压缩混淆：gulp-uglify](#%E5%8E%8B%E7%BC%A9%E6%B7%B7%E6%B7%86%EF%BC%9Agulp-uglify)
+    - [HTML 处理](#html-%E5%A4%84%E7%90%86)
+      - [风格检查：gulp-htmlhint](#%E9%A3%8E%E6%A0%BC%E6%A3%80%E6%9F%A5%EF%BC%9Agulp-htmlhint)
+      - [压缩：gulp-html-minify](#%E5%8E%8B%E7%BC%A9%EF%BC%9Agulp-html-minify)
+    - [其它](#%E5%85%B6%E5%AE%83)
+      - [open](#open)
+      - [gulp-connect](#gulp-connect)
+      - [gulp-debug](#gulp-debug)
+      - [显示你的项目的大小：gulp-size](#%E6%98%BE%E7%A4%BA%E4%BD%A0%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%A4%A7%E5%B0%8F%EF%BC%9Agulp-size)
+      - [仅让发生改变的文件通过：gulp-changed](#%E4%BB%85%E8%AE%A9%E5%8F%91%E7%94%9F%E6%94%B9%E5%8F%98%E7%9A%84%E6%96%87%E4%BB%B6%E9%80%9A%E8%BF%87%EF%BC%9Agulp-changed)
   - [Refer Links](#refer-links)
 
 # Build Tool: Gulp 
@@ -179,22 +207,6 @@ Run gulp serve:dist to preview the production build
 
 ## 其它 
 
-### 使用 ES6
-	
-我们可以用 gulpfile.babel.js 代替 gulpfile.js（直接重命名即可），这样可以借助 babel 使用 ES6 新特性，不过我们也需要在项目中安装 babel：
-```
-	$ npm install --save-dev babel-core
-	$ npm install --save-dev babel-register
-	$ npm install --save-dev babel-preset-latest
-```
-在项目根目录下创建。babelrc 文件，内容如下：
-```
-	{
-		"presets": ["latest"]
-	}
-```
-这样，就可以在 gulpfile 中使用 ES6 代码。
-
 ### 部署项目任务
 
 当项目任务比较复杂时，不可能通过一个 gulpfile.js 实现全部我们想要的任务功能，否则会让这个文件超级大；   
@@ -232,6 +244,152 @@ $ gulp task
 $ gulp --gulpfile gulpfile.js
 $ gulp task
 ```
+
+## 常用插件
+
+### gulp-load-plugins
+
+https://www.npmjs.com/package/gulp-load-plugins
+
+```javascript
+// package.json 
+
+"devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.1"
+}
+
+// gulpfile.js
+
+var $ = require('gulp-load-plugins')();     // $ 是一个对象，加载了依赖里的插件
+
+gulp.src('./**/*.js')
+    .pipe($.concat('all.js'))               // 使用插件就可以用 $.PluginsName()
+    .pipe($.uglify())
+    .pipe($.rename('all.min.js'))
+    .pipe(gulp.dest('./dist'))
+```
+
+### 文件操作
+
+#### 清理文件夹：del
+
+del （替代 gulp-clean)
+```javascript
+var del = require('del');
+del('./dist');                      // 删除整个 dist 文件夹
+```
+#### 合并文件：gulp-concat
+
+#### 重命名：gulp-rename
+
+#### 以 Hash 命名：gulp-rev、gulp-rev-replace
+
+### 图片处理
+
+#### 压缩：gulp-imagemin
+
+### CSS 处理
+
+#### 风格检查：CSSLint、sass-lint
+
+https://github.com/sasstools/sass-lint
+
+#### 预编译：gulp-less、gulp-sass
+
+gulp-sass
+```javascript
+var sass = require('gulp-sass');
+
+gulp.src('./sass/**/*.scss')
+    .pipe(sass({
+        outputStyle: 'compressed'           // 配置输出方式，默认为 nested
+    }))
+    .pipe(gulp.dest('./dist/css'));
+    
+gulp.watch('./sass/**/*.scss', ['sass']);   // 实时监听 sass 文件变动，执行 sass 任务
+```
+
+#### 兼容前缀：gulp-autoprefixer
+
+#### 移除未使用的 CSS 选择器：gulp-uncss
+
+#### 压缩：gulp-cssmin
+
+#### 图片 Base64：gulp-base64
+
+将 css 文件里引用的图片转为 base64。
+
+```javascript
+var base64 = require('gulp-base64');
+
+gulp.src('./css/*.css')
+    .pipe(base64({
+        maxImageSize: 8*1024,               // 只转 8kb 以下的图片为 base64
+    }))
+    .pipe(gulp.dest('./dist'))
+```
+
+### JavaScript 处理
+
+#### 风格检查：gulp-eslint
+
+规则文档：https://eslint.org/docs/rules/
+
+AlloyTeam ESLint 配置指南：http://www.alloyteam.com/2017/08/13065/
+
+#### 使用 ES6：gulp-babel
+
+https://www.npmjs.com/package/gulp-babel
+
+我们可以用 gulpfile.babel.js 代替 gulpfile.js（直接重命名即可），这样可以借助 babel 使用 ES6 新特性，不过我们也需要在项目中安装 babel：
+```
+	$ npm install --save-dev babel-core
+	$ npm install --save-dev babel-register
+	$ npm install --save-dev babel-preset-latest
+```
+在项目根目录下创建。babelrc 文件，内容如下：
+```
+	{
+		"presets": ["latest"]
+	}
+```
+这样，就可以在 gulpfile 中使用 ES6 代码。
+
+#### 压缩混淆：gulp-uglify
+
+### HTML 处理
+
+#### 风格检查：gulp-htmlhint
+
+#### 压缩：gulp-html-minify
+
+### 其它
+
+#### open
+
+#### gulp-connect
+
+#### gulp-debug
+
+https://www.npmjs.com/package/gulp-debug
+
+```javascript
+const gulp = require('gulp');
+const debug = require('gulp-debug');
+ 
+gulp.task('default', () =>
+    gulp.src('foo.js')
+        .pipe(debug({title: 'unicorn:'}))
+        .pipe(gulp.dest('dist'))
+);
+```
+
+#### 显示你的项目的大小：gulp-size
+
+#### 仅让发生改变的文件通过：gulp-changed
 
 ## Refer Links
 
