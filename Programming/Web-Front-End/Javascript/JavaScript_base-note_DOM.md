@@ -22,7 +22,9 @@
       - [EventTarget 接口的 addEventListener 方法](#eventtarget-%E6%8E%A5%E5%8F%A3%E7%9A%84-addeventlistener-%E6%96%B9%E6%B3%95)
         - [EventTarget 接口](#eventtarget-%E6%8E%A5%E5%8F%A3)
     - [事件种类](#%E4%BA%8B%E4%BB%B6%E7%A7%8D%E7%B1%BB)
+      - [customEvent](#customevent)
       - [鼠标事件](#%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6)
+      - [进度事件](#%E8%BF%9B%E5%BA%A6%E4%BA%8B%E4%BB%B6)
       - [键盘事件](#%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6)
       - [触摸事件](#%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6)
       - [表单事件](#%E8%A1%A8%E5%8D%95%E4%BA%8B%E4%BB%B6)
@@ -553,10 +555,13 @@ EventTarget 接口包含三个方法：
 	para.dispatchEvent(event);
 	```
 
-### 事件种类 ###
+### 事件种类
+
 http://javascript.ruanyifeng.com/dom/event-type.html 
 
-#### 鼠标事件 ####
+#### customEvent
+
+#### 鼠标事件
 
 - click
 - dbclick
@@ -573,16 +578,70 @@ http://javascript.ruanyifeng.com/dom/event-type.html
 
 - contextmenu
 
-#### 键盘事件 ####
+#### 进度事件
 
-#### 触摸事件 ####
+#### 键盘事件
 
-#### 表单事件 ####
+- altKey
+- ctrlKey
+- metaKey
+- shiftKey
+- key
+- charCode
 
-#### 文档事件 ####
+#### 触摸事件
+
+- touch
+
+
+#### 表单事件
+
+- input
+- select
+- change
+- reset
+- submit
+
+
+#### 文档事件
+
 - beforeunload
 - unload
 - load
 - error
 - pageshow
 - pagehide
+
+- scroll
+
+  scroll事件在文档或文档元素滚动时触发，主要出现在用户拖动滚动条。
+
+  由于该事件会连续地大量触发，所以它的监听函数之中不应该有非常耗费计算的操作。推荐的做法是使用requestAnimationFrame或setTimeout控制该事件的触发频率，然后可以结合customEvent抛出一个新事件：
+  ```javascript
+
+  (function() {
+    window.addEventListener('scroll', scrollThrottler, false);
+
+    var scrollTimeout;
+    function scrollThrottler() {
+      if (!scrollTimeout) {
+        scrollTimeout = setTimeout(function() {
+          scrollTimeout = null;
+          actualScrollHandler();
+        }, 66);
+      }
+    }
+
+    function actualScrollHandler() {
+      // ...
+    }
+  }());
+  ```
+
+- resize
+
+
+- hashchange
+- popstate
+- cut、copy、paste
+- focus
