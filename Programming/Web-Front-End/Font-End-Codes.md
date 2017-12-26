@@ -45,10 +45,14 @@
     - [validity 对象](#validity-%E5%AF%B9%E8%B1%A1)
     - [实践](#%E5%AE%9E%E8%B7%B5)
   - [平滑滚动的实现](#%E5%B9%B3%E6%BB%91%E6%BB%9A%E5%8A%A8%E7%9A%84%E5%AE%9E%E7%8E%B0)
-    - [通过CSS实现](#%E9%80%9A%E8%BF%87css%E5%AE%9E%E7%8E%B0)
-    - [通过JavaScript实现](#%E9%80%9A%E8%BF%87javascript%E5%AE%9E%E7%8E%B0)
+    - [通过 CSS 实现](#%E9%80%9A%E8%BF%87-css-%E5%AE%9E%E7%8E%B0)
+    - [通过 JavaScript 实现](#%E9%80%9A%E8%BF%87-javascript-%E5%AE%9E%E7%8E%B0)
   - [判断是否已滑到底部](#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%B7%B2%E6%BB%91%E5%88%B0%E5%BA%95%E9%83%A8)
-  - [ios中z-index失效的解决方案](#ios%E4%B8%ADz-index%E5%A4%B1%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
+  - [ios 中 z-index 失效的解决方案](#ios-%E4%B8%AD-z-index-%E5%A4%B1%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
+  - [CSS 选择器如何选中上一个相邻元素？为什么没有这种选择器？](#css-%E9%80%89%E6%8B%A9%E5%99%A8%E5%A6%82%E4%BD%95%E9%80%89%E4%B8%AD%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%9B%B8%E9%82%BB%E5%85%83%E7%B4%A0%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E8%BF%99%E7%A7%8D%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%9F)
+  - [无法触发 scroll 事件](#%E6%97%A0%E6%B3%95%E8%A7%A6%E5%8F%91-scroll-%E4%BA%8B%E4%BB%B6)
+  - [Html 中注释符号`<!-- -->`内容若含有非西文字符，需要以空格隔开](#html-%E4%B8%AD%E6%B3%A8%E9%87%8A%E7%AC%A6%E5%8F%B7-----%E5%86%85%E5%AE%B9%E8%8B%A5%E5%90%AB%E6%9C%89%E9%9D%9E%E8%A5%BF%E6%96%87%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%9C%80%E8%A6%81%E4%BB%A5%E7%A9%BA%E6%A0%BC%E9%9A%94%E5%BC%80)
+  - [去除 inline-block 元素间间距](#%E5%8E%BB%E9%99%A4-inline-block-%E5%85%83%E7%B4%A0%E9%97%B4%E9%97%B4%E8%B7%9D)
 
 # JavaScript 实用代码段
 
@@ -414,8 +418,6 @@ div:after {
   border-bottom-color: red;
 }
 ```
-
-
 
 ## 圆形画法
 
@@ -1217,26 +1219,25 @@ https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
 
       https://www.w3cplus.com/css/form-validation-part-3-a-validity-state-api-polyfill.html
 
-
 ## 平滑滚动的实现
 
 https://iwenku.net/?article_167.html
 
 http://www.zcfy.cc/article/smooth-page-scroll-in-5-lines-of-javascript-406.html
 
-### 通过CSS实现
+### 通过 CSS 实现
 
-需要给“平滑滚动”的元素（通常是body）应用`scroll-behavior: smooth`:
+需要给“平滑滚动”的元素（通常是 body）应用`scroll-behavior: smooth`:
 ```css
 body {
     scroll-behavior: smooth;
 }
 ```
-但在浏览器兼容这方面可以发现也就firefox支持，在7.36%的浏览器上可以使用这个属性，目前来说还只是一个小众的属性，不推荐使用。
+但在浏览器兼容这方面可以发现也就 firefox 支持，在 7.36% 的浏览器上可以使用这个属性，目前来说还只是一个小众的属性，不推荐使用。
 
-### 通过JavaScript实现
+### 通过 JavaScript 实现
 
-由于CSS的属性兼容性较差，因此一般平滑滚动的实现都是通过JavaScript的window.scrollTo方法来实现：
+由于 CSS 的属性兼容性较差，因此一般平滑滚动的实现都是通过 JavaScript 的 window.scrollTo 方法来实现：
 ```javascript
 window.scrollTo({"behavior": "smooth", "top": element.offsetTop, "left": element.offsetLeft});
 ```
@@ -1255,8 +1256,6 @@ anchorLink.addEventListener("click", function(e) {
 
 TODO: 在微信浏览器上两种方式都无法是是实现
 
-
-
 ## 判断是否已滑到底部
 
 ```javascript
@@ -1274,10 +1273,127 @@ document.getElementById('my-order-list').addEventListener('scroll', function (ev
 });
 ```
 
-## ios中z-index失效的解决方案
+## ios 中 z-index 失效的解决方案
 
 http://www.zhangxinxu.com/wordpress/2016/08/safari-3d-transform-z-index/
 
 ```less
-transform: translateZ(120px); //像素自由设置
+transform: translateZ(120px); // 像素自由设置
 ```
+
+## CSS 选择器如何选中上一个相邻元素？为什么没有这种选择器？
+
+https://www.zhihu.com/question/38235620
+
+https://www.zhihu.com/question/21508830/answer/18465691
+
+浏览器最初设计的时候就考虑了渐进显示，也就是整个文档加载了多少就显示多少内容，而不用等整个下载完。渐进显示在 CSS 上的原理就是一个节点所适用的样式只取决于它和它之前的节点（父节点、它之前的兄弟节点）的性质。
+
+而所设想的 selector（如选中上一个相邻元素的选择器）则恰好相反。也就是当浏览器解析到一个新节点时，可能改变之前节点所适用的样式——因而要求在解析一个新节点后，得回头重新计算之前节点所匹配的样式，此即所谓“回溯”。在最坏的情况下所导致大量的重新计算和 reflow，可以相当于重新 render 整个网页。
+
+## 无法触发 scroll 事件
+
+可能原因：
+- 对 html,body 设置 `height:100%` 时导致无法触发 scroll 事件
+  
+  - 原因：
+    
+    当 scroll 事件绑定在 window 上时，如果 html 的高度没有超过整个浏览器高度，将无法触发 scroll 事件。此处设置为 100%，即与浏览器高度相同，导致 scroll 函数无法触发。
+
+    同样如果绑定在 body 上，body 的高度需要比框架大才行。如果 body 的高度和框架一样大，而 body 内的元素比如一个叫 container 的 div 比 body 高，那么滚动是在这个 container 里滚的，绑定在 body 上的 scroll 便不会触发。这时候需要绑定在 container 上。
+
+  - solve:
+    
+    必须 `height:auto;`且内容累计高度超过浏览器高度，才能正确触发 scroll 事件。
+
+- 
+
+## Html 中注释符号`<!-- -->`内容若含有非西文字符，需要以空格隔开
+
+例：
+
+错误：可能会因中文乱码导致注释符号也成为乱码而失去注释的作用
+```html
+<!-- 我很高兴 -->
+```
+正确：
+```html
+<!-- 我很高兴 -->
+```
+
+## 去除 inline-block 元素间间距
+
+http://www.zhangxinxu.com/wordpress/?p=2357
+
+https://www.w3cplus.com/css/fighting-the-space-between-inline-block-elements
+
+由于编写代码时 HTML 标签之间的换行、空格等空白字符，导致代码解析后的页面中 使用 inline-block 的元素之间会存在“4px”的空白间距。
+
+由于这个原因会导致刚好占满 100% 容器宽度的多个子元素无法在同一行显示，部分元素被“挤”到了下一行。
+
+解决方法：
+- 改变 HTML 结构，移除代码的空格
+
+  考虑到代码可读性，显然连成一行的写法是不可取的：
+  ```html
+  <!-- 方式一 -->
+  <div class="space">
+      <a href="##">
+      惆怅</a><a href="##">
+      淡定</a><a href="##">
+      热血</a>
+  </div>
+  <!-- 方式二 -->
+  <div class="space">
+      <a href="##">惆怅</a
+      ><a href="##">淡定</a
+      ><a href="##">热血</a>
+  </div>
+  <!-- 方式三 -->
+  <div class="space">
+      <a href="##">惆怅</a><!--
+      --><a href="##">淡定</a><!--
+      --><a href="##">热血</a>
+  </div>
+  ```
+
+- 使用 margin 负值
+
+  ```css
+  .space a {
+      display: inline-block;
+      margin-right: -3px;
+  }
+  ```
+  margin 负值的大小与上下文的字体和文字大小相关，由于外部环境的不确定性，以及最后一个元素多出的父 margin 值等问题，这个方法**不适合大规模使用**。
+
+- 设置`font-size:0`
+
+  ```css
+  .space {
+      font-size: 0;
+  }
+  .space a {
+      font-size: 12px;
+  }
+  ```
+
+- 将元素设置浮动
+
+- 在父元素中设置`font-size:0`, 用来兼容 chrome，而使用`letter-space:-N px`来兼容 safari:
+  ```css
+  .finally-solve {
+    letter-spacing: -4px;/*根据不同字体字号或许需要做一定的调整*/
+    word-spacing: -4px;
+    font-size: 0;
+  }
+  .finally-solve li {/*恢复正常值*/
+    font-size: 16px;
+    letter-spacing: normal;
+    word-spacing: normal;
+    display:inline-block;
+    *display: inline;
+    zoom:1;
+  }
+  ```
+  该方法基本兼容所有主流浏览器，推荐使用。

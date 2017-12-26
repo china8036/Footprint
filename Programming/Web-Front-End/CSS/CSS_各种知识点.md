@@ -1,5 +1,7 @@
-- [CSS](#css)
+- [CSS 各种知识点 NOTE](#css-%E5%90%84%E7%A7%8D%E7%9F%A5%E8%AF%86%E7%82%B9-note)
   - [vertical-align & line-height](#vertical-align-line-height)
+  - [padding 和 margin](#padding-%E5%92%8C-margin)
+  - [锚点定位的本质](#%E9%94%9A%E7%82%B9%E5%AE%9A%E4%BD%8D%E7%9A%84%E6%9C%AC%E8%B4%A8)
 
 # CSS 各种知识点 NOTE
 
@@ -70,3 +72,4 @@ padding 和 margin 属性使用`%`作为单位时，长度基准是父元素的*
 锚点定位触发条件：
 - URL 地址中的锚链与锚点元素
 - 可 focus 的锚点元素处于 focus 状态
+

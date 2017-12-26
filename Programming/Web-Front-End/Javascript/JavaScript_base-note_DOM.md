@@ -16,11 +16,15 @@
       - [事件冒泡](#%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1)
       - [事件捕获](#%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7)
       - [DOM 事件流](#dom-%E4%BA%8B%E4%BB%B6%E6%B5%81)
+    - [EventTarget 接口](#eventtarget-%E6%8E%A5%E5%8F%A3)
     - [监听函数](#%E7%9B%91%E5%90%AC%E5%87%BD%E6%95%B0)
-      - [HTML 标签的 on- 属性](#html-%E6%A0%87%E7%AD%BE%E7%9A%84-on--%E5%B1%9E%E6%80%A7)
-      - [Element 节点的事件属性](#element-%E8%8A%82%E7%82%B9%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%B1%9E%E6%80%A7)
-      - [EventTarget 接口的 addEventListener 方法](#eventtarget-%E6%8E%A5%E5%8F%A3%E7%9A%84-addeventlistener-%E6%96%B9%E6%B3%95)
-        - [EventTarget 接口](#eventtarget-%E6%8E%A5%E5%8F%A3)
+      - [绑定监听函数](#%E7%BB%91%E5%AE%9A%E7%9B%91%E5%90%AC%E5%87%BD%E6%95%B0)
+        - [HTML 标签的 on- 属性](#html-%E6%A0%87%E7%AD%BE%E7%9A%84-on--%E5%B1%9E%E6%80%A7)
+        - [Element 节点的事件属性 `onXxx`](#element-%E8%8A%82%E7%82%B9%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%B1%9E%E6%80%A7-onxxx)
+        - [EventTarget 接口的 addEventListener 方法](#eventtarget-%E6%8E%A5%E5%8F%A3%E7%9A%84-addeventlistener-%E6%96%B9%E6%B3%95)
+      - [解绑监听函数](#%E8%A7%A3%E7%BB%91%E7%9B%91%E5%90%AC%E5%87%BD%E6%95%B0)
+        - [覆盖 Element 节点的事件属性 `onXxx`](#%E8%A6%86%E7%9B%96-element-%E8%8A%82%E7%82%B9%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%B1%9E%E6%80%A7-onxxx)
+        - [EventTarget 接口的 removeEventListener 方法](#eventtarget-%E6%8E%A5%E5%8F%A3%E7%9A%84-removeeventlistener-%E6%96%B9%E6%B3%95)
     - [事件种类](#%E4%BA%8B%E4%BB%B6%E7%A7%8D%E7%B1%BB)
       - [customEvent](#customevent)
       - [鼠标事件](#%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6)
@@ -473,20 +477,69 @@ formData 对象是"只写"的，也就是说，你可以把数据添加到该对
 3. 目标阶段：事件离开`<p>`时，触发`<p>`的 click 事件；
 4. 冒泡阶段：事件从`<p>`传回`<div>`时，再次触发`<div>`的 click 事件；
 
-### 监听函数 ###
+### EventTarget 接口 
+
+EventTarget 接口封装了 DOM 的事件操作（监听和触发）；
+
+DOM 中的 Element 节点、document 节点和 window 对象，都部署了 EventTarget 接口。此外，BOM 中的 XMLHttpRequest、AudioNode、AudioContext 等浏览器内置对象，也部署了这个接口；
+
+EventTarget 接口包含三个方法：
+
+- `addEventListener`：绑定事件的监听函数
+	- 函数原型
+    ```javascript
+    target.addEventListener(type, listener[, useCapture]);
+    ```
+    参数说明：
+      - type：事件名称，大小写敏感；
+      - listener：监听函数。事件发生时，会调用该监听函数；
+      - useCapture：布尔值，表示监听函数是否在捕获阶段（capture）触发，默认为 false（监听函数只在冒泡阶段被触发）。老式浏览器规定该参数必写，较新版本的浏览器允许该参数可选。为了保持兼容，建议总是写上该参数；
+	- 实例
+    ```javascript
+    window.addEventListener('load', function () {...}, false);
+    request.addEventListener('readystatechange', function () {...}, false);
+    ``` 
+- `removeEventListener`：移除事件的监听函数
+  - 函数原型
+    ```javascript
+    target.removeEventListener(type, listener[, useCapture])
+    ```
+    参数说明：
+    - type：一个字符串，表示需要移除的事件类型，如 "click"。
+    - listener：需要移除的 EventListener 函数（先前使用 addEventListener 方法定义的，这里必须是同一个函数才能正确移除）
+    - useCapture：（可选) 指定需要移除的 EventListener 函数是否为事件捕获。如果无此参数，默认值为 false。如果同一个监听事件分别为“事件捕获”和“事件冒泡”注册了一次，一共两次，这两次事件需要分别移除。两者不会互相干扰。
+	
+  - 实例
+    ```javascript
+    div.addEventListener('click', listener, false);
+    div.removeEventListener('click', listener, false);
+    ```
+
+- `dispatchEvent`：在当前节点上触发指定事件，从而触发监听函数的执行；该方法返回一个布尔值，只要有一个监听函数调用了 Event.preventDefault()，则返回值为 false，否则为 true；
+	- 实例
+    ```javascript
+    para.addEventListener('click', hello, false);
+    var event = new Event('click');
+    para.dispatchEvent(event);
+    ```
+
+### 监听函数
 
 监听函数（listener）是事件发生时，程序所要执行的函数，它是事件驱动编程模式的主要编程方式；
 
+#### 绑定监听函数
+
 DOM 提供三种方法，可以用来为事件绑定监听函数：
 
-#### HTML 标签的 on- 属性 ####
+##### HTML 标签的 on- 属性
+
 HTML 语言允许在元素标签的属性中，直接定义某些事件的监听代码：
 ```html
 <body onload="doSomething()">
 	<div onclick="console.log('触发事件')">
 ```
 注意：
-- on- 属性的值是将会执行的代码，而不是一个函数
+- `on*` 属性的值是将会执行的代码，而不是一个函数
 ```html
 	<!-- 正确 -->
 	<body onload="doSomething()">
@@ -496,18 +549,21 @@ HTML 语言允许在元素标签的属性中，直接定义某些事件的监听
 ```
 - 该方式虽然方便，但违反了 HTML 与 JavaScript 代码相分离的原则；
 
-#### Element 节点的事件属性 ####
+##### Element 节点的事件属性 `onXxx`
+
 每个节点对象都由其事件处理属性，这些属性通常采用小写且以 on 开头：
 ```javascript
 div.onclick = function(event){
 	console.log('触发事件');
 };
 ```
+
 注意：   
 - 使用这个方法指定的监听函数，只会在冒泡阶段触发；
 - 同一个事件只能定义一个监听函数，也就是说，如果定义两次 onclick 属性，后一次定义会覆盖前一次；
 
-#### EventTarget 接口的 addEventListener 方法 ####
+##### EventTarget 接口的 addEventListener 方法
+
 addEventListener 是推荐的指定监听函数的方法；
 
 通过 Element 节点、document 节点、window 对象的 addEventListener() 方法，可以定义事件的监听函数；
@@ -520,40 +576,34 @@ window.addEventListener('load', doSomething, false);
 - 能够指定在哪个阶段（捕获阶段还是冒泡阶段）触发回监听函数；
 - 除了 DOM 节点，还可以部署在 window、XMLHttpRequest 等对象上面，等于统一了整个 JavaScript 的监听函数接口；
 
-##### EventTarget 接口 #####
-EventTarget 接口封装了 DOM 的事件操作（监听和触发）；
+与节点属性`onXxx`的区别：
+- `onXxx` 方法会被覆盖，也就是多次执行只会执行最后一次赋值的函数。
+- `addEventListener` 不会被覆盖，会按冒泡规则全部触发。
 
-DOM 中的 Element 节点、document 节点和 window 对象，都部署了 EventTarget 接口。此外，BOM 中的 XMLHttpRequest、AudioNode、AudioContext 等浏览器内置对象，也部署了这个接口；
+#### 解绑监听函数
 
-EventTarget 接口包含三个方法：
-- addEventListener：绑定事件的监听函数
-	- 函数原型
-	```javascript
-	target.addEventListener(type, listener[, useCapture]);
-	```
-	参数说明：
-		- type：事件名称，大小写敏感；
-		- listener：监听函数。事件发生时，会调用该监听函数；
-		- useCapture：布尔值，表示监听函数是否在捕获阶段（capture）触发，默认为 false（监听函数只在冒泡阶段被触发）。老式浏览器规定该参数必写，较新版本的浏览器允许该参数可选。为了保持兼容，建议总是写上该参数；
-	- 实例
-	```javascript
-	window.addEventListener('load', function () {...}, false);
-	request.addEventListener('readystatechange', function () {...}, false);
-	``` 
-- removeEventListener：移除事件的监听函数
-	- 实例
-	```javascript
-	div.addEventListener('click', listener, false);
-	div.removeEventListener('click', listener, false);
-	```
+##### 覆盖 Element 节点的事件属性 `onXxx`
 
-- dispatchEvent：在当前节点上触发指定事件，从而触发监听函数的执行；该方法返回一个布尔值，只要有一个监听函数调用了 Event.preventDefault()，则返回值为 false，否则为 true；
-	- 实例
-	```javascript
-	para.addEventListener('click', hello, false);
-	var event = new Event('click');
-	para.dispatchEvent(event);
-	```
+可对 Element 节点的事件属性 `onXxx` 进行重新赋值，覆盖原来的属性值：
+```javscript
+document.getElementById('xxx').onclick=function(){
+  // 函数体可为空
+};
+
+```
+
+##### EventTarget 接口的 removeEventListener 方法
+
+可使用 EventTarget 接口的 removeEventListener 方法，解绑监听函数：
+```javascript
+div.addEventListener('click', listener, false);
+div.removeEventListener('click', listener, false);
+```
+NOTE：
+- 监听函数必须与绑定时的监听函数完全相同，才能成功解绑。
+- 一个 EventTarget 上的 EventListener 被移除之后，如果此事件正在执行，会立即停止。 EventListener 移除之后不能被触发，但可以重新绑定。
+
+- 使用 removeEventListener() 移除 EventTarget 上未绑定的 EventListener 不会起任何作用。
 
 ### 事件种类
 
@@ -593,7 +643,6 @@ http://javascript.ruanyifeng.com/dom/event-type.html
 
 - touch
 
-
 #### 表单事件
 
 - input
@@ -601,7 +650,6 @@ http://javascript.ruanyifeng.com/dom/event-type.html
 - change
 - reset
 - submit
-
 
 #### 文档事件
 
@@ -614,9 +662,13 @@ http://javascript.ruanyifeng.com/dom/event-type.html
 
 - scroll
 
-  scroll事件在文档或文档元素滚动时触发，主要出现在用户拖动滚动条。
+  当子元素的高度超过父元素的高度时，会在父容器上形成滚动条，即会触发子元素的 scroll 事件。
 
-  由于该事件会连续地大量触发，所以它的监听函数之中不应该有非常耗费计算的操作。推荐的做法是使用requestAnimationFrame或setTimeout控制该事件的触发频率，然后可以结合customEvent抛出一个新事件：
+  element 的 scroll 事件不冒泡，但是 document 的 defaultView 的 scroll 事件冒泡。
+  
+  scroll 事件无法取消。
+
+  由于该事件会连续高频度地大量触发，所以它的监听函数之中不应该有非常耗费计算的操作（如 DOM 操作就不该放于 scroll 的 handle 函数中）。推荐的做法是使用 requestAnimationFrame, setTimeout 或 customEvent 控制该事件的触发频率，然后可以结合 customEvent 抛出一个新事件：
   ```javascript
 
   (function() {
@@ -638,8 +690,17 @@ http://javascript.ruanyifeng.com/dom/event-type.html
   }());
   ```
 
-- resize
+  - 滚动分为两种：body 滚动和局部滚动
+    - body 滚动：
 
+      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/26/28eb591bae39802849091b15cbbe1508.jpg)
+    - 局部滚动：
+
+      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/26/0c2a38277d430b3704caff6e5605b9bd.jpg)
+
+      在移动端如果使用局部滚动，意思就是我们的滚动在一个固定宽高的 div 内触发，将该 div 设置成`overflow:scroll/auto`; 来形成 div 内部的滚动。
+
+- resize
 
 - hashchange
 - popstate
