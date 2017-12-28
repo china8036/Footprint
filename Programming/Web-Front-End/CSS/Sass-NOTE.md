@@ -63,7 +63,7 @@ Sass(Syntactically Awesome StyleSheets) 是对 CSS 的扩展，让 CSS 语言更
 
 Sass 有两种语法：Sass 和 Scss。SCSS 是 Sass 3 引入新的语法，其语法完全兼容 CSS3，并且继承了 Sass 的强大功能。也就是说，任何标准的 CSS3 样式表都是具有相同语义的有效的 SCSS 文件。另外，SCSS 还能识别大部分 CSS hacks（一些 CSS 小技巧）和特定于浏览器的语法，例如：古老的 IE filter 语法。
 
-- 具体应该使用 sass 还是 scss，取决于开发团队是对 ruby 较为熟悉还是对 css 较为熟悉，甚至可以在同一个项目中混用 sass 和 scss，但不可在同一个文件中混用。
+- 具体应该使用 sass 还是 scss，取决于开发团队是对 ruby 较为熟悉（选用 sass） 还是对 css 较为熟悉（选用 scss），甚至可以在同一个项目中混用 sass 和 scss，但不可在同一个文件中混用。
 
 - 相互转换
 
