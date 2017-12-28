@@ -2,6 +2,11 @@
   - [变量扩展语法](#%E5%8F%98%E9%87%8F%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
     - [let 和 const](#let-%E5%92%8C-const)
     - [解构赋值](#%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
+      - [数组的解构赋值](#%E6%95%B0%E7%BB%84%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
+      - [对象的解构赋值](#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
+      - [其它数据类型的解构赋值](#%E5%85%B6%E5%AE%83%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
+      - [圆括号问题](#%E5%9C%86%E6%8B%AC%E5%8F%B7%E9%97%AE%E9%A2%98)
+      - [应用](#%E5%BA%94%E7%94%A8)
     - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
   - [函数扩展语法](#%E5%87%BD%E6%95%B0%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
     - [默认参数](#%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0)
@@ -74,95 +79,298 @@ ES5 只有全局作用域和函数作用域，没有块级作用域。一不小�
 
 ### 解构赋值
 
-所谓解构，即把某种数据类型，分解成单个变量的过程。
+ES6 允许按照一定的模式匹配，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。
+
+#### 数组的解构赋值
+
+数组的元素是按次序排列的，因此对于数组的解构赋值，变量的取值由它的位置决定。
 
 ```javascript
-function  data(){
-    var a=1,b=2;
-    return [a,b];
-}
-var [x,y]=data();// 解构赋值
-console.log(x);    //1
-console.log(y);    //2
+let [a, b, c] = [1, 2, 3];
+a //1
+b //2
+c //3
+
+let [foo, [[bar], baz]] = [1, [[2], 3]];
+foo // 1
+bar // 2
+baz // 3
+
+let [ , , third] = ["foo", "bar", "baz"];
+third // "baz"
+
+let [x, , y] = [1, 2, 3];
+x // 1
+y // 3
+
+let [head, ...tail] = [1, 2, 3, 4];
+head // 1
+tail // [2, 3, 4]
+
+let [x, y, ...z] = ['a'];
+x // "a"
+y // undefined, 如果解构不成功，变量的值就等于 undefined
+z // []
 ```
 
-```javascript
-function setting(){
-    return {
-      display:{
-        color:'red'
-      },
-      keyboard:{
-        layout:‘querty’
-      }
-    };
-}
-const {
-  display:{
-    color: displayColor
-  },
-  keyboard:{
-    layout:keyboardLayout
-  }
-} = setting();// 解构赋值
-
-console.log(displayColor, keyboardLayout);    //'red' 'querty'
-```
-
-```javascript
-// 函数参数的解构赋值
-
-// 参数为数组
-let fun = function([x,y=3]){
-    console.log(x+y);
-}
-
-fun([1]);
-
-// 参数为对象
-let fun = function({x=1,y=3}){
-    console.log(x+y);
-}
-fun();
-```
-
-使用解构赋值避免为属性创建冗余的临时变量或对象：
-```javascript
-// bad
-function getFullName(user) {
-  const firstName = user.firstName;
-  const lastName = user.lastName;
-  return `${firstName} ${lastName}`;
-}
-// good
-function getFullName(obj) {
-  const { firstName, lastName } = obj;
-  return `${firstName} ${lastName}`;
-}
-// best
-function getFullName({ firstName, lastName }) {
-  return `${firstName} ${lastName}`;
-}
-```
-
-NOTE：
-- 可以为解构赋值设置默认值
-
+- 如果解构不成功，变量的值就等于 undefined。
   ```javascript
-  let arr = [1,2,null];
-  let [a,b,c,d,e='5'] = arr;//a=1,b=2,c=null,d=undefined,e='5'
+  let [foo] = [];
+  let [bar, foo] = [1];
+  ```
+- 不完全解构：
+  ```javascript
+  // 这种情况下，解构依然可以成功
+  let [x, y] = [1, 2, 3];
+  x // 1
+  y // 2
+
+  let [a, [b], d] = [1, [2, 3], 4];
+  a // 1
+  b // 2
+  d // 4
+  ```
+- 若解构赋值时等号右边不是可遍历的结构（即不具有 Iterator 接口的数据结构)，将会报错：
+  ```javascript
+  // 报错
+  let [foo] = 1;
+  let [foo] = false;
+  let [foo] = NaN;
+  let [foo] = undefined;
+  let [foo] = null;
+  let [foo] = {};
+  // 正确赋值
+  let [x, y, z] = new Set(['a', 'b', 'c']);
+  x // a
   ```
 
-- 如果解构不成功，变量被设置为 undefined 
-- 数据结构具有 Iterator 接口 （ps： 新增加的一种接口形式，是可以被遍历的数据接口） 
-- 数组和字符串的解构是按照顺序来赋值的，但对象是按照属性名对应变量名。因为对象的属性没有顺序
-
+- 解构赋值允许指定默认值，当赋值元素的值**严格等于 undefined**则默认值生效：
   ```javascript
-  let obj = {'a':1,'b':2};
-  let {a,b:str,c=5} = obj;
-  console.log(a);
-  console.log(str);
-  console.log(c);
+  // 默认值生效
+  let [foo = true] = []; // foo=true
+
+  let [x, y = 'b'] = ['a']; // x='a', y='b'
+  let [x, y = 'b'] = ['a', undefined]; // x='a', y='b'
+
+  // 默认值不生效
+  let [x = 1] = [null]; // x=null，因为 null 不严格等于 undefined
+  ```
+  如果默认值是一个表达式，那么这个表达式是惰性求值的，即只有在默认值生效的时候，才会求值：
+  ```javascript
+  function f() {
+    console.log('aaa');
+  }
+
+  let [x = f()] = [1];// 因为 x 能取到值，所以函数 f 根本不会执行
+  ```
+  默认值可以引用解构赋值的其他变量，但该变量必须已经声明：
+  ```javascript
+  let [x = 1, y = x] = [];     // x=1; y=1
+  let [x = 1, y = x] = [2];    // x=2; y=2
+  let [x = 1, y = x] = [1, 2]; // x=1; y=2
+  let [x = y, y = 1] = [];     // ReferenceError
+  ```
+
+#### 对象的解构赋值
+
+对象的属性没有次序，因此对于对象的解构赋值，变量必须与属性同名，才能取到正确的值，否则为 undefined:
+```javascript
+let { foo, bar } = { foo: "aaa", bar: "bbb" };
+foo // "aaa"
+bar // "bbb"
+```
+
+- 实际上，对象的解构赋值是下面形式的简写：
+  ```javascript
+  let { foo: foo, bar: bar } = { foo: "aaa", bar: "bbb" };
+  ```
+  也就是说，对象的解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量。真正被赋值的是后者，而不是前者：
+  ```javascript
+  let { foo: baz } = { foo: "aaa", bar: "bbb" };
+  baz // "aaa"
+  foo // error: foo is not defined
+  // foo 是匹配的模式，baz 才是变量。真正被赋值的是变量 baz，而不是模式 foo。
+  ```
+
+- 对象的解构也可以指定默认值，当对象的属性值严格等于 undefined 时，默认值生效：
+  ```javascript
+  var {x = 3} = {};
+  x // 3
+
+  var {x, y = 5} = {x: 1};
+  x // 1
+  y // 5
+
+  var {x: y = 3} = {};
+  y // 3
+
+  var {x: y = 3} = {x: 5};
+  y // 5
+  ```
+
+- 如果解构模式是嵌套的对象，而且子对象所在的父属性不存在，那么将会报错。
+  ```javascript
+  // 报错
+  let {foo: {bar}} = {baz: 'baz'};
+  ```
+
+- 如果要将一个已经声明的变量用于解构赋值，必须非常小心：
+  ```javascript
+  // 错误的写法
+  let x;
+  {x} = {x: 1};
+  // SyntaxError: syntax error
+  ```
+  JavaScript 引擎会将{x}理解成一个代码块，从而发生语法错误。只有不将大括号写在行首，避免 JavaScript 将其解释为代码块，才能解决这个问题：
+  ```javascript
+  // 正确的写法
+  let x;
+  ({x} = {x: 1});
+  ```
+
+- 解构赋值允许等号左边的模式之中，不放置任何变量名。因此，可以写出非常古怪的赋值表达式。
+  ```javascript
+  ({} = [true, false]);
+  ({} = 'abc');
+  ({} = []);
+  ```
+  上面的表达式虽然毫无意义，但是语法是合法的，可以执行。
+
+- 由于数组本质是特殊的对象，因此可以对数组进行对象属性的解构。
+  ```javascript
+  let arr = [1, 2, 3];
+  let {0 : first, [arr.length - 1] : last} = arr;
+  first // 1
+  last // 3
+  ```
+
+#### 其它数据类型的解构赋值
+
+解构赋值时，只要等号右边的值不是对象或数组，就先将其转为对象。
+
+- 字符串
+  
+  字符串也可以解构赋值。此时字符串被转换成了一个类似数组的对象：
+  ```javascript
+  const [a, b, c, d, e] = 'hello';
+  a // "h"
+  b // "e"
+  c // "l"
+  d // "l"
+  e // "o"
+  ```
+  类似数组的对象都有一个 length 属性，因此还可以对这个属性解构赋值：
+  ```javascript
+  let {length : len} = 'hello';
+  len // 5
+  ```
+- 数值和布尔值
+
+  解构赋值时，如果等号右边是数值和布尔值，则会先转为对象：
+  ```javascript
+  let {toString: s} = 123;
+  s === Number.prototype.toString // true
+
+  let {toString: s} = true;
+  s === Boolean.prototype.toString // true
+  ```
+
+- undefined 和 null
+
+  根据解构赋值的规则，由于 undefined 和 null 无法转为对象，所以对它们进行解构赋值，都会报错。
+
+#### 圆括号问题
+
+ES6 的规则是，只要有可能导致解构的歧义，就不得使用圆括号。但是，这条规则实际上不那么容易辨别，处理起来相当麻烦。因此，建议只要有可能，就不要在模式中放置圆括号。
+
+可以使用圆括号的情况只有一种：赋值语句的非模式部分，可以使用圆括号：
+```javascript
+[(b)] = [3]; // 正确
+({ p: (d) } = {}); // 正确
+[(parseInt.prop)] = [3]; // 正确
+```
+
+#### 应用
+
+- 使用解构赋值避免为属性创建冗余的临时变量或对象：
+  ```javascript
+  // bad
+  function getFullName(user) {
+    const firstName = user.firstName;
+    const lastName = user.lastName;
+    return `${firstName} ${lastName}`;
+  }
+  // good
+  function getFullName(obj) {
+    const { firstName, lastName } = obj;
+    return `${firstName} ${lastName}`;
+  }
+  // best
+  function getFullName({ firstName, lastName }) {
+    return `${firstName} ${lastName}`;
+  }
+  ```
+
+- 交换变量的值
+  ```javascript
+  let x = 1;
+  let y = 2;
+
+  [x, y] = [y, x];
+  ```
+
+- 用于函数参数的定义
+  - 解构赋值可以方便地将一组参数与变量名对应起来
+    ```javascript
+    // 参数是一组有次序的值
+    function f([x, y, z]) { ... }
+    f([1, 2, 3]);
+
+    // 参数是一组无次序的值
+    function f({x, y, z}) { ... }
+    f({z: 3, y: 2, x: 1});
+    ```
+  - 指定函数参数的默认值，就避免了在函数体内部再写`var foo = config.foo || 'default foo';`这样的语句
+    ```javascript
+    jQuery.ajax = function (url, {
+      async = true,
+      beforeSend = function () {},
+      cache = true,
+      complete = function () {},
+      crossDomain = false,
+      global = true,
+      // ... more config
+    }) {
+      // ... do stuff
+    };
+    ```
+
+- 遍历 Map 结构
+  ```javascript
+  const map = new Map();
+  map.set('first', 'hello');
+  map.set('second', 'world');
+
+  for (let [key, value] of map) {
+    console.log(key + " is " + value);
+  }
+  // first is hello
+  // second is world
+
+  // 只获取键名
+  for (let [key] of map) {
+    // ...
+  }
+
+  // 只获取键值
+  for (let [,value] of map) {
+    // ...
+  }
+  ```
+
+- 输入模块的指定方法
+  ```javascript
+  const { SourceMapConsumer, SourceNode } = require("source-map");
   ```
 
 ### 模板字符串
@@ -236,6 +444,7 @@ var sum = (num1, num2) =>  num1 + num2;
   var f = (v) => v;
   var f = v => v;
   ```
+  尽管语法支持在单参数情况下可省略括号，但一般推荐总是用括号包裹参数，因为省略括号降低了程序的可读性。
 
 - 当函数不包含参数时，不可省略括号：
   ```javascript
@@ -397,7 +606,7 @@ TODO:
 
 ## 数组扩展语法
 
-使用 `...` 拷贝数组：
+使用 `...` 复制数组：
 ```javascript
 // bad
 const len = items.length;
@@ -416,6 +625,7 @@ ES6 中引入了 class 关键字，支持使用 class 直接定义一个类，�
 
 ### 类的定义
 
+推荐总是使用 class 关键字，避免直接修改 prototype：
 ```javascript
 //es5
 var Animal=function(name){
@@ -498,6 +708,35 @@ const square = new Rectangle(10, 10);
 
 console.log(square.area);
 // 100
+```
+
+一般推荐在方法中返回 this 以方便**链式调用**：
+```javascript
+// bad
+Jedi.prototype.jump = function() {
+  this.jumping = true;
+  return true;
+};
+Jedi.prototype.setHeight = function(height) {
+  this.height = height;
+};
+const luke = new Jedi();
+luke.jump(); // => true
+luke.setHeight(20); // => undefined
+// good
+class Jedi {
+  jump() {
+    this.jumping = true;
+    return this;
+  }
+  setHeight(height) {
+    this.height = height;
+    return this;
+  }
+}
+const luke = new Jedi();
+luke.jump()
+  .setHeight(20);
 ```
 
 ### static 方法
@@ -1069,6 +1308,75 @@ var zeroesForeverIterator = {
 ## 异步请求
 
 ## 模块（Module）
+
+使用 import 取代 require：
+```javascript
+// bad
+const moduleA = require('moduleA');
+const func1 = moduleA.func1;
+const func2 = moduleA.func2;
+
+// good
+import { func1, func2 } from 'moduleA';
+```
+
+使用 export 取代 module.exports：
+```javascript
+// commonJS 的写法
+var React = require('react');
+var Breadcrumbs = React.createClass({
+  render() {
+    return <nav />;
+  }
+});
+module.exports = Breadcrumbs;
+
+// ES6 的写法
+import React from 'react';
+class Breadcrumbs extends React.Component {
+  render() {
+    return <nav />;
+  }
+};
+export default Breadcrumbs;//如果模块只有一个输出值，就使用export default，如果模块有多个输出值，就不使用export default
+```
+
+NOTE:
+- 不要使用通配符 * 的 import，这样可以确保你的模块之中，有一个默认输出（export default）:
+  ```javascript
+  // bad
+  import * as myObject from './importModule';
+
+  // good
+  import myObject from './importModule';
+  ```
+
+- 不要直接从一个 import 上 export:
+  ```javascript
+  // bad
+  // filename es6.js
+  export default { es6 } from './airbnbStyleGuide';
+  // good
+  // filename es6.js
+  import { es6 } from './AirbnbStyleGuide';
+  export default es6;
+  ```
+
+- 如果模块默认输出一个函数，函数名的首字母应该小写:
+  ```javascript
+  function makeStyleGuide() {
+  }
+  export default makeStyleGuide;
+  ```
+- 如果模块默认输出一个对象，对象名的首字母应该大写:
+  ```javascript
+  const StyleGuide = {
+    es6: {
+    }
+  };
+  export default StyleGuide;
+  ```
+
 
 ## Refer Links
 
