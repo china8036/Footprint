@@ -53,6 +53,9 @@
   - [无法触发 scroll 事件](#%E6%97%A0%E6%B3%95%E8%A7%A6%E5%8F%91-scroll-%E4%BA%8B%E4%BB%B6)
   - [Html 中注释符号`<!-- -->`内容若含有非西文字符，需要以空格隔开](#html-%E4%B8%AD%E6%B3%A8%E9%87%8A%E7%AC%A6%E5%8F%B7-----%E5%86%85%E5%AE%B9%E8%8B%A5%E5%90%AB%E6%9C%89%E9%9D%9E%E8%A5%BF%E6%96%87%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%9C%80%E8%A6%81%E4%BB%A5%E7%A9%BA%E6%A0%BC%E9%9A%94%E5%BC%80)
   - [去除 inline-block 元素间间距](#%E5%8E%BB%E9%99%A4-inline-block-%E5%85%83%E7%B4%A0%E9%97%B4%E9%97%B4%E8%B7%9D)
+  - [瀑布流布局实现](#%E7%80%91%E5%B8%83%E6%B5%81%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0)
+    - [通过 Multi-columns 布局实现](#%E9%80%9A%E8%BF%87-multi-columns-%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0)
+    - [通过 flex 布局实现](#%E9%80%9A%E8%BF%87-flex-%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0)
 
 # JavaScript 实用代码段
 
@@ -1397,3 +1400,115 @@ https://www.w3cplus.com/css/fighting-the-space-between-inline-block-elements
   }
   ```
   该方法基本兼容所有主流浏览器，推荐使用。
+
+## 瀑布流布局实现
+
+https://www.w3cplus.com/css/pure-css-create-masonry-layout.html
+
+### 通过 Multi-columns 布局实现
+
+html
+```html
+<div class="masonry">
+    <div class="item">
+        <div class="item__content">
+        </div>
+    </div>
+    <div class="item">
+        <div class="item__content">
+        </div>
+    </div>
+    <!-- more items -->
+</div>
+```
+
+css
+```less
+.masonry {
+    column-count: 1; // one column on mobile
+    column-gap: 0; // 设置列间距
+}
+@media (min-width: 400px) {
+    .masonry {
+        column-count: 2; // two columns on larger phones
+    }
+}
+@media (min-width: 1200px) {
+    .masonry {
+        column-count: 3; // three columns on...you get it
+    }
+}
+@media (min-width: 1600px) {
+    .masonry {
+        column-count: 4; // three columns on...you get it
+    }
+}
+
+.item {
+    break-inside: avoid;// 控制文本块分解成单独的列，以免项目列表的内容跨列，破坏整体的布局
+    box-sizing: border-box;
+    padding: 10px;
+}
+```
+
+### 通过 flex 布局实现
+
+html
+```html
+<div class="masonry">
+    <div class="column">
+        <div class="item">
+            <div class="item__content"></div>
+        </div>
+        <!-- more items -->
+    </div>
+    <div class="column">
+        <div class="item">
+            <div class="item__content"></div>
+        </div>
+        <!-- more items -->
+    </div>
+    <div class="column">
+        <div class="item">
+            <div class="item__content"></div>
+        </div>
+        <!-- more items -->
+    </div>
+</div>
+```
+
+css
+```less
+// 当屏幕宽度不足 500px 时，单列显示
+.masonry {
+    display: flex;
+    flex-direction: column;
+}
+.column {
+    display: flex;
+    flex-flow: column wrap;
+    width: 100%;
+}
+
+// 当屏幕宽度大于 500px 时，显示两列
+@media only screen and (min-width: 500px) {
+    .masonry {
+        flex-direction: row;
+    }
+    .column {
+        width: calc(100%/2);// 此处定义显示多少列
+    }
+}
+
+// 当屏幕宽度大于 1200px 时，显示 4 列
+@media only screen and (min-width: 1200px) {
+    .masonry {
+        flex-direction: row;
+    }
+    .column {
+        width: calc(100%/4);// 此处定义显示多少列
+    }
+}
+
+// set more...
+```

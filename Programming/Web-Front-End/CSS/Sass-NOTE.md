@@ -314,7 +314,7 @@ css3 中支持使用 @import 来引入外部文件，但其存在以下缺点：
 
 基于 sass 的 @import 有以下既定规则：
 - 默认寻路路径根目录是当前文件所在目录，但可通过 load_paths 选项配置其它寻路路径，如缺省的`@import "compass/reset"`就是使用了该选项。
-- 没有文件后缀名时，会尝试添加。scss/.sass 后缀。
+- 没有文件后缀名时，会尝试添加 `.scss/.sass` 后缀。
 - 同一目录下，局部文件和非局部文件不能重名。
 
 #### @extend：继承
@@ -346,10 +346,14 @@ css3 中支持使用 @import 来引入外部文件，但其存在以下缺点：
 会被编译为：
 ```scss
 .sidebar {
-  width: 300px; }
-  @media screen and (orientation: landscape) {
-    .sidebar {
-      width: 500px; } }
+  width: 300px;
+}
+
+@media screen and (orientation: landscape) {
+  .sidebar {
+    width: 500px; 
+  } 
+}
 ```
 
 ### 流程控制 Control Directives
