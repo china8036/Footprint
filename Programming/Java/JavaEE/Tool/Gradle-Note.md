@@ -1,21 +1,21 @@
 - [Gradle Note](#gradle-note)
-  - [介绍](#%E4%BB%8B%E7%BB%8D)
-  - [安装](#%E5%AE%89%E8%A3%85)
-  - [使用](#%E4%BD%BF%E7%94%A8)
-    - [基础](#%E5%9F%BA%E7%A1%80)
-    - [配置](#%E9%85%8D%E7%BD%AE)
-    - [build.gradle](#buildgradle)
-      - [依赖管理](#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86)
-      - [配置依赖仓库](#%E9%85%8D%E7%BD%AE%E4%BE%9D%E8%B5%96%E4%BB%93%E5%BA%93)
-    - [使用 Gradle Wrapper 构建项目](#%E4%BD%BF%E7%94%A8-gradle-wrapper-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE)
-    - [使用镜像 maven 库](#%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F-maven-%E5%BA%93)
-    - [修改本地仓库位置](#%E4%BF%AE%E6%94%B9%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%BD%8D%E7%BD%AE)
-    - [IDEA 中使用 Gradle](#idea-%E4%B8%AD%E4%BD%BF%E7%94%A8-gradle)
-      - [IDEA 中三种 gradle 模式的区别](#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB)
-      - [Unindexed remote maven repositories](#unindexed-remote-maven-repositories)
-    - [优化 Gradle](#%E4%BC%98%E5%8C%96-gradle)
-    - [将 pom.xml 转化为 build.gradle](#%E5%B0%86-pomxml-%E8%BD%AC%E5%8C%96%E4%B8%BA-buildgradle)
-  - [Refer Links](#refer-links)
+    - [介绍](#%E4%BB%8B%E7%BB%8D)
+    - [安装](#%E5%AE%89%E8%A3%85)
+    - [使用](#%E4%BD%BF%E7%94%A8)
+        - [基础](#%E5%9F%BA%E7%A1%80)
+        - [配置](#%E9%85%8D%E7%BD%AE)
+        - [build.gradle](#buildgradle)
+            - [依赖管理](#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86)
+            - [配置依赖仓库](#%E9%85%8D%E7%BD%AE%E4%BE%9D%E8%B5%96%E4%BB%93%E5%BA%93)
+        - [使用 Gradle Wrapper 构建项目](#%E4%BD%BF%E7%94%A8-gradle-wrapper-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE)
+        - [使用镜像 maven 库](#%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F-maven-%E5%BA%93)
+        - [修改本地仓库位置](#%E4%BF%AE%E6%94%B9%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%BD%8D%E7%BD%AE)
+        - [IDEA 中使用 Gradle](#idea-%E4%B8%AD%E4%BD%BF%E7%94%A8-gradle)
+            - [IDEA 中三种 gradle 模式的区别](#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB)
+            - [Unindexed remote maven repositories](#unindexed-remote-maven-repositories)
+        - [优化 Gradle](#%E4%BC%98%E5%8C%96-gradle)
+        - [将 pom.xml 转化为 build.gradle](#%E5%B0%86-pomxml-%E8%BD%AC%E5%8C%96%E4%B8%BA-buildgradle)
+    - [Refer Links](#refer-links)
 
 # Gradle Note
 
@@ -233,7 +233,7 @@ allprojects{
 
 http://blog.csdn.net/kl28978113/article/details/53018225 
 
-将 C:Users/ower/.gradle 的默认目录复制到 xxxx/gradle_repo/.gradle，删除 C:Users/ower/.gradle，然后设置系统环境变量： 
+将 C:Users/owner/.gradle 的默认目录复制到 xxxx/gradle_repo/.gradle，删除 C:Users/ower/.gradle，然后设置系统环境变量： 
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/aae83817483868a4571b774d9eeccdd9.jpg)
 
@@ -303,7 +303,7 @@ Gradle 有个 Daemon 配置，开启这个配置能有效的提高编译速度�
 
 操作：
 
-在。gradle 目录下创建一个 gradle.properties 文件，再打开该文件在其中添加如下语句保存即可：
+在`.gradle` 目录下创建一个 gradle.properties 文件，再打开该文件在其中添加如下语句保存即可：
 ```
 org.gradle.daemon=true
 ```
