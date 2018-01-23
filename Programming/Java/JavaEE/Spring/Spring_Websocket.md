@@ -24,7 +24,7 @@
     - [异常信息推送](#%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF%E6%8E%A8%E9%80%81)
   - [Refer Links](#refer-links)
 
-# websocket spring 实现
+# Spring websocket 实现
 
 ## 介绍
 
@@ -39,7 +39,7 @@ Spring 从 4.0 开始加入了 spring-websocket 这个模块，并能够全面�
 </dependency>
 ```
 
-在 spring 中引入 websocket 模块的代码：在 spring 的配置文件中配置对此类的自动扫描
+在 spring 中引入 websocket 模块的代码，在 spring 的配置文件中配置对此类的自动扫描
 ```xml
 <context:component-scan base-package="xxx.xxx.websocket"/>
 ```
@@ -119,18 +119,17 @@ public class MyWebSocketHandler implements WebSocketHandler {
  * WebSocket 拦截器，用于建立连接（握手）和断开
 */
 public class MyHandShake implements HandshakeInterceptor {
- 
-	/** 
-* 初次握手前，若返回 false，则不建立链接 
-*/
-	// 可在此处将 HttpSession 中对象放入 WebSocketSession 中，便于之后 Handler 使用 HttpSession
-	// 也可直接使用内建拦截器 HttpSessionHandshakeInterceptor，它可以传递 HTTP session attributes 到 WebSocket session 中
+    /** 
+     * 初次握手前，若返回 false，则不建立链接 
+     * 可在此处将 HttpSession 中对象放入 WebSocketSession 中，便于之后 Handler 使用 HttpSession
+     * 也可直接使用内建拦截器 HttpSessionHandshakeInterceptor，它可以传递 HTTP session attributes 到 WebSocket session 中
+     */
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-		. . .
+        // ...
         return true;
     }
  
-	/** 初次握手访问后 */
+    /** 初次握手访问后 */
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
     }
  
@@ -150,25 +149,25 @@ public class MyHandShake implements HandshakeInterceptor {
 @EnableWebSocket
 public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
  
-@Bean
+    @Bean
     public MyWebSocketHandler myHandler() {
         return new MyWebSocketHandler();
     }
- 
-	@Override
+
+    @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(myWebSocketHandler, "/ws").addInterceptors(new MyHandShake ());// 注册 websocket 接口，并配置处理器和拦截器
-    //registry.addHandler(socketHandler, "/sockjs/socketServer").addInterceptors(new WebSocketInterceptor()).withSockJS();
-}
+        //registry.addHandler(socketHandler, "/sockjs/socketServer").addInterceptors(new WebSocketInterceptor()).withSockJS();
+    }
 
-// 配置 Tomcat 服务器的 WebSocket 引擎
-@Bean
-public ServletServerContainerFactoryBean createWebSocketContainer() {
-    ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
-    container.setMaxTextMessageBufferSize(8192);
-    container.setMaxBinaryMessageBufferSize(8192);
-    return container;
-}
+    // 配置 Tomcat 服务器的 WebSocket 引擎
+    @Bean
+    public ServletServerContainerFactoryBean createWebSocketContainer() {
+        ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+        container.setMaxTextMessageBufferSize(8192);
+        container.setMaxBinaryMessageBufferSize(8192);
+        return container;
+    }
 
 }
 
@@ -218,7 +217,7 @@ WebSocketSession 对象表示与一个客户端的一个会话，每个客户端
 - boolean isOpen()：返回连接是否打开；
 - void close() throws IOException：关闭 WebSocket 连接，状态码 1000；
 
-  注：客户端直接调用 close 方法并不会关闭连接，而是发送请求（操作码为 8 的帧）到服务器请求对方，服务器接收请求后断开连接，才会触发客户端的 close 事件；因此，在断开之前、客户端若可以发送个同样的断连请求，并包含状态码和原因描述，也可以起到相同的效果。
+  注：客户端直接调用 close 方法并不会关闭连接，而是发送请求（操作码为 8 的帧）到服务器请求对方，服务器接收请求后断开连接，才会触发客户端的 close 事件；因此，在断开之前，客户端若发送一个同样的断连请求，并包含状态码和原因描述，也可以起到相同的效果。
 
 - void close(CloseStatus status) throws IOException：关闭 WebSocket 连接，指定状态码 status；
 
@@ -291,7 +290,7 @@ HTTP transport 则需要更多请求。例如，Ajax/XHR streaming 依赖于一�
 
 由于 spring 内置了 SockJS 服务端，因此只需在注册 websocket handle 时添加`.withSockJS()`即可；
 
-若出现错误：Incompatibile SockJS! 使用 setClientLibraryUrl，指定客户端与服务器的 sockjs 为同一版本；
+若出现错误：`Incompatibile SockJS!` 使用 setClientLibraryUrl，指定客户端与服务器的 sockjs 为同一版本即可；
 ```java
 @Override
 public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
@@ -508,12 +507,12 @@ CONNECT、SEND、SUBSCRIBE、UNSUBSCRIBE、BEGIN、COMMIT、ABORT、ACK、NACK�
 
 - 心跳机制
 
-若使用 STOMP 1.1 版本，默认开启了心跳检测机制，可通过 client 对象的 heartbeat field 进行配置（默认值都是 10000 ms）：
-```javascript
-client.heartbeat.outgoing = 20000; 	// client will send heartbeats every 20000ms
-client.heartbeat.incoming = 0;     	// client does not want to receive heartbeats from the server TODO:
-// The heart-beating is using window.setInterval() to regularly send heart-beats and/or check server heart-beats
-```
+	若使用 STOMP 1.1 版本，默认开启了心跳检测机制，可通过 client 对象的 heartbeat field 进行配置（默认值都是 10000 ms）：
+	```javascript
+	client.heartbeat.outgoing = 20000; 	// client will send heartbeats every 20000ms
+	client.heartbeat.incoming = 0;     	// client does not want to receive heartbeats from the server TODO:
+	// The heart-beating is using window.setInterval() to regularly send heart-beats and/or check server heart-beats
+	```
 
 - 发送信息
 
@@ -717,7 +716,7 @@ The nack() method can also be used to inform STOMP 1.1 brokers that the client d
 
     @Override
     public void afterConnectionEstablished(WebSocketSession webSocketSession) throws Exception {
-      // 假如连接队列
+      // 加入连接队列
       sessions.add(webSocketSession);
       System.out.printf("webSocketSessionId:" + webSocketSession.getId() + "连接成功！服务器准备开始发送信息……");
       webSocketSession.sendMessage(new TextMessage("连接成功了！服务器准备开始发送信息……"));
@@ -733,7 +732,7 @@ The nack() method can also be used to inform STOMP 1.1 brokers that the client d
           break;
         }
 
-        // 设置轮询的间隔时间为 1.5 秒
+        // 设置轮询的间隔时间
         Thread.sleep(1000);
 
       }
@@ -789,6 +788,8 @@ The nack() method can also be used to inform STOMP 1.1 brokers that the client d
   ```
 
 ## 实例：SpringBoot + websocket + STOMP + SockJS
+
+使用 SpringBoot + websocket + STOMP + SockJS 实现的[多人网页聊天室](https://github.com/firejq/web-chatroom-stomp)
 
 ### 服务器端
 
@@ -898,7 +899,9 @@ public String talk(@Payload String text, @Header("simpSessionId") String session
 	System.out.println("收到来自 sessionId:【" + sessionId + "】的广播消息：【" + text + "】");
 	return "【" + sessionId + "】说：【" + text + "】";
 }
+```
 Client
+```javascript
 ......
 // 订阅广播消息
 var subscription_broadcast = stompClient.subscribe('/topic/getResponse', function callBack (response) {
@@ -915,102 +918,118 @@ stompClient.send("/chat", headers, JSON.stringify(body));
 
 ### 一对一消息推送的几种方法（即服务器收到客户端消息后仅回复给该客户端而非广播）
 
-1)	在 @MessageMapping 匹配的 URL 中携带参数（客户端 id），以区分不同的客户端
+- 在 @MessageMapping 匹配的 URL 中携带参数（客户端 id），以区分不同的客户端
 
-    Controller
-    ```java
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+	Controller
+	```java
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping(value = "/speak/{userId}")
-    public void speak(Message message, @Payload String text, @DestinationVariable String userId) throws Exception {
-      System.out.println("收到私人消息：" + text);
-      this.simpMessagingTemplate.convertAndSend(‘/user/’ + userId + ‘/personal’, text);
-    }
-    ```
-    client
-    ```javascript
-    // 随机生成一个全局变量 userId
-    userId = Math.random().toString(36).substr(2);
-    ......
-    // 订阅私人消息
-    var subscription_personal = stompClient.subscribe('/user/' + userId + '/personal', function callBack (response) {
-        if (response.body) {
-            printToScreen("【私人消息】" + response.body);
-        } else {
-            printToScreen("收到一个空消息");
-        }
-    }
-    ......
-    // 发送消息
-    stompClient.send("/speak/" + userId, headers, JSON.stringify(body));
-    ```
+	@MessageMapping(value = "/speak/{userId}")
+	public void speak(Message message, @Payload String text, @DestinationVariable String userId) throws Exception {
+		System.out.println("收到私人消息：" + text);
+		this.simpMessagingTemplate.convertAndSend(‘/user/’ + userId + ‘/personal’, text);
+	}
+	```
+	client
+	```javascript
+	// 随机生成一个全局变量 userId
+	userId = Math.random().toString(36).substr(2);
+	......
+	// 订阅私人消息
+	var subscription_personal = stompClient.subscribe('/user/' + userId + '/personal', function callBack (response) {
+			if (response.body) {
+					printToScreen("【私人消息】" + response.body);
+			} else {
+					printToScreen("收到一个空消息");
+			}
+	}
+	......
+	// 发送消息
+	stompClient.send("/speak/" + userId, headers, JSON.stringify(body));
+	```
 
-2)	与方法 (1) 基本相同，但用 websocket 连接产生的 sessionId 代替自己生成的 userId
+- 与第一种方法基本相同，但用 websocket 连接产生的 sessionId 代替自己生成的 userId
     
-    Controller
-    ```java
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+	Controller
+	```java
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping(value = "/speak")
-    public void speak(Message message, @Payload String text, @Header("simpSessionId") String sessionId) throws Exception {
-      System.out.println("收到私人消息：" + text);
-      this.simpMessagingTemplate.convertAndSend(‘/user/’ + sessionId + ‘/personal’, text);
-    }
-    ```
-    client
-    ```javascript
-    // 获取 socket 连接的 sessionId，即从 socket._transport.url 中使用正则截取
-    var sessionId = /\/([^\/]+)\/websocket/.exec(socket._transport.url)[1];
-    console.log("connected, session id: " + sessionId);
-    ......
-    // 订阅私人消息
-    var subscription_personal = stompClient.subscribe('/user/' + sessionId + '/personal', function callBack (response) {
-        if (response.body) {
-            printToScreen("【私人消息】" + response.body);
-        } else {
-            printToScreen("收到一个空消息");
-        }
-    }
-    ......
-    // 发送消息
-    stompClient.send("/speak", headers, JSON.stringify(body));
-    ```
+	@MessageMapping(value = "/speak")
+	public void speak(Message message, @Payload String text, @Header("simpSessionId") String sessionId) throws Exception {
+		System.out.println("收到私人消息：" + text);
+		this.simpMessagingTemplate.convertAndSend(‘/user/’ + sessionId + ‘/personal’, text);
+	}
+	```
+	client
+	```javascript
+	// 获取 socket 连接的 sessionId，即从 socket._transport.url 中使用正则截取
+	var sessionId = /\/([^\/]+)\/websocket/.exec(socket._transport.url)[1];
+	console.log("connected, session id: " + sessionId);
+	......
+	// 订阅私人消息
+	var subscription_personal = stompClient.subscribe('/user/' + sessionId + '/personal', function callBack (response) {
+			if (response.body) {
+					printToScreen("【私人消息】" + response.body);
+			} else {
+					printToScreen("收到一个空消息");
+			}
+	}
+	......
+	// 发送消息
+	stompClient.send("/speak", headers, JSON.stringify(body));
+	```
 
-3)	使用 @sendToUser 代替 SimpMessagingTemplate，客户端与方法 (2) 相同
+- 使用 @sendToUser 代替 SimpMessagingTemplate，客户端与第二种方法相同
 
-    ```java
-    @sendToUser(value = “/URL”) 匹配的 URL 等同于 '/user/' + sessionId + ‘/URL’；
+	Controller
+	```java
+	@MessageMapping(value = "/speak")
+	@SendToUser(value = "/personal")
+	// @sendToUser(value = “/URL”) 匹配的 URL 等同于 '/user/' + sessionId + ‘/URL’；
+	public String speak(Message message, @Payload String text, @Header("simpSessionId") String sessionId) throws Exception {
+		System.out.println("收到私人消息：" + text);
+		return text;
+	}
+	```
+		
+	client
+	```javascript
+	// 获取 socket 连接的 sessionId，即从 socket._transport.url 中使用正则截取
+	var sessionId = /\/([^\/]+)\/websocket/.exec(socket._transport.url)[1];
+	console.log("connected, session id: " + sessionId);
+	......
+	// 订阅私人消息
+	var subscription_personal = stompClient.subscribe('/user/' + sessionId + '/personal', function callBack (response) {
+			if (response.body) {
+					printToScreen("【私人消息】" + response.body);
+			} else {
+					printToScreen("收到一个空消息");
+			}
+	}
+	......
+	// 发送消息
+	stompClient.send("/speak", headers, JSON.stringify(body));
+	```
 
-    Controller
-    @MessageMapping(value = "/speak")
-    @SendToUser(value = "/personal")
-    public String speak(Message message, @Payload String text, @Header("simpSessionId") String sessionId) throws Exception {
-      System.out.println("收到私人消息：" + text);
-      return text;
-    }
-    ```
-    client
-    ```javascript
-    // 获取 socket 连接的 sessionId，即从 socket._transport.url 中使用正则截取
-    var sessionId = /\/([^\/]+)\/websocket/.exec(socket._transport.url)[1];
-    console.log("connected, session id: " + sessionId);
-    ......
-    // 订阅私人消息
-    var subscription_personal = stompClient.subscribe('/user/' + sessionId + '/personal', function callBack (response) {
-        if (response.body) {
-            printToScreen("【私人消息】" + response.body);
-        } else {
-            printToScreen("收到一个空消息");
-        }
-    }
-    ......
-    // 发送消息
-    stompClient.send("/speak", headers, JSON.stringify(body));
-    ```
+注意：以上几种方法，订阅的 URL 都应使用 WebSocketConfig 类中的 enableSimpleBroker 配置为前缀，上例中：
+```java
+@Configuration
+@EnableWebSocketMessageBroker
+public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
-注意：以上几种方法，订阅的 URL 都应以 “/user” 作为前缀，否则会出错；
+	/**
+	 * 广播消息代理
+	 * @param registry
+	 */
+	@Override
+	public void configureMessageBroker(MessageBrokerRegistry registry) {
+		registry.enableSimpleBroker("/topic", "/user");
+	}
+}
+```
+因此，订阅的 URL 都应使用 “/user” 作为前缀，否则会出错；
 
 ### 异常信息推送
 
