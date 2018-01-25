@@ -1,9 +1,13 @@
-- [JavaScript Note - DOM](#javascript-note---dom)
+- [JavaScript - DOM](#javascript---dom)
   - [Node 节点](#node-%E8%8A%82%E7%82%B9)
-    - [查找 Element](#%E6%9F%A5%E6%89%BE-element)
-    - [修改 HTML](#%E4%BF%AE%E6%94%B9-html)
-    - [添加 Element](#%E6%B7%BB%E5%8A%A0-element)
-    - [删除 Element](#%E5%88%A0%E9%99%A4-element)
+    - [创建 DOM 节点](#%E5%88%9B%E5%BB%BA-dom-%E8%8A%82%E7%82%B9)
+    - [查询 DOM 节点](#%E6%9F%A5%E8%AF%A2-dom-%E8%8A%82%E7%82%B9)
+    - [修改 DOM](#%E4%BF%AE%E6%94%B9-dom)
+      - [DOM 节点修改](#dom-%E8%8A%82%E7%82%B9%E4%BF%AE%E6%94%B9)
+      - [DOM 属性修改](#dom-%E5%B1%9E%E6%80%A7%E4%BF%AE%E6%94%B9)
+    - [常见问题](#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+      - [innerHTML, outerHTML, innerText, outerText 的区别？](#innerhtml-outerhtml-innertext-outertext-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F)
+      - [jQuery 的 html() 与 innerHTML 的区别？](#jquery-%E7%9A%84-html-%E4%B8%8E-innerhtml-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F)
   - [表单操作](#%E8%A1%A8%E5%8D%95%E6%93%8D%E4%BD%9C)
     - [获取值](#%E8%8E%B7%E5%8F%96%E5%80%BC)
     - [设置值](#%E8%AE%BE%E7%BD%AE%E5%80%BC)
@@ -34,18 +38,21 @@
       - [表单事件](#%E8%A1%A8%E5%8D%95%E4%BA%8B%E4%BB%B6)
       - [文档事件](#%E6%96%87%E6%A1%A3%E4%BA%8B%E4%BB%B6)
 
-# JavaScript Note - DOM #
+# JavaScript - DOM 
 
-DOM 是 JavaScript 操作网页的接口，全称为“文档对象模型”（Document Object Model），是针对 XML 但经过扩展用于 HTML 的应用程序编程接口，它的作用是将网页转为一个 JavaScript 对象，从而可以用脚本进行各种操作（比如增删内容）；
+[原生 JavaScript 的 DOM 操作汇总](http://harttle.land/2015/10/01/javascript-dom-api.html)
+
+DOM 是 JavaScript 操作网页的接口（通过 window.documnet 提供），全称为“文档对象模型”（Document Object Model），是针对 XML 但经过扩展用于 HTML 的应用程序编程接口，它的作用是将网页转为一个 JavaScript 对象，从而可以用脚本进行各种操作（比如增删内容）。
 
 DOM 有自己的国际标准：
+
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/1ef8ea54173a36c50c66c2ef98179283.jpg)
 
-严格地说，DOM 不属于 JavaScript，但是操作 DOM 是 JavaScript 最常见的任务，而 JavaScript 也是最常用于 DOM 操作的语言；
+DOM 将整个页面映射为一个多层节点结构，即 DOM 模型。
 
-DOM 将整个页面映射为一个多层节点结构，即 DOM 模型；
+严格地说，DOM 并不是编程语言，它是文档对象的模型，该模型是独立于编程语言的。比如在 Python 中也可以操作 DOM，DOM 不属于 JavaScript，但是操作 DOM 是 JavaScript 最常见的任务，而 JavaScript 也是最常用于 DOM 操作的语言。
 
-## Node 节点 ##
+## Node 节点
 
 DOM 的最小组成单位叫做节点（node）。文档的树形结构（DOM 树），就是由各种不同类型的节点组成。每个节点可以看作是文档树的一片叶子。
 
@@ -60,34 +67,9 @@ DOM Node 类型（浏览器原生提供的节点对象的派生对象）：
 
 所有节点对象都是浏览器内置的 Node 对象的实例，继承了 Node 属性和方法；
 
-### 查找 Element ###
+### 创建 DOM 节点
 
-- 通过 id 找到 HTML 元素
-```javascript
-var x = document.getElementById("intro");
-```
-- 通过标签名找到 HTML 元素
-```javascript
-var x = document.getElementById("main");
-var y = x.getElementsByTagName("p");
-```
-- 通过类名找到 HTML 元素
-
-### 修改 HTML ###
-- 修改 HTML 内容：使用 innerHTML 属性
-```javascript
-document.getElementById(id).innerHTML=new HTML
-```
-- 修改 HTML 属性：使用 attribute 属性
-```javascript
-document.getElementById(id).attribute=new value
-```
-- 修改 HTML 样式：使用 style 属性
-```javascript
-document.getElementById(id).style.property=new style
-```
-
-### 添加 Element ###
+DOM 节点创建最常用的是 document.createElement 和 document.createTextNode 方法。
 
 ```html
 <div id="div1">
@@ -105,20 +87,133 @@ document.getElementById(id).style.property=new style
 </script>
 ```
 
-### 删除 Element
+### 查询 DOM 节点
 
-```html
-<div id="div1">
-	<p id="p1">这是一个段落。</p>
-	<p id="p2">这是另一个段落。</p>
-</div>
+DOM 查询的 API 返回的的结果是 DOM 节点或 DOM 节点的列表。document 提供了三种类型的 Query 方法：
+- 使用选择器查询
 
-<script>
-	var parent=document.getElementById("div1");
-	var child=document.getElementById("p1");
-	parent.removeChild(child);
-</script>
+  ```javascript
+  // 返回当前文档中第一个类名为 "myclass" 的元素
+  var el = document.querySelector(".myclass");
+
+  // 返回一个文档中所有的 class 为"note"或者 "alert"的 div 元素
+  var els = document.querySelectorAll("div.note, div.alert");
+  ```
+
+- 直接查询
+
+  - 通过 id 找到 HTML 元素，返回匹配的唯一元素
+    ```javascript
+    var x = document.getElementById("intro");
+    ```
+
+  - 通过标签名找到 HTML 元素，返回匹配的所有元素列表
+    ```javascript
+    var y = x.getElementsByTagName("p");
+    ```
+
+  - 通过类名找到 HTML 元素
+    ```javascript
+    var els = document.getElementsByClassName('highlight');
+    ```
+
+- 相对位置查询
+
+  ```javascript
+  // 获取父元素、父节点
+  var parent = ele.parentElement;
+  var parent = ele.parentNode;
+
+  // 获取子节点，子节点可以是任何一种节点，可以通过 nodeType 来判断
+  var nodes = ele.children;    
+
+  // 通过迭代查询子元素
+  var els = ele.getElementsByTagName('td');
+  var els = ele.getElementsByClassName('highlight');
+
+  // 当前元素的第一个 / 最后一个子元素节点
+  var el = ele.firstElementChild;
+  var el = ele.lastElementChild;
+
+  // 下一个 / 上一个兄弟元素节点
+  var el = ele.nextElementSibling;
+  var el = ele.previousElementSibling;
+  ```
+
+### 修改 DOM
+
+#### DOM 节点修改
+
+- 添加、删除子元素
+  ```javascript
+  ele.appendChild(el);
+  ele.removeChild(el);
+  ```
+
+- 替换子元素
+  ```javascript
+  ele.replaceChild(el1, el2);
+  ```
+
+- 插入子元素
+  ```javascript
+  parentElement.insertBefore(newElement, referenceElement);
+  ```
+#### DOM 属性修改
+
+- 获取一个{name, value}的数组
+  ```javascript
+  var attrs = el.attributes;
+  ```
+
+- 获取、设置属性
+  ```javascript
+  var c = el.getAttribute('class');
+  el.setAttribute('class', 'highlight');
+  ```
+
+- 判断、移除属性
+  ```javascript
+  el.hasAttribute('class');
+  el.removeAttribute('class');
+  ```
+
+- 是否有属性设置
+  ```javascript
+  el.hasAttributes();     
+  ```
+
+- 快速属性操作
+  - 修改 HTML 内容：使用 innerHTML 属性
+    ```javascript
+    document.getElementById(id).innerHTML=new HTML
+    ```
+
+  - 修改 HTML 属性：使用 attribute 属性
+    ```javascript
+    document.getElementById(id).attribute=new value
+    ```
+
+  - 修改 HTML 样式：使用 style 属性
+    ```javascript
+    document.getElementById(id).style.property=new style
+    ```
+
+### 常见问题
+
+#### innerHTML, outerHTML, innerText, outerText 的区别？
+
+对于这样一个 HTML 元素：`<div>content<br/></div>`:
 ```
+innerHTML：内部 HTML，content<br/>；
+outerHTML：外部 HTML，<div>content<br/></div>；
+innerText：内部文本，content ；
+outerText：内部文本，content ；
+```
+上述四个属性不仅可以读取，还可以赋值。outerText 和 innerText 的区别在于 outerText 赋值时会把标签一起赋值掉，另外 xxText 赋值时 HTML 特殊字符会被转义。
+
+#### jQuery 的 html() 与 innerHTML 的区别？
+jQuery 的。html() 会调用。innerHTML 来操作，但同时也会 catch 异常，然后用。empty(), .append() 来重新操作。 这是因为 IE8 中有些元素的。innerHTML 是只读的。
 
 ## 表单操作
 

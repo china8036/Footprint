@@ -560,6 +560,8 @@ utilities 模块某些不属于其他模块的功能。
 
 [sass 官方文档](http://sass-lang.com/documentation/file.SASS_REFERENCE.html)
 
+[sass 中文官网](https://www.sass.hk/)
+
 [sass 中文文档](http://sass.bootcss.com/docs/sass-reference/)
 
 [compass 官方文档](http://compass-style.org/help/)
