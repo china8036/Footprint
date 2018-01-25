@@ -105,46 +105,8 @@ http://zyjustin9.iteye.com/blog/2177291
 
 http://blog.topspeedsnail.com/archives/4551
 
-1.	安装 JDK：
-    -	APT 安装
-
-        https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04 
-
-        ```bash
-        sudo add-apt-repository ppa:webupd8team/java
-        sudo apt-get update
-        sudo apt-get install oracle-java8-installer
-        sudo update-alternatives --config java
-        vim /etc/environment
-        ```
-        
-        add:
-        - JAVA_HOME="/usr/java/jdk1.8.0_121"
-        - JRE_HOME=”/usr/java/jdk1.8.0_121/jre”
-        
-        ```bash
-        source /etc/environment
-        echo $JAVA_HOME
-        ```
-
-    - 压缩包安装
-
-        到 oracle 官网下载 tar.gz 压缩文件，解压到 /usr/java/；
-
-        将 /usr/java/jdk1.8.0_121/bin 添加到环境变量：
-        ```bash
-        vim /etc/environment
-        ```
-        add:
-        - JAVA_HOME="/usr/java/jdk1.8.0_121"
-        - JRE_HOME=”/usr/java/jdk1.8.0_121/jre”
-        ```bash
-        source /etc/environment
-        echo $JAVA_HOME
-        ```
-        测试：`java -version`；
-
-2.	安装 tomcat9：
+1. 安装 JDK：
+1. 安装 tomcat9：
 
     到 tomcat 官网下载 tar.gz 压缩文件，解压到 /opt/tomcat9/；
 
