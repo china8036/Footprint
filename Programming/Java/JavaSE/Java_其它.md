@@ -1,35 +1,7 @@
 - [Java 零碎知识点整理](#java-%E9%9B%B6%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86)
-  - [Java 程序： Application 与 Applet 的区别](#java-%E7%A8%8B%E5%BA%8F%EF%BC%9A-application-%E4%B8%8E-applet-%E7%9A%84%E5%8C%BA%E5%88%AB)
-    - [Application](#application)
-    - [Applet](#applet)
   - [取余运算的实现以及奇偶判断的一个细节](#%E5%8F%96%E4%BD%99%E8%BF%90%E7%AE%97%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%BB%A5%E5%8F%8A%E5%A5%87%E5%81%B6%E5%88%A4%E6%96%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E7%BB%86%E8%8A%82)
 
 # Java 零碎知识点整理
-
-## Java 程序： Application 与 Applet 的区别
-
-Java 语言是一种半编译半解释的语言，Java 的用户程序分为两类：Java Application 和 Java Applet。这两类程序在组成结构和执行机制上都有一定的差异：
-
-### Application
-
-- application 主要是桌面应用程序的开发，application 是不能用 Jsp 加载的 。
-
-- Java Application 是完整的程序，可以独立运行。
-
-- Java Application 程序被编译以后，用普通的 Java 解释器就可以使其边解释边执行。
-
-- 每个 Java Application 程序必定含有一个并且只有一个 main 方法，程序执行时，首先寻找 main 方法，并以此为入口点开始运行。含有 main 方法的那个类，常被称为主类，也就是说，Java Application 程序都含有一个主类。
-
-### Applet
-
-- applet 一般用于 B/S 页面上作为插件式的开发。
-
-- Java Applet 程序不能单独运行，它必须嵌入到用 HTML 语言编写的 Web 页面中，通过与 Java 兼容的浏览器来控制执行。
-
-- Java Applet 必须通过网络浏览器或者 Applet 观察器才能执行。 
-
-- Applet 程序则没有含 main 方法的主类，这也正是  Applet 程序不能独立运行的原因。
-
 
 ## 取余运算的实现以及奇偶判断的一个细节
 
