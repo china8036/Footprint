@@ -28,6 +28,7 @@
     - [自动转换](#%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2)
     - [强制转换](#%E5%BC%BA%E5%88%B6%E8%BD%AC%E6%8D%A2)
   - [枚举类型](#%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B)
+  - [大数值](#%E5%A4%A7%E6%95%B0%E5%80%BC)
   - [运算符](#%E8%BF%90%E7%AE%97%E7%AC%A6)
     - [算术运算符](#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6)
     - [赋值运算符](#%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6)
@@ -43,8 +44,23 @@
     - [中断控制](#%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6)
     - [switch](#switch)
   - [输入输出](#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA)
+    - [控制台输入输出](#%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA)
+    - [文件输入输出](#%E6%96%87%E4%BB%B6%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA)
   - [字符串](#%E5%AD%97%E7%AC%A6%E4%B8%B2)
+    - [子串](#%E5%AD%90%E4%B8%B2)
+    - [拼接](#%E6%8B%BC%E6%8E%A5)
+    - [相等判断](#%E7%9B%B8%E7%AD%89%E5%88%A4%E6%96%AD)
+    - [字符串长度](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6)
+    - [空串和 Null 串](#%E7%A9%BA%E4%B8%B2%E5%92%8C-null-%E4%B8%B2)
+    - [不可变字符串](#%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AD%97%E7%AC%A6%E4%B8%B2)
+    - [字符串构建](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9E%84%E5%BB%BA)
   - [数组](#%E6%95%B0%E7%BB%84)
+    - [创建与初始化](#%E5%88%9B%E5%BB%BA%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96)
+    - [多维数组](#%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84)
+    - [数组拷贝](#%E6%95%B0%E7%BB%84%E6%8B%B7%E8%B4%9D)
+    - [数组填充](#%E6%95%B0%E7%BB%84%E5%A1%AB%E5%85%85)
+    - [快速排序](#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F)
+    - [二分查找](#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE)
 
 # Java 基础语法
 
@@ -245,6 +261,8 @@ Java 的用户程序分为两类：Java Application 和 Java Applet。这两类�
 
 ### 文档注释
 
+<!-- TODO: 补充 -->
+
 文档注释示例：
 ```java
 /**
@@ -403,6 +421,8 @@ boolean 类型占 1 字节，有两个取值：false 和 true（默认值为 fal
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/25/c22c9e291a897e9967753c3caaca04f4.jpg)
 
+（转换原则：往表数范围更大的方向转换）
+
 其中，实心箭头表示无信息丢失的转换；虚箭头表示可能会有精度损失的转换。
 
 **当对两个不同类型的操作数进行运算时，会按照合法转换规则发生类型的自动转换，使得转换后的两个操作数类型相同后再进行运算**。例：若两个操作数中有一个 double，则另一个操作数无论是什么类型都会自动转换为 double。
@@ -435,6 +455,12 @@ Size s = Size.LARGE;
 Size s = Size.X-LARGE;
 Size s = Size.a; // error
 ```
+
+## 大数值
+
+若基本的数值类型不能满足需求，可使用 BigInteger 和 BigDecimal。
+
+这两个类可以处理包含任意长度的数字序列的数值，实现了任意精度的整数运算和浮点运算。
 
 ## 运算符
 
@@ -531,17 +557,16 @@ variable x = (expression) ? value if true : value if false
 ### 条件控制
 
 ```java
-if(布尔表达式 1){
-   //如果布尔表达式 1的值为true执行代码
-}else if(布尔表达式 2){
-   //如果布尔表达式 2的值为true执行代码
-}else if(布尔表达式 3){
-   //如果布尔表达式 3的值为true执行代码
+if（布尔表达式 1){
+   // 如果布尔表达式 1 的值为 true 执行代码
+}else if（布尔表达式 2){
+   // 如果布尔表达式 2 的值为 true 执行代码
+}else if（布尔表达式 3){
+   // 如果布尔表达式 3 的值为 true 执行代码
 }else {
-   //如果以上布尔表达式都不为true执行代码
+   // 如果以上布尔表达式都不为 true 执行代码
 }
 ```
-
 
 ### 循环控制
 
@@ -585,14 +610,14 @@ for（声明语句 : 表达式)
 ```java
 switch(expression){
     case value :
-       //语句
-       break; //可选
+       // 语句
+       break; // 可选
     case value :
-       //语句
-       break; //可选
-    //你可以有任意数量的case语句
-    default : //可选
-       //语句
+       // 语句
+       break; // 可选
+    // 你可以有任意数量的 case 语句
+    default : // 可选
+       // 语句
 }
 
 ```
@@ -602,13 +627,260 @@ case 标签可以是：
 - 枚举常量
 - 字符串字面值
 
-
 ## 输入输出
 
+### 控制台输入输出
+
+- 输入
+
+  - Scanner 对象
+
+    ```java
+    Scanner in = new Scanner(System.in);
+    String input = in.next();// 读取输入的第一个单词
+    String input = in.nextLine();// 读取输入的一行
+    int input = in.nextInt();// 读取输入的整型数值
+    //...
+    ```
+
+  - Console 对象
+
+    ```java
+    Console cons = System.console();
+    String input = cons.readLine();// 读取输入的一行
+    String input = cons.readPassword();// 读取输入的密码，不会在屏幕上显示
+    ```
+
+- 输出
+
+  - System.out.print()
+
+  - System.out.println()
+
+  - System.out.printf("<格式化字符串>", <参数表>)
+    
+    <!-- TODO: http://www.itzhai.com/java-notes-java-in-the-formatted-output-formatter-class-presentation.html#read-more -->
+
+    格式化字符串：
+    - int/long/short/byte : 	
+      - %d 按无符号十进制整数输出
+      - %u 按有符号十进制整数输出
+      - %o 按无符号八进制整数输出(不输出前缀0）
+      - %x/%X 按无符号十六进制整数输出(不输出前缀0x）
+    - double/float :		
+      - %f 按定点浮点数输出
+      - %e/%E 按指数浮点数（科学计数法）输出
+      - %g/%G	按通常浮点数输出（有效位数，如：%8g表示单精度浮点数保留8位有效数字。双精度用lg）
+      - %a/%A 按十六进制浮点数输出
+    - String：%s（输出字符串中的字符直至字符串中的空字符（字符串以'\0‘结尾，这个'\0'即空字符））
+    - char：%c（可以把输入的数字按照ASCII码相应转换为对应的字符）
+    - 指针值：%p（以16进制形式输出指针）
+    - boolean：%b/%B
+    - 时间：%t+转换符（以t开始，以表中人以字母结束的两个字母格式）（详见下）
+
+    - %%		输出百分号
+    - %.3f 	保留三位小数
+    - %6d  	占6位（默认右对齐）（以空格补全）
+    - %06d 	占6位（默认右对齐）（以0补全）
+    - %-6d	占6位（左对齐）（以空格补全）
+    - %+d  	输出时显示正负号
+    - %,f		输出时用“，”分组（如：("%,f", 9999.99)  输出9,999.990000）
+    - %#o  	输出时显示前缀o
+    - %#x  	输出时显示前缀0x
+    - %#e		输出时一定显示小数点
+    - %#g		输出时保留尾部的0
+    - %(f		输出时用括号包含负数（如：("%(f", -123.321)  输出(123.321000)）
+    - %<d  	输出时格式化前一个转换符描述的变量（如： (“%f还有%<.2f”, 99.45) 输出99.450000还有99.45）
+    - %i$d  表示第i个变量（若无指定，下一个输出第i+1个变量，可能会越界）
+
+    - 时间日期格式化输出：
+
+      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/dffd80ab50fd9caf4b6ff16da74ec16f.jpg)
+
+      ```java
+      public static void main(String[] args) {
+        System.out.printf("%tc\n", new Date());
+        System.out.printf("%tF\n", new Date());
+        System.out.printf("%ts\n", new Date());
+      }
+      ```
+
+    用printf判断闰年：
+    ```java
+    System.out.printf("%s",a%(a%100?4:400)?"NO":"YES");
+    ```
+
+### 文件输入输出
+
+- 输入
+
+  ```java
+  Scanner in = new Scanner(Paths.get("myfile.txt"), "UTF-8");
+  ```
+- 输出
+
+  ```java
+  PrintWriter out = new PrintWriter("myfile.txt", "UTF-8");
+  ```
 
 ## 字符串
 
+Java 字符串就是 Unicode 字符序列。例如：字符串"java/u2122"由 5 个 Unicode 字符组成，分别是 j、a、v、a、™。
+
+Java 没有设计内置的字符串类型，而是在 Java 标准库中提供了一个预定义类 [String](https://docs.oracle.com/javase/9/docs/api/java/lang/String.html)。每个用双引号括起来的字符串都是 String 类的一个实例。
+
+### 子串
+
+`String	substring​(int beginIndex, int endIndex)`：从一个较大的字符串中提取一个子串。子串从 beginIndex 开始，到 endIndex 为止（不包括 endIndex）。
+```java
+String sub = "hello".substring(1, 3); // "el"
+```
+
+### 拼接
+
+使用 + 拼接两个字符串，任何类型的值与字符串进行 "+" 运算时，非字符串的值总是被转换为字符串。
+
+`static String	join​(CharSequence delimiter, CharSequence... elements)`：将多个字符串用分隔符进行连接。
+
+### 相等判断
+
+使用`String.equals()`方法检测两个字符串的内容是否完全相同，使用`String.equalsIgnoreCase()`进行不区分大小写的判断。
+
+NOTE：使用 `==` 判断的是两个是否指向同一个字符串，而不是判断内容是否相同。
+
+### 字符串长度
+
+Java 字符串由 char 值序列组成。`String.length`方法返回采用 UTF-16 编码表示的给定字符串所需要的代码单元数量。
+
+### 空串和 Null 串
+
+空串是长度为 0 的字符串对象，写为 `""`，有自己的长度（0）和内容（空）。
+
+Null 串表示没有任何对象与该字符串变量关联，没有长度也没有内容。若对一个 Null 串调用 length 方法，会抛出异常。
+
+一般使用以下条件检查字符串不为 null 也不为空串：
+```java
+if (str != null && str.length != 0) {//...}
+```
+
+### 不可变字符串
+
+Java 中将 String 类对象定义为不可变字符串，即**不能修改字符串中的某个字符**（但可以修改字符串变量 a 引用的字符串字面量）。
+
+NOTE: 区分字符串拼接和字符串修改
+```java
+String str = "hello";
+str = str + "world";// 字符串拼接
+str += "world";// 字符串拼接
+str[2] // error
+str = str.substring(0, 2) + "p" + str.substring(3, 5);// "heplo" 字符串修改（实际上仍旧是字符串的拼接）
+```
+
+不可变字符串让编译器可以共享字符串，即在公共存储池中存放各种字符串常量，多个字符串变量可以指向同一个字符串常量（只有字符串常量是共享的，`+` 或 `substring()` 产生的临时字符串值并不是共享的）。虽然这样的设计导致**修改字符串时需要进行子串提取、拼接操作**，但共享带来的高效率远胜于多出的操作。因为实际上只有很少的情况需要修改字符串，而对于需要频繁拼接的字符串，Java 提供了 [StringBuilder](https://docs.oracle.com/javase/9/docs/api/java/lang/StringBuilder.html) 类。
+
+P.S. 在 C++ 中字符串是可修改的，即可以修改字符串的单个字符。
+
+### 字符串构建
+
+由于 Java 字符串不可修改，而每次拼接字符串时都会产生一个新的 String 临时对象。当需要对一个字符串变量进行频繁的拼接时，耗时与空间的浪费就显得非常严重，因此 Java 提供了 [StringBuilder](https://docs.oracle.com/javase/9/docs/api/java/lang/StringBuilder.html) 类，用于字符串的构建。
+
+```java
+// 创建一个空的字符串构建起
+StringBuilder builder = new StringBuilder();
+// 每次需要进行字符串拼接时，调用 append 方法
+builder.append("xxx");
+// 修改字符串中的字符，将第 i 个代码单圈设置为 (char)c
+builder.setCharAt(i, 'c');
+// 在 offset 位置插入一个字符串
+builder.insert(offset, s);
+// 构建完成，返回一个 String 对象
+String str = builder.toString();
+```
+
+P.S. [StringBuffer](https://docs.oracle.com/javase/9/docs/api/java/lang/StringBuffer.html) 类是 StringBuilder 类的前身，两者 API 基本上完全相同，效率稍低，但允许采用多线程的方式执行添加或删除字符的操作。但若所有字符串在单线程中编译（通常情况都是这样），应使用 StringBuilder 进行字符串的构建。
 
 ## 数组
 
+数组是一种用于存储同一类型的值集合的数据结构。
 
+Java 中对数组的操作主要通过工具类 [Arrays](https://docs.oracle.com/javase/9/docs/api/java/util/Arrays.html) 完成。
+
+### 创建与初始化
+
+数组的声明 / 创建：
+```java
+int [] a;
+int a[];
+```
+
+数组的初始化：
+```java
+a = new int[100]; // 固定长度初始化
+a = {2,3,4,56,7,78,57}; // 直接赋值初始化
+a= new int[] {2,3,4,56,7,78,57}; // 使用匿名数组进行初始化
+```
+
+NOTE：
+- 在 Java 中不要求数组长度是常量，`new int[n]`是完全合法的。
+- 在 Java 中允许数组长度为 0。
+- 初始化数组后，数值数值所有元素默认值为 0，boolean 数组所有元素默认值为 false，对象数组所有元素默认值为 null。
+- 数组创建初始化后，便无法再改变长度。若需要在运行过程中扩展数组的大小，应使用数组列表 [ArrayList](https://docs.oracle.com/javase/9/docs/api/java/util/ArrayList.html)。
+- 数组的声明 / 创建可与初始化同时完成，如：`int [] a = new int[n];`。
+
+### 多维数组
+
+```java
+int [][] a = new int[X](Y);
+int [][] b = new int[X][];// 先创建一维数组
+int [][] b = new int[][Y];//error，必须从低维到高维创建
+int [][] c = {// 创建不规则数组
+  {1,2,3},
+  {4,5},
+  {6,7,8,9}
+};
+```
+- NOTE: 不同于 C++ 中存在真正的多维数组，在 Java 中实际上没有真正的多维数组，只有一维数组。
+
+  ```java
+  //java
+  int [][] a = new int[10](6);
+  ```
+  在 C++ 中相当于创建了一个包含 10 个指针的数组，然后再为每个数组元素填充一个包含 6 个数字的数组：
+  ```cpp
+  //cpp
+  // 不等价
+  int a[10](6);
+  // 不等价
+  int (*a)[6] = new int[10](6); 
+  // 等价
+  int **a = new int*[10];
+  for (i = 0; i < 10; i++) {
+    a[i] = new int[6];
+  }
+  ```
+
+### 数组拷贝
+
+在 Java 中，数组的拷贝主要通过`Arrays.copyOf​(U [] original, int newLength)`完成，其中 original 为要复制的原数组，newLength 为要返回的数组副本的长度（若长度小于原数组长度，则只拷贝前部分的元素；若长度大小原数组的长度，则多出的部分赋默认值）。
+
+`Arrays.copyOf`常用于数组扩容：
+```java
+int [] originalArray = {1,2,3,4,5};
+int [] newArray = Arrays.copyOf(originalArray, 2 * originalArray.length);
+```
+
+NOTE：使用`System.arraycopy()`方法同样可完成数组的拷贝，两者的不同在于：
+- `System.arraycopy()` 调用其它语言编写的底层函数，完成数组拷贝。
+- `Arrays.copyOf` 实际上是对 `System.arraycopy()` 的二次封装，可以选择拷贝的起点和长度以及放入新数组中的位置。
+
+### 数组填充
+
+通过`Arrays.fill​(type [] a, type val)`方法，可将数组的所有元素设置为 val 值。
+
+### 快速排序
+
+通过`Arrays.sort​(type [] a, int fromIndex, int toIndex)`方法，可对数值型数组进行优化的快速排序，其中 type 可为 byte、char、double、float、int、long、short。
+
+### 二分查找
+
+通过`Arrays.binarySearch​(type [] a, int fromIndex, int toIndex, type key)`方法，可对数组进行二分查找。若查找成功，返回相应下标值；否则，返回一个负数值 r（`-r-1` 是为了保持原数组 a 有序，key 值应插入的位置）。

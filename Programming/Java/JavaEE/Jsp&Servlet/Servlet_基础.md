@@ -39,15 +39,15 @@ Java Servlet 通常情况下与使用 CGI（Common Gateway Interface，公共网
 
 Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类。Web 应用程序开发人员通常编写 Servlet 来扩展 javax.servlet.http.HttpServlet，并实现 Servlet 接口的抽象类专门用来处理 HTTP 请求；
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/057b09ff710d3c7c669c23c79ab7614b.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/057b09ff710d3c7c669c23c79ab7614b.jpg)
 
 附：Servlet 类主要接口：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/e5302925b3ad9e0f53738ca69b485279.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/e5302925b3ad9e0f53738ca69b485279.jpg)
 
 ### 生命周期
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/80e6f7d3e862237d2370d80316ce4cec.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/80e6f7d3e862237d2370d80316ce4cec.jpg)
 
 1. 加载
     
@@ -75,7 +75,8 @@ Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类�
     
     流程图如下：
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/5133369a83f0687abfcf59dd96cdbf09.jpg)
+    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/5133369a83f0687abfcf59dd96cdbf09.jpg)
+
 
 1. 销毁
     
@@ -109,7 +110,7 @@ Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类�
     response.setContentType("text/html");
             // 实际的逻辑是在这里
             PrintWriter out = response.getWriter();
-            out.println("<h1>" + message + "</h1>");
+            out.println("<h1>" + message + "</h1>");	在Servlet中获得内置对
     }
       
     public void destroy() {
@@ -154,7 +155,8 @@ Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类�
 
 ### 内置对象
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/8137a19614dcc4a48342ee58af7a2fe7.jpg)
+<!-- ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/8137a19614dcc4a48342ee58af7a2fe7.jpg) -->
+![image](../../../../static/tmp.jpg)
 
 ## 过滤器
 http://www.runoob.com/jsp/jsp-writing-filters.html
