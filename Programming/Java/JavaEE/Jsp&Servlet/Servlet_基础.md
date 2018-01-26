@@ -156,7 +156,7 @@ Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类�
 ### 内置对象
 
 <!-- ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/8137a19614dcc4a48342ee58af7a2fe7.jpg) -->
-![image](../../../../static/tmp.jpg)
+![image](../../../../static/tmp.png)
 
 ## 过滤器
 http://www.runoob.com/jsp/jsp-writing-filters.html
