@@ -155,8 +155,7 @@ Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类�
 
 ### 内置对象
 
-<!-- ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/8137a19614dcc4a48342ee58af7a2fe7.jpg) -->
-![image](../../../../static/tmp.png)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/8137a19614dcc4a48342ee58af7a2fe7.jpg)
 
 ## 过滤器
 http://www.runoob.com/jsp/jsp-writing-filters.html
@@ -197,7 +196,7 @@ Filter 的执行顺序与在 web.xml 配置文件中的配置顺序一致，一�
 1. 在 src 中新建类，实现 filter 接口；
 1. 在 web.xml 中添加刚刚编写的 filter 类，并绑定 url；
     
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/04ecb4d38a4074db0ba91facedeeda9f.jpg)
+   ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/89dc131ac6beec3c385ec3b9000467e2.jpg)
 
 过滤器可改变用户请求的资源，即可改变客户端请求的 url；
 
@@ -205,23 +204,23 @@ Filter 的执行顺序与在 web.xml 配置文件中的配置顺序一致，一�
 
 可定义多个 filter，若多个 filter 绑定的 url 互不相同，则各自工作；若有多个 filter 绑定的 url 是相同的，则会组成过滤器链：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/45e58e3a26c1047d6c3301c82a31dec2.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/45e58e3a26c1047d6c3301c82a31dec2.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/d62a05c9e8aaf14a5f835940cb6f18ad.jpg)（Chain.doFilter() 即放行）
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/d62a05c9e8aaf14a5f835940cb6f18ad.jpg)（Chain.doFilter() 即放行）
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/2791f3a6cc3bb41776bfd3a26c5be21f.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/2791f3a6cc3bb41776bfd3a26c5be21f.jpg)
 
 当请求过滤器 request filter 使得访问可能发生死循环时：
 - 若采用得是重定向 sendRedirect 方法，走的是 request 路线，在客户端处理，因此会造成死循环；若采用的是转发 getRedirectDispatch(“main.jsp”).forward(req,res) 方法，则走是的 forward 路线，在服务器端处理，因此不会造成死循环；
 - 若采用的是 forward 过滤器，则会；
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/a9350edfeb8c94d20933e31b62f3a2ba.jpg)
+@WebFilter用于将一个类声明为过滤器，该注解将会在部署时被容器处理，容器将根据具体的属性配置将相应的类部署为过滤器。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/2beebf4d357657067135745191b67b62.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/2beebf4d357657067135745191b67b62.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/488871fa579465a819256a1e8cbc0359.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/488871fa579465a819256a1e8cbc0359.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/4e88e9a31e0239f901b9e137474a4e49.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/4e88e9a31e0239f901b9e137474a4e49.jpg)
 
 ## 监听器
 
@@ -229,19 +228,19 @@ http://www.jellythink.com/archives/1414
 
 监听器是一种上下文对象，web 应用创建时创建（调用 contextInitialized 方法），web 应用销毁时销毁（调用 contextDestory 方法）；
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/128143f9f7d7a16f344d4efc0abd348e.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/128143f9f7d7a16f344d4efc0abd348e.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/745d9f6e76b36e114357b8a9cdefb6d7.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/745d9f6e76b36e114357b8a9cdefb6d7.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/e590f09b66fc26ebd08d98219a13b220.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/e590f09b66fc26ebd08d98219a13b220.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/a73726cbb58a4ae48a5bcc03cb9581ea.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/a73726cbb58a4ae48a5bcc03cb9581ea.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/f9a7fa307c3eb4886f57dce13090317c.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/f9a7fa307c3eb4886f57dce13090317c.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/46d1905c2430635c147f4113c5fa5cc2.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/46d1905c2430635c147f4113c5fa5cc2.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/09ae0ed8326f842857f49ee5cf1fb4cc.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/09ae0ed8326f842857f49ee5cf1fb4cc.jpg)
 
 ## 其它问题
 
