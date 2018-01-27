@@ -1,26 +1,36 @@
-<style>img {box-shadow: 0 0 15px #111;}</style>
+<style>
+img {
+    box-shadow: 0 0 15px #111;
+}
+</style>
 
 - [Spring MVC Note](#spring-mvc-note)
-	- [Controller](#controller)
-		- [@RequestBody](#requestbody)
-		- [@ResponseBody](#responsebody)
-			- [响应 JSON 数据](#%E5%93%8D%E5%BA%94-json-%E6%95%B0%E6%8D%AE)
-			- [响应 XML 数据](#%E5%93%8D%E5%BA%94-xml-%E6%95%B0%E6%8D%AE)
-			- [Accpect 与 produces](#accpect-%E4%B8%8E-produces)
-			- [ContentType 与 consumes](#contenttype-%E4%B8%8E-consumes)
-			- [响应媒体类型](#%E5%93%8D%E5%BA%94%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B)
-		- [HttpMessageConverter](#httpmessageconverter)
-			- [自定义 HttpMessageConverter](#%E8%87%AA%E5%AE%9A%E4%B9%89-httpmessageconverter)
-		- [@RequestMapping](#requestmapping)
-			- [支持的方法参数类型](#%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B)
-			- [支持的返回类型](#%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B)
-		- [@SessionAttributes](#sessionattributes)
-		- [处理 PUT/DELETE/PATCH 请求](#%E5%A4%84%E7%90%86-putdeletepatch-%E8%AF%B7%E6%B1%82)
-	- [拦截器](#%E6%8B%A6%E6%88%AA%E5%99%A8)
-	- [事务控制](#%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6)
-	- [Refer Links](#refer-links)
+    - [概述](#%E6%A6%82%E8%BF%B0)
+    - [Controller](#controller)
+        - [@RequestBody](#requestbody)
+        - [@ResponseBody](#responsebody)
+            - [响应 JSON 数据](#%E5%93%8D%E5%BA%94-json-%E6%95%B0%E6%8D%AE)
+            - [响应 XML 数据](#%E5%93%8D%E5%BA%94-xml-%E6%95%B0%E6%8D%AE)
+            - [Accpect 与 produces](#accpect-%E4%B8%8E-produces)
+            - [ContentType 与 consumes](#contenttype-%E4%B8%8E-consumes)
+            - [响应媒体类型](#%E5%93%8D%E5%BA%94%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B)
+        - [HttpMessageConverter](#httpmessageconverter)
+            - [自定义 HttpMessageConverter](#%E8%87%AA%E5%AE%9A%E4%B9%89-httpmessageconverter)
+        - [@RequestMapping](#requestmapping)
+            - [支持的方法参数类型](#%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B)
+            - [支持的返回类型](#%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B)
+        - [@SessionAttributes](#sessionattributes)
+        - [处理 PUT/DELETE/PATCH 请求](#%E5%A4%84%E7%90%86-putdeletepatch-%E8%AF%B7%E6%B1%82)
+    - [拦截器](#%E6%8B%A6%E6%88%AA%E5%99%A8)
+    - [事务控制](#%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6)
+    - [Refer Links](#refer-links)
 
 # Spring MVC Note 
+## 概述
+
+Spring MVC 是一个模型 - 视图 - 控制器（MVC）的 Web 框架建立在中央前端控制器 servlet（DispatcherServlet），它负责发送每个请求到合适的处理程序，使用视图来最终返回响应结果的概念。Spring MVC 是 Spring 产品组合的一部分，它享有 Spring IoC 容器紧密结合 Spring 松耦合等特点，因此它有 Spring 的所有优点。
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/7baf39de923c5f2b02010d5bd1b9e916.jpg)
 
 ## Controller
 
@@ -329,13 +339,13 @@ SpringMVC 未指定跳转页面时，有 @ResponseBody 注解则会根据请求�
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/5fbda7c49c4a0995c1f8aea7925af43c.jpg)
 
 拦截器和过滤器的区别：
-- 过滤器依赖于Servlet容器，基于回调函数，过滤范围大
+- 过滤器依赖于 Servlet 容器，基于回调函数，过滤范围大
 - 拦截器依赖于框架容器，基于反射机制，只过滤请求
 
 ## 事务控制
 
-通常建议将事务放在service层，因为在同一个事务中可能会对多个表进行操作（即调用多个Dao），将事务放在Dao层的话不便于操作。
+通常建议将事务放在 service 层，因为在同一个事务中可能会对多个表进行操作（即调用多个 Dao），将事务放在 Dao 层的话不便于操作。
 
 ## Refer Links
 
-解析 Spring 中的 ResponseBody 和 RequestBody：  https://lexburner.github.io/2017/08/30/%E8%A7%A3%E6%9E%90Spring%E4%B8%AD%E7%9A%84ResponseBody%E5%92%8CRequestBody/
+[解析 Spring 中的 ResponseBody 和 RequestBody](https://lexburner.github.io/2017/08/30/%E8%A7%A3%E6%9E%90Spring%E4%B8%AD%E7%9A%84ResponseBody%E5%92%8CRequestBody)

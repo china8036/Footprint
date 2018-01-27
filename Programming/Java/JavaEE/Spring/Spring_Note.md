@@ -1,4 +1,4 @@
-<style>img {box-shadow: 0 0 15px #111;}</style>
+<!-- <style>img {box-shadow: 0 0 15px #111;}</style> -->
 
 - [Spring Note](#spring-note)
   - [Spring 概述](#spring-%E6%A6%82%E8%BF%B0)
