@@ -9,6 +9,8 @@
 
 # Java 集合
 
+![image](/resources/images/java-collections.png)
+
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/f9992918707e6ff6ea21ed0fd212b2ce.jpg)
 
 ## ArrayList
