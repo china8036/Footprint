@@ -9,6 +9,7 @@
       - [应用](#%E5%BA%94%E7%94%A8)
     - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
   - [函数扩展语法](#%E5%87%BD%E6%95%B0%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
+    - [name 属性](#name-%E5%B1%9E%E6%80%A7)
     - [默认参数](#%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0)
     - [变长参数 （rest） 和扩展运算符](#%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0-%EF%BC%88rest%EF%BC%89-%E5%92%8C%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6)
     - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
@@ -31,9 +32,13 @@
     - [Symbol.species](#symbolspecies)
     - [Mix-ins 混合](#mix-ins-%E6%B7%B7%E5%90%88)
   - [对象扩展语法](#%E5%AF%B9%E8%B1%A1%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
+    - [属性简写 & 方法简写](#%E5%B1%9E%E6%80%A7%E7%AE%80%E5%86%99-%E6%96%B9%E6%B3%95%E7%AE%80%E5%86%99)
     - [getter](#getter)
     - [setter](#setter)
-    - [生成器方法](#%E7%94%9F%E6%88%90%E5%99%A8%E6%96%B9%E6%B3%95)
+    - [Object.is()](#objectis)
+    - [Object.assign()](#objectassign)
+    - [Object.keys() & Object.values() & Object.entries()](#objectkeys-objectvalues-objectentries)
+    - [Generator 方法](#generator-%E6%96%B9%E6%B3%95)
     - [Async 方法](#async-%E6%96%B9%E6%B3%95)
     - [Async 生成器方法](#async-%E7%94%9F%E6%88%90%E5%99%A8%E6%96%B9%E6%B3%95)
   - [JavaScript 的第七种数据类型：Symbols](#javascript-%E7%9A%84%E7%AC%AC%E4%B8%83%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9Asymbols)
@@ -52,6 +57,9 @@
   - [生成器（Generator）](#%E7%94%9F%E6%88%90%E5%99%A8%EF%BC%88generator%EF%BC%89)
   - [异步请求](#%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82)
   - [模块（Module）](#%E6%A8%A1%E5%9D%97%EF%BC%88module%EF%BC%89)
+    - [export](#export)
+    - [import](#import)
+    - [跨模块常量](#%E8%B7%A8%E6%A8%A1%E5%9D%97%E5%B8%B8%E9%87%8F)
   - [Refer Links](#refer-links)
 
 # ECMAScript 6 NOTE
@@ -381,6 +389,21 @@ docuemnt.getElementById('test').appendChild(`<b>${a}</b><b>${b}</b>`);// 使用�
 ```
 
 ## 函数扩展语法
+
+### name 属性
+
+函数的 name 属性，返回函数名。
+
+对象方法也是函数，因此也有 name 属性：
+```javascript
+const person = {
+  sayName() {
+    console.log('hello!');
+  },
+};
+
+person.sayName.name   // "sayName"
+```
 
 ### 默认参数
 
@@ -888,6 +911,8 @@ class Bar extends calculatorMixin(randomizerMixin(Foo)) { }
 
 ## 对象扩展语法
 
+### 属性简写 & 方法简写
+
 从 ECMAScript 2015 开始，在对象初始器中引入了一种更简短定义方法的语法，这是一种把方法名直接赋给函数的简写方式。
 
 Syntax：
@@ -909,111 +934,292 @@ var obj = {
 };
 ```
 
-eg:
-```javascript
-//es5
-var obj = {
-  foo: function() {
-    /* code */
-  },
-  bar: function() {
-    /* code */
-  }
-};
+- 属性简写
+  ```javascript
+  // es5
+  const foo = 'bar';
+  const baz = {foo};
+  baz // {foo: "bar"}
 
-//es6
-let obj = {
-  foo() {
-    /* code */
-  },
-  bar() {
-    /* code */
-  }
+  // es6
+  const baz = {foo: foo};
+  ```
+
+- 方法简写
+  ```javascript
+  //es5
+  var obj = {
+    foo: function() {
+      /* code */
+    },
+    bar: function() {
+      /* code */
+    }
+  };
+
+  //es6
+  let obj = {
+    foo() {
+      /* code */
+    },
+    bar() {
+      /* code */
+    }
+  };
+  ```
+
+例：
+```javascript
+let birth = '2000/01/01';
+
+const Person = {
+
+  name: '张三',
+
+  // 等同于 birth: birth
+  birth,
+
+  // 等同于 hello: function ()...
+  hello() { console.log('我的名字是', this.name); }
+
 };
+```
+```javascript
+function getPoint() {
+  const x = 1;
+  const y = 10;
+  return {x, y};
+}
+
+getPoint()
+// {x:1, y:10}
 ```
 
 ### getter
 
 get 语法将对象属性绑定到查询该属性时将被调用的函数。
 
-- Syntax:
-  ```javascript
-  {get prop() { ... } }
-  {get [expression]() { ... } }
-  ```
+Syntax:
+```javascript
+{get prop() { ... } }
+{get [expression]() { ... } }
+```
 
-- NOTE:
-  - 可以使用数值或字符串作为标识；
-  - 必须不带参数；
-  - 它不能与另一个 get 或具有相同属性的数据条目同时出现在一个对象字面量中（不允许使用 { get x() { }, get x() { } } 和 { x: ..., get x() { } }）。
-  - 可通过 delete 操作符删除 getter。
+NOTE:
+- 可以使用数值或字符串作为标识；
+- 必须不带参数；
+- 它不能与另一个 get 或具有相同属性的数据条目同时出现在一个对象字面量中（不允许使用 { get x() { }, get x() { } } 和 { x: ..., get x() { } }）。
+- 可通过 delete 操作符删除 getter。
 
-- eg:
-  ```javascript
-  var obj = {
-    log: ['example','test'],
-    get latest() {
-      if (this.log.length == 0) return undefined;
-      return this.log[this.log.length - 1];
-    }
+eg:
+```javascript
+var obj = {
+  log: ['example','test'],
+  get latest() {
+    if (this.log.length == 0) 
+      return undefined;
+    return this.log[this.log.length - 1];
   }
-  console.log(obj.latest); // "test".
-  console.log(obj.log);//["example", "test"]
-  obj,latest='abc';
-  console.log(obj.latest);// "test".
-  delete obj.latest;// true
-  console.log(obj.latest);// undefined
-  ```
+}
+console.log(obj.latest); // "test".
+console.log(obj.log);//["example", "test"]
+obj,latest='abc';
+console.log(obj.latest);// "test".
+delete obj.latest;// true
+console.log(obj.latest);// undefined
+```
 
 ### setter
 
 当尝试设置属性时，set 语法将对象属性绑定到要调用的函数。
 
-- Syntax:
-  ```javascript
-  {set prop(val) { . . . }}
-  {set [expression](val) { . . . }}
-  ```
+Syntax:
+```javascript
+{set prop(val) { . . . }}
+{set [expression](val) { . . . }}
+```
 
-- NOTE:
-  - 它的标识符可以是数字或字符串；
-  - 它必须有一个明确的参数；
-  - 在对象字面量中，不能为一个已有真实值的变量使用 set ，也不能为一个属性设置多个 set。( `{ set x(v) { }, set x(v) { } } 和 { x: ..., set x(v) { } }` 是不允许的 )
-  - setter 可以用 delete 操作来移除。
+NOTE:
+- 它的标识符可以是数字或字符串；
+- 它必须有一个明确的参数；
+- 在对象字面量中，不能为一个已有真实值的变量使用 set ，也不能为一个属性设置多个 set。( `{ set x(v) { }, set x(v) { } } 和 { x: ..., set x(v) { } }` 是不允许的 )
+- setter 可以用 delete 操作来移除。
 
-- Parameters:
-  - prop
-    
-    The name of the property to bind to the given function.
+Parameters:
+- prop
+  
+  The name of the property to bind to the given function.
 
-  - val
-    
-    An alias for the variable that holds the value attempted to be assigned to prop.
+- val
+  
+  An alias for the variable that holds the value attempted to be assigned to prop.
 
-  - expression
-    
-    Starting with ECMAScript 2015, you can also use expressions for a computed property name to bind to the given function.
+- expression
+  
+  Starting with ECMAScript 2015, you can also use expressions for a computed property name to bind to the given function.
 
-- eg:
-  ```javascript
-  var language = {
-    set current(name) {
-      this.log.push(name);
-    },
-    log: []
+eg:
+```javascript
+var language = {
+  set current(name) {
+    this.log.push(name);
+  },
+  log: []
+}
+
+language.current = 'EN';
+console.log(language.log); // ['EN']
+
+language.current = 'FA';
+console.log(language.log); // ['EN', 'FA']
+```
+
+```javascript
+const cart = {
+  _wheels: 4,
+
+  get wheels () {
+    return this._wheels;
+  },
+
+  set wheels (value) {
+    if (value < this._wheels) {
+      throw new Error('数值太小了！');
+    }
+    this._wheels = value;
   }
+}
+```
 
-  language.current = 'EN';
-  console.log(language.log); // ['EN']
+```javascript
+const obj = {
+  class () {}
+};
 
-  language.current = 'FA';
-  console.log(language.log); // ['EN', 'FA']
+// 等同于
 
+var obj = {
+  'class': function() {}// 简洁写法的属性名总是字符串，所以不会因为 class 属于关键字，而导致语法解析报错
+};
+```
+
+### Object.is()
+
+ES5 比较两个值是否相等，只有两个运算符：相等运算符（==）和严格相等运算符（===）。它们都有缺点，前者会自动转换数据类型，后者的 NaN 不等于自身，以及 +0 等于 -0。JavaScript 缺乏一种运算，在所有环境中，只要两个值是一样的，它们就应该相等。
+
+ES6 中 Object.is 就是解决这个问题的新方法。它用来比较两个值是否严格相等，与严格比较运算符（===）的行为基本一致，不同之处只有两个：一是 +0 不等于 -0，二是 NaN 等于自身。
+
+```javascript
+Object.is('foo', 'foo')
+// true
+Object.is({}, {})
+// false
+
++0 === -0 //true
+NaN === NaN // false
+
+Object.is(+0, -0) // false
+Object.is(NaN, NaN) // true
+```
+
+### Object.assign()
+
+Object.assign 方法用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）。
+
+- Object.assign 方法的第一个参数是目标对象，后面的参数都是源对象。如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性。
+
+  ```javascript
+  const target = { a: 1, b: 1 };
+
+  const source1 = { b: 2, c: 2 };
+  const source2 = { c: 3 };
+
+  Object.assign(target, source1, source2);
+  target // {a:1, b:2, c:3}
   ```
 
-### 生成器方法
+- 如果非对象参数出现在源对象的位置（即非首参数），那么处理规则有所不同。首先，这些参数都会转成对象，如果无法转成对象，就会跳过。这意味着，如果 undefined 和 null 不在首参数，就不会报错。
+  ```javascript
+  typeof Object.assign(2) // "object"
+  Object.assign(undefined) // 报错
+  Object.assign(null) // 报错
+  ```
 
-简写语法中的星号（`*`）必须出现在生成器名前，也就是说`* g(){}`可以正常工作，而`g *(){}`不行。
+- Object.assign 拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）。
+  ```javascript
+  //Object.assign 要拷贝的对象只有一个不可枚举属性 invisible，这个属性并没有被拷贝进去。
+  Object.assign({b: 'c'},
+    Object.defineProperty({}, 'invisible', {
+      enumerable: false,
+      value: 'hello'
+    })
+  )
+  // { b: 'c' }
+  ```
+
+- 属性名为 Symbol 值的属性，也会被 Object.assign 拷贝。
+  ```javscript
+  Object.assign({ a: 'b' }, { [Symbol('c')]: 'd' })
+  // { a: 'b', Symbol(c): 'd' }
+  ```
+
+- Object.assign 方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。
+  ```javascript
+  const obj1 = {a: {b: 1}};
+  const obj2 = Object.assign({}, obj1);
+
+  obj1.a.b = 2;
+  obj2.a.b // 2
+  ```
+
+- Object.assign 可以用来处理数组，但是会把数组视为对象。
+  ```javascript
+  // Object.assign 把数组视为属性名为 0、1、2 的对象，因此源数组的 0 号属性 4 覆盖了目标数组的 0 号属性 1。
+  Object.assign([1, 2, 3], [4, 5])
+  // [4, 5, 3]
+  ```
+
+- Object.assign 只能进行值的复制，如果要复制的值是一个取值函数，那么将求值后再复制。
+  ```javascript
+  const source = {
+    get foo() { return 1 }
+  };
+  const target = {};
+
+  Object.assign(target, source)
+  // { foo: 1 }
+  ```
+
+- 应用
+  - 为对象添加属性、方法
+  - 克隆对象：将原始对象拷贝到一个空对象，就得到了原始对象的克隆。
+  - 合并多个对象。
+  - 为属性指定默认值。
+
+### Object.keys() & Object.values() & Object.entries()
+
+ES5 引入了 Object.keys 方法，返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键名。ES2017 引入了跟 Object.keys 配套的 Object.values 和 Object.entries，作为遍历一个对象的补充手段，供 for...of 循环使用。
+
+```javascript
+let {keys, values, entries} = Object;
+let obj = { a: 1, b: 2, c: 3 };
+
+for (let key of keys(obj)) {
+  console.log(key); // 'a', 'b', 'c'
+}
+
+for (let value of values(obj)) {
+  console.log(value); // 1, 2, 3
+}
+
+for (let [key, value] of entries(obj)) {
+  console.log([key, value]); // ['a', 1], ['b', 2], ['c', 3]
+}
+```
+
+### Generator 方法
+
+如果某个方法的值是一个生成器方法，前面需要加上星号（`* g(){}`可以正常工作，而`g *(){}`不行）。
 
 非生成器方法定义可能不包含 yield 关键字。这意味着遗留的生成器函数也不会工作，并且将抛出 SyntaxError。始终使用 yield 与星号（*）结合使用。
 
@@ -1309,39 +1515,158 @@ var zeroesForeverIterator = {
 
 ## 模块（Module）
 
-使用 import 取代 require：
-```javascript
-// bad
-const moduleA = require('moduleA');
-const func1 = moduleA.func1;
-const func2 = moduleA.func2;
+在 ES6 中，export 命令用于规定模块的对外接口，import 命令用于输入其他模块提供的功能。
 
-// good
-import { func1, func2 } from 'moduleA';
-```
-
-使用 export 取代 module.exports：
-```javascript
-// commonJS 的写法
-var React = require('react');
-var Breadcrumbs = React.createClass({
-  render() {
-    return <nav />;
-  }
-});
-module.exports = Breadcrumbs;
-
-// ES6 的写法
-import React from 'react';
-class Breadcrumbs extends React.Component {
-  render() {
-    return <nav />;
-  }
-};
-export default Breadcrumbs;//如果模块只有一个输出值，就使用export default，如果模块有多个输出值，就不使用export default
-```
+import 和 export 命令可以出现在模块的任何位置，只要处于模块顶层就可以。如果处于块级作用域内，就会报错。
 
 NOTE:
+- ES6 的模块自动采用严格模式，不管你有没有在模块头部加上`"use strict"`;。
+- ES6 模块之中，顶层的 this 指向 undefined，即不应该在顶层代码使用 this。
+- 变量必须声明后再使用。
+
+### export
+
+一个模块就是一个独立的文件。该文件内部的所有变量，外部无法获取。如果你希望外部能够读取模块内部的某个变量，就必须使用 export 关键字输出该变量。
+
+- 导出变量、函数、类
+  - 写法一：
+    ```javascript
+    // profile.js
+    export var firstName = 'Michael';
+    export var lastName = 'Jackson';
+    export var year = 1958;
+    ```
+
+  - 写法二：
+    ```javascript
+    // profile.js
+    var firstName = 'Michael';
+    var lastName = 'Jackson';
+    var year = 1958;
+
+    export {firstName, lastName, year};
+    ```
+    应该优先考虑使用这种写法。因为这样就可以在脚本尾部，一眼看清楚输出了哪些变量。
+
+- 使用 as 关键字，重命名对外接口：
+  ```javascript
+  function v1() { ... }
+  function v2() { ... }
+
+  export {
+    v1 as streamV1,
+    v2 as streamV2,
+    v2 as streamLatestVersion
+    // 重命名后，v2 可以用不同的名字输出两次
+  };
+  ```
+
+- export 命令规定的是对外的接口，必须与模块内部的变量建立一一对应关系：
+  ```javascript
+  // 报错
+  export 1;
+
+  // 报错
+  var m = 1;
+  export m;
+  ```
+
+- export 语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值。
+  ```javascript
+  export var foo = 'bar';
+  setTimeout(() => foo = 'baz', 500);
+  ```
+  对比 CommonJS：CommonJS 模块输出的是值的缓存，不存在动态更新
+
+- 如果模块默认输出一个函数，函数名的首字母应该小写；如果模块默认输出一个对象，对象名的首字母应该大写。
+  ```javascript
+  function makeStyleGuide() {
+  }
+  export default makeStyleGuide;
+  ```
+  ```javascript
+  const StyleGuide = {
+    es6: {
+    }
+  };
+  export default StyleGuide;
+  ```
+
+例：
+```javascript
+import store from '../store/index'
+import {mapState, mapMutations, mapActions} from 'vuex'
+import axios from '../assets/js/request'
+import util from '../utils/js/util.js'
+
+export default {
+  created () {
+    this.getClassify(); 
+
+    this.RESET_VALUE();
+    console.log('created' ,new Date().getTime());
+
+  }
+}
+```
+
+### import
+
+使用 export 命令定义了模块的对外接口以后，其他 JS 文件就可以通过 import 命令加载这个模块。import 命令加载指定文件，并从文件中输入变量。
+
+- import 命令接受一对大括号，里面指定要从其他模块导入的变量名。大括号里面的变量名，必须与被导入模块中的对外接口名称相同。
+  ```javascript
+  // main.js
+  import {firstName, lastName, year} from './profile.js';
+
+  function setName(element) {
+    element.textContent = firstName + ' ' + lastName;
+  }
+  ```
+
+- 使用 as 关键字，可为输入的变量重命名。
+  ```javascript
+  import { lastName as surname } from './profile.js';
+  ```
+
+- import 命令输入的变量都是只读的，因为它的本质是输入接口。但是，如果输入变量是一个对象，改写其属性是允许的，并且其他模块也可以读到改写后的值。不过，这种写法很难查错，建议凡是输入的变量，都当作完全只读，轻易不要改变它的属性。
+  ```javascript
+  import {a} from './xxx.js'
+
+  a = {}; // Syntax Error : 'a' is read-only;
+  ```
+  ```javascript
+  import {a} from './xxx.js'
+
+  a.foo = 'hello'; // 合法操作
+  ```
+
+- import 后面的 from 指定模块文件的位置，可以是相对路径，也可以是绝对路径，.js 后缀可以省略。如果只是模块名，不带有路径，那么必须有配置文件，告诉 JavaScript 引擎该模块的位置。
+
+- import 命令具有提升效果，会提升到整个模块的头部，首先执行。
+  ```javascript
+  foo();
+
+  import { foo } from 'my_module';
+  ```
+
+- 由于 import 是静态执行，所以不能使用表达式和变量，这些只有在运行时才能得到结果的语法结构。
+  ```javascript
+  // 报错
+  import { 'f' + 'oo' } from 'my_module';
+
+  // 报错
+  let module = 'my_module';
+  import { foo } from module;
+
+  // 报错
+  if (x === 1) {
+    import { foo } from 'module1';
+  } else {
+    import { foo } from 'module2';
+  }
+  ```
+
 - 不要使用通配符 * 的 import，这样可以确保你的模块之中，有一个默认输出（export default）:
   ```javascript
   // bad
@@ -1362,21 +1687,98 @@ NOTE:
   export default es6;
   ```
 
-- 如果模块默认输出一个函数，函数名的首字母应该小写:
+- import 语句是 Singleton 模式。
   ```javascript
-  function makeStyleGuide() {
-  }
-  export default makeStyleGuide;
-  ```
-- 如果模块默认输出一个对象，对象名的首字母应该大写:
-  ```javascript
-  const StyleGuide = {
-    es6: {
-    }
-  };
-  export default StyleGuide;
+  import { foo } from 'my_module';
+  import { bar } from 'my_module';
+
+  // 等同于
+  import { foo, bar } from 'my_module';
   ```
 
+- 通过 Babel 转码，CommonJS 模块的 require 命令和 ES6 模块的 import 命令，可以写在同一个模块里面，但是最好不要这样做。因为 import 在静态解析阶段执行，所以它是一个模块之中最早执行的，这样的代码可能不会得到预期结果。
+
+- 可以使用 `export default` 命令，为模块指定默认输出。当其他模块加载该模块时，import 命令可以为该匿名函数指定任意名字。一个模块只能有一个默认输出。
+  ```javascript
+  export default function () {
+    console.log('foo');
+  }
+
+  import customName from './export-default';
+  customName(); // 'foo'
+  ```
+  ```javascript
+  // MyClass.js
+  export default class { ... }
+
+  // main.js
+  import MyClass from 'MyClass';
+  let o = new MyClass();
+  ```
+  需要注意的是，这时 import 命令后面，不使用大括号。
+
+  本质上，export default 就是输出一个叫做 default 的变量或方法，然后系统允许你为它取任意名字。
+  ```javascript
+  function add(x, y) {
+    return x * y;
+  }
+  export {add as default};
+  // 等同于
+  // export default add;
+
+  // app.js
+  import { default as foo } from 'modules';
+  // 等同于
+  // import foo from 'modules';
+  ```
+  因此，export default 后不能跟变量声明语句：
+  ```javascript
+  // 正确
+  var a = 1;
+  export default a;
+
+  // 错误
+  export default var a = 1;
+
+  // 正确
+  export default 42;
+  ```
+  可在一条 import 语句中，同时输入默认方法和其他接口：
+  ```javascript
+  // lodash.js
+  export default function (obj) {
+    // ···
+  }
+
+  export function each(obj, iterator, context) {
+    // ···
+  }
+
+  export { each as forEach };
+
+  // other.js
+  import _, { each, each as forEach } from 'lodash';
+  ```
+
+### 跨模块常量
+
+const 声明的常量只在当前代码块有效。如果想设置跨模块的常量（即跨多个文件），或者说一个值要被多个模块共享，可以采用下面的写法：
+```javascript
+// constants.js 模块
+export const A = 1;
+export const B = 3;
+export const C = 4;
+
+// test1.js 模块
+import * as constants from './constants';
+console.log(constants.A); // 1
+console.log(constants.B); // 3
+
+// test2.js 模块
+import {A, B} from './constants';
+console.log(A); // 1
+console.log(B); // 3
+```
 
 ## Refer Links
 

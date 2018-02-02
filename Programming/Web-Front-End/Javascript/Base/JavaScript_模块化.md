@@ -9,7 +9,6 @@
   - [ES6 Module](#es6-module)
     - [静态加载](#%E9%9D%99%E6%80%81%E5%8A%A0%E8%BD%BD)
     - [优点](#%E4%BC%98%E7%82%B9)
-    - [严格模式](#%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F)
   - [Refer Links](#refer-links)
 
 # JavaScript 模块化
@@ -161,7 +160,38 @@ ES6 在语言标准的层面上，实现了模块功能，而且实现得相当�
 
 **在 ES6 中，我们可以使用 import 关键字引入模块，通过 export 关键字导出模块**，功能较之于前几个方案更为强大。
 
+- 使用 import 取代 require：
+  ```javascript
+  // bad
+  const moduleA = require('moduleA');
+  const func1 = moduleA.func1;
+  const func2 = moduleA.func2;
 
+  // good
+  import { func1, func2 } from 'moduleA';
+  ```
+
+- 使用 export 取代 module.exports：
+  ```javascript
+  // commonJS 的写法
+  var React = require('react');
+  var Breadcrumbs = React.createClass({
+    render() {
+      return <nav />;
+    }
+  });
+  module.exports = Breadcrumbs;
+
+  // ES6 的写法
+  import React from 'react';
+  class Breadcrumbs extends React.Component {
+    render() {
+      return <nav />;
+    }
+  };
+  export default Breadcrumbs;// 如果模块只有一个输出值，就使用 export default，如果模块有多个输出值，就不使用 export default
+  ```
+  
 例：
 ```javascript
 import store from '../store/index'
@@ -184,30 +214,19 @@ export default {
 
 ### 静态加载
 
-**ES6 模块是编译时加载的。ES6 中模块的设计思想，是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。**CommonJS 和 AMD 模块，都只能在运行时确定这些东西。例如，在CommonJS 中，模块就是对象；但在ES6中模块不是对象，而是通过export命令显式指定输出的代码，再通过import命令输入：
+**ES6 模块是编译时加载的。ES6 中模块的设计思想，是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。**CommonJS 和 AMD 模块，都只能在运行时确定这些东西。例如，在 CommonJS 中，模块就是对象；但在 ES6 中模块不是对象，而是通过 export 命令显式指定输出的代码，再通过 import 命令输入：
 ```javascript
-// ES6模块
+// ES6 模块
 import { stat, exists, readFile } from 'fs';
 ```
-上面代码从fs模块加载 3 个方法，其他方法不加载。这种加载称为“编译时加载”或者静态加载，即 ES6 可以在编译时就完成模块加载，效率要比 CommonJS 模块的加载方式高。当然，这也导致了没法引用 ES6 模块本身，因为它不是对象。
+上面代码从 fs 模块加载 3 个方法，其他方法不加载。这种加载称为“编译时加载”或者静态加载，即 ES6 可以在编译时就完成模块加载，效率要比 CommonJS 模块的加载方式高。当然，这也导致了没法引用 ES6 模块本身，因为它不是对象。
 
 ### 优点
 
 除了静态加载带来的各种好处，ES6 模块还有以下好处：
-- 不再需要UMD模块格式了，将来服务器和浏览器都会支持 ES6 模块格式。目前，通过各种工具库，其实已经做到了这一点。
-- 将来浏览器的新 API 就能用模块格式提供，不再必须做成全局变量或者navigator对象的属性。
-- 不再需要对象作为命名空间（比如Math对象），未来这些功能可以通过模块提供。
-
-
-### 严格模式
-
-ES6 的模块自动采用严格模式，不管你有没有在模块头部加上`"use strict"`;。
-
-NOTE:
-- ES6 模块之中，顶层的this指向undefined，即不应该在顶层代码使用this。
-- 变量必须声明后再使用。
-
-
+- 不再需要 UMD 模块格式了，将来服务器和浏览器都会支持 ES6 模块格式。目前，通过各种工具库，其实已经做到了这一点。
+- 将来浏览器的新 API 就能用模块格式提供，不再必须做成全局变量或者 navigator 对象的属性。
+- 不再需要对象作为命名空间（比如 Math 对象），未来这些功能可以通过模块提供。
 
 ## Refer Links
 
@@ -223,4 +242,4 @@ NOTE:
 
 [JavaScript 模块化 --- Commonjs、AMD、CMD、ES6 modules](http://www.imooc.com/article/20057)  
 
-[ECMAScript 6 入门 Module 的语法](http://es6.ruanyifeng.com/#docs/module)
+[ECMAScript 6 入门 --- Module](http://es6.ruanyifeng.com/#docs/module)

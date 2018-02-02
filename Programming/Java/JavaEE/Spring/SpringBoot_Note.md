@@ -529,12 +529,11 @@ http://younian.net.cn/article/117
 
     - 设置表单的文件字段名与实体类的 MultipartFile 属性名不一致，在 controller 中利用 HttpServlet 先判空后再手动赋值
 
-
     - 在客户端上传之前判断有没有选择文件，没有的话就不添加文件字段；同时在服务端执行文件保存时先判空
         
         客户端
         ```javscript
-		if (typeof activityPoster !== 'undefined') {//若没上传图片，则不添加此字段
+		if (typeof activityPoster !== 'undefined') {// 若没上传图片，则不添加此字段
 			formData.append('activityPoster', activityPoster);
 		}
         ```
@@ -542,32 +541,32 @@ http://younian.net.cn/article/117
         服务端
         ```java
         if (activity.getActivityPoster() != null) {
-            //保存文件操作
+            // 保存文件操作
         }
         ```
 
-    - 采用spring提供的上传文件的方法
+    - 采用 spring 提供的上传文件的方法
 
     ```java
     @RequestMapping("springUpload")
     public String  springUpload(HttpServletRequest request) throws IllegalStateException, IOException {
          long  startTime=System.currentTimeMillis();
-         //将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
+         // 将当前上下文初始化给  CommonsMutipartResolver （多部分解析器）
         CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
                 request.getSession().getServletContext());
-        //检查form中是否有enctype="multipart/form-data"
+        // 检查 form 中是否有 enctype="multipart/form-data"
         if(multipartResolver.isMultipart(request)) {
-            //将request变成多部分request
+            // 将 request 变成多部分 request
             MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
-           //获取multiRequest 中所有的文件名
+           // 获取 multiRequest 中所有的文件名
             Iterator iter=multiRequest.getFileNames();
              
             while(iter.hasNext()) {
-                //一次遍历所有文件
+                // 一次遍历所有文件
                 MultipartFile file=multiRequest.getFile(iter.next().toString());
                 if(file!=null) {
                     String path="E:/springUpload"+file.getOriginalFilename();
-                    //上传
+                    // 上传
                     file.transferTo(new File(path));
                 }    
             }
@@ -741,9 +740,7 @@ public String hello() throws Exception {
 
 ### 使用 `@ControllerAdvice` 进行统一异常处理
 
-[`@ControllerAdvice` 文档](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html)
-
-在 spring 3.2 中，新增了 @ControllerAdvice 注解，可以用于定义 @ExceptionHandler、@InitBinder、@ModelAttribute，并应用到所有 @RequestMapping 中。
+在 spring 3.2 中，新增了 [`@ControllerAdvice`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html) 注解，可以用于定义 @ExceptionHandler、@InitBinder、@ModelAttribute，并应用到所有 @RequestMapping 中。
 
 @ExceptionHandler 拦截了异常，我们可以通过该注解实现自定义异常处理。其中，@ExceptionHandler 配置的 value 指定需要拦截的异常类型，异常的抛出可以是来自 @Service、@Controller 等。
 
@@ -939,7 +936,6 @@ public class GlobalExceptionHandler {
 ```
 
 ## 使用 validation 进行数据校验
-
 
 [使用 spring validation 完成数据后端校验](https://www.cnkirito.moe/2017/08/16/%E4%BD%BF%E7%94%A8spring%20validation%E5%AE%8C%E6%88%90%E6%95%B0%E6%8D%AE%E5%90%8E%E7%AB%AF%E6%A0%A1%E9%AA%8C/)
 
@@ -1185,25 +1181,24 @@ public class ValidateController {
 }
 ```
 
-
 ### 自定义校验注解
 
-业务需求总是比框架提供的这些简单校验要复杂的多，我们可以自定义校验来满足我们的需求。自定义spring validation非常简单，主要分为两步。
+业务需求总是比框架提供的这些简单校验要复杂的多，我们可以自定义校验来满足我们的需求。自定义 spring validation 非常简单，主要分为两步。
 
 1. 添加自定义注解
     ```java
     @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
     @Retention(RUNTIME)
     @Documented
-    @Constraint(validatedBy = {CannotHaveBlankValidator.class})//指定了真正的验证者类
+    @Constraint(validatedBy = {CannotHaveBlankValidator.class})// 指定了真正的验证者类
     public @interface CannotHaveBlank {
-        //默认错误消息
+        // 默认错误消息
         String message() default "不能包含空格";
-        //分组
+        // 分组
         Class<?>[] groups() default {};
-        //负载
+        // 负载
         Class<? extends Payload>[] payload() default {};
-        //指定多个时使用
+        // 指定多个时使用
         @Target({FIELD, METHOD, PARAMETER, ANNOTATION_TYPE})
         @Retention(RUNTIME)
         @Documented
@@ -1213,7 +1208,6 @@ public class ValidateController {
     }
     ```
 
-
 2. 编写校验者类
     ```java
     public class CannotHaveBlankValidator implements ConstraintValidator<CannotHaveBlank, String> {
@@ -1222,16 +1216,16 @@ public class ValidateController {
         }
         
         @Override
-        // 参数ConstraintValidatorContext 这个上下文包含了认证中所有的信息，我们可以利用这个上下文实现获取默认错误提示信息，禁用错误提示信息，改写错误提示信息等操作
+        // 参数 ConstraintValidatorContext 这个上下文包含了认证中所有的信息，我们可以利用这个上下文实现获取默认错误提示信息，禁用错误提示信息，改写错误提示信息等操作
         public boolean isValid(String value, ConstraintValidatorContext context) {
-            //null时不进行校验
+            //null 时不进行校验
             if (value != null && value.contains(" ")) {
-                //获取默认提示信息
+                // 获取默认提示信息
                 String defaultConstraintMessageTemplate = context.getDefaultConstraintMessageTemplate();
                 System.out.println("default message :" + defaultConstraintMessageTemplate);
-                //禁用默认提示信息
+                // 禁用默认提示信息
                 context.disableDefaultConstraintViolation();
-                //设置提示语
+                // 设置提示语
                 context.buildConstraintViolationWithTemplate("can not contains blank").addConstraintViolation();
                 return false;
             }
@@ -1242,7 +1236,7 @@ public class ValidateController {
 
 ### 手动校验
 
-可能在某些场景下需要我们手动校验，即使用校验器对需要被校验的实体发起validate，同步获得校验结果。理论上我们既可以使用Hibernate Validation提供Validator，也可以使用Spring对其的封装。在spring构建的项目中，提倡使用经过spring封装过后的方法：
+可能在某些场景下需要我们手动校验，即使用校验器对需要被校验的实体发起 validate，同步获得校验结果。理论上我们既可以使用 Hibernate Validation 提供 Validator，也可以使用 Spring 对其的封装。在 spring 构建的项目中，提倡使用经过 spring 封装过后的方法：
 
 ```java
 @Autowired
@@ -1260,7 +1254,6 @@ public String validate() {
     return "success";
 }
 ```
-
 
 ## 静态资源目录
 
@@ -1745,6 +1738,8 @@ public enum Propagation {
 
 3)  配置 mybatis【appication.properties】             
 
+    可用配置项见[这里](http://www.mybatis.org/mybatis-3/zh/configuration.html#settings)
+
     使用前缀为 mybatis 进行配置，可用配置如下：          
     
     | **Property**               | **Description**                          |
@@ -1757,6 +1752,8 @@ public enum Propagation {
     | `executor-type`            | Executor type: `SIMPLE`, `REUSE`, `BATCH`. |
     | `configuration-properties` | Externalized properties for MyBatis  configuration. Specified properties can be used as placeholder on MyBatis  config file and Mapper file. For detail see the [MyBatis reference  page](http://www.mybatis.org/mybatis-3/configuration.html#properties) |
     | `configuration`            | A MyBatis `Configuration` bean. About available properties see  the [MyBatis reference  page](http://www.mybatis.org/mybatis-3/configuration.html#settings). **NOTE** This  property cannot be used at the same time with the `config-location` |
+    | `autoMappingBehavior`      |	指定 MyBatis 应如何自动映射列到字段或属性。 NONE 表示取消自动映射；PARTIAL 只会自动映射没有定义嵌套结果集映射的结果集。 FULL 会自动映射任意复杂的结果集（无论是否嵌套）。默认值为 PARTIAL。|
+    | `autoMappingUnknownColumnBehavior`| 指定发现自动映射目标未知列（或者未知属性类型）的行为。NONE: 不做任何反应；WARNING: 输出提醒日志 ('org.apache.ibatis.session.AutoMappingUnknownColumnBehavior' 的日志等级必须设置为 WARN)；FAILING: 映射失败 （抛出 SqlSessionException）。默认值为 NONE。|
 
     
     常用的配置：
@@ -2712,7 +2709,7 @@ http://www.jianshu.com/p/b3be5e54d836
 
 打包为 jar 包时，包含了内置的 tomcat 服务器，若希望使用独立的 tomcat 服务器或者其它容器服务器，则需要将项目打包为 war 包后再部署到容器中；
 
-需要注意的是这样部署的 request url 需要在端口后加上项目的名字才能正常访问。spring-boot 更加强大的一点就是：即便项目是以上配置，依然可以用内嵌的 tomcat 来调试，启动命令和以前没变，还是：mvn spring-boot:run。
+需要注意的是这样部署的 request url 需要在端口后加上项目的名字才能正常访问。spring-boot 更加强大的一点就是：即便项目是以上配置，依然可以用内嵌的 tomcat 来调试，启动命令和以前没变，还是：`mvn spring-boot:run`。
 
 如果需要在 springboot 中加上 request 前缀，需要在 application.properties 中添加 server.contextPath=/prefix/ 即可。其中 prefix 为前缀名。这个前缀会在 war 包中失效，取而代之的是 war 包名称，如果 war 包名称和 prefix 相同的话，那么调试环境和正式部署环境就是一个 request 地址了。
 
@@ -2742,9 +2739,9 @@ http://www.jianshu.com/p/b3be5e54d836
 
 NOTE：
 
-- 若使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`的依赖设置，会导致开发期间项目无法运行，提示 Unregistering JMX-exposed beans on shutdown，这是因为内置的 tomcat 容器无法启动，因此运行自动停止。
+若使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`的依赖设置，会导致开发期间项目无法运行，提示 Unregistering JMX-exposed beans on shutdown，这是因为内置的 tomcat 容器无法启动，因此运行自动停止。
 
-    - 解决方法：开发期间使用`compile('org.springframework.boot:spring-boot-starter-tomcat')`，项目上线时编译才使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`
+解决方法：开发期间使用`compile('org.springframework.boot:spring-boot-starter-tomcat')`，项目上线时编译才使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`
 
 #### 打包为 docker 镜像
 
@@ -2755,12 +2752,15 @@ https://waylau.com/docker-spring-boot-gradle/
 ### 使用 Schedule
 
 1)	引入依赖
-    spring boot 的定时任务依赖于 springboot starter，但若使用了 springboot starter web 则无须再添加（已包含）；
+
+	spring boot 的定时任务依赖于 springboot starter，但若使用了 springboot starter web 则无须再添加（已包含）；
 
 2)	启动类启用定时任务
-    在启动类上面加上 @EnableScheduling 即可开启定时任务；
+
+    在 Spring Boot 的主类中加入 @EnableScheduling 注解，启用定时任务的配置；
 
 3)	创建定时任务
+
     在能被 spring 扫描后注入的类（如 @Service、@Component）中创建定时任务，并用 @Scheduled 注解标记，项目启动会自动执行使用了该注解的方法；
     
     例：
@@ -2772,7 +2772,7 @@ https://waylau.com/docker-spring-boot-gradle/
         private int count=0;
 
         @Scheduled(cron="*/6 * * * * ?")
-        private void process(){
+        private void process() {
             System.out.println("this is scheduler task runing  "+(count++));
         }
 
@@ -2818,12 +2818,44 @@ https://waylau.com/docker-spring-boot-gradle/
       @Scheduled(initialDelay=1000, fixedRate=6000) ：第一次延迟 1 秒后执行，之后按 fixedRate 的规则每 6 秒执行一次
       ```
 
-      注：http://412887952-qq-com.iteye.com/blog/2369020 
+4) 更改执行任务的时间
+	
+	http://blog.csdn.net/qq_34125349/article/details/77430956
 
-      若是在应用服务器集群中，spring Schedule 会出现任务多次被调度执行的情况，因为集群的节点之间是不会共享任务信息的，每个节点上的任务都会按时执行。比如我们部署了 3 个实例，三个实例一启动，就会把定时任务都启动，那么在同一个时间点，定时任务会一起执行，也就是会执行 3 次，这样很可能会导致我们的业务出现错误。
-      
-      解决方案：     
-      逻辑分离，就是我们将真正要定时任务处理的逻辑，写成 rest 服务，或者 rpc 服务，然后我们可以新建一个单独的定时任务项目，这个项目应该是没有任何的业务代码的，他纯粹只有定时任务功能，几点启动，或者每隔多少时间启动，启动后，通过 rest 或者 rpc 的方式，调用真正处理逻辑的服务。同时，我们甚至可以不用新建一个项目，我们通过 linux 的 cron 就可以进行。同时，这种方式还有一个好处，比如有些时候，我们的定时任务也会因为某些原因出现问题，没有执行，那么我们就可以通过 curl 或者 wget 等等很多方式，再次定时任务的执行。
+5) 停止、启动任务
+
+	http://blog.csdn.net/qq_34125349/article/details/77430956
+
+NOTE：
+- 集群环境中定时任务存在的问题
+
+	http://412887952-qq-com.iteye.com/blog/2369020 
+
+	若是在应用服务器集群中，spring Schedule 会出现任务多次被调度执行的情况，因为集群的节点之间是不会共享任务信息的，每个节点上的任务都会按时执行。比如我们部署了 3 个实例，三个实例一启动，就会把定时任务都启动，那么在同一个时间点，定时任务会一起执行，也就是会执行 3 次，这样很可能会导致我们的业务出现错误。
+	
+	解决方案：     
+	
+	逻辑分离，就是我们将真正要定时任务处理的逻辑，写成 rest 服务，或者 rpc 服务，然后我们可以新建一个单独的定时任务项目，这个项目应该是没有任何的业务代码的，他纯粹只有定时任务功能，几点启动，或者每隔多少时间启动，启动后，通过 rest 或者 rpc 的方式，调用真正处理逻辑的服务。同时，我们甚至可以不用新建一个项目，我们通过 linux 的 cron 就可以进行。同时，这种方式还有一个好处，比如有些时候，我们的定时任务也会因为某些原因出现问题，没有执行，那么我们就可以通过 curl 或者 wget 等等很多方式，再次定时任务的执行。
+
+- 多个定时任务默认运行在同一个线程池的同一个线程中
+
+	https://www.jianshu.com/p/0db083bf4d39
+
+	Spring Boot 中默认所有的定时任务都是在同一个线程池中的同一个线程来完成的。在实际开发过程中，我们当然不希望所有的任务都运行在一个线程中。
+
+	解决方案：
+
+	通过 ScheduleConfig 配置文件实现 SchedulingConfigurer 接口，并重写 setSchedulerfang 方法：
+	```java
+	@Configuration
+	public class ScheduleConfig implements SchedulingConfigurer {
+		@Override
+		public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+			
+			taskRegistrar.setScheduler(Executors.newScheduledThreadPool(5));
+		}
+	}
+	```
 
 ### 使用 Quartz
 

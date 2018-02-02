@@ -295,8 +295,8 @@ HTTP transport 则需要更多请求。例如，Ajax/XHR streaming 依赖于一�
 @Override
 public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
    registry.addHandler(myWebSocketHandler, "/ws").addInterceptors(new MyHandShake ());
-   registry.addHandler(socketHandler, "/sockjs/socketServer").addInterceptors(new WebSocketInterceptor()).withSockJS()
-.setClientLibraryUrl("//cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js");
+   registry.addHandler(socketHandler, "/sockjs/socketServer").addInterceptors(new WebSocketInterceptor())       .withSockJS()
+    .setClientLibraryUrl("//cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js");
 }
 ```
 或者 XML：
@@ -316,6 +316,7 @@ public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 ```
 使用 sockJS：
+
 创建连接：
 ```javascript
 var sockjs = new SockJS(url, _reserved, options);
