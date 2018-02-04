@@ -1,17 +1,18 @@
 - [SublimeText Note](#sublimetext-note)
-  - [PackageControl](#packagecontrol)
-  - [安装插件](#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6)
-  - [配置文件](#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
-  - [快捷键](#%E5%BF%AB%E6%8D%B7%E9%94%AE)
+	- [PackageControl](#packagecontrol)
+	- [安装插件](#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6)
+	- [配置文件](#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+	- [快捷键](#%E5%BF%AB%E6%8D%B7%E9%94%AE)
 
 # SublimeText Note
 
 ## PackageControl
-https://packagecontrol.io/installation#st3 
+
+https://packagecontrol.io/installation
 
 使用 ctrl+`调出 console，执行代码：
 ```python
-import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
 ```
 即可完成 PackageControl 的安装。
 
@@ -114,6 +115,7 @@ chrome 中扩展程序设置：
 
 ## 快捷键
 
+```
 Ctrl+Shift+P：打开命令面板
 Ctrl+P：搜索项目中的文件
 Ctrl+W：关闭当前打开文件
@@ -141,3 +143,4 @@ Alt+ 数字：切换打开第 N 个文件
 Shift+ 右键拖动：光标多不，用来更改或插入列内容
 Ctrl+ 依次左键点击或选取，可需要编辑的多个位置
 Ctrl+Shift+ 上下键：替换行
+```

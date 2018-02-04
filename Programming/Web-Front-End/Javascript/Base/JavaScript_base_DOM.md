@@ -29,6 +29,9 @@
       - [解绑监听函数](#%E8%A7%A3%E7%BB%91%E7%9B%91%E5%90%AC%E5%87%BD%E6%95%B0)
         - [覆盖 Element 节点的事件属性 `onXxx`](#%E8%A6%86%E7%9B%96-element-%E8%8A%82%E7%82%B9%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%B1%9E%E6%80%A7-onxxx)
         - [EventTarget 接口的 removeEventListener 方法](#eventtarget-%E6%8E%A5%E5%8F%A3%E7%9A%84-removeeventlistener-%E6%96%B9%E6%B3%95)
+    - [事件委托 / 代理](#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98-%E4%BB%A3%E7%90%86)
+      - [适用场景](#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF)
+      - [局限](#%E5%B1%80%E9%99%90)
     - [事件种类](#%E4%BA%8B%E4%BB%B6%E7%A7%8D%E7%B1%BB)
       - [customEvent](#customevent)
       - [鼠标事件](#%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6)
@@ -544,16 +547,18 @@ formData 对象是"只写"的，也就是说，你可以把数据添加到该对
 ## 事件 ##
 事件是一种异步编程的实现方式，本质上是程序各个组成部分之间的通信，在传统软件工程中被称为观察者模式，支持页面行为与页面外观的松散耦合；
 
-### 事件流 ###
+### 事件流
 事件流指的是从页面中接受事件的顺序；
 
-#### 事件冒泡 ####
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/3/3126857653ac2adc305eac46d771b4ce.jpg)
+
+#### 事件冒泡 
 事件冒泡指的是事件开始时由最具体的元素接受，然后沿 DOM Tree 逐级向上传播，在每一级节点上都会发生，直至传播到 document 对象；
 
-#### 事件捕获 ####
+#### 事件捕获 
 事件捕获指的是事件开始时由最不具体的元素接受，然后沿 DOM Tree 逐级向下传播，在每一级节点上都会发生，直至传播到事件的实际目标；
 
-#### DOM 事件流 ####
+#### DOM 事件流 
 
 “DOM2 级事件” 规定的事件流包括三个阶段：   
 第一阶段：从 window 对象传导到目标节点，称为 “捕获阶段”（capture phase）；   
@@ -699,6 +704,55 @@ NOTE：
 - 一个 EventTarget 上的 EventListener 被移除之后，如果此事件正在执行，会立即停止。 EventListener 移除之后不能被触发，但可以重新绑定。
 
 - 使用 removeEventListener() 移除 EventTarget 上未绑定的 EventListener 不会起任何作用。
+
+### 事件委托 / 代理
+
+https://zhuanlan.zhihu.com/p/26536815
+
+事件委托，就是把一个元素响应事件（click、keydown......）的函数委托到另一个元素。
+
+一般来讲，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，当事件响应到需要绑定的元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数。
+
+#### 适用场景
+
+- 为大量元素绑定事件
+
+  假设有一个列表，列表之中有大量的列表项，我们需要在点击列表项的时候响应一个事件：
+  ```html
+  <ul id="list">
+    <li>item 1</li>
+    <li>item 2</li>
+    <li>item 3</li>
+    ......
+    <li>item n</li>
+  </ul>
+  <!-- ...... 代表中间还有未知数个 li -->
+  ```
+  如果给每个列表项一一都绑定一个函数，那对于内存消耗是非常大的，效率上需要消耗很多性能。因此，比较好的方法就是把这个点击事件绑定到他的父层，也就是 `ul` 上，然后在执行事件的时候再通过判断 target 的一些属性（比如：nodeName，id 等等）或使用 `Element.matches()` 方法匹配判断目标元素。
+  ```javascript
+  // 给父层元素绑定事件
+  document.getElementById('list').addEventListener('click', function (e) {
+    // 兼容性处理
+    var event = e || window.event;
+    var target = event.target || event.srcElement;
+    // 判断是否匹配目标元素
+    if (target.nodeName.toLocaleLowerCase === 'li') {
+      console.log('the content is: ', target.innerHTML);
+    }
+  });
+  ```
+
+- 动态绑定事件
+
+  在很多时候，我们需要通过 AJAX 或者用户操作动态的增加或者去除列表项元素，那么在每一次改变的时候都需要重新给新增的元素绑定事件，给即将删去的元素解绑事件。
+
+  如果用了事件委托就没有这种麻烦了，因为事件是绑定在父层的，和目标元素的增减是没有关系的，执行到目标元素是在真正响应执行事件函数的过程中去匹配的。
+
+#### 局限
+
+focus、blur 之类的事件本身没有事件冒泡机制，所以无法委托。
+
+mousemove、mouseout 这样的事件，虽然有事件冒泡，但是只能不断通过位置去计算定位，对性能消耗高，因此也是不适合于事件委托。
 
 ### 事件种类
 
