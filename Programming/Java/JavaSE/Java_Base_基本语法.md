@@ -181,7 +181,6 @@ $ javac --version
 ```
 javac 9.0.1
 
-
 #### 2.2.2. Ubuntu
 
 -	APT 安装
@@ -397,6 +396,18 @@ Java 中提供了三个特殊的浮点数值：
   `// \u00A0 is a newline`会导致语法错误，因为、u00A0 会被替换为一个换行符。
 
   `// look inside c:\users`会导致语法错误，因为、u 后没有跟着 4 个十六进制数。
+
+- 在表示用户密码时，使用 `char []` 代替 `String` 是更安全的做法。
+
+  https://stackoverflow.com/questions/8881291/why-is-char-preferred-over-string-for-passwords?rq=1
+
+  **Strings are immutable. That means once you've created the String, if another process can dump memory, there's no way (aside from reflection) you can get rid of the data before garbage collection kicks in.**
+
+  **With an array, you can explicitly wipe the data after you're done with it. You can overwrite the array with anything you like, and the password won't be present anywhere in the system, even before garbage collection.**
+
+  So yes, this is a security concern - **but even using char[] only reduces the window of opportunity for an attacker**, and it's only for this specific type of attack.
+
+  It's possible that arrays being moved by the garbage collector will leave stray copies of the data in memory. I believe this is implementation-specific - the garbage collector may clear all memory as it goes, to avoid this sort of thing. Even if it does, there's still the time during which the char[] contains the actual characters as an attack window.
 
 #### 6.1.4. boolean
 
@@ -658,7 +669,7 @@ case 标签可以是：
 
   - System.out.println()
 
-  - System.out.printf("<格式化字符串>", <参数表>)
+  - System.out.printf("《格式化字符串》", 《参数表》)
     
     <!-- TODO: http://www.itzhai.com/java-notes-java-in-the-formatted-output-formatter-class-presentation.html#read-more -->
 
@@ -666,33 +677,33 @@ case 标签可以是：
     - int/long/short/byte : 	
       - %d 按无符号十进制整数输出
       - %u 按有符号十进制整数输出
-      - %o 按无符号八进制整数输出(不输出前缀0）
-      - %x/%X 按无符号十六进制整数输出(不输出前缀0x）
+      - %o 按无符号八进制整数输出（不输出前缀 0）
+      - %x/%X 按无符号十六进制整数输出（不输出前缀 0x）
     - double/float :		
       - %f 按定点浮点数输出
       - %e/%E 按指数浮点数（科学计数法）输出
-      - %g/%G	按通常浮点数输出（有效位数，如：%8g表示单精度浮点数保留8位有效数字。双精度用lg）
+      - %g/%G	按通常浮点数输出（有效位数，如：%8g 表示单精度浮点数保留 8 位有效数字。双精度用 lg）
       - %a/%A 按十六进制浮点数输出
     - String：%s（输出字符串中的字符直至字符串中的空字符（字符串以'\0‘结尾，这个'\0'即空字符））
-    - char：%c（可以把输入的数字按照ASCII码相应转换为对应的字符）
-    - 指针值：%p（以16进制形式输出指针）
+    - char：%c（可以把输入的数字按照 ASCII 码相应转换为对应的字符）
+    - 指针值：%p（以 16 进制形式输出指针）
     - boolean：%b/%B
-    - 时间：%t+转换符（以t开始，以表中人以字母结束的两个字母格式）（详见下）
+    - 时间：%t+ 转换符（以 t 开始，以表中人以字母结束的两个字母格式）（详见下）
 
     - %%		输出百分号
     - %.3f 	保留三位小数
-    - %6d  	占6位（默认右对齐）（以空格补全）
-    - %06d 	占6位（默认右对齐）（以0补全）
-    - %-6d	占6位（左对齐）（以空格补全）
+    - %6d  	占 6 位（默认右对齐）（以空格补全）
+    - %06d 	占 6 位（默认右对齐）（以 0 补全）
+    - %-6d	占 6 位（左对齐）（以空格补全）
     - %+d  	输出时显示正负号
-    - %,f		输出时用“，”分组（如：("%,f", 9999.99)  输出9,999.990000）
-    - %#o  	输出时显示前缀o
-    - %#x  	输出时显示前缀0x
+    - %,f		输出时用“，”分组（如：("%,f", 9999.99)  输出 9,999.990000）
+    - %#o  	输出时显示前缀 o
+    - %#x  	输出时显示前缀 0x
     - %#e		输出时一定显示小数点
-    - %#g		输出时保留尾部的0
-    - %(f		输出时用括号包含负数（如：("%(f", -123.321)  输出(123.321000)）
-    - %<d  	输出时格式化前一个转换符描述的变量（如： (“%f还有%<.2f”, 99.45) 输出99.450000还有99.45）
-    - %i$d  表示第i个变量（若无指定，下一个输出第i+1个变量，可能会越界）
+    - %#g		输出时保留尾部的 0
+    - %(f		输出时用括号包含负数（如：("%(f", -123.321)  输出 (123.321000)）
+    - %<d  	输出时格式化前一个转换符描述的变量（如： (“%f 还有 %<.2f”, 99.45) 输出 99.450000 还有 99.45）
+    - %i$d  表示第 i 个变量（若无指定，下一个输出第 i+1 个变量，可能会越界）
 
     - 时间日期格式化输出：
 
@@ -706,7 +717,7 @@ case 标签可以是：
       }
       ```
 
-    用printf判断闰年：
+    用 printf 判断闰年：
     ```java
     System.out.printf("%s",a%(a%100?4:400)?"NO":"YES");
     ```
