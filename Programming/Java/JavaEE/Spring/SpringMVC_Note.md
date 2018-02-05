@@ -1,40 +1,40 @@
-<style>
+<!-- <style>
 img {
     box-shadow: 0 0 15px #111;
 }
-</style>
+</style> -->
 
 - [Spring MVC Note](#spring-mvc-note)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [Controller](#controller)
-        - [@RequestBody](#requestbody)
-        - [@ResponseBody](#responsebody)
-            - [响应 JSON 数据](#%E5%93%8D%E5%BA%94-json-%E6%95%B0%E6%8D%AE)
-            - [响应 XML 数据](#%E5%93%8D%E5%BA%94-xml-%E6%95%B0%E6%8D%AE)
-            - [Accpect 与 produces](#accpect-%E4%B8%8E-produces)
-            - [ContentType 与 consumes](#contenttype-%E4%B8%8E-consumes)
-            - [响应媒体类型](#%E5%93%8D%E5%BA%94%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B)
-        - [HttpMessageConverter](#httpmessageconverter)
-            - [自定义 HttpMessageConverter](#%E8%87%AA%E5%AE%9A%E4%B9%89-httpmessageconverter)
-        - [@RequestMapping](#requestmapping)
-            - [支持的方法参数类型](#%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B)
-            - [支持的返回类型](#%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B)
-        - [@SessionAttributes](#sessionattributes)
-        - [处理 PUT/DELETE/PATCH 请求](#%E5%A4%84%E7%90%86-putdeletepatch-%E8%AF%B7%E6%B1%82)
-    - [拦截器](#%E6%8B%A6%E6%88%AA%E5%99%A8)
-    - [事务控制](#%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6)
-    - [Refer Links](#refer-links)
+    - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+    - [2. Controller](#2-controller)
+        - [2.1. @RequestBody](#21-requestbody)
+        - [2.2. @ResponseBody](#22-responsebody)
+            - [2.2.1. 响应 JSON 数据](#221-%E5%93%8D%E5%BA%94-json-%E6%95%B0%E6%8D%AE)
+            - [2.2.2. 响应 XML 数据](#222-%E5%93%8D%E5%BA%94-xml-%E6%95%B0%E6%8D%AE)
+            - [2.2.3. Accpect 与 produces](#223-accpect-%E4%B8%8E-produces)
+            - [2.2.4. ContentType 与 consumes](#224-contenttype-%E4%B8%8E-consumes)
+            - [2.2.5. 响应媒体类型](#225-%E5%93%8D%E5%BA%94%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B)
+        - [2.3. HttpMessageConverter](#23-httpmessageconverter)
+            - [2.3.1. 自定义 HttpMessageConverter](#231-%E8%87%AA%E5%AE%9A%E4%B9%89-httpmessageconverter)
+        - [2.4. @RequestMapping](#24-requestmapping)
+            - [2.4.1. 支持的方法参数类型](#241-%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B)
+            - [2.4.2. 支持的返回类型](#242-%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B)
+        - [2.5. @SessionAttributes](#25-sessionattributes)
+        - [2.6. 处理 PUT/DELETE/PATCH 请求](#26-%E5%A4%84%E7%90%86-putdeletepatch-%E8%AF%B7%E6%B1%82)
+    - [3. 拦截器](#3-%E6%8B%A6%E6%88%AA%E5%99%A8)
+    - [4. 事务控制](#4-%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6)
+    - [5. Refer Links](#5-refer-links)
 
 # Spring MVC Note 
-## 概述
+## 1. 概述
 
 Spring MVC 是一个模型 - 视图 - 控制器（MVC）的 Web 框架建立在中央前端控制器 servlet（DispatcherServlet），它负责发送每个请求到合适的处理程序，使用视图来最终返回响应结果的概念。Spring MVC 是 Spring 产品组合的一部分，它享有 Spring IoC 容器紧密结合 Spring 松耦合等特点，因此它有 Spring 的所有优点。
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/7baf39de923c5f2b02010d5bd1b9e916.jpg)
 
-## Controller
+## 2. Controller
 
-### @RequestBody 
+### 2.1. @RequestBody
 
 @RequestBody 将 HTTP 请求正文转换为适合的 HttpMessageConverter 对象。
 
@@ -59,13 +59,13 @@ Spring MVC 是一个模型 - 视图 - 控制器（MVC）的 Web 框架建立在�
     
     request 的 body 部分的数据编码格式由 header 部分的 Content-Type 指定；
 
-### @ResponseBody
+### 2.2. @ResponseBody
 
 @ResponseBody 将内容或对象作为 HTTP 响应正文返回，并调用适合 HttpMessageConverter 的 Adapter 转换对象，写入输出流。
 
 GET 模式下，可以使用 @ResponseBody 注解，Controller 返回的 Java 对象可以自动被转换成对应的 XML 或者 JSON 数据。同时使用 @PathVariable 绑定输入参数，非常适合 Restful 风格，且隐藏了参数与路径的关系，可以提升网站的安全性，静态化页面，降低恶意攻击风险。
 
-#### 响应 JSON 数据
+#### 2.2.1. 响应 JSON 数据
 
 例：
 
@@ -106,7 +106,7 @@ public class BookController {
 ```
 则控制器会直接返回 POJO，POJO 自动转化为 json 格式。
 
-#### 响应 XML 数据
+#### 2.2.2. 响应 XML 数据
 
 **JSON 可直接自动转换，而 XML 需要在 entity 中标注 @XmlRootElement 和 @XmlElement 等**。
 
@@ -120,7 +120,7 @@ public class Book {
 ```
 在我们未对 web 层的 BookController 做任何改动之前，尝试访问 localhost:8080/book/2 时，会发现得到的结果仍然是前面的 JSON 对象。这是因为 Book 对象如今既可以被解析为 XML，也可以被解析为 JSON，想让 RestController 返回 XML 解析结果，有以下实现方法：
 
-#### Accpect 与 produces
+#### 2.2.3. Accpect 与 produces
 
 - http 客户端使用 **Accpect** 指定接收的返回结果类型
 
@@ -172,7 +172,7 @@ public class Book {
 
 在接口交互时，最良好的对接方式，当然是客户端指定 Accpect，同时服务端也指定 produces，这样可以避免模棱两可的请求响应，避免出现意想不到的对接结果。
 
-#### ContentType 与 consumes
+#### 2.2.4. ContentType 与 consumes
 
 和 Accpect&produces 相反，这两个参数是与用于限制请求的。
 
@@ -182,7 +182,7 @@ public class Book {
 
 一般而言，consumes 与 produces 对请求响应媒体类型起到的限制作用，即：窄化。
 
-#### 响应媒体类型
+#### 2.2.5. 响应媒体类型
 
 常见的 HTTP 响应媒体类型：
 
@@ -200,7 +200,7 @@ public class Book {
 
 在 JAVA 中，提供了 MediaType 这样的抽象，来与 http 的媒体类型进行对应。‘/’之前的名词，如 text，application 被称为类型（type），‘/’之后被称为子类型 (subType)。
 
-### HttpMessageConverter
+### 2.3. HttpMessageConverter
 
 HttpMessageConverter 是一个顶级接口，该接口完成了 spring 中众多实体类等复杂类型的数据转换以及与媒体类型的对应。
 
@@ -220,15 +220,15 @@ public interface HttpMessageConverter<T> {
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/37b8d8680f2e5bab95e513ca34d3c78e.jpg)
 
-#### 自定义 HttpMessageConverter
+#### 2.3.1. 自定义 HttpMessageConverter
 
 参考：https://lexburner.github.io/2017/08/30/%E8%A7%A3%E6%9E%90Spring%E4%B8%AD%E7%9A%84ResponseBody%E5%92%8CRequestBody/
 
-### @RequestMapping
+### 2.4. @RequestMapping
 
 @RequestMapping 可用于标记处理器方法支持的**方法参数**和**返回类型**。
 
-#### 支持的方法参数类型
+#### 2.4.1. 支持的方法参数类型
 
 - HttpServlet
 
@@ -280,7 +280,7 @@ public interface HttpMessageConverter<T> {
 
 	Spring 封装的 Errors 和 BindingResult 对象。 这两个对象参数必须紧接在需要验证的实体对象参数之后，它里面包含了实体对象的验证结果。
 
-#### 支持的返回类型
+#### 2.4.2. 支持的返回类型
 
 参见：http://blog.csdn.net/mafan121/article/details/45060135
 
@@ -307,11 +307,11 @@ TODO：
 
 SpringMVC 未指定跳转页面时，有 @ResponseBody 注解则会根据请求的路径最后 / 后的字段去掉后缀作为跳转的文件名；
 
-### @SessionAttributes
+### 2.5. @SessionAttributes
 
 @SessionAttributes 一般是标记在 Controller 类上的，可以通过名称、类型或者名称加类型的形式来指定哪些属性是需要存放在 session 中的。
 
-### 处理 PUT/DELETE/PATCH 请求
+### 2.6. 处理 PUT/DELETE/PATCH 请求
 
 浏览器的 form 表单只支持 GET 和 POST 请求，而 DELETE 和 PUT 请求并不支持。为了解决这个问题，Spring MVC 提供了一个 HiddenHttpMethodFilter，可以将带有_method 参数的 POST 请求转换为 PUT 或 DELETE 请求。使用 Spring Boot 时，它已经被默认配置生效了。
 
@@ -334,7 +334,7 @@ SpringMVC 未指定跳转页面时，有 @ResponseBody 注解则会根据请求�
 
 需要注意的是，_method 字段只是用于提示 Spring MVC 框架我们发送的请求应该作为什么方法来处理，所以将其设为 hidden，让用户不可见。
 
-## 拦截器
+## 3. 拦截器
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/5fbda7c49c4a0995c1f8aea7925af43c.jpg)
 
@@ -342,10 +342,10 @@ SpringMVC 未指定跳转页面时，有 @ResponseBody 注解则会根据请求�
 - 过滤器依赖于 Servlet 容器，基于回调函数，过滤范围大
 - 拦截器依赖于框架容器，基于反射机制，只过滤请求
 
-## 事务控制
+## 4. 事务控制
 
 通常建议将事务放在 service 层，因为在同一个事务中可能会对多个表进行操作（即调用多个 Dao），将事务放在 Dao 层的话不便于操作。
 
-## Refer Links
+## 5. Refer Links
 
 [解析 Spring 中的 ResponseBody 和 RequestBody](https://lexburner.github.io/2017/08/30/%E8%A7%A3%E6%9E%90Spring%E4%B8%AD%E7%9A%84ResponseBody%E5%92%8CRequestBody)

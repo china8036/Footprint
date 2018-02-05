@@ -1,59 +1,59 @@
 - [ECMAScript 6 NOTE](#ecmascript-6-note)
-  - [变量扩展语法](#%E5%8F%98%E9%87%8F%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
-    - [let 和 const](#let-%E5%92%8C-const)
-    - [解构赋值](#%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
-      - [数组的解构赋值](#%E6%95%B0%E7%BB%84%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
-      - [对象的解构赋值](#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
-      - [其它数据类型的解构赋值](#%E5%85%B6%E5%AE%83%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
-      - [圆括号问题](#%E5%9C%86%E6%8B%AC%E5%8F%B7%E9%97%AE%E9%A2%98)
-      - [应用](#%E5%BA%94%E7%94%A8)
-    - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
-  - [函数扩展语法](#%E5%87%BD%E6%95%B0%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
-    - [name 属性](#name-%E5%B1%9E%E6%80%A7)
-    - [默认参数](#%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0)
-    - [变长参数 （rest） 和扩展运算符](#%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0-%EF%BC%88rest%EF%BC%89-%E5%92%8C%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6)
-    - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
-      - [基本使用](#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
-      - [没有 this、arguments、caller](#%E6%B2%A1%E6%9C%89-this%E3%80%81arguments%E3%80%81caller)
-      - [没有 prototype 属性](#%E6%B2%A1%E6%9C%89-prototype-%E5%B1%9E%E6%80%A7)
-      - [不可被 new](#%E4%B8%8D%E5%8F%AF%E8%A2%AB-new)
-      - [不适用 yield](#%E4%B8%8D%E9%80%82%E7%94%A8-yield)
-      - [可定义为递归函数](#%E5%8F%AF%E5%AE%9A%E4%B9%89%E4%B8%BA%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0)
-      - [应用场景](#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF)
-    - [装饰器函数（Decorator）](#%E8%A3%85%E9%A5%B0%E5%99%A8%E5%87%BD%E6%95%B0%EF%BC%88decorator%EF%BC%89)
-  - [数组扩展语法](#%E6%95%B0%E7%BB%84%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
-  - [类的扩展语法](#%E7%B1%BB%E7%9A%84%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
-    - [类的定义](#%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89)
-    - [构造函数](#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
-    - [原型方法](#%E5%8E%9F%E5%9E%8B%E6%96%B9%E6%B3%95)
-    - [static 方法](#static-%E6%96%B9%E6%B3%95)
-    - [不会自动装箱](#%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%A3%85%E7%AE%B1)
-    - [类的继承](#%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF)
-    - [Symbol.species](#symbolspecies)
-    - [Mix-ins 混合](#mix-ins-%E6%B7%B7%E5%90%88)
-  - [对象扩展语法](#%E5%AF%B9%E8%B1%A1%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
-    - [属性简写 & 方法简写](#%E5%B1%9E%E6%80%A7%E7%AE%80%E5%86%99-%E6%96%B9%E6%B3%95%E7%AE%80%E5%86%99)
-    - [getter](#getter)
-    - [setter](#setter)
-    - [Object.is()](#objectis)
-    - [Object.assign()](#objectassign)
-    - [Object.keys() & Object.values() & Object.entries()](#objectkeys-objectvalues-objectentries)
-    - [Generator 方法](#generator-%E6%96%B9%E6%B3%95)
-    - [Async 方法](#async-%E6%96%B9%E6%B3%95)
-    - [Async 生成器方法](#async-%E7%94%9F%E6%88%90%E5%99%A8%E6%96%B9%E6%B3%95)
-  - [JavaScript 的第七种数据类型：Symbols](#javascript-%E7%9A%84%E7%AC%AC%E4%B8%83%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9Asymbols)
-  - [数据结构扩展](#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%89%A9%E5%B1%95)
-    - [Set](#set)
-    - [Map](#map)
-  - [遍历器 (Iterator) 与 for-of 循环](#%E9%81%8D%E5%8E%86%E5%99%A8-iterator-%E4%B8%8E-for-of-%E5%BE%AA%E7%8E%AF)
-    - [遍历方法的发展](#%E9%81%8D%E5%8E%86%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%91%E5%B1%95)
-    - [for-of 循环](#for-of-%E5%BE%AA%E7%8E%AF)
-    - [遍历器](#%E9%81%8D%E5%8E%86%E5%99%A8)
-  - [模块（Module）](#%E6%A8%A1%E5%9D%97%EF%BC%88module%EF%BC%89)
-    - [export](#export)
-    - [import](#import)
-    - [跨模块常量](#%E8%B7%A8%E6%A8%A1%E5%9D%97%E5%B8%B8%E9%87%8F)
-  - [Refer Links](#refer-links)
+  - [1. 变量扩展语法](#1-%E5%8F%98%E9%87%8F%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
+    - [1.1. let 和 const](#11-let-%E5%92%8C-const)
+    - [1.2. 解构赋值](#12-%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
+      - [1.2.1. 数组的解构赋值](#121-%E6%95%B0%E7%BB%84%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
+      - [1.2.2. 对象的解构赋值](#122-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
+      - [1.2.3. 其它数据类型的解构赋值](#123-%E5%85%B6%E5%AE%83%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC)
+      - [1.2.4. 圆括号问题](#124-%E5%9C%86%E6%8B%AC%E5%8F%B7%E9%97%AE%E9%A2%98)
+      - [1.2.5. 应用](#125-%E5%BA%94%E7%94%A8)
+    - [1.3. 模板字符串](#13-%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
+  - [2. 函数扩展语法](#2-%E5%87%BD%E6%95%B0%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
+    - [2.1. name 属性](#21-name-%E5%B1%9E%E6%80%A7)
+    - [2.2. 默认参数](#22-%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0)
+    - [2.3. 变长参数 （rest） 和扩展运算符](#23-%E5%8F%98%E9%95%BF%E5%8F%82%E6%95%B0-%EF%BC%88rest%EF%BC%89-%E5%92%8C%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6)
+    - [2.4. 箭头函数](#24-%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
+      - [2.4.1. 基本使用](#241-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
+      - [2.4.2. 没有 this、arguments、caller](#242-%E6%B2%A1%E6%9C%89-this%E3%80%81arguments%E3%80%81caller)
+      - [2.4.3. 没有 prototype 属性](#243-%E6%B2%A1%E6%9C%89-prototype-%E5%B1%9E%E6%80%A7)
+      - [2.4.4. 不可被 new](#244-%E4%B8%8D%E5%8F%AF%E8%A2%AB-new)
+      - [2.4.5. 不适用 yield](#245-%E4%B8%8D%E9%80%82%E7%94%A8-yield)
+      - [2.4.6. 可定义为递归函数](#246-%E5%8F%AF%E5%AE%9A%E4%B9%89%E4%B8%BA%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0)
+      - [2.4.7. 应用场景](#247-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF)
+    - [2.5. 装饰器函数（Decorator）](#25-%E8%A3%85%E9%A5%B0%E5%99%A8%E5%87%BD%E6%95%B0%EF%BC%88decorator%EF%BC%89)
+  - [3. 数组扩展语法](#3-%E6%95%B0%E7%BB%84%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
+  - [4. 类的扩展语法](#4-%E7%B1%BB%E7%9A%84%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
+    - [4.1. 类的定义](#41-%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89)
+    - [4.2. 构造函数](#42-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
+    - [4.3. 原型方法](#43-%E5%8E%9F%E5%9E%8B%E6%96%B9%E6%B3%95)
+    - [4.4. static 方法](#44-static-%E6%96%B9%E6%B3%95)
+    - [4.5. 不会自动装箱](#45-%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E8%A3%85%E7%AE%B1)
+    - [4.6. 类的继承](#46-%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF)
+    - [4.7. Symbol.species](#47-symbolspecies)
+    - [4.8. Mix-ins 混合](#48-mix-ins-%E6%B7%B7%E5%90%88)
+  - [5. 对象扩展语法](#5-%E5%AF%B9%E8%B1%A1%E6%89%A9%E5%B1%95%E8%AF%AD%E6%B3%95)
+    - [5.1. 属性简写 & 方法简写](#51-%E5%B1%9E%E6%80%A7%E7%AE%80%E5%86%99-%E6%96%B9%E6%B3%95%E7%AE%80%E5%86%99)
+    - [5.2. getter](#52-getter)
+    - [5.3. setter](#53-setter)
+    - [5.4. Object.is()](#54-objectis)
+    - [5.5. Object.assign()](#55-objectassign)
+    - [5.6. Object.keys() & Object.values() & Object.entries()](#56-objectkeys-objectvalues-objectentries)
+    - [5.7. Generator 方法](#57-generator-%E6%96%B9%E6%B3%95)
+    - [5.8. Async 方法](#58-async-%E6%96%B9%E6%B3%95)
+    - [5.9. Async 生成器方法](#59-async-%E7%94%9F%E6%88%90%E5%99%A8%E6%96%B9%E6%B3%95)
+  - [6. JavaScript 的第七种数据类型：Symbols](#6-javascript-%E7%9A%84%E7%AC%AC%E4%B8%83%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9Asymbols)
+  - [7. 数据结构扩展](#7-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%89%A9%E5%B1%95)
+    - [7.1. Set](#71-set)
+    - [7.2. Map](#72-map)
+  - [8. 遍历器 (Iterator) 与 for-of 循环](#8-%E9%81%8D%E5%8E%86%E5%99%A8-iterator-%E4%B8%8E-for-of-%E5%BE%AA%E7%8E%AF)
+    - [8.1. 遍历方法的发展](#81-%E9%81%8D%E5%8E%86%E6%96%B9%E6%B3%95%E7%9A%84%E5%8F%91%E5%B1%95)
+    - [8.2. for-of 循环](#82-for-of-%E5%BE%AA%E7%8E%AF)
+    - [8.3. 遍历器](#83-%E9%81%8D%E5%8E%86%E5%99%A8)
+  - [9. 模块（Module）](#9-%E6%A8%A1%E5%9D%97%EF%BC%88module%EF%BC%89)
+    - [9.1. export](#91-export)
+    - [9.2. import](#92-import)
+    - [9.3. 跨模块常量](#93-%E8%B7%A8%E6%A8%A1%E5%9D%97%E5%B8%B8%E9%87%8F)
+  - [10. Refer Links](#10-refer-links)
 
 # ECMAScript 6 NOTE
 
@@ -63,9 +63,9 @@ ECMA 的第 39 号技术专家委员会（Technical Committee 39，简称 [TC39]
 
 各大浏览器的最新版本，对 ES6 的支持可以在[这里](kangax.github.io/es5-compat-table/es6/) 查看。
 
-## 变量扩展语法
+## 1. 变量扩展语法
 
-### let 和 const
+### 1.1. let 和 const
 
 ES5 只有全局作用域和函数作用域，没有块级作用域。一不小心变量就会被覆盖。
 在 ES6 中，let 和 const 提供了块级作用域，
@@ -78,11 +78,11 @@ ES5 只有全局作用域和函数作用域，没有块级作用域。一不小�
 
 - let 用于定义变量，而 const 用于定义常量，即定义后不能再改变，不能赋值，同样不能变量提升，不可重复声明。
 
-### 解构赋值
+### 1.2. 解构赋值
 
 ES6 允许按照一定的模式匹配，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。
 
-#### 数组的解构赋值
+#### 1.2.1. 数组的解构赋值
 
 数组的元素是按次序排列的，因此对于数组的解构赋值，变量的取值由它的位置决定。
 
@@ -172,7 +172,7 @@ z // []
   let [x = y, y = 1] = [];     // ReferenceError
   ```
 
-#### 对象的解构赋值
+#### 1.2.2. 对象的解构赋值
 
 对象的属性没有次序，因此对于对象的解构赋值，变量必须与属性同名，才能取到正确的值，否则为 undefined:
 ```javascript
@@ -245,7 +245,7 @@ bar // "bbb"
   last // 3
   ```
 
-#### 其它数据类型的解构赋值
+#### 1.2.3. 其它数据类型的解构赋值
 
 解构赋值时，只要等号右边的值不是对象或数组，就先将其转为对象。
 
@@ -280,7 +280,7 @@ bar // "bbb"
 
   根据解构赋值的规则，由于 undefined 和 null 无法转为对象，所以对它们进行解构赋值，都会报错。
 
-#### 圆括号问题
+#### 1.2.4. 圆括号问题
 
 ES6 的规则是，只要有可能导致解构的歧义，就不得使用圆括号。但是，这条规则实际上不那么容易辨别，处理起来相当麻烦。因此，建议只要有可能，就不要在模式中放置圆括号。
 
@@ -291,7 +291,7 @@ ES6 的规则是，只要有可能导致解构的歧义，就不得使用圆括�
 [(parseInt.prop)] = [3]; // 正确
 ```
 
-#### 应用
+#### 1.2.5. 应用
 
 - 使用解构赋值避免为属性创建冗余的临时变量或对象：
   ```javascript
@@ -374,16 +374,16 @@ ES6 的规则是，只要有可能导致解构的歧义，就不得使用圆括�
   const { SourceMapConsumer, SourceNode } = require("source-map");
   ```
 
-### 模板字符串
+### 1.3. 模板字符串
 
 ```javascript
 let a=1,b=2;
 docuemnt.getElementById('test').appendChild(`<b>${a}</b><b>${b}</b>`);// 使用反引号``创建一个模板字符串，在模板字符串中使用 ${x} 引用并输出变量值
 ```
 
-## 函数扩展语法
+## 2. 函数扩展语法
 
-### name 属性
+### 2.1. name 属性
 
 函数的 name 属性，返回函数名。
 
@@ -398,7 +398,7 @@ const person = {
 person.sayName.name   // "sayName"
 ```
 
-### 默认参数
+### 2.2. 默认参数
 
 ```javascript
 function log(x,y='小明'){
@@ -409,7 +409,7 @@ log('hello','xiaoming');    //hello xiaoming
 log('nihao','');    //nihao
 ```
 
-### 变长参数 （rest） 和扩展运算符
+### 2.3. 变长参数 （rest） 和扩展运算符
 
 ```javascript
 let fun = function(a,...other){  // 定义函数使用 rest 参数 获取其余的参数
@@ -433,11 +433,11 @@ Math.max(...[14,3,7]);
 Math.max(14,3,7)
 ```
 
-### 箭头函数
+### 2.4. 箭头函数
 
 [MDN Arrow Function](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
-#### 基本使用
+#### 2.4.1. 基本使用
 
 ```javascript
 //es5
@@ -508,7 +508,7 @@ var sum = (num1, num2) =>  num1 + num2;
   callback = callback || (() => {});    // ok
   ```
 
-#### 没有 this、arguments、caller
+#### 2.4.2. 没有 this、arguments、caller
 
 箭头函数的设计来源可以追溯到 lambda 演算与图灵机的思想：数学家们喜欢用纯函数式编程语言，纯函数的特点是没有副作用，给予特定的输入，总是产生确定的输出，甚至有些情况下通过输出能够反推输入。要实现纯函数，必须使函数的执行过程不依赖于任何外部状态，整个函数就像一个数学公式，给定一套输入参数，就有一个固定的输出值，不随外部环境而变化。
 
@@ -562,14 +562,14 @@ Object.defineProperty(obj, "b", {
 });
 ```
 
-#### 没有 prototype 属性
+#### 2.4.3. 没有 prototype 属性
 
 ```javascript
 var Foo = () => {};
 console.log(Foo.prototype); // undefined
 ```
 
-#### 不可被 new
+#### 2.4.4. 不可被 new
 
 箭头函数不能用作构造器，和 new 一起用会抛出错误。
 
@@ -578,18 +578,18 @@ var Foo = () => {};
 var foo = new Foo(); // TypeError: Foo is not a constructor
 ```
 
-#### 不适用 yield
+#### 2.4.5. 不适用 yield
 
 yield 关键字通常不能在箭头函数中使用（除非是嵌套在允许使用的函数内）。因此，箭头函数不能用作生成器。
 
-#### 可定义为递归函数
+#### 2.4.6. 可定义为递归函数
 
 ```javascript
 var fact = (x) => ( x==0 ?  1 : x*fact(x-1) );
 fact(5);       // 120
 ```
 
-#### 应用场景
+#### 2.4.7. 应用场景
 
 - 箭头函数适合于无复杂逻辑或者无副作用的纯函数场景下，例如用在 map、reduce、filter 的回调函数定义中；
 
@@ -616,11 +616,11 @@ fact(5);       // 120
 
 - 箭头函数最吸引人的地方是简洁。在有多层函数嵌套的情况下，箭头函数的简洁性并没有很大的提升，反而影响了函数的作用范围的识别度，这种情况不建议使用箭头函数。
 
-### 装饰器函数（Decorator）
+### 2.5. 装饰器函数（Decorator）
 
 TODO:
 
-## 数组扩展语法
+## 3. 数组扩展语法
 
 使用 `...` 复制数组：
 ```javascript
@@ -635,11 +635,11 @@ for (i = 0; i < len; i++) {
 const itemsCopy = [...items];
 ```
 
-## 类的扩展语法
+## 4. 类的扩展语法
 
 ES6 中引入了 class 关键字，支持使用 class 直接定义一个类，但实质上这只是 JavaScript 现有的基于原型的继承的语法糖。 类语法不是向 JavaScript 引入一个新的面向对象的继承模型，但提供了一个更简单和更清晰的语法来创建对象并处理继承。
 
-### 类的定义
+### 4.1. 类的定义
 
 推荐总是使用 class 关键字，避免直接修改 prototype：
 ```javascript
@@ -696,13 +696,13 @@ NOTE:
   };
   ```
 
-### 构造函数
+### 4.2. 构造函数
 
 构造函数方法是一个特殊的方法，其用于创建和初始化使用一个类创建的一个对象。一个类只能拥有一个名为 “constructor”的特殊方法。如果类包含多个构造函数的方法，则将抛出一个 SyntaxError 。
 
 一个构造函数可以使用 super 关键字来调用一个父类的构造函数。
 
-### 原型方法
+### 4.3. 原型方法
 
 ```javascript
 class Rectangle {
@@ -755,7 +755,7 @@ luke.jump()
   .setHeight(20);
 ```
 
-### static 方法
+### 4.4. static 方法
 
 static 关键字用来定义一个类的一个静态方法。
 
@@ -784,7 +784,7 @@ const p2 = new Point(10, 10);
 console.log(Point.distance(p1, p2));
 ```
 
-### 不会自动装箱
+### 4.5. 不会自动装箱
 
 当一个对象调用静态或原型方法时，如果该对象没有“this”值（或“this”作为布尔，字符串，数字，未定义或 null) ，那么“this”值在被调用的函数内部将为 undefined。不会发生自动装箱。
 
@@ -810,7 +810,7 @@ let eat = Animal.eat;
 eat(); // undefined
 ```
 
-### 类的继承
+### 4.6. 类的继承
 
 - ES6 中提供了 extends 关键字，在类声明或类表达式中直接继承另一个类。
 
@@ -865,7 +865,7 @@ eat(); // undefined
   d.speak();//Mitzie makes a noise. + 20kg weight. 
   ```
 
-### Symbol.species
+### 4.7. Symbol.species
 
 你可能希望在派生数组类 MyArray 中返回 Array 对象。这种类 / 种类模式允许你覆盖默认的构造函数。
 
@@ -884,7 +884,7 @@ console.log(mapped instanceof Array);
 // true
 ```
 
-### Mix-ins 混合
+### 4.8. Mix-ins 混合
 
 抽象子类或者 mix-ins 是类的模板。 一个 ECMAScript 类只能有一个单超类，所以想要从工具类来多重继承的行为是不可能的。子类继承的只能是父类提供的功能性。因此，例如，从工具类的多重继承是不可能的。该功能必须由超类提供。
 
@@ -902,9 +902,9 @@ class Foo { }
 class Bar extends calculatorMixin(randomizerMixin(Foo)) { }
 ```
 
-## 对象扩展语法
+## 5. 对象扩展语法
 
-### 属性简写 & 方法简写
+### 5.1. 属性简写 & 方法简写
 
 从 ECMAScript 2015 开始，在对象初始器中引入了一种更简短定义方法的语法，这是一种把方法名直接赋给函数的简写方式。
 
@@ -988,7 +988,7 @@ getPoint()
 // {x:1, y:10}
 ```
 
-### getter
+### 5.2. getter
 
 get 语法将对象属性绑定到查询该属性时将被调用的函数。
 
@@ -1022,7 +1022,7 @@ delete obj.latest;// true
 console.log(obj.latest);// undefined
 ```
 
-### setter
+### 5.3. setter
 
 当尝试设置属性时，set 语法将对象属性绑定到要调用的函数。
 
@@ -1096,7 +1096,7 @@ var obj = {
 };
 ```
 
-### Object.is()
+### 5.4. Object.is()
 
 ES5 比较两个值是否相等，只有两个运算符：相等运算符（==）和严格相等运算符（===）。它们都有缺点，前者会自动转换数据类型，后者的 NaN 不等于自身，以及 +0 等于 -0。JavaScript 缺乏一种运算，在所有环境中，只要两个值是一样的，它们就应该相等。
 
@@ -1115,7 +1115,7 @@ Object.is(+0, -0) // false
 Object.is(NaN, NaN) // true
 ```
 
-### Object.assign()
+### 5.5. Object.assign()
 
 Object.assign 方法用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）。
 
@@ -1189,7 +1189,7 @@ Object.assign 方法用于对象的合并，将源对象（source）的所有可
   - 合并多个对象。
   - 为属性指定默认值。
 
-### Object.keys() & Object.values() & Object.entries()
+### 5.6. Object.keys() & Object.values() & Object.entries()
 
 ES5 引入了 Object.keys 方法，返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（enumerable）属性的键名。ES2017 引入了跟 Object.keys 配套的 Object.values 和 Object.entries，作为遍历一个对象的补充手段，供 for...of 循环使用。
 
@@ -1210,7 +1210,7 @@ for (let [key, value] of entries(obj)) {
 }
 ```
 
-### Generator 方法
+### 5.7. Generator 方法
 
 如果某个方法的值是一个生成器方法，前面需要加上星号（`* g(){}`可以正常工作，而`g *(){}`不行）。
 
@@ -1241,7 +1241,7 @@ console.log(it.next().value); // 0
 console.log(it.next().value); // 1
 ```
 
-### Async 方法
+### 5.8. Async 方法
 
 ```javascript
 // Using a named property
@@ -1259,7 +1259,7 @@ var obj3 = {
 };
 ```
 
-### Async 生成器方法
+### 5.9. Async 生成器方法
 
 ```javascript
 var obj4 = {
@@ -1280,11 +1280,11 @@ var obj4 = {
 };
 ```
 
-## JavaScript 的第七种数据类型：Symbols
+## 6. JavaScript 的第七种数据类型：Symbols
 
-## 数据结构扩展
+## 7. 数据结构扩展
 
-### Set
+### 7.1. Set
 
 属性：
 ```javascript
@@ -1330,15 +1330,15 @@ let difference = new Set([...a].filter(x => !b.has(x)));
 // Set {1}
 ```
 
-### Map
+### 7.2. Map
 
 TODO:
 
-## 遍历器 (Iterator) 与 for-of 循环
+## 8. 遍历器 (Iterator) 与 for-of 循环
 
 [深入浅出 ES6（二）：迭代器和 for-of 循环](http://www.infoq.com/cn/articles/es6-in-depth-iterators-and-the-for-of-loop)
 
-### 遍历方法的发展
+### 8.1. 遍历方法的发展
 
 - JavaScript 刚萌生时，一般这样实现数组遍历：
   ```javascript
@@ -1366,7 +1366,7 @@ TODO:
   ```
   这是最简洁、最直接的遍历数组元素的语法，它避开了 for-in 循环的所有缺陷，可以正确响应 break、continue 和 return 语句。
 
-### for-of 循环
+### 8.2. for-of 循环
 
 - for-of 循环不仅支持数组，还支持大多数类数组对象，例如 DOM NodeList 对象。
 
@@ -1382,7 +1382,7 @@ TODO:
   }
   ```
 
-### 遍历器
+### 8.3. 遍历器
 
 正如其它语言中的 for/foreach 语句一样，for-of 循环语句通过方法调用来遍历各种集合。数组、Maps 对象、Sets 对象以及其它在我们讨论的对象有一个共同点，它们都有一个迭代器方法。
 
@@ -1412,7 +1412,7 @@ var zeroesForeverIterator = {
 
 迭代器对象也可以实现可选的。return() 和。throw(exc) 方法。如果 for-of 循环过早退出会调用。`return()` 方法，异常、break 语句或 return 语句均可触发过早退出。如果迭代器需要执行一些清洁或释放资源的操作，可以在。`return()` 方法中实现。大多数迭代器方法无须实现这一方法。`.throw(exc)` 方法的使用场景就更特殊了：for-of 循环永远不会调用它。
 
-## 模块（Module）
+## 9. 模块（Module）
 
 在 ES6 中，export 命令用于规定模块的对外接口，import 命令用于输入其他模块提供的功能。
 
@@ -1423,7 +1423,7 @@ NOTE:
 - ES6 模块之中，顶层的 this 指向 undefined，即不应该在顶层代码使用 this。
 - 变量必须声明后再使用。
 
-### export
+### 9.1. export
 
 一个模块就是一个独立的文件。该文件内部的所有变量，外部无法获取。如果你希望外部能够读取模块内部的某个变量，就必须使用 export 关键字输出该变量。
 
@@ -1509,7 +1509,7 @@ export default {
 }
 ```
 
-### import
+### 9.2. import
 
 使用 export 命令定义了模块的对外接口以后，其他 JS 文件就可以通过 import 命令加载这个模块。import 命令加载指定文件，并从文件中输入变量。
 
@@ -1659,7 +1659,7 @@ export default {
   import _, { each, each as forEach } from 'lodash';
   ```
 
-### 跨模块常量
+### 9.3. 跨模块常量
 
 const 声明的常量只在当前代码块有效。如果想设置跨模块的常量（即跨多个文件），或者说一个值要被多个模块共享，可以采用下面的写法：
 ```javascript
@@ -1679,7 +1679,7 @@ console.log(A); // 1
 console.log(B); // 3
 ```
 
-## Refer Links
+## 10. Refer Links
 
 [ES6 新特性](http://es6katas.org/)
 

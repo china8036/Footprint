@@ -1,59 +1,59 @@
 - [python Selenium3 & phantomJS NOTE](#python-selenium3-phantomjs-note)
-  - [Selenium3](#selenium3)
-    - [介绍](#%E4%BB%8B%E7%BB%8D)
-    - [安装](#%E5%AE%89%E8%A3%85)
-    - [工作原理](#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86)
-    - [使用](#%E4%BD%BF%E7%94%A8)
-      - [获取 webdriver 对象](#%E8%8E%B7%E5%8F%96-webdriver-%E5%AF%B9%E8%B1%A1)
-      - [设置 request header](#%E8%AE%BE%E7%BD%AE-request-header)
-        - [设置 phantomjs 请求头](#%E8%AE%BE%E7%BD%AE-phantomjs-%E8%AF%B7%E6%B1%82%E5%A4%B4)
-        - [设置 chrome 请求头](#%E8%AE%BE%E7%BD%AE-chrome-%E8%AF%B7%E6%B1%82%E5%A4%B4)
-        - [设置 chrome–cookie](#%E8%AE%BE%E7%BD%AE-chrome%E2%80%93cookie)
-        - [设置 phantomjs- 图片不加载](#%E8%AE%BE%E7%BD%AE-phantomjs--%E5%9B%BE%E7%89%87%E4%B8%8D%E5%8A%A0%E8%BD%BD)
-      - [使用代理](#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86)
-      - [访问链接](#%E8%AE%BF%E9%97%AE%E9%93%BE%E6%8E%A5)
-      - [当前 URL](#%E5%BD%93%E5%89%8D-url)
-      - [页面源码](#%E9%A1%B5%E9%9D%A2%E6%BA%90%E7%A0%81)
-      - [页面操作](#%E9%A1%B5%E9%9D%A2%E6%93%8D%E4%BD%9C)
-        - [获取元素对象（定位)](#%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E5%AF%B9%E8%B1%A1%EF%BC%88%E5%AE%9A%E4%BD%8D)
-          - [抛出 NoSuchElement 异常可能存在的问及其解决方法](#%E6%8A%9B%E5%87%BA-nosuchelement-%E5%BC%82%E5%B8%B8%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95)
-          - [元素对象常用属性](#%E5%85%83%E7%B4%A0%E5%AF%B9%E8%B1%A1%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7)
-        - [模拟输入](#%E6%A8%A1%E6%8B%9F%E8%BE%93%E5%85%A5)
-        - [滚动到页面底部](#%E6%BB%9A%E5%8A%A8%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%BA%95%E9%83%A8)
-        - [拖拽](#%E6%8B%96%E6%8B%BD)
-        - [页面切换](#%E9%A1%B5%E9%9D%A2%E5%88%87%E6%8D%A2)
-          - [frame 切换](#frame-%E5%88%87%E6%8D%A2)
-          - [window 切换](#window-%E5%88%87%E6%8D%A2)
-        - [弹窗处理](#%E5%BC%B9%E7%AA%97%E5%A4%84%E7%90%86)
-        - [历史记录](#%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95)
-      - [Cookie 操作](#cookie-%E6%93%8D%E4%BD%9C)
-        - [基本操作](#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C)
-        - [结合 js 操作](#%E7%BB%93%E5%90%88-js-%E6%93%8D%E4%BD%9C)
-          - [操作 cookie 实现登陆操作](#%E6%93%8D%E4%BD%9C-cookie-%E5%AE%9E%E7%8E%B0%E7%99%BB%E9%99%86%E6%93%8D%E4%BD%9C)
-      - [等待](#%E7%AD%89%E5%BE%85)
-        - [强制等待](#%E5%BC%BA%E5%88%B6%E7%AD%89%E5%BE%85)
-        - [隐性等待](#%E9%9A%90%E6%80%A7%E7%AD%89%E5%BE%85)
-        - [显式等待](#%E6%98%BE%E5%BC%8F%E7%AD%89%E5%BE%85)
-          - [使用 expected_conditions 模块中的预定义条件](#%E4%BD%BF%E7%94%A8-expectedconditions-%E6%A8%A1%E5%9D%97%E4%B8%AD%E7%9A%84%E9%A2%84%E5%AE%9A%E4%B9%89%E6%9D%A1%E4%BB%B6)
-          - [使用 lambda 表达式](#%E4%BD%BF%E7%94%A8-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F)
-      - [调用 JavaScript](#%E8%B0%83%E7%94%A8-javascript)
-      - [关闭浏览器](#%E5%85%B3%E9%97%AD%E6%B5%8F%E8%A7%88%E5%99%A8)
-        - [close](#close)
-        - [quit](#quit)
-      - [程序结构](#%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84)
-  - [PhantomJS](#phantomjs)
-    - [介绍](#%E4%BB%8B%E7%BB%8D)
-    - [安装](#%E5%AE%89%E8%A3%85)
-    - [使用](#%E4%BD%BF%E7%94%A8)
-      - [REPL 环境](#repl-%E7%8E%AF%E5%A2%83)
-      - [webpage 模块](#webpage-%E6%A8%A1%E5%9D%97)
-      - [system 模块](#system-%E6%A8%A1%E5%9D%97)
-      - [应用](#%E5%BA%94%E7%94%A8)
-        - [过滤资源](#%E8%BF%87%E6%BB%A4%E8%B5%84%E6%BA%90)
-        - [截图](#%E6%88%AA%E5%9B%BE)
-        - [抓取图片](#%E6%8A%93%E5%8F%96%E5%9B%BE%E7%89%87)
-        - [生成网页](#%E7%94%9F%E6%88%90%E7%BD%91%E9%A1%B5)
-  - [Refer Links](#refer-links)
+  - [1. Selenium](#1-selenium)
+    - [1.1. 介绍](#11-%E4%BB%8B%E7%BB%8D)
+    - [1.2. 安装](#12-%E5%AE%89%E8%A3%85)
+    - [1.3. 工作原理](#13-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86)
+    - [1.4. 使用](#14-%E4%BD%BF%E7%94%A8)
+      - [1.4.1. 获取 webdriver 对象](#141-%E8%8E%B7%E5%8F%96-webdriver-%E5%AF%B9%E8%B1%A1)
+      - [1.4.2. 设置 request header](#142-%E8%AE%BE%E7%BD%AE-request-header)
+        - [1.4.2.1. 设置 phantomjs 请求头](#1421-%E8%AE%BE%E7%BD%AE-phantomjs-%E8%AF%B7%E6%B1%82%E5%A4%B4)
+        - [1.4.2.2. 设置 chrome 请求头](#1422-%E8%AE%BE%E7%BD%AE-chrome-%E8%AF%B7%E6%B1%82%E5%A4%B4)
+        - [1.4.2.3. 设置 chrome–cookie](#1423-%E8%AE%BE%E7%BD%AE-chrome%E2%80%93cookie)
+        - [1.4.2.4. 设置 phantomjs- 图片不加载](#1424-%E8%AE%BE%E7%BD%AE-phantomjs--%E5%9B%BE%E7%89%87%E4%B8%8D%E5%8A%A0%E8%BD%BD)
+      - [1.4.3. 使用代理](#143-%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86)
+      - [1.4.4. 访问链接](#144-%E8%AE%BF%E9%97%AE%E9%93%BE%E6%8E%A5)
+      - [1.4.5. 当前 URL](#145-%E5%BD%93%E5%89%8D-url)
+      - [1.4.6. 页面源码](#146-%E9%A1%B5%E9%9D%A2%E6%BA%90%E7%A0%81)
+      - [1.4.7. 页面操作](#147-%E9%A1%B5%E9%9D%A2%E6%93%8D%E4%BD%9C)
+        - [1.4.7.1. 获取元素对象（定位)](#1471-%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0%E5%AF%B9%E8%B1%A1%EF%BC%88%E5%AE%9A%E4%BD%8D)
+          - [1.4.7.1.1. 抛出 NoSuchElement 异常可能存在的问及其解决方法](#14711-%E6%8A%9B%E5%87%BA-nosuchelement-%E5%BC%82%E5%B8%B8%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95)
+          - [1.4.7.1.2. 元素对象常用属性](#14712-%E5%85%83%E7%B4%A0%E5%AF%B9%E8%B1%A1%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7)
+        - [1.4.7.2. 模拟输入](#1472-%E6%A8%A1%E6%8B%9F%E8%BE%93%E5%85%A5)
+        - [1.4.7.3. 滚动到页面底部](#1473-%E6%BB%9A%E5%8A%A8%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%BA%95%E9%83%A8)
+        - [1.4.7.4. 拖拽](#1474-%E6%8B%96%E6%8B%BD)
+        - [1.4.7.5. 页面切换](#1475-%E9%A1%B5%E9%9D%A2%E5%88%87%E6%8D%A2)
+          - [1.4.7.5.1. frame 切换](#14751-frame-%E5%88%87%E6%8D%A2)
+          - [1.4.7.5.2. window 切换](#14752-window-%E5%88%87%E6%8D%A2)
+        - [1.4.7.6. 弹窗处理](#1476-%E5%BC%B9%E7%AA%97%E5%A4%84%E7%90%86)
+        - [1.4.7.7. 历史记录](#1477-%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95)
+      - [1.4.8. Cookie 操作](#148-cookie-%E6%93%8D%E4%BD%9C)
+        - [1.4.8.1. 基本操作](#1481-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C)
+        - [1.4.8.2. 结合 js 操作](#1482-%E7%BB%93%E5%90%88-js-%E6%93%8D%E4%BD%9C)
+          - [1.4.8.2.1. 操作 cookie 实现登陆操作](#14821-%E6%93%8D%E4%BD%9C-cookie-%E5%AE%9E%E7%8E%B0%E7%99%BB%E9%99%86%E6%93%8D%E4%BD%9C)
+      - [1.4.9. 等待](#149-%E7%AD%89%E5%BE%85)
+        - [1.4.9.1. 强制等待](#1491-%E5%BC%BA%E5%88%B6%E7%AD%89%E5%BE%85)
+        - [1.4.9.2. 隐性等待](#1492-%E9%9A%90%E6%80%A7%E7%AD%89%E5%BE%85)
+        - [1.4.9.3. 显式等待](#1493-%E6%98%BE%E5%BC%8F%E7%AD%89%E5%BE%85)
+          - [1.4.9.3.1. 使用 expected_conditions 模块中的预定义条件](#14931-%E4%BD%BF%E7%94%A8-expectedconditions-%E6%A8%A1%E5%9D%97%E4%B8%AD%E7%9A%84%E9%A2%84%E5%AE%9A%E4%B9%89%E6%9D%A1%E4%BB%B6)
+          - [1.4.9.3.2. 使用 lambda 表达式](#14932-%E4%BD%BF%E7%94%A8-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+      - [1.4.10. 调用 JavaScript](#1410-%E8%B0%83%E7%94%A8-javascript)
+      - [1.4.11. 关闭浏览器](#1411-%E5%85%B3%E9%97%AD%E6%B5%8F%E8%A7%88%E5%99%A8)
+        - [1.4.11.1. close](#14111-close)
+        - [1.4.11.2. quit](#14112-quit)
+      - [1.4.12. 程序结构](#1412-%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84)
+  - [2. PhantomJS](#2-phantomjs)
+    - [2.1. 介绍](#21-%E4%BB%8B%E7%BB%8D)
+    - [2.2. 安装](#22-%E5%AE%89%E8%A3%85)
+    - [2.3. 使用](#23-%E4%BD%BF%E7%94%A8)
+      - [2.3.1. REPL 环境](#231-repl-%E7%8E%AF%E5%A2%83)
+      - [2.3.2. webpage 模块](#232-webpage-%E6%A8%A1%E5%9D%97)
+      - [2.3.3. system 模块](#233-system-%E6%A8%A1%E5%9D%97)
+      - [2.3.4. 应用](#234-%E5%BA%94%E7%94%A8)
+        - [2.3.4.1. 过滤资源](#2341-%E8%BF%87%E6%BB%A4%E8%B5%84%E6%BA%90)
+        - [2.3.4.2. 截图](#2342-%E6%88%AA%E5%9B%BE)
+        - [2.3.4.3. 抓取图片](#2343-%E6%8A%93%E5%8F%96%E5%9B%BE%E7%89%87)
+        - [2.3.4.4. 生成网页](#2344-%E7%94%9F%E6%88%90%E7%BD%91%E9%A1%B5)
+  - [3. Refer Links](#3-refer-links)
 
 # python Selenium3 & phantomJS NOTE
 
@@ -61,9 +61,9 @@
 
 搭配方法：PhantomJS 用来渲染解析 JS，Selenium 用来驱动以及与 Python 的对接，Python 进行具体逻辑的处理。
 
-## Selenium3
+## 1. Selenium
 
-### 介绍
+### 1.1. 介绍
 
 浏览器的自动化测试包括很多方面，如性能测试、UI 测试、页面测试等。本文测试背景是页面测试部分，如：登录某个页面，检查是否登录成功等。对浏览器页面进行自动化测试，一般选取的工具都是 selenium。selenium 是一个免费的 web 自动化测试工具，支持多平台（windows、linux 等）、多浏览器（ie、ff、safari、opera、chrome、PhantomJS）、多语言（C、 java、ruby、python 等）。
 
@@ -75,7 +75,7 @@ Selenium 测试直接运行在浏览器中，就像真实用户操作一样。Se
 - 支持多浏览器：ie、ff、safari、opera、chrome、PhantomJS
 - 支持多语言：C、C#、java、ruby、python 等
 
-### 安装
+### 1.2. 安装
 
 Selenium3 将 Webdriver 从各个浏览器中分离出来了，所以对浏览器进行自动化测试时，需要单独安装对应浏览器的 Webdriver，安装过程：将浏览器程序和 webdriver 程序的路径加入系统环境变量即可。
 
@@ -85,7 +85,7 @@ Selenium3 将 Webdriver 从各个浏览器中分离出来了，所以对浏览�
 - 使用 selenium 操作 Edge 浏览器时，需要安装 [MicrosoftWebDriver.exe](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/)；
 - 使用 selenium 操作 firefox 浏览器时，需要安装 [geckodriver.exe](https://github.com/mozilla/geckodriver/releases)；
 
-### 工作原理
+### 1.3. 工作原理
 
 以 selenium 和 chormedriver 为例：
 
@@ -103,7 +103,7 @@ chromedriver 是 google 为网站开发人员提供的自动化测试接口，�
 
   6. selenium 中的 WebDriver 实例和 chromedriver 的关系为多对一，chromedriver 和 chromebrowser 的关系为一对多；
 
-### 使用
+### 1.4. 使用
 
 英文教程：https://selenium-python.readthedocs.io/index.html 
 
@@ -113,7 +113,7 @@ chromedriver 是 google 为网站开发人员提供的自动化测试接口，�
 
 python selenium 教程：https://huilansame.github.io/huilansame.github.io/category/ 
 
-#### 获取 webdriver 对象
+#### 1.4.1. 获取 webdriver 对象
 
 获取特定浏览器的 WebDriver 对象是进行自动化测试几乎所有操作的第一步，各种操作都封装在 webdriver 类中。
 ```python
@@ -128,11 +128,11 @@ driver=webdriver.PhantomJS(executable_path = 'D:\\software\\web\\phantomJS\\phan
 # 其他浏览器 webdriver 对象的获取类似
 ```
 
-#### 设置 request header
+#### 1.4.2. 设置 request header
 
 [参考文章](https://www.urlteam.org/2017/02/selenium%E8%AE%BE%E7%BD%AEchrome%E5%92%8Cphantomjs%E7%9A%84%E8%AF%B7%E6%B1%82%E5%A4%B4%E4%BF%A1%E6%81%AF/ )
 
-##### 设置 phantomjs 请求头
+##### 1.4.2.1. 设置 phantomjs 请求头
 ```python
 # 访问 https://httpbin.org/get?show_env=1  该网站能呈现你请求的头部信息
 # !/usr/bin/python
@@ -151,7 +151,7 @@ driver.get_screenshot_as_file('01.png')
 driver.quit()
 ```
 
-##### 设置 chrome 请求头
+##### 1.4.2.2. 设置 chrome 请求头
 ```python
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
@@ -169,7 +169,7 @@ browser.get(url)
 browser.quit()
 ```
 
-##### 设置 chrome–cookie
+##### 1.4.2.3. 设置 chrome–cookie
 ```python
 # 设置 cookie 用于模拟登陆
 # !/usr/bin/python
@@ -191,7 +191,7 @@ browser.execute_script(newwindow)
 input("查看效果")
 browser.quit()
 ```
-##### 设置 phantomjs- 图片不加载
+##### 1.4.2.4. 设置 phantomjs- 图片不加载
 ```python
 from selenium import webdriver
  
@@ -211,7 +211,7 @@ input("是否有图")
 browser.quit()
 ```
 
-#### 使用代理
+#### 1.4.3. 使用代理
 ```python
 # 搭配 Tor 代理服务器使用，使 tor 运行在本地 9150 端口（默认端口）
 service_args = [‘—proxy=localhost:9150’, ‘—proxy-type=socks5’,]
@@ -222,23 +222,23 @@ print(driver.page_source)
 driver.close()
 ```
 
-#### 访问链接
+#### 1.4.4. 访问链接
 ```python
 url = ‘https://www.google.com’
 driver.get(url) # 使用 get 方法访问链接，该方法会将 url 资源完全加载完后才执行下一行代码（但若页面包含大量 ajax，则无法确定 ajax 完全加载完的时间，对于包含大量 ajax 的页面，应使用 wait）
 ```
 
-#### 当前 URL
+#### 1.4.5. 当前 URL
 
 使用 driver.current_url 即可获取当前 URL；
 
-#### 页面源码
+#### 1.4.6. 页面源码
 
 使用 driver.page_source 即可获取页面源码；
 
-#### 页面操作
+#### 1.4.7. 页面操作
 
-##### 获取元素对象（定位)
+##### 1.4.7.1. 获取元素对象（定位)
 
 API：https://selenium-python.readthedocs.io/locating-elements.html 
 
@@ -307,7 +307,7 @@ find_elements_by_css_selector
   # 先用 xpath 定位找到一个元素节点，再以该节点为根节点用 name 找到另一个节点
   ```
 
-###### 抛出 NoSuchElement 异常可能存在的问及其解决方法
+###### 1.4.7.1.1. 抛出 NoSuchElement 异常可能存在的问及其解决方法
 
 http://blog.csdn.net/mrlevo520/article/details/51954203 
 
@@ -353,7 +353,7 @@ http://blog.csdn.net/mrlevo520/article/details/51926145
   - 服务器端重定向
     <!-- TODO: -->
 
-###### 元素对象常用属性
+###### 1.4.7.1.2. 元素对象常用属性
 
 - 当前元素的 ID：id_
 
@@ -361,7 +361,7 @@ http://blog.csdn.net/mrlevo520/article/details/51926145
 
 - 获取该元素的文本：text
 
-##### 模拟输入
+##### 1.4.7.2. 模拟输入
 
 - 向文本框 text/textarea 标签输入文本：
 
@@ -497,7 +497,7 @@ http://blog.csdn.net/mrlevo520/article/details/51926145
   # element 对象有 submit() 方法。如果在表单中的元素上调用此方法，则 WebDriver 将向上移动 DOM，直到找到包围的表单，然后调用 submit 提交表单。如果元素不在表单中，则会引发 NoSuchElementException 异常
   ```
 
-##### 滚动到页面底部
+##### 1.4.7.3. 滚动到页面底部
 
 ```python
 for i in range(10):
@@ -505,7 +505,7 @@ for i in range(10):
     time.sleep(1)
 ```
 
-##### 拖拽
+##### 1.4.7.4. 拖拽
 
 要完成元素的拖拽，首先你需要指定被拖动的元素和拖动目标元素，然后利用 ActionChains 类来实现。
 
@@ -518,11 +518,11 @@ action_chains = ActionChains(driver)
 action_chains.drag_and_drop(element, target).perform()
 ```
 
-##### 页面切换
+##### 1.4.7.5. 页面切换
 
 https://www.cnblogs.com/kongzhongqijing/p/3534197.html 
 
-###### frame 切换
+###### 1.4.7.5.1. frame 切换
 
 http://blog.csdn.net/huilan_same/article/details/52200586
 
@@ -566,7 +566,7 @@ http://blog.csdn.net/huilan_same/article/details/52200586
   ```
 
 
-###### window 切换
+###### 1.4.7.5.2. window 切换
 
 ```python
 # 当浏览器中有多个窗口时，实现窗口的切换，参数为窗口名或窗口的句柄：
@@ -594,7 +594,7 @@ switch_to.window(driver.window_handles[2])
 driver.switch_to.window(driver.window_handles[-1])
 ```
 
-##### 弹窗处理
+##### 1.4.7.6. 弹窗处理
 
 ```python
 # 获取弹窗对象
@@ -639,7 +639,7 @@ alert = driver.switch_to.alert()
 
 
 
-##### 历史记录
+##### 1.4.7.7. 历史记录
 
 ```python
 driver.get("http://www.example.com")
@@ -665,9 +665,9 @@ driver.refresh()
   ```
   因此，要在刷新之后重新获取一下元素进行操作。
 
-#### Cookie 操作
+#### 1.4.8. Cookie 操作
 
-##### 基本操作
+##### 1.4.8.1. 基本操作
 
 ```python
 # Go to the correct domain
@@ -681,7 +681,7 @@ driver.add_cookie(cookie)
 driver.get_cookies()
 ```
 
-##### 结合 js 操作
+##### 1.4.8.2. 结合 js 操作
 
 http://xxuan.me/2016-07-16-webscraper.html 
 
@@ -703,7 +703,7 @@ document.cookie = 'iflyssesse=AAA; path=/; domain=mis.sse.ustc.edu.cn';
 document.cookie = 'ASP.NET_SessionId=bbb; path=/; domain=mis.sse.ustc.edu.cn';
 ```
 
-###### 操作 cookie 实现登陆操作
+###### 1.4.8.2.1. 操作 cookie 实现登陆操作
 
 使用以上方法，辅以完善的报错机制，可以把登录操作封装成一个函数，完成一次登录操作之后就把 cookies 保存到文件之中，以便其后的爬虫直接通过 cookies 实现登录：
 
@@ -772,17 +772,17 @@ def logout(driver, login_url):
         driver.close()
 ```
 
-#### 等待
+#### 1.4.9. 等待
 
 https://huilansame.github.io/huilansame.github.io/archivers/sleep-implicitlywait-wait 
 
-##### 强制等待
+##### 1.4.9.1. 强制等待
 
 使用 time.sleep(xxx)，强制使程序暂停运行 xx 秒；
 
 缺点：太死板，严重影响程序执行速度。
 
-##### 隐性等待
+##### 1.4.9.2. 隐性等待
 
 使用 implicitly_wait(xx)；
 
@@ -800,7 +800,7 @@ driver.get("http://somedomain/url_that_delays_loading")
 myDynamicElement = driver.find_element_by_id("myDynamicElement")
 ```
 
-##### 显式等待
+##### 1.4.9.3. 显式等待
 
 使用 wait 模块中的 WebDriverWait 类配合该类的 until() 和 until_not() 方法，以及 ExpectedCondition 模块；
 
@@ -825,7 +825,7 @@ until_not ：与 until 相反，until 是当某元素出现或什么条件成立
     message
 ```
 
-###### 使用 expected_conditions 模块中的预定义条件
+###### 1.4.9.3.1. 使用 expected_conditions 模块中的预定义条件
 
 [官方 API](https://seleniumhq.github.io/selenium/docs/api/py/webdriver_support/selenium.webdriver.support.expected_conditions.html )
 
@@ -895,7 +895,7 @@ driver.quit()
 # 在抛出 TimeoutException 异常之前将等待 10 秒或者在 10 秒内发现了查找的元素。 WebDriverWait 默认情况下会每 500 毫秒调用一次 ExpectedCondition 直到结果成功返回。ExpectedCondition 成功的返回结果是一个布尔类型的 true 或是不为 null 的返回值
 ```
 
-###### 使用 lambda 表达式
+###### 1.4.9.3.2. 使用 lambda 表达式
 
 例：
 ```python
@@ -908,7 +908,7 @@ WebDriverWait(driver_item, 10).until(lambda driver: driver.find_element_by_xpath
 WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_xpath('xpath 表达式').is_displayed())
 ```
 
-#### 调用 JavaScript
+#### 1.4.10. 调用 JavaScript
 1. 	
   
   ```python
@@ -940,11 +940,11 @@ WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_xpath('xpa
   driver.execute_script('arguments[0].innerHTML = arguments[1]', title_element, data[i-1](0))
   ```
 
-#### 关闭浏览器
+#### 1.4.11. 关闭浏览器
 
 selenium关闭窗口有两个方法，close与quit。
 
-##### close
+##### 1.4.11.1. close
 
 close用于关闭当前窗口：
 ```python
@@ -952,14 +952,14 @@ driver.close()
 # 若不主动关闭浏览器，程序会一直运行
 ```
 
-##### quit
+##### 1.4.11.2. quit
 
 quit用于退出驱动并关闭所有关联的窗口：
 ```python
 driver.quit()
 ```
 
-#### 程序结构
+#### 1.4.12. 程序结构
 
 一个页面对象表示在你测试的 WEB 应用程序的用户界面上的区域。
 
@@ -970,15 +970,15 @@ driver.quit()
 
 <!-- TODO: https://selenium-python-zh.readthedocs.io/en/latest/page-objects.html  -->
 
-## PhantomJS
+## 2. PhantomJS
 
-### 介绍
+### 2.1. 介绍
 
 phantomJS 是一个基于 webkit 的“无头浏览器”，原生支持多种 web 标准：DOM 操作，CSS 选择器，JSON，Canvas 以及 SVG。
 
 PhantomJS 的功能，就是提供一个浏览器环境的命令行接口，可以像浏览器解析网页，但不提供图形界面，功能非常强大，比如生成网页的截图、抓取网页数据等。
 
-### 安装
+### 2.2. 安装
 
 PhantomJS 安装方法有两种，一种是下载源码之后自己来编译，另一种是直接下载编译好的二进制文件。编译需要的时间太长，而且需要挺多的磁盘空间。官方推荐直接下载二进制文件即可。
 
@@ -991,15 +991,15 @@ phantomjs -v
 
 如果正常显示版本号，那么证明安装成功了。
 
-### 使用
+### 2.3. 使用
 
 http://javascript.ruanyifeng.com/tool/phantomjs.html
 
-#### REPL 环境
+#### 2.3.1. REPL 环境
 
 phantomjs 提供了一个完整的 REPL（交互式编程) 环境，允许用户通过命令行与 PhantomJS 互动。在命令行中键入 phantomjs，进入该环境后便可输入 Javascript 命令进行交互。使用 ctrl+c 可以退出该环境。
 
-#### webpage 模块
+#### 2.3.2. webpage 模块
 
 webpage 模块是 PhantomJS 的核心模块，用于网页操作。
 ```javascript
@@ -1103,7 +1103,7 @@ webpage 属性和方法：
     - statusText：HTTP 状态信息，比如 OK。
       如果 HTTP 回应非常大，分成多个数据块发送，onResourceReceived 会在收到每个数据块时触发回调函数。
 
-#### system 模块
+#### 2.3.3. system 模块
 
 system 模块可以加载操作系统变量，system.args 就是参数数组。
 
@@ -1137,19 +1137,19 @@ page.open(address, function (status) {
 ```shell
 $ phantomjs page.js http://www.google.com
 ```
-#### 应用
+#### 2.3.4. 应用
 
 详见 http://cuiqingcai.com/2577.html
 
-##### 过滤资源
+##### 2.3.4.1. 过滤资源
 
-##### 截图
+##### 2.3.4.2. 截图
 
-##### 抓取图片
+##### 2.3.4.3. 抓取图片
 
-##### 生成网页
+##### 2.3.4.4. 生成网页
 
-## Refer Links
+## 3. Refer Links
 
 http://cuiqingcai.com/2599.html
 

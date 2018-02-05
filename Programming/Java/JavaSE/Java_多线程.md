@@ -1,32 +1,32 @@
 - [Java 多线程](#java-%E5%A4%9A%E7%BA%BF%E7%A8%8B)
-  - [基本 API](#%E5%9F%BA%E6%9C%AC-api)
-    - [线程创建和执行](#%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA%E5%92%8C%E6%89%A7%E8%A1%8C)
-    - [中断线程](#%E4%B8%AD%E6%96%AD%E7%BA%BF%E7%A8%8B)
-    - [线程状态](#%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81)
-    - [线程优先级](#%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7)
-    - [守护线程](#%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B)
-    - [未捕获异常处理器](#%E6%9C%AA%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8)
-  - [线程同步](#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5)
-    - [Lock & Condition](#lock-condition)
-      - [锁机制](#%E9%94%81%E6%9C%BA%E5%88%B6)
-      - [条件对象](#%E6%9D%A1%E4%BB%B6%E5%AF%B9%E8%B1%A1)
-    - [synchronized & volatile](#synchronized-volatile)
-      - [synchronized](#synchronized)
-      - [volatile](#volatile)
-    - [原子操作](#%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C)
-    - [死锁](#%E6%AD%BB%E9%94%81)
-    - [线程局部变量](#%E7%BA%BF%E7%A8%8B%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F)
-    - [阻塞队列](#%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97)
-  - [线程安全的集合](#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%9B%86%E5%90%88)
-  - [Executor 框架 & 线程池](#executor-%E6%A1%86%E6%9E%B6-%E7%BA%BF%E7%A8%8B%E6%B1%A0)
-  - [Fork-Join 框架](#fork-join-%E6%A1%86%E6%9E%B6)
-  - [同步器](#%E5%90%8C%E6%AD%A5%E5%99%A8)
+  - [1. 基本 API](#1-%E5%9F%BA%E6%9C%AC-api)
+    - [1.1. 线程创建和执行](#11-%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA%E5%92%8C%E6%89%A7%E8%A1%8C)
+    - [1.2. 中断线程](#12-%E4%B8%AD%E6%96%AD%E7%BA%BF%E7%A8%8B)
+    - [1.3. 线程状态](#13-%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81)
+    - [1.4. 线程优先级](#14-%E7%BA%BF%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7)
+    - [1.5. 守护线程](#15-%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B)
+    - [1.6. 未捕获异常处理器](#16-%E6%9C%AA%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8)
+  - [2. 线程同步](#2-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5)
+    - [2.1. Lock & Condition](#21-lock-condition)
+      - [2.1.1. 锁机制](#211-%E9%94%81%E6%9C%BA%E5%88%B6)
+      - [2.1.2. 条件对象](#212-%E6%9D%A1%E4%BB%B6%E5%AF%B9%E8%B1%A1)
+    - [2.2. synchronized & volatile](#22-synchronized-volatile)
+      - [2.2.1. synchronized](#221-synchronized)
+      - [2.2.2. volatile](#222-volatile)
+    - [2.3. 原子操作](#23-%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C)
+    - [2.4. 死锁](#24-%E6%AD%BB%E9%94%81)
+    - [2.5. 线程局部变量](#25-%E7%BA%BF%E7%A8%8B%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F)
+    - [2.6. 阻塞队列](#26-%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97)
+  - [3. 线程安全的集合](#3-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E9%9B%86%E5%90%88)
+  - [4. Executor 框架 & 线程池](#4-executor-%E6%A1%86%E6%9E%B6-%E7%BA%BF%E7%A8%8B%E6%B1%A0)
+  - [5. Fork-Join 框架](#5-fork-join-%E6%A1%86%E6%9E%B6)
+  - [6. 同步器](#6-%E5%90%8C%E6%AD%A5%E5%99%A8)
 
 # Java 多线程
 
-## 基本 API
+## 1. 基本 API
 
-### 线程创建和执行
+### 1.1. 线程创建和执行
 
 - 存放线程任务：
   - [Runnable](https://docs.oracle.com/javase/9/docs/api/java/lang/Runnable.html) 接口
@@ -85,7 +85,7 @@
 
     NOTE：不要调用 Thread 类或 Runnable 接口中的 run 方法，直接调用该方法只会执行同一个线程中的任务，而不会启动新线程。只有调用 start 方法，才会创建一个执行 run 方法的新线程。
 
-### 中断线程
+### 1.2. 中断线程
 
 线程的退出有以下两种情况：
 - 线程中的 run 方法执行完方法体中的最后一条语句后，经由执行 return 语句自然返回。
@@ -116,7 +116,7 @@ P.S.
 
   当用 suspend 挂起持有一个锁的线程时，该锁在恢复之前是不可用的，若调用 suspend 的线程同时申请获得该锁，将造成死锁。因此，弃用了 suspend。
 
-### 线程状态
+### 1.3. 线程状态
 
 在 Java 中，线程有以下 6 种可能的状态：
 - New：新创建。当使用 new 创建一个线程后，还未调用 start 之前该线程的状态为 New。
@@ -132,7 +132,7 @@ P.S.
 
 - `Thread.State	getState​()`：获取指定的线程的当前状态。
 
-### 线程优先级
+### 1.4. 线程优先级
 
 在 Java 的多线程中，每一个线程都有一个优先级。默认情况下，一个线程继承它的父线程的优先级。
 
@@ -144,7 +144,7 @@ NOTE：线程优先级是高度依赖于操作系统的。当虚拟机依赖于�
 - `void	setPriority​(int newPriority)`：设置线程的优先级。
 - `static void	yield​()`：静态方法，导致当前线程处于让步状态。若有其它可运行线程具有至少与该线程同样的优先级，则这些线程会在接下来被调度。
 
-### 守护线程
+### 1.5. 守护线程
 
 守护线程的唯一用途是为其它线程提供服务，例如用于计时的线程。因此，当只剩下守护线程时，虚拟机会自动退出。
 
@@ -155,7 +155,7 @@ NOTE：线程优先级是高度依赖于操作系统的。当虚拟机依赖于�
 相关 API
 - `void	setDaemon​(boolean on)`：将普通线程转换为守护线程，该方法必须在线程启动之前调用。
 
-### 未捕获异常处理器
+### 1.6. 未捕获异常处理器
 
 线程的 run 方法无法抛出任何异常，但线程发生异常后，会将异常传递到一个用于未捕获异常的处理器。该处理器为一个实现了 Thread.UncaughtExceptionHandler​接口的类（这个接口只有一个方法`void uncaughtExcept(Thread t, Throwable e)`）。
 
@@ -165,13 +165,13 @@ NOTE：线程优先级是高度依赖于操作系统的。当虚拟机依赖于�
 - `static void	setDefaultUncaughtExceptionHandler​(Thread.UncaughtExceptionHandler eh)`
 - `void	setUncaughtExceptionHandler​(Thread.UncaughtExceptionHandler eh)`
 
-## 线程同步
+## 2. 线程同步
 
 线程同步指的是为避免线程之间的竞争条件而采取的同步存取措施。
 
-### Lock & Condition
+### 2.1. Lock & Condition
 
-#### 锁机制
+#### 2.1.1. 锁机制
 
 - Lock
 
@@ -237,7 +237,7 @@ NOTE：线程优先级是高度依赖于操作系统的。当虚拟机依赖于�
   - `ReentrantReadWriteLock.ReadLock	readLock​()`：得到一个可以被多个读操作共用的读锁，但会排斥所有写操作。
   - `ReentrantReadWriteLock.WriteLock	writeLock​()`：得到一个写锁，排斥所有其它读操作和写操作。
 
-#### 条件对象
+#### 2.1.2. 条件对象
 
 条件对象 [Condition](https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/locks/Condition.html) 用于管理那些已经获得一个锁，但却需要等待某个条件满足才能进行有效工作的线程。
 
@@ -265,9 +265,9 @@ try {
 - `void	signal​()`：从该条件的等待集中随机选择一个线程，解除其阻塞状态。
 - `void	signalAll​()`：解除该条件的等待集中的所有线程的阻塞状态。
 
-### synchronized & volatile
+### 2.2. synchronized & volatile
 
-#### synchronized
+#### 2.2.1. synchronized
 
 为简化锁控机制，减小出错概率，Java 提供了一种嵌入到 Java 语言内部的机制，每一个对象都有一个内部锁，若一个方法使用 synchronized 关键字声明，则对象锁将保护整个方法。
 
@@ -290,7 +290,7 @@ public void method() {
 
 对象内部锁只有一个相关的条件对象。通过 Object 类提供的 final 方法 wait 添加一个线程到等待集中，notifyAll、notify 方法解除等待线程的阻塞状态（这三个方法只能在一个同步方法或同步块中调用，如果当前线程不是对象锁的持有者，方法会抛出 IllegalMonitorStateException）。
 
-#### volatile
+#### 2.2.2. volatile
 
 实际开发中，同步方法中很多时候只读写了一两个实例，浪费了大量开销。因此，Java 提供了 volatile 关键字，为实例域的同步访问提供了另一种免锁机制。若一个域被声明为 volatile，则编译器和虚拟机就知道该域是可能被另一个线程并发更新的。
 
@@ -308,15 +308,15 @@ public void setDone() {}
 
 NOTE：volatile 变量不能提供原子性，无法保证读取、翻转、写入不被中断。
 
-### 原子操作
+### 2.3. 原子操作
 
 java.util.concurrent.atomatic 包中提供了很多用高效的机器级指令实现的原子性操作，保证了操作不会被中断。
 
-### 死锁
+### 2.4. 死锁
 
 Java 语言中没有任何可以避免死锁或打破死锁的机制，因此开发者必须仔细设计并发的应用程序，以确保不会出现死锁。
 
-### 线程局部变量
+### 2.5. 线程局部变量
 
 当多个线程同时访问共享变量时，需要通过锁机制控制出错的风险。有时可能需要避免共享变量，Java 提供了 [ThreadLocal](https://docs.oracle.com/javase/9/docs/api/java/lang/ThreadLocal.html) 辅助类，为每个线程提供各自的变量实例，即线程局部变量。
 
@@ -333,7 +333,7 @@ String date = dateFormat.get().format(new Date());
 - `void	remove​()`：删除对应这个线程的值。
 - `static <S> ThreadLocal<S>	withInitial​(Supplier<? extends S> supplier)`：创建一个线程局部变量，初始值通过调用给定的 supplier 生成。
 
-### 阻塞队列
+### 2.6. 阻塞队列
 
 Lock/Condition、synchronized/volatile 形成了 Java 并发程序设计的底层构建基础，但在实际的业务开发中，应远离底层结构，转而使用由并发处理的专业人士实现的较高层次的结构。
 
@@ -347,7 +347,7 @@ Java 中的 java.util.concurrent 包提供了一系列阻塞队列的实现：
 - `DelayQueue`
 - `LinkedTransferQueue`：允许生产者线程等待，直到消费者线程准备就绪可以接收一个元素。
 
-## 线程安全的集合
+## 3. 线程安全的集合
 
 java.util.concurrent 包中提供了映射、有序集、队列的线程安全的高效实现，它们使用复杂的算法，通过允许并发访问数据结构的不同部分来使竞争最小化：
 - `ConcurrentHashMap`
@@ -355,7 +355,7 @@ java.util.concurrent 包中提供了映射、有序集、队列的线程安全�
 - `ConcurrentSkipListSet`
 - `ConcurrentLinkedQueue`
 
-## Executor 框架 & 线程池
+## 4. Executor 框架 & 线程池
 
 http://blog.csdn.net/ns_code/article/details/17465497
 
@@ -370,11 +370,11 @@ Java 中可通过 [Executors](https://docs.oracle.com/javase/9/docs/api/java/uti
 - `static ScheduledExecutorService	newScheduledThreadPool​(int corePoolSize)`
 - `static ScheduledExecutorService	newSingleThreadScheduledExecutor​()`
 
-## Fork-Join 框架
+## 5. Fork-Join 框架
 
 http://www.infoq.com/cn/articles/fork-join-introduction
 
-## 同步器
+## 6. 同步器
 
 - 信号量
 - 倒计时门栓

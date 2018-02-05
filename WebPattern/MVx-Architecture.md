@@ -1,12 +1,13 @@
-- [MVC MVP MVVM](#mvc-mvp-mvvm)
-  - [MVC(Model+View+Controller)](#mvcmodelviewcontroller)
-  - [MVP(Model+View+Presenter)](#mvpmodelviewpresenter)
-  - [MVVM(Model+View+ViewModel)](#mvvmmodelviewviewmodel)
-  - [Refer Links](#refer-links)
-
+- [MV* 架构模式](#mv-%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+  - [2. MVC(Model+View+Controller)](#2-mvcmodelviewcontroller)
+  - [3. MVP(Model+View+Presenter)](#3-mvpmodelviewpresenter)
+  - [4. MVVM(Model+View+ViewModel)](#4-mvvmmodelviewviewmodel)
+  - [5. Refer Links](#5-refer-links)
+  
 # MV* 架构模式
 
-## 概述
+## 1. 概述
 
 > M-V-*架构的本质都是一样的，都是在于 M-V 之间的桥梁耀靠 X 来牵线，而 X 的模式之间的不同，主要是 M 与 V 的数据传递的流程不同。
 >
@@ -16,7 +17,7 @@
 > 
 > 在不同技术栈下，相同的 X 可能实现都大相径庭，仅有非常抽象的流程类似。
 
-## MVC(Model+View+Controller)
+## 2. MVC(Model+View+Controller)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/5cc1af29dfd007c81fb8391c5457a946.jpg)
 
@@ -26,7 +27,7 @@
 模型更新视图；
 
 
-## MVP(Model+View+Presenter)
+## 3. MVP(Model+View+Presenter)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/86dea35f532b275ea53319d778c78ca3.jpg)
 
@@ -36,7 +37,7 @@
 
 View 非常薄，不部署任何业务逻辑，称为"被动视图"（Passive View），即没有任何主动性，而 Presenter 非常厚，所有逻辑都部署在那里。
 
-## MVVM(Model+View+ViewModel)
+## 4. MVVM(Model+View+ViewModel)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/d6929975db518d443290d87582287a79.jpg)
 
@@ -48,7 +49,7 @@ View 非常薄，不部署任何业务逻辑，称为"被动视图"（Passive Vi
 
 正因为如此，许多人认为 MVVM 是最好的一种模式，没有之一。
 
-## Refer Links
+## 5. Refer Links
 
 http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html
 

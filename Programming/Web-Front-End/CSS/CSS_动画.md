@@ -1,31 +1,31 @@
 - [CSS 动画](#css-%E5%8A%A8%E7%94%BB)
-  - [CSS Transition](#css-transition)
-    - [transition](#transition)
-    - [transition-delay](#transition-delay)
-    - [transition-timing-function](#transition-timing-function)
-      - [cubic-bezier(x1, y1, x2, y2)](#cubic-bezierx1-y1-x2-y2)
-      - [steps()](#steps)
-    - [NOTE](#note)
-  - [CSS Animation](#css-animation)
-    - [@keyframes](#keyframes)
-    - [animation](#animation)
-      - [animation-fill-mode](#animation-fill-mode)
-    - [实例](#%E5%AE%9E%E4%BE%8B)
-  - [Browser Compatibility](#browser-compatibility)
-  - [CSS 动画实践](#css-%E5%8A%A8%E7%94%BB%E5%AE%9E%E8%B7%B5)
-    - [实践例子](#%E5%AE%9E%E8%B7%B5%E4%BE%8B%E5%AD%90)
-    - [CSS 动画于 JavaScript 动画的比较](#css-%E5%8A%A8%E7%94%BB%E4%BA%8E-javascript-%E5%8A%A8%E7%94%BB%E7%9A%84%E6%AF%94%E8%BE%83)
-  - [Refer Links](#refer-links)
+  - [1. CSS Transition](#1-css-transition)
+    - [1.1. transition](#11-transition)
+    - [1.2. transition-delay](#12-transition-delay)
+    - [1.3. transition-timing-function](#13-transition-timing-function)
+      - [1.3.1. cubic-bezier(x, y, x, y)](#131-cubic-bezierx-y-x-y)
+      - [1.3.2. steps()](#132-steps)
+    - [1.4. NOTE](#14-note)
+  - [2. CSS Animation](#2-css-animation)
+    - [2.1. @keyframes](#21-keyframes)
+    - [2.2. animation](#22-animation)
+      - [2.2.1. animation-fill-mode](#221-animation-fill-mode)
+    - [2.3. 实例](#23-%E5%AE%9E%E4%BE%8B)
+  - [3. Browser Compatibility](#3-browser-compatibility)
+  - [4. CSS 动画实践](#4-css-%E5%8A%A8%E7%94%BB%E5%AE%9E%E8%B7%B5)
+    - [4.1. 实践例子](#41-%E5%AE%9E%E8%B7%B5%E4%BE%8B%E5%AD%90)
+    - [4.2. CSS 动画于 JavaScript 动画的比较](#42-css-%E5%8A%A8%E7%94%BB%E4%BA%8E-javascript-%E5%8A%A8%E7%94%BB%E7%9A%84%E6%AF%94%E8%BE%83)
+  - [5. Refer Links](#5-refer-links)
 
 # CSS 动画
 
 动画是使元素从一种样式逐渐变化为另一种样式的效果。
 
-## CSS Transition
+## 1. CSS Transition
 
 Transitions：用于**实现简单的动画，只有起始两帧过渡**。**多用于页面的交互操作**，使交互效果更生动活泼。
 
-### transition
+### 1.1. transition
 
 语法：
 > transition: property duration timing-function delay;
@@ -66,7 +66,7 @@ img{
 
 - [在变化某个目标属性时，前提是浏览器已经得知这个属性需要加动画，否则动画无法执行](https://www.zhihu.com/question/36375965)。
 
-### transition-delay
+### 1.2. transition-delay
 
 transition-delay 属性规定在过渡效果开始之前需要等待的时间，以秒或毫秒计。默认值为 0
 
@@ -87,7 +87,7 @@ img{
 ```
 上边代码指定，width 在 1 秒之后，再开始变化，也就是延迟（delay）1 秒。
 
-### transition-timing-function 
+### 1.3. transition-timing-function
 
 transition-timing-function 属性规定过渡效果的速度曲线，即过渡动画的速度。默认值是 ease。
 
@@ -117,7 +117,7 @@ img{
 }
 ```
 
-#### cubic-bezier(x1, y1, x2, y2)
+#### 1.3.1. cubic-bezier(x, y, x, y)
 
 http://joveyzheng.com/2016/03/16/css-cubic-bezier/
 
@@ -137,7 +137,7 @@ timing-function 属性的取值中，支持使用 cubic-bezier 函数，自定�
   
   最直接的理解是，将以一条直线放在范围只有 1 的坐标轴中，并从中间拿出两个点来拉扯（X 轴的取值区间是 [0, 1]，Y 轴任意），最后形成的曲线就是动画的速度曲线。
 
-#### steps()
+#### 1.3.2. steps()
 
 https://idiotwu.me/understanding-css3-timing-function-steps/
 
@@ -158,7 +158,7 @@ steps 函数指定了一个阶跃函数，第一个参数指定了时间函数�
 
   当指定跃点为 end，动画则在每个计时周期的终点发生阶跃（即图中空心圆 → 实心圆）。由于第一次阶跃发生在第一个计时周期结束时（1s），所以我们看到的初态为 0% 的状态；而在整个动画周期完成处（3s），虽然发生阶跃跳到了 100% 的状态，但同时动画结束，所以 100% 的状态不可视。因此在视觉上动画的过程为 0 → 1/3 → 2/3（回忆一下数电里的异步清零，当所有输出端都为高电平的时候触发清零，所以全为高电平是暂态）。
 
-### NOTE
+### 1.4. NOTE
 
 - 目前，各大浏览器（包括 IE 10）都已经支持无前缀的 transition，所以 transition 已经可以很安全地不加浏览器前缀
 
@@ -174,13 +174,13 @@ steps 函数指定了一个阶跃函数，第一个参数指定了时间函数�
 
 - 一条 transition 规则，只能定义一个属性的变化，不能涉及多个属性。
 
-## CSS Animation
+## 2. CSS Animation
 
 针对 transition 的多个局限性，CSS 提出了 Animation。
 
 Keyframes animation：用于**实现较为复杂的动画**，**一般关键帧较多**。
 
-### @keyframes
+### 2.1. @keyframes
 
 @keyframes 用于定义动画的各个关键帧的状态。
 
@@ -229,7 +229,7 @@ Keyframes animation：用于**实现较为复杂的动画**，**一般关键帧�
   ```
   例：[打字机动画](http://dabblet.com/gist/1745856)
 
-### animation
+### 2.2. animation
 
 语法：
 
@@ -267,7 +267,7 @@ div:hover {
 }
 ```
 
-#### animation-fill-mode
+#### 2.2.1. animation-fill-mode
 
 animation-fill-mode 属性规定动画在播放之前或之后，其动画效果是否可见。
 
@@ -280,7 +280,7 @@ animation-fill-mode 属性规定动画在播放之前或之后，其动画效果
 | backwards | 动画结束后，让动画回到第一帧的状态。 |
 | both      | 根据 animation-direction（见后）轮流应用 forwards 和 backwards 规则。                           |
 
-### 实例
+### 2.3. 实例
 
 - [心脏跳动](http://lea.verou.me/css-4d/#heart-demo)
   ```css
@@ -317,7 +317,7 @@ animation-fill-mode 属性规定动画在播放之前或之后，其动画效果
   }
   ```
 
-## Browser Compatibility
+## 3. Browser Compatibility
 
 目前：
 
@@ -361,7 +361,7 @@ animation-fill-mode 属性规定动画在播放之前或之后，其动画效果
   }
   ```
 
-## CSS 动画实践
+## 4. CSS 动画实践
 
 需求中常见的 css3 动画一般有**补间动画 / 关键帧动画**和**逐帧动画**两种：
 
@@ -387,7 +387,7 @@ animation-fill-mode 属性规定动画在播放之前或之后，其动画效果
   - 不同的动画无法实现同步
   - 多个动画彼此无法堆叠
 
-### 实践例子
+### 4.1. 实践例子
 
 https://aotu.io/notes/2016/01/04/css3-animation/index.html
 
@@ -395,11 +395,11 @@ https://aotu.io/notes/2016/05/06/Guide-To-Tween-Animation/index.html
 
 https://webdesign.tutsplus.com/tutorials/a-beginners-introduction-to-css-animation--cms-21068
 
-### CSS 动画于 JavaScript 动画的比较
+### 4.2. CSS 动画于 JavaScript 动画的比较
 
 [Javascript 可以比 CSS transition 性能更好](http://zencode.in/19.CSS-vs-JS%E5%8A%A8%E7%94%BB%EF%BC%9A%E8%B0%81%E6%9B%B4%E5%BF%AB%EF%BC%9F.html)
 
-## Refer Links
+## 5. Refer Links
 
 http://www.w3school.com.cn/css3/css3_transition.asp
 

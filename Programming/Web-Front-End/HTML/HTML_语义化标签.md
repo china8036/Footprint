@@ -1,15 +1,15 @@
 - [HTML 语义化标签](#html-%E8%AF%AD%E4%B9%89%E5%8C%96%E6%A0%87%E7%AD%BE)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-  - [EXAMPLES](#examples)
-    - [头部——header 和 nav 标签](#%E5%A4%B4%E9%83%A8%E2%80%94%E2%80%94header-%E5%92%8C-nav-%E6%A0%87%E7%AD%BE)
-    - [主体部分——main 和 section](#%E4%B8%BB%E4%BD%93%E9%83%A8%E5%88%86%E2%80%94%E2%80%94main-%E5%92%8C-section)
-    - [尾部——footer](#%E5%B0%BE%E9%83%A8%E2%80%94%E2%80%94footer)
-    - [OTHERS](#others)
-  - [Refer Links](#refer-links)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+  - [2. EXAMPLES](#2-examples)
+    - [2.1. 头部——header 和 nav 标签](#21-%E5%A4%B4%E9%83%A8%E2%80%94%E2%80%94header-%E5%92%8C-nav-%E6%A0%87%E7%AD%BE)
+    - [2.2. 主体部分——main 和 section](#22-%E4%B8%BB%E4%BD%93%E9%83%A8%E5%88%86%E2%80%94%E2%80%94main-%E5%92%8C-section)
+    - [2.3. 尾部——footer](#23-%E5%B0%BE%E9%83%A8%E2%80%94%E2%80%94footer)
+    - [2.4. OTHERS](#24-others)
+  - [3. Refer Links](#3-refer-links)
 
 # HTML 语义化标签
 
-## 概述
+## 1. 概述
 
 HTML 标签语义化是 Web 网页标准化的重要一欢，也是标准制定时重要的设计原则；
 
@@ -23,7 +23,7 @@ HTML 标签语义化是 Web 网页标准化的重要一欢，也是标准制定�
 
   - 可使用在线工具 [HTML 5 Outline](https://gsnedders.html5.org/outliner/) 对页面进行抽象，若解析得到的 outline 基本符合设想，则说明页面标签的语义化已达到标准。
 
-## EXAMPLES
+## 2. EXAMPLES
 
 段落使用 p，引用使用 q 和 blockquote，强调用 em 和 strong，术语定义用 dl，无序列表用 ul，有序列表用 ol，文章用 article，导航用 nav，分节用 section，按钮用 input[type=button]；  
 
@@ -31,7 +31,7 @@ HTML 标签语义化是 Web 网页标准化的重要一欢，也是标准制定�
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/15/2dceb671dc9003016703a694fb66162d.jpg)
 
-### 头部——header 和 nav 标签
+### 2.1. 头部——header 和 nav 标签
 
 header 头部，body 下的直接子元素 header 一般用于放页面的介绍性的信息如网站名称、logo 或者导航栏 nav。
 
@@ -52,7 +52,7 @@ NOTE：
 
 上面用了两个 h1 标签，在传统的 html4 里面，h1 标题一般只能用一个，用于表示页面的大标题。但是在 html5 页面中，所有的标题标签 h1~h6 都可用于不同的章节里。如上，第二个 h1 标签隶属于 nav 标签，与第一个 h1 是不同级别的。在 Chrome 里面第二个 h1 的样式字体小于第一个。搜索引擎也能根据标签正确解析出文章的大纲。
 
-### 主体部分——main 和 section
+### 2.2. 主体部分——main 和 section
 
 ```html
 <main>
@@ -83,7 +83,7 @@ NOTE:
 
 - 多个标题可以用 hgroup 包括起来，在页面提纲里成为独立的一条内容
 
-### 尾部——footer
+### 2.3. 尾部——footer
 
 ```html
 <footer>
@@ -94,7 +94,7 @@ NOTE:
 footer 和 header 一样，用在不同的章节里，可以显示该章节（如 body 整个页面）相关的外链、版权等信息。
 
 
-### OTHERS
+### 2.4. OTHERS
 
 - 由于`<div>`和`<span>`标签是最没有语义的两个标签，因此在使用此类标签时应使用更具语义的标签代替，如 `ul`、`ol`等；
 
@@ -124,7 +124,7 @@ footer 和 header 一样，用在不同的章节里，可以显示该章节（�
   </figure>
   ```
 
-## Refer Links
+## 3. Refer Links
 
 https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/HTML5/HTML5_element_list
 

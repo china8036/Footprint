@@ -1,14 +1,14 @@
 - [CSS 字体](#css-%E5%AD%97%E4%BD%93)
-  - [font-family](#font-family)
-  - [字体分类](#%E5%AD%97%E4%BD%93%E5%88%86%E7%B1%BB)
-  - [系统预装字体](#%E7%B3%BB%E7%BB%9F%E9%A2%84%E8%A3%85%E5%AD%97%E4%BD%93)
-  - [兼容情况](#%E5%85%BC%E5%AE%B9%E6%83%85%E5%86%B5)
-  - [中文字体](#%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93)
-  - [主流网站设置的字体](#%E4%B8%BB%E6%B5%81%E7%BD%91%E7%AB%99%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%AD%97%E4%BD%93)
+  - [1. font-family](#1-font-family)
+  - [2. 字体分类](#2-%E5%AD%97%E4%BD%93%E5%88%86%E7%B1%BB)
+  - [3. 系统预装字体](#3-%E7%B3%BB%E7%BB%9F%E9%A2%84%E8%A3%85%E5%AD%97%E4%BD%93)
+  - [4. 兼容情况](#4-%E5%85%BC%E5%AE%B9%E6%83%85%E5%86%B5)
+  - [5. 中文字体](#5-%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93)
+  - [6. 主流网站设置的字体](#6-%E4%B8%BB%E6%B5%81%E7%BD%91%E7%AB%99%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%AD%97%E4%BD%93)
 
 # CSS 字体
 
-## font-family
+## 1. font-family
 
 CSS 的 font-family 命令，指定了网页元素所使用的字体。
 
@@ -33,7 +33,7 @@ font-family: Georgia, "Times New Roman",
 
 - 如果字体名称中间有空格，则要用双引号把字体名称包起来。如 "Microsoft Yahei"
 
-## 字体分类
+## 2. 字体分类
 
 - 衬线字体（Serif Fonts）
   
@@ -61,7 +61,7 @@ font-family: Georgia, "Times New Roman",
 
   这类字体没有明确特征，无法归入上诉四种系列的字体归入这类字体。
 
-## 系统预装字体
+## 3. 系统预装字体
 
 - Windows 操作系统
   ```
@@ -85,7 +85,7 @@ font-family: Georgia, "Times New Roman",
   华文仿宋：STFangsong
   ```
 
-## 兼容情况
+## 4. 兼容情况
 
 移动端：
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/9/2b914871a29c3cc6be5adc9a9194511d.jpg)
@@ -93,7 +93,7 @@ font-family: Georgia, "Times New Roman",
 PC 端：
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/9/fe4a7fe02fbbc7e490fac89b52c2f86c.jpg)
 
-## 中文字体
+## 5. 中文字体
 
 - 宋体（SimSun）
 
@@ -129,7 +129,7 @@ PC 端：
   font-family: Georgia, "Times New Roman", "KaiTi", "楷体", STKaiti, "华文楷体", serif;
   ```
 
-## 主流网站设置的字体
+## 6. 主流网站设置的字体
 
 - Type Is Beautiful （有关文字设计和视觉文化的网站)
   ```css

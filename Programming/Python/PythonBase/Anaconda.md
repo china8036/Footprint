@@ -1,22 +1,22 @@
-- [Anaconda 使用总结](#anaconda-%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-    - [介绍](#%E4%BB%8B%E7%BB%8D)
-    - [安装](#%E5%AE%89%E8%A3%85)
-      - [Windows](#windows)
-      - [Linux](#linux)
-  - [conda](#conda)
-    - [环境管理](#%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86)
-      - [使用 powershell 操作的坑](#%E4%BD%BF%E7%94%A8-powershell-%E6%93%8D%E4%BD%9C%E7%9A%84%E5%9D%91)
-        - [PowerShell Execution Policy](#powershell-execution-policy)
-        - [在 powershell 中 active 和 deactive 失效](#%E5%9C%A8-powershell-%E4%B8%AD-active-%E5%92%8C-deactive-%E5%A4%B1%E6%95%88)
-    - [包管理](#%E5%8C%85%E7%AE%A1%E7%90%86)
-    - [更改镜像源](#%E6%9B%B4%E6%94%B9%E9%95%9C%E5%83%8F%E6%BA%90)
+- [Anaconda 踏坑总结](#anaconda-%E8%B8%8F%E5%9D%91%E6%80%BB%E7%BB%93)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+    - [1.1. 介绍](#11-%E4%BB%8B%E7%BB%8D)
+    - [1.2. 安装](#12-%E5%AE%89%E8%A3%85)
+      - [1.2.1. Windows](#121-windows)
+      - [1.2.2. Linux](#122-linux)
+  - [2. conda](#2-conda)
+    - [2.1. 环境管理](#21-%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86)
+      - [2.1.1. 使用 powershell 操作的坑](#211-%E4%BD%BF%E7%94%A8-powershell-%E6%93%8D%E4%BD%9C%E7%9A%84%E5%9D%91)
+        - [2.1.1.1. PowerShell Execution Policy](#2111-powershell-execution-policy)
+        - [2.1.1.2. 在 powershell 中 active 和 deactive 失效](#2112-%E5%9C%A8-powershell-%E4%B8%AD-active-%E5%92%8C-deactive-%E5%A4%B1%E6%95%88)
+    - [2.2. 包管理](#22-%E5%8C%85%E7%AE%A1%E7%90%86)
+    - [2.3. 更改镜像源](#23-%E6%9B%B4%E6%94%B9%E9%95%9C%E5%83%8F%E6%BA%90)
 
 # Anaconda 踏坑总结
 
-## 概述
+## 1. 概述
 
-### 介绍
+### 1.1. 介绍
 
 Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux、Mac、Windows 系统，内置了常用的科学计算包； 
 
@@ -26,9 +26,9 @@ Anaconda 利用工具 / 命令 conda 来进行 package 和 environment 的管理
 
   第二：提供环境管理的功能，功能类似 Virtualenv，解决了多版本 Python 并存、切换的问题；
 
-### 安装
+### 1.2. 安装
 
-#### Windows
+#### 1.2.1. Windows
 
 从官网上下载 Anaconda 最新安装包，安装成功后，将 Anaconda/Script 的路径（如 C:\ProgramData\Anaconda3\Scripts）加入到环境变量中；
 
@@ -42,7 +42,7 @@ conda -h
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/dc196e4ebafe7e32be7ff1bd6d0549d2.jpg)
 
-#### Linux
+#### 1.2.2. Linux
 
 ```shell
 wget anaconda Linux 版本安装包
@@ -56,11 +56,11 @@ export PATH=/usr/anaconda3/bin:$PATH
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/328eff4c7881355805bd0070c8f7a7ba.jpg)
 
-## conda
+## 2. conda
 
 conda 是 Anaconda 下用于包管理和环境管理的工具，功能上类似 pip 和 vitualenv 的组合；
 
-### 环境管理
+### 2.1. 环境管理
 
 基于 python3.6 版本创建一个名字为 python36 的环境（不用管是 3.6.x，conda 会为我们自动寻找 3.6.x 中的最新版本）
 ```
@@ -93,9 +93,9 @@ python36              *  D:\Programs\Anaconda3\envs\python36
 root                     D:\Programs\Anaconda3
 ```
 
-#### 使用 powershell 操作的坑
+#### 2.1.1. 使用 powershell 操作的坑
 
-##### PowerShell Execution Policy
+##### 2.1.1.1. PowerShell Execution Policy
 
 ps1 脚本没有数字签名，导致无法运行 activate.ps1 和 deactivate.ps1 脚本；
 
@@ -107,7 +107,7 @@ Set-Executionpolicy -Scope CurrentUser -ExecutionPolicy UnRestricted
 ```
 参考：http://www.freebuf.com/articles/system/93829.html 
 
-##### 在 powershell 中 active 和 deactive 失效
+##### 2.1.1.2. 在 powershell 中 active 和 deactive 失效
 
 conda 默认只包含了 activate.bat 和 deactivate.bat，在 powershell 中无法很好的执行，因此，需要这两个脚本的 ps1 实现形式：
 https://github.com/firejq/PSCondaEnvs/tree/patch-1 
@@ -117,7 +117,7 @@ https://github.com/firejq/PSCondaEnvs/tree/patch-1
 Copy-Item -Path "$anacondaInstallPath\Scripts\deactivate.ps1" -Destination "$env:ANACONDA_ENVS\$condaEnvName\Scripts"
 ```
 
-### 包管理
+### 2.2. 包管理
 
 conda 的包管理功能与 pip 基本相同；
 
@@ -168,7 +168,7 @@ conda create -n python35 python=3.5 anaconda
 NOTE：
 安装 Anaconda 后，只是提供多了一个包管理工具 conda，python 自带的 pip 依旧可以使用；
 
-### 更改镜像源
+### 2.3. 更改镜像源
 
 使用清华的镜像源：
 

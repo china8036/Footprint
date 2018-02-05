@@ -1,6 +1,6 @@
 - [CSS 滤镜](#css-%E6%BB%A4%E9%95%9C)
-  - [USAGE](#usage)
-  - [EXAMPLE](#example)
+  - [1. USAGE](#1-usage)
+  - [2. EXAMPLE](#2-example)
 
 # CSS 滤镜
 
@@ -8,7 +8,7 @@ https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter
 
 CSS3 滤镜（filter）属提供的图形特效，像模糊，锐化或元素变色。过滤器通常被用于调整图片，背景和边界的渲染，但也可用于 video。
 
-## USAGE
+## 1. USAGE
 
 ```css
 .example-1 {
@@ -69,6 +69,6 @@ CSS3 滤镜（filter）属提供的图形特效，像模糊，锐化或元素变
 filter: contrast(175%) brightness(3%)
 ```
 
-## EXAMPLE
+## 2. EXAMPLE
 
 http://jsbin.com/vasiperusi/edit?html,css,output

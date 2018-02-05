@@ -1,14 +1,14 @@
-- [前后端分离 NOTE](#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB-note)
-  - [Web 1.0](#web-10)
-  - [后端为主的 MVC 时代](#%E5%90%8E%E7%AB%AF%E4%B8%BA%E4%B8%BB%E7%9A%84-mvc-%E6%97%B6%E4%BB%A3)
-  - [CLIENT-SIDE （重前端) MV* 时代](#client-side-%EF%BC%88%E9%87%8D%E5%89%8D%E7%AB%AF-mv-%E6%97%B6%E4%BB%A3)
-    - [SPA](#spa)
-  - [SUMMARIZE](#summarize)
-  - [Refer Links](#refer-links)
+- [前后端分离](#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB)
+  - [1. Web](#1-web)
+  - [2. 后端为主的 MVC 时代](#2-%E5%90%8E%E7%AB%AF%E4%B8%BA%E4%B8%BB%E7%9A%84-mvc-%E6%97%B6%E4%BB%A3)
+  - [3. CLIENT-SIDE （重前端) MV* 时代](#3-client-side-%EF%BC%88%E9%87%8D%E5%89%8D%E7%AB%AF-mv-%E6%97%B6%E4%BB%A3)
+    - [3.1. SPA](#31-spa)
+  - [5. SUMMARIZE](#5-summarize)
+  - [6. Refer Links](#6-refer-links)
 
-# 前后端分离 NOTE
+# 前后端分离
 
-## Web 1.0
+## 1. Web
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/9891571a702c817b1e404010f77eca4d.jpg)
 
@@ -26,7 +26,7 @@
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/55e6a6173a65d82af724a6a747ca5585.jpg)
 
-## 后端为主的 MVC 时代
+## 2. 后端为主的 MVC 时代
 
 以 Structs、Spring MVC 为典型例子，为了降低复杂度，以后端为出发点，有了 Web Server 层的架构升级，这是后端的 MVC 时代。
 
@@ -48,7 +48,7 @@ MVC 是个非常好的协作模式，从架构层面让开发者懂得什么代�
 
 经常会有人吐槽 Java，但 Java 在工程化开发方面真的做了大量思考和架构尝试。Java 蛮符合马云的一句话：让平凡人做非凡事。
 
-## CLIENT-SIDE （重前端) MV* 时代
+## 3. CLIENT-SIDE （重前端) MV* 时代
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/93ad746bc0abce30cf8134032bc33ab1.jpg)
 
@@ -104,7 +104,7 @@ MVC 是个非常好的协作模式，从架构层面让开发者懂得什么代�
       - 业务太靠前，导致不同端重复实现
       - 逻辑太靠前，造成维护上的不易
 
-### SPA
+### 3.1. SPA
 
 参考：[单页应用开发权威指南](https://island205.github.io/Single-Page-App-Break/index.html)
 
@@ -164,18 +164,18 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/d3f4902529e4d3612a42d7f381a6dfa3.jpg)
 
-### WHY NodeJS?
+### 3.2. WHY NodeJS?
 - 前端熟悉的语言，學習成本低
 - 都是 JS，可以前后端复用
 - 体质适合：事件驱动、非阻塞 I/O
 - 适合 IO 密集型业务
 - 执行速度也不差
 
-### [职责划分](http://2014.jsconf.cn/slides/herman-taobaoweb/#/69)
+### 3.3. [职责划分](http://jsconf.cn/slides/herman-taobaoweb/#/)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/22ee42367106cb7daa3ea23ac5202e39.jpg)
 
-### 实际案例
+### 3.4. 实际案例
 
 淘宝首页优化： http://2014.jsconf.cn/slides/herman-taobaoweb/#/72
 
@@ -185,7 +185,7 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 
 具体实现：http://2014.jsconf.cn/slides/herman-taobaoweb/#/86
 
-## Node 全栈模式
+## 4. Node 全栈模式
 
 前端为主的 MV* 模式解决了很多很多问题，但如上所述，依旧存在不少不足之处。随着 Node.js 的兴起，JavaScript 开始有能力运行在服务端。这意味着可以有一种新的研发模式：
 
@@ -211,7 +211,7 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
   
   4. 大量历史遗留问题如何过渡。这可能是最大最大的阻力。 -->
 
-## SUMMARIZE
+## 5. SUMMARIZE
 
 1. 模式没有好坏高下之分，只有合不合适。**每种技术方案都有利弊，采用哪一种模式需要通过对产品需求（跨平台、SEO、性能、用户群属性？）、资源（工程师配比，能力？）时间要求等的评估来做出选择。**
 
@@ -221,7 +221,7 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 
 4. 还有个原则，让合适的人做合适的事。比如 Web Server 层的 UI Layer 开发，前端是更合适的人选。
 
-## Refer Links
+## 6. Refer Links
 
 Web 研发模式演变：https://github.com/lifesinger/blog/issues/184 
 

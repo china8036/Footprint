@@ -1,11 +1,11 @@
 - [CSS 各种知识点 NOTE](#css-%E5%90%84%E7%A7%8D%E7%9F%A5%E8%AF%86%E7%82%B9-note)
-  - [vertical-align & line-height](#vertical-align-line-height)
-  - [padding 和 margin](#padding-%E5%92%8C-margin)
-  - [锚点定位的本质](#%E9%94%9A%E7%82%B9%E5%AE%9A%E4%BD%8D%E7%9A%84%E6%9C%AC%E8%B4%A8)
+  - [1. vertical-align & line-height](#1-vertical-align-line-height)
+  - [2. padding 和 margin](#2-padding-%E5%92%8C-margin)
+  - [3. 锚点定位的本质](#3-%E9%94%9A%E7%82%B9%E5%AE%9A%E4%BD%8D%E7%9A%84%E6%9C%AC%E8%B4%A8)
 
 # CSS 各种知识点 NOTE
 
-## vertical-align & line-height
+## 1. vertical-align & line-height
 
 http://www.zhangxinxu.com/wordpress/2015/08/css-deep-understand-vertical-align-and-line-height/
 
@@ -59,11 +59,11 @@ https://zhuanlan.zhihu.com/p/25808995
 
 对于所有 display 值以 inline- 开头的元素（如 img / input / svg），其高度是基于 height、margin 和 border 属性的和；如果你将其 height 设置为 auto 的话，那么其高度的取值就是 line-height。
 
-## padding 和 margin
+## 2. padding 和 margin
 
 padding 和 margin 属性使用`%`作为单位时，长度基准是父元素的**宽度**的百分比。
 
-## 锚点定位的本质
+## 3. 锚点定位的本质
 
 锚点定位的本质：**改变容器的滚动高度**。
 

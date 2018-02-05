@@ -1,35 +1,35 @@
 - [JSP 其他知识点](#jsp-%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9)
-  - [session 与 cookie](#session-%E4%B8%8E-cookie)
-    - [cookie 与 session 的比较：](#cookie-%E4%B8%8E-session-%E7%9A%84%E6%AF%94%E8%BE%83%EF%BC%9A)
-    - [cookie](#cookie)
-    - [session](#session)
-  - [请求重定向和请求转发](#%E8%AF%B7%E6%B1%82%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91)
-  - [易混淆的几个类关系](#%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E5%87%A0%E4%B8%AA%E7%B1%BB%E5%85%B3%E7%B3%BB)
-  - [四种作用域范围](#%E5%9B%9B%E7%A7%8D%E4%BD%9C%E7%94%A8%E5%9F%9F%E8%8C%83%E5%9B%B4)
-    - [page--PageContext 域](#page--pagecontext-%E5%9F%9F)
-    - [request--Request 域](#request--request-%E5%9F%9F)
-    - [session--Session 域](#session--session-%E5%9F%9F)
-    - [application--ServletContext 域](#application--servletcontext-%E5%9F%9F)
-  - [几种 context 辨析](#%E5%87%A0%E7%A7%8D-context-%E8%BE%A8%E6%9E%90)
-    - [ServletContext：](#servletcontext%EF%BC%9A)
-    - [ActionContext：](#actioncontext%EF%BC%9A)
-    - [ServletActionContext](#servletactioncontext)
-    - [ApplicationContext](#applicationcontext)
-    - [PageContext](#pagecontext)
-    - [SessionContext](#sessioncontext)
-    - [JspContext：javax.serlvet.jsp.JspContext](#jspcontext%EF%BC%9Ajavaxserlvetjspjspcontext)
-    - [ELContext](#elcontext)
-  - [getParameter() 与 getAttribute()：](#getparameter-%E4%B8%8E-getattribute%EF%BC%9A)
-  - [javax.servlet.jsp.JspWriter 和 java.io.PrintWriter：](#javaxservletjspjspwriter-%E5%92%8C-javaioprintwriter%EF%BC%9A)
-  - [JSP/Servlet 中的编码问题](#jspservlet-%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98)
-    - [JSP/Servlet 中四个编码设置的函数 / 指令：](#jspservlet-%E4%B8%AD%E5%9B%9B%E4%B8%AA%E7%BC%96%E7%A0%81%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%87%BD%E6%95%B0-%E6%8C%87%E4%BB%A4%EF%BC%9A)
-    - [编码过程](#%E7%BC%96%E7%A0%81%E8%BF%87%E7%A8%8B)
+  - [1. session 与 cookie](#1-session-%E4%B8%8E-cookie)
+    - [1.1. cookie 与 session 的比较：](#11-cookie-%E4%B8%8E-session-%E7%9A%84%E6%AF%94%E8%BE%83%EF%BC%9A)
+    - [1.2. cookie](#12-cookie)
+    - [1.3. session](#13-session)
+  - [2. 请求重定向和请求转发](#2-%E8%AF%B7%E6%B1%82%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91)
+  - [3. 易混淆的几个类关系](#3-%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E5%87%A0%E4%B8%AA%E7%B1%BB%E5%85%B3%E7%B3%BB)
+  - [4. 四种作用域范围](#4-%E5%9B%9B%E7%A7%8D%E4%BD%9C%E7%94%A8%E5%9F%9F%E8%8C%83%E5%9B%B4)
+    - [4.1. page--PageContext 域](#41-page--pagecontext-%E5%9F%9F)
+    - [4.2. request--Request 域](#42-request--request-%E5%9F%9F)
+    - [4.3. session--Session 域](#43-session--session-%E5%9F%9F)
+    - [4.4. application--ServletContext 域](#44-application--servletcontext-%E5%9F%9F)
+  - [5. 几种 context 辨析](#5-%E5%87%A0%E7%A7%8D-context-%E8%BE%A8%E6%9E%90)
+    - [5.1. ServletContext：](#51-servletcontext%EF%BC%9A)
+    - [5.2. ActionContext：](#52-actioncontext%EF%BC%9A)
+    - [5.3. ServletActionContext](#53-servletactioncontext)
+    - [5.4. ApplicationContext](#54-applicationcontext)
+    - [5.5. PageContext](#55-pagecontext)
+    - [5.6. SessionContext](#56-sessioncontext)
+    - [5.7. JspContext：javax.serlvet.jsp.JspContext](#57-jspcontext%EF%BC%9Ajavaxserlvetjspjspcontext)
+    - [5.8. ELContext](#58-elcontext)
+  - [6. getParameter() 与 getAttribute()：](#6-getparameter-%E4%B8%8E-getattribute%EF%BC%9A)
+  - [7. javax.servlet.jsp.JspWriter 和 java.io.PrintWriter：](#7-javaxservletjspjspwriter-%E5%92%8C-javaioprintwriter%EF%BC%9A)
+  - [8. JSP/Servlet 中的编码问题](#8-jspservlet-%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98)
+    - [8.1. JSP/Servlet 中四个编码设置的函数 / 指令：](#81-jspservlet-%E4%B8%AD%E5%9B%9B%E4%B8%AA%E7%BC%96%E7%A0%81%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%87%BD%E6%95%B0-%E6%8C%87%E4%BB%A4%EF%BC%9A)
+    - [8.2. 编码过程](#82-%E7%BC%96%E7%A0%81%E8%BF%87%E7%A8%8B)
 
 # JSP 其他知识点
 
-## session 与 cookie
+## 1. session 与 cookie
 
-### cookie 与 session 的比较：
+### 1.1. cookie 与 session 的比较：
 
 session：
 - 没有大小限制；
@@ -45,7 +45,7 @@ cookie：
 - 可以长期保存在客户端；
 - 只适合保存不隐秘的不重要信息；
 
-### cookie
+### 1.2. cookie
 
 cookie 是存储在客户机的文本文件，保存了大量的用户会话信息；服务器通过指定一个唯一的 sessionID 作为 cookie 来代表每个客户端，用以识别该客户端的连贯会话请求；
 
@@ -149,15 +149,15 @@ Cookie 分为两种，一种可以叫做 persistent cookie，设置有效期后�
   %>
   ```
 
-### session
+### 1.3. session
 
-## 请求重定向和请求转发
+## 2. 请求重定向和请求转发
 
 - 请求重定向：response.sendRedirect(String URL)，客户端行为，要求客户端对另外一个 URL 重新发起请求，相当于两次请求，且第一次请求的对象不会保存，客户端浏览器地址栏的 URL 会改变；
 
 - 请求转发：request.getRequestDispatcher(String URL).forward(request, response)，服务器端行为，将一次请求完整转发到服务端另一个 Jsp 页面 /Servlet 处理，转发请求后请求对象会保存，相当于一次请求，客户端浏览器地址栏的 URL 不会改变；
 
-## 易混淆的几个类关系
+## 3. 易混淆的几个类关系
 
 interface 层：ServletContext，ServletConfig，Servlet，JspPage；
 
@@ -226,41 +226,41 @@ abstract 类层：GenericServlet，HttpServlet，HttpJspPage；
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/d5240373983a2ad5a5e5a79f2419a1d7.jpg)
 
-## 四种作用域范围
+## 4. 四种作用域范围
 
 http://www.5ycode.com/article/63.html
 
-### page--PageContext 域
+### 4.1. page--PageContext 域
 
 具有 page 范围的对象被绑定到 javax.servlet.jsp.PageContext 对象中；
 
 可以调用 pageContext 这个隐含对象的 getAttribute() 方法来访问具有这种范围类型的对象（pageContext 对象还提供了访问其他范围对象的 getAttribute 方法），pageContext 对象本身也属于 page 范围。当 Servlet 类的_jspService() 方法执行完毕，属于 page 范围的对象的引用将被丢弃。page 范围内的对象，在客户端每次请求 JSP 页面时创建，在页面向客户端发送回响应或请求被转发（forward）到其他的资源后被删除；
 
-### request--Request 域
+### 4.2. request--Request 域
 
 具有 request 范围的对象被绑定到 javax.servlet.ServletRequest 对象中；
 
 可以调用 request 这个隐含对象的 getAttribute() 方法来访问具有这种范围类型的对象。在调用 forward() 方法转向的页面或者调用 include() 方法包含的页面中，都可以访问这个范围内的对象。要注意的是，因为请求对象对于每一个客户请求都是不同的，所以对于每一个新的请求，都要重新创建和删除这个范围内的对象；在完成客户端的请求之前，request 对象一直有效；
 
-### session--Session 域
+### 4.3. session--Session 域
 
 具有 session 范围的对象被绑定到 javax.servlet.http.HttpSession 对象中；
 
 可以调用 session 这个隐含对象的 getAttribute() 方法来访问具有这种范围类型的对象。JSP 容器为每一次会话，创建一个 HttpSession 对象，在会话期间，可以访问 session 范围内的对象；
 
-### application--ServletContext 域
+### 4.4. application--ServletContext 域
 
 具有 application 范围的对象被绑定到 javax.servlet.ServletContext 中；
 
 可以调用 application 这个隐含对象的 getAttribute() 方法来访问具有这种范围类型的对象。在 Web 应用程序运行期间，所有的页面都可以访问在这个范围内的对象；
 
-## 几种 context 辨析
+## 5. 几种 context 辨析
 
 http://www.blogjava.net/fancydeepin/archive/2015/03/27/397185.html
 
 “Context“指上下文、环境。
 
-### ServletContext：
+### 5.1. ServletContext：
 
 一个 WEB 运用程序只有一个 ServletContext 实例，它是在容器（包括 JBoss, Tomcat 等) 完全启动 WEB 项目之前被创建，生命周期伴随整个 WEB 运用；
 
@@ -275,7 +275,7 @@ javax.servlet.jsp.PageContext.getServletContext()
 javax.servlet.ServletConfig.getServletContext()
 ```
 
-### ActionContext：
+### 5.2. ActionContext：
 
 ActionContext 是当前 Action 执行时的上下文环境，ActionContext 中维护了一些与当前 Action 相关的对象的引用，如：Parameters （参数), Session （会话), ValueStack （值栈), Locale （本地化信息) 等；
 
@@ -288,29 +288,29 @@ public ActionForward execute(ActionMapping mapping,ActionForm form,HttpServletRe
 ```
 在 Struts2, 则是通过 WebWork 来将与 Servlet 相关的数据信息转换成了与 Servlet API 无关的对象，即 ActionContext 对象；这样就使得了业务逻辑控制器能够与 Servlet API 分离开来。另外，由于 Struts2 的 Action 是每一次用户请求都产生一个新的实例，因此，ActionContext 不存在线程安全问题，可以放心使用；
 
-### ServletActionContext
+### 5.3. ServletActionContext
 
 ServletActionContext 是 ActionContext 的一个子类。ServletActionContext 从名字上来看，意味着它与 Servlet API 紧密耦合；
 
 ServletActionContext 的构造子是私有的，主要是提供了一些静态的方法，可以用来获取：ActionContext, ActionMapping, PageContext, HttpServletRequest, HttpServletResponse, ServletContext, ValueStack, HttpSession 对象的引用；
 
-### ApplicationContext
+### 5.4. ApplicationContext
 
-### PageContext
+### 5.5. PageContext
 
-### SessionContext
+### 5.6. SessionContext
 
 HttpSession 类有方法：HttpSessionContext getSessionContext()
 
-### JspContext：javax.serlvet.jsp.JspContext
+### 5.7. JspContext：javax.serlvet.jsp.JspContext
 
 > Official API: “JspContext serves as the base class for the PageContext class and abstracts all information that is not specific to servlets. This allows for Simple Tag Extensions to be used outside of the context of a request/response Servlet.”
 
 每个 JSP 页面都有 JspContext 的对象，专为自定义标签而设计；
 
-### ELContext
+### 5.8. ELContext
 
-## getParameter() 与 getAttribute()：
+## 6. getParameter() 与 getAttribute()：
 
 - getParameter()：
 
@@ -328,7 +328,7 @@ HttpServletRequest 类有 setAttribute() 方法，而没有 setParameter() 方�
 
 parameter 与 attribute 的区别可以类比为 request 和 session 的区别；
 
-## javax.servlet.jsp.JspWriter 和 java.io.PrintWriter：
+## 7. javax.servlet.jsp.JspWriter 和 java.io.PrintWriter：
 
 - JspWriter 和 PrintWriter 都是继承于 Java.io.Writer，都是向客户端响应中输出的工具；
 ps：System.out.println() 是向本地（服务器）终端输出，注意区分；
@@ -361,13 +361,13 @@ ps：System.out.println() 是向本地（服务器）终端输出，注意区分
   - PrintWriter 输出全部结束后，才开始 JspWriter 的输出；
   - 若在 JspWriter 输出后调用 out.flush()，强制输出缓冲区内容并清空，则可实现 JspWriter 的输出先于 PrintWriter；
 
-## JSP/Servlet 中的编码问题
+## 8. JSP/Servlet 中的编码问题
 
 http://developer.51cto.com/art/200906/132667.htm
 
 https://www.cnblogs.com/caowei/p/2013-12-11_request-response.html
 
-### JSP/Servlet 中四个编码设置的函数 / 指令：
+### 8.1. JSP/Servlet 中四个编码设置的函数 / 指令：
 
 - page 指令的属性 pageEncoding="UTF-8"：
   只能用于 JSP 中，告诉 JSP 编译器在将 JSP 文件编译成 Servlet 时要使用的编码 / 字符集；
@@ -390,7 +390,7 @@ https://www.cnblogs.com/caowei/p/2013-12-11_request-response.html
 
 注：服务器发送数据时，服务器按照 response.setCharacterEncoding—contentType—pageEncoding 的优先顺序，对要发送的数据进行编码；
 
-### 编码过程
+### 8.2. 编码过程
 
 浏览器向服务器发送请求，因为浏览器与服务器之间的通信实质上是 socket 流（字节流），所以要先将请求参数编码（字符转换成字节），再发送；服务器接收到请求参数后需进行解码（字节转换成字符），然后才封装到 request 对象中；
 

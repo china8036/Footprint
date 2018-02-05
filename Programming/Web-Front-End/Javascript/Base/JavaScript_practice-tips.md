@@ -3,9 +3,9 @@
   - [JavaScript 的 10 个设计缺陷](#javascript-%E7%9A%84-10-%E4%B8%AA%E8%AE%BE%E8%AE%A1%E7%BC%BA%E9%99%B7)
 
   
-# JavaScript 实践 TIPS #
+# JavaScript 实践 TIPS 
 
-## 12 种不宜使用的 Javascript 语法 ##
+## 12 种不宜使用的 Javascript 语法
 http://www.ruanyifeng.com/blog/2010/01/12_javascript_syntax_structures_you_should_not_use.html 
 
 1.	Javascript 有两组相等运算符，一组是 == 和！=，另一组是 === 和！==。前者只比较值的相等，后者除了值以外，还比较类型是否相同。请尽量不要使用前一组，永远只使用 === 和！==。因为 == 默认会进行类型转换，规则十分难记。
@@ -56,7 +56,7 @@ myCat.name = 'mimi';
 ```
 12.	在大多数语言中，void 都是一种类型，表示没有值。但是在 Javascript 中，void 是一个运算符，接受一个运算数，并返回 undefined。但这个命令没多大用处，而且令人困惑，应尽量不用。
 
-## JavaScript 的 10 个设计缺陷 ##
+## JavaScript 的 10 个设计缺陷 
 http://www.ruanyifeng.com/blog/2011/06/10_design_defects_in_javascript.html 
 
 1.	不适合开发大型程序

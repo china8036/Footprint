@@ -1,46 +1,46 @@
 - [Python Requests NOTE](#python-requests-note)
-  - [概念](#%E6%A6%82%E5%BF%B5)
-  - [使用](#%E4%BD%BF%E7%94%A8)
-    - [请求](#%E8%AF%B7%E6%B1%82)
-      - [发送请求](#%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82)
-        - [请求方法](#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95)
-        - [请求头部](#%E8%AF%B7%E6%B1%82%E5%A4%B4%E9%83%A8)
-        - [发送 cookie](#%E5%8F%91%E9%80%81-cookie)
-        - [重定向设置](#%E9%87%8D%E5%AE%9A%E5%90%91%E8%AE%BE%E7%BD%AE)
-        - [超时设置](#%E8%B6%85%E6%97%B6%E8%AE%BE%E7%BD%AE)
-        - [session 对象](#session-%E5%AF%B9%E8%B1%A1)
-        - [SSL 证书验证](#ssl-%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81)
-        - [使用代理](#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86)
-        - [使用事件钩子](#%E4%BD%BF%E7%94%A8%E4%BA%8B%E4%BB%B6%E9%92%A9%E5%AD%90)
-      - [GET 请求](#get-%E8%AF%B7%E6%B1%82)
-        - [传递 URL 参数](#%E4%BC%A0%E9%80%92-url-%E5%8F%82%E6%95%B0)
-      - [POST 请求](#post-%E8%AF%B7%E6%B1%82)
-        - [表单请求](#%E8%A1%A8%E5%8D%95%E8%AF%B7%E6%B1%82)
-        - [JSON 请求](#json-%E8%AF%B7%E6%B1%82)
-        - [上传文件](#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6)
-    - [响应](#%E5%93%8D%E5%BA%94)
-      - [响应内容](#%E5%93%8D%E5%BA%94%E5%86%85%E5%AE%B9)
-      - [json 响应](#json-%E5%93%8D%E5%BA%94)
-      - [原始套接字响应](#%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97%E5%93%8D%E5%BA%94)
-      - [二进制响应](#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%93%8D%E5%BA%94)
-      - [响应 cookie](#%E5%93%8D%E5%BA%94-cookie)
-    - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
-    - [获取源代码](#%E8%8E%B7%E5%8F%96%E6%BA%90%E4%BB%A3%E7%A0%81)
-  - [Refer Links](#refer-links)
+  - [1. 概念](#1-%E6%A6%82%E5%BF%B5)
+  - [2. 使用](#2-%E4%BD%BF%E7%94%A8)
+    - [2.1. 请求](#21-%E8%AF%B7%E6%B1%82)
+      - [2.1.1. 发送请求](#211-%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82)
+        - [2.1.1.1. 请求方法](#2111-%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95)
+        - [2.1.1.2. 请求头部](#2112-%E8%AF%B7%E6%B1%82%E5%A4%B4%E9%83%A8)
+        - [2.1.1.3. 发送 cookie](#2113-%E5%8F%91%E9%80%81-cookie)
+        - [2.1.1.4. 重定向设置](#2114-%E9%87%8D%E5%AE%9A%E5%90%91%E8%AE%BE%E7%BD%AE)
+        - [2.1.1.5. 超时设置](#2115-%E8%B6%85%E6%97%B6%E8%AE%BE%E7%BD%AE)
+        - [2.1.1.6. session 对象](#2116-session-%E5%AF%B9%E8%B1%A1)
+        - [2.1.1.7. SSL 证书验证](#2117-ssl-%E8%AF%81%E4%B9%A6%E9%AA%8C%E8%AF%81)
+        - [2.1.1.8. 使用代理](#2118-%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86)
+        - [2.1.1.9. 使用事件钩子](#2119-%E4%BD%BF%E7%94%A8%E4%BA%8B%E4%BB%B6%E9%92%A9%E5%AD%90)
+      - [2.1.2. GET 请求](#212-get-%E8%AF%B7%E6%B1%82)
+        - [2.1.2.1. 传递 URL 参数](#2121-%E4%BC%A0%E9%80%92-url-%E5%8F%82%E6%95%B0)
+      - [2.1.3. POST 请求](#213-post-%E8%AF%B7%E6%B1%82)
+        - [2.1.3.1. 表单请求](#2131-%E8%A1%A8%E5%8D%95%E8%AF%B7%E6%B1%82)
+        - [2.1.3.2. JSON 请求](#2132-json-%E8%AF%B7%E6%B1%82)
+        - [2.1.3.3. 上传文件](#2133-%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6)
+    - [2.2. 响应](#22-%E5%93%8D%E5%BA%94)
+      - [2.2.1. 响应内容](#221-%E5%93%8D%E5%BA%94%E5%86%85%E5%AE%B9)
+      - [2.2.2. json 响应](#222-json-%E5%93%8D%E5%BA%94)
+      - [2.2.3. 原始套接字响应](#223-%E5%8E%9F%E5%A7%8B%E5%A5%97%E6%8E%A5%E5%AD%97%E5%93%8D%E5%BA%94)
+      - [2.2.4. 二进制响应](#224-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%93%8D%E5%BA%94)
+      - [2.2.5. 响应 cookie](#225-%E5%93%8D%E5%BA%94-cookie)
+    - [2.3. 异常处理](#23-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
+    - [2.4. 获取源代码](#24-%E8%8E%B7%E5%8F%96%E6%BA%90%E4%BB%A3%E7%A0%81)
+  - [3. Refer Links](#3-refer-links)
 
 # Python Requests NOTE
 
-## 概念
+## 1. 概念
 
 Requests 是一个封装了 HTTP/1.1 协议的 Python 库，可以看作是 urllib 库的更高级版本。
 
-## 使用
+## 2. 使用
 
-### 请求
+### 2.1. 请求
 
-#### 发送请求
+#### 2.1.1. 发送请求
 
-##### 请求方法
+##### 2.1.1.1. 请求方法
 
 requests 库提供了 http 所有的基本请求方式：
 ```python
@@ -54,7 +54,7 @@ r = requests.options("http://httpbin.org/get")
 
 这些方法向目标 URL 发送不同 method 的 HTTP 请求后，将响应 response 封装后返回。
 
-##### 请求头部
+##### 2.1.1.2. 请求头部
 
 使用 requests 库发送的请求的默认请求报文头部的 User-Agent 字段大概是这样：
 ```
@@ -83,7 +83,7 @@ NOTE:
 
 - 所有的 header 值必须是 string、bytestring 或者 unicode。尽管传递 unicode header 也是允许的，但不建议这样做。
 
-##### 发送 cookie
+##### 2.1.1.3. 发送 cookie
 
 请求方法中提供了关键字参数 cookie：
 ```python
@@ -92,7 +92,7 @@ cookies = dict(cookies_are='working')
 r = requests.get(url, cookies=cookies)
 ```
 
-##### 重定向设置
+##### 2.1.1.4. 重定向设置
 
 默认情况下，除了 HEAD, Requests 会自动处理所有重定向。
 
@@ -116,7 +116,7 @@ r = requests.get(url, cookies=cookies)
 [<Response [301]>]
 ```
 
-##### 超时设置
+##### 2.1.1.5. 超时设置
 
 可以利用 timeout 参数来配置最大请求时间（秒）：
 ```python
@@ -128,7 +128,7 @@ requests.get('http://github.com', timeout=(3, 7))
 
 注：timeout 仅对请求连接过程有效，与响应体的下载无关。
 
-##### session 对象
+##### 2.1.1.6. session 对象
 
 http://docs.python-requests.org/zh_CN/latest/user/advanced.html 
 
@@ -209,7 +209,7 @@ s.post(url=login_url, data=data)
 r = s.get(list_url)
 ```
 
-##### SSL 证书验证
+##### 2.1.1.7. SSL 证书验证
 
 Requests 可以为 HTTPS 请求验证 SSL 证书，就像 web 浏览器一样。要想检查某个主机的 SSL 证书，你可以使用 verify 参数（默认情况下 verify 是 True)：
 ```python
@@ -217,7 +217,7 @@ r = requests.get('https://kyfw.12306.cn/otn/', verify=True)
 # requests.exceptions.SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:590)
 ```
 
-##### 使用代理
+##### 2.1.1.8. 使用代理
 
 如果需要使用代理，你可以通过为任意请求方法提供 proxies 参数来配置单个请求
 ```python
@@ -242,13 +242,13 @@ response = requests.get(url, timeout=10, proxies=proxies)
 
 NOTE：若使用 http 代理，则发起请求时也要使用 http，否则不会走代理通道；
 
-##### 使用事件钩子
+##### 2.1.1.9. 使用事件钩子
 
 http://www.imooc.com/video/13091 
 
-#### GET 请求
+#### 2.1.2. GET 请求
 
-##### 传递 URL 参数
+##### 2.1.2.1. 传递 URL 参数
 
 - 方式一：
   
@@ -277,18 +277,18 @@ http://www.imooc.com/video/13091
   
   - get 方法的参数是 params，post 方法的参数是 data，注意区别；
 
-#### POST 请求
+#### 2.1.3. POST 请求
 
 对于 POST 请求的参数，requests 提供了关键字参数 data，将 post 请求参数以一个字典的形式传入即可：
 
-##### 表单请求
+##### 2.1.3.1. 表单请求
 
 ```python
 payload = {'key1': 'value1', 'key2': 'value2'}
 r = requests.post("http://httpbin.org/post", data=payload)
 ```
 
-##### JSON 请求
+##### 2.1.3.2. JSON 请求
 
 ```python
 # 使用 json.dumps() 方法把表单数据序列化即可
@@ -297,7 +297,7 @@ payload = {'some': 'data'}
 r = requests.post(url, data=json.dumps(payload))
 ```
 
-##### 上传文件
+##### 2.1.3.3. 上传文件
 
 请求方法中提供了关键字参数 file：
 ```python
@@ -311,11 +311,11 @@ with open('massive-body') as f:
     requests.post('http://some.url/streamed', data=f)
 ```
 
-### 响应
+### 2.2. 响应
 
 requests 库的 get()、post() 等方法发送请求后，将收到的响应 response 封装后作为返回值。
 
-#### 响应内容
+#### 2.2.1. 响应内容
 
 - .text 属性返回响应报文的响应体内容；
 
@@ -363,7 +363,7 @@ requests 库的 get()、post() 等方法发送请求后，将收到的响应 res
 
 - .elapsed
 
-#### json 响应
+#### 2.2.2. json 响应
 
 Requests 中也有一个内置的 JSON 解码器：.json() 方法；
 ```python
@@ -373,7 +373,7 @@ print(r.json())
 
 如果 JSON 解码失败， r.json() 就会抛出一个异常。例如，相应内容是 401 (Unauthorized)，尝试访问 r.json 将会抛出 ValueError: No JSON object could be decoded 异常。
 
-#### 原始套接字响应
+#### 2.2.3. 原始套接字响应
 
 在初始请求中设置 stream=True 后，使用。raw 属性可以获取来自服务器的原始套接字响应；
 ```python
@@ -411,7 +411,7 @@ for chunk in response.iter_content(128):
 			fd.write(chunk)
 ```
 
-#### 二进制响应
+#### 2.2.4. 二进制响应
 
 对于非文本响应，可以通过。content 属性以字节的方式访问请求响应体，Requests 会自动解码 gzip 和 deflate 传输编码的响应数据；
 ```python
@@ -430,7 +430,7 @@ f.write(response.content)
 f.close()
 ```
 
-#### 响应 cookie
+#### 2.2.5. 响应 cookie
 
 如果一个响应中包含了 cookie，那么我们可以利用 cookies 属性来拿到：
 ```python
@@ -441,7 +441,7 @@ print(r.cookies['example_cookie_name']) #若 cookie 不存在，会抛出异常
 print(r.cookies.get(‘example_cookie_name’)) # 若 cookie 不存在，输出 none
 ```
 
-### 异常处理
+### 2.3. 异常处理
 
 在 requests.exceptions 中定义了 HTTP 请求过程中可能出现的大部分异常：
 
@@ -464,7 +464,7 @@ else:
 	print(response.status_code)
 ```
 
-### 获取源代码
+### 2.4. 获取源代码
 
 http://www.imooc.com/article/17119?block_id=tuijian_wz 	
 
@@ -478,7 +478,7 @@ http://www.imooc.com/article/17119?block_id=tuijian_wz
 
 5. 我们直接通过 requests.get 方法或者 urllib 获取到的 html 源码实际上是浏览器处理之前的原始 html
 
-## Refer Links
+## 3. Refer Links
 
 Requests2.10.0 中文文档：http://docs.python-requests.org/zh_CN/latest/user/quickstart.html 
 

@@ -1,102 +1,102 @@
 - [Spring Boot Note](#spring-boot-note)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [Spring Boot CLI 安装](#spring-boot-cli-%E5%AE%89%E8%A3%85)
-    - [在 IDEA 中创建使用 gradle 的 spring boot 项目](#%E5%9C%A8-idea-%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%BD%BF%E7%94%A8-gradle-%E7%9A%84-spring-boot-%E9%A1%B9%E7%9B%AE)
-    - [运行 spring boot 项目](#%E8%BF%90%E8%A1%8C-spring-boot-%E9%A1%B9%E7%9B%AE)
-    - [配置风格](#%E9%85%8D%E7%BD%AE%E9%A3%8E%E6%A0%BC)
-    - [application.yml / application.propertities](#applicationyml-applicationpropertities)
-        - [常用配置](#%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE)
-            - [.properties](#properties)
-            - [.yml](#yml)
-    - [Spring EL](#spring-el)
-    - [配置 CORS](#%E9%85%8D%E7%BD%AE-cors)
-    - [文件上传](#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)
-        - [上传为空导致异常](#%E4%B8%8A%E4%BC%A0%E4%B8%BA%E7%A9%BA%E5%AF%BC%E8%87%B4%E5%BC%82%E5%B8%B8)
-    - [日志管理](#%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86)
-        - [配置](#%E9%85%8D%E7%BD%AE)
-            - [配置日志级别【格式：logging.level. 包名 = 级别】](#%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB%E3%80%90%E6%A0%BC%E5%BC%8F%EF%BC%9Alogginglevel-%E5%8C%85%E5%90%8D-%E7%BA%A7%E5%88%AB%E3%80%91)
-            - [配置日志输出文件：](#%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%EF%BC%9A)
-            - [格式化日志](#%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%97%A5%E5%BF%97)
-            - [自定义日志框架配置](#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E9%85%8D%E7%BD%AE)
-            - [代码中使用](#%E4%BB%A3%E7%A0%81%E4%B8%AD%E4%BD%BF%E7%94%A8)
-    - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
-        - [使用 `@ControllerAdvice` 进行统一异常处理](#%E4%BD%BF%E7%94%A8-controlleradvice-%E8%BF%9B%E8%A1%8C%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
-            - [实例 1](#%E5%AE%9E%E4%BE%8B-1)
-            - [实例 2：处理数据校验异常](#%E5%AE%9E%E4%BE%8B-2%EF%BC%9A%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E5%BC%82%E5%B8%B8)
-    - [使用 validation 进行数据校验](#%E4%BD%BF%E7%94%A8-validation-%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C)
-        - [捕获异常处理校验失败](#%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%A0%A1%E9%AA%8C%E5%A4%B1%E8%B4%A5)
-        - [使用 BindingResult 处理校验错误](#%E4%BD%BF%E7%94%A8-bindingresult-%E5%A4%84%E7%90%86%E6%A0%A1%E9%AA%8C%E9%94%99%E8%AF%AF)
-        - [使用 groups 属性进行分组校验](#%E4%BD%BF%E7%94%A8-groups-%E5%B1%9E%E6%80%A7%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84%E6%A0%A1%E9%AA%8C)
-        - [使用 `@ScriptAssert` 自定义校验逻辑](#%E4%BD%BF%E7%94%A8-scriptassert-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E9%80%BB%E8%BE%91)
-        - [自定义校验注解](#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3)
-        - [手动校验](#%E6%89%8B%E5%8A%A8%E6%A0%A1%E9%AA%8C)
-    - [静态资源目录](#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%9B%AE%E5%BD%95)
-    - [模板页面目录](#%E6%A8%A1%E6%9D%BF%E9%A1%B5%E9%9D%A2%E7%9B%AE%E5%BD%95)
-    - [使用 spring boot data JPA](#%E4%BD%BF%E7%94%A8-spring-boot-data-jpa)
-        - [引入依赖 spring-boot-starter-data-jpa](#%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96-spring-boot-starter-data-jpa)
-        - [配置【application.yml】](#%E9%85%8D%E7%BD%AE%E3%80%90applicationyml%E3%80%91)
-        - [编写实体类：](#%E7%BC%96%E5%86%99%E5%AE%9E%E4%BD%93%E7%B1%BB%EF%BC%9A)
-        - [编写数据访问接口：](#%E7%BC%96%E5%86%99%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8E%A5%E5%8F%A3%EF%BC%9A)
-            - [接口自动实现的方法](#%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%96%B9%E6%B3%95)
-            - [复杂查询方法](#%E5%A4%8D%E6%9D%82%E6%9F%A5%E8%AF%A2%E6%96%B9%E6%B3%95)
-                - [分页查询](#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2)
-                - [排序查询](#%E6%8E%92%E5%BA%8F%E6%9F%A5%E8%AF%A2)
-                - [限制查询](#%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2)
-                - [自定义 SQL 查询](#%E8%87%AA%E5%AE%9A%E4%B9%89-sql-%E6%9F%A5%E8%AF%A2)
-                - [多表查询](#%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2)
-    - [使用 spring boot data rest](#%E4%BD%BF%E7%94%A8-spring-boot-data-rest)
-    - [使用事务](#%E4%BD%BF%E7%94%A8%E4%BA%8B%E5%8A%A1)
-        - [高级使用](#%E9%AB%98%E7%BA%A7%E4%BD%BF%E7%94%A8)
-            - [指定不同的事务管理器](#%E6%8C%87%E5%AE%9A%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8)
-            - [隔离级别控制](#%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E6%8E%A7%E5%88%B6)
-            - [传播行为](#%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA)
-    - [结合 Mybatis](#%E7%BB%93%E5%90%88-mybatis)
-        - [基本操作](#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C)
-        - [mapper 的注解支持](#mapper-%E7%9A%84%E6%B3%A8%E8%A7%A3%E6%94%AF%E6%8C%81)
-            - [@Insert](#insert)
-            - [@Update](#update)
-            - [@Delete](#delete)
-            - [@Select](#select)
-                - [结果映射](#%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84)
-                    - [普通映射](#%E6%99%AE%E9%80%9A%E6%98%A0%E5%B0%84)
-                    - [一对一映射](#%E4%B8%80%E5%AF%B9%E4%B8%80%E6%98%A0%E5%B0%84)
-                    - [一对多映射](#%E4%B8%80%E5%AF%B9%E5%A4%9A%E6%98%A0%E5%B0%84)
-        - [使用 mybatis-generator](#%E4%BD%BF%E7%94%A8-mybatis-generator)
-        - [多数据源配置](#%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE)
-        - [使用 HikariCP 连接池](#%E4%BD%BF%E7%94%A8-hikaricp-%E8%BF%9E%E6%8E%A5%E6%B1%A0)
-        - [使用 mybatis-plus](#%E4%BD%BF%E7%94%A8-mybatis-plus)
-    - [使用数据库版本工具](#%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E7%89%88%E6%9C%AC%E5%B7%A5%E5%85%B7)
-        - [flyway](#flyway)
-        - [liquibase](#liquibase)
-    - [使用 Redis](#%E4%BD%BF%E7%94%A8-redis)
-    - [使用 Actuator](#%E4%BD%BF%E7%94%A8-actuator)
-    - [使用 Lombok](#%E4%BD%BF%E7%94%A8-lombok)
-    - [使用 Swagger](#%E4%BD%BF%E7%94%A8-swagger)
-    - [使用 JHipster](#%E4%BD%BF%E7%94%A8-jhipster)
-    - [测试](#%E6%B5%8B%E8%AF%95)
-        - [单元测试](#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95)
-        - [集成测试](#%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95)
-    - [部署](#%E9%83%A8%E7%BD%B2)
-        - [IDEA 中开启 spring boot 热部署](#idea-%E4%B8%AD%E5%BC%80%E5%90%AF-spring-boot-%E7%83%AD%E9%83%A8%E7%BD%B2)
-            - [使用 spring boot devtools](#%E4%BD%BF%E7%94%A8-spring-boot-devtools)
-            - [使用 JRebel](#%E4%BD%BF%E7%94%A8-jrebel)
-        - [打包与部署](#%E6%89%93%E5%8C%85%E4%B8%8E%E9%83%A8%E7%BD%B2)
-            - [打包为 jar 包](#%E6%89%93%E5%8C%85%E4%B8%BA-jar-%E5%8C%85)
-                - [maven 版本](#maven-%E7%89%88%E6%9C%AC)
-                - [gradle 版本](#gradle-%E7%89%88%E6%9C%AC)
-                - [打包为可执行的 jar 包](#%E6%89%93%E5%8C%85%E4%B8%BA%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9A%84-jar-%E5%8C%85)
-            - [打包为 war 包](#%E6%89%93%E5%8C%85%E4%B8%BA-war-%E5%8C%85)
-            - [打包为 docker 镜像](#%E6%89%93%E5%8C%85%E4%B8%BA-docker-%E9%95%9C%E5%83%8F)
-    - [定时任务](#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1)
-        - [使用 Schedule](#%E4%BD%BF%E7%94%A8-schedule)
-        - [使用 Quartz](#%E4%BD%BF%E7%94%A8-quartz)
-    - [使用 Shiro](#%E4%BD%BF%E7%94%A8-shiro)
-    - [使用 Spring Security](#%E4%BD%BF%E7%94%A8-spring-security)
-    - [Refer Links](#refer-links)
+    - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+    - [2. Spring Boot CLI 安装](#2-spring-boot-cli-%E5%AE%89%E8%A3%85)
+    - [3. 在 IDEA 中创建使用 gradle 的 spring boot 项目](#3-%E5%9C%A8-idea-%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%BD%BF%E7%94%A8-gradle-%E7%9A%84-spring-boot-%E9%A1%B9%E7%9B%AE)
+    - [4. 运行 spring boot 项目](#4-%E8%BF%90%E8%A1%8C-spring-boot-%E9%A1%B9%E7%9B%AE)
+    - [5. 配置风格](#5-%E9%85%8D%E7%BD%AE%E9%A3%8E%E6%A0%BC)
+    - [6. application.yml / application.propertities](#6-applicationyml-applicationpropertities)
+        - [6.1. 常用配置](#61-%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE)
+            - [6.1.1. .properties](#611-properties)
+            - [6.1.2. .yml](#612-yml)
+    - [7. Spring EL](#7-spring-el)
+    - [8. 配置 CORS](#8-%E9%85%8D%E7%BD%AE-cors)
+    - [9. 文件上传](#9-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)
+        - [9.1. 上传为空导致异常](#91-%E4%B8%8A%E4%BC%A0%E4%B8%BA%E7%A9%BA%E5%AF%BC%E8%87%B4%E5%BC%82%E5%B8%B8)
+    - [10. 日志管理](#10-%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86)
+        - [10.1. 配置](#101-%E9%85%8D%E7%BD%AE)
+            - [10.1.1. 配置日志级别【格式：logging.level. 包名 = 级别】](#1011-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB%E3%80%90%E6%A0%BC%E5%BC%8F%EF%BC%9Alogginglevel-%E5%8C%85%E5%90%8D-%E7%BA%A7%E5%88%AB%E3%80%91)
+            - [10.1.2. 配置日志输出文件：](#1012-%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA%E6%96%87%E4%BB%B6%EF%BC%9A)
+            - [10.1.3. 格式化日志](#1013-%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%97%A5%E5%BF%97)
+            - [10.1.4. 自定义日志框架配置](#1014-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E9%85%8D%E7%BD%AE)
+            - [10.1.5. 代码中使用](#1015-%E4%BB%A3%E7%A0%81%E4%B8%AD%E4%BD%BF%E7%94%A8)
+    - [11. 异常处理](#11-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
+        - [11.1. 使用 `@ControllerAdvice` 进行统一异常处理](#111-%E4%BD%BF%E7%94%A8-controlleradvice-%E8%BF%9B%E8%A1%8C%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
+            - [11.1.1. 实例](#1111-%E5%AE%9E%E4%BE%8B)
+            - [11.1.2. 实例：处理数据校验异常](#1112-%E5%AE%9E%E4%BE%8B%EF%BC%9A%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E5%BC%82%E5%B8%B8)
+    - [12. 使用 validation 进行数据校验](#12-%E4%BD%BF%E7%94%A8-validation-%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C)
+        - [12.1. 捕获异常处理校验失败](#121-%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%A0%A1%E9%AA%8C%E5%A4%B1%E8%B4%A5)
+        - [12.2. 使用 BindingResult 处理校验错误](#122-%E4%BD%BF%E7%94%A8-bindingresult-%E5%A4%84%E7%90%86%E6%A0%A1%E9%AA%8C%E9%94%99%E8%AF%AF)
+        - [12.3. 使用 groups 属性进行分组校验](#123-%E4%BD%BF%E7%94%A8-groups-%E5%B1%9E%E6%80%A7%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84%E6%A0%A1%E9%AA%8C)
+        - [12.4. 使用 `@ScriptAssert` 自定义校验逻辑](#124-%E4%BD%BF%E7%94%A8-scriptassert-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E9%80%BB%E8%BE%91)
+        - [12.5. 自定义校验注解](#125-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E6%B3%A8%E8%A7%A3)
+        - [12.6. 手动校验](#126-%E6%89%8B%E5%8A%A8%E6%A0%A1%E9%AA%8C)
+    - [13. 静态资源目录](#13-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E7%9B%AE%E5%BD%95)
+    - [14. 模板页面目录](#14-%E6%A8%A1%E6%9D%BF%E9%A1%B5%E9%9D%A2%E7%9B%AE%E5%BD%95)
+    - [15. 使用 spring boot data JPA](#15-%E4%BD%BF%E7%94%A8-spring-boot-data-jpa)
+        - [15.1. 引入依赖 spring-boot-starter-data-jpa](#151-%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96-spring-boot-starter-data-jpa)
+        - [15.2. 配置【application.yml】](#152-%E9%85%8D%E7%BD%AE%E3%80%90applicationyml%E3%80%91)
+        - [15.3. 编写实体类：](#153-%E7%BC%96%E5%86%99%E5%AE%9E%E4%BD%93%E7%B1%BB%EF%BC%9A)
+        - [15.4. 编写数据访问接口：](#154-%E7%BC%96%E5%86%99%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%8E%A5%E5%8F%A3%EF%BC%9A)
+            - [15.4.1. 接口自动实现的方法](#1541-%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%96%B9%E6%B3%95)
+            - [15.4.2. 复杂查询方法](#1542-%E5%A4%8D%E6%9D%82%E6%9F%A5%E8%AF%A2%E6%96%B9%E6%B3%95)
+                - [15.4.2.1. 分页查询](#15421-%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2)
+                - [15.4.2.2. 排序查询](#15422-%E6%8E%92%E5%BA%8F%E6%9F%A5%E8%AF%A2)
+                - [15.4.2.3. 限制查询](#15423-%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2)
+                - [15.4.2.4. 自定义 SQL 查询](#15424-%E8%87%AA%E5%AE%9A%E4%B9%89-sql-%E6%9F%A5%E8%AF%A2)
+                - [15.4.2.5. 多表查询](#15425-%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2)
+    - [16. 使用 spring boot data rest](#16-%E4%BD%BF%E7%94%A8-spring-boot-data-rest)
+    - [17. 使用事务](#17-%E4%BD%BF%E7%94%A8%E4%BA%8B%E5%8A%A1)
+        - [17.1. 高级使用](#171-%E9%AB%98%E7%BA%A7%E4%BD%BF%E7%94%A8)
+            - [17.1.1. 指定不同的事务管理器](#1711-%E6%8C%87%E5%AE%9A%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8)
+            - [17.1.2. 隔离级别控制](#1712-%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E6%8E%A7%E5%88%B6)
+            - [17.1.3. 传播行为](#1713-%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA)
+    - [18. 结合 Mybatis](#18-%E7%BB%93%E5%90%88-mybatis)
+        - [18.1. 基本操作](#181-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C)
+        - [18.2. mapper 的注解支持](#182-mapper-%E7%9A%84%E6%B3%A8%E8%A7%A3%E6%94%AF%E6%8C%81)
+            - [18.2.1. @Insert](#1821-insert)
+            - [18.2.2. @Update](#1822-update)
+            - [18.2.3. @Delete](#1823-delete)
+            - [18.2.4. @Select](#1824-select)
+                - [18.2.4.1. 结果映射](#18241-%E7%BB%93%E6%9E%9C%E6%98%A0%E5%B0%84)
+                    - [18.2.4.1.1. 普通映射](#182411-%E6%99%AE%E9%80%9A%E6%98%A0%E5%B0%84)
+                    - [18.2.4.1.2. 一对一映射](#182412-%E4%B8%80%E5%AF%B9%E4%B8%80%E6%98%A0%E5%B0%84)
+                    - [18.2.4.1.3. 一对多映射](#182413-%E4%B8%80%E5%AF%B9%E5%A4%9A%E6%98%A0%E5%B0%84)
+        - [18.3. 使用 mybatis-generator](#183-%E4%BD%BF%E7%94%A8-mybatis-generator)
+        - [18.4. 多数据源配置](#184-%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E9%85%8D%E7%BD%AE)
+        - [18.5. 使用 HikariCP 连接池](#185-%E4%BD%BF%E7%94%A8-hikaricp-%E8%BF%9E%E6%8E%A5%E6%B1%A0)
+        - [18.6. 使用 mybatis-plus](#186-%E4%BD%BF%E7%94%A8-mybatis-plus)
+    - [19. 使用数据库版本工具](#19-%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E7%89%88%E6%9C%AC%E5%B7%A5%E5%85%B7)
+        - [19.1. flyway](#191-flyway)
+        - [19.2. liquibase](#192-liquibase)
+    - [20. 使用 Redis](#20-%E4%BD%BF%E7%94%A8-redis)
+    - [21. 使用 Actuator](#21-%E4%BD%BF%E7%94%A8-actuator)
+    - [22. 使用 Lombok](#22-%E4%BD%BF%E7%94%A8-lombok)
+    - [23. 使用 Swagger](#23-%E4%BD%BF%E7%94%A8-swagger)
+    - [24. 使用 JHipster](#24-%E4%BD%BF%E7%94%A8-jhipster)
+    - [25. 测试](#25-%E6%B5%8B%E8%AF%95)
+        - [25.1. 单元测试](#251-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95)
+        - [25.2. 集成测试](#252-%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95)
+    - [26. 部署](#26-%E9%83%A8%E7%BD%B2)
+        - [26.1. IDEA 中开启 spring boot 热部署](#261-idea-%E4%B8%AD%E5%BC%80%E5%90%AF-spring-boot-%E7%83%AD%E9%83%A8%E7%BD%B2)
+            - [26.1.1. 使用 spring boot devtools](#2611-%E4%BD%BF%E7%94%A8-spring-boot-devtools)
+            - [26.1.2. 使用 JRebel](#2612-%E4%BD%BF%E7%94%A8-jrebel)
+        - [26.2. 打包与部署](#262-%E6%89%93%E5%8C%85%E4%B8%8E%E9%83%A8%E7%BD%B2)
+            - [26.2.1. 打包为 jar 包](#2621-%E6%89%93%E5%8C%85%E4%B8%BA-jar-%E5%8C%85)
+                - [26.2.1.1. maven 版本](#26211-maven-%E7%89%88%E6%9C%AC)
+                - [26.2.1.2. gradle 版本](#26212-gradle-%E7%89%88%E6%9C%AC)
+                - [26.2.1.3. 打包为可执行的 jar 包](#26213-%E6%89%93%E5%8C%85%E4%B8%BA%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%9A%84-jar-%E5%8C%85)
+            - [26.2.2. 打包为 war 包](#2622-%E6%89%93%E5%8C%85%E4%B8%BA-war-%E5%8C%85)
+            - [26.2.3. 打包为 docker 镜像](#2623-%E6%89%93%E5%8C%85%E4%B8%BA-docker-%E9%95%9C%E5%83%8F)
+    - [27. 定时任务](#27-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1)
+        - [27.1. 使用 Schedule](#271-%E4%BD%BF%E7%94%A8-schedule)
+        - [27.2. 使用 Quartz](#272-%E4%BD%BF%E7%94%A8-quartz)
+    - [28. 使用 Shiro](#28-%E4%BD%BF%E7%94%A8-shiro)
+    - [29. 使用 Spring Security](#29-%E4%BD%BF%E7%94%A8-spring-security)
+    - [30. Refer Links](#30-refer-links)
 
 # Spring Boot Note
 
-## 概述
+## 1. 概述
 
 > spring boot 代替了什么，Spring、SpringMVC/Struts2、hibernate/Mybatis？<br/>     
 > 个人理解：代替了 spring。用代替 / 取代来解释貌似都不好，更准确的可能是封装了 spring，使搭建 SSH/SSM 更快捷。     
@@ -113,7 +113,7 @@
 
 <!-- TODO: 降耦合原则：项目尽量不要出现任何重复的代码，便于维护 -->
 
-## Spring Boot CLI 安装
+## 2. Spring Boot CLI 安装
 
 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-started-gradle-installation 
 
@@ -125,7 +125,7 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/a7b5433aa57776d7f28c698ef7407435.jpg)
 
-## 在 IDEA 中创建使用 gradle 的 spring boot 项目
+## 3. 在 IDEA 中创建使用 gradle 的 spring boot 项目
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/e31d28feff47bbdf73b514febb75a56e.jpg)
 
@@ -203,23 +203,23 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
 
     ```
 
-## 运行 spring boot 项目
+## 4. 运行 spring boot 项目
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/3606cffe1d51ec0a0f19fb5e4489f8df.jpg)
 
 出现 Started TestdemoApplication in 2.916 seconds (JVM running for 3.43) 字样，表明 spring boot 启动成功；
 
-## 配置风格
+## 5. 配置风格
 
 在 spring boot 一般采用 Java 配置和注解混合配置，其中：全局配置采用 Java 配置（如数据库、MVC 配置），业务 Bean 的配置采用注解配置（@Service、@Controller 等）。
 
-## application.yml / application.propertities
+## 6. application.yml / application.propertities
 
 Spring Boot 采用一个全局的配置文件：application.yml / application.propertities，放置于 src/main/resources 或类路径下的 /config 中。
 
-### 常用配置
+### 6.1. 常用配置
 
-#### .properties
+#### 6.1.1. .properties
 
 ```ini
 #disbale Spring banner
@@ -259,7 +259,7 @@ management.security.enabled=true
 
 ```
 
-#### .yml
+#### 6.1.2. .yml
 
 ```yaml
 # 服务器配置
@@ -308,7 +308,7 @@ banner:
 
 ```
 
-## Spring EL
+## 7. Spring EL
 
 Spring EL 即 Spring 表达式语言，支持在 xml 和注解中使用表达式。
 
@@ -349,7 +349,7 @@ public class ELTest {
 
 ```
 
-## 配置 CORS
+## 8. 配置 CORS
 
 https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-cors
 
@@ -392,7 +392,7 @@ public class WebConfig implements WebMvcConfigurer {
 }
 ```
 
-## 文件上传
+## 9. 文件上传
 
 http://www.leftso.com/blog/232.html
 
@@ -509,7 +509,7 @@ public class RestUploadController {
 }
 ```
 
-### 上传为空导致异常
+### 9.1. 上传为空导致异常
 
 http://blog.csdn.net/qq724581322/article/details/51332799
 
@@ -577,7 +577,7 @@ http://younian.net.cn/article/117
     }
     ```
 
-## 日志管理
+## 10. 日志管理
 
 spring boot 支持 Java Util Logging、Log4J、Log4J2、Logback 作为日志框架，默认情况下，Spring Boot 会用 Logback 来记录日志，并用 INFO 级别输出到控制台；
 
@@ -585,11 +585,11 @@ spring boot 的日志管理依赖于 spring-boot-starter-logging，但实际开�
 
 spring boot 对各种支持的日志框架的控制台输出和文件输出做好了默认配置；
 
-### 配置
+### 10.1. 配置
 
 Spring Boot 为我们提供了很多默认的日志配置，所以，只要将 spring-boot-starter-logging 作为依赖加入到当前应用的 classpath，则“开箱即用”，但我们仍可以根据具体需求在【application.properties】中更改配置选项：
 
-#### 配置日志级别【格式：logging.level. 包名 = 级别】
+#### 10.1.1. 配置日志级别【格式：logging.level. 包名 = 级别】
 
 ```
 logging.level.org.springframework.web = DEBUG
@@ -598,7 +598,7 @@ logging.level.org.springframework.web = DEBUG
 
 Spring Boot 中默认配置 ERROR、WARN 和 INFO 级别的日志输出到控制台。您还可以通过启动您的应用程序–debug 标志来启用“调试”模式（开发的时候推荐开启）；
 
-#### 配置日志输出文件：
+#### 10.1.2. 配置日志输出文件：
 
 默认情况下，Spring Boot 将日志输出到控制台，不会写到日志文件。如果要编写除控制台输出之外的日志文件，则需在 application.properties 中设置 logging.file 或 logging.path 属性；
 
@@ -622,7 +622,7 @@ logging.path，设置目录，会在该目录下创建 spring.log 文件，并�
 logging.file = D:/mylog/log.log
 ```
 
-#### 格式化日志
+#### 10.1.3. 格式化日志
 默认的日志输出如下：
 ```
 2016-04-13 08:23:50.120  INFO 37397 --- [main] org.hibernate.Version: HHH000412: Hibernate Core {4.3.11.Final}
@@ -643,7 +643,7 @@ Logger 名 — 通常使用源代码的类名
 
 日志内容
 ```
-#### 自定义日志框架配置
+#### 10.1.4. 自定义日志框架配置
 
 由于日志服务一般都在 ApplicationContext 创建前就初始化了，它并不是必须通过 Spring 的配置文件控制。因此通过系统属性和传统的 Spring Boot 外部配置文件依然可以很好的支持日志控制和管理。
 
@@ -705,7 +705,7 @@ logback-spring.xml 例子：
 </configuration>
 ```
 
-#### 代码中使用
+#### 10.1.5. 代码中使用
 只需在类中
 ```
 private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -719,7 +719,7 @@ this.logger.warn(“xxxxx”)
 this.logger.error(“xxxxx”)
 ```
 
-## 异常处理
+## 11. 异常处理
 
 http://blog.didispace.com/springbootexception/
 
@@ -738,7 +738,7 @@ public String hello() throws Exception {
 
 虽然 Spring Boot 中实现了默认的 error 映射，但是在实际应用中，我们一般需要根据实际需求实现自定义的异常提示界面或者返回 json 格式的异常信息。
 
-### 使用 `@ControllerAdvice` 进行统一异常处理
+### 11.1. 使用 `@ControllerAdvice` 进行统一异常处理
 
 在 spring 3.2 中，新增了 [`@ControllerAdvice`](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html) 注解，可以用于定义 @ExceptionHandler、@InitBinder、@ModelAttribute，并应用到所有 @RequestMapping 中。
 
@@ -790,7 +790,7 @@ public class MyControllerAdvice {
 
 以下以返回 json 格式的异常信息为例，当我们要实现 RESTful API 时，抛出异常时我们需要返回 JSON 格式的异常信息：
 
-#### 实例 1
+#### 11.1.1. 实例
 
 创建统一的 JSON 返回对象，code：消息类型，message：消息内容，url：请求的 url，data：请求返回的数据：
 ```java
@@ -862,7 +862,7 @@ NOTE:
 - 优点：将 Controller 层的异常和数据校验的异常进行统一处理，减少模板代码，减少编码量，提升扩展性和可维护性。
 - 缺点：只能处理 Controller 层未捕获（往外抛）的异常，对于 Interceptor（拦截器）层的异常，Spring 框架层的异常，就无能为力了。
 
-#### 实例 2：处理数据校验异常
+#### 11.1.2. 实例：处理数据校验异常
 
 在 Dog 类中的字段上的注解数据校验规则：
 ```java
@@ -935,7 +935,7 @@ public class GlobalExceptionHandler {
 }
 ```
 
-## 使用 validation 进行数据校验
+## 12. 使用 validation 进行数据校验
 
 [使用 spring validation 完成数据后端校验](https://www.cnkirito.moe/2017/08/16/%E4%BD%BF%E7%94%A8spring%20validation%E5%AE%8C%E6%88%90%E6%95%B0%E6%8D%AE%E5%90%8E%E7%AB%AF%E6%A0%A1%E9%AA%8C/)
 
@@ -945,7 +945,7 @@ public class GlobalExceptionHandler {
 
 从 Spring3 起，spring 支持 JSR-303 验证框架，JSR-303 是 Java EE 6 中的一项子规范，也称为 BeanValidation。
 
-### 捕获异常处理校验失败
+### 12.1. 捕获异常处理校验失败
 
 1. 在 POJO 中添加注解定义校验规则：
 
@@ -1065,7 +1065,7 @@ public class GlobalExceptionHandler {
     
     spring validation 不会在第一个错误发生后立即停止，而是继续试错，告诉我们所有的错误。
 
-### 使用 BindingResult 处理校验错误
+### 12.2. 使用 BindingResult 处理校验错误
 
 在 controller 中：
 ```java
@@ -1088,7 +1088,7 @@ public class FooController {
 foo(@Validated Foo foo, BindingResult fooBindingResult ，@Validated Bar bar, BindingResult barBindingResult);
 ```
 
-### 使用 groups 属性进行分组校验
+### 12.3. 使用 groups 属性进行分组校验
 
 如果 Student bean 想要用于两个不同的请求中，每个请求有不同的校验需求，例如一个请求只需要校验 name 字段，一个请求需要校验 name 和 age 两个字段，那该怎么做呢？
 
@@ -1132,7 +1132,7 @@ public class ValidateController {
 
 ```
 
-### 使用 `@ScriptAssert` 自定义校验逻辑
+### 12.4. 使用 `@ScriptAssert` 自定义校验逻辑
 
  [@ScriptAssert 文档](https://docs.jboss.org/hibernate/validator/6.0/api/org/hibernate/validator/constraints/ScriptAssert.html) 
 
@@ -1181,7 +1181,7 @@ public class ValidateController {
 }
 ```
 
-### 自定义校验注解
+### 12.5. 自定义校验注解
 
 业务需求总是比框架提供的这些简单校验要复杂的多，我们可以自定义校验来满足我们的需求。自定义 spring validation 非常简单，主要分为两步。
 
@@ -1234,7 +1234,7 @@ public class ValidateController {
     }
     ```
 
-### 手动校验
+### 12.6. 手动校验
 
 可能在某些场景下需要我们手动校验，即使用校验器对需要被校验的实体发起 validate，同步获得校验结果。理论上我们既可以使用 Hibernate Validation 提供 Validator，也可以使用 Spring 对其的封装。在 spring 构建的项目中，提倡使用经过 spring 封装过后的方法：
 
@@ -1255,7 +1255,7 @@ public String validate() {
 }
 ```
 
-## 静态资源目录
+## 13. 静态资源目录
 
 https://juejin.im/post/58f768458d6d810064a00ad6 
 
@@ -1270,7 +1270,7 @@ spring boot 默认配置的静态资源目录如下：
 
 使用 webjar 管理静态资源：http://www.jianshu.com/p/d127c4f78bb8 
 
-## 模板页面目录
+## 14. 模板页面目录
 
 templates 文件夹下的模板文件无法直接访问，要访问这些页面，有两种方法：
 
@@ -1308,17 +1308,17 @@ templates 文件夹下的模板文件无法直接访问，要访问这些页面�
 - 使用各种 spring-boot-start 的模板引擎，会自动配置 viewResolve；      
   http://www.jianshu.com/p/85cfe2e061fe 
 
-## 使用 spring boot data JPA
+## 15. 使用 spring boot data JPA
 JPA(Java Persistence API) 是 Sun 官方提出的 Java 持久化规范。它为 Java 开发人员提供了一种对象 / 关联映射工具来管理 Java 应用中的关系数据。他的出现主要是为了简化现有的持久化开发工作和整合 ORM 技术，结束现在 Hibernate，TopLink，JDO 等 ORM 框架各自为营的局面。值得注意的是，JPA 是在充分吸收了现有 Hibernate，TopLink，JDO 等 ORM 框架的基础上发展而来的，具有易于使用，伸缩性强等优点。
 
 注意：JPA 是一套规范，不是一套产品，那么像 Hibernate,TopLink,JDO 他们是一套产品，如果说这些产品实现了这个 JPA 规范，那么我们就可以叫他们为 JPA 的实现产品。
 
-### 引入依赖 spring-boot-starter-data-jpa
+### 15.1. 引入依赖 spring-boot-starter-data-jpa
     ```
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     ```
 
-### 配置【application.yml】
+### 15.2. 配置【application.yml】
     ```yaml
     spring:
         # database configure
@@ -1342,7 +1342,7 @@ JPA(Java Persistence API) 是 Sun 官方提出的 Java 持久化规范。它为 
     - validate：每次加载 hibernate 时，验证创建数据库表结构，只会和数据库中的表进行比较，不会创建新表，但是会插入新值，在开发稳定后使用此项；
     - none：启动时不做任何措施； 
 
-### 编写实体类：
+### 15.3. 编写实体类：
 ```java
 @Entity
 @Data
@@ -1403,7 +1403,7 @@ public class User {
 
   注意：以上每个注解都可能性有一个 message 属性，用于在验证失败后向用户返回的消息；
 
-### 编写数据访问接口：
+### 15.4. 编写数据访问接口：
 ```java
 public interface UserRepository extends JpaRepository<User, Long> {
 }
@@ -1414,7 +1414,7 @@ http://www.ityouknow.com/springboot/2016/08/20/springboot(%E4%BA%94)-spring-data
 
 这个接口中我们没有定义任何操作方法，而是直接继承于 PagingAndSortingRepository 接口，该接口本身已经实现了创建（save）、更新（save）、删除（delete）、查询（findAll、findOne）等基本操作的函数，因此对于这些基础操作的数据访问就不需要开发者再自己定义。
 
-#### 接口自动实现的方法
+#### 15.4.1. 接口自动实现的方法
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/d958459a5671411daa55a05c0a69aee4.jpg)
 
@@ -1477,11 +1477,11 @@ List<User> findByUserNameOrderByEmailDesc(String email);
 
  
 
-#### 复杂查询方法
+#### 15.4.2. 复杂查询方法
 
 在实际的开发中我们需要用到分页、删选、连表等查询的时候就需要特殊的方法或者自定义 SQL，可以通过使用 @Query 注解来创建查询，您只需要编写 JPQL 语句，并通过类似“:name”来映射 @Param 指定的参数
 
-##### 分页查询
+##### 15.4.2.1. 分页查询
 分页查询在实际使用中非常普遍了，spring data jpa 已经帮我们实现了分页的功能，在查询的方法中，需要传入参数 Pageable , 当查询中有多个参数的时候 Pageable 建议做为最后一个参数传入
 ```java
 Page<User> findALL(Pageable pageable);// 自动实现
@@ -1493,7 +1493,7 @@ Page<User> pageUsers = UserRepository.findAll(new PageRequest(1, 2));
 return pageUsers;
 ```
 
-##### 排序查询
+##### 15.4.2.2. 排序查询
 ```java
 List<Person> findAll(Sort sort);// 自动实现
 ```
@@ -1503,7 +1503,7 @@ List<Person> people =  personRepository.findAll(new Sort(Direction.DESC, “age�
 return people;
 ```
 
-##### 限制查询
+##### 15.4.2.3. 限制查询
 有时候我们只需要查询前 N 个元素，或者支取前一个实体。
 ```java
 ser findFirstByOrderByLastnameAsc();
@@ -1516,7 +1516,7 @@ List<User> findFirst10ByLastname(String lastname, Sort sort);
 
 List<User> findTop10ByLastname(String lastname, Pageable pageable);
 ```
-##### 自定义 SQL 查询
+##### 15.4.2.4. 自定义 SQL 查询
 其实 Spring data 觉大部分的 SQL 都可以根据方法名定义的方式来实现，但是由于某些原因我们想使用自定义的 SQL 来查询，spring data 也是完美支持的；在 SQL 的查询方法上面使用 @Query 注解，如涉及到删除和修改在需要加上 @Modifying. 也可以根据需要添加 @Transactional 对事务的支持，查询超时的设置等；
 ```java
 @Modifying
@@ -1532,7 +1532,7 @@ void deleteByUserId(Long id);
 @Query("select u from User u where u.emailAddress = ?1")
     User findByEmailAddress(String emailAddress);
 ```
-##### 多表查询
+##### 15.4.2.5. 多表查询
 多表查询在 spring data jpa 中有两种实现方式，第一种是利用 hibernate 的级联查询来实现，第二种是创建一个结果集的接口来接收连表查询后的结果，这里主要第二种方式。
 首先需要定义一个结果集的接口类。
 ```java
@@ -1570,7 +1570,7 @@ for(HotelSummary summay:hotels){
 
 至此，JPA 数据库访问层编写完毕，只需在需要访问数据的地方使用 @Autowired 注入 UserRepository（自动注册成 Bean），即可访问数据库；
 
-## 使用 spring boot data rest
+## 16. 使用 spring boot data rest
 
 中文文档 https://springcloud.cc/spring-data-rest-zhcn.html#dependencies.spring-boot 
 
@@ -1629,7 +1629,7 @@ Spring Data REST 构建在 Spring Data repositories 之上，并自动将其导�
   DELETE /users/{id} 删除单个 User 对象
   ```
 
-## 使用事务
+## 17. 使用事务
 Spring Data JPA 默认对所有的方法开启了事务支持，且查询类事务默认启用 readOnly == true；因此，在 spring boot data jpa 项目中，无需使用 @EnableTransactionManagement，直接在需要使用事务的方法 / 类上标注 @Transactional 即可；
 
 通常我们单元测试为了保证每个测试之间的数据独立，会使用 @Rollback 注解让每个单元测试都能在结束时回滚；
@@ -1646,13 +1646,13 @@ public interface {
 }
 ```
 
-### 高级使用
+### 17.1. 高级使用
 http://blog.didispace.com/springboottransactional/ 
 
-#### 指定不同的事务管理器
+#### 17.1.1. 指定不同的事务管理器
 一般我们直接使用默认的事务配置，就可以满足一些基本的事务需求，但是当我们项目较大较复杂时（比如，有多个数据源等），这时候需要在声明事务时，指定不同的事务管理器。在声明事务时，只需要通过 value 属性指定配置的事务管理器名即可，例如：@Transactional(value="transactionManagerPrimary")。
 
-#### 隔离级别控制
+#### 17.1.2. 隔离级别控制
 隔离级别是指若干个并发的事务之间的隔离程度，与我们开发时候主要相关的场景包括：脏读取、重复读、幻读。
 
 支持的五种隔离级别：
@@ -1681,7 +1681,7 @@ public enum Isolation {
 @Transactional(isolation = Isolation.DEFAULT)
 ```
 
-#### 传播行为
+#### 17.1.3. 传播行为
 所谓事务的传播行为是指，如果在开始当前事务之前，一个事务上下文已经存在，此时有若干选项可以指定一个事务性方法的执行行为。
 ```java
 public enum Propagation {
@@ -1714,13 +1714,13 @@ public enum Propagation {
 @Transactional(propagation = Propagation.REQUIRED)
 ```
 
-## 结合 Mybatis
+## 18. 结合 Mybatis
 
 [官方文档](http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 
 [如何优雅使用 mybatis](http://www.ityouknow.com/springboot/2016/11/06/springboot(%E5%85%AD)-%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E4%BD%BF%E7%94%A8mybatis.html)
 
-### 基本操作
+### 18.1. 基本操作
 
 1)  引入依赖 mybatis-spring-boot-starter 和 mysql-connector-java，【build.gradle】
     ```
@@ -1802,11 +1802,11 @@ public enum Propagation {
     }
     ```
 
-### mapper 的注解支持
+### 18.2. mapper 的注解支持
 
 官方文档：http://www.mybatis.org/mybatis-3/zh/java-api.html 
 
-#### @Insert
+#### 18.2.1. @Insert
 基本使用：
 ```java
 public interface StudentMapper {
@@ -1845,21 +1845,21 @@ int insertStudent(Student student);
 ```
 注：如果在数据库中设置了 AFTER 触发器，每次插入后都将主键值存储到 STUD_ID_SEQ 中，可将 before=false，则会在插入完毕后，从 STUD_ID_SEQ 中执行 SELECT 语句获取刚刚插入的主键值，赋值给 studId；
 
-#### @Update
+#### 18.2.2. @Update
 例：
 ```java
 @Update("UPDATE STUDENTS SET NAME=#{name}, EMAIL=#{email}, PHONE=#{phone} WHERE STUD_ID=#{studId}")
 // 将会返回执行了 UPDATE 语句后影响的行数
 int updateStudent(Student student);
 ```
-#### @Delete
+#### 18.2.3. @Delete
 例：
 ```java
 @Delete("DELETE FROM STUDENTS WHERE STUD_ID=#{studId}")
 // 将会返回执行了 DELETE 语句后影响的行数
 int deleteStudent(int studId);
 ```
-#### @Select
+#### 18.2.4. @Select
 例：
 ```java
 @Select("SELECT STUD_ID AS STUDID, NAME, EMAIL, PHONE FROM STUDENTS WHERE STUD_ID=#{studId}")
@@ -1869,7 +1869,7 @@ Student findStudentById(Integer studId);
 
 如果返回了多行结果，将抛出 TooManyResultsException 异常
 
-##### 结果映射
+##### 18.2.4.1. 结果映射
 
 数据库表列与实体类属性映射的四种方法： http://blog.csdn.net/lmy86263/article/details/53150091 
 
@@ -1882,7 +1882,7 @@ c)	通过属性配置完成映射；
 d)	通过使用在 SQL 语句中定义别名完成映射；
 
 以下使用的都是注解映射：
-###### 普通映射
+###### 18.2.4.1.1. 普通映射
 将查询结果通过别名或者是 @Results 注解与 JavaBean 属性映射起来，一个 @Result 对应 Java bean 的一个属性赋值，映射失败的属性保持默认值： 
 
 例：
@@ -1899,7 +1899,7 @@ List<Student> findAllStudents();
 ```
 可通过在配置中开启驼峰命名映射，自动将所有 axxx_bxx_cxx 的列名与 axxxBxxCxx 的属性名相映射；
 
-###### 一对一映射
+###### 18.2.4.1.2. 一对一映射
 当使用嵌套的 SELECT 语句时，可使用 @One 来进行一对一的数据映射
 
 例：Student 类中有一个属性为 Address 对象，该对象属性无法与 STUDENTS 表中的列名直接进行映射
@@ -1927,7 +1927,7 @@ System.out.println("Student :"+student.toString);
 System.out.println("Address :"+student.getAddress().toString);
 ```
 
-###### 一对多映射
+###### 18.2.4.1.3. 一对多映射
 
 MyBatis 还提供了 @Many 注解，用来使用嵌套 Select 语句加载一对多关联查询；
 
@@ -1955,7 +1955,7 @@ property = "courses"
 Tutor findTutorById(int tutorId);
 ```
 
-### 使用 mybatis-generator
+### 18.3. 使用 mybatis-generator
 http://www.jianshu.com/p/188622950cc6 
 
 由于 mybatis-generator 官方使用的是 maven plugin，因此针对 gradle，使用[第三方解决方案](https://plugins.gradle.org/plugin/com.arenagod.gradle.MybatisGenerator) ，即使用[第三方插件](https://github.com/kimichen13/mybatis-generator-plugin) ；
@@ -2083,10 +2083,10 @@ http://www.jianshu.com/p/188622950cc6
 
     b)	删除 mapper/ 中的 provider 类，以及 mapper 接口中的 provider 方法，只留下基本的增删改查；
 
-### 多数据源配置
+### 18.4. 多数据源配置
 spring boot mybatis 多数据库源（主从）配置 http://www.ityouknow.com/springboot/2016/11/25/springboot(%E4%B8%83)-springboot+mybatis%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E6%9C%80%E7%AE%80%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html 
 
-### 使用 HikariCP 连接池
+### 18.5. 使用 HikariCP 连接池
 SpringBoot 默认使用 org.apache.tomcat.jdbc.pool.DataSource 连接池，通过更改配置可使用其它第三方连接池；
 1)	引入依赖
     ```
@@ -2110,15 +2110,15 @@ SpringBoot 默认使用 org.apache.tomcat.jdbc.pool.DataSource 连接池，通�
     spring.datasource.hikari.data-source-properties.useServerPrepStmts=true
     ```
 
-### 使用 mybatis-plus
+### 18.6. 使用 mybatis-plus
 
 官方文档：http://mp.baomidou.com/#/quick-start 
 
-## 使用数据库版本工具
+## 19. 使用数据库版本工具
 
 SpringBoot 支持了两种数据库迁移工具，一个是 flyway，一个是 liquibase。其本身也支持 sql script，在初始化数据源之后执行指定的脚本。
 
-### flyway
+### 19.1. flyway
 
 flyway 官方教程 / 工作原理说明 https://flywaydb.org/getstarted/how  
 
@@ -2166,7 +2166,7 @@ flyway.baseline-on-migrate=true
 
     ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/360a244c369d71c54e7668e7ef99de64.jpg)
 
-###	liquibase
+### 19.2. liquibase
 可用配置：
 ```
 liquibase.change-log
@@ -2189,7 +2189,7 @@ liquibase.user
 目标数据用户名
 ```
 
-## 使用 Redis
+## 20. 使用 Redis
 
 spring-boot-starter-data-redis 依赖
 
@@ -2207,7 +2207,7 @@ spring.redis.timeout=0
 @AutowiredRedisTemplate redisTemplate;
 ```
 
-## 使用 Actuator
+## 21. 使用 Actuator
 
 Actuator 是 spring boot 提供的对应用系统的自省和监控的集成功能，可以对应用系统进行配置查看、相关功能统计等。
 
@@ -2245,7 +2245,7 @@ Actuator 是 spring boot 提供的对应用系统的自省和监控的集成功�
     | POST   | /shutdown       | 关闭应用          | true  |
     | GET    | /trace          | 查看基本追踪信息      | true  |
 
-## 使用 Lombok
+## 22. 使用 Lombok
 
 lombok 是一套代码模板解决方案，将极大提升开发的效率；
 
@@ -2290,7 +2290,7 @@ lombok 是一套代码模板解决方案，将极大提升开发的效率；
     }
     ```
 
-## 使用 Swagger
+## 23. 使用 Swagger
 Swagger 是一个规范和完整的框架，用于生成、描述、调用和可视化 RESTful 风格的 Web 服务。
 
 1)	引入依赖
@@ -2488,11 +2488,11 @@ Swagger 是一个规范和完整的框架，用于生成、描述、调用和可
 
     Swagger 存在一定安全漏洞，需要使用官方最新版并且自己完全安全认证措施；
 
-## 使用 JHipster
+## 24. 使用 JHipster
 
-## 测试
+## 25. 测试
 
-### 单元测试
+### 25.1. 单元测试
 
 http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html 
 
@@ -2560,17 +2560,17 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
     }
     ```
 
-### 集成测试
+### 25.2. 集成测试
 
 整体开发完成之后进入集成测试，spring boot 项目的启动入口在 Application 类中，直接运行 run 方法就可以启动项目；
 
-## 部署
+## 26. 部署
 
 http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
 
-###	IDEA 中开启 spring boot 热部署
+### 26.1. IDEA 中开启 spring boot 热部署
 
-#### 使用 spring boot devtools
+#### 26.1.1. 使用 spring boot devtools
 
 在 spring boot 运行期间，对代码做出任何修改会触发 IDEA 自动重启 spring boot；
 
@@ -2610,13 +2610,13 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
 
     ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/f68eef2002759a230f4dca734d0dc63c.jpg)
 
-#### 使用 JRebel
+#### 26.1.2. 使用 JRebel
 
-### 打包与部署
+### 26.2. 打包与部署
 
-#### 打包为 jar 包
+#### 26.2.1. 打包为 jar 包
 
-##### maven 版本
+##### 26.2.1.1. maven 版本
 
 在 IDEA 中，打开 project structure
 
@@ -2645,7 +2645,7 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
 java -jar xxxx.jar
 ```
 
-##### gradle 版本
+##### 26.2.1.2. gradle 版本
 
 在 build.gradle 中加入
 ```groovy
@@ -2668,7 +2668,7 @@ gradle clean build
 java -jar xxxx.jar
 ```
 
-##### 打包为可执行的 jar 包
+##### 26.2.1.3. 打包为可执行的 jar 包
 
 http://blog.geekidentity.com/spring/spring_boot_production_deploy/
 
@@ -2699,7 +2699,7 @@ Spring Boot 提供了一个 tools 工具，该工具可以方便的让我们将�
 
 在此基础上，还可以通过 Linux 系统中的 init.d 或 systemd 将 Spring Boot 应用程序作为 Unix / Linux 服务启动，从而更加方便和稳定。
 
-#### 打包为 war 包
+#### 26.2.2. 打包为 war 包
 
 https://docs.spring.io/spring-boot/docs/current/reference/html/howto-traditional-deployment.html 
 
@@ -2743,13 +2743,13 @@ NOTE：
 
 解决方法：开发期间使用`compile('org.springframework.boot:spring-boot-starter-tomcat')`，项目上线时编译才使用`providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')`
 
-#### 打包为 docker 镜像
+#### 26.2.3. 打包为 docker 镜像
 
 https://waylau.com/docker-spring-boot-gradle/ 
 
-## 定时任务
+## 27. 定时任务
 
-### 使用 Schedule
+### 27.1. 使用 Schedule
 
 1)	引入依赖
 
@@ -2857,7 +2857,7 @@ NOTE：
 	}
 	```
 
-### 使用 Quartz
+### 27.2. 使用 Quartz
 
 https://www.cnblogs.com/javanoob/p/springboot_schedule.html 
 
@@ -2865,7 +2865,7 @@ https://www.cnblogs.com/lic309/p/4089633.html
 
 Quartz 是一个功能完善的任务调度框架，特别牛叉的是它支持集群环境下的任务调度，当然代价也很大，需要将任务调度状态序列化到数据库。Quartz 框架需要 10 多张表协同，配置繁多。
 
-## 使用 Shiro
+## 28. 使用 Shiro
 
 官方网站：http://shiro.apache.org/ 
 
@@ -2885,10 +2885,10 @@ Apache Shiro 核心通过 Filter 来实现，通过 URL 规则来进行过滤和
     compile group: 'org.apache.shiro', name: 'shiro-spring', version: "${ShiroVersion}"
     ```
 
-## 使用 Spring Security
+## 29. 使用 Spring Security
 
 官方教程 https://docs.spring.io/spring-security/site/docs/current/guides/html5/helloworld-boot.html 
 
-## Refer Links
+## 30. Refer Links
 
 官方教程 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/ 

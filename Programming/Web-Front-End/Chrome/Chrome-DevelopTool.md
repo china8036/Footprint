@@ -1,22 +1,22 @@
 - [Chrome 开发者工具使用](#chrome-%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8)
-  - [DOM Breakpoints](#dom-breakpoints)
-    - [Subtree Modifications](#subtree-modifications)
-    - [Attributes Modifications](#attributes-modifications)
-    - [Node Removal](#node-removal)
-  - [XHR Breakpoints](#xhr-breakpoints)
-  - [Console](#console)
-    - [$(selector)](#selector)
-  - [Timeline Tool](#timeline-tool)
-  - [Chrome Profiles](#chrome-profiles)
-  - [Refer Links](#refer-links)
+  - [1. DOM Breakpoints](#1-dom-breakpoints)
+    - [1.1. Subtree Modifications](#11-subtree-modifications)
+    - [1.2. Attributes Modifications](#12-attributes-modifications)
+    - [1.3. Node Removal](#13-node-removal)
+  - [2. XHR Breakpoints](#2-xhr-breakpoints)
+  - [3. Console](#3-console)
+    - [3.1. $(selector)](#31-selector)
+  - [4. Timeline Tool](#4-timeline-tool)
+  - [5. Chrome Profiles](#5-chrome-profiles)
+  - [6. Refer Links](#6-refer-links)
 
 # Chrome 开发者工具使用
 
-## DOM Breakpoints
+## 1. DOM Breakpoints
 
 原文：[你可能不知道的 chrome 控制台：DOM 断点（属性、节点、内容变化监听）](http://frontenddev.org/article/you-may-not-know-the-chrome-console-dom-breakpoint-properties-node-content-changes-to-monitor.html)
 
-### Subtree Modifications
+### 1.1. Subtree Modifications
 
 
 子节点（内容、属性）修改通知.
@@ -35,7 +35,7 @@ document.body.innerHTML = '<b></b>';
 使用场景：常用在子节点内容发生变化后，来定位源码。
 
 
-### Attributes Modifications
+### 1.2. Attributes Modifications
 
 （当前节点）属性修改通知.
 
@@ -53,7 +53,7 @@ document.body.id2 = 456;
 
 使用场景：节点的 className 等属性被修改后，来定位源码。
 
-### Node Removal
+### 1.3. Node Removal
 
 （当前）节点移动（通知）.
 
@@ -72,7 +72,7 @@ document.body.insertBefore(document.body.children[1], document.body.children[0])
 使用场景：节点被移除了，定位源码。
 
 
-## XHR Breakpoints
+## 2. XHR Breakpoints
 
 原文：[ 你可能不知道的 chrome 控制台：ajax xhr 断点](http://frontenddev.org/article/you-may-not-know-the-chrome-console-ajax-xhr-breakpoints.html)
 
@@ -92,30 +92,30 @@ document.body.insertBefore(document.body.children[1], document.body.children[0])
 在输入框输入搜索词之后，触发了 XHR 断点，美化代码之后，可以很明显的看到，xhr 断点直接暂停在xhr.send这一步，通过上下文分析，可以看到当前请求的一些参数，如a.uri。
 
 
-## Console
+## 3. Console
 
-### $(selector)
+### 3.1. $(selector)
 
 即使当前页面没有加载jQuery，你也依然可以使用$和$$函数来选取元素，实际上，这两个函数只是对document.querySelector()和document.querySelectorAll()的简单封装，$用于选取单个元素，$$则用于选取多个。
 
 除了$_，你还可以使用$0,$1,$2,$3,$4这5个变量来引用最近选取过的5个DOM元素。 $0 为Elements HTML 面板中选中的元素。 $1 为上一次在 HTML 面板中选中的元素。 $2、$3、$4 同样的。不过只能到$4。
 
 
-## Timeline Tool
+## 4. Timeline Tool
 
 https://developers.google.com/chrome-developer-tools/docs/timeline
 
 http://frontenddev.org/link/the-timeline-panel-of-the-chrome-developer-tools.html
 
 
-## Chrome Profiles
+## 5. Chrome Profiles
 
 原文：[JS内存泄漏排查方法——Chrome Profiles](http://frontenddev.org/link/js-memory-leak-screening-method-chrome-profiles.html)
 
 
 
 
-## Refer Links
+## 6. Refer Links
 
 https://developers.google.com/web/tools/chrome-devtools/
 

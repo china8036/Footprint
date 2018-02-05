@@ -1,17 +1,17 @@
 - [CSS overflow 相关](#css-overflow-%E7%9B%B8%E5%85%B3)
-  - [overflow 基本属性值](#overflow-%E5%9F%BA%E6%9C%AC%E5%B1%9E%E6%80%A7%E5%80%BC)
-  - [overflow-x 与 overflow-y](#overflow-x-%E4%B8%8E-overflow-y)
-  - [overflow 与滚动条](#overflow-%E4%B8%8E%E6%BB%9A%E5%8A%A8%E6%9D%A1)
-  - [overflow 与 BFC](#overflow-%E4%B8%8E-bfc)
-  - [overflow 与 absolute 绝对定位](#overflow-%E4%B8%8E-absolute-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D)
-  - [依赖于 overflow 的样式属性](#%E4%BE%9D%E8%B5%96%E4%BA%8E-overflow-%E7%9A%84%E6%A0%B7%E5%BC%8F%E5%B1%9E%E6%80%A7)
-    - [resize](#resize)
-    - [text-overflow: ellipsis](#text-overflow-ellipsis)
-  - [Refer Links](#refer-links)
+  - [1. overflow 基本属性值](#1-overflow-%E5%9F%BA%E6%9C%AC%E5%B1%9E%E6%80%A7%E5%80%BC)
+  - [2. overflow-x 与 overflow-y](#2-overflow-x-%E4%B8%8E-overflow-y)
+  - [3. overflow 与滚动条](#3-overflow-%E4%B8%8E%E6%BB%9A%E5%8A%A8%E6%9D%A1)
+  - [4. overflow 与 BFC](#4-overflow-%E4%B8%8E-bfc)
+  - [5. overflow 与 absolute 绝对定位](#5-overflow-%E4%B8%8E-absolute-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D)
+  - [6. 依赖于 overflow 的样式属性](#6-%E4%BE%9D%E8%B5%96%E4%BA%8E-overflow-%E7%9A%84%E6%A0%B7%E5%BC%8F%E5%B1%9E%E6%80%A7)
+    - [6.1. resize](#61-resize)
+    - [6.2. text-overflow: ellipsis](#62-text-overflow-ellipsis)
+  - [7. Refer Links](#7-refer-links)
 
 # CSS overflow 相关
 
-## overflow 基本属性值
+## 1. overflow 基本属性值
 
 - visible(default)
 - hidden
@@ -19,7 +19,7 @@
 - auto
 - inherit
 
-## overflow-x 与 overflow-y
+## 2. overflow-x 与 overflow-y
 
 若 overflow-x 与 overflow-y 值相同，则等同于 overflow；
 
@@ -27,7 +27,7 @@
 
 因此，若要在 x 或 y 一个方向上设置 overflow 的值，需要将另一个方向上的 overflow 赋为 hidden/scroll/auto。
 
-## overflow 与滚动条
+## 3. overflow 与滚动条
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/30/d20c4229a8e1aada9c6cc8ccb314a4fe.jpg)
 
@@ -89,7 +89,7 @@
   html {overflow-y: scroll;}
   ```
 
-## overflow 与 BFC
+## 4. overflow 与 BFC
 
 https://www.imooc.com/video/6459 
 
@@ -100,7 +100,7 @@ https://www.imooc.com/video/6459
 - 避免 margin 穿透问题
 - 两栏自适应布局
 
-## overflow 与 absolute 绝对定位
+## 5. overflow 与 absolute 绝对定位
 
 https://www.imooc.com/video/6484 
 
@@ -123,16 +123,16 @@ https://www.imooc.com/video/6484
 - 将 overflow 元素的子元素设置为包含块
 - 任意合法 transform 声明当作包含块
 
-## 依赖于 overflow 的样式属性
+## 6. 依赖于 overflow 的样式属性
 
-### resize
+### 6.1. resize
 
 resize 属性使得元素尺寸可被拉伸，但要该属性生效，元素的 overflow 值不可是 visible。
 
-### text-overflow: ellipsis
+### 6.2. text-overflow: ellipsis
 
 `text-overflow: ellipsis`可使文本超过容器限制后以省略号表示，但要该属性生效，必须设置元素`overflow:hidden;`，才能生效。
 
-## Refer Links
+## 7. Refer Links
 
 https://www.imooc.com/learn/256

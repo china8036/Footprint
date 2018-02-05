@@ -1,11 +1,11 @@
 - [Tomcat 类加载机制](#tomcat-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6)
-  - [当 tomcat 启动时，会创建几种类加载器](#%E5%BD%93-tomcat-%E5%90%AF%E5%8A%A8%E6%97%B6%EF%BC%8C%E4%BC%9A%E5%88%9B%E5%BB%BA%E5%87%A0%E7%A7%8D%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8)
-  - [当 web 应用需要用到某个类时，会按照以下顺序进行类加载](#%E5%BD%93-web-%E5%BA%94%E7%94%A8%E9%9C%80%E8%A6%81%E7%94%A8%E5%88%B0%E6%9F%90%E4%B8%AA%E7%B1%BB%E6%97%B6%EF%BC%8C%E4%BC%9A%E6%8C%89%E7%85%A7%E4%BB%A5%E4%B8%8B%E9%A1%BA%E5%BA%8F%E8%BF%9B%E8%A1%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD)
-  - [Refer Links](#refer-links)
+  - [1. 当 tomcat 启动时，会创建几种类加载器](#1-%E5%BD%93-tomcat-%E5%90%AF%E5%8A%A8%E6%97%B6%EF%BC%8C%E4%BC%9A%E5%88%9B%E5%BB%BA%E5%87%A0%E7%A7%8D%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8)
+  - [2. 当 web 应用需要用到某个类时，会按照以下顺序进行类加载](#2-%E5%BD%93-web-%E5%BA%94%E7%94%A8%E9%9C%80%E8%A6%81%E7%94%A8%E5%88%B0%E6%9F%90%E4%B8%AA%E7%B1%BB%E6%97%B6%EF%BC%8C%E4%BC%9A%E6%8C%89%E7%85%A7%E4%BB%A5%E4%B8%8B%E9%A1%BA%E5%BA%8F%E8%BF%9B%E8%A1%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD)
+  - [3. Refer Links](#3-refer-links)
 
 # Tomcat 类加载机制
 
-## 当 tomcat 启动时，会创建几种类加载器
+## 1. 当 tomcat 启动时，会创建几种类加载器
 
 - Bootstrap 引导类加载器：
   
@@ -31,7 +31,7 @@
   
   该类加载器会加载位于 WEB-INF/lib 下 jar 包中的 class 和 WEB-INF/classes 下的 class；
 
-## 当 web 应用需要用到某个类时，会按照以下顺序进行类加载
+## 2. 当 web 应用需要用到某个类时，会按照以下顺序进行类加载
 
 1. 使用 bootstrap 引导类加载器加载；
 1. 使用 system 系统类加载器加载；
@@ -43,6 +43,6 @@
 
 P.S. 这也就是为什么 WEB-INF/classes 中的类比 WEB-INF/lib 中的类有更高的优先级的原因。
 
-## Refer Links
+## 3. Refer Links
 
 https://www.cnblogs.com/xing901022/p/4574961.html

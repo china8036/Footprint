@@ -1,51 +1,51 @@
 - [Java 集合](#java-%E9%9B%86%E5%90%88)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-    - [设计思想](#%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3)
-    - [类谱图](#%E7%B1%BB%E8%B0%B1%E5%9B%BE)
-  - [Collection](#collection)
-  - [Iterator](#iterator)
-  - [List](#list)
-    - [ListIterator](#listiterator)
-    - [LinkedList](#linkedlist)
-      - [构造器](#%E6%9E%84%E9%80%A0%E5%99%A8)
-      - [添加元素](#%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
-    - [访问元素](#%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
-    - [ArrayList](#arraylist)
-      - [构造器](#%E6%9E%84%E9%80%A0%E5%99%A8)
-      - [添加 & 删除元素](#%E6%B7%BB%E5%8A%A0-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
-      - [访问元素](#%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
-      - [转换为数组](#%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%95%B0%E7%BB%84)
-      - [其它](#%E5%85%B6%E5%AE%83)
-  - [Set](#set)
-    - [HashSet](#hashset)
-      - [构造器](#%E6%9E%84%E9%80%A0%E5%99%A8)
-      - [添加 & 删除元素](#%E6%B7%BB%E5%8A%A0-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
-      - [访问元素](#%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
-      - [其它](#%E5%85%B6%E5%AE%83)
-    - [SortedSet 接口 & TreeSet 类](#sortedset-%E6%8E%A5%E5%8F%A3-treeset-%E7%B1%BB)
-  - [Queue](#queue)
-    - [PriorityQueue](#priorityqueue)
-    - [Deque](#deque)
-    - [ArrayDeque](#arraydeque)
-    - [LinkedList](#linkedlist)
-  - [Map](#map)
-    - [HashMap](#hashmap)
-    - [SortedMap 接口 & TreeMap 类](#sortedmap-%E6%8E%A5%E5%8F%A3-treemap-%E7%B1%BB)
-    - [WeakHashMap](#weakhashmap)
-  - [算法包装类 Collections](#%E7%AE%97%E6%B3%95%E5%8C%85%E8%A3%85%E7%B1%BB-collections)
-    - [排序](#%E6%8E%92%E5%BA%8F)
-    - [混排](#%E6%B7%B7%E6%8E%92)
-    - [搜索](#%E6%90%9C%E7%B4%A2)
-    - [其它](#%E5%85%B6%E5%AE%83)
-  - [Refer Links](#refer-links)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+    - [1.1. 设计思想](#11-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3)
+    - [1.2. 类谱图](#12-%E7%B1%BB%E8%B0%B1%E5%9B%BE)
+  - [2. Collection](#2-collection)
+  - [3. Iterator](#3-iterator)
+  - [4. List](#4-list)
+    - [4.1. ListIterator](#41-listiterator)
+    - [4.2. LinkedList](#42-linkedlist)
+      - [4.2.1. 构造器](#421-%E6%9E%84%E9%80%A0%E5%99%A8)
+      - [4.2.2. 添加元素](#422-%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
+    - [4.3. 访问元素](#43-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
+    - [4.4. ArrayList](#44-arraylist)
+      - [4.4.1. 构造器](#441-%E6%9E%84%E9%80%A0%E5%99%A8)
+      - [4.4.2. 添加 & 删除元素](#442-%E6%B7%BB%E5%8A%A0-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
+      - [4.4.3. 访问元素](#443-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
+      - [4.4.4. 转换为数组](#444-%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%95%B0%E7%BB%84)
+      - [4.4.5. 其它](#445-%E5%85%B6%E5%AE%83)
+  - [5. Set](#5-set)
+    - [5.1. HashSet](#51-hashset)
+      - [5.1.1. 构造器](#511-%E6%9E%84%E9%80%A0%E5%99%A8)
+      - [5.1.2. 添加 & 删除元素](#512-%E6%B7%BB%E5%8A%A0-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
+      - [5.1.3. 访问元素](#513-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
+      - [5.1.4. 其它](#514-%E5%85%B6%E5%AE%83)
+    - [5.2. SortedSet 接口 & TreeSet 类](#52-sortedset-%E6%8E%A5%E5%8F%A3-treeset-%E7%B1%BB)
+  - [6. Queue](#6-queue)
+    - [6.1. PriorityQueue](#61-priorityqueue)
+    - [6.2. Deque](#62-deque)
+    - [6.3. ArrayDeque](#63-arraydeque)
+    - [6.4. LinkedList](#64-linkedlist)
+  - [7. Map](#7-map)
+    - [7.1. HashMap](#71-hashmap)
+    - [7.2. SortedMap 接口 & TreeMap 类](#72-sortedmap-%E6%8E%A5%E5%8F%A3-treemap-%E7%B1%BB)
+    - [7.3. WeakHashMap](#73-weakhashmap)
+  - [8. 算法包装类 Collections](#8-%E7%AE%97%E6%B3%95%E5%8C%85%E8%A3%85%E7%B1%BB-collections)
+    - [8.1. 排序](#81-%E6%8E%92%E5%BA%8F)
+    - [8.2. 混排](#82-%E6%B7%B7%E6%8E%92)
+    - [8.3. 搜索](#83-%E6%90%9C%E7%B4%A2)
+    - [8.4. 其它](#84-%E5%85%B6%E5%AE%83)
+  - [9. Refer Links](#9-refer-links)
 
 # Java 集合
 
-## 概述
+## 1. 概述
 
 Java 在 `java.util.*` 中为开发者提供了包含了一系列常用数据结构及其操作的工具包，即 Java 集合框架。
 
-### 设计思想
+### 1.1. 设计思想
 
 - 接口与实现分离
   
@@ -58,13 +58,13 @@ Java 在 `java.util.*` 中为开发者提供了包含了一系列常用数据结
 
   Java 集合框架中大量使用了适配器模式进行实现。
 
-### 类谱图
+### 1.2. 类谱图
 
 ![image](/resources/images/java-collection.png)
 
 集合有两个基本接口：Collection 和 Map。
 
-## Collection
+## 2. Collection
 
 Java 类库中，集合类最基本的接口是 [Collection](https://docs.oracle.com/javase/9/docs/api/java/util/Collection.html) 接口，用于存储相同类型的元素。
 
@@ -106,7 +106,7 @@ Java 类库中，集合类最基本的接口是 [Collection](https://docs.oracle
   
     返回集合的对象数组，并填入 arrayToFill 中。若 arrayToFill 足够大，则剩余空间补 null；否则分配一个新的数组，其长度等于集合的大小，并重新填充集合元素。
 
-## Iterator
+## 3. Iterator
 
 [Iterator](https://docs.oracle.com/javase/9/docs/api/java/util/Iterator.html) 接口用于对象的迭代。
 
@@ -136,7 +136,7 @@ Iterator 接口实际上是 Java 早期 Enumeration 接口的“升级版”。
 
     该方法从 Java SE 8 开始加入，可通过为该方法提供一个 lambda 表达式，对迭代器的每一个元素调用该 lambda 表达式进行处理。
 
-## List
+## 4. List
 
 [List](https://docs.oracle.com/javase/9/docs/api/java/util/List.html) 是一个有序集合，元素会添加到容器中的特定位置。
 
@@ -174,7 +174,7 @@ if (c instanceof RandomAccess) {
 }
 ```
 
-### ListIterator
+### 4.1. ListIterator
 
 [ListIterator](https://docs.oracle.com/javase/9/docs/api/java/util/ListIterator.html) 接口是 Iterator 的子接口，是用于顺序访问的迭代器，主要用在链表结构中。
 
@@ -192,7 +192,7 @@ if (c instanceof RandomAccess) {
 
 - `void	set​(E e)`
 
-### LinkedList
+### 4.2. LinkedList
 
 在 Java 中，[LinkedList](https://docs.oracle.com/javase/9/docs/api/java/util/LinkedList.html) 是链表的数据结构封装，而且 Java 中所有的链表都是双向链表。
 
@@ -201,7 +201,7 @@ if (c instanceof RandomAccess) {
 缺点
 - 访问每个元素只能从头搜索，随机访问效率极低
 
-#### 构造器
+#### 4.2.1. 构造器
 
 - `LinkedList​()`
 
@@ -211,7 +211,7 @@ if (c instanceof RandomAccess) {
 
   构造一个链表，并将所给集合中的所有元素添加到这个链表中。
 
-#### 添加元素
+#### 4.2.2. 添加元素
 
 LinkedList 提供了	`add​(E e)` 方法将对象添加到链表的尾部，但对于链表中间位置的元素添加，需要使用迭代器 ListIterator 中的 add 方法。
 
@@ -219,7 +219,7 @@ LinkedList 提供了	`add​(E e)` 方法将对象添加到链表的尾部，但
 
 P.S. 并非所有的集合都需要使用迭代器来插入中间位置的元素，比如无序的 Set 结构，其中元素完全无序。因此，Java 集合框架的设计者不在 Iterator 接口中定义 add 方法，而是在 Iterator 的子接口 ListIterator 中才定义了 add 方法，更具实际意义。
 
-### 访问元素
+### 4.3. 访问元素
 
 LinkedList 提供了一个用于访问元素的 get 方法，但该方法的实现效率很低。
 
@@ -230,7 +230,7 @@ LinkedList 提供了一个用于访问元素的 get 方法，但该方法的实�
 core java
 > 我们建议避免使用以整数索引表示链表中位置的所有方法。若需要对集合进行随机访问，就使用数组或 ArrayList，不要使用链表。
 
-### ArrayList
+### 4.4. ArrayList
 
 Java 中允许创建数组的长度为变量，即允许在运行时动态确定数组的大小，但这并没有解决运行时动态改变数组大小的问题。一旦确定了数组的大小，再改变它就不太容易了（比如通过 Arrays.copyOf 进行扩容）。因此，Java 提供了 [ArrayList](https://docs.oracle.com/javase/9/docs/api/java/util/ArrayList.html) 类。
 
@@ -241,7 +241,7 @@ ArrayList 是一个采用类型参数的泛型类，在添加或删除数组元�
 缺点
 - 在集合中间位置插入元素时需要移动该元素后的所有元素，效率低
 
-#### 构造器
+#### 4.4.1. 构造器
 
 ArrayList 由三种构造方式：
 
@@ -260,7 +260,7 @@ ArrayList 由三种构造方式：
 
 NOTE: 尖括号内不可使用基本数据类型。
 
-#### 添加 & 删除元素
+#### 4.4.2. 添加 & 删除元素
 
 `void	add​(E element)`：可为数组列表创建一块新的存储空间并添加元素。若调用 add 时内部数组已满，数组列表将自动创建一个更大的数组，并将所有的对象从较小的数组中拷贝到一个较大的数组中。
 
@@ -274,7 +274,7 @@ NOTE：
 
 对数组进行插入或删除元素的操作效率都比较低。对小型数组而言，这部分效率的损失还不必担心；但对于大型数组，频繁的在数组的中间位置插入、删除元素，将耗费大量时间成本在元素的移动上，事实上这种情况下应该使用链表作为数据结构存储。
 
-#### 访问元素
+#### 4.4.3. 访问元素
 
 数组列表的自动扩展容量带来了便利，但也增加了访问元素时语法的复杂性。因为 ArrayList 不是 Java 程序设计语言的一部分，只是由其他人编写并包含在标准库中的实用工具类，而 Java 中不支持重载运算符的特性，因此在 ArrayList 中访问元素无法使用普通数组的`[]`格式，而需要使用 get 和 set 方法进行访问。
 
@@ -282,11 +282,11 @@ NOTE：
 
 `E	set​(int index, E element)`: 设置数组列表指定位置的元素的值。该方法不会创建新的存储空间，因此不可用于添加新元素。
 
-#### 转换为数组
+#### 4.4.4. 转换为数组
 
 `Object[]	toArray​()`：使用该方法将数组列表中的数组元素拷贝到一个数组中。
 
-#### 其它
+#### 4.4.5. 其它
 
 `int	size​()`：返回数组列表的元素个数。
 
@@ -294,7 +294,7 @@ NOTE：
 
 `void	trimToSize​()`：当确认数组列表的大小将不再发生变化，可以调用该方法，将存储区域的大小调整为当前元素数量所需要的存储空间数目，多余的空间由垃圾回收器回收。需要注意的是，一旦调用该方法整理数组列表的大小后，添加新元素就需要耗费时间再次移动存储快，因此应该在确认不会再添加任何元素时，才调用该方法。
 
-## Set
+## 5. Set
 
 [Set](https://docs.oracle.com/javase/9/docs/api/java/util/Set.html) 是一种无序、元素不可以重复的集合。
 
@@ -316,7 +316,7 @@ Set 结构提供的方法的行为相比 Collection 接口有更严谨的定义�
 
   要保证包含相同元素的两个集合会得到相同的散列码。
 
-### HashSet
+### 5.1. HashSet
 
 Java 集合类库中提供了 [HashSet](https://docs.oracle.com/javase/9/docs/api/java/util/HashSet.html) 类，它实现了基于散列表的集合。
 
@@ -330,7 +330,7 @@ P.S. 在 Java 8 中，桶满时会从链表变成平衡二叉树。
 
 散列将元素分散在散列表的各个位置上，若元素的散列码发生了变化，则元素在数据结构中的位置也会发生变化。
 
-#### 构造器
+#### 5.1.1. 构造器
 
 - `HashSet​()`
 
@@ -348,13 +348,13 @@ P.S. 在 Java 8 中，桶满时会从链表变成平衡二叉树。
 
   构造一个空的具有指定容量 / 桶数和装填因子的散列表。
 
-#### 添加 & 删除元素
+#### 5.1.2. 添加 & 删除元素
 
 - `boolean	add​(E e)
 
 - `boolean	remove​(Object o)
 
-#### 访问元素
+#### 5.1.3. 访问元素
 
 散列表迭代器将依次访问所有的桶，但由于散列将元素分散在表中的各个位置上，因此在散列表中访问元素的顺序是完全随机的。
 
@@ -367,11 +367,11 @@ for (int i =1; i <= 20 && iter.hasNext(); i ++) {
 }
 ```
 
-#### 其它
+#### 5.1.4. 其它
 
 `boolean	contains​(Object o)`：用于快速查看某个元素是否已经出现在散列集中。该方法不会查看集合中的所有元素，而只会在某个桶中查找元素。
 
-### SortedSet 接口 & TreeSet 类
+### 5.2. SortedSet 接口 & TreeSet 类
 
 [TreeSet](https://docs.oracle.com/javase/9/docs/api/java/util/TreeSet.html) 与散列表相似，但有所改进。
 
@@ -383,7 +383,7 @@ P.S. TreeSet 采用红黑树实现，每次将一个元素添加到树中，都�
 
 若不需要对集合的元素进行排序，那么选择散列集作为存储结构，可避免用于排序的开销。
 
-## Queue
+## 6. Queue
 
 队列 [Queue](https://docs.oracle.com/javase/9/docs/api/java/util/Queue.html) 接口支持有效地在集合的尾部添加元素、在头部删除元素，但不支持在集合的中间位置添加元素。
 
@@ -403,7 +403,7 @@ P.S. TreeSet 采用红黑树实现，每次将一个元素添加到树中，都�
 
   - `E	peek​()`：若队列为空，返回 null。
 
-### PriorityQueue
+### 6.1. PriorityQueue
 
 优先级队列 [PriorityQueue](https://docs.oracle.com/javase/9/docs/api/java/util/PriorityQueue.html) 是 Queue 接口的实现类，队列中的元素可以按照任意的顺序插入，却总是按照排序的顺序进行检索。
 
@@ -418,7 +418,7 @@ P.S. TreeSet 采用红黑树实现，每次将一个元素添加到树中，都�
   - `PriorityQueue​(int initialCapacity)`	
   - `PriorityQueue​(int initialCapacity, Comparator<? super E> comparator)`
 
-### Deque
+### 6.2. Deque
 
 双端队列（double ended queue） [Deque](https://docs.oracle.com/javase/9/docs/api/java/util/Deque.html) 接口是 Queue 接口的扩展，支持有效地在头部和尾部同时添加或删除元素，但同样不支持在集合的中间位置添加元素。它既可以当作栈使用，也可以当作队列使用。
 
@@ -441,7 +441,7 @@ ArrayDeque 和 LinkedList 都是该接口的实现类，但官方更推荐使用
   - `E	peekFirst​()`
   - `E	peekLast​()`
 
-### ArrayDeque
+### 6.3. ArrayDeque
 
 当需要使用栈时，Java 已不推荐使用 Stack，而是推荐使用更高效的 [ArrayDeque](https://docs.oracle.com/javase/9/docs/api/java/util/ArrayDeque.html)。
 
@@ -453,9 +453,9 @@ ArrayDeque 不支持为 null 的元素。
   - `ArrayDeque​()`
   - `ArrayDeque​(int numElements)`：用给定的初始容量构造一个无限双端队列。
 
-### LinkedList
+### 6.4. LinkedList
 
-## Map
+## 7. Map
 
 [Map](https://docs.oracle.com/javase/9/docs/api/java/util/Map.html) 是 Java 集合类库中的两个基本接口之一。
 
@@ -496,7 +496,7 @@ ArrayDeque 不支持为 null 的元素。
 
 Java 中为映射提供了两个通用的实现：HashMap 和 TreeMap。
 
-### HashMap
+### 7.1. HashMap
 
 散列映射 [HashMap](https://docs.oracle.com/javase/9/docs/api/java/util/HashMap.html) 对键进行散列，并将其组织成搜索树。散列函数只能作用于键。
 
@@ -505,7 +505,7 @@ Java 中为映射提供了两个通用的实现：HashMap 和 TreeMap。
 - `HashMap​(int initialCapacity)`
 - `HashMap​(int initialCapacity, float loadFactor)`
 
-### SortedMap 接口 & TreeMap 类
+### 7.2. SortedMap 接口 & TreeMap 类
 
 树映射 [TreeMap](https://docs.oracle.com/javase/9/docs/api/java/util/TreeMap.html) 用键的整体顺序对元素进行排序，并将其组织成搜索树。比较函数只能作用于键。
 
@@ -532,7 +532,7 @@ Java 中为映射提供了两个通用的实现：HashMap 和 TreeMap。
 
 - `Map.Entry<K,V>	firstEntry​()`
 
-### WeakHashMap
+### 7.3. WeakHashMap
 
 对于 HashMap 存在这样的问题：由于 GC 跟踪活动的对象，只要映射对象是活动的，其中所有的桶也是活动的，因此即时一条映射的键值已不再使用了，GC 也不会回收，这导致了开发者需要负责从长期存活的映射表中删除无用的值。
 
@@ -540,11 +540,11 @@ Java 中为映射提供了两个通用的实现：HashMap 和 TreeMap。
 
 WeakHashMap 使用弱引用保存键。WeakReference 对象将引用保存到另外一个对象中，即散列键。若某个对象只能由 WeakReference 引用，GC 仍然会回收它，但要将引用该对象的 WeakReference 放入队列中。WeakHashMap 会周期性检查队列，找出新添加的弱引用并删除其对应的条目。
 
-## 算法包装类 Collections
+## 8. 算法包装类 Collections
 
 虽没有 C++ 标准库中实现的几十种算法丰富，但 Java 集合框架也提供了基本的排序、二分查找等实用算法，这些算法实现主要封装于集合框架的工具类 [Collections](https://docs.oracle.com/javase/9/docs/api/java/util/Collections.html) 中。
 
-### 排序
+### 8.1. 排序
 
 Collections.sort 方法可以对实现了 List 接口的集合进行排序：
 
@@ -558,7 +558,7 @@ Collections.sort 方法可以对实现了 List 接口的集合进行排序：
 
 列表包含了数组结构和链表结构，其中对数组的排序算法基本上都是基于随机访问的，然而对链表排序时若采用基于随机访问的排序算法，效率会极低。因此，Java 集合框架中的排序方法的实现是直接将所有元素转入一个数组，然后对数组进行排序，最后再将排序后的序列复制回列表。
 
-### 混排
+### 8.2. 混排
 
 Collections.shuffle 方法的功能与 sort 正好相反，该方法会随机地混排列表中元素的顺序。
 
@@ -568,7 +568,7 @@ Collections.shuffle 方法的功能与 sort 正好相反，该方法会随机地
 
 类似 sort 方法，若所给列表没有实现 RandomAccess 接口，该方法会将元素复制到数组中，然后打乱数组中元素的顺序，最后再将打乱顺序后的元素复制回列表。
 
-### 搜索
+### 8.3. 搜索
 
 Collections.binarySearch​ 方法实现了二分查找算法。
 
@@ -583,7 +583,7 @@ NOTE：
   - 若返回负数，表示没有匹配到的元素，但可以利用返回值计算应该将 element 插入到集合的那个位置，以保持集合的有序性。若返回值为 i，则应插入的位置是 (-i - 1)。
 - 只有采用随机访问时，二分查找才有意义。因此，若对链表结构调用 binarySearch​方法，它将自动变成线性查找。
 
-### 其它
+### 8.4. 其它
 
 Collections 中还包含了许多简单算法的封装实现，使用这些方法，**加快开发者开发效率的同时，更可提高代码可读性**。
 
@@ -609,6 +609,6 @@ Collections 中还包含了许多简单算法的封装实现，使用这些方�
 - 若两个集合没有任何相同的元素，返回 true
   - `static boolean	disjoint​(Collection<?> c1, Collection<?> c2)`
 
-## Refer Links
+## 9. Refer Links
 
 [java 集合系列](http://blog.csdn.net/u010648555/article/details/56049460)

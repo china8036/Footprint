@@ -1,15 +1,15 @@
 - [Java 工具类](#java-%E5%B7%A5%E5%85%B7%E7%B1%BB)
-  - [Math](#math)
-  - [Date & SimpleDateFormat](#date-simpledateformat)
-  - [包装器](#%E5%8C%85%E8%A3%85%E5%99%A8)
-    - [特性](#%E7%89%B9%E6%80%A7)
-    - [常用 API](#%E5%B8%B8%E7%94%A8-api)
+  - [1. Math](#1-math)
+  - [2. Date & SimpleDateFormat](#2-date-simpledateformat)
+  - [3. 包装器](#3-%E5%8C%85%E8%A3%85%E5%99%A8)
+    - [3.1. 特性](#31-%E7%89%B9%E6%80%A7)
+    - [3.2. 常用 API](#32-%E5%B8%B8%E7%94%A8-api)
 
 # Java 工具类
 
 Java 标准库中提供了一系列可供使用的工具类，便利了开发工作，以下列出常用的工具类：
 
-## Math
+## 1. Math
 
 在 [Math](https://docs.oracle.com/javase/9/docs/api/java/lang/Math.html) 类中，包含了各种各样的数学函数和数学常量值。
 
@@ -50,11 +50,11 @@ public class Test {
 }
 ```
 
-## Date & SimpleDateFormat
+## 2. Date & SimpleDateFormat
 
 返回 unix 时间戳：TODO:
 
-## 包装器
+## 3. 包装器
 
 在 Java 中，所有的基本类型都有一个与之对应的包装器：
 
@@ -64,7 +64,7 @@ public class Test {
 
 将基本类型包装成对象以后，扩大了基本类型所具有的操作，也是 Java 面向对象的体现。
 
-### 特性
+### 3.1. 特性
 
 - 不可变
 
@@ -104,7 +104,7 @@ public class Test {
     System.out.println(true?a:b);// 输出 1.0
     ```
 
-### 常用 API
+### 3.2. 常用 API
 
 - 构造器
 

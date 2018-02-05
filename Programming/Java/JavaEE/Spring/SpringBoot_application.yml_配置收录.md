@@ -1,59 +1,59 @@
 - [Spring Boot 配置 application.yml 收录](#spring-boot-%E9%85%8D%E7%BD%AE-applicationyml-%E6%94%B6%E5%BD%95)
-  - [mvc](#mvc)
-    - [mvc](#mvc)
-    - [messages](#messages)
-    - [mobile](#mobile)
-    - [view](#view)
-    - [multipart](#multipart)
-    - [freemarker](#freemarker)
-    - [velocity](#velocity)
-    - [thymeleaf](#thymeleaf)
-    - [mustcache](#mustcache)
-    - [groovy 模板](#groovy-%E6%A8%A1%E6%9D%BF)
-    - [http](#http)
-    - [json](#json)
-    - [jersey](#jersey)
-  - [server](#server)
-    - [server 配置](#server-%E9%85%8D%E7%BD%AE)
-    - [ssl 配置](#ssl-%E9%85%8D%E7%BD%AE)
-    - [tomcat](#tomcat)
-    - [undertow](#undertow)
-  - [datasource](#datasource)
-    - [datasource](#datasource)
-    - [JPA](#jpa)
-    - [jooq](#jooq)
-    - [h2](#h2)
-    - [JTA](#jta)
-  - [NoSQL](#nosql)
-    - [cache](#cache)
-    - [mongodb](#mongodb)
-    - [redis](#redis)
-    - [springdata](#springdata)
-  - [MQ](#mq)
-    - [activemq](#activemq)
-    - [rabbitmq](#rabbitmq)
-    - [hornetq](#hornetq)
-    - [jms](#jms)
-  - [Security](#security)
-  - [Migration](#migration)
-    - [flyway](#flyway)
-    - [liquibase](#liquibase)
-  - [其它](#%E5%85%B6%E5%AE%83)
-    - [aop](#aop)
-    - [batch](#batch)
-    - [jmx](#jmx)
-    - [mail](#mail)
-    - [sendgrid](#sendgrid)
-    - [social](#social)
+  - [1. mvc](#1-mvc)
+    - [1.1. mvc](#11-mvc)
+    - [1.2. messages](#12-messages)
+    - [1.3. mobile](#13-mobile)
+    - [1.4. view](#14-view)
+    - [1.5. multipart](#15-multipart)
+    - [1.6. freemarker](#16-freemarker)
+    - [1.7. velocity](#17-velocity)
+    - [1.8. thymeleaf](#18-thymeleaf)
+    - [1.9. mustcache](#19-mustcache)
+    - [1.10. groovy 模板](#110-groovy-%E6%A8%A1%E6%9D%BF)
+    - [1.11. http](#111-http)
+    - [1.12. json](#112-json)
+    - [1.13. jersey](#113-jersey)
+  - [2. server](#2-server)
+    - [2.1. server 配置](#21-server-%E9%85%8D%E7%BD%AE)
+    - [2.2. ssl 配置](#22-ssl-%E9%85%8D%E7%BD%AE)
+    - [2.3. tomcat](#23-tomcat)
+    - [2.4. undertow](#24-undertow)
+  - [3. datasource](#3-datasource)
+    - [3.1. datasource](#31-datasource)
+    - [3.2. JPA](#32-jpa)
+    - [3.3. jooq](#33-jooq)
+    - [3.4. h](#34-h)
+    - [3.5. JTA](#35-jta)
+  - [4. NoSQL](#4-nosql)
+    - [4.1. cache](#41-cache)
+    - [4.2. mongodb](#42-mongodb)
+    - [4.3. redis](#43-redis)
+    - [4.4. springdata](#44-springdata)
+  - [5. MQ](#5-mq)
+    - [5.1. activemq](#51-activemq)
+    - [5.2. rabbitmq](#52-rabbitmq)
+    - [5.3. hornetq](#53-hornetq)
+    - [5.4. jms](#54-jms)
+  - [6. Security](#6-security)
+  - [7. Migration](#7-migration)
+    - [7.1. flyway](#71-flyway)
+    - [7.2. liquibase](#72-liquibase)
+  - [8. 其它](#8-%E5%85%B6%E5%AE%83)
+    - [8.1. aop](#81-aop)
+    - [8.2. batch](#82-batch)
+    - [8.3. jmx](#83-jmx)
+    - [8.4. mail](#84-mail)
+    - [8.5. sendgrid](#85-sendgrid)
+    - [8.6. social](#86-social)
 
     
 # Spring Boot 配置 application.yml 收录
 
 原文：https://segmentfault.com/a/1190000004315890 
 
-## mvc
+## 1. mvc
 
-### mvc
+### 1.1. mvc
 ```
 spring.mvc.async.request-timeout
 设定 async 请求的超时时间，以毫秒为单位，如果没有设置的话，以具体实现的超时时间为准，比如 tomcat 的 servlet3 的话是 10 秒。
@@ -73,7 +73,7 @@ spring.mvc.view.suffix
 指定 mvc 视图的后缀。
 ```
 
-### messages
+### 1.2. messages
 ```
 spring.messages.basename
 指定 message 的 basename，多个以逗号分隔，如果不加包名的话，默认从 classpath 路径开始，默认：messages
@@ -83,7 +83,7 @@ spring.messages.encoding
 设定 Message bundles 的编码，默认：UTF-8
 ```
 
-### mobile
+### 1.3. mobile
 ```
 spring.mobile.devicedelegatingviewresolver.enable-fallback
 是否支持 fallback 的解决方案，默认 false
@@ -105,7 +105,7 @@ spring.mobile.sitepreference.enabled
 是否启用 SitePreferenceHandler，默认为：true
 ```
 
-### view
+### 1.4. view
 ```
 spring.view.prefix
 设定 mvc 视图的前缀。
@@ -136,7 +136,7 @@ spring.resources.static-locations
 指定静态资源路径，默认为 classpath:[/META-INF/resources/,/resources/, /static/, /public/] 以及 context:/
 ```
 
-### multipart
+### 1.5. multipart
 ```
 multipart.enabled
 是否开启文件上传支持，默认为 true
@@ -150,7 +150,7 @@ multipart.max-request-size
 指定每次请求的最大值，默认为 10MB
 ```
 
-### freemarker
+### 1.6. freemarker
 ```
 spring.freemarker.allow-request-override
 指定 HttpServletRequest 的属性是否可以覆盖 controller 的 model 的同名项
@@ -187,7 +187,7 @@ spring.freemarker.template-loader-path
 spring.freemarker.view-names
 指定使用模板的视图列表。
 ```
-### velocity
+### 1.7. velocity
 ```
 spring.velocity.allow-request-override
 指定 HttpServletRequest 的属性是否可以覆盖 controller 的 model 的同名项
@@ -230,7 +230,7 @@ spring.velocity.toolbox-config-location
 spring.velocity.view-names
 设定需要解析的视图名称。
 ```
-### thymeleaf
+### 1.8. thymeleaf
 ```
 spring.thymeleaf.cache
 是否开启模板缓存，默认 true
@@ -255,7 +255,7 @@ spring.thymeleaf.template-resolver-order
 spring.thymeleaf.view-names
 指定使用模板的视图名，多个以逗号分隔。
 ```
-### mustcache
+### 1.9. mustcache
 ```
 spring.mustache.cache
 是否 Enable template caching.
@@ -274,7 +274,7 @@ spring.mustache.suffix
 spring.mustache.view-names
 指定要使用模板的视图名。
 ```
-### groovy 模板
+### 1.10. groovy 模板
 ```
 spring.groovy.template.allow-request-override
 指定 HttpServletRequest 的属性是否可以覆盖 controller 的 model 的同名项
@@ -331,7 +331,7 @@ spring.groovy.template.suffix
 spring.groovy.template.view-names
 指定要使用模板的视图名称。
 ```
-### http
+### 1.11. http
 ```
 spring.hateoas.apply-to-primary-object-mapper
 设定是否对 object mapper 也支持 HATEOAS，默认为：true
@@ -344,7 +344,7 @@ spring.http.encoding.enabled
 spring.http.encoding.force
 是否强制对 http 请求和响应进行编码，默认为 true
 ```
-### json
+### 1.12. json
 ```
 spring.jackson.date-format
 指定日期格式，比如 yyyy-MM-dd HH:mm:ss，或者具体的格式化类的全限定名
@@ -369,7 +369,7 @@ spring.jackson.serialization-inclusion
 spring.jackson.time-zone
 指定日期格式化时区，比如 America/Los_Angeles 或者 GMT+10.
 ```
-### jersey
+### 1.13. jersey
 ```
 spring.jersey.filter.order
 指定 Jersey filter 的 order，默认为：0
@@ -379,9 +379,9 @@ spring.jersey.type
 指定 Jersey 的集成类型，可以是 servlet 或者 filter.
 ```
 
-## server
+## 2. server
 
-### server 配置
+### 2.1. server 配置
 ```
 server.address
 指定 server 绑定的地址
@@ -435,7 +435,7 @@ server.session.tracking-modes
 
 ```
 
-### ssl 配置
+### 2.2. ssl 配置
 
 ```
 server.ssl.ciphers
@@ -468,7 +468,7 @@ server.ssl.trust-store-type
 指定 trust store 的类型。
 ```
 
-### tomcat
+### 2.3. tomcat
 
 ```
 server.tomcat.access-log-enabled
@@ -507,7 +507,7 @@ server.tomcat.uri-encoding
 设定 URI 的解码字符集。
 ```
 
-### undertow
+### 2.4. undertow
 
 ```
 server.undertow.access-log-dir
@@ -531,9 +531,9 @@ server.undertow.worker-threads
 
 ```
 
-## datasource
+## 3. datasource
 
-### datasource
+### 3.1. datasource
 ```
 spring.dao.exceptiontranslation.enabled
 是否开启 PersistenceExceptionTranslationPostProcessor，默认为 true
@@ -704,7 +704,7 @@ spring.datasource.xa.data-source-class-name
 spring.datasource.xa.properties
 指定传递给 XA data source 的属性
 ```
-### JPA
+### 3.2. JPA
 ```
 spring.jpa.database
 指定目标数据库。
@@ -723,19 +723,19 @@ spring.jpa.properties
 spring.jpa.show-sql
 是否开启 sql 的 log，默认为：false
 ```
-### jooq
+### 3.3. jooq
 ```
 spring.jooq.sql-dialect
 指定 JOOQ 使用的 SQLDialect，比如 POSTGRES.
 ```
-### h2
+### 3.4. h
 ```
 spring.h2.console.enabled
 是否开启控制台，默认为 false
 spring.h2.console.path
 指定控制台路径，默认为：/h2-console
 ```
-### JTA
+### 3.5. JTA
 ```
 spring.jta.allow-multiple-lrc
 是否允许 multiple LRC，默认为：false
@@ -791,9 +791,9 @@ spring.jta.warn-about-zero-resource-transaction
 当使用 Bitronix Transaction Manager 时，是否对没有使用指定资源的事务进行警告，默认为：true
 ```
 
-## NoSQL
+## 4. NoSQL
 
-### cache
+### 4.1. cache
 ```
 spring.cache.cache-names
 指定要创建的缓存的名称，逗号分隔（若该缓存实现支持的话)
@@ -812,14 +812,14 @@ spring.cache.jcache.provider
 spring.cache.type
 指定缓存类型
 ```
-### mongodb
+### 4.2. mongodb
 ```
 spring.mongodb.embedded.features
 指定要开启的特性，逗号分隔。
 spring.mongodb.embedded.version
 指定要使用的版本，默认：2.6.10
 ```
-### redis
+### 4.3. redis
 ```
 spring.redis.database
 指定连接工厂使用的 Database index，默认为：0
@@ -844,7 +844,7 @@ spring.redis.sentinel.nodes
 spring.redis.timeout
 指定连接超时时间，毫秒单位，默认为 0
 ```
-### springdata
+### 4.4. springdata
 ```
 spring.data.elasticsearch.cluster-name
 指定 es 集群名称，默认：elasticsearch
@@ -900,9 +900,9 @@ spring.data.solr.zk-host
 指定 zk 的地址，格式为 HOST:PORT.
 ```
 
-## MQ
+## 5. MQ
 
-### activemq
+### 5.1. activemq
 ```
 spring.activemq.broker-url
 指定 ActiveMQ broker 的 URL，默认自动生成。
@@ -936,7 +936,7 @@ spring.artemis.mode
 spring.artemis.port
 指定 Artemis broker 的端口，默认为：61616
 ```
-### rabbitmq
+### 5.2. rabbitmq
 ```
 spring.rabbitmq.addresses
 指定 client 连接到的 server 的地址，多个以逗号分隔。
@@ -977,7 +977,7 @@ spring.rabbitmq.username
 spring.rabbitmq.virtual-host
 指定连接到 broker 的 Virtual host.
 ```
-### hornetq
+### 5.3. hornetq
 ```
 spring.hornetq.embedded.cluster-password
 指定集群的密码，默认启动时随机生成。
@@ -1000,7 +1000,7 @@ spring.hornetq.mode
 spring.hornetq.port
 指定 HornetQ broker 端口，默认：5445
 ```
-### jms
+### 5.4. jms
 ```
 spring.jms.jndi-name
 指定 Connection factory JNDI 名称。
@@ -1016,7 +1016,7 @@ spring.jms.pub-sub-domain
 是否使用默认的 destination type 来支持 publish/subscribe，默认：false
 ```
 
-## Security
+## 6. Security
 ```
 security.basic.authorize-mode
 要使用权限控制模式。
@@ -1114,8 +1114,8 @@ security.user.role
 默认用户的授权角色。
 ```
 
-## 	Migration
-### flyway
+## 7. Migration
+### 7.1. flyway
 ```
 flyway.baseline-description
 对执行迁移时基准版本的描述。
@@ -1168,7 +1168,7 @@ flyway.user
 flyway.validate-on-migrate
 迁移时是否校验，默认为 true.
 ```
-### liquibase
+### 7.2. liquibase
 ```
 liquibase.change-log
 Change log 配置文件的路径，默认值为 classpath:/db/changelog/db.changelog-master.yaml
@@ -1189,9 +1189,9 @@ liquibase.url
 liquibase.user 
 目标数据用户名
 ```
-## 其它
+## 8. 其它
 
-### aop
+### 8.1. aop
 ```
 spring.aop.auto
 是否支持 @EnableAspectJAutoProxy，默认为：true
@@ -1206,7 +1206,7 @@ autoconfig
 spring.autoconfigure.exclude
 配置要排除的 Auto-configuration classes.
 ```
-### batch
+### 8.2. batch
 ```
 spring.batch.initializer.enabled
 是否在必要时创建 batch 表，默认为 true
@@ -1219,7 +1219,7 @@ spring.batch.schema
 spring.batch.table-prefix
 指定批量处理的表的前缀。
 ```
-### jmx
+### 8.3. jmx
 ```
 spring.jmx.default-domain
 指定 JMX domain name.
@@ -1228,7 +1228,7 @@ spring.jmx.enabled
 spring.jmx.server
 指定 MBeanServer bean name. 默认为：mbeanServer)
 ```
-### mail
+### 8.4. mail
 ```
 spring.mail.default-encoding
 指定默认 MimeMessage 的编码，默认为：UTF-8
@@ -1249,7 +1249,7 @@ spring.mail.test-connection
 spring.mail.username
 指定 SMTP server 的用户名。
 ```
-### sendgrid
+### 8.5. sendgrid
 ```
 spring.sendgrid.password
 指定 SendGrid password.
@@ -1260,7 +1260,7 @@ spring.sendgrid.proxy.port
 spring.sendgrid.username
 指定 SendGrid username.
 ```
-### social
+### 8.6. social
 ```
 spring.social.auto-connection-views
 是否开启连接状态的视图，默认为 false

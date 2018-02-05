@@ -1,36 +1,29 @@
-
-
-<!-- toc -->
-
-* [包管理工具：npm](#包管理工具npm)
-  * [概述](#概述)
-  * [安装](#安装)
-  * [使用](#使用)
-    * [安装包](#安装包)
-    * [卸载包](#卸载包)
-    * [更新包](#更新包)
-    * [搜索包](#搜索包)
-  * [其它命令](#其它命令)
-    * [查看帮助](#查看帮助)
-    * [查看包信息](#查看包信息)
-  * [配置](#配置)
-    * [编辑配置文件](#编辑配置文件)
-    * [配置proxy](#配置proxy)
-    * [package.json](#packagejson)
-
-<!-- toc stop -->
-
+- [包管理工具：npm](#%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%EF%BC%9Anpm)
+	- [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+	- [2. 安装](#2-%E5%AE%89%E8%A3%85)
+	- [3. 使用](#3-%E4%BD%BF%E7%94%A8)
+		- [3.1. 安装包](#31-%E5%AE%89%E8%A3%85%E5%8C%85)
+		- [3.2. 卸载包](#32-%E5%8D%B8%E8%BD%BD%E5%8C%85)
+		- [3.3. 更新包](#33-%E6%9B%B4%E6%96%B0%E5%8C%85)
+		- [3.4. 搜索包](#34-%E6%90%9C%E7%B4%A2%E5%8C%85)
+	- [4. 其它命令](#4-%E5%85%B6%E5%AE%83%E5%91%BD%E4%BB%A4)
+		- [4.1. 查看帮助](#41-%E6%9F%A5%E7%9C%8B%E5%B8%AE%E5%8A%A9)
+		- [4.2. 查看包信息](#42-%E6%9F%A5%E7%9C%8B%E5%8C%85%E4%BF%A1%E6%81%AF)
+	- [5. 配置](#5-%E9%85%8D%E7%BD%AE)
+		- [5.1. 编辑配置文件](#51-%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+		- [5.2. 配置proxy](#52-%E9%85%8D%E7%BD%AEproxy)
+		- [5.3. package.json](#53-packagejson)
 
 
 # 包管理工具：npm #
 http://javascript.ruanyifeng.com/nodejs/npm.html    
 http://www.runoob.com/nodejs/nodejs-npm.html    
 
-## 概述 ##
+## 1. 概述 ##
 NPM（node package manager），通常称为node包管理器，它的主要功能就是管理node包，包括：安装、卸载、更新、查看、搜索、发布等。NPM依赖于couchdb的一个数据库，其中详细记录了每个包的信息，包括作者、版本、依赖、授权信息等。它的一个很重要的作用就是：将开发者从繁琐的包管理工作（版本、依赖等）中解放出来，更加专注于功能的开发。
 
 
-## 安装 ##
+## 2. 安装 ##
 由于最新版的 nodejs 已经集成了 npm，所以只要安装完 nodeJS，npm也就安装完毕了。
 
 查看npm版本，出现版本提示说明安装成功：
@@ -67,9 +60,9 @@ npm install npm -g
 	ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 	```
 
-## 使用 ##
+## 3. 使用 ##
 
-### 安装包 ###
+### 3.1. 安装包 ###
 
 - 安装最新版的package
 	```
@@ -128,7 +121,7 @@ npm install npm -g
 		```
 
 
-### 卸载包 ###
+### 3.2. 卸载包 ###
 ```
 npm uninstall package
 ```
@@ -137,26 +130,26 @@ npm uninstall package
 npm uninstall package@<version>
 ```
 
-### 更新包 ###
+### 3.3. 更新包 ###
 
 ```
 npm update package
 ```
 
-### 搜索包 ###
+### 3.4. 搜索包 ###
 ```
 npm search package
 ```
 
 
-## 其它命令 ##
+## 4. 其它命令 ##
 
-### 查看帮助 ###
+### 4.1. 查看帮助 ###
 ```
 npm help
 ```
 
-### 查看包信息 ###
+### 4.2. 查看包信息 ###
 
 查看当前目录安装的package：
 ```
@@ -175,15 +168,15 @@ npm ls package
 npm info package
 ```
 
-## 配置 ##
+## 5. 配置 ##
 npm的配置工作主要是通过 `npm config` 命令。
 
-### 编辑配置文件 ###
+### 5.1. 编辑配置文件 ###
 ```
 npm config edit
 ```
 
-### 配置proxy ###
+### 5.2. 配置proxy ###
 
 设置代理
 ```
@@ -199,7 +192,7 @@ npm delete proxy
 ```
 
 
-### package.json ###
+### 5.3. package.json ###
 package.json 位于模块的目录下，用于定义包的属性。
 
 - 属性说明

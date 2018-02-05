@@ -1,27 +1,27 @@
 - [Servlet 基础](#servlet-%E5%9F%BA%E7%A1%80)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-    - [优势](#%E4%BC%98%E5%8A%BF)
-    - [Servlet 类谱图](#servlet-%E7%B1%BB%E8%B0%B1%E5%9B%BE)
-    - [生命周期](#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
-  - [Servlet 编写](#servlet-%E7%BC%96%E5%86%99)
-    - [步骤](#%E6%AD%A5%E9%AA%A4)
-    - [内置对象](#%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1)
-  - [过滤器](#%E8%BF%87%E6%BB%A4%E5%99%A8)
-  - [监听器](#%E7%9B%91%E5%90%AC%E5%99%A8)
-  - [其它问题](#%E5%85%B6%E5%AE%83%E9%97%AE%E9%A2%98)
-    - [路径问题](#%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98)
-    - [关于斜线“/”的总结：](#%E5%85%B3%E4%BA%8E%E6%96%9C%E7%BA%BF%E2%80%9C%E2%80%9D%E7%9A%84%E6%80%BB%E7%BB%93%EF%BC%9A)
-  - [Refer Links](#refer-links)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+    - [1.1. 优势](#11-%E4%BC%98%E5%8A%BF)
+    - [1.2. Servlet 类谱图](#12-servlet-%E7%B1%BB%E8%B0%B1%E5%9B%BE)
+    - [1.3. 生命周期](#13-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+  - [2. Servlet 编写](#2-servlet-%E7%BC%96%E5%86%99)
+    - [2.1. 步骤](#21-%E6%AD%A5%E9%AA%A4)
+    - [2.2. 内置对象](#22-%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1)
+  - [3. 过滤器](#3-%E8%BF%87%E6%BB%A4%E5%99%A8)
+  - [4. 监听器](#4-%E7%9B%91%E5%90%AC%E5%99%A8)
+  - [5. 其它问题](#5-%E5%85%B6%E5%AE%83%E9%97%AE%E9%A2%98)
+    - [5.1. 路径问题](#51-%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98)
+    - [5.2. 关于斜线“/”的总结](#52-%E5%85%B3%E4%BA%8E%E6%96%9C%E7%BA%BF%E2%80%9C%E2%80%9D%E7%9A%84%E6%80%BB%E7%BB%93)
+  - [6. Refer Links](#6-refer-links)
 
 # Servlet 基础
 
-## 概述
+## 1. 概述
 
 Java Servlet 是运行在带有支持 Java Servlet 规范的解释器的 web 服务器上的 Java 类，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和 HTTP 服务器上的数据库或应用程序之间的中间层，可以通过“请求 - 响应”的编程模型来访问这个驻留在服务器内存中的 Servlet 程序；
 
 Servlet 可以使用 javax.servlet 和 javax.servlet.http 包创建，它是 Java 企业版的标准组成部分；
 
-### 优势
+### 1.1. 优势
 
 Java Servlet 通常情况下与使用 CGI（Common Gateway Interface，公共网关接口）实现的程序可以达到异曲同工的效果。但是相比于 CGI，Servlet 有以下几点优势：
 
@@ -35,7 +35,7 @@ Java Servlet 通常情况下与使用 CGI（Common Gateway Interface，公共网
 
 - Java 类库的全部功能对 Servlet 来说都是可用的。它可以通过 sockets 和 RMI 机制与 applets、数据库或其他软件进行交互；
 
-### Servlet 类谱图
+### 1.2. Servlet 类谱图
 
 Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类。Web 应用程序开发人员通常编写 Servlet 来扩展 javax.servlet.http.HttpServlet，并实现 Servlet 接口的抽象类专门用来处理 HTTP 请求；
 
@@ -45,7 +45,7 @@ Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类�
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/e5302925b3ad9e0f53738ca69b485279.jpg)
 
-### 生命周期
+### 1.3. 生命周期
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/80e6f7d3e862237d2370d80316ce4cec.jpg)
 
@@ -82,9 +82,9 @@ Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类�
     
     服务器关闭时，调用 destroy() 方法；
 
-## Servlet 编写
+## 2. Servlet 编写
 
-### 步骤
+### 2.1. 步骤
 
 1. 编写 java 类：
     - 继承 javax.servlet.http.HttpServlet；
@@ -153,11 +153,11 @@ Servlet 是服务 HTTP 请求并实现 javax.servlet.Servlet 接口的 Java 类�
     </servlet-mapping>
     ```
 
-### 内置对象
+### 2.2. 内置对象
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/8137a19614dcc4a48342ee58af7a2fe7.jpg)
 
-## 过滤器
+## 3. 过滤器
 http://www.runoob.com/jsp/jsp-writing-filters.html
 
 http://www.jellythink.com/archives/1409
@@ -222,7 +222,7 @@ Filter 的执行顺序与在 web.xml 配置文件中的配置顺序一致，一�
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/4e88e9a31e0239f901b9e137474a4e49.jpg)
 
-## 监听器
+## 4. 监听器
 
 http://www.jellythink.com/archives/1414
 
@@ -242,9 +242,9 @@ http://www.jellythink.com/archives/1414
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/09ae0ed8326f842857f49ee5cf1fb4cc.jpg)
 
-## 其它问题
+## 5. 其它问题
 
-### 路径问题
+### 5.1. 路径问题
 
 JSP 文件与 Servlet 的相互访问：
 - 在 jsp 文件中访问 servlet：
@@ -288,7 +288,7 @@ JSP 文件与 Servlet 的相互访问：
       ```
       注意：当前目录为 package/Test，因此。./ 回到上一级目录，即项目根目录；<!-- TODO:——未验证 -->
 
-### 关于斜线“/”的总结：
+### 5.2. 关于斜线“/”的总结
 
 - jsp 页面中的 / 代表服务器根目录；
 
@@ -298,6 +298,6 @@ JSP 文件与 Servlet 的相互访问：
 
 - java 文件中请求转发的 / 代表项目根目录
 
-## Refer Links
+## 6. Refer Links
 
 官方 document: https://tomcat.apache.org/tomcat-5.5-doc/servletapi/javax/servlet/Servlet.html

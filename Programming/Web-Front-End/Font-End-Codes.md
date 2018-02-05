@@ -1,65 +1,65 @@
 - [JavaScript 实用代码段](#javascript-%E5%AE%9E%E7%94%A8%E4%BB%A3%E7%A0%81%E6%AE%B5)
-  - [防止网页被 iframe 引用](#%E9%98%B2%E6%AD%A2%E7%BD%91%E9%A1%B5%E8%A2%AB-iframe-%E5%BC%95%E7%94%A8)
-  - [页面跳转](#%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
-  - [使 input 输入框不能编辑](#%E4%BD%BF-input-%E8%BE%93%E5%85%A5%E6%A1%86%E4%B8%8D%E8%83%BD%E7%BC%96%E8%BE%91)
-  - [文字超出限制显示省略号](#%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E9%99%90%E5%88%B6%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7)
-  - [Android 浏览器下 line-height 垂直居中偏离问题](#android-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8B-line-height-%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E5%81%8F%E7%A6%BB%E9%97%AE%E9%A2%98)
-  - [用伪元素实现文字两端均分对齐](#%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E4%B8%A4%E7%AB%AF%E5%9D%87%E5%88%86%E5%AF%B9%E9%BD%90)
-  - [通过 `:empty` 选择器区分样式](#%E9%80%9A%E8%BF%87-empty-%E9%80%89%E6%8B%A9%E5%99%A8%E5%8C%BA%E5%88%86%E6%A0%B7%E5%BC%8F)
-  - [实现绝对底部（Sticky Footer）](#%E5%AE%9E%E7%8E%B0%E7%BB%9D%E5%AF%B9%E5%BA%95%E9%83%A8%EF%BC%88sticky-footer%EF%BC%89)
-  - [input 标签相关样式 Reset](#input-%E6%A0%87%E7%AD%BE%E7%9B%B8%E5%85%B3%E6%A0%B7%E5%BC%8F-reset)
-  - [使用：invalid 实现输入不合法时改变按钮样式](#%E4%BD%BF%E7%94%A8%EF%BC%9Ainvalid-%E5%AE%9E%E7%8E%B0%E8%BE%93%E5%85%A5%E4%B8%8D%E5%90%88%E6%B3%95%E6%97%B6%E6%94%B9%E5%8F%98%E6%8C%89%E9%92%AE%E6%A0%B7%E5%BC%8F)
-  - [隐藏一个元素的实现方法](#%E9%9A%90%E8%97%8F%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95)
-  - [三角形画法](#%E4%B8%89%E8%A7%92%E5%BD%A2%E7%94%BB%E6%B3%95)
-  - [圆形画法](#%E5%9C%86%E5%BD%A2%E7%94%BB%E6%B3%95)
-  - [居中](#%E5%B1%85%E4%B8%AD)
-    - [水平居中](#%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD)
-    - [垂直居中](#%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD)
-    - [水平垂直居中](#%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD)
-  - [图片上传相关](#%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3)
-    - [HTML5 调用手机摄像机、相册功能](#html5-%E8%B0%83%E7%94%A8%E6%89%8B%E6%9C%BA%E6%91%84%E5%83%8F%E6%9C%BA%E3%80%81%E7%9B%B8%E5%86%8C%E5%8A%9F%E8%83%BD)
-    - [使用 canvas 进行图片压缩](#%E4%BD%BF%E7%94%A8-canvas-%E8%BF%9B%E8%A1%8C%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9)
-  - [使用 history 和 window.onpopstate 让 ajax 分页支持前进、后退](#%E4%BD%BF%E7%94%A8-history-%E5%92%8C-windowonpopstate-%E8%AE%A9-ajax-%E5%88%86%E9%A1%B5%E6%94%AF%E6%8C%81%E5%89%8D%E8%BF%9B%E3%80%81%E5%90%8E%E9%80%80)
-  - [不指定高度，实现固定 & 自适应的高宽比](#%E4%B8%8D%E6%8C%87%E5%AE%9A%E9%AB%98%E5%BA%A6%EF%BC%8C%E5%AE%9E%E7%8E%B0%E5%9B%BA%E5%AE%9A-%E8%87%AA%E9%80%82%E5%BA%94%E7%9A%84%E9%AB%98%E5%AE%BD%E6%AF%94)
-    - [固定高宽比](#%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%AE%BD%E6%AF%94)
-      - [使用 max-height](#%E4%BD%BF%E7%94%A8-max-height)
-      - [使用基于宽度的百分比来设置 padding](#%E4%BD%BF%E7%94%A8%E5%9F%BA%E4%BA%8E%E5%AE%BD%E5%BA%A6%E7%9A%84%E7%99%BE%E5%88%86%E6%AF%94%E6%9D%A5%E8%AE%BE%E7%BD%AE-padding)
-        - [padding](#padding)
-        - [padding & 伪元素](#padding-%E4%BC%AA%E5%85%83%E7%B4%A0)
-        - [padding & calc()](#padding-calc)
-        - [padding & CSS 变量](#padding-css-%E5%8F%98%E9%87%8F)
-      - [使用视窗单位 vw](#%E4%BD%BF%E7%94%A8%E8%A7%86%E7%AA%97%E5%8D%95%E4%BD%8D-vw)
-        - [vw](#vw)
-        - [vw & CSS Grid](#vw-css-grid)
-    - [自适应高宽比](#%E8%87%AA%E9%80%82%E5%BA%94%E9%AB%98%E5%AE%BD%E6%AF%94)
-  - [Retina 屏中实现 1px 的 border](#retina-%E5%B1%8F%E4%B8%AD%E5%AE%9E%E7%8E%B0-1px-%E7%9A%84-border)
-  - [outline 圆角实现](#outline-%E5%9C%86%E8%A7%92%E5%AE%9E%E7%8E%B0)
-  - [Android 平台中弹出虚拟键盘对布局的影响](#android-%E5%B9%B3%E5%8F%B0%E4%B8%AD%E5%BC%B9%E5%87%BA%E8%99%9A%E6%8B%9F%E9%94%AE%E7%9B%98%E5%AF%B9%E5%B8%83%E5%B1%80%E7%9A%84%E5%BD%B1%E5%93%8D)
-    - [破坏 fixed 布局](#%E7%A0%B4%E5%9D%8F-fixed-%E5%B8%83%E5%B1%80)
-    - [改变 viewport，导致 vh 变小](#%E6%94%B9%E5%8F%98-viewport%EF%BC%8C%E5%AF%BC%E8%87%B4-vh-%E5%8F%98%E5%B0%8F)
-  - [输入长度限制监控](#%E8%BE%93%E5%85%A5%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E7%9B%91%E6%8E%A7)
-    - [非直接的文字输入](#%E9%9D%9E%E7%9B%B4%E6%8E%A5%E7%9A%84%E6%96%87%E5%AD%97%E8%BE%93%E5%85%A5)
-    - [emoji 表情的输入](#emoji-%E8%A1%A8%E6%83%85%E7%9A%84%E8%BE%93%E5%85%A5)
-  - [去除容器内 img 下方的空白](#%E5%8E%BB%E9%99%A4%E5%AE%B9%E5%99%A8%E5%86%85-img-%E4%B8%8B%E6%96%B9%E7%9A%84%E7%A9%BA%E7%99%BD)
-  - [表单输入验证](#%E8%A1%A8%E5%8D%95%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81)
-    - [validity 对象](#validity-%E5%AF%B9%E8%B1%A1)
-    - [实践](#%E5%AE%9E%E8%B7%B5)
-  - [平滑滚动的实现](#%E5%B9%B3%E6%BB%91%E6%BB%9A%E5%8A%A8%E7%9A%84%E5%AE%9E%E7%8E%B0)
-    - [通过 CSS 实现](#%E9%80%9A%E8%BF%87-css-%E5%AE%9E%E7%8E%B0)
-    - [通过 JavaScript 实现](#%E9%80%9A%E8%BF%87-javascript-%E5%AE%9E%E7%8E%B0)
-  - [判断是否已滑到底部](#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%B7%B2%E6%BB%91%E5%88%B0%E5%BA%95%E9%83%A8)
-  - [ios 中 z-index 失效的解决方案](#ios-%E4%B8%AD-z-index-%E5%A4%B1%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
-  - [CSS 选择器如何选中上一个相邻元素？为什么没有这种选择器？](#css-%E9%80%89%E6%8B%A9%E5%99%A8%E5%A6%82%E4%BD%95%E9%80%89%E4%B8%AD%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%9B%B8%E9%82%BB%E5%85%83%E7%B4%A0%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E8%BF%99%E7%A7%8D%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%9F)
-  - [无法触发 scroll 事件](#%E6%97%A0%E6%B3%95%E8%A7%A6%E5%8F%91-scroll-%E4%BA%8B%E4%BB%B6)
-  - [Html 中注释符号`<!-- -->`内容若含有非西文字符，需要以空格隔开](#html-%E4%B8%AD%E6%B3%A8%E9%87%8A%E7%AC%A6%E5%8F%B7-----%E5%86%85%E5%AE%B9%E8%8B%A5%E5%90%AB%E6%9C%89%E9%9D%9E%E8%A5%BF%E6%96%87%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%9C%80%E8%A6%81%E4%BB%A5%E7%A9%BA%E6%A0%BC%E9%9A%94%E5%BC%80)
-  - [去除 inline-block 元素间间距](#%E5%8E%BB%E9%99%A4-inline-block-%E5%85%83%E7%B4%A0%E9%97%B4%E9%97%B4%E8%B7%9D)
-  - [瀑布流布局实现](#%E7%80%91%E5%B8%83%E6%B5%81%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0)
-    - [通过 Multi-columns 布局实现](#%E9%80%9A%E8%BF%87-multi-columns-%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0)
-    - [通过 flex 布局实现](#%E9%80%9A%E8%BF%87-flex-%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0)
+    - [1. 防止网页被 iframe 引用](#1-%E9%98%B2%E6%AD%A2%E7%BD%91%E9%A1%B5%E8%A2%AB-iframe-%E5%BC%95%E7%94%A8)
+    - [2. 页面跳转](#2-%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
+    - [3. 使 input 输入框不能编辑](#3-%E4%BD%BF-input-%E8%BE%93%E5%85%A5%E6%A1%86%E4%B8%8D%E8%83%BD%E7%BC%96%E8%BE%91)
+    - [4. 文字超出限制显示省略号](#4-%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E9%99%90%E5%88%B6%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7)
+    - [5. Android 浏览器下 line-height 垂直居中偏离问题](#5-android-%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8B-line-height-%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD%E5%81%8F%E7%A6%BB%E9%97%AE%E9%A2%98)
+    - [6. 用伪元素实现文字两端均分对齐](#6-%E7%94%A8%E4%BC%AA%E5%85%83%E7%B4%A0%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E4%B8%A4%E7%AB%AF%E5%9D%87%E5%88%86%E5%AF%B9%E9%BD%90)
+    - [7. 通过 `:empty` 选择器区分样式](#7-%E9%80%9A%E8%BF%87-empty-%E9%80%89%E6%8B%A9%E5%99%A8%E5%8C%BA%E5%88%86%E6%A0%B7%E5%BC%8F)
+    - [8. 实现绝对底部（Sticky Footer）](#8-%E5%AE%9E%E7%8E%B0%E7%BB%9D%E5%AF%B9%E5%BA%95%E9%83%A8%EF%BC%88sticky-footer%EF%BC%89)
+    - [9. input 标签相关样式 Reset](#9-input-%E6%A0%87%E7%AD%BE%E7%9B%B8%E5%85%B3%E6%A0%B7%E5%BC%8F-reset)
+    - [10. 使用：invalid 实现输入不合法时改变按钮样式](#10-%E4%BD%BF%E7%94%A8%EF%BC%9Ainvalid-%E5%AE%9E%E7%8E%B0%E8%BE%93%E5%85%A5%E4%B8%8D%E5%90%88%E6%B3%95%E6%97%B6%E6%94%B9%E5%8F%98%E6%8C%89%E9%92%AE%E6%A0%B7%E5%BC%8F)
+    - [11. 隐藏一个元素的实现方法](#11-%E9%9A%90%E8%97%8F%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95)
+    - [12. 三角形画法](#12-%E4%B8%89%E8%A7%92%E5%BD%A2%E7%94%BB%E6%B3%95)
+    - [13. 圆形画法](#13-%E5%9C%86%E5%BD%A2%E7%94%BB%E6%B3%95)
+    - [14. 居中](#14-%E5%B1%85%E4%B8%AD)
+        - [14.1. 水平居中](#141-%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD)
+        - [14.2. 垂直居中](#142-%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD)
+        - [14.3. 水平垂直居中](#143-%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD)
+    - [15. 图片上传相关](#15-%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E7%9B%B8%E5%85%B3)
+        - [15.1. HTML调用手机摄像机、相册功能](#151-html%E8%B0%83%E7%94%A8%E6%89%8B%E6%9C%BA%E6%91%84%E5%83%8F%E6%9C%BA%E3%80%81%E7%9B%B8%E5%86%8C%E5%8A%9F%E8%83%BD)
+        - [15.2. 使用 canvas 进行图片压缩](#152-%E4%BD%BF%E7%94%A8-canvas-%E8%BF%9B%E8%A1%8C%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9)
+    - [16. 使用 history 和 window.onpopstate 让 ajax 分页支持前进、后退](#16-%E4%BD%BF%E7%94%A8-history-%E5%92%8C-windowonpopstate-%E8%AE%A9-ajax-%E5%88%86%E9%A1%B5%E6%94%AF%E6%8C%81%E5%89%8D%E8%BF%9B%E3%80%81%E5%90%8E%E9%80%80)
+    - [17. 不指定高度，实现固定 & 自适应的高宽比](#17-%E4%B8%8D%E6%8C%87%E5%AE%9A%E9%AB%98%E5%BA%A6%EF%BC%8C%E5%AE%9E%E7%8E%B0%E5%9B%BA%E5%AE%9A-%E8%87%AA%E9%80%82%E5%BA%94%E7%9A%84%E9%AB%98%E5%AE%BD%E6%AF%94)
+        - [17.1. 固定高宽比](#171-%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%AE%BD%E6%AF%94)
+            - [17.1.1. 使用 max-height](#1711-%E4%BD%BF%E7%94%A8-max-height)
+            - [17.1.2. 使用基于宽度的百分比来设置 padding](#1712-%E4%BD%BF%E7%94%A8%E5%9F%BA%E4%BA%8E%E5%AE%BD%E5%BA%A6%E7%9A%84%E7%99%BE%E5%88%86%E6%AF%94%E6%9D%A5%E8%AE%BE%E7%BD%AE-padding)
+                - [17.1.2.1. padding](#17121-padding)
+                - [17.1.2.2. padding & 伪元素](#17122-padding-%E4%BC%AA%E5%85%83%E7%B4%A0)
+                - [17.1.2.3. padding & calc()](#17123-padding-calc)
+                - [17.1.2.4. padding & CSS 变量](#17124-padding-css-%E5%8F%98%E9%87%8F)
+            - [17.1.3. 使用视窗单位 vw](#1713-%E4%BD%BF%E7%94%A8%E8%A7%86%E7%AA%97%E5%8D%95%E4%BD%8D-vw)
+                - [17.1.3.1. vw](#17131-vw)
+                - [17.1.3.2. vw & CSS Grid](#17132-vw-css-grid)
+        - [17.2. 自适应高宽比](#172-%E8%87%AA%E9%80%82%E5%BA%94%E9%AB%98%E5%AE%BD%E6%AF%94)
+    - [18. Retina 屏中实现px 的 border](#18-retina-%E5%B1%8F%E4%B8%AD%E5%AE%9E%E7%8E%B0px-%E7%9A%84-border)
+    - [19. outline 圆角实现](#19-outline-%E5%9C%86%E8%A7%92%E5%AE%9E%E7%8E%B0)
+    - [20. Android 平台中弹出虚拟键盘对布局的影响](#20-android-%E5%B9%B3%E5%8F%B0%E4%B8%AD%E5%BC%B9%E5%87%BA%E8%99%9A%E6%8B%9F%E9%94%AE%E7%9B%98%E5%AF%B9%E5%B8%83%E5%B1%80%E7%9A%84%E5%BD%B1%E5%93%8D)
+        - [20.1. 破坏 fixed 布局](#201-%E7%A0%B4%E5%9D%8F-fixed-%E5%B8%83%E5%B1%80)
+        - [20.2. 改变 viewport，导致 vh 变小](#202-%E6%94%B9%E5%8F%98-viewport%EF%BC%8C%E5%AF%BC%E8%87%B4-vh-%E5%8F%98%E5%B0%8F)
+    - [21. 输入长度限制监控](#21-%E8%BE%93%E5%85%A5%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E7%9B%91%E6%8E%A7)
+        - [21.1. 非直接的文字输入](#211-%E9%9D%9E%E7%9B%B4%E6%8E%A5%E7%9A%84%E6%96%87%E5%AD%97%E8%BE%93%E5%85%A5)
+        - [21.2. emoji 表情的输入](#212-emoji-%E8%A1%A8%E6%83%85%E7%9A%84%E8%BE%93%E5%85%A5)
+    - [22. 去除容器内 img 下方的空白](#22-%E5%8E%BB%E9%99%A4%E5%AE%B9%E5%99%A8%E5%86%85-img-%E4%B8%8B%E6%96%B9%E7%9A%84%E7%A9%BA%E7%99%BD)
+    - [23. 表单输入验证](#23-%E8%A1%A8%E5%8D%95%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81)
+        - [23.1. validity 对象](#231-validity-%E5%AF%B9%E8%B1%A1)
+        - [23.2. 实践](#232-%E5%AE%9E%E8%B7%B5)
+    - [24. 平滑滚动的实现](#24-%E5%B9%B3%E6%BB%91%E6%BB%9A%E5%8A%A8%E7%9A%84%E5%AE%9E%E7%8E%B0)
+        - [24.1. 通过 CSS 实现](#241-%E9%80%9A%E8%BF%87-css-%E5%AE%9E%E7%8E%B0)
+        - [24.2. 通过 JavaScript 实现](#242-%E9%80%9A%E8%BF%87-javascript-%E5%AE%9E%E7%8E%B0)
+    - [25. 判断是否已滑到底部](#25-%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%B7%B2%E6%BB%91%E5%88%B0%E5%BA%95%E9%83%A8)
+    - [26. ios 中 z-index 失效的解决方案](#26-ios-%E4%B8%AD-z-index-%E5%A4%B1%E6%95%88%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
+    - [27. CSS 选择器如何选中上一个相邻元素？为什么没有这种选择器？](#27-css-%E9%80%89%E6%8B%A9%E5%99%A8%E5%A6%82%E4%BD%95%E9%80%89%E4%B8%AD%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%9B%B8%E9%82%BB%E5%85%83%E7%B4%A0%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E8%BF%99%E7%A7%8D%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%9F)
+    - [28. 无法触发 scroll 事件](#28-%E6%97%A0%E6%B3%95%E8%A7%A6%E5%8F%91-scroll-%E4%BA%8B%E4%BB%B6)
+    - [29. Html 中注释符号`<!-- -->`内容若含有非西文字符，需要以空格隔开](#29-html-%E4%B8%AD%E6%B3%A8%E9%87%8A%E7%AC%A6%E5%8F%B7-----%E5%86%85%E5%AE%B9%E8%8B%A5%E5%90%AB%E6%9C%89%E9%9D%9E%E8%A5%BF%E6%96%87%E5%AD%97%E7%AC%A6%EF%BC%8C%E9%9C%80%E8%A6%81%E4%BB%A5%E7%A9%BA%E6%A0%BC%E9%9A%94%E5%BC%80)
+    - [30. 去除 inline-block 元素间间距](#30-%E5%8E%BB%E9%99%A4-inline-block-%E5%85%83%E7%B4%A0%E9%97%B4%E9%97%B4%E8%B7%9D)
+    - [31. 瀑布流布局实现](#31-%E7%80%91%E5%B8%83%E6%B5%81%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0)
+        - [31.1. 通过 Multi-columns 布局实现](#311-%E9%80%9A%E8%BF%87-multi-columns-%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0)
+        - [31.2. 通过 flex 布局实现](#312-%E9%80%9A%E8%BF%87-flex-%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0)
 
 # JavaScript 实用代码段
 
-## 防止网页被 iframe 引用
+## 1. 防止网页被 iframe 引用
 
 http://www.ruanyifeng.com/blog/2008/10/anti-frameset_javascript_codes.html
 
@@ -100,11 +100,11 @@ http://www.ruanyifeng.com/blog/2010/08/anti-frameset_javascript_codes_continued.
     }
     ```
 
-## 页面跳转
+## 2. 页面跳转
 
 http://blog.csdn.net/ithomer/article/details/7861313 
 
-## 使 input 输入框不能编辑
+## 3. 使 input 输入框不能编辑
 
 http://blog.sina.com.cn/s/blog_69e220850100pyg2.html
 
@@ -132,7 +132,7 @@ http://blog.sina.com.cn/s/blog_69e220850100pyg2.html
     <input type="text" value="fisker" disabled />
     ```
 
-## 文字超出限制显示省略号
+## 4. 文字超出限制显示省略号
 
 https://github.com/ruansongsong/H5Skills/blob/master/resources/textoverflow.md
 
@@ -156,7 +156,7 @@ https://github.com/ruansongsong/H5Skills/blob/master/resources/textoverflow.md
 }
 ```
 
-## Android 浏览器下 line-height 垂直居中偏离问题
+## 5. Android 浏览器下 line-height 垂直居中偏离问题
 
 https://github.com/ruansongsong/H5Skills/blob/master/resources/android_lineheight.md
 
@@ -192,7 +192,7 @@ https://github.com/ruansongsong/H5Skills/blob/master/resources/android_lineheigh
 }
 ```
 
-## 用伪元素实现文字两端均分对齐
+## 6. 用伪元素实现文字两端均分对齐
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/168932f5dc1950a4566707ea2c4f1070.jpg)
 
@@ -213,7 +213,7 @@ https://github.com/ruansongsong/H5Skills/blob/master/resources/android_lineheigh
 }
 ```
 
-## 通过 `:empty` 选择器区分样式
+## 7. 通过 `:empty` 选择器区分样式
 
 https://github.com/ruansongsong/H5Skills/blob/master/resources/empty.md
 
@@ -237,7 +237,7 @@ https://github.com/ruansongsong/H5Skills/blob/master/resources/empty.md
 }
 ```
 
-## 实现绝对底部（Sticky Footer）
+## 8. 实现绝对底部（Sticky Footer）
 
 https://github.com/ruansongsong/H5Skills/blob/master/resources/sticky_footer.md
 
@@ -307,7 +307,7 @@ Sticky Footer 效果：
   }
   ```
 
-##  input 标签相关样式 Reset
+## 9. input 标签相关样式 Reset
 
 - 取消 input 默认样式
   ```css
@@ -363,7 +363,7 @@ Sticky Footer 效果：
   }
   ```
 
-## 使用：invalid 实现输入不合法时改变按钮样式
+## 10. 使用：invalid 实现输入不合法时改变按钮样式
 
 http://yincheng.site/using-html-css-instead-of-js
 
@@ -380,7 +380,7 @@ http://yincheng.site/using-html-css-instead-of-js
 <span class="next-step">Next</span>
 ```
 
-## 隐藏一个元素的实现方法
+## 11. 隐藏一个元素的实现方法
 
 - 方法一：
     ```css
@@ -407,7 +407,7 @@ http://yincheng.site/using-html-css-instead-of-js
     ```
     类似方法三，设置元素完全透明，但仍在 DOM 中存在，仍占据 DOM 空间
 
-## 三角形画法
+## 12. 三角形画法
 
 http://yincheng.site/css-triangle
 
@@ -422,18 +422,18 @@ div:after {
 }
 ```
 
-## 圆形画法
+## 13. 圆形画法
 
 将 border-rasius 的属性值设置为元素几何中心到顶点的距离，即：
 ```css
 border-radius: 50%
 ```
 
-## 居中
+## 14. 居中
 
 http://yincheng.site/css-align
 
-### 水平居中
+### 14.1. 水平居中
 
 - 方法一
   
@@ -464,7 +464,7 @@ http://yincheng.site/css-align
   ```
   NOTE：这是最常见的水平居中方法，不仅适用于块元素也适用于行内元素，但这个办法对垂直居中不适用。
 
-### 垂直居中
+### 14.2. 垂直居中
 
 - 方法一
 
@@ -526,7 +526,7 @@ http://yincheng.site/css-align
 
   方法二和三：margin-top 设置负值和 translate -50% 都有一个潜在的弊端，就是如果设置 left 为 50% 是借助 position 为 absolute 的话，可能会导致换行。
 
-### 水平垂直居中
+### 14.3. 水平垂直居中
 
 - 方法一
 
@@ -539,13 +539,13 @@ http://yincheng.site/css-align
   }
   ```
 
-## 图片上传相关
+## 15. 图片上传相关
 
 http://yincheng.site/crop-upload-photo
 
 图片上传涉及的功能，第一个是支持拖拽，第二个压缩，第三个是裁剪编辑，第四个是上传和上传进度显示。
 
-### HTML5 调用手机摄像机、相册功能
+### 15.1. HTML调用手机摄像机、相册功能
 
 https://www.w3.org/TR/html-media-capture/
 
@@ -581,7 +581,7 @@ https://imys.net/20150916/webapp-input-use-camera.html
   <input type="file" accept="image/*" multiple>
   ```
 
-### 使用 canvas 进行图片压缩
+### 15.2. 使用 canvas 进行图片压缩
 <!-- TODO: -->
 
 https://imys.net/20150916/webapp-input-use-camera.html
@@ -619,11 +619,11 @@ var compress = function (res) {
 }
 ```
 
-## 使用 history 和 window.onpopstate 让 ajax 分页支持前进、后退
+## 16. 使用 history 和 window.onpopstate 让 ajax 分页支持前进、后退
 
 http://yincheng.site/h5-history
 
-## 不指定高度，实现固定 & 自适应的高宽比
+## 17. 不指定高度，实现固定 & 自适应的高宽比
 
 https://www.w3cplus.com/css/flexible-images.html
 
@@ -631,19 +631,19 @@ https://www.w3cplus.com/css/aspect-ratio-boxes.html
 
 https://www.w3cplus.com/css/aspect-ratio.html
 
-### 固定高宽比
+### 17.1. 固定高宽比
 
 效果示意图：
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/0444d75425397180d543c116217eb143.jpg)
 
-#### 使用 max-height
+#### 17.1.1. 使用 max-height
 
 ```css
 img { max-width: 100%; height: auto; }
 ```
 
-#### 使用基于宽度的百分比来设置 padding
+#### 17.1.2. 使用基于宽度的百分比来设置 padding
 
 主要的原理是基于元素的 padding-top 或 padding-bottom 是根据元素的 width 进行计算的。假设你有一个 div 容器，它的宽度是 500px，你想让其高度也是和宽度一样，也就是说宽高比例是 1:1。这个时候借助 padding-top 或者 padding-bottom 的值为 100%，就可以计算出容器 div 的高度是 500px。如果我们的 padding-bottom 或 padding-top 不是 100%，而是 56.25%，其实这就是一个完美的宽高比 16:9，也就是 9 / 16 * 100% = 56.25%。
 
@@ -654,7 +654,7 @@ padding-top 或 padding-bottom = （背景图片高度 / 背景图片宽度) * 1
 
 这种方案有一个必要条件，容器 div 的 height 为 0，同时 box-sizing 为 border-box，不然的话，容器不能带有 border。
 
-##### padding
+##### 17.1.2.1. padding
 
 例：
 ```html
@@ -691,7 +691,7 @@ padding-top 或 padding-bottom = （背景图片高度 / 背景图片宽度) * 1
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/e9ec48ae872e138f84f81e9edd9385fd.jpg)
 
-##### padding & 伪元素
+##### 17.1.2.2. padding & 伪元素
 
 就这种方法而言，如果在 div 容器设置了 padding-top（或者 padding-bottom）会造成容器的内容往盒子外推，此时设置了若 `overflow:hidden`，溢出的内容就会看不见了。若把 overflow:hidden 换成 overflow:auto。但也是美中不足，会出现滚动条。因此，可**借助 CSS 的伪元素来做容器的高宽比例**：
 
@@ -701,17 +701,17 @@ https://codepen.io/airen/pen/Rgomao
 
 通过这种处理方式，如果内容不超出容器的时候，容器的大小还具有对应的宽高比，如果内容超出容器的时候，会扩展容器的高度，让内容能足已展示。
 
-##### padding & calc()
+##### 17.1.2.3. padding & calc()
 
 https://www.w3cplus.com/css/aspect-ratio.html
 
-##### padding & CSS 变量
+##### 17.1.2.4. padding & CSS 变量
 
 https://www.w3cplus.com/css/aspect-ratio-boxes.html
 
-#### 使用视窗单位 vw
+#### 17.1.3. 使用视窗单位 vw
 
-##### vw
+##### 17.1.3.1. vw
 
 16:9 对应的就是 100vw * 9 / 16 = 56.25vw。这个值可以用在 padding-top 或者 padding-bottom 中。但这里演示的不再是 padding 了，而是把这个值给 height。
 
@@ -722,11 +722,11 @@ https://www.w3cplus.com/css/aspect-ratio-boxes.html
 }
 ```
 
-##### vw & CSS Grid
+##### 17.1.3.2. vw & CSS Grid
 
 https://www.w3cplus.com/css/aspect-ratio.html
 
-### 自适应高宽比
+### 17.2. 自适应高宽比
 
 效果示意图：
 
@@ -736,11 +736,11 @@ https://www.w3cplus.com/css/aspect-ratio.html
 
 实现方法：https://www.w3cplus.com/css/flexible-images.html
 
-## Retina 屏中实现 1px 的 border
+## 18. Retina 屏中实现px 的 border
 
 https://www.w3cplus.com/css/fix-1px-for-retina.html
 
-## outline 圆角实现
+## 19. outline 圆角实现
 
 http://www.zhangxinxu.com/wordpress/2015/04/css3-radius-outline/
 
@@ -752,7 +752,7 @@ img {
 }
 ```
 
-## Android 平台中弹出虚拟键盘对布局的影响
+## 20. Android 平台中弹出虚拟键盘对布局的影响
 
 问题：
 
@@ -760,7 +760,7 @@ img {
 
 - 移动端虚拟键盘出现的条件是：文本框（文本类）获得焦点，但是文本框获得焦点未必会弹出键盘；收起虚拟键盘的条件是：文本框失焦
 
-### 破坏 fixed 布局
+### 20.1. 破坏 fixed 布局
 
 http://www.jianshu.com/p/d535e643e59c
 
@@ -826,13 +826,13 @@ Html5 登录表单，但是登录表单下面有内容是固定在页面最底�
 
   https://www.cnblogs.com/yexiaochai/p/3561939.html
 
-### 改变 viewport，导致 vh 变小
+### 20.2. 改变 viewport，导致 vh 变小
 
 移动端若要使用视窗单位，最好统一使用 vw。
 
-## 输入长度限制监控
+## 21. 输入长度限制监控
 
-### 非直接的文字输入
+### 21.1. 非直接的文字输入
 
 当输入汉字时必然会是非直接输入，需要我们点选才能正式输入。
 
@@ -850,7 +850,7 @@ $('#input').on('compositionend', function(e) {
 });
 ```   
 
-### emoji 表情的输入
+### 21.2. emoji 表情的输入
 
 当输入 emoji 的时候，但是，当输入 emoji 表情的时候，js 中判断 emoji 表情的 length 为 2，因此 emoji 正常应该最多只能输入 8 个，但是 ios 端却把 emoji 的 length 算为 1，可以输入 16 个 emoji。这样就导致了两端的体验不同。因此需要在 js 中来进行字数限制。
 
@@ -875,7 +875,7 @@ $('#input').on('input', function(e) {
 });
 ```
 
-## 去除容器内 img 下方的空白
+## 22. 去除容器内 img 下方的空白
 
 容器内图片下方的空白，是由 vertical-align 和 line-height 影响所造成，详细参见[这篇文章](http://www.zhangxinxu.com/wordpress/2015/08/css-deep-understand-vertical-align-and-line-height/)。
 
@@ -915,7 +915,7 @@ $('#input').on('input', function(e) {
   div { font-size: 0; }
   ```
 
-## 表单输入验证
+## 23. 表单输入验证
 
 https://www.w3cplus.com/blog/tags/627.html
 
@@ -932,7 +932,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
 
 因此，我们可以使用浏览器原生的 JavaScript API，来自定义表单验证的行为。
 
-### validity 对象
+### 23.1. validity 对象
 
 每个 input 元素都包含了一个 validity 对象，该对象以布尔值 (true/false) 的形式提供了一系列关于表单域的信息：
 
@@ -952,7 +952,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
 | `stepMismatch`    | 当字段拥有 `step` 属性，且输入的 `value` 值不符合设定的间隔值时，该属性值为 `true`。 |
 | `rangeOverflow`   | 当字段拥有 `max` 属性，且输入的数字 `value` 值大于设定的最大值时，该属性的值为`true`。 |
 
-### 实践
+### 23.2. 实践
 
 1. 禁用原生表单验证
 
@@ -1222,13 +1222,13 @@ https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
 
       https://www.w3cplus.com/css/form-validation-part-3-a-validity-state-api-polyfill.html
 
-## 平滑滚动的实现
+## 24. 平滑滚动的实现
 
 https://iwenku.net/?article_167.html
 
 http://www.zcfy.cc/article/smooth-page-scroll-in-5-lines-of-javascript-406.html
 
-### 通过 CSS 实现
+### 24.1. 通过 CSS 实现
 
 需要给“平滑滚动”的元素（通常是 body）应用`scroll-behavior: smooth`:
 ```css
@@ -1238,7 +1238,7 @@ body {
 ```
 但在浏览器兼容这方面可以发现也就 firefox 支持，在 7.36% 的浏览器上可以使用这个属性，目前来说还只是一个小众的属性，不推荐使用。
 
-### 通过 JavaScript 实现
+### 24.2. 通过 JavaScript 实现
 
 由于 CSS 的属性兼容性较差，因此一般平滑滚动的实现都是通过 JavaScript 的 window.scrollTo 方法来实现：
 ```javascript
@@ -1259,7 +1259,7 @@ anchorLink.addEventListener("click", function(e) {
 
 TODO: 在微信浏览器上两种方式都无法是是实现
 
-## 判断是否已滑到底部
+## 25. 判断是否已滑到底部
 
 ```javascript
 document.getElementById('my-order-list').addEventListener('scroll', function (event) {
@@ -1276,7 +1276,7 @@ document.getElementById('my-order-list').addEventListener('scroll', function (ev
 });
 ```
 
-## ios 中 z-index 失效的解决方案
+## 26. ios 中 z-index 失效的解决方案
 
 http://www.zhangxinxu.com/wordpress/2016/08/safari-3d-transform-z-index/
 
@@ -1284,7 +1284,7 @@ http://www.zhangxinxu.com/wordpress/2016/08/safari-3d-transform-z-index/
 transform: translateZ(120px); // 像素自由设置
 ```
 
-## CSS 选择器如何选中上一个相邻元素？为什么没有这种选择器？
+## 27. CSS 选择器如何选中上一个相邻元素？为什么没有这种选择器？
 
 https://www.zhihu.com/question/38235620
 
@@ -1294,7 +1294,7 @@ https://www.zhihu.com/question/21508830/answer/18465691
 
 而所设想的 selector（如选中上一个相邻元素的选择器）则恰好相反。也就是当浏览器解析到一个新节点时，可能改变之前节点所适用的样式——因而要求在解析一个新节点后，得回头重新计算之前节点所匹配的样式，此即所谓“回溯”。在最坏的情况下所导致大量的重新计算和 reflow，可以相当于重新 render 整个网页。
 
-## 无法触发 scroll 事件
+## 28. 无法触发 scroll 事件
 
 可能原因：
 - 对 html,body 设置 `height:100%` 时导致无法触发 scroll 事件
@@ -1311,7 +1311,7 @@ https://www.zhihu.com/question/21508830/answer/18465691
 
 - 
 
-## Html 中注释符号`<!-- -->`内容若含有非西文字符，需要以空格隔开
+## 29. Html 中注释符号`<!-- -->`内容若含有非西文字符，需要以空格隔开
 
 例：
 
@@ -1324,7 +1324,7 @@ https://www.zhihu.com/question/21508830/answer/18465691
 <!-- 我很高兴 -->
 ```
 
-## 去除 inline-block 元素间间距
+## 30. 去除 inline-block 元素间间距
 
 http://www.zhangxinxu.com/wordpress/?p=2357
 
@@ -1401,11 +1401,11 @@ https://www.w3cplus.com/css/fighting-the-space-between-inline-block-elements
   ```
   该方法基本兼容所有主流浏览器，推荐使用。
 
-## 瀑布流布局实现
+## 31. 瀑布流布局实现
 
 https://www.w3cplus.com/css/pure-css-create-masonry-layout.html
 
-### 通过 Multi-columns 布局实现
+### 31.1. 通过 Multi-columns 布局实现
 
 html
 ```html
@@ -1451,7 +1451,7 @@ css
 }
 ```
 
-### 通过 flex 布局实现
+### 31.2. 通过 flex 布局实现
 
 html
 ```html

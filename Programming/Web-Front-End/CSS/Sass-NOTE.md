@@ -1,54 +1,54 @@
 - [Sass NOTE](#sass-note)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-    - [Sass 定义](#sass-%E5%AE%9A%E4%B9%89)
-    - [Feature](#feature)
-    - [Sass 和 Scss](#sass-%E5%92%8C-scss)
-  - [安装](#%E5%AE%89%E8%A3%85)
-  - [使用 CLI](#%E4%BD%BF%E7%94%A8-cli)
-  - [语法](#%E8%AF%AD%E6%B3%95)
-    - [注释 (Comments)](#%E6%B3%A8%E9%87%8A-comments)
-    - [SassScript](#sassscript)
-      - [变量 (Variables)](#%E5%8F%98%E9%87%8F-variables)
-      - [数据类型](#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)
-      - [运算](#%E8%BF%90%E7%AE%97)
-      - [函数](#%E5%87%BD%E6%95%B0)
-    - [嵌套 (Nested Rules)](#%E5%B5%8C%E5%A5%97-nested-rules)
-    - [@ 规则和指令](#%E8%A7%84%E5%88%99%E5%92%8C%E6%8C%87%E4%BB%A4)
-      - [@import](#import)
-      - [@extend：继承](#extend%EF%BC%9A%E7%BB%A7%E6%89%BF)
-      - [@media](#media)
-    - [流程控制 Control Directives](#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6-control-directives)
-      - [@if](#if)
-      - [@for](#for)
-      - [@each](#each)
-      - [@while](#while)
-  - [Compass](#compass)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [安装 compass](#%E5%AE%89%E8%A3%85-compass)
-    - [使用 compass cli](#%E4%BD%BF%E7%94%A8-compass-cli)
-      - [项目初始化](#%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96)
-      - [编译](#%E7%BC%96%E8%AF%91)
-      - [实时编译](#%E5%AE%9E%E6%97%B6%E7%BC%96%E8%AF%91)
-    - [配置：config.rb](#%E9%85%8D%E7%BD%AE%EF%BC%9Aconfigrb)
-      - [output_style](#outputstyle)
-    - [模块](#%E6%A8%A1%E5%9D%97)
-      - [reset 模块](#reset-%E6%A8%A1%E5%9D%97)
-      - [CSS3 模块](#css3-%E6%A8%A1%E5%9D%97)
-      - [layout 模块](#layout-%E6%A8%A1%E5%9D%97)
-      - [typography 模块](#typography-%E6%A8%A1%E5%9D%97)
-      - [Helper 模块](#helper-%E6%A8%A1%E5%9D%97)
-      - [utilities 模块](#utilities-%E6%A8%A1%E5%9D%97)
-  - [Refer Links](#refer-links)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+    - [1.1. Sass 定义](#11-sass-%E5%AE%9A%E4%B9%89)
+    - [1.2. Feature](#12-feature)
+    - [1.3. Sass 和 Scss](#13-sass-%E5%92%8C-scss)
+  - [2. 安装](#2-%E5%AE%89%E8%A3%85)
+  - [3. 使用 CLI](#3-%E4%BD%BF%E7%94%A8-cli)
+  - [4. 语法](#4-%E8%AF%AD%E6%B3%95)
+    - [4.1. 注释 (Comments)](#41-%E6%B3%A8%E9%87%8A-comments)
+    - [4.2. SassScript](#42-sassscript)
+      - [4.2.1. 变量 (Variables)](#421-%E5%8F%98%E9%87%8F-variables)
+      - [4.2.2. 数据类型](#422-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)
+      - [4.2.3. 运算](#423-%E8%BF%90%E7%AE%97)
+      - [4.2.4. 函数](#424-%E5%87%BD%E6%95%B0)
+    - [4.3. 嵌套 (Nested Rules)](#43-%E5%B5%8C%E5%A5%97-nested-rules)
+    - [4.4. @ 规则和指令](#44-%E8%A7%84%E5%88%99%E5%92%8C%E6%8C%87%E4%BB%A4)
+      - [4.4.1. @import](#441-import)
+      - [4.4.2. @extend：继承](#442-extend%EF%BC%9A%E7%BB%A7%E6%89%BF)
+      - [4.4.3. @media](#443-media)
+    - [4.5. 流程控制 Control Directives](#45-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6-control-directives)
+      - [4.5.1. @if](#451-if)
+      - [4.5.2. @for](#452-for)
+      - [4.5.3. @each](#453-each)
+      - [4.5.4. @while](#454-while)
+  - [5. Compass](#5-compass)
+    - [5.1. 概述](#51-%E6%A6%82%E8%BF%B0)
+    - [5.2. 安装 compass](#52-%E5%AE%89%E8%A3%85-compass)
+    - [5.3. 使用 compass cli](#53-%E4%BD%BF%E7%94%A8-compass-cli)
+      - [5.3.1. 项目初始化](#531-%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96)
+      - [5.3.2. 编译](#532-%E7%BC%96%E8%AF%91)
+      - [5.3.3. 实时编译](#533-%E5%AE%9E%E6%97%B6%E7%BC%96%E8%AF%91)
+    - [5.4. 配置：config.rb](#54-%E9%85%8D%E7%BD%AE%EF%BC%9Aconfigrb)
+      - [5.4.1. output_style](#541-outputstyle)
+    - [5.5. 模块](#55-%E6%A8%A1%E5%9D%97)
+      - [5.5.1. reset 模块](#551-reset-%E6%A8%A1%E5%9D%97)
+      - [5.5.2. CSS模块](#552-css%E6%A8%A1%E5%9D%97)
+      - [5.5.3. layout 模块](#553-layout-%E6%A8%A1%E5%9D%97)
+      - [5.5.4. typography 模块](#554-typography-%E6%A8%A1%E5%9D%97)
+      - [5.5.5. Helper 模块](#555-helper-%E6%A8%A1%E5%9D%97)
+      - [5.5.6. utilities 模块](#556-utilities-%E6%A8%A1%E5%9D%97)
+  - [6. Refer Links](#6-refer-links)
 
 # Sass NOTE
 
-## 概述
+## 1. 概述
 
-### Sass 定义
+### 1.1. Sass 定义
 
 Sass(Syntactically Awesome StyleSheets) 是对 CSS 的扩展，让 CSS 语言更强大、优雅。 它允许你使用变量、嵌套规则、 mixins、导入等众多功能， 并且完全兼容 CSS 语法。 Sass 有助于保持大型样式表结构良好， 同时也让你能够快速开始小型项目， 特别是在搭配 [Compass](http://compass-style.org/) 样式库一同使用时。
 
-### Feature
+### 1.2. Feature
 
 - 完全兼容 CSS3
 - 在 CSS 语言基础上添加了扩展功能，比如变量、嵌套 (nesting)、混合 (mixin)
@@ -57,7 +57,7 @@ Sass(Syntactically Awesome StyleSheets) 是对 CSS 的扩展，让 CSS 语言更
 - 良好的格式，可对输出格式进行定制
 - 支持 Firebug
 
-### Sass 和 Scss
+### 1.3. Sass 和 Scss
 
 参见 [SCSS 与 Sass 异同](http://sass.bootcss.com/docs/scss-for-sass-users/)
 
@@ -78,7 +78,7 @@ Sass 有两种语法：Sass 和 Scss。SCSS 是 Sass 3 引入新的语法，其�
   sass-convert main.sass main.scss
   ```
 
-## 安装
+## 2. 安装
 
 参考 [sass 安装](http://sass-lang.com/install)
 
@@ -102,7 +102,7 @@ Sass 有两种语法：Sass 和 Scss。SCSS 是 Sass 3 引入新的语法，其�
     gem update
     ```
 
-## 使用 CLI
+## 3. 使用 CLI
 
 - 编译 scss 文件
   ```shell
@@ -118,9 +118,9 @@ Sass 有两种语法：Sass 和 Scss。SCSS 是 Sass 3 引入新的语法，其�
   sass --watch app/sass:public/stylesheets
   ```
 
-## 语法
+## 4. 语法
 
-### 注释 (Comments)
+### 4.1. 注释 (Comments)
 
 sass 中支持使用 // 和 /* */ 进行注释，但 // 注释不会编译到 css 文件中。
 
@@ -147,13 +147,13 @@ sass 中支持使用 // 和 /* */ 进行注释，但 // 注释不会编译到 cs
 //……
 ```
 
-### SassScript
+### 4.2. SassScript
 
 In addition to the plain CSS property syntax, Sass supports a small set of extensions called SassScript. SassScript allows properties to use variables, arithmetic, and extra functions. SassScript can be used in any property value.
 
 SassScript can also be used to generate selectors and property names, which is useful when writing mixins. This is done via interpolation.
 
-#### 变量 (Variables)
+#### 4.2.1. 变量 (Variables)
 
 - 声明
   ```scss
@@ -172,7 +172,7 @@ NOTE：一般会将变量集中写在一个文件_variables.scss（用单下划�
 @import "variables";
 ```
 
-#### 数据类型
+#### 4.2.2. 数据类型
 
 SassScript 支持六种主要的数据类型：
 
@@ -190,7 +190,7 @@ SassScript 支持六种主要的数据类型：
 
 SassScript 还支持所有其他 CSS 属性值类型， 例如 Unicode 范围和 !important 声明。 然而，它不会对这些类型做特殊处理。 它们只会被当做不带引号的字符串看待。
 
-#### 运算
+#### 4.2.3. 运算
 
 所有数据类型都支持等式运算 (== and !=)。 另外，每种数据类型也有其支持的特殊运算符。
 
@@ -227,7 +227,7 @@ SassScript 还支持所有其他 CSS 属性值类型， 例如 Unicode 范围和
   
   圆括号可以用来改变运算顺序。
 
-#### 函数
+#### 4.2.4. 函数
 
 - function
 
@@ -271,7 +271,7 @@ SassScript 还支持所有其他 CSS 属性值类型， 例如 Unicode 范围和
   }
   ```
 
-### 嵌套 (Nested Rules)
+### 4.3. 嵌套 (Nested Rules)
 
 - 选择器嵌套
   ```scss
@@ -300,9 +300,9 @@ SassScript 还支持所有其他 CSS 属性值类型， 例如 Unicode 范围和
   }
   ```
 
-### @ 规则和指令
+### 4.4. @ 规则和指令
 
-#### @import
+#### 4.4.1. @import
 
 css3 中支持使用 @import 来引入外部文件，但其存在以下缺点：
 - 必须放置在 css 文件的头部，否则不生效
@@ -317,7 +317,7 @@ css3 中支持使用 @import 来引入外部文件，但其存在以下缺点：
 - 没有文件后缀名时，会尝试添加 `.scss/.sass` 后缀。
 - 同一目录下，局部文件和非局部文件不能重名。
 
-#### @extend：继承
+#### 4.4.2. @extend：继承
 
 ```scss
 .error {
@@ -332,7 +332,7 @@ css3 中支持使用 @import 来引入外部文件，但其存在以下缺点：
 - Placeholder Selectors：可以使用 % 声明仅用于继承的选择器样式，这种选择器不会被编译到 css 文件中。
 - 不可继承诸如`.A .B`的链式选择器。
 
-#### @media
+#### 4.4.3. @media
 
 在 sass 中，@media 可以直接在选择器中书写，编译后 sass 会自动将 media query 的部分提升至最高层：
 ```scss
@@ -356,23 +356,23 @@ css3 中支持使用 @import 来引入外部文件，但其存在以下缺点：
 }
 ```
 
-### 流程控制 Control Directives
+### 4.5. 流程控制 Control Directives
 
-#### @if
+#### 4.5.1. @if
 
-#### @for
+#### 4.5.2. @for
 
-#### @each
+#### 4.5.3. @each
 
-#### @while
+#### 4.5.4. @while
 
-## Compass
+## 5. Compass
 
-### 概述
+### 5.1. 概述
 
 Sass 本身只是一个编译器，Compass 在它的基础上，封装了一系列有用的模块和模板，补充 Sass 的功能。它们之间的关系，有点像 Javascript 和 jQuery、Ruby 和 Rails、python 和 Django 的关系。
 
-### 安装 compass
+### 5.2. 安装 compass
 
 安装 compass 的同时会安装对应版本的 sass。
 
@@ -381,11 +381,11 @@ gem install compass
 ```
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/6/14c0265d74bdc3e133a05cfe4b51e7b9.jpg)
 
-### 使用 compass cli
+### 5.3. 使用 compass cli
 
 http://compass-style.org/help/tutorials/production-css/
 
-#### 项目初始化
+#### 5.3.1. 项目初始化
 
 ```shell
 mkdir compass-demo
@@ -393,7 +393,7 @@ compass create compass-demo
 ``` 
 项目目录中的 config.rb 文件为项目的配置文件，子目录 sass 存放 Sass 源文件，子目录 stylesheets 存放编译后的 css 文件。
 
-#### 编译
+#### 5.3.2. 编译
 
 ```shell
 compass compile
@@ -405,7 +405,7 @@ Compass 只编译发生变动的文件，如果你要重新编译未变动的文
 compass compile --force
 ```
 
-#### 实时编译
+#### 5.3.3. 实时编译
 
 只要 scss 文件发生变化，就会被自动编译成 css 文件：
 ```shell
@@ -413,9 +413,9 @@ cd compass-demo
 compass watch
 ```
 
-### 配置：config.rb
+### 5.4. 配置：config.rb
 
-#### output_style
+#### 5.4.1. output_style
 
 默认状态下，编译出来的 css 文件带有大量的注释。但是，生产环境需要压缩后的 css 文件，可配置编译后将 css 文件进行压缩：
 ```ruby
@@ -427,7 +427,7 @@ environment = :development
 output_style = (environment == :production) ? :compressed : :expanded
 ```
 
-### 模块
+### 5.5. 模块
 
 Compass 采用模块结构，不同模块提供不同的功能。内置核心模块：
 - reset
@@ -438,7 +438,7 @@ Compass 采用模块结构，不同模块提供不同的功能。内置核心模
 - utilities
 除了内置模块，开发者可以使用自定义的第三方模块。
 
-#### reset 模块
+#### 5.5.1. reset 模块
 
 加载：
 ```scss
@@ -446,7 +446,7 @@ Compass 采用模块结构，不同模块提供不同的功能。内置核心模
 ```
 编译后，会生成相应的 css reset 代码。
 
-#### CSS3 模块
+#### 5.5.2. CSS模块
 
 该模块提供多种 CSS3 命令。
 
@@ -491,7 +491,7 @@ Compass 采用模块结构，不同模块提供不同的功能。内置核心模
   }
   ```
 
-#### layout 模块
+#### 5.5.3. layout 模块
 
 layout 模块提供常见的布局。
 
@@ -505,7 +505,7 @@ layout 模块提供常见的布局。
   }
   ```
 
-#### typography 模块
+#### 5.5.4. typography 模块
 
 typography 模块提供版式功能。
 
@@ -521,7 +521,7 @@ typography 模块提供版式功能。
   }
   ```
 
-#### Helper 模块
+#### 5.5.5. Helper 模块
 
 Helper 模块提供了一系列函数（函数与 mixin 的主要区别是，不需要使用 @include 命令，可以直接调用)。
 
@@ -542,7 +542,7 @@ Helper 模块提供了一系列函数（函数与 mixin 的主要区别是，不
   }
   ```
 
-#### utilities 模块
+#### 5.5.6. utilities 模块
 
 utilities 模块某些不属于其他模块的功能。
 
@@ -556,7 +556,7 @@ utilities 模块某些不属于其他模块的功能。
   }
   ```
 
-## Refer Links
+## 6. Refer Links
 
 [sass 官方文档](http://sass-lang.com/documentation/file.SASS_REFERENCE.html)
 

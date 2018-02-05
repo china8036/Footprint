@@ -1,34 +1,34 @@
-- [Tomcat Note](#tomcat-note)
-  - [Tomcat 概述](#tomcat-%E6%A6%82%E8%BF%B0)
-  - [Tomcat & Apache](#tomcat-apache)
-  - [tomcat & JSP & Servlet](#tomcat-jsp-servlet)
-  - [Tomcat 容器等级](#tomcat-%E5%AE%B9%E5%99%A8%E7%AD%89%E7%BA%A7)
-  - [tomcat 安装](#tomcat-%E5%AE%89%E8%A3%85)
-    - [windows 安装 Tomcat9](#windows-%E5%AE%89%E8%A3%85-tomcat9)
-    - [Ubuntu16.04 安装 Tomcat9](#ubuntu1604-%E5%AE%89%E8%A3%85-tomcat9)
-    - [常见问题](#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
-      - [JDK 环境变量的设置问题导致 tomcat 无法启动](#jdk-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E8%AE%BE%E7%BD%AE%E9%97%AE%E9%A2%98%E5%AF%BC%E8%87%B4-tomcat-%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8)
-        - [在 windows 下配置 Tomcat](#%E5%9C%A8-windows-%E4%B8%8B%E9%85%8D%E7%BD%AE-tomcat)
-        - [ubuntu16.04](#ubuntu1604)
-      - [腾讯云 ubuntu 中 tomcat 启动缓慢](#%E8%85%BE%E8%AE%AF%E4%BA%91-ubuntu-%E4%B8%AD-tomcat-%E5%90%AF%E5%8A%A8%E7%BC%93%E6%85%A2)
-  - [conf/server.xml 配置](#confserverxml-%E9%85%8D%E7%BD%AE)
-    - [修改服务器监听端口](#%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3)
-    - [修改 webapp 路径](#%E4%BF%AE%E6%94%B9-webapp-%E8%B7%AF%E5%BE%84)
-  - [使用非 root 用户启动 tomcat](#%E4%BD%BF%E7%94%A8%E9%9D%9E-root-%E7%94%A8%E6%88%B7%E5%90%AF%E5%8A%A8-tomcat)
-  - [Eclipse 中整合 Tomcat 常见问题](#eclipse-%E4%B8%AD%E6%95%B4%E5%90%88-tomcat-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
-    - [Eclipse 中 tomcat 启动后 404](#eclipse-%E4%B8%AD-tomcat-%E5%90%AF%E5%8A%A8%E5%90%8E-404)
-    - [使用 Eclipse 部署 web 项目与手工部署的区别](#%E4%BD%BF%E7%94%A8-eclipse-%E9%83%A8%E7%BD%B2-web-%E9%A1%B9%E7%9B%AE%E4%B8%8E%E6%89%8B%E5%B7%A5%E9%83%A8%E7%BD%B2%E7%9A%84%E5%8C%BA%E5%88%AB)
-    - [手动删除 webapps 下的的项目后，tomcat 无法启动](#%E6%89%8B%E5%8A%A8%E5%88%A0%E9%99%A4-webapps-%E4%B8%8B%E7%9A%84%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%90%8E%EF%BC%8Ctomcat-%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8)
-  - [Tomcat 目录结构](#tomcat-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
-  - [Tomcat 中各端口作用](#tomcat-%E4%B8%AD%E5%90%84%E7%AB%AF%E5%8F%A3%E4%BD%9C%E7%94%A8)
-  - [Tomcat 安全配置和性能优化](#tomcat-%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%E5%92%8C%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96)
-  - [Tomcat 配置 Https](#tomcat-%E9%85%8D%E7%BD%AE-https)
-    - [使用本地证书](#%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E8%AF%81%E4%B9%A6)
-    - [使用授权证书](#%E4%BD%BF%E7%94%A8%E6%8E%88%E6%9D%83%E8%AF%81%E4%B9%A6)
+- [Tomcat Base Note](#tomcat-base-note)
+  - [1. Tomcat 概述](#1-tomcat-%E6%A6%82%E8%BF%B0)
+  - [2. Tomcat & Apache](#2-tomcat-apache)
+  - [3. tomcat & JSP & Servlet](#3-tomcat-jsp-servlet)
+  - [4. Tomcat 容器等级](#4-tomcat-%E5%AE%B9%E5%99%A8%E7%AD%89%E7%BA%A7)
+  - [5. tomcat 安装](#5-tomcat-%E5%AE%89%E8%A3%85)
+    - [5.1. windows 安装 Tomcat](#51-windows-%E5%AE%89%E8%A3%85-tomcat)
+    - [5.2. Ubuntu安装 Tomcat](#52-ubuntu%E5%AE%89%E8%A3%85-tomcat)
+    - [5.3. 常见问题](#53-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+      - [5.3.1. JDK 环境变量的设置问题导致 tomcat 无法启动](#531-jdk-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E8%AE%BE%E7%BD%AE%E9%97%AE%E9%A2%98%E5%AF%BC%E8%87%B4-tomcat-%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8)
+        - [5.3.1.1. 在 windows 下配置 Tomcat](#5311-%E5%9C%A8-windows-%E4%B8%8B%E9%85%8D%E7%BD%AE-tomcat)
+        - [5.3.1.2. ubuntu](#5312-ubuntu)
+      - [5.3.2. 腾讯云 ubuntu 中 tomcat 启动缓慢](#532-%E8%85%BE%E8%AE%AF%E4%BA%91-ubuntu-%E4%B8%AD-tomcat-%E5%90%AF%E5%8A%A8%E7%BC%93%E6%85%A2)
+  - [6. conf/server.xml 配置](#6-confserverxml-%E9%85%8D%E7%BD%AE)
+    - [6.1. 修改服务器监听端口](#61-%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3)
+    - [6.2. 修改 webapp 路径](#62-%E4%BF%AE%E6%94%B9-webapp-%E8%B7%AF%E5%BE%84)
+  - [7. 使用非 root 用户启动 tomcat](#7-%E4%BD%BF%E7%94%A8%E9%9D%9E-root-%E7%94%A8%E6%88%B7%E5%90%AF%E5%8A%A8-tomcat)
+  - [8. Eclipse 中整合 Tomcat 常见问题](#8-eclipse-%E4%B8%AD%E6%95%B4%E5%90%88-tomcat-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+    - [8.1. Eclipse 中 tomcat 启动后](#81-eclipse-%E4%B8%AD-tomcat-%E5%90%AF%E5%8A%A8%E5%90%8E)
+    - [8.2. 使用 Eclipse 部署 web 项目与手工部署的区别](#82-%E4%BD%BF%E7%94%A8-eclipse-%E9%83%A8%E7%BD%B2-web-%E9%A1%B9%E7%9B%AE%E4%B8%8E%E6%89%8B%E5%B7%A5%E9%83%A8%E7%BD%B2%E7%9A%84%E5%8C%BA%E5%88%AB)
+    - [8.3. 手动删除 webapps 下的的项目后，tomcat 无法启动](#83-%E6%89%8B%E5%8A%A8%E5%88%A0%E9%99%A4-webapps-%E4%B8%8B%E7%9A%84%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%90%8E%EF%BC%8Ctomcat-%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8)
+  - [9. Tomcat 目录结构](#9-tomcat-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
+  - [10. Tomcat 中各端口作用](#10-tomcat-%E4%B8%AD%E5%90%84%E7%AB%AF%E5%8F%A3%E4%BD%9C%E7%94%A8)
+  - [11. Tomcat 安全配置和性能优化](#11-tomcat-%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%E5%92%8C%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96)
+  - [12. Tomcat 配置 Https](#12-tomcat-%E9%85%8D%E7%BD%AE-https)
+    - [12.1. 使用本地证书](#121-%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E8%AF%81%E4%B9%A6)
+    - [12.2. 使用授权证书](#122-%E4%BD%BF%E7%94%A8%E6%8E%88%E6%9D%83%E8%AF%81%E4%B9%A6)
 
 # Tomcat Base Note
 
-## Tomcat 概述
+## 1. Tomcat 概述
 
 > The Apache Tomcat® software is an open source implementation of the Java Servlet, JavaServer Pages, Java Expression Language and Java WebSocket technologies. The Java Servlet, JavaServer Pages, Java Expression Language and Java WebSocket specifications are developed under the Java Community Process.
 
@@ -36,7 +36,7 @@ Tomcat 是由 Apache 软件基金会下属的 Jakarta 项目开发的一个 Serv
 
 为解析 JSP，Tomcat 提供了一个 Jasper 编译器用以将 JSP 编译成对应的 Servlet，从而在 Servlet 容器中运行。
 
-## Tomcat & Apache 
+## 2. Tomcat & Apache
 
 http://developer.51cto.com/art/201007/210894.htm
 
@@ -64,7 +64,7 @@ Apache 是专门用了提供 HTTP 服务的，以及相关配置的（例如虚�
 搭配使用的好处：
 - 如果客户端请求的是静态页面，则只需要 Apache 服务器响应请求；如果客户端请求动态页面，则是 Tomcat 服务器响应请求。因为 JSP 是服务器端解释代码的，这样整合就可以减少 Tomcat 用于处理客户端请求的服务开销。
 
-## tomcat & JSP & Servlet
+## 3. tomcat & JSP & Servlet
 
 - servlet 是处理 http request 的应用程序；
 
@@ -72,7 +72,7 @@ Apache 是专门用了提供 HTTP 服务的，以及相关配置的（例如虚�
 
 - jsp 可以理解成 servlet+html；
 
-## Tomcat 容器等级
+## 4. Tomcat 容器等级
 
 Tomcat 容器分为四个等级：
 
@@ -80,9 +80,9 @@ Tomcat 容器分为四个等级：
 
 其中，Servlet 容器管理 Context 容器，一个 Context 对应一个 Web 工程。
 
-## tomcat 安装
+## 5. tomcat 安装
 
-### windows 安装 Tomcat9
+### 5.1. windows 安装 Tomcat
 
 1.	安装 JDK；
 1.	安装 tomcat9：
@@ -99,7 +99,7 @@ Tomcat 容器分为四个等级：
 
     ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/34d519576be07441c70ff84a6ef847b2.jpg)
 
-### Ubuntu16.04 安装 Tomcat9
+### 5.2. Ubuntu安装 Tomcat
 
 http://zyjustin9.iteye.com/blog/2177291
 
@@ -143,11 +143,11 @@ http://blog.topspeedsnail.com/archives/4551
     ```
     在浏览器访问服务器地址；
 
-### 常见问题
+### 5.3. 常见问题
 
-#### JDK 环境变量的设置问题导致 tomcat 无法启动
+#### 5.3.1. JDK 环境变量的设置问题导致 tomcat 无法启动
 
-##### 在 windows 下配置 Tomcat
+##### 5.3.1.1. 在 windows 下配置 Tomcat
 
 P.S. 若在安装 jdk 时已经配置好了 jdk 的环境变量：
 - JAVA_HOME = D:\JAVA\jdk1.6.0
@@ -162,7 +162,7 @@ set JRE_HOME=C:\java\jdk1.8.0_102\jre
 ```
 之后运行 start.bat 即可启动 tomcat 服务器，运行 shutdown.bat 即可关闭 tomcat 服务器，默认采用 8080 端口（http://localhost:8080 访问）（可在 /conf/server.xml 中修改默认端口）。
 
-##### ubuntu16.04
+##### 5.3.1.2. ubuntu
 
 ```bash
 vim bin/catalina.sh
@@ -182,7 +182,7 @@ export JAVA_HOME=/home/weblogic/jdk1.7.0_72
 export JRE_HOME=/home/weblogic/jdk1.7.0_72/jre
 ```
 
-#### 腾讯云 ubuntu 中 tomcat 启动缓慢
+#### 5.3.2. 腾讯云 ubuntu 中 tomcat 启动缓慢
 
 Tomcat 从 7 版本开始，非常依赖于 SecureRandom 这个类去生成随机的串用作 seesion ids 等，而 SecureRandom 依赖于熵（entropy）的输入。如果缺少熵，那么就会造成随机数的生产非常缓慢，导致 tomcat 启动变慢。所以解决方案就是指定一个非空的熵（entropy）给 SeureRandom。
 
@@ -201,9 +201,9 @@ P.S. tomcat 没有完全启动之前，运行 shutdown.sh 还会报错。
   apt install haveged
   ```
 
-## conf/server.xml 配置
+## 6. conf/server.xml 配置
 
-### 修改服务器监听端口
+### 6.1. 修改服务器监听端口
 
 在 /conf/server.xml 中：
 
@@ -213,14 +213,14 @@ P.S. tomcat 没有完全启动之前，运行 shutdown.sh 还会报错。
 
 保存后重新启动即可。
 
-### 修改 webapp 路径
+### 6.2. 修改 webapp 路径
 
 conf/server.xml 中，修改 Host 标签的 appBase 属性：
 ```xml
 <Host name="localhost"  appBase="xxxx" unpackWARs="true" autoDeploy="true">
 ```
 
-## 使用非 root 用户启动 tomcat
+## 7. 使用非 root 用户启动 tomcat
 
 使用 startup.sh 启动 tomcat 虽然已经可以正常启动 Tomcat 服务器，但是是以系统 root 账户来启动的，这是一种很不安全的行为。
 
@@ -296,9 +296,9 @@ Java 程序与 C 程序不同。nginx,httpd 使用 root 用户启动守护 80 �
     ```
     ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/368ff105fcd8a89ccc3d34af8a95bc30.jpg)
 
-## Eclipse 中整合 Tomcat 常见问题
+## 8. Eclipse 中整合 Tomcat 常见问题
 
-### Eclipse 中 tomcat 启动后 404
+### 8.1. Eclipse 中 tomcat 启动后
 
 http://blog.csdn.net/wqjsir/article/details/7169838/
 
@@ -337,7 +337,7 @@ eclipse 将 tomcat 的项目发布目录（tomcat 目录中的 webapp）重定�
 
 这样，即在 Eclipse 的 workspace 中能找到 web 项目的源码，也能在 tomcat 的 webapp 路径下找到 web 项目源码（两者区别在于：workspace 中包含了 src 即 java 源代码，而 webapp 下的是 java 源码编译后的 class 字节码文件，放于 WEB-INF/classes 中）。
 
-### 使用 Eclipse 部署 web 项目与手工部署的区别
+### 8.2. 使用 Eclipse 部署 web 项目与手工部署的区别
 
 - 使用 IDE：
   
@@ -361,7 +361,7 @@ eclipse 将 tomcat 的项目发布目录（tomcat 目录中的 webapp）重定�
   
   - 在系统的 CLASSPATH 变量中加入 class 文件的地址，这种方法不利于管理和移植，一般不采用；
 
-### 手动删除 webapps 下的的项目后，tomcat 无法启动
+### 8.3. 手动删除 webapps 下的的项目后，tomcat 无法启动
 
 解决方法：进入 TOMCAT_HOME\conf\Catalina\localhost 下有一个"项目目录。xml"的配置文件，直接删除，重启 MyEclipse，一切 OK。
 
@@ -400,11 +400,11 @@ source="org.eclipse.jst.jee.server:StrutsDevTemplate"/>
       autoDeploy="false": 避免 tomcat 在扫描改动时，再次把 webapps 下的 web 应用给部署进来
       ```
 
-## Tomcat 目录结构
+## 9. Tomcat 目录结构
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/5800f686e375b9981d1d9ca90c73359e.jpg)
 
-## Tomcat 中各端口作用
+## 10. Tomcat 中各端口作用
 
 查看 conf/server.xml：
 ```xml
@@ -425,7 +425,7 @@ Tomcat 默认端口：
 - 8443：HTTPS 端口；
 - 8009：AJP 端口  APACHE 能过 AJP 协议访问 TOMCAT 的 8009 端口；
 
-## Tomcat 安全配置和性能优化
+## 11. Tomcat 安全配置和性能优化
 
 [Tomcat 安全配置与性能优化](https://netkiller.github.io/journal/tomcat.html)
 
@@ -551,14 +551,14 @@ Tomcat 默认端口：
   <Context path="" docBase="path/to/your" reloadable="false" sessionCookiePath="/" sessionCookieName="PHPSESSID">	
   ```
 
-## Tomcat 配置 Https
+## 12. Tomcat 配置 Https
 
 官方教程：https://tomcat.apache.org/tomcat-9.0-doc/ssl-howto.html 
 
 要使用 https，首先需要 SSL 证书，SSL 证书可以通过两个渠道获得：
 - 公开可信认证机构：例如 CA, 但是申请一般是收费的，一般几百到几千一年。
 - 自己生成的本地证书：虽然安全性不是那么高，但胜在成本低。
-###	使用本地证书
+### 12.1. 使用本地证书
 
 1. 使用 jdk 生成证书：
    
@@ -616,7 +616,7 @@ Tomcat 默认端口：
     将 URL 映射设为 /* ，这样你的整个应用都要求是 HTTPS 访问，而 transport-guarantee 标签设置为 CONFIDENTIAL 以便使应用支持 SSL。
     如果你希望关闭 SSL ，只需要将 CONFIDENTIAL 改为 NONE 即可。
 
-### 使用授权证书
+### 12.2. 使用授权证书
 
 免费 HTTPS 证书 Let's Encrypt 安装教程：https://foofish.net/https-free-for-lets-encrypt.html 
 

@@ -1,22 +1,22 @@
 - [ECMAScript6 异步编程](#ecmascript6-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B)
-  - [Generator 函数](#generator-%E5%87%BD%E6%95%B0)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [基本使用](#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
-    - [Generator.prototype.next()](#generatorprototypenext)
-    - [Generator.prototype.throw()](#generatorprototypethrow)
-    - [Generator.prototype.return()](#generatorprototypereturn)
-    - [yield](#yield)
-    - [yield*](#yield)
-    - [for...of](#forof)
-    - [自动执行器](#%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%99%A8)
-      - [Thunk 函数](#thunk-%E5%87%BD%E6%95%B0)
-      - [co 函数库](#co-%E5%87%BD%E6%95%B0%E5%BA%93)
-  - [asyn 函数](#asyn-%E5%87%BD%E6%95%B0)
-    - [与 Generator 函数的对比](#%E4%B8%8E-generator-%E5%87%BD%E6%95%B0%E7%9A%84%E5%AF%B9%E6%AF%94)
-    - [基本使用](#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
-    - [NOTE](#note)
-    - [实现原理](#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-  - [Refer Links](#refer-links)
+  - [1. Generator 函数](#1-generator-%E5%87%BD%E6%95%B0)
+    - [1.1. 概述](#11-%E6%A6%82%E8%BF%B0)
+    - [1.2. 基本使用](#12-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
+    - [1.3. Generator.prototype.next()](#13-generatorprototypenext)
+    - [1.4. Generator.prototype.throw()](#14-generatorprototypethrow)
+    - [1.5. Generator.prototype.return()](#15-generatorprototypereturn)
+    - [1.6. yield](#16-yield)
+    - [1.7. yield*](#17-yield)
+    - [1.8. for...of](#18-forof)
+    - [1.9. 自动执行器](#19-%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E5%99%A8)
+      - [1.9.1. Thunk 函数](#191-thunk-%E5%87%BD%E6%95%B0)
+      - [1.9.2. co 函数库](#192-co-%E5%87%BD%E6%95%B0%E5%BA%93)
+  - [2. asyn 函数](#2-asyn-%E5%87%BD%E6%95%B0)
+    - [2.1. 与 Generator 函数的对比](#21-%E4%B8%8E-generator-%E5%87%BD%E6%95%B0%E7%9A%84%E5%AF%B9%E6%AF%94)
+    - [2.2. 基本使用](#22-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
+    - [2.3. NOTE](#23-note)
+    - [2.4. 实现原理](#24-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
+  - [3. Refer Links](#3-refer-links)
 
 # ECMAScript6 异步编程
 
@@ -27,9 +27,9 @@
 - Promise 对象
 **异步编程的语法目标，就是怎样让它更像同步编程。**ECMAScript 6 作为下一代 JavaScript 语言，将 JavaScript 异步编程带入了一个全新的阶段。
 
-## Generator 函数
+## 1. Generator 函数
 
-### 概述
+### 1.1. 概述
 
 传统的编程语言，早有异步编程的解决方案（其实是多任务的解决方案）。其中有一种叫做"协程"（coroutine），意思是多个线程互相协作，完成异步任务。它的运行流程大致如下：
 
@@ -52,7 +52,7 @@ Generator 函数有多种理解角度：
   - function 关键字与函数名之间有一个星号。
   - 函数体内部使用 yield 表达式，定义不同的内部状态。
 
-### 基本使用
+### 1.2. 基本使用
 
 Generator 函数的调用方法与普通函数一样，也是在函数名后面加上一对圆括号。不同的是，调用 Generator 函数后，该函数并不执行，返回的也不是函数运行结果，而是一个指向内部状态的指针对象 (Iterator Object)。必须调用遍历器对象的 next 方法，使得指针移向下一个状态。也就是说，每次调用 next 方法，内部指针就从函数头部或上一次停下来的地方开始执行，直到遇到下一个 yield 表达式。next 方法返回的对象的 value 属性就是当前 yield 表达式的值，done 属性表示是否到达最终状态。
 ```javascript
@@ -73,7 +73,7 @@ hw.next()
 // { value: undefined, done: true }
 ```
 
-### Generator.prototype.next()
+### 1.3. Generator.prototype.next()
 
 遍历器对象的 next 方法的运行逻辑如下：
 - 遇到 yield 表达式，就暂停执行后面的操作，并将紧跟在 yield 后面的那个表达式的值，作为返回的对象的 value 属性值。
@@ -100,7 +100,7 @@ g.next() // { value: 1, done: false }
 g.next(true) // { value: 0, done: false }
 ```
 
-### Generator.prototype.throw()
+### 1.4. Generator.prototype.throw()
 
 Generator 函数返回的遍历器对象，都有一个 throw 方法，可以在函数体外抛出错误，然后在 Generator 函数体内捕获。
 
@@ -143,7 +143,7 @@ i.throw(new Error('出错了！'));
 // Error: 出错了！(…)
 ```
 
-### Generator.prototype.return()
+### 1.5. Generator.prototype.return()
 
 Generator 函数返回的遍历器对象，还有一个 return 方法，可以返回给定的值，并且终结遍历 Generator 函数。
 
@@ -162,7 +162,7 @@ g.next()        // { value: undefined, done: true }
 ```
 上面代码中，遍历器对象 g 调用 return 方法后，返回值的 value 属性就是 return 方法的参数 foo。并且，Generator 函数的遍历就终止了，返回值的 done 属性为 true，以后再调用 next 方法，done 属性总是返回 true。
 
-### yield
+### 1.6. yield
 
 yield 表达式只能用在 Generator 函数里面，用在其他地方都会报错。
 
@@ -184,7 +184,7 @@ function* demo() {
 }
 ```
 
-### yield*
+### 1.7. yield*
 
 如果在 Generator 函数内部，调用另一个 Generator 函数，默认情况下是没有效果的。这个时候就需要用到 yield*表达式，用来在一个 Generator 函数里面执行另一个 Generator 函数。
 
@@ -221,7 +221,7 @@ for (let v of bar()){
 // "y"
 ```
 
-### for...of
+### 1.8. for...of
 
 for...of 循环可以自动遍历 Generator 函数时生成的 Iterator 对象，且此时不再需要调用 next 方法。
 
@@ -258,7 +258,7 @@ for (let n of fibonacci()) {
 }
 ```
 
-### 自动执行器
+### 1.9. 自动执行器
 
 Generator 函数实质上就是一个异步操作的容器。虽然 Generator 函数将异步操作表示得很简洁，但是流程管理却不方便（即何时执行第一阶段、何时执行第二阶段）。
 
@@ -266,7 +266,7 @@ Generator 函数实质上就是一个异步操作的容器。虽然 Generator �
 - 回调函数。将异步操作包装成 Thunk 函数，在回调函数里面交回执行权。
 - Promise 对象。将异步操作包装成 Promise 对象，用 then 方法交回执行权。
 
-#### Thunk 函数
+#### 1.9.1. Thunk 函数
 
 http://www.ruanyifeng.com/blog/2015/05/thunk.html
 
@@ -296,7 +296,7 @@ var gen = function* (){
 run(gen);
 ```
 
-#### co 函数库
+#### 1.9.2. co 函数库
 
 http://www.ruanyifeng.com/blog/2015/05/co.html
 
@@ -319,11 +319,11 @@ co(gen).then(function (){
 })
 ```
 
-## asyn 函数
+## 2. asyn 函数
 
 > ES2017 标准引入了 async 函数，使得异步操作变得更加方便。async 函数是什么？一句话，async 函数就是 Generator 函数的语法糖。
 
-### 与 Generator 函数的对比
+### 2.1. 与 Generator 函数的对比
 
 async 函数与 Generator 函数的对比：
 ```javascript
@@ -355,7 +355,7 @@ async 函数对 Generator 函数的改进，体现在以下三点：
 
 - 更广的适用性。 co 函数库约定，yield 命令后面只能是 Thunk 函数或 Promise 对象，而 async 函数的 await 命令后面，可以是 Promise 对象和原始类型的值（数值、字符串和布尔值，但这时等同于同步操作）。
 
-### 基本使用
+### 2.2. 基本使用
 
 - async 函数返回一个 Promise 对象，可以使用 then 方法添加回调函数。**async 函数内部 return 语句返回的值，会成为 then 方法回调函数的参数。**
 
@@ -437,7 +437,7 @@ async 函数对 Generator 函数的改进，体现在以下三点：
   // 出错了
   ```
 
-### NOTE
+### 2.3. NOTE
 
 - await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中。
   ```javascript
@@ -476,7 +476,7 @@ async 函数对 Generator 函数的改进，体现在以下三点：
   let bar = await barPromise;
   ```
 
-### 实现原理
+### 2.4. 实现原理
 
 async 函数的实现原理，就是将 Generator 函数和自动执行器，包装在一个函数里。
 
@@ -517,7 +517,7 @@ function fn(args) {
 }
 ```
 
-## Refer Links
+## 3. Refer Links
 
 [Javascript 异步编程的 4 种方法](http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html)
 

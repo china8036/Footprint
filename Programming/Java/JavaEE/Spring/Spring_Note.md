@@ -1,23 +1,23 @@
 <!-- <style>img {box-shadow: 0 0 15px #111;}</style> -->
 
 - [Spring Note](#spring-note)
-  - [Spring 概述](#spring-%E6%A6%82%E8%BF%B0)
-  - [Maven 依赖](#maven-%E4%BE%9D%E8%B5%96)
-  - [Spring 容器](#spring-%E5%AE%B9%E5%99%A8)
-  - [依赖注入](#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-    - [注入方式](#%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F)
-    - [IoC Service Provider](#ioc-service-provider)
-    - [资源访问](#%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE)
-    - [IoC 容器 BeanFactory](#ioc-%E5%AE%B9%E5%99%A8-beanfactory)
-    - [应用上下文 ApplicationContext](#%E5%BA%94%E7%94%A8%E4%B8%8A%E4%B8%8B%E6%96%87-applicationcontext)
-  - [AOP](#aop)
-  - [SpEL](#spel)
-  - [配置文件](#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
-    - [web.xml](#webxml)
+    - [1. Spring 概述](#1-spring-%E6%A6%82%E8%BF%B0)
+    - [2. Maven 依赖](#2-maven-%E4%BE%9D%E8%B5%96)
+    - [3. Spring 容器](#3-spring-%E5%AE%B9%E5%99%A8)
+    - [4. 依赖注入](#4-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+        - [4.1. 注入方式](#41-%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F)
+        - [4.2. IoC Service Provider](#42-ioc-service-provider)
+        - [4.3. 资源访问](#43-%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE)
+        - [4.4. IoC 容器 BeanFactory](#44-ioc-%E5%AE%B9%E5%99%A8-beanfactory)
+        - [4.5. 应用上下文 ApplicationContext](#45-%E5%BA%94%E7%94%A8%E4%B8%8A%E4%B8%8B%E6%96%87-applicationcontext)
+    - [5. AOP](#5-aop)
+    - [6. SpEL](#6-spel)
+    - [7. 配置文件](#7-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+        - [7.1. web.xml](#71-webxml)
 
 # Spring Note
 
-## Spring 概述
+## 1. Spring 概述
 
 Spring 设计的根本理念：简化 java 开发。为降低 java 开发的复杂性，将开发者的关注点便放到了需要实现的业务逻辑上 spring 采取了以下几种关键策略：
 - 基于 POJO 的轻量级和最小侵入式编程；
@@ -27,7 +27,7 @@ Spring 设计的根本理念：简化 java 开发。为降低 java 开发的复�
 
 Spring 框架实现的核心技术：反射。
 
-## Maven 依赖
+## 2. Maven 依赖
 
 使用 maven 创建 SSM 项目 pom.xml 需要配置的依赖：
 - spring-core
@@ -376,7 +376,7 @@ Spring 框架实现的核心技术：反射。
   </project>
 ```
 
-## Spring 容器
+## 3. Spring 容器
 
 Spring 容器是 Spring 的核心，一切 Spring bean 都存储在 Spring 容器内，并由其通过 IoC 技术管理。Spring 容器也就是一个 bean 工厂（BeanFactory）。应用中 bean 的实例化，获取，销毁等都是由这个 bean 工厂管理的。
 
@@ -420,33 +420,33 @@ org.springframework.context.ApplicationContext 接口用于完成容器的配置
     ContextLoaderListener：
     - 这个 Listener 就是在标准 Spring Web 工程中 Spring 开始干活的切入点，ContextLoaderListener 实现了 ServletContextListener，所以在 web 容器启动时，ContextLoaderListener 就悄悄开始工作了。
 
-## 依赖注入
+## 4. 依赖注入
 
 依赖注入 DI/IOC 本质就是要抛弃 new 的方法取得对象，通过配置来取得对象。
 
-### 注入方式
+### 4.1. 注入方式
 
 - 构造函数注入
 - 属性注入（通过 setter 方法）
 - 接口注入（弃用）
 
-### IoC Service Provider
+### 4.2. IoC Service Provider
 
-### 资源访问
+### 4.3. 资源访问
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/fd7e2fd6a27db2a4b44a5c2fcc1d9e0d.jpg)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/55b25012f6f1b165b3cada047e5bcf19.jpg)
 
-### IoC 容器 BeanFactory
+### 4.4. IoC 容器 BeanFactory
 
-### 应用上下文 ApplicationContext
+### 4.5. 应用上下文 ApplicationContext
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/941a9f063460dc39653ff52d58bf3e24.jpg)
 
-## AOP
+## 5. AOP
 
-## SpEL
+## 6. SpEL
 SpEL 的目的是通过计算来获取某个值，#{}标记会提示 Spring 这个标记内的是 SpEL 表达式。
 
 通过注解，可以将 SpEL 从 xml 文件中分离，在基于注解驱动的装配中使用 SpEL。
@@ -457,14 +457,14 @@ SpEL 的目的是通过计算来获取某个值，#{}标记会提示 Spring 这�
 - 正则表达式匹配
 - 集合操作
 
-## 配置文件
+## 7. 配置文件
 
 按照官方文档，spring web 项目的配置文件应有：http://jiage17.iteye.com/blog/2312456 
 - WEB-INF/web.xml
 - WEB-INF/<dispatcherServlet_name>-servlet.xml（配置 spring mvc）
 - WEB-INF/applicationContext.xml（配置 spring framework）
 
-### web.xml
+### 7.1. web.xml
 
 - 加载 spring 配置文件
   

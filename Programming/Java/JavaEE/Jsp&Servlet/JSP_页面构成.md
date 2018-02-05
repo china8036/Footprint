@@ -1,32 +1,32 @@
 - [JSP 页面构成](#jsp-%E9%A1%B5%E9%9D%A2%E6%9E%84%E6%88%90)
-  - [静态部分](#%E9%9D%99%E6%80%81%E9%83%A8%E5%88%86)
-  - [动态部分](#%E5%8A%A8%E6%80%81%E9%83%A8%E5%88%86)
-    - [JSP 注释](#jsp-%E6%B3%A8%E9%87%8A)
-    - [JSP 声明](#jsp-%E5%A3%B0%E6%98%8E)
-    - [JSP 输出表达式](#jsp-%E8%BE%93%E5%87%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F)
-    - [JSP 脚本](#jsp-%E8%84%9A%E6%9C%AC)
-    - [JSP 指令](#jsp-%E6%8C%87%E4%BB%A4)
-      - [page](#page)
-      - [include](#include)
-      - [taglib](#taglib)
-    - [JSP 动作（标签）](#jsp-%E5%8A%A8%E4%BD%9C%EF%BC%88%E6%A0%87%E7%AD%BE%EF%BC%89)
-    - [JSP 自定义标签](#jsp-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE)
-    - [JSTL](#jstl)
-      - [安装](#%E5%AE%89%E8%A3%85)
-      - [使用](#%E4%BD%BF%E7%94%A8)
-    - [JSP 表达式语言（EL）](#jsp-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E8%A8%80%EF%BC%88el%EF%BC%89)
+  - [1. 静态部分](#1-%E9%9D%99%E6%80%81%E9%83%A8%E5%88%86)
+  - [2. 动态部分](#2-%E5%8A%A8%E6%80%81%E9%83%A8%E5%88%86)
+    - [2.1. JSP 注释](#21-jsp-%E6%B3%A8%E9%87%8A)
+    - [2.2. JSP 声明](#22-jsp-%E5%A3%B0%E6%98%8E)
+    - [2.3. JSP 输出表达式](#23-jsp-%E8%BE%93%E5%87%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+    - [2.4. JSP 脚本](#24-jsp-%E8%84%9A%E6%9C%AC)
+    - [2.5. JSP 指令](#25-jsp-%E6%8C%87%E4%BB%A4)
+      - [2.5.1. page](#251-page)
+      - [2.5.2. include](#252-include)
+      - [2.5.3. taglib](#253-taglib)
+    - [2.6. JSP 动作（标签）](#26-jsp-%E5%8A%A8%E4%BD%9C%EF%BC%88%E6%A0%87%E7%AD%BE%EF%BC%89)
+    - [2.7. JSP 自定义标签](#27-jsp-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE)
+    - [2.8. JSTL](#28-jstl)
+      - [2.8.1. 安装](#281-%E5%AE%89%E8%A3%85)
+      - [2.8.2. 使用](#282-%E4%BD%BF%E7%94%A8)
+    - [2.9. JSP 表达式语言（EL）](#29-jsp-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E8%A8%80%EF%BC%88el%EF%BC%89)
 
 # JSP 页面构成
 
-## 静态部分
+## 1. 静态部分
 
 标准的 HTML 标签、静态的页面内容，这些内容与静态 HTML 页面相同；
 
-## 动态部分
+## 2. 动态部分
 
 受 Java 程序控制的内容，这些内容由 Java 程序来动态生成，如下：
 
-### JSP 注释
+### 2.1. JSP 注释
 
 - 方式一： `<%-- 这里是 JSP 注释 --%>`；
 
@@ -40,7 +40,7 @@
   ```
   注：不同于 HTML，JSP 是只运行在服务器端的语言，因此 JSP 注释不会被发送到客户端，也就是说 HTML 的注释可以在客户端通过源码查看到，但 JSP 的注释是无法通过网页源码查看到的；
 
-### JSP 声明
+### 2.2. JSP 声明
 
 - JSP 声明用于声明变量和方法，供 JSP 页面的其它部分调用；
 
@@ -66,7 +66,7 @@
     </jsp:declaration>
     ```
 
-### JSP 输出表达式
+### 2.3. JSP 输出表达式
 
 - JSP 输出表达式会先计算出表达式的值，再将值转换为 String 格式在表达式出现的地方替换该表达式；
 
@@ -81,7 +81,7 @@
     </jsp:expression>
     ```
 
-### JSP 脚本
+### 2.4. JSP 脚本
 
 - 在 JSP 页面中可以包含任何可以执行的 Java 代码，所有可执行 Java 代码都可以通过如下方式嵌入 JSP 页面中：
   - JSP 形式
@@ -117,7 +117,7 @@
   </html>
   ```
 
-### JSP 指令
+### 2.5. JSP 指令
 
 - JSP 指令在编译 JSP 页面时执行，用来设置与整个 JSP 页面相关的属性，例如编码格式、文档类型等。这些指令用来告知 JSP 引擎如何处理该 JSP 页面；
 
@@ -127,7 +127,7 @@
 
 常用编译指令有以下三个：
 
-#### page
+#### 2.5.1. page
 
 该指令是针对当前页面属性的指令，位于 jsp 页面的顶端，同一个 jsp 页面可包含多个 page 指令；
 
@@ -154,7 +154,7 @@ eg：
 ```
 注意：任何 page 允许的属性都只能出现一次，否则会出现编译错误；import 属性除外，import 可以多次出现；
 
-#### include
+#### 2.5.2. include
 
 用于将一个外部文件的所有源代码嵌入到当前的 jsp 文件中，在 jsp 文件编译时期执行，适合不经常变化的内容的导入（每次变化都要重写编译）；
 语法格式：
@@ -166,7 +166,7 @@ eg：
 若在 1.jsp 中<%@ include file=”2.jsp” %>，运行该程序后，只能找到 1_jsp.java 和 1_jsp.class，找不到 2_jsp.java 和 2_jsp.class，因为 2.jsp 直接被导入到了 1.jsp 中，没有被编译；
 导入时是将源代码全部导入（包括 html 的<head>、<body>，jsp 的所有元素），导入之后若发生冲突，在编译时解决（如新的覆盖旧的）；
 
-#### taglib
+#### 2.5.3. taglib
 
 用于引入一个自定义标签集合的定义，包括库路径、自定义标签，在 JSP 页面中启用定制行为； 
 
@@ -177,7 +177,7 @@ eg：
 
 - XML 形式：`<jsp:directive.taglib uri="uri" prefix="prefixOfTag" />`；
 
-### JSP 动作（标签）
+### 2.6. JSP 动作（标签）
 
 - JSP 动作标签实际上是一些预定义好的函数，使用 XML 语法结构来控制 servlet 引擎。它能够动态插入一个文件，重用 JavaBean 组件，引导用户去另一个页面，为 Java 插件产生相关的 HTML 等；
 
@@ -296,7 +296,7 @@ flush 属性用于指定输出缓存是否转移到被导入的文件中；如�
 
 > See also：https://stackoverflow.com/questions/3177733/how-to-avoid-java-code-in-jsp-files. “The use of scriptlets (those <% %> things) in JSP is indeed highly discouraged since the birth of taglibs (like JSTL) and EL (Expression Language, those ${} things) over a decade ago. “
 
-### JSP 自定义标签
+### 2.7. JSP 自定义标签
 
 自定义标签库是一种非常优秀的表现层组件技术。通过使用自定义标签库，可以在简单的标签中封装复杂的功能；
 
@@ -404,7 +404,7 @@ flush 属性用于指定输出缓存是否转移到被导入的文件中；如�
 
   - 使用标签；在 JSP 页面中使用自定义标签；
 
-### JSTL
+### 2.8. JSTL
 
 JSP Standard Tag Library（JSP 标准标签库），由 JCP（Java Community Process）制订，是一个 JSP 标签集合，它封装了 JSP 应用的通用核心功能；
 
@@ -421,7 +421,7 @@ JSTL 中支持 EL(Expression Language) 语法，也支持使用<%= %>，但都�
 <c:out value="${userList.user.phoneNumber}" />
 ```
 
-#### 安装
+#### 2.8.1. 安装
 
 在 https://tomcat.apache.org/download-taglibs.cgi 下载 4 个 jar 包：
 
@@ -440,7 +440,7 @@ JSTL 中支持 EL(Expression Language) 语法，也支持使用<%= %>，但都�
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/functions" %>
 ```
 
-#### 使用
+#### 2.8.2. 使用
 
 https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/
 
@@ -525,7 +525,7 @@ https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/
   | fn:toUpperCase()        | 将字符串中的字符转为大写                 |
   | fn:trim()               | 移除首位的空白符                     |
 
-### JSP 表达式语言（EL）
+### 2.9. JSP 表达式语言（EL）
 
 表达式语言 (Expression Language) ，EL 表达式是 Java 中的一种特殊的通用编程语言，借鉴于 JavaScript 和 XPath；主要作用是在 Java Web 应用程序嵌入到网页（如 JSP）中，用以访问页面的上下文以及不同作用域中的对象 ，取得对象属性的值，或执行简单的运算或判断操作。EL 在得到某个数据时，会自动进行数据类型的转换；
 

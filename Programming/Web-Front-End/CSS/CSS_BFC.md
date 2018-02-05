@@ -1,14 +1,14 @@
 - [CSS BFC](#css-bfc)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-  - [应用](#%E5%BA%94%E7%94%A8)
-    - [解决 margin 叠加问题](#%E8%A7%A3%E5%86%B3-margin-%E5%8F%A0%E5%8A%A0%E9%97%AE%E9%A2%98)
-    - [用于不重叠的 float 布局](#%E7%94%A8%E4%BA%8E%E4%B8%8D%E9%87%8D%E5%8F%A0%E7%9A%84-float-%E5%B8%83%E5%B1%80)
-    - [解决浮动的高度塌陷问题](#%E8%A7%A3%E5%86%B3%E6%B5%AE%E5%8A%A8%E7%9A%84%E9%AB%98%E5%BA%A6%E5%A1%8C%E9%99%B7%E9%97%AE%E9%A2%98)
-  - [Refer Links](#refer-links)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+  - [2. 应用](#2-%E5%BA%94%E7%94%A8)
+    - [2.1. 解决 margin 叠加问题](#21-%E8%A7%A3%E5%86%B3-margin-%E5%8F%A0%E5%8A%A0%E9%97%AE%E9%A2%98)
+    - [2.2. 用于不重叠的 float 布局](#22-%E7%94%A8%E4%BA%8E%E4%B8%8D%E9%87%8D%E5%8F%A0%E7%9A%84-float-%E5%B8%83%E5%B1%80)
+    - [2.3. 解决浮动的高度塌陷问题](#23-%E8%A7%A3%E5%86%B3%E6%B5%AE%E5%8A%A8%E7%9A%84%E9%AB%98%E5%BA%A6%E5%A1%8C%E9%99%B7%E9%97%AE%E9%A2%98)
+  - [3. Refer Links](#3-refer-links)
 
 # CSS BFC
 
-## 概述
+## 1. 概述
 
 - BFC 的特性：
 
@@ -38,9 +38,9 @@
   
   - fieldset 元素
 
-## 应用
+## 2. 应用
 
-### 解决 margin 叠加问题 
+### 2.1. 解决 margin 叠加问题
 
 问题：
 ```html
@@ -88,7 +88,7 @@ p{
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/1c7077e778f4425aaec36904f39c9765.jpg)
 
-### 用于不重叠的 float 布局
+### 2.2. 用于不重叠的 float 布局
 
 ```html
 <div class="aside"></div>
@@ -141,7 +141,7 @@ body {
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/e3ac09dc897ae4a6850e884a2f1a3f60.jpg)
 
-### 解决浮动的高度塌陷问题
+### 2.3. 解决浮动的高度塌陷问题
 
 ```html
 <div class="BFC">
@@ -190,7 +190,7 @@ body {
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/bad7e40b5ccf4cdbce66e96a711ce4e4.jpg)
 
-## Refer Links
+## 3. Refer Links
 
 http://www.jianshu.com/p/fc1d61dace7b
 

@@ -1,20 +1,20 @@
 - [ECMAScript 6 Promise](#ecmascript-6-promise)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-  - [基本使用](#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
-  - [Promise.prototype.then()](#promiseprototypethen)
-  - [Promise.prototype.catch()](#promiseprototypecatch)
-  - [Promise.prototype.finally()](#promiseprototypefinally)
-  - [Promise.all()](#promiseall)
-  - [Promise.race()](#promiserace)
-  - [Promise.resolve()](#promiseresolve)
-  - [Promise.reject()](#promisereject)
-  - [Others](#others)
-    - [红绿灯问题](#%E7%BA%A2%E7%BB%BF%E7%81%AF%E9%97%AE%E9%A2%98)
-  - [Refer Links](#refer-links)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+  - [2. 基本使用](#2-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
+  - [3. Promise.prototype.then()](#3-promiseprototypethen)
+  - [4. Promise.prototype.catch()](#4-promiseprototypecatch)
+  - [5. Promise.prototype.finally()](#5-promiseprototypefinally)
+  - [6. Promise.all()](#6-promiseall)
+  - [7. Promise.race()](#7-promiserace)
+  - [8. Promise.resolve()](#8-promiseresolve)
+  - [9. Promise.reject()](#9-promisereject)
+  - [10. Others](#10-others)
+    - [10.1. 红绿灯问题](#101-%E7%BA%A2%E7%BB%BF%E7%81%AF%E9%97%AE%E9%A2%98)
+  - [11. Refer Links](#11-refer-links)
 
 # ECMAScript 6 Promise
 
-## 概述
+## 1. 概述
 
 传统 JavaScript 中使用回掉函数实现异步编程，但当出现多个回调函数嵌套时，代码不是纵向发展，而是横向发展，很快就会乱成一团，无法管理 -- "callback hell"。
 
@@ -46,7 +46,7 @@ Promise 也有一些缺点：
 
 如果某些事件不断地反复发生，一般来说，使用 Stream 模式是比部署 Promise 更好的选择。
 
-## 基本使用
+## 2. 基本使用
 
 Promise 构造函数接受一个函数作为参数，该函数的两个参数分别是 resolve 和 reject。它们是两个函数，由 JavaScript 引擎提供，不用自己部署。
 - resolve 函数的作用是，将 Promise 对象的状态从“未完成”变为“成功”（即从 Pending 变为 Resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；
@@ -118,7 +118,7 @@ promise.catch(function(error) {
 });
 ```
 
-## Promise.prototype.then()
+## 3. Promise.prototype.then()
 
 Promise 实例生成以后，**可以用 then 方法分别指定 Resolved 状态和 Reject 状态的回调函数，then 方法的第一个参数是 resolved 状态的回调函数，第二个参数（可选）是 rejected 状态的回调函数**。
 
@@ -145,7 +145,7 @@ getJSON("/post/1.json").then(
 ```
 上面代码中，第一个 then 方法指定的回调函数，返回的是另一个 Promise 对象。这时，第二个 then 方法指定的回调函数，就会等待这个新的 Promise 对象状态发生变化。如果变为 resolved，就调用 funcA，如果状态变为 rejected，就调用 funcB。
 
-## Promise.prototype.catch()
+## 4. Promise.prototype.catch()
 
 Promise.prototype.catch 方法是。then(null, rejection) 的别名，用于指定发生错误时的回调函数。
 
@@ -158,7 +158,7 @@ getJSON('/posts.json').then(function(posts) {
 });
 ```
 
-## Promise.prototype.finally()
+## 5. Promise.prototype.finally()
 
 finally 方法用于指定不管 Promise 对象最后状态如何，都会执行的操作。该方法是 ES2018 引入标准的。
 
@@ -170,7 +170,7 @@ promise
 .finally(() => {···});
 ```
 
-## Promise.all()
+## 6. Promise.all()
 
 Promise.all 方法接受一个数组作为参数，用于将多个 Promise 实例，包装成一个新的 Promise 实例。
 
@@ -198,7 +198,7 @@ Promise.all([
 .then(([books, user]) => pickTopRecommentations(books, user));
 ```
 
-## Promise.race()
+## 7. Promise.race()
 
 Promise.race 方法同样是将多个 Promise 实例，包装成一个新的 Promise 实例。
 ```javascript
@@ -218,7 +218,7 @@ p.then(response => console.log(response));
 p.catch(error => console.log(error));
 ```
 
-## Promise.resolve() 
+## 8. Promise.resolve()
 
 Promise.resolve() 用于将现有对象转为 Promise 对象。
 ```javascript
@@ -232,7 +232,7 @@ E.G.
 const jsPromise = Promise.resolve($.ajax('/whatever.json'));
 ```
 
-## Promise.reject() 
+## 9. Promise.reject()
 
 Promise.reject(reason) 方法也会返回一个新的 Promise 实例，该实例的状态为 rejected。
 
@@ -247,9 +247,9 @@ p.then(null, function (s) {
 // 出错了
 ```
 
-## Others
+## 10. Others
 
-### 红绿灯问题
+### 10.1. 红绿灯问题
 
 题目：
 ```javascript
@@ -368,7 +368,7 @@ var step = function(gen, iterator){
 step(gen, iterator);
 ```
 
-## Refer Links
+## 11. Refer Links
 
 http://wiki.jikexueyuan.com/project/es6/promise.html
 

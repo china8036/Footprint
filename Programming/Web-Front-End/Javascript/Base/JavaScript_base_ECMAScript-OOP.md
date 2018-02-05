@@ -1,27 +1,27 @@
 - [JavaScript 面向对象](#javascript-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1)
-  - [基础概念](#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5)
-    - [原型](#%E5%8E%9F%E5%9E%8B)
-    - [Prototype 对象](#prototype-%E5%AF%B9%E8%B1%A1)
-      - [prototype 的相关方法](#prototype-%E7%9A%84%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95)
-    - [`__proto__`属性](#proto%E5%B1%9E%E6%80%A7)
-  - [对象创建 - 封装](#%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA---%E5%B0%81%E8%A3%85)
-    - [直接声明创建对象](#%E7%9B%B4%E6%8E%A5%E5%A3%B0%E6%98%8E%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1)
-    - [使用构造函数创建对象](#%E4%BD%BF%E7%94%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1)
-    - [使用 Object.create 创建对象](#%E4%BD%BF%E7%94%A8-objectcreate-%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1)
-    - [使用 class 关键字创建对象](#%E4%BD%BF%E7%94%A8-class-%E5%85%B3%E9%94%AE%E5%AD%97%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1)
-  - [对象继承](#%E5%AF%B9%E8%B1%A1%E7%BB%A7%E6%89%BF)
-    - [JavaScript 中的继承特性](#javascript-%E4%B8%AD%E7%9A%84%E7%BB%A7%E6%89%BF%E7%89%B9%E6%80%A7)
-    - [内置对象的默认继承](#%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%BB%98%E8%AE%A4%E7%BB%A7%E6%89%BF)
-    - [基于构造函数的继承](#%E5%9F%BA%E4%BA%8E%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E7%BB%A7%E6%89%BF)
-    - [基于 prototype 对象的继承](#%E5%9F%BA%E4%BA%8E-prototype-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%A7%E6%89%BF)
-      - [将子类构造函数的 prototype 属性指向父类的实例](#%E5%B0%86%E5%AD%90%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84-prototype-%E5%B1%9E%E6%80%A7%E6%8C%87%E5%90%91%E7%88%B6%E7%B1%BB%E7%9A%84%E5%AE%9E%E4%BE%8B)
-      - [将子类构造函数的 prototype 属性指向父类构造函数的 prototype 属性](#%E5%B0%86%E5%AD%90%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84-prototype-%E5%B1%9E%E6%80%A7%E6%8C%87%E5%90%91%E7%88%B6%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84-prototype-%E5%B1%9E%E6%80%A7)
-      - [利用空对象作为中介](#%E5%88%A9%E7%94%A8%E7%A9%BA%E5%AF%B9%E8%B1%A1%E4%BD%9C%E4%B8%BA%E4%B8%AD%E4%BB%8B)
-    - [基于拷贝的继承](#%E5%9F%BA%E4%BA%8E%E6%8B%B7%E8%B4%9D%E7%9A%84%E7%BB%A7%E6%89%BF)
-    - [使用 Object.create 实现继承](#%E4%BD%BF%E7%94%A8-objectcreate-%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF)
-    - [使用 class 关键字实现继承](#%E4%BD%BF%E7%94%A8-class-%E5%85%B3%E9%94%AE%E5%AD%97%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF)
-    - [NOTE](#note)
-  - [Refer Links](#refer-links)
+  - [1. 基础概念](#1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5)
+    - [1.1. 原型](#11-%E5%8E%9F%E5%9E%8B)
+    - [1.2. Prototype 对象](#12-prototype-%E5%AF%B9%E8%B1%A1)
+      - [1.2.1. prototype 的相关方法](#121-prototype-%E7%9A%84%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95)
+    - [1.3. `__proto__`属性](#13-proto%E5%B1%9E%E6%80%A7)
+  - [2. 对象创建 - 封装](#2-%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA---%E5%B0%81%E8%A3%85)
+    - [2.1. 直接声明创建对象](#21-%E7%9B%B4%E6%8E%A5%E5%A3%B0%E6%98%8E%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1)
+    - [2.2. 使用构造函数创建对象](#22-%E4%BD%BF%E7%94%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1)
+    - [2.3. 使用 Object.create 创建对象](#23-%E4%BD%BF%E7%94%A8-objectcreate-%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1)
+    - [2.4. 使用 class 关键字创建对象](#24-%E4%BD%BF%E7%94%A8-class-%E5%85%B3%E9%94%AE%E5%AD%97%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1)
+  - [3. 对象继承](#3-%E5%AF%B9%E8%B1%A1%E7%BB%A7%E6%89%BF)
+    - [3.1. JavaScript 中的继承特性](#31-javascript-%E4%B8%AD%E7%9A%84%E7%BB%A7%E6%89%BF%E7%89%B9%E6%80%A7)
+    - [3.2. 内置对象的默认继承](#32-%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%BB%98%E8%AE%A4%E7%BB%A7%E6%89%BF)
+    - [3.3. 基于构造函数的继承](#33-%E5%9F%BA%E4%BA%8E%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E7%BB%A7%E6%89%BF)
+    - [3.4. 基于 prototype 对象的继承](#34-%E5%9F%BA%E4%BA%8E-prototype-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BB%A7%E6%89%BF)
+      - [3.4.1. 将子类构造函数的 prototype 属性指向父类的实例](#341-%E5%B0%86%E5%AD%90%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84-prototype-%E5%B1%9E%E6%80%A7%E6%8C%87%E5%90%91%E7%88%B6%E7%B1%BB%E7%9A%84%E5%AE%9E%E4%BE%8B)
+      - [3.4.2. 将子类构造函数的 prototype 属性指向父类构造函数的 prototype 属性](#342-%E5%B0%86%E5%AD%90%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84-prototype-%E5%B1%9E%E6%80%A7%E6%8C%87%E5%90%91%E7%88%B6%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84-prototype-%E5%B1%9E%E6%80%A7)
+      - [3.4.3. 利用空对象作为中介](#343-%E5%88%A9%E7%94%A8%E7%A9%BA%E5%AF%B9%E8%B1%A1%E4%BD%9C%E4%B8%BA%E4%B8%AD%E4%BB%8B)
+    - [3.5. 基于拷贝的继承](#35-%E5%9F%BA%E4%BA%8E%E6%8B%B7%E8%B4%9D%E7%9A%84%E7%BB%A7%E6%89%BF)
+    - [3.6. 使用 Object.create 实现继承](#36-%E4%BD%BF%E7%94%A8-objectcreate-%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF)
+    - [3.7. 使用 class 关键字实现继承](#37-%E4%BD%BF%E7%94%A8-class-%E5%85%B3%E9%94%AE%E5%AD%97%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF)
+    - [3.8. NOTE](#38-note)
+  - [4. Refer Links](#4-refer-links)
 
 # JavaScript 面向对象
 
@@ -29,11 +29,11 @@ Javascript 是一种基于对象（object-based）的语言，在 JavaScript 中
 - 狭义上的对象：指的是原生对象 Object，所有对象都会继承 Object.prototype 上的所有属性（如 hasOwnProperty，etc）。
 - 广义上的对象：在 JavaScript 上，一切皆对象，也就是说包括数组、函数等都是广义上的对象。
 
-## 基础概念
+## 1. 基础概念
 
-### 原型
+### 1.1. 原型
 
-### Prototype 对象
+### 1.2. Prototype 对象
 
 Javascript 规定，每一个构造函数都有一个私有属性`prototype`，指向另一个对象 (prototype 对象)。这个对象的所有属性和方法，都会被构造函数的实例继承。
 
@@ -43,7 +43,7 @@ prototype 对象默认会包含两个属性：constructor 和`__proto__`，其�
 
 当我们的代码需要一个属性的时候，Javascript 的引擎会先看当前的这个对象中是否有这个属性，如果没有的话，就会查找他的 Prototype 对象是否有这个属性，一直继续下去，直到找到或是直到没有 Prototype 对象。
 
-#### prototype 的相关方法
+#### 1.2.1. prototype 的相关方法
 
 为了配合 prototype 属性，Javascript 定义了一些辅助方法，帮助我们使用它。
 
@@ -77,7 +77,7 @@ prototype 对象默认会包含两个属性：constructor 和`__proto__`，其�
   }
   ```
 
-### `__proto__`属性
+### 1.3. `__proto__`属性
 
 prototype 是原型 / 构造函数的属性，而`__proto__`是实例对象的属性，指向原型 / 构造函数的 prototype 属性对象。
 
@@ -105,11 +105,11 @@ NOTE：
   binded.prototype//undefined
   ```
 
-## 对象创建 - 封装
+## 2. 对象创建 - 封装
 
 JavaScript 中创建对象有多种方法：
 
-### 直接声明创建对象
+### 2.1. 直接声明创建对象
 
 ```javscript
 var o = {
@@ -125,7 +125,7 @@ var o = {
 - 一是如果多生成几个实例，写起来就非常麻烦；
 - 二是实例与原型之间，没有任何办法，可以看出有什么联系。
 
-### 使用构造函数创建对象
+### 2.2. 使用构造函数创建对象
 
 为了解决从原型对象生成实例的问题，Javascript 提供了一个构造函数（Constructor）模式。
 
@@ -175,7 +175,7 @@ cat2.eat(); // 吃老鼠
 alert(cat1.eat == cat2.eat); //true，证明 prototype 对象是被共享的
 ```
 
-### 使用 Object.create 创建对象
+### 2.3. 使用 Object.create 创建对象
 
 ECMAScript 5 中引入了一个新方法：Object.create()。可以调用这个方法来创建一个新对象。调用 create 方法时传入的第一个参数（必须传入）为要创建的新对象的原型：
 
@@ -189,7 +189,7 @@ var a = Object.create(null);// d ---> null
 console.log(a.hasOwnProperty); // undefined, 因为 d 没有继承 Object.prototype
 ```
 
-### 使用 class 关键字创建对象
+### 2.4. 使用 class 关键字创建对象
 
 ECMAScript6 引入了一套新的关键字用来实现 class。**使用基于类语言的开发人员会对这些结构感到熟悉，但它们是不同的。JavaScript 仍然基于原型**。这些新的关键字包括 class, constructor，static，extends 和 super。
 
@@ -206,9 +206,9 @@ class Polygon {
 var Polygon = new Polygon(2, 2);
 ```
 
-## 对象继承
+## 3. 对象继承
 
-### JavaScript 中的继承特性
+### 3.1. JavaScript 中的继承特性
 
 - 继承属性
 
@@ -268,7 +268,7 @@ var Polygon = new Polygon(2, 2);
   // 此时的'this.a' 即 p.a，即 p 的自身属性 'a'
   ```
 
-### 内置对象的默认继承
+### 3.2. 内置对象的默认继承
 
 ```javascript
 var o = {a: 1};
@@ -296,7 +296,7 @@ function f(){
 // f ---> Function.prototype ---> Object.prototype ---> null
 ```
 
-### 基于构造函数的继承
+### 3.3. 基于构造函数的继承
 
 使用 call 或 apply 方法，将父对象的构造函数绑定在子对象上：
 ```javascript
@@ -326,9 +326,9 @@ alert(cat1.species); // 动物
 - 无法实现函数复用，每个子类实例都持有一个新的fun函数，效率较低
 
 
-### 基于 prototype 对象的继承
+### 3.4. 基于 prototype 对象的继承
 
-#### 将子类构造函数的 prototype 属性指向父类的实例
+#### 3.4.1. 将子类构造函数的 prototype 属性指向父类的实例
 
 ```javascript
 function Animal(){
@@ -355,7 +355,7 @@ alert(cat1.species); // 动物
 - 修改sub1.arr后sub2.arr也会变，因为来自原型对象的引用属性是所有实例共享的。
 
 
-#### 将子类构造函数的 prototype 属性指向父类构造函数的 prototype 属性
+#### 3.4.2. 将子类构造函数的 prototype 属性指向父类构造函数的 prototype 属性
 
 这种方式是对上一种方式的改进。
 
@@ -375,7 +375,7 @@ alert(cat1.species); // 动物
 
 缺点是 Cat.prototype 和 Animal.prototype 现在指向了同一个对象，那么任何对 Cat.prototype 的修改，都会反映到 Animal.prototype。这导致了**这种方式不可被采用**。
 
-#### 利用空对象作为中介
+#### 3.4.3. 利用空对象作为中介
 
 这种方式是前两种方式的结合，同时克服了前两种方式的缺点。
 
@@ -405,7 +405,7 @@ var cat1 = new Cat("大毛","黄色");
 alert(cat1.species); // 动物
 ```
 
-### 基于拷贝的继承
+### 3.5. 基于拷贝的继承
 
 思路：把父对象的所有属性和方法，拷贝进子对象，从而实现继承的效果。
 
@@ -429,7 +429,7 @@ var cat1 = new Cat("大毛","黄色");
 alert(cat1.species); // 动物
 ```
 
-### 使用 Object.create 实现继承
+### 3.6. 使用 Object.create 实现继承
 
 ECMAScript 5 的新方法 Object.create() 可以在创建对象时指定新对象的原型：
 ```javascript
@@ -448,7 +448,7 @@ var d = Object.create(null);
 console.log(d.hasOwnProperty); // undefined, 因为 d 没有继承 Object.prototype
 ```
 
-### 使用 class 关键字实现继承
+### 3.7. 使用 class 关键字实现继承
 
 ECMAScript6 引入了一套新的关键字用来实现 class，包括 class, constructor，static，extends 和 super，可以通过这些语法糖实现继承：
 
@@ -478,7 +478,7 @@ class Square extends Polygon {
 var square = new Square(2);
 ```
 
-### NOTE
+### 3.8. NOTE
 
 - 要注意代码中的原型链的长度，并在必要时将其分解，以避免潜在的性能问题。
   
@@ -494,7 +494,7 @@ var square = new Square(2);
 
   这种技术被称为猴子补丁并且会破坏封装。尽管一些流行的框架（如 Prototype.js）在使用该技术，但仍然没有足够好的理由使用附加的非标准方法来混入内置原型。
 
-## Refer Links
+## 4. Refer Links
 
 [MDN Web Docs - 继承与原型链](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 

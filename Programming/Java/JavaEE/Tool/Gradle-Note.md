@@ -1,25 +1,25 @@
 - [Gradle Note](#gradle-note)
-    - [介绍](#%E4%BB%8B%E7%BB%8D)
-    - [安装](#%E5%AE%89%E8%A3%85)
-    - [使用](#%E4%BD%BF%E7%94%A8)
-        - [基础](#%E5%9F%BA%E7%A1%80)
-        - [配置](#%E9%85%8D%E7%BD%AE)
-        - [build.gradle](#buildgradle)
-            - [依赖管理](#%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86)
-            - [配置依赖仓库](#%E9%85%8D%E7%BD%AE%E4%BE%9D%E8%B5%96%E4%BB%93%E5%BA%93)
-        - [使用 Gradle Wrapper 构建项目](#%E4%BD%BF%E7%94%A8-gradle-wrapper-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE)
-        - [使用镜像 maven 库](#%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F-maven-%E5%BA%93)
-        - [修改本地仓库位置](#%E4%BF%AE%E6%94%B9%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%BD%8D%E7%BD%AE)
-        - [IDEA 中使用 Gradle](#idea-%E4%B8%AD%E4%BD%BF%E7%94%A8-gradle)
-            - [IDEA 中三种 gradle 模式的区别](#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB)
-            - [Unindexed remote maven repositories](#unindexed-remote-maven-repositories)
-        - [优化 Gradle](#%E4%BC%98%E5%8C%96-gradle)
-        - [将 pom.xml 转化为 build.gradle](#%E5%B0%86-pomxml-%E8%BD%AC%E5%8C%96%E4%B8%BA-buildgradle)
-    - [Refer Links](#refer-links)
+    - [1. 介绍](#1-%E4%BB%8B%E7%BB%8D)
+    - [2. 安装](#2-%E5%AE%89%E8%A3%85)
+    - [3. 使用](#3-%E4%BD%BF%E7%94%A8)
+        - [3.1. 基础](#31-%E5%9F%BA%E7%A1%80)
+        - [3.2. 配置](#32-%E9%85%8D%E7%BD%AE)
+        - [3.3. build.gradle](#33-buildgradle)
+            - [3.3.1. 依赖管理](#331-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86)
+            - [3.3.2. 配置依赖仓库](#332-%E9%85%8D%E7%BD%AE%E4%BE%9D%E8%B5%96%E4%BB%93%E5%BA%93)
+        - [3.4. 使用 Gradle Wrapper 构建项目](#34-%E4%BD%BF%E7%94%A8-gradle-wrapper-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE)
+        - [3.5. 使用镜像 maven 库](#35-%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F-maven-%E5%BA%93)
+        - [3.6. 修改本地仓库位置](#36-%E4%BF%AE%E6%94%B9%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%BD%8D%E7%BD%AE)
+        - [3.7. IDEA 中使用 Gradle](#37-idea-%E4%B8%AD%E4%BD%BF%E7%94%A8-gradle)
+            - [3.7.1. IDEA 中三种 gradle 模式的区别](#371-idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB)
+            - [3.7.2. Unindexed remote maven repositories](#372-unindexed-remote-maven-repositories)
+        - [3.8. 优化 Gradle](#38-%E4%BC%98%E5%8C%96-gradle)
+        - [3.9. 将 pom.xml 转化为 build.gradle](#39-%E5%B0%86-pomxml-%E8%BD%AC%E5%8C%96%E4%B8%BA-buildgradle)
+    - [4. Refer Links](#4-refer-links)
 
 # Gradle Note
 
-## 介绍
+## 1. 介绍
 
 Gradle 是一种构建工具，它抛弃了基于 XML 的构建脚本，取而代之的是采用一种基于 Groovy 的 DSL（Domain Specific Language），即内部领域特定语言；
 
@@ -29,7 +29,7 @@ Gradle 采用约定优于配置的原则，最简单方式是使用一个默认�
 
 Gradle 基于 Groovy 语言开发，在安装包中集成了 Groovy 库；
 
-## 安装
+## 2. 安装
 
 最新版下载地址 https://gradle.org/releases/ 
 
@@ -53,9 +53,9 @@ Gradle 基于 Groovy 语言开发，在安装包中集成了 Groovy 库；
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/4f9148298ddc210a3d8e10202a30e107.jpg)
 
 
-## 使用
+## 3. 使用
 
-### 基础
+### 3.1. 基础
 
 1)	Project
 
@@ -78,7 +78,7 @@ Gradle 基于 Groovy 语言开发，在安装包中集成了 Groovy 库；
 
     在 Gradle 中，所有有用的特性都是由 Plugin 来提供的。添加 Plugin 到 Gradle 中其实就是添加了一些新的 task，域对象（如 SourceSet)，约定（如 Java source 默认放在 src/main/java 下)，同时也会扩展一些已经存在的类型。 Plugin 分两种：脚本插件 apply from: 'other.gradle'和二进制插件 apply plugin: 'java'；
 
-### 配置
+### 3.2. 配置
 
 可以通过配置文件对 Gradle 构建进行配置
 
@@ -88,11 +88,11 @@ Gradle 基于 Groovy 语言开发，在安装包中集成了 Groovy 库；
 
 3)	Gradle 设置文件（gradle.settings）：对于只有一个项目的构建而言是可选的，如果我们的构建中包含多于一个项目，那么它就是必须的，因为它描述了哪一个项目参与构建。每一个多项目的构建都必须在项目结构的根目录中加入一个设置文件。
 
-### build.gradle
+### 3.3. build.gradle
 
 Gradle 有一个类似 Maven 中 pom.xml 的配置文件：build.gradle。功能也基本一样，负责当前 project 的构建定义。
 
-#### 依赖管理
+#### 3.3.1. 依赖管理
 
 Gradle 和 Maven 在依赖管理上几乎差不多，核心的概念是一样的，只不过 Gradle 语法更精简，并且多了一些更灵活的自定义配置。我们先看一个例子，Maven 的 pom.xml：
 ```
@@ -136,7 +136,7 @@ dependencies {
 }
 ```
 
-#### 配置依赖仓库
+#### 3.3.2. 配置依赖仓库
 
 ```
 repositories {
@@ -165,7 +165,7 @@ repositories {                              // 定义 ivy 协议类型的仓库
 
 NOTE：**由于网络问题，经过测试只有jcenter仓库速度较为稳定**。
 
-### 使用 Gradle Wrapper 构建项目
+### 3.4. 使用 Gradle Wrapper 构建项目
 
 Gradle Wrapper 是开始一个 Gradle 构建的首选方式。它包含了 windows 批处理以及 OS X 和 Linux 的 Shell 脚本。这些脚本允许我们在没有安装 Gradle 的系统上执行 Gradle 构建。
 
@@ -176,7 +176,7 @@ task wrapper(type: Wrapper) {
 }
 ```
 
-### 使用镜像 maven 库
+### 3.5. 使用镜像 maven 库
 
 https://yrom.net/blog/2015/02/07/change-gradle-maven-repo-url/ 
 
@@ -229,7 +229,7 @@ allprojects{
 ```
 注：init.gradle 文件其实是 Gradle 的初始化脚本 (Initialization Scripts)，也是运行时的全局配置；
 
-### 修改本地仓库位置
+### 3.6. 修改本地仓库位置
 
 http://blog.csdn.net/kl28978113/article/details/53018225 
 
@@ -239,9 +239,9 @@ http://blog.csdn.net/kl28978113/article/details/53018225
 
 重启计算机后生效；
 
-### IDEA 中使用 Gradle
+### 3.7. IDEA 中使用 Gradle
 
-#### IDEA 中三种 gradle 模式的区别
+#### 3.7.1. IDEA 中三种 gradle 模式的区别
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/7d7e7dcb30d109bd397a6b8ae03ce597.jpg)
 
@@ -273,7 +273,7 @@ http://blog.csdn.net/kl28978113/article/details/53018225
   使用本地 Gradle；         
   不利于项目的迁移，若在别的环境中打开项目，很可能会发生 Gradle 的版本冲突等问题；
 
-#### Unindexed remote maven repositories
+#### 3.7.2. Unindexed remote maven repositories
 
 创建项目后出现下边的错误：        
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/644c6ee249567850e69050df3d090547.jpg)
@@ -291,7 +291,7 @@ maven {
 }
 ```
 
-### 优化 Gradle
+### 3.8. 优化 Gradle
 
 Gradle 有个 Daemon 配置，开启这个配置能有效的提高编译速度；
 
@@ -308,7 +308,7 @@ Gradle 有个 Daemon 配置，开启这个配置能有效的提高编译速度�
 org.gradle.daemon=true
 ```
 
-### 将 pom.xml 转化为 build.gradle
+### 3.9. 将 pom.xml 转化为 build.gradle
 
 复制 maven 项目到另外一个文件夹，执行
 ```
@@ -320,7 +320,7 @@ gradle init --type pom
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/29d67799e3787372ec34d6411447bc3a.jpg)
 
-## Refer Links
+## 4. Refer Links
 
 官网文档 https://gradle.org/docs/ 
 

@@ -1,16 +1,16 @@
 - [JSP 生命周期](#jsp-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
-  - [JSP 文件与 Servlet 的关系](#jsp-%E6%96%87%E4%BB%B6%E4%B8%8E-servlet-%E7%9A%84%E5%85%B3%E7%B3%BB)
-  - [JSP 文件转换为 Servlet 的过程](#jsp-%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2%E4%B8%BA-servlet-%E7%9A%84%E8%BF%87%E7%A8%8B)
-  - [服务端处理 JSP 请求的过程 /JSP 生命周期](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%A4%84%E7%90%86-jsp-%E8%AF%B7%E6%B1%82%E7%9A%84%E8%BF%87%E7%A8%8B-jsp-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
-    - [编译阶段](#%E7%BC%96%E8%AF%91%E9%98%B6%E6%AE%B5)
-    - [初始化阶段](#%E5%88%9D%E5%A7%8B%E5%8C%96%E9%98%B6%E6%AE%B5)
-    - [执行阶段](#%E6%89%A7%E8%A1%8C%E9%98%B6%E6%AE%B5)
-    - [销毁阶段](#%E9%94%80%E6%AF%81%E9%98%B6%E6%AE%B5)
-    - [验证实验](#%E9%AA%8C%E8%AF%81%E5%AE%9E%E9%AA%8C)
+  - [1. JSP 文件与 Servlet 的关系](#1-jsp-%E6%96%87%E4%BB%B6%E4%B8%8E-servlet-%E7%9A%84%E5%85%B3%E7%B3%BB)
+  - [2. JSP 文件转换为 Servlet 的过程](#2-jsp-%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2%E4%B8%BA-servlet-%E7%9A%84%E8%BF%87%E7%A8%8B)
+  - [3. 服务端处理 JSP 请求的过程 /JSP 生命周期](#3-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%A4%84%E7%90%86-jsp-%E8%AF%B7%E6%B1%82%E7%9A%84%E8%BF%87%E7%A8%8B-jsp-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+    - [3.1. 编译阶段](#31-%E7%BC%96%E8%AF%91%E9%98%B6%E6%AE%B5)
+    - [3.2. 初始化阶段](#32-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%98%B6%E6%AE%B5)
+    - [3.3. 执行阶段](#33-%E6%89%A7%E8%A1%8C%E9%98%B6%E6%AE%B5)
+    - [3.4. 销毁阶段](#34-%E9%94%80%E6%AF%81%E9%98%B6%E6%AE%B5)
+    - [3.5. 验证实验](#35-%E9%AA%8C%E8%AF%81%E5%AE%9E%E9%AA%8C)
 
 # JSP 生命周期
 
-## JSP 文件与 Servlet 的关系
+## 1. JSP 文件与 Servlet 的关系
 
 http://www.webkaka.com/blog/archives/the-location-of-jsp-java-file.html
 
@@ -34,7 +34,7 @@ http://www.webkaka.com/blog/archives/the-location-of-jsp-java-file.html
   
   test.jsp 会编译生成`test1_jsp.java`和`test1_jsp.class`；
 
-## JSP 文件转换为 Servlet 的过程
+## 2. JSP 文件转换为 Servlet 的过程
 
 转换过程示意图：
 
@@ -118,17 +118,17 @@ P.S.
   ```
   在 Weblogic 中生成临时文件中即可看到编译前的 java 文件。
 
-## 服务端处理 JSP 请求的过程 /JSP 生命周期
+## 3. 服务端处理 JSP 请求的过程 /JSP 生命周期
 
 JSP 生命周期的几个阶段：
 
-### 编译阶段
+### 3.1. 编译阶段
 
 由 servlet 容器（如 tomcat）编译 JSP 文件成 servlet 源文件（java 文件），生成 servlet 类（class 文件），在编译过程中如果发生错误，会立刻中止，同时向服务器端和客户端发送错误信息报告；
 
 当客户端浏览器请求 JSP 页面时，JSP 引擎会首先去检查是否需要编译这个文件。如果这个文件没有被编译过，或者在上次编译后被更改过，则编译这个 JSP 文件；
 
-### 初始化阶段
+### 3.2. 初始化阶段
 
 初始化过程在 jsp 页面第一次被访问时执行，且只执行一次，JSP 引擎会按以下顺序调用初始化方法；
 
@@ -146,7 +146,7 @@ JSP 生命周期的几个阶段：
 
 **注意：一般以下划线“_”开头命名的方法，都是系统自动生成不可 override 的。**
 
-### 执行阶段
+### 3.3. 执行阶段
 
 当 JSP 网页完成初始化后，JSP 引擎会将编译的都的 Servlet 程序加载到内存（并常驻内存），对客户端的每一个请求，会开启一个线程调用_jspService() 方法，将响应以静态形式（HTML）返回；
 
@@ -161,7 +161,7 @@ _jspService() 方法在每个 request 中被调用一次并且负责产生与之
 
 这一阶段描述了 JSP 生命周期中一切与请求相关的交互行为，直到被销毁；
 
-### 销毁阶段
+### 3.4. 销毁阶段
 
 <!-- TODO: 什么时候会执行销毁？）由于某种原因导致 jsp 网页关闭或者销毁的话 / 服务器关闭？ -->
 
@@ -178,7 +178,7 @@ _jspService() 方法在每个 request 中被调用一次并且负责产生与之
 
 该阶段描述了当一个 JSP 网页从容器中被移除时所发生的一切；
 
-### 验证实验
+### 3.5. 验证实验
 
 http://www.xlgps.com/article/386296.html 
 

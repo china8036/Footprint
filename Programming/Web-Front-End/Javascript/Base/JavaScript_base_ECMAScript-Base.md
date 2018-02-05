@@ -1,58 +1,58 @@
 - [JavaScript Note - ECMAScript](#javascript-note---ecmascript)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-  - [基本语法](#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95)
-    - [区分大小写](#%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99)
-    - [注释](#%E6%B3%A8%E9%87%8A)
-    - [标识符](#%E6%A0%87%E8%AF%86%E7%AC%A6)
-  - [代码结构](#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
-    - [区块](#%E5%8C%BA%E5%9D%97)
-    - [if 结构](#if-%E7%BB%93%E6%9E%84)
-    - [switch 结构](#switch-%E7%BB%93%E6%9E%84)
-    - [while 循环](#while-%E5%BE%AA%E7%8E%AF)
-    - [for 循环](#for-%E5%BE%AA%E7%8E%AF)
-  - [变量](#%E5%8F%98%E9%87%8F)
-    - [变量定义](#%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89)
-    - [作用域](#%E4%BD%9C%E7%94%A8%E5%9F%9F)
-    - [变量提升](#%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87)
-  - [数据类型](#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)
-    - [类型检测](#%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B)
-      - [typeof](#typeof)
-      - [instanceof](#instanceof)
-    - [原始类型](#%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B)
-      - [null](#null)
-      - [undefined](#undefined)
-      - [Boolean](#boolean)
-      - [Number](#number)
-      - [String](#string)
-    - [Object](#object)
-      - [狭义 Object](#%E7%8B%AD%E4%B9%89-object)
-      - [数组 Array](#%E6%95%B0%E7%BB%84-array)
-      - [函数 Function](#%E5%87%BD%E6%95%B0-function)
-        - [函数参数](#%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0)
-        - [原型对象](#%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1)
-      - [包装类型](#%E5%8C%85%E8%A3%85%E7%B1%BB%E5%9E%8B)
-        - [Number](#number)
-        - [String](#string)
-        - [Boolean](#boolean)
-      - [Math](#math)
-      - [Date](#date)
-      - [RegExp](#regexp)
-      - [JSON](#json)
-      - [console](#console)
-      - [内置对象](#%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1)
-    - [数据类型转换](#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2)
-  - [异常处理](#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
-  - [匿名函数](#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0)
-    - [递归](#%E9%80%92%E5%BD%92)
-    - [闭包](#%E9%97%AD%E5%8C%85)
-    - [仿块级作用域](#%E4%BB%BF%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F)
-    - [私有变量](#%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F)
-    - [立即调用的函数表达式 (IIFE)](#%E7%AB%8B%E5%8D%B3%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F-iife)
-  - [Refer](#refer)
+	- [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+	- [2. 基本语法](#2-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95)
+		- [2.1. 区分大小写](#21-%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99)
+		- [2.2. 注释](#22-%E6%B3%A8%E9%87%8A)
+		- [2.3. 标识符](#23-%E6%A0%87%E8%AF%86%E7%AC%A6)
+	- [3. 代码结构](#3-%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
+		- [3.1. 区块](#31-%E5%8C%BA%E5%9D%97)
+		- [3.2. if 结构](#32-if-%E7%BB%93%E6%9E%84)
+		- [3.3. switch 结构](#33-switch-%E7%BB%93%E6%9E%84)
+		- [3.4. while 循环](#34-while-%E5%BE%AA%E7%8E%AF)
+		- [3.5. for 循环](#35-for-%E5%BE%AA%E7%8E%AF)
+	- [4. 变量](#4-%E5%8F%98%E9%87%8F)
+		- [4.1. 变量定义](#41-%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89)
+		- [4.2. 作用域](#42-%E4%BD%9C%E7%94%A8%E5%9F%9F)
+		- [4.3. 变量提升](#43-%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87)
+	- [5. 数据类型](#5-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)
+		- [5.1. 类型检测](#51-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B)
+			- [5.1.1. typeof](#511-typeof)
+			- [5.1.2. instanceof](#512-instanceof)
+		- [5.2. 原始类型](#52-%E5%8E%9F%E5%A7%8B%E7%B1%BB%E5%9E%8B)
+			- [5.2.1. null](#521-null)
+			- [5.2.2. undefined](#522-undefined)
+			- [5.2.3. Boolean](#523-boolean)
+			- [5.2.4. Number](#524-number)
+			- [5.2.5. String](#525-string)
+		- [5.3. Object](#53-object)
+			- [5.3.1. 狭义 Object](#531-%E7%8B%AD%E4%B9%89-object)
+			- [5.3.2. 数组 Array](#532-%E6%95%B0%E7%BB%84-array)
+			- [5.3.3. 函数 Function](#533-%E5%87%BD%E6%95%B0-function)
+				- [5.3.3.1. 函数参数](#5331-%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0)
+				- [5.3.3.2. 原型对象](#5332-%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1)
+			- [5.3.4. 包装类型](#534-%E5%8C%85%E8%A3%85%E7%B1%BB%E5%9E%8B)
+				- [5.3.4.1. Number](#5341-number)
+				- [5.3.4.2. String](#5342-string)
+				- [5.3.4.3. Boolean](#5343-boolean)
+			- [5.3.5. Math](#535-math)
+			- [5.3.6. Date](#536-date)
+			- [5.3.7. RegExp](#537-regexp)
+			- [5.3.8. JSON](#538-json)
+			- [5.3.9. console](#539-console)
+			- [5.3.10. 内置对象](#5310-%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1)
+		- [5.4. 数据类型转换](#54-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2)
+	- [6. 异常处理](#6-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
+	- [7. 匿名函数](#7-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0)
+		- [7.1. 递归](#71-%E9%80%92%E5%BD%92)
+		- [7.2. 闭包](#72-%E9%97%AD%E5%8C%85)
+		- [7.3. 仿块级作用域](#73-%E4%BB%BF%E5%9D%97%E7%BA%A7%E4%BD%9C%E7%94%A8%E5%9F%9F)
+		- [7.4. 私有变量](#74-%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F)
+		- [7.5. 立即调用的函数表达式 (IIFE)](#75-%E7%AB%8B%E5%8D%B3%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F-iife)
+	- [8. Refer](#8-refer)
 
 # JavaScript Note - ECMAScript 
 
-## 概述
+## 1. 概述
 https://zh.wikipedia.org/wiki/JavaScript
 
 > JavaScript，一种高级编程语言，通过解释执行，是一门动态类型，面向对象（基于原型）的直译语言。它已经由 ECMA（欧洲电脑制造商协会）通过 ECMAScript 实现语言的标准化。
@@ -67,7 +67,7 @@ https://zh.wikipedia.org/wiki/JavaScript
 	- DOM（文档对象模型），描述处理网页内容的方法和接口
 	- BOM（浏览器对象模型），描述与浏览器进行交互的方法和接口
 
-## 基本语法 
+## 2. 基本语法
 
 JavaScript 的语法和 Java 语言类似，每个语句以；结束，语句块用{...}；
 注：
@@ -76,17 +76,17 @@ JavaScript 并不强制要求在每个语句的结尾加 “;”，浏览器中�
 
 JavaScript 程序的执行单位为行（line），也就是一行一行地执行。一般情况下，每一行就是一个语句。
 
-### 区分大小写 
+### 2.1. 区分大小写
 JavaScript 严格区分大小写。
 
-### 注释 
+### 2.2. 注释
 ECMAScript 采用 C 风格的注释：
 
 行注释：以 // 开头直到行末的字符，JavaScript 引擎会自动忽略注释；
 
 块注释：用 /*...*/ 把多行字符包裹起来，把一大“块”视为一个注释；
 
-### 标识符 
+### 2.3. 标识符
 标识符指的是变量、函数、函数参数、属性的命名；
 
 - 标识符命名规范
@@ -112,14 +112,14 @@ a+b  // 标识符不能包含加号
 -d  // 标识符不能包含减号或连词线
 ```
 
-## 代码结构 
+## 3. 代码结构
 
-### 区块 
+### 3.1. 区块
 JavaScript 使用大括号，将多个相关的语句组合在一起，称为“区块”（block）；
 
 与大多数编程语言不一样，**JavaScript 的区块不构成单独的作用域（scope）**。也就是说，区块中的变量与区块外的变量，属于同一个作用域；
 
-### if 结构 
+### 3.2. if 结构
 ```javascript
 if (expression) {
 	statement;
@@ -130,7 +130,7 @@ if (expression) {
 }
 ```
 
-### switch 结构 
+### 3.3. switch 结构
 ```
 switch (fruit) {
   case "banana":
@@ -164,22 +164,22 @@ ECMAScript 和 Java 中的 switch 语句有两点不同：
 
 - 在 ECMAScript 中，switch 语句可以用于字符串
 
-### while 循环
+### 3.4. while 循环
 ```
 while (expression) {
   statement;
 }
 ```
 
-### for 循环 
+### 3.5. for 循环
 ```
 for (initialize; test; increment) {
   statement
 }
 ```
 
-## 变量 
-### 变量定义 
+## 4. 变量
+### 4.1. 变量定义
 
 - ECMAScript 中，使用** var 操作符**定义的变量将成为定义该变量的作用域中的**局部变量**，若不使用 var 操作符，将创建一个**全局变量**；
 例：   
@@ -221,14 +221,14 @@ a = "hello";
 	x = 2;
 ```
 
-### 作用域
+### 4.2. 作用域
 Javascript 只有两种作用域：
 - 一种是**全局作用域**，变量在整个程序中一直存在，所有地方都可以读取；
 - 另一种是**函数作用域**，变量只在函数内部存在；
 
 也就是说，在函数外部声明的变量全都是全局变量（global variable），在函数内部定义的变量，外部无法读取，称为“局部变量”（local variable）；
 
-### 变量提升 
+### 4.3. 变量提升
 在解析 JavaScript 脚本时，JavaScript 引擎的工作方式是：先解析所有使用 var 操作符声明的变量，然后再一行一行地运行其它代码。这造成的结果，就是所有的变量的声明语句，都会被提升到代码的头部，这就叫做**变量提升（hoisting）**；
 
 例：
@@ -245,14 +245,14 @@ Javascript 只有两种作用域：
 
 注意：变量提升**只对 var 操作符声明的变量有效**，如果一个变量不是用 var 命令声明的，就不会发生变量提升；
 
-## 数据类型
+## 5. 数据类型
 ECMAScript 中有 5 种基本数据类型，以及 1 种复杂数据类型 --Object；
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/23/86950679098abc59eb5f63113def8929.jpg)
 
-### 类型检测
+### 5.1. 类型检测
 http://www.imooc.com/video/5677
 
-#### typeof 
+#### 5.1.1. typeof
 typeof 操作符返回一个字符串，表示变量的数据类型，可能返回的类型有：number、string、boolean、function、undefined 以及 object（不满足其它类型的情况都返回 object）；
 
 ```javascript
@@ -271,13 +271,13 @@ alert(typeof NaN);//object
 
 - typeof 一般适用于原始数据类型的判断；
 
-#### instanceof 
+#### 5.1.2. instanceof
 
 instanceof 是基于原型链的类型判断运算符，一般用于 Object 类型的判断；
 
-### 原始类型 
+### 5.2. 原始类型
 
-#### null 
+#### 5.2.1. null
 - null 表示一个空对象指针，即 “没有对象”，该处不应该有值。典型用法是：
 	- 作为函数的参数，表示该函数的参数不是对象；
 	- 作为对象原型链的终点；
@@ -294,7 +294,7 @@ instanceof 是基于原型链的类型判断运算符，一般用于 Object 类�
 
 - 只要在保存对象的变量还没有真正保存对象之前，都应该明确地将该变量赋值为 null；
 
-#### undefined
+#### 5.2.2. undefined
 - undefined 表示"未定义"，就是此处应该有一个值，但是还没有定义。典型用法是：
 	- 变量被声明了，但没有赋值时，就等于 undefined；
 	- 调用函数时，应该提供的参数没有提供，该参数等于 undefined；
@@ -337,7 +337,7 @@ instanceof 是基于原型链的类型判断运算符，一般用于 Object 类�
 	5 + undefined // NaN
 	```
 
-#### Boolean
+#### 5.2.3. Boolean
 
 - Boolean 只有两个字面值：true 和 false；
 - Boolean 类型的字面值 true 和 false 是区分大小写的，True、False 等都不是 Boolean 值；
@@ -354,7 +354,7 @@ NaN
 ```
 需要特别注意的是，**空数组（[]）和空对象（{}）对应的布尔值，都是 true**；
 
-#### Number 
+#### 5.2.4. Number
 
 - Number 类型使用 IEEE754 标准来表示整数与浮点数值；
 - Number 类型可表示多种进制的整数：
@@ -375,7 +375,7 @@ NaN
 	- 任何数除以 0 都会返回 NaN；
 	- NaN 与任何值都不相等，包括 NaN 本身；
 
-#### String
+#### 5.2.5. String
 
 - String 类型用于表示由零或多个 16 位 Unicode 字符组成的字符序列，即字符串；
 - 字符串可以由双引号或单引号表示（在 ECMAScript 中双引号和单引号的解析方式基本完全相同）；
@@ -389,7 +389,7 @@ lang = lang + "script"
 
 先创建一个能容纳 10 个字符的新字符串，然后在这个字符串中填充 “java” 和 “script”，最后一步是销毁原来字符串 "java" 和字符串 “script”；
 
-### Object ###
+### 5.3. Object ###
 - 对象（object）是 JavaScript 的核心概念，也是最重要的数据类型；
 
 - 对象可分为三种类型：**狭义的对象（object）、数组（array）、函数（function）**；
@@ -397,7 +397,7 @@ lang = lang + "script"
 
 - 需要明确的是，JavaScript 的所有数据，都可以视为广义的对象。不仅数组和函数属于对象，就连原始类型的数据（数值、字符串、布尔值）也可以用对象方式调用；
 
-#### 狭义 Object 
+#### 5.3.1. 狭义 Object
 - 对象是一种无序的数据集合，由若干个“键值对”（key-value）构成；
 
 - 对象的创建通常有三种方法：
@@ -488,7 +488,7 @@ lang = lang + "script"
 	JavaScript 中遍历对象的多种方法：https://huixisheng.github.io/object-loop/
 	
 
-#### 数组 Array
+#### 5.3.2. 数组 Array
 
 - 数组（array）是按次序排列的一组值，每个值的位置都有编号（从 0 开始），整个数组用方括号表示；
 - 数组的创建方式一般有两种：
@@ -541,7 +541,7 @@ lang = lang + "script"
 	})
 ```
 
-#### 函数 Function 
+#### 5.3.3. 函数 Function
 
 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function
 
@@ -667,7 +667,7 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 		}
 	```
 
-##### 函数参数
+##### 5.3.3.1. 函数参数
 
 - 调用函数时，函数参数不是必需的，Javascript 允许省略参数，被省略的参数的值为 undefined
 	```javascript
@@ -732,7 +732,7 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 	obj // [1, 2, 3]
 	```
 
-##### 原型对象
+##### 5.3.3.2. 原型对象
 
 - 属性
 
@@ -824,7 +824,7 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 
 
 		
-#### 包装类型 
+#### 5.3.4. 包装类型
 
 ECMAScript 中每个原始数据类型都存在对应的包装类型：String、Number、Boolean；
 
@@ -836,31 +836,31 @@ ECMAScript 中每个原始数据类型都存在对应的包装类型：String、
 当对一个原始数据类型的变量执行 “对象” 的操作时，ECMAScript 会自动创建一个对应的临时包装类型的对象并赋以相同的值，完成用户所需的 “对象” 操作后，又将该临时包装对象销毁。   
 因此，原始类型的字符串可以成功输出 length 属性并动态赋一个新的属性值，但赋值后该包装类即被销毁故为 undefined。
 
-##### Number
+##### 5.3.4.1. Number
 
-##### String
+##### 5.3.4.2. String
 
-##### Boolean
+##### 5.3.4.3. Boolean
 
-#### Math 
+#### 5.3.5. Math
 
-#### Date
+#### 5.3.6. Date
 
-#### RegExp
+#### 5.3.7. RegExp
 
-#### JSON 
+#### 5.3.8. JSON
 
-#### console
+#### 5.3.9. console
 
-#### 内置对象
+#### 5.3.10. 内置对象
 
-### 数据类型转换 
+### 5.4. 数据类型转换
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/636660656ff60630d6afaa4e0b37fe8a.jpg)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/5bcb6e749ea0564b0a70c68778cc8500.jpg)
 
-## 异常处理
+## 6. 异常处理
 
 ```javascript
 console.log("a");    // 這是正確的
@@ -878,20 +878,20 @@ try{console.log("e");}catch(e){}    // 這是正確的
 ```
 
 
-## 匿名函数 
+## 7. 匿名函数
 
-### 递归
+### 7.1. 递归
 
-### 闭包 
+### 7.2. 闭包
 闭包（closure）是 Javascript 语言的一个难点，也是它的特色，很多高级应用都要依靠闭包实现；
 
 http://javascript.ruanyifeng.com/grammar/function.html
 
-### 仿块级作用域 
+### 7.3. 仿块级作用域
 
-### 私有变量 
+### 7.4. 私有变量
 
-### 立即调用的函数表达式 (IIFE)
+### 7.5. 立即调用的函数表达式 (IIFE)
 
 https://www.cnblogs.com/TomXu/archive/2011/12/31/2289423.html 
 
@@ -913,7 +913,7 @@ storeData(tmp);
 ```
 上面代码中，写法二比写法一更好，因为完全避免了污染全局变量。
 
-## Refer
+## 8. Refer
 
 阮一峰的 JavaScript 教程：   
 http://javascript.ruanyifeng.com/    

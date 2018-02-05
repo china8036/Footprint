@@ -1,15 +1,15 @@
 - [Python pyinstaller Note](#python-pyinstaller-note)
-  - [简介](#%E7%AE%80%E4%BB%8B)
-  - [使用](#%E4%BD%BF%E7%94%A8)
-    - [安装](#%E5%AE%89%E8%A3%85)
-    - [命令](#%E5%91%BD%E4%BB%A4)
-    - [打包为一个文件夹](#%E6%89%93%E5%8C%85%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9)
-    - [打包为一个文件](#%E6%89%93%E5%8C%85%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6)
-    - [spec 文件](#spec-%E6%96%87%E4%BB%B6)
+  - [1. 简介](#1-%E7%AE%80%E4%BB%8B)
+  - [2. 使用](#2-%E4%BD%BF%E7%94%A8)
+    - [2.1. 安装](#21-%E5%AE%89%E8%A3%85)
+    - [2.2. 命令](#22-%E5%91%BD%E4%BB%A4)
+    - [2.3. 打包为一个文件夹](#23-%E6%89%93%E5%8C%85%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%A4%B9)
+    - [2.4. 打包为一个文件](#24-%E6%89%93%E5%8C%85%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6)
+    - [2.5. spec 文件](#25-spec-%E6%96%87%E4%BB%B6)
 
 # Python pyinstaller Note
 
-## 简介
+## 1. 简介
 
 PyInstaller 可以用来打包 python 应用程序，打包完的程序就可以在没有安装 Python 解释器的机器上运行了。PyInstaller 支持 Python 2.7 和 Python 3.3+。
 
@@ -19,8 +19,8 @@ Pyinstaller 可以在 Windows、Mac OS X 和 Linux 上使用，但在不同的�
 
 2)	在 Mac OS 上运行 Pyinstaller 进行打包工作，会打包成 mac app；
 
-## 使用
-### 安装
+## 2. 使用
+### 2.1. 安装
 ```
 pip install pyinstaller
 ```
@@ -36,7 +36,7 @@ IndexError: tuple index out of range
 解决方法：     
 官方在 GitHub 已经更新了 pyinstaller3.3 的源码，但还没有发布，而 pyinstaller3.3 版本是支持 oy3.6 的，因此，在 https://github.com/pyinstaller/pyinstaller 下载源码包，解压缩后复制其中的 Pyinstaller 文件夹，替换`C:\Users\firej\AppData\Local\Programs\Python\Python36\Lib\site-packages\PyInstaller`，即可。
 
-### 命令
+### 2.2. 命令
 在命令行中切换到要打包的程序所在目录，直接输入指令即可：
 ```
 pyinstaller demo.py
@@ -51,7 +51,7 @@ pyinstaller demo.py
 
 PyInstaller 会分析你的 python 程序，找到所有的依赖项。然后将依赖文件和 python 解释器放到一个文件夹下或者一个可执行文件中。
 
-### 打包为一个文件夹
+### 2.3. 打包为一个文件夹
 
 使用 PyInstaller 打包的时候，默认生成一个文件夹，文件夹中包含所有依赖项，以及可执行文件。打包成文件夹的好处就是 debug 的时候可以清楚的看到依赖项有没有包含。另一个好处是更新的时候，只需要更新可执行文件就可以了。当然缺点也很明显，不方便，不易管理。
 ```
@@ -60,7 +60,7 @@ pyinstaller xxx.py
 
 它是如何工作的呢？PyInstaller 的引导程序是一个二进制可执行程序。当用户启动你的程序的时候，PyInstaller 的引导程序开始运行，首先创建一个临时的 Python 环境，然后通过 Python 解释器导入程序的依赖，当然他们都在同一个文件夹下。
 
-### 打包为一个文件
+### 2.4. 打包为一个文件
 ```
 pyinstaller -F xxx.py
 ```
@@ -71,7 +71,7 @@ pyinstaller -F xxx.py
 运行`pyinstaller –F xx.py` 之后，会在当前目录下生成 dist、build 和一个 spec 文件，这些都是打包过程中生成的东西，因 -F 参数会将所有依赖打包到可执行文件中，这几个副产品都可以删除。     
 生成的可执行文件与 xxx.py 同名，如 xxx.exe，注意若 py 中使用了与路径相关的代码，exe 文件必须放在与 py 文件相同的路径下才能正确运行。
 
-### spec 文件
+### 2.5. spec 文件
 http://legendtkl.com/2015/11/06/pyinstaller/ 
 
 ```

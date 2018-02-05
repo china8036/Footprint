@@ -1,26 +1,26 @@
 - [CSS 单位](#css-%E5%8D%95%E4%BD%8D)
-  - [Absolute Lengths Unit](#absolute-lengths-unit)
-    - [px](#px)
-    - [mm](#mm)
-    - [pt](#pt)
-    - [in](#in)
-    - [cm](#cm)
-  - [Relative Lengths Unit](#relative-lengths-unit)
-    - [Font-relative lengths](#font-relative-lengths)
-      - [rem & em](#rem-em)
-        - [如何转化为像素值](#%E5%A6%82%E4%BD%95%E8%BD%AC%E5%8C%96%E4%B8%BA%E5%83%8F%E7%B4%A0%E5%80%BC)
-        - [为什么使用 rem 和 em](#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-rem-%E5%92%8C-em)
-      - [ex & ch](#ex-ch)
-    - [Viewport-percentage lengths](#viewport-percentage-lengths)
-      - [vh & vw](#vh-vw)
-      - [vmin & vmax](#vmin-vmax)
-      - [vi & vb](#vi-vb)
-  - [浏览器兼容情况](#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%83%85%E5%86%B5)
-  - [Refer Links](#refer-links)
+  - [1. Absolute Lengths Unit](#1-absolute-lengths-unit)
+    - [1.1. px](#11-px)
+    - [1.2. mm](#12-mm)
+    - [1.3. pt](#13-pt)
+    - [1.4. in](#14-in)
+    - [1.5. cm](#15-cm)
+  - [2. Relative Lengths Unit](#2-relative-lengths-unit)
+    - [2.1. Font-relative lengths](#21-font-relative-lengths)
+      - [2.1.1. rem & em](#211-rem-em)
+        - [2.1.1.1. 如何转化为像素值](#2111-%E5%A6%82%E4%BD%95%E8%BD%AC%E5%8C%96%E4%B8%BA%E5%83%8F%E7%B4%A0%E5%80%BC)
+        - [2.1.1.2. 为什么使用 rem 和 em](#2112-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-rem-%E5%92%8C-em)
+      - [2.1.2. ex & ch](#212-ex-ch)
+    - [2.2. Viewport-percentage lengths](#22-viewport-percentage-lengths)
+      - [2.2.1. vh & vw](#221-vh-vw)
+      - [2.2.2. vmin & vmax](#222-vmin-vmax)
+      - [2.2.3. vi & vb](#223-vi-vb)
+  - [3. 浏览器兼容情况](#3-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%83%85%E5%86%B5)
+  - [4. Refer Links](#4-refer-links)
 
 # CSS 单位
 
-## Absolute Lengths Unit
+## 1. Absolute Lengths Unit
 
 | Unit | Description                              |
 | ---- | ---------------------------------------- |
@@ -33,27 +33,27 @@
 
 `* Pixels` (px) are relative to the viewing device. For low-dpi devices, 1px is one device pixel (dot) of the display. For printers and high resolution screens 1px implies multiple device pixels.
 
-### px
+### 1.1. px
 
 Depends on the viewing device. For screen displays, it traditionally represents one device pixel (dot). However, for printers and high-resolution screens, one CSS pixel implies multiple device pixels, so that the number of pixels per inch stays around 96.
 
-### mm
+### 1.2. mm
 
 One millimeter.
 
-### pt
+### 1.3. pt
 
 One point (1/72nd of an inch).
 
-### in
+### 1.4. in
 
 One inch (2.54 centimeters).
 
-### cm
+### 1.5. cm
 
 One centimeter (10 millimeters).
 
-## Relative Lengths Unit
+## 2. Relative Lengths Unit
 
 | Unit | Description                              |
 | ---- | ---------------------------------------- |
@@ -71,17 +71,17 @@ Tip: The em and rem units are practical in creating perfectly scalable layout!
 
 `* Viewport` = the browser window size. If the viewport is 50cm wide, 1vw = 0.5cm.
 
-### Font-relative lengths
+### 2.1. Font-relative lengths
 
 Font-relative lengths specify the `<length>` value in terms of the size of a particular character or font attribute in the font currently in effect in an element or its parent.
 
 Note: If the `<html>` and `<body>` elements are set as `overflow:auto`, space taken by scrollbars is not subtracted from the viewport, whereas it will be subtracted if set as `overflow:scroll`.
 
-#### rem & em
+#### 2.1.1. rem & em
 
 em 和 rem 都是灵活可扩展的单位，由浏览器转换为像素值，使用 em 和 rem 单位可以让我们的设计更加灵活，能够控制元素整体放大缩小，而不是固定大小。
 
-##### 如何转化为像素值
+##### 2.1.1.1. 如何转化为像素值
 
 - rem 如何转化为像素值
 
@@ -97,7 +97,7 @@ em 和 rem 都是灵活可扩展的单位，由浏览器转换为像素值，使
 
   有一个比较普遍的误解，认为 em 单位是相对于父元素的字体大小。 事实上，根据 W3 标准 ，它们是相对于使用 em 单位的元素的字体大小。父元素的字体大小可以影响 em 值，但这种情况的发生，纯粹是因为继承。
 
-##### 为什么使用 rem 和 em
+##### 2.1.1.2. 为什么使用 rem 和 em
 
 - 为什么使用 rem 单位
 
@@ -151,28 +151,28 @@ NOTE：
 - 若一旦缩放就会破坏布局结构（这种情况很少见），就不要使用 em 或 rem，而使用固定长度单位，如px。
 
 
-#### ex & ch
+#### 2.1.2. ex & ch
 
 ex和ch单位，与em和rem相似，依赖于当前字体和字体大小。然而，与em和rem不同的是，这两个单位只也依赖于font-family，因为它们被定为基于特殊字体的法案。
 
 
-### Viewport-percentage lengths
+### 2.2. Viewport-percentage lengths
 
 Viewport-percentage lengths define the `<length>` value relative to the size of the viewport, i.e., the visible portion of the document. Viewport lengths are invalid in `@page` declaration blocks.
 
-#### vh & vw
+#### 2.2.1. vh & vw
 
 vh: Equal to 1% of the height of **the viewport's initial containing block**(window.innerHeight).
 
 vw: Equal to 1% of the width of **the viewport's initial containing block**(window.innerWidth).
 
-#### vmin & vmax
+#### 2.2.2. vmin & vmax
 
 vmin: Equal to the smaller of vw and vh.
 
 vmax: Equal to the larger of vw and vh.
 
-#### vi & vb
+#### 2.2.3. vi & vb
  
 vi: Equal to 1% of the size of the initial containing block, in the direction of the root element’s inline axis.
  
@@ -192,11 +192,11 @@ vb: Equal to 1% of the size of the initial containing block, in the direction of
 .box { height: 100vmax; width: 100vmax; }
 ```
 
-## 浏览器兼容情况
+## 3. 浏览器兼容情况
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/9/d4ec2124c21c2d088cd3b279ce0da3b4.jpg)
 
-## Refer Links
+## 4. Refer Links
 
 https://www.w3schools.com/cssref/css_units.asp
 

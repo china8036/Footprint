@@ -1,13 +1,13 @@
 - [JSP 预定义对象](#jsp-%E9%A2%84%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1)
-  - [application](#application)
-  - [config](#config)
-  - [exception：](#exception%EF%BC%9A)
-  - [out：](#out%EF%BC%9A)
-  - [page](#page)
-  - [pageContext](#pagecontext)
-  - [request](#request)
-  - [response](#response)
-  - [session](#session)
+  - [1. application](#1-application)
+  - [2. config](#2-config)
+  - [3. exception：](#3-exception%EF%BC%9A)
+  - [4. out：](#4-out%EF%BC%9A)
+  - [5. page](#5-page)
+  - [6. pageContext](#6-pagecontext)
+  - [7. request](#7-request)
+  - [8. response](#8-response)
+  - [9. session](#9-session)
 
 # JSP 预定义对象
 
@@ -31,7 +31,7 @@ java.lang.Throwable Exception；
 ```
 注意：正因为预定义对象都是在_jspService 方法中定义的，因此，在“<% %>”或“<%= %>”或 jsp 预定义的动作标签中可以使用预定义对象，而在<%@ %>中不可使用；
 
-## application
+## 1. application
 
 - 定义：
   ```java
@@ -104,7 +104,7 @@ java.lang.Throwable Exception；
   - application 对象代表 Web 应用本身，具有全局操作性，可以在整个 Web 应用的多个 JSP、Servlet 之间共享数据；
   - application 可以从 web.xml 中读取全局配置文件 web.xml，可以访问 Web 应用的全局配置参数；
 
-## config
+## 2. config
 
 - 定义：
   ```
@@ -183,7 +183,7 @@ java.lang.Throwable Exception；
   - Enumeration<String> getInitParameterNames()：返回 web.xml 中当前 jsp 页面 /Servlet 初始化所需要的所有参数的枚举；
   - String getServletName()；
 
-## exception：
+## 3. exception：
 
 - 定义：`java.lang.Throwable Exception；`
 
@@ -219,7 +219,7 @@ java.lang.Throwable Exception；
 
 - 应用：在开发过程中，可以定义一个统一的异常处理页面，所有的 JSP 页面中将 errorPage 属性指定为统一的异常处理页面，这样方便页面风格的统一，也方便页面调试；
 
-## out：
+## 4. out：
 
 - 定义：`javax.servlet.jsp.JspWriter out = pageContext.getOut();`
   
@@ -243,7 +243,7 @@ java.lang.Throwable Exception；
   - 由于在使用内置 out 对象的地方都可以使用更为简洁的输出表达式`<%= ... %>`来代替，所以在实际的 JSP 页面中，通常很少使用内置的 out 对象；
   - 输出表达式`<%= ... %>`的实现就是 out.print(...)；
 
-## page
+## 5. page
 
 - 定义：`final java.lang.Object page = this;`
 
@@ -255,7 +255,7 @@ java.lang.Throwable Exception；
 
   （page 对象的方法都是 Object 类的方法）
 
-## pageContext
+## 6. pageContext
 
 - 定义：
   ```
@@ -294,7 +294,7 @@ java.lang.Throwable Exception；
 
 - 应用：可以通过 pageContext 对象来访问 page、request、session 和 application 作用域下的变量。
 
-## request
+## 7. request
 
 - 定义：
   ```
@@ -428,7 +428,7 @@ java.lang.Throwable Exception；
 
 - 应用：
 
-## response
+## 8. response
 
 - 定义
   ```
@@ -591,7 +591,7 @@ java.lang.Throwable Exception；
     >%
     ```
 
-## session
+## 9. session
 
 - 定义：
   ```

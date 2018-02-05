@@ -1,18 +1,18 @@
 - [Tomcat 与 Nginx 搭配部署](#tomcat-%E4%B8%8E-nginx-%E6%90%AD%E9%85%8D%E9%83%A8%E7%BD%B2)
-  - [背景与意义](#%E8%83%8C%E6%99%AF%E4%B8%8E%E6%84%8F%E4%B9%89)
-  - [Tomcat 设置](#tomcat-%E8%AE%BE%E7%BD%AE)
-  - [Nginx 设置](#nginx-%E8%AE%BE%E7%BD%AE)
-    - [nginx.conf](#nginxconf)
-    - [负载均衡策略](#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5)
-  - [分布式 / 集群 session 共享机制](#%E5%88%86%E5%B8%83%E5%BC%8F-%E9%9B%86%E7%BE%A4-session-%E5%85%B1%E4%BA%AB%E6%9C%BA%E5%88%B6)
-    - [Session 保持（黏性 session）](#session-%E4%BF%9D%E6%8C%81%EF%BC%88%E9%BB%8F%E6%80%A7-session%EF%BC%89)
-    - [Session 复制](#session-%E5%A4%8D%E5%88%B6)
-    - [Session 共享](#session-%E5%85%B1%E4%BA%AB)
-  - [Refer Links](#refer-links)
+  - [1. 背景与意义](#1-%E8%83%8C%E6%99%AF%E4%B8%8E%E6%84%8F%E4%B9%89)
+  - [2. Tomcat 设置](#2-tomcat-%E8%AE%BE%E7%BD%AE)
+  - [3. Nginx 设置](#3-nginx-%E8%AE%BE%E7%BD%AE)
+    - [3.1. nginx.conf](#31-nginxconf)
+    - [3.2. 负载均衡策略](#32-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5)
+  - [4. 分布式 / 集群 session 共享机制](#4-%E5%88%86%E5%B8%83%E5%BC%8F-%E9%9B%86%E7%BE%A4-session-%E5%85%B1%E4%BA%AB%E6%9C%BA%E5%88%B6)
+    - [4.1. Session 保持（黏性 session）](#41-session-%E4%BF%9D%E6%8C%81%EF%BC%88%E9%BB%8F%E6%80%A7-session%EF%BC%89)
+    - [4.2. Session 复制](#42-session-%E5%A4%8D%E5%88%B6)
+    - [4.3. Session 共享](#43-session-%E5%85%B1%E4%BA%AB)
+  - [5. Refer Links](#5-refer-links)
 
 # Tomcat 与 Nginx 搭配部署
 
-## 背景与意义
+## 1. 背景与意义
 
 Tomcat 服务器作为一个 Web 服务器，其并发数在 300-500 之间，如果超过 500 的并发数会出现 Tomcat 不能响应新的请求的情况，严重影响网站的运行。同时如果访问量非常大的情况下，Tomcat 的线程数会不断增加。因此会占据大量内存，严重时出现内存溢出的现象，这时需要重启 Tomcat 以释放内存，阻断了网站的运行。所以对 Tomcat 做负载均衡便很有必要。
 
@@ -27,7 +27,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 - 整个负载均衡层和 Web 层的工作流程为 LVS/DR+Keeaplived→Nginx 反向代理（动静分离）→Tomcat 集群，可以保证整个网站不会因为某一台 LVS 或 Nginx+tomcat 机器挂掉而影响网站的运营。
 - Nginx 稳定，宕机的可能性微乎其乎。
 
-## Tomcat 设置
+## 2. Tomcat 设置
 
 分别配置多个 tomcat：
 - 修改 HTTP/1.1 监听不同的端口，如 8081、8082 等；
@@ -35,9 +35,9 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 
 同时启动多个 tomcat；
 
-## Nginx 设置
+## 3. Nginx 设置
 
-### nginx.conf
+### 3.1. nginx.conf
 
 1. 配置服务器组，在 http{}节点之间添加 upstream 配置。（注意不要写 localhost，不然会增加地址解析时间，降低访问速度）
     ```conf
@@ -139,7 +139,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 
       如果不想使用 root 用户运行，可以通过修改目录访问权限解决 403 问题，但不能把目录放在 root 用户宿主目录下，放在任意一个位置并给它 755，或者通过 chown 改变它的拥有者与 Nginx 运行身份一致也可以解决权限问题。
 
-### 负载均衡策略
+### 3.2. 负载均衡策略
 
 - 轮询（默认）
 
@@ -215,7 +215,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
   }
   ```
 
-## 分布式 / 集群 session 共享机制
+## 4. 分布式 / 集群 session 共享机制
 
 在搭建完集群或者分布式环境之后，如果不做任何处理的话，网站将频繁的出现用户未登录的现象。比如：集群中有 A、B 两台服务器，用户第一次访问网站时，Nginx 将用户请求分发到 A 服务器，这时 A 服务器给用户创建了一个 Session，当用户第二次访问网站时，假设 Nginx 将用户请求分发到了 B 服务器上，而这时 B 服务器并不存在用户的 Session，所以就会出现用户未登录的情况，这对用户来说是不可忍受的。
 
@@ -223,7 +223,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 
 处理 Session 的方式大致分为三种：Session 保持（黏性 Session）、Session 复制、Session 共享。
 
-### Session 保持（黏性 session）
+### 4.1. Session 保持（黏性 session）
 
 Session 保持（会话保持）就是将用户锁定到某一个服务器上。比如上面说的例子，用户第一次请求时，负载均衡器（Nginx）将用户的请求分发到了 A 服务器上，如果负载均衡器（Nginx）设置了 Session 保持的话，那么用户以后的每次请求都会分发到 A 服务器上，相当于把用户和 A 服务器粘到了一块，这就是 Session 保持的原理。Session 保持方案在所有的负载均衡器都有对应的实现。而且这是在负载均衡这一层就可以解决 Session 问题。
 
@@ -237,7 +237,7 @@ Session 保持（会话保持）就是将用户锁定到某一个服务器上。
 
 实现方式：以 Nginx 为例，在 upstream 模块配置 ip_hash 属性即可实现粘性 Session。
 
-### Session 复制
+### 4.2. Session 复制
 
 针对 Session 保持的容错性缺点，我们可以在所有服务器上都保存一份用户的 Session 信息。这种将每个服务器中的 Session 信息复制到其它服务器上的处理办法就称为会话复制。当任何一台服务器上的 session 发生改变时，该节点会把 session 的所有内容序列化，然后广播给所有其它节点，不管其他服务器需不需要 session，以此来保证 Session 同步。
 
@@ -255,7 +255,7 @@ Tomcat 的会话复制分为两种：
 - 全局复制 (DeltaManager)：复制会话中的变更信息到集群中的所有其他节点。
 - 非全局复制（BackupManager）：它会把 Session 复制给一个指定的备份节点。
 
-### Session 共享
+### 4.3. Session 共享
 
 Session 共享的实现方式有很多种，比如 memcached、Redis、DB 等；核心思想是修改 tomcat 的 session 存储机制，使之能够把 session 序列化，然后存放到 memcached 中。
 
@@ -275,7 +275,7 @@ Session 共享的实现方式有很多种，比如 memcached、Redis、DB 等；
 - 使用 tomcat session manager 方法存储
 - 使用 terracotta 服务器共享
 
-## Refer Links
+## 5. Refer Links
 
 [同时启动多个 tomcat](https://my.oschina.net/bgq365/blog/870155)
 

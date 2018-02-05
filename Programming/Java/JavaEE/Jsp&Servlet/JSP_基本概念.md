@@ -1,7 +1,7 @@
 - [JSP 基本概念](#jsp-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-  - [优势](#%E4%BC%98%E5%8A%BF)
-  - [Eclipse web 项目目录结构](#eclipse-web-%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
-  - [Refer Links](#refer-links)
+  - [1. 优势](#1-%E4%BC%98%E5%8A%BF)
+  - [2. Eclipse web 项目目录结构](#2-eclipse-web-%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
+  - [3. Refer Links](#3-refer-links)
 
 # JSP 基本概念
 
@@ -13,7 +13,7 @@ JSP 是以 Java 语言作为脚本语言的，JSP 网页为整个服务器端的
 
 JSP 开发的 WEB 应用可以**跨平台**使用，既可以运行在 Linux 上也能运行在 Window 上；
 
-## 优势
+## 1. 优势
 
 JSP 程序与 CGI 程序有着相似的功能，但和 CGI 程序相比，JSP 程序有如下优势：
 
@@ -29,7 +29,7 @@ P.S.
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/3b3d51785d1a3279372ddd57ff3c1f7a.jpg)
 
-## Eclipse web 项目目录结构
+## 2. Eclipse web 项目目录结构
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/26f11c50399d42c7132021674210b218.jpg)
 
@@ -48,7 +48,7 @@ P.S.
     
     （对于需要管理员权限才运行访问的管理者界面，可创建 WEB-INF/page/ 文件夹，然后将管理界面存放于该目录下，然后在 Servlet 中验证管理员身份成功后利用服务器端转发来访问 /WEB-INF/page 下的页面）
 
-## Refer Links
+## 3. Refer Links
 
 http://www.jellythink.com/archives/category/javaframework/page/2
 

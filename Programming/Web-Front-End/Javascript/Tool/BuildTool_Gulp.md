@@ -1,46 +1,46 @@
 - [Build Tool: Gulp](#build-tool-gulp)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-  - [基本使用](#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
-  - [核心 API](#%E6%A0%B8%E5%BF%83-api)
-  - [使用插件](#%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6)
-  - [Gulp 搭配 Yeoman Generator：webapp](#gulp-%E6%90%AD%E9%85%8D-yeoman-generator%EF%BC%9Awebapp)
-  - [其它](#%E5%85%B6%E5%AE%83)
-    - [部署项目任务](#%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E4%BB%BB%E5%8A%A1)
-    - [指定一个 gulpfile 的路径](#%E6%8C%87%E5%AE%9A%E4%B8%80%E4%B8%AA-gulpfile-%E7%9A%84%E8%B7%AF%E5%BE%84)
-  - [常用插件](#%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6)
-    - [gulp-load-plugins](#gulp-load-plugins)
-    - [文件操作](#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C)
-      - [清理文件夹：del](#%E6%B8%85%E7%90%86%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9Adel)
-      - [合并文件：gulp-concat](#%E5%90%88%E5%B9%B6%E6%96%87%E4%BB%B6%EF%BC%9Agulp-concat)
-      - [重命名：gulp-rename](#%E9%87%8D%E5%91%BD%E5%90%8D%EF%BC%9Agulp-rename)
-      - [以 Hash 命名：gulp-rev、gulp-rev-replace](#%E4%BB%A5-hash-%E5%91%BD%E5%90%8D%EF%BC%9Agulp-rev%E3%80%81gulp-rev-replace)
-    - [图片处理](#%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86)
-      - [压缩：gulp-imagemin](#%E5%8E%8B%E7%BC%A9%EF%BC%9Agulp-imagemin)
-    - [CSS 处理](#css-%E5%A4%84%E7%90%86)
-      - [风格检查：CSSLint、sass-lint](#%E9%A3%8E%E6%A0%BC%E6%A3%80%E6%9F%A5%EF%BC%9Acsslint%E3%80%81sass-lint)
-      - [预编译：gulp-less、gulp-sass](#%E9%A2%84%E7%BC%96%E8%AF%91%EF%BC%9Agulp-less%E3%80%81gulp-sass)
-      - [兼容前缀：gulp-autoprefixer](#%E5%85%BC%E5%AE%B9%E5%89%8D%E7%BC%80%EF%BC%9Agulp-autoprefixer)
-      - [移除未使用的 CSS 选择器：gulp-uncss](#%E7%A7%BB%E9%99%A4%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%9A%84-css-%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%9Agulp-uncss)
-      - [压缩：gulp-cssmin](#%E5%8E%8B%E7%BC%A9%EF%BC%9Agulp-cssmin)
-      - [图片 Base64：gulp-base64](#%E5%9B%BE%E7%89%87-base64%EF%BC%9Agulp-base64)
-    - [JavaScript 处理](#javascript-%E5%A4%84%E7%90%86)
-      - [风格检查：gulp-eslint](#%E9%A3%8E%E6%A0%BC%E6%A3%80%E6%9F%A5%EF%BC%9Agulp-eslint)
-      - [使用 ES6：gulp-babel](#%E4%BD%BF%E7%94%A8-es6%EF%BC%9Agulp-babel)
-      - [压缩混淆：gulp-uglify](#%E5%8E%8B%E7%BC%A9%E6%B7%B7%E6%B7%86%EF%BC%9Agulp-uglify)
-    - [HTML 处理](#html-%E5%A4%84%E7%90%86)
-      - [风格检查：gulp-htmlhint](#%E9%A3%8E%E6%A0%BC%E6%A3%80%E6%9F%A5%EF%BC%9Agulp-htmlhint)
-      - [压缩：gulp-html-minify](#%E5%8E%8B%E7%BC%A9%EF%BC%9Agulp-html-minify)
-    - [其它](#%E5%85%B6%E5%AE%83)
-      - [open](#open)
-      - [gulp-connect](#gulp-connect)
-      - [gulp-debug](#gulp-debug)
-      - [显示你的项目的大小：gulp-size](#%E6%98%BE%E7%A4%BA%E4%BD%A0%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%A4%A7%E5%B0%8F%EF%BC%9Agulp-size)
-      - [仅让发生改变的文件通过：gulp-changed](#%E4%BB%85%E8%AE%A9%E5%8F%91%E7%94%9F%E6%94%B9%E5%8F%98%E7%9A%84%E6%96%87%E4%BB%B6%E9%80%9A%E8%BF%87%EF%BC%9Agulp-changed)
-  - [Refer Links](#refer-links)
+	- [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+	- [2. 基本使用](#2-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
+	- [3. 核心 API](#3-%E6%A0%B8%E5%BF%83-api)
+	- [4. 使用插件](#4-%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6)
+	- [5. Gulp 搭配 Yeoman Generator：webapp](#5-gulp-%E6%90%AD%E9%85%8D-yeoman-generator%EF%BC%9Awebapp)
+	- [6. 其它](#6-%E5%85%B6%E5%AE%83)
+		- [6.1. 部署项目任务](#61-%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E4%BB%BB%E5%8A%A1)
+		- [6.2. 指定一个 gulpfile 的路径](#62-%E6%8C%87%E5%AE%9A%E4%B8%80%E4%B8%AA-gulpfile-%E7%9A%84%E8%B7%AF%E5%BE%84)
+	- [7. 常用插件](#7-%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6)
+		- [7.1. gulp-load-plugins](#71-gulp-load-plugins)
+		- [7.2. 文件操作](#72-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C)
+			- [7.2.1. 清理文件夹：del](#721-%E6%B8%85%E7%90%86%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9Adel)
+			- [7.2.2. 合并文件：gulp-concat](#722-%E5%90%88%E5%B9%B6%E6%96%87%E4%BB%B6%EF%BC%9Agulp-concat)
+			- [7.2.3. 重命名：gulp-rename](#723-%E9%87%8D%E5%91%BD%E5%90%8D%EF%BC%9Agulp-rename)
+			- [7.2.4. 以 Hash 命名：gulp-rev、gulp-rev-replace](#724-%E4%BB%A5-hash-%E5%91%BD%E5%90%8D%EF%BC%9Agulp-rev%E3%80%81gulp-rev-replace)
+		- [7.3. 图片处理](#73-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86)
+			- [7.3.1. 压缩：gulp-imagemin](#731-%E5%8E%8B%E7%BC%A9%EF%BC%9Agulp-imagemin)
+		- [7.4. CSS 处理](#74-css-%E5%A4%84%E7%90%86)
+			- [7.4.1. 风格检查：CSSLint、sass-lint](#741-%E9%A3%8E%E6%A0%BC%E6%A3%80%E6%9F%A5%EF%BC%9Acsslint%E3%80%81sass-lint)
+			- [7.4.2. 预编译：gulp-less、gulp-sass](#742-%E9%A2%84%E7%BC%96%E8%AF%91%EF%BC%9Agulp-less%E3%80%81gulp-sass)
+			- [7.4.3. 兼容前缀：gulp-autoprefixer](#743-%E5%85%BC%E5%AE%B9%E5%89%8D%E7%BC%80%EF%BC%9Agulp-autoprefixer)
+			- [7.4.4. 移除未使用的 CSS 选择器：gulp-uncss](#744-%E7%A7%BB%E9%99%A4%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%9A%84-css-%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%9Agulp-uncss)
+			- [7.4.5. 压缩：gulp-cssmin](#745-%E5%8E%8B%E7%BC%A9%EF%BC%9Agulp-cssmin)
+			- [7.4.6. 图片 Base：gulp-base](#746-%E5%9B%BE%E7%89%87-base%EF%BC%9Agulp-base)
+		- [7.5. JavaScript 处理](#75-javascript-%E5%A4%84%E7%90%86)
+			- [7.5.1. 风格检查：gulp-eslint](#751-%E9%A3%8E%E6%A0%BC%E6%A3%80%E6%9F%A5%EF%BC%9Agulp-eslint)
+			- [7.5.2. 使用 ES：gulp-babel](#752-%E4%BD%BF%E7%94%A8-es%EF%BC%9Agulp-babel)
+			- [7.5.3. 压缩混淆：gulp-uglify](#753-%E5%8E%8B%E7%BC%A9%E6%B7%B7%E6%B7%86%EF%BC%9Agulp-uglify)
+		- [7.6. HTML 处理](#76-html-%E5%A4%84%E7%90%86)
+			- [7.6.1. 风格检查：gulp-htmlhint](#761-%E9%A3%8E%E6%A0%BC%E6%A3%80%E6%9F%A5%EF%BC%9Agulp-htmlhint)
+			- [7.6.2. 压缩：gulp-html-minify](#762-%E5%8E%8B%E7%BC%A9%EF%BC%9Agulp-html-minify)
+		- [7.7. 其它](#77-%E5%85%B6%E5%AE%83)
+			- [7.7.1. open](#771-open)
+			- [7.7.2. gulp-connect](#772-gulp-connect)
+			- [7.7.3. gulp-debug](#773-gulp-debug)
+			- [7.7.4. 显示你的项目的大小：gulp-size](#774-%E6%98%BE%E7%A4%BA%E4%BD%A0%E7%9A%84%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%A4%A7%E5%B0%8F%EF%BC%9Agulp-size)
+			- [7.7.5. 仅让发生改变的文件通过：gulp-changed](#775-%E4%BB%85%E8%AE%A9%E5%8F%91%E7%94%9F%E6%94%B9%E5%8F%98%E7%9A%84%E6%96%87%E4%BB%B6%E9%80%9A%E8%BF%87%EF%BC%9Agulp-changed)
+	- [8. Refer Links](#8-refer-links)
 
 # Build Tool: Gulp 
 
-## 概述
+## 1. 概述
 
 gulp 是一个基于流的构建工具，个人感觉比 grunt 更简单清晰，也解决了 grunt 插件职责不明的问题。
 
@@ -61,7 +61,7 @@ gulp 是一个基于流的构建工具，个人感觉比 grunt 更简单清晰�
 	```
 	可以看到这样一个链式调用的结构，除了开头和结尾，每一个命令的输出都是下一个命令的输入。先把任务分解成一个一个的小模块，然后再各取所需，组装起来。
 
-## 基本使用 
+## 2. 基本使用
 
 - 安装 gulp 命令行工具
 	```
@@ -103,7 +103,7 @@ gulp 是一个基于流的构建工具，个人感觉比 grunt 更简单清晰�
 	```
 	若不指定 task 名称，会默认执行名为 default 的 task；
 
-## 核心 API
+## 3. 核心 API
 gulp 的核心 API 主要使用于 gulpfile.js 中；
 
 - gulp.task 
@@ -122,7 +122,7 @@ gulp 的核心 API 主要使用于 gulpfile.js 中；
 	
 	gulp.watch 用于监听文件变化，以运行相应的 task；
 
-## 使用插件
+## 4. 使用插件
 https://github.com/twtrubiks/Gulp-Beginners-Guide   
 
 https://www.cnblogs.com/libin-1/p/6439550.html   
@@ -164,7 +164,7 @@ https://www.cnblogs.com/libin-1/p/6439550.html
 	npm install gulp-base64 --save-dev        //- 把小图片转成 base64 字符串
 	```
 
-## Gulp 搭配 Yeoman Generator：webapp
+## 5. Gulp 搭配 Yeoman Generator：webapp
 
 https://github.com/yeoman/generator-webapp#readme
 
@@ -205,9 +205,9 @@ Run gulp serve:dist to preview the production build
 
 <!-- TODO: 怎么实时监控源文件变化并编译到 dist？ -->
 
-## 其它 
+## 6. 其它
 
-### 部署项目任务
+### 6.1. 部署项目任务
 
 当项目任务比较复杂时，不可能通过一个 gulpfile.js 实现全部我们想要的任务功能，否则会让这个文件超级大；   
 
@@ -233,7 +233,7 @@ gulp.task('add',require('./gulp/task/add'));
 ```
 这样就可以将 gulp 任务进行分解，当你的 gulp 任务特别多的时候，可以有效的进行管理。
 
-### 指定一个 gulpfile 的路径
+### 6.2. 指定一个 gulpfile 的路径
 
 可使用 `--gulpfile gulpfile_path` 参数手动指定一个 gulpfile 的路径，这在你有很多个 gulpfile 的时候很有用。这也会将 CWD 设置到该 gulpfile 所在目录；   
 
@@ -245,9 +245,9 @@ $ gulp --gulpfile gulpfile.js
 $ gulp task
 ```
 
-## 常用插件
+## 7. 常用插件
 
-### gulp-load-plugins
+### 7.1. gulp-load-plugins
 
 https://www.npmjs.com/package/gulp-load-plugins
 
@@ -272,32 +272,32 @@ gulp.src('./**/*.js')
     .pipe(gulp.dest('./dist'))
 ```
 
-### 文件操作
+### 7.2. 文件操作
 
-#### 清理文件夹：del
+#### 7.2.1. 清理文件夹：del
 
 del （替代 gulp-clean)
 ```javascript
 var del = require('del');
 del('./dist');                      // 删除整个 dist 文件夹
 ```
-#### 合并文件：gulp-concat
+#### 7.2.2. 合并文件：gulp-concat
 
-#### 重命名：gulp-rename
+#### 7.2.3. 重命名：gulp-rename
 
-#### 以 Hash 命名：gulp-rev、gulp-rev-replace
+#### 7.2.4. 以 Hash 命名：gulp-rev、gulp-rev-replace
 
-### 图片处理
+### 7.3. 图片处理
 
-#### 压缩：gulp-imagemin
+#### 7.3.1. 压缩：gulp-imagemin
 
-### CSS 处理
+### 7.4. CSS 处理
 
-#### 风格检查：CSSLint、sass-lint
+#### 7.4.1. 风格检查：CSSLint、sass-lint
 
 https://github.com/sasstools/sass-lint
 
-#### 预编译：gulp-less、gulp-sass
+#### 7.4.2. 预编译：gulp-less、gulp-sass
 
 gulp-sass
 ```javascript
@@ -312,13 +312,13 @@ gulp.src('./sass/**/*.scss')
 gulp.watch('./sass/**/*.scss', ['sass']);   // 实时监听 sass 文件变动，执行 sass 任务
 ```
 
-#### 兼容前缀：gulp-autoprefixer
+#### 7.4.3. 兼容前缀：gulp-autoprefixer
 
-#### 移除未使用的 CSS 选择器：gulp-uncss
+#### 7.4.4. 移除未使用的 CSS 选择器：gulp-uncss
 
-#### 压缩：gulp-cssmin
+#### 7.4.5. 压缩：gulp-cssmin
 
-#### 图片 Base64：gulp-base64
+#### 7.4.6. 图片 Base：gulp-base
 
 将 css 文件里引用的图片转为 base64。
 
@@ -332,15 +332,15 @@ gulp.src('./css/*.css')
     .pipe(gulp.dest('./dist'))
 ```
 
-### JavaScript 处理
+### 7.5. JavaScript 处理
 
-#### 风格检查：gulp-eslint
+#### 7.5.1. 风格检查：gulp-eslint
 
 规则文档：https://eslint.org/docs/rules/
 
 AlloyTeam ESLint 配置指南：http://www.alloyteam.com/2017/08/13065/
 
-#### 使用 ES6：gulp-babel
+#### 7.5.2. 使用 ES：gulp-babel
 
 https://www.npmjs.com/package/gulp-babel
 
@@ -358,21 +358,21 @@ https://www.npmjs.com/package/gulp-babel
 ```
 这样，就可以在 gulpfile 中使用 ES6 代码。
 
-#### 压缩混淆：gulp-uglify
+#### 7.5.3. 压缩混淆：gulp-uglify
 
-### HTML 处理
+### 7.6. HTML 处理
 
-#### 风格检查：gulp-htmlhint
+#### 7.6.1. 风格检查：gulp-htmlhint
 
-#### 压缩：gulp-html-minify
+#### 7.6.2. 压缩：gulp-html-minify
 
-### 其它
+### 7.7. 其它
 
-#### open
+#### 7.7.1. open
 
-#### gulp-connect
+#### 7.7.2. gulp-connect
 
-#### gulp-debug
+#### 7.7.3. gulp-debug
 
 https://www.npmjs.com/package/gulp-debug
 
@@ -387,11 +387,11 @@ gulp.task('default', () =>
 );
 ```
 
-#### 显示你的项目的大小：gulp-size
+#### 7.7.4. 显示你的项目的大小：gulp-size
 
-#### 仅让发生改变的文件通过：gulp-changed
+#### 7.7.5. 仅让发生改变的文件通过：gulp-changed
 
-## Refer Links
+## 8. Refer Links
 
 官方文档：https://github.com/gulpjs/gulp/blob/master/docs/API.md   
 

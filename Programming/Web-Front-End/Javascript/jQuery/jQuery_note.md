@@ -1,45 +1,45 @@
 - [jQuery Note](#jquery-note)
-  - [介绍](#%E4%BB%8B%E7%BB%8D)
-  - [基础](#%E5%9F%BA%E7%A1%80)
-    - [加载](#%E5%8A%A0%E8%BD%BD)
-    - [jQuery 对象](#jquery-%E5%AF%B9%E8%B1%A1)
-    - [构造函数](#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
-  - [实例方法](#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95)
-    - [结果集过滤方法](#%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%87%E6%BB%A4%E6%96%B9%E6%B3%95)
-    - [DOM 操作方法](#dom-%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95)
-    - [动画效果方法](#%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C%E6%96%B9%E6%B3%95)
-    - [时间处理方法](#%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95)
-    - [其它方法](#%E5%85%B6%E5%AE%83%E6%96%B9%E6%B3%95)
-  - [工具方法](#%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95)
-    - [类型判断](#%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD)
-    - [AJAX 方法](#ajax-%E6%96%B9%E6%B3%95)
-      - [基本方法](#%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95)
-        - [方法调用](#%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8)
-        - [参数说明](#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E)
-        - [返回值说明](#%E8%BF%94%E5%9B%9E%E5%80%BC%E8%AF%B4%E6%98%8E)
-      - [简便写法](#%E7%AE%80%E4%BE%BF%E5%86%99%E6%B3%95)
-        - [$.get()、$.post()](#get%E3%80%81post)
-        - [$.getJSON()](#getjson)
-        - [$.getScript()](#getscript)
-        - [$.fn.load()](#fnload)
-      - [AJAX 事件](#ajax-%E4%BA%8B%E4%BB%B6)
-      - [JSONP](#jsonp)
-      - [AJAX 文件上传](#ajax-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)
-  - [插件](#%E6%8F%92%E4%BB%B6)
-  - [Deferred 对象](#deferred-%E5%AF%B9%E8%B1%A1)
-  - [Refer Links](#refer-links)
+  - [1. 介绍](#1-%E4%BB%8B%E7%BB%8D)
+  - [2. 基础](#2-%E5%9F%BA%E7%A1%80)
+    - [2.1. 加载](#21-%E5%8A%A0%E8%BD%BD)
+    - [2.2. jQuery 对象](#22-jquery-%E5%AF%B9%E8%B1%A1)
+    - [2.3. 构造函数](#23-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
+  - [3. 实例方法](#3-%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95)
+    - [3.1. 结果集过滤方法](#31-%E7%BB%93%E6%9E%9C%E9%9B%86%E8%BF%87%E6%BB%A4%E6%96%B9%E6%B3%95)
+    - [3.2. DOM 操作方法](#32-dom-%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95)
+    - [3.3. 动画效果方法](#33-%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C%E6%96%B9%E6%B3%95)
+    - [3.4. 时间处理方法](#34-%E6%97%B6%E9%97%B4%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95)
+    - [3.5. 其它方法](#35-%E5%85%B6%E5%AE%83%E6%96%B9%E6%B3%95)
+  - [4. 工具方法](#4-%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95)
+    - [4.1. 类型判断](#41-%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD)
+    - [4.2. AJAX 方法](#42-ajax-%E6%96%B9%E6%B3%95)
+      - [4.2.1. 基本方法](#421-%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95)
+        - [4.2.1.1. 方法调用](#4211-%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8)
+        - [4.2.1.2. 参数说明](#4212-%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E)
+        - [4.2.1.3. 返回值说明](#4213-%E8%BF%94%E5%9B%9E%E5%80%BC%E8%AF%B4%E6%98%8E)
+      - [4.2.2. 简便写法](#422-%E7%AE%80%E4%BE%BF%E5%86%99%E6%B3%95)
+        - [4.2.2.1. $.get()、$.post()](#4221-get%E3%80%81post)
+        - [4.2.2.2. $.getJSON()](#4222-getjson)
+        - [4.2.2.3. $.getScript()](#4223-getscript)
+        - [4.2.2.4. $.fn.load()](#4224-fnload)
+      - [4.2.3. AJAX 事件](#423-ajax-%E4%BA%8B%E4%BB%B6)
+      - [4.2.4. JSONP](#424-jsonp)
+      - [4.2.5. AJAX 文件上传](#425-ajax-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)
+  - [5. 插件](#5-%E6%8F%92%E4%BB%B6)
+  - [6. Deferred 对象](#6-deferred-%E5%AF%B9%E8%B1%A1)
+  - [7. Refer Links](#7-refer-links)
 
 # jQuery Note
 
-## 介绍
+## 1. 介绍
 
 jQuery 是目前使用最广泛的 JavaScript 函数库。
 
 jQuery 的最大优势有两个。首先，它基本是一个 DOM 操作工具，可以使操作 DOM 对象变得异常容易。其次，它统一了不同浏览器的 API 接口，使得代码在所有现代浏览器均能运行，开发者不用担心浏览器之间的差异。
 
-## 基础
+## 2. 基础
 
-### 加载
+### 2.1. 加载
 
 将以下代码放到网页 body 尾部（浏览器按顺序解析标签，优先显示静态元素而将 js 最后解析以提高用户体验）；
 
@@ -56,34 +56,34 @@ window.jQuery ||
 </script>
 ```
 
-### jQuery 对象
+### 2.2. jQuery 对象
 
-### 构造函数
+### 2.3. 构造函数
 
 jQuery 的核心思想是“先选中某些网页元素，然后对其进行某种处理”（find something, do something），也就是说，先选择后处理，这是 jQuery 的基本操作模式。
 
-## 实例方法
+## 3. 实例方法
 
 链式写法比滥用选择器的速度快的多
 
 $('#x') 比 getElementById('x') 慢 40 倍
 
-### 结果集过滤方法
+### 3.1. 结果集过滤方法
 
-### DOM 操作方法
+### 3.2. DOM 操作方法
 
-### 动画效果方法
+### 3.3. 动画效果方法
 
-### 时间处理方法
+### 3.4. 时间处理方法
 
-### 其它方法
+### 3.5. 其它方法
 
-## 工具方法
+## 4. 工具方法
 jQuery 函数库提供了一个 jQuery 对象（简写为 $），这个对象本身是一个构造函数，可以用来生成 jQuery 对象的实例。有了实例以后，就可以调用许多针对实例的方法，它们定义 jQuery.prototype 对象上面（简写为 $.fn）。
 
 除了实例对象的方法以外，jQuery 对象本身还提供一些方法（即直接定义 jQuery 对象上面），不需要生成实例就能使用。由于这些方法类似“通用工具”的性质，所以我们把它们称为“工具方法”（utilities）。
 
-### 类型判断
+### 4.1. 类型判断
 
 jQuery 提供一系列工具方法，用来判断数据类型，以弥补 JavaScript 原生的 typeof 运算符的不足。以下方法对参数进行判断，返回一个布尔值：
 ```javascript
@@ -105,19 +105,19 @@ $.isXMLDoc(document.body) // false
 $.type(/test/) // "regexp"
 ```
 
-### AJAX 方法
+### 4.2. AJAX 方法
 jQuery 对象上面还定义了 Ajax 方法（$.ajax()），用来处理 Ajax 操作。调用该方法后，浏览器就会向服务器发出一个 HTTP 请求：
 
-#### 基本方法
+#### 4.2.1. 基本方法
 
-##### 方法调用
+##### 4.2.1.1. 方法调用
 
 ```javascript
 $.ajax(url[, options])
 $.ajax([options])
 ```
 
-##### 参数说明
+##### 4.2.1.2. 参数说明
 - url 指的是服务器网址；
 
 - options 则是一个对象参数，设置 Ajax 请求的具体参数：
@@ -189,7 +189,7 @@ $.ajax({
 
 ```
 
-##### 返回值说明
+##### 4.2.1.3. 返回值说明
 ajax 方法返回的是一个 deferred 对象，可以用 then 方法为该对象指定回调函数
 
 例：
@@ -202,7 +202,7 @@ $.ajax({
 })
 ```
 
-#### 简便写法
+#### 4.2.2. 简便写法
 
 ```javascript
 $.get()：发出 GET 请求。
@@ -213,7 +213,7 @@ $.fn.load()：读取一个 html 文件，并将其放入当前元素之中。
 ```
 这些简便方法依次接受三个参数：url、数据、成功时的回调函数。
 
-##### $.get()、$.post()
+##### 4.2.2.1. $.get()、$.post()
 
 这两个方法分别对应 HTTP 的 GET 方法和 POST 方法。
 
@@ -228,7 +228,7 @@ $.post('/data/save', {name: 'Rebecca'}, function (resp){
 });
 ```
 
-##### $.getJSON()
+##### 4.2.2.2. $.getJSON()
 当服务器端返回 JSON 格式的数据，可以用这个方法代替 $.ajax 方法。
 
 例：
@@ -249,7 +249,7 @@ $.ajax({
 });
 ```
 
-##### $.getScript()
+##### 4.2.2.3. $.getScript()
 $.getScript 方法用于从服务器端加载一个脚本文件。
 
 例：
@@ -278,7 +278,7 @@ jQuery.getScript("/path/to/myscript.js")
 });
 ```
 
-##### $.fn.load()
+##### 4.2.2.4. $.fn.load()
 $.fn.load 不是 jQuery 的工具方法，而是定义在 jQuery 对象实例上的方法，用于获取服务器端的 HTML 文件，将其放入当前元素。
 ```javascript
 $('#newContent').load('/foo.html');
@@ -291,7 +291,7 @@ $('#newContent').load('/foo.html #myDiv h1:first',
 });
 ```
 
-#### AJAX 事件
+#### 4.2.3. AJAX 事件
 jQuery 提供以下**实例方法（不是工具方法）**，用于指定特定的 AJAX 事件的回调函数。
 ```javascript
 .ajaxComplete()：ajax 请求完成。
@@ -315,7 +315,7 @@ $(document).ajaxError(function (e, xhr, settings, error) {
 });
 ```
 
-#### JSONP
+#### 4.2.4. JSONP
 由于浏览器存在“同域限制”，ajax 方法只能向当前网页所在的域名发出 HTTP 请求。但是，通过在当前网页中插入 script 元素（`<script>`），可以向不同的域名发出 GET 请求，这种变通方法叫做 JSONP（JSON with Padding）。
 
 ajax 方法可以发出 JSONP 请求，方法是在对象参数中指定 dataType 为 JSONP。
@@ -340,7 +340,7 @@ $.getJSON('/data/search.jsonp?q=a&callback=?',
 );
 ```
 
-#### AJAX 文件上传
+#### 4.2.5. AJAX 文件上传
 ```html
 <input type="file" id="test-input">
 ```
@@ -370,17 +370,17 @@ $.ajax('myserver/uploads', {
 });
 ```
 
-## 插件
+## 5. 插件
 
 插件使用 https://www.cnblogs.com/zhangziqiu/archive/2009/05/22/jQuery-Learn-11.html 
 
 自定义插件 http://javascript.ruanyifeng.com/jquery/plugin.html 
 
-## Deferred 对象
+## 6. Deferred 对象
 
 http://javascript.ruanyifeng.com/jquery/deferred.html 
 
-## Refer Links
+## 7. Refer Links
 
 http://javascript.ruanyifeng.com/jquery/basic.html
 

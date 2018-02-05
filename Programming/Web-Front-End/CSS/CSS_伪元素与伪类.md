@@ -1,17 +1,17 @@
 - [CSS 伪元素与伪类](#css-%E4%BC%AA%E5%85%83%E7%B4%A0%E4%B8%8E%E4%BC%AA%E7%B1%BB)
-  - [伪元素](#%E4%BC%AA%E5%85%83%E7%B4%A0)
-    - [:first-line](#first-line)
-    - [:first-letter](#first-letter)
-    - [:before 与：after](#before-%E4%B8%8E%EF%BC%9Aafter)
-      - [content 属性](#content-%E5%B1%9E%E6%80%A7)
-      - [实用技巧](#%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7)
-  - [伪类](#%E4%BC%AA%E7%B1%BB)
-    - [锚伪类](#%E9%94%9A%E4%BC%AA%E7%B1%BB)
-    - [:first-child](#first-child)
-    - [:lang](#lang)
-    - [表单相关伪类](#%E8%A1%A8%E5%8D%95%E7%9B%B8%E5%85%B3%E4%BC%AA%E7%B1%BB)
-  - [伪类与伪元素的比较](#%E4%BC%AA%E7%B1%BB%E4%B8%8E%E4%BC%AA%E5%85%83%E7%B4%A0%E7%9A%84%E6%AF%94%E8%BE%83)
-  - [Refer Links](#refer-links)
+  - [1. 伪元素](#1-%E4%BC%AA%E5%85%83%E7%B4%A0)
+    - [1.1. :first-line](#11-first-line)
+    - [1.2. :first-letter](#12-first-letter)
+    - [1.3. :before 与：after](#13-before-%E4%B8%8E%EF%BC%9Aafter)
+      - [1.3.1. content 属性](#131-content-%E5%B1%9E%E6%80%A7)
+      - [1.3.2. 实用技巧](#132-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7)
+  - [2. 伪类](#2-%E4%BC%AA%E7%B1%BB)
+    - [2.1. 锚伪类](#21-%E9%94%9A%E4%BC%AA%E7%B1%BB)
+    - [2.2. :first-child](#22-first-child)
+    - [2.3. :lang](#23-lang)
+    - [2.4. 表单相关伪类](#24-%E8%A1%A8%E5%8D%95%E7%9B%B8%E5%85%B3%E4%BC%AA%E7%B1%BB)
+  - [3. 伪类与伪元素的比较](#3-%E4%BC%AA%E7%B1%BB%E4%B8%8E%E4%BC%AA%E5%85%83%E7%B4%A0%E7%9A%84%E6%AF%94%E8%BE%83)
+  - [4. Refer Links](#4-refer-links)
 
 # CSS 伪元素与伪类
 
@@ -19,7 +19,7 @@
 
 伪类和伪元素用于格式化不在文档树中的部分，比如，一句话中的第一个字母，或者是列表中的第一个元素。
 
-## 伪元素
+## 1. 伪元素
 
 伪元素用于创建一些不在文档树中的元素，并为其添加样式。比如说，我们可以通过：before 来在一个元素前增加一些文本，并为这些文本添加样式。虽然用户可以看到这些文本，但是这些文本实际上不在文档树中。你可以用伪元素制造视觉上的效果，但是不会增加 JS 查 DOM 的负担，它对 JS 是透明的，开发者无法用 js 获取到这个伪元素，或者增、删、改一个伪元素。
 
@@ -37,7 +37,7 @@ NOTE：
 
 - 伪元素不存在于 DOM 文档中，无法被鼠标选中，但可以通过 JavaScript 和 CSS 操作 
 
-### :first-line
+### 1.1. :first-line
 
 "first-line" 伪元素用于向文本的首行设置特殊样式。
 
@@ -51,7 +51,7 @@ p:first-line {
 
 NOTE："first-line" 伪元素只能用于块级元素。
 
-### :first-letter
+### 1.2. :first-letter
 
 "first-letter" 伪元素用于向文本的首字母设置特殊样式：
 
@@ -65,7 +65,7 @@ p:first-letter {
 
 NOTE:"first-letter" 伪元素只能用于块级元素。
 
-### :before 与：after
+### 1.3. :before 与：after
 
 ":before" 伪元素可以在元素的内容前面插入新内容，新内容会作为已选中元素的第一个子元素。
 
@@ -78,7 +78,7 @@ h1:before {
 }
 ```
 
-#### content 属性
+#### 1.3.1. content 属性
 
 这两个伪元素有一个特有的属性 content，用于在 CSS 渲染中向元素逻辑上的头部或尾部添加内容。注意这些添加不会改变文档内容，不会出现在 DOM 中，不可复制，仅仅是在 CSS 渲染层加入。
 
@@ -115,7 +115,7 @@ h1:before {
   }
   ```
 
-#### 实用技巧
+#### 1.3.2. 实用技巧
 
 [我不知道你知不知道我知道的伪元素小技巧](https://juejin.im/post/5a0029a45188254dd935cc40?utm_medium=fe&utm_source=weixinqun)
 
@@ -180,7 +180,7 @@ h1:before {
 
 
 
-## 伪类
+## 2. 伪类
 
 伪类用于当已有元素处于的某个状态时，为其添加对应的样式，这个状态是根据用户行为而动态变化的。比如说，当用户悬停在指定的元素时，我们可以通过：hover 来描述这个元素的状态。虽然它和普通的 css 类相似，可以为已有的元素添加样式，但是它只有处于 DOM 树无法描述的状态下才能为元素添加样式，所以将其称为伪类。
 
@@ -192,7 +192,7 @@ NOTE：伪类名称对大小写不敏感。
 伪类总结图：    
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/7c5020a1963abf8587b83e53821a9948.jpg)
 
-### 锚伪类
+### 2.1. 锚伪类
 
 在浏览器中，链接的不同状态都可以不同的方式显示，这些状态包括：活动状态，已被访问状态，未被访问状态，和鼠标悬停状态。
 
@@ -209,7 +209,7 @@ NOTE:
 
 - a:active 必须被置于 a:hover 之后，才是有效的
 
-### :first-child
+### 2.2. :first-child
 
 使用 :first-child 伪类可用于选择作为任何元素的第一个子元素的指定元素。
 
@@ -234,7 +234,7 @@ NOTE:
 
   最常见的错误是认为 p:first-child 之类的选择器会选择 p 元素的第一个子元素。
 
-### :lang
+### 2.3. :lang
 
 :lang 伪类使你有能力为不同的语言定义特殊的规则。
 
@@ -254,7 +254,7 @@ NOTE:
 </html>
 ```
 
-### 表单相关伪类
+### 2.4. 表单相关伪类
 
 [美化表单的CSS高级技巧](https://www.w3cplus.com/css/advanced-css-form-styling.html)
 
@@ -302,7 +302,7 @@ NOTE:
 - :checked
 
 
-## 伪类与伪元素的比较
+## 3. 伪类与伪元素的比较
 
 > CSS 伪元素用于将特殊的效果添加到某些选择器。
 > 
@@ -317,7 +317,7 @@ NOTE:
 ```
 但因为兼容性的问题，所以现在大部分还是统一的单冒号。
 
-## Refer Links
+## 4. Refer Links
 
 http://www.w3school.com.cn/css/css_pseudo_elements.asp
 

@@ -1,16 +1,10 @@
-
-
-<!-- toc -->
-
-* [Scaffolding Tool: Yeoman](#scaffolding-tool-yeoman)
-  * [安装](#安装)
-  * [使用](#使用)
-    * [安装 generators](#安装-generators)
-    * [使用 generators](#使用-generators)
-    * [其它命令](#其它命令)
-  * [自定义 Yeoman generators](#自定义-yeoman-generators)
-
-<!-- toc stop -->
+- [Scaffolding Tool: Yeoman](#scaffolding-tool-yeoman)
+  - [1. 安装](#1-%E5%AE%89%E8%A3%85)
+  - [2. 使用](#2-%E4%BD%BF%E7%94%A8)
+    - [2.1. 安装 generators](#21-%E5%AE%89%E8%A3%85-generators)
+    - [2.2. 使用 generators](#22-%E4%BD%BF%E7%94%A8-generators)
+    - [2.3. 其它命令](#23-%E5%85%B6%E5%AE%83%E5%91%BD%E4%BB%A4)
+  - [3. 自定义 Yeoman generators](#3-%E8%87%AA%E5%AE%9A%E4%B9%89-yeoman-generators)
 
 
 # Scaffolding Tool: Yeoman #
@@ -20,7 +14,7 @@ Yeoman 是一款现代 webapp 的 SCAFFOLDING TOOL （脚手架工具），在 w
 
 Yeoman is language agnostic. It can generate projects in any language (Web, Java, Python, C#, etc.)
 
-## 安装 ##
+## 1. 安装 ##
 YeoMan 是一个 node.js 项目，首先需要使用 npm 进行安装：
 ```
 npm install -g yo
@@ -30,12 +24,12 @@ npm install -g yo
 yo --version
 ```
 
-## 使用 ##
+## 2. 使用 ##
 
 Yeoman 的使用依赖于模板项目(generators)，每一个 generators 都是一个 node.js 项目，但是需要符合一定的规范，比如命名上必须得是 generator-XYZ 这种形式（其中 XYZ 即为项目名）；
 
 
-### 安装 generators ###
+### 2.1. 安装 generators ###
 
 1. 搜索 generators
 搜索 generators 有两种方式：
@@ -51,7 +45,7 @@ npm install -g generator-xxx
 ```
 注意：必须是全局安装；
 
-### 使用 generators ###
+### 2.2. 使用 generators ###
 
 - 使用 generators 快速构建项目结构；
 ```
@@ -77,14 +71,14 @@ npm home generator-xxx
 ```
 
 
-### 其它命令 ###
+### 2.3. 其它命令 ###
 - `yo --help`：获取帮助信息；
 - `yo --version`：获取版本信息；
 - `yo --generators`：列出所有已安装的 generators；
 - `yo doctor`：诊断问题并提供解决方案；
 
 
-## 自定义 Yeoman generators ##
+## 3. 自定义 Yeoman generators ##
 http://imweb.io/topic/586766b5b3ce6d8e3f9f99b1
 
 https://ivweb.io/topic/58d92e3fdb35a9135d42f840

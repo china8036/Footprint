@@ -1,18 +1,18 @@
 - [ECMAScript6 Fetch](#ecmascript6-fetch)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-  - [基本使用](#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
-  - [API](#api)
-    - [WindowOrWorkerGlobalScope.fetch()](#windoworworkerglobalscopefetch)
-    - [Headers](#headers)
-    - [Request](#request)
-    - [Response](#response)
-  - [兼容性](#%E5%85%BC%E5%AE%B9%E6%80%A7)
-  - [缺点](#%E7%BC%BA%E7%82%B9)
-  - [Refer Links](#refer-links)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+  - [2. 基本使用](#2-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
+  - [3. API](#3-api)
+    - [3.1. WindowOrWorkerGlobalScope.fetch()](#31-windoworworkerglobalscopefetch)
+    - [3.2. Headers](#32-headers)
+    - [3.3. Request](#33-request)
+    - [3.4. Response](#34-response)
+  - [4. 兼容性](#4-%E5%85%BC%E5%AE%B9%E6%80%A7)
+  - [5. 缺点](#5-%E7%BC%BA%E7%82%B9)
+  - [6. Refer Links](#6-refer-links)
 
 # ECMAScript6 Fetch
 
-## 概述
+## 1. 概述
 
 在 Ajax 中涉及到的 JavaScript 方面的技术，即 XMLHttpRequest（以下简称 XHR）。很长一段时间我们都是通过 XHR 来与服务器建立异步通信。然而在使用的过程中，我们发现 XHR 是基于事件的异步模型，在设计上将输入、输出和事件监听混杂在一个对象里，且必须通过实例化方式来发请求。配置和调用方式混乱，不符合关注分点离原则。
 
@@ -24,7 +24,7 @@ Fetch API 是一个 HTML5 的 API，旨在修正上述缺陷，它提供了与 H
 
 Fetch 并不是 XHR 的升级版本，而是从一个全新的角度来思考的一种设计。Fetch 是基于 Promise 语法结构，语法简洁，更加语义化，而且它的设计足够低阶，这表示它可以在实际需求中进行更多的弹性设计。对于 XHR 所提供的能力来说，Fetch 已经足够取代 XHR ，并且提供了更多拓展的可能性。
 
-## 基本使用
+## 2. 基本使用
 
 ```javascript
 // 获取 some.json 资源
@@ -58,9 +58,9 @@ NOTE
 
 - 服务器返回 400，500 错误码时并不会 reject，只有网络错误这些导致请求不能完成时，fetch 才会被 reject。
 
-## API
+## 3. API
 
-### WindowOrWorkerGlobalScope.fetch()
+### 3.1. WindowOrWorkerGlobalScope.fetch()
 
 https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalFetch/fetch
 
@@ -96,7 +96,7 @@ Window 和 WorkerGlobalScope 都实现了 WorkerOrGlobalScope。 ——这意味
 
 返回值：一个 Promise，resolve 时回传 Response 对象。
 
-### Headers
+### 3.2. Headers
 
 https://developer.mozilla.org/zh-CN/docs/Web/API/Headers
 
@@ -135,7 +135,7 @@ headers.has("Content-Type") // true
 headers.getAll("X-Custom-Header"); // ["ProcessThisImmediately", "AnotherValue"]
 ```
 
-### Request
+### 3.3. Request
 
 https://developer.mozilla.org/zh-CN/docs/Web/API/Request
 
@@ -178,7 +178,7 @@ fetch(getReq).then(function(response) {
 });
 ```
 
-### Response
+### 3.4. Response
 
 https://developer.mozilla.org/zh-CN/docs/Web/API/Response
 
@@ -215,7 +215,7 @@ Response 实例是在 fentch() 处理完 promises 之后返回的。它的实例
 - `Response.json()`: 把响应内容解析为对象后 reslove 。
 - `Response.text()`: 把响应数据当做字符串后 reslove 。
 
-## 兼容性
+## 4. 兼容性
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/3/879bfbb6b50db99e3173b243820ce6a6.jpg)
 
@@ -229,11 +229,11 @@ Response 实例是在 fentch() 处理完 promises 之后返回的。它的实例
 - 可选：如果你还使用了 jsonp，引入 [fetch-jsonp](https://github.com/camsong/fetch-jsonp)。
 - 可选：开启 Babel 的 runtime 模式，即使用 async/await。
 
-## 缺点
+## 5. 缺点
 
 Fetch API 是基于 Promise，由于 Promise 没有处理 timeout 的机制，所以无法通过原生方式处理请求超时后的中断，和读取进度的能力。但是相信未来为了支持流，Fetch API 最终将会提供可以中断执行读取资源的能力，并且提供可以读取进度的 API。
 
-## Refer Links
+## 6. Refer Links
 
 [传统 Ajax 已死，Fetch 永生](https://github.com/camsong/blog/issues/2)
 

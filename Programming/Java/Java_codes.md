@@ -1,9 +1,9 @@
 - [Java 实用代码段](#java-%E5%AE%9E%E7%94%A8%E4%BB%A3%E7%A0%81%E6%AE%B5)
-  - [获取客户端真实 ip](#%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9C%9F%E5%AE%9Eip)
+	- [1. 获取客户端真实 ip](#1-%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9C%9F%E5%AE%9E-ip)
 
 # Java 实用代码段
 
-## 获取客户端真实 ip
+## 1. 获取客户端真实 ip
 
 在 java 中我们通常可以这样获取客户端 ip 地址：
 ```java
@@ -14,20 +14,20 @@ request.getRemoteAddr()
 获取客户端真实 ip：
 ```java
 public static String getClientIP(HttpServletRequest request) {
-        String ip = request.getHeader("X-Forwarded-For");
-        if (StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)) {
-            // 多次反向代理后会有多个 ip 值，第一个 ip 才是真实 ip
-            int index = ip.indexOf(",");
-            if (index != -1) {
-                return ip.substring(0, index);
-            } else {
-                return ip;
-            }
-        }
-        ip = request.getHeader("X-Real-IP");
-        if (StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)) {
-            return ip;
-        }
-        return request.getRemoteAddr();
+	String ip = request.getHeader("X-Forwarded-For");
+	if (StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)) {
+		// 多次反向代理后会有多个 ip 值，第一个 ip 才是真实 ip
+		int index = ip.indexOf(",");
+		if (index != -1) {
+				return ip.substring(0, index);
+		} else {
+				return ip;
+		}
+	}
+	ip = request.getHeader("X-Real-IP");
+	if (StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)) {
+		return ip;
+	}
+	return request.getRemoteAddr();
 }
 ```

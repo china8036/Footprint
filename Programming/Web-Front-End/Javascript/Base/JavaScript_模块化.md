@@ -1,19 +1,19 @@
 - [JavaScript 模块化](#javascript-%E6%A8%A1%E5%9D%97%E5%8C%96)
-  - [CommonJS](#commonjs)
-  - [AMD(Asynchronous Module Definition)](#amdasynchronous-module-definition)
-    - [require.js](#requirejs)
-      - [解决的问题：](#%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A)
-      - [requireJS 使用](#requirejs-%E4%BD%BF%E7%94%A8)
-  - [UMD](#umd)
-  - [CMD](#cmd)
-  - [ES6 Module](#es6-module)
-    - [静态加载](#%E9%9D%99%E6%80%81%E5%8A%A0%E8%BD%BD)
-    - [优点](#%E4%BC%98%E7%82%B9)
-  - [Refer Links](#refer-links)
+  - [1. CommonJS](#1-commonjs)
+  - [2. AMD(Asynchronous Module Definition)](#2-amdasynchronous-module-definition)
+    - [2.1. require.js](#21-requirejs)
+      - [2.1.1. 解决的问题：](#211-%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A)
+      - [2.1.2. requireJS 使用](#212-requirejs-%E4%BD%BF%E7%94%A8)
+  - [3. UMD](#3-umd)
+  - [4. CMD](#4-cmd)
+  - [5. ESModule](#5-esmodule)
+    - [5.1. 静态加载](#51-%E9%9D%99%E6%80%81%E5%8A%A0%E8%BD%BD)
+    - [5.2. 优点](#52-%E4%BC%98%E7%82%B9)
+  - [6. Refer Links](#6-refer-links)
 
 # JavaScript 模块化
 
-## CommonJS
+## 1. CommonJS
 
 在 CommonJS 中，全局方法 module() 用于定义模块，module.export() 用于导出模块内容，require() 用于引入模块，
 
@@ -26,7 +26,7 @@ node.js 的[模块系统](http://nodejs.org/docs/latest/api/modules.html)，就�
 
 这种方式存在一个问题：**CommonJS 规范采用同步加载模块**，在执行`require('math')`的时候，JavaScript 是被阻塞的，这对服务器端不是一个问题，因为所有的模块都存放在本地硬盘，可以同步加载完成，等待时间就是硬盘的读取时间。但是，对于浏览器，这却是一个大问题，因为模块都放在服务器端，等待时间取决于网速的快慢，可能要等很长时间，浏览器处于"假死"状态。因此，由于这个原因，**CommonJS 规范只适用于服务端，而不适用于浏览器端**。
 
-## AMD(Asynchronous Module Definition)
+## 2. AMD(Asynchronous Module Definition)
 
 **AMD 规范采用异步方式加载模块**，模块的加载不影响它后面语句的运行。所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行。
 
@@ -43,11 +43,11 @@ require(['math'], function (math) {
 ```
 显然，**AMD 更适合浏览器环境**。
 
-### require.js
+### 2.1. require.js
 
 require.js 是 AMD 规范的一种实现。
 
-#### 解决的问题：
+#### 2.1.1. 解决的问题：
 
 一般情况下，多模块的 JavaScript 项目，我们需要依次加载所有的 JavaScript 文件：
 ```javascript
@@ -65,7 +65,7 @@ require.js 解决了这两个问题：
 - 实现 js 文件的异步加载，避免网页失去响应；
 - 管理模块之间的依赖性，便于代码的编写和维护。
 
-#### requireJS 使用
+#### 2.1.2. requireJS 使用
 
 引入 require.js，并指定应用的主模块文件 main.js（也放在 js 目录下面)：
 ```html
@@ -131,11 +131,11 @@ require.js 解决了这两个问题：
   ```
   当 require() 函数加载上面这个模块的时候，就会先加载 myLib.js 文件。
 
-## UMD
+## 3. UMD
 
 UMD 是 AMD 和 CommonJS 的糅合，是跨平台的解决方案。UMD 先判断是否支持 Node.js 的模块，exports 是否存在，存在则使用 Node.js 模块模式。在判断是否支持 AMD(define 是否存在), 存在则使用 AMD 方式加载模块。
 
-## CMD
+## 4. CMD
 
 CMD 规范是阿里的玉伯提出来的，实现 js 库为 sea.js。 它和 requirejs 非常类似，即一个 js 文件就是一个模块，但是 CMD 的加载方式更加优秀，是通过按需加载的方式，而不是必须在模块开始就加载所有的依赖。
 
@@ -154,7 +154,7 @@ define(function(require,exports,module){
 缺点：依赖 SPM 打包，模块的加载逻辑偏重。
     
 
-## ES6 Module
+## 5. ESModule
 
 ES6 在语言标准的层面上，实现了模块功能，而且实现得相当简单，完全可以取代 CommonJS 和 AMD 规范，成为浏览器和服务器通用的模块解决方案。
 
@@ -212,7 +212,7 @@ export default {
 
 但是由于 ES6 目前无法在浏览器中执行，所以，我们只能通过 babel 将不被支持的 import 编译为当前受到广泛支持的 require。
 
-### 静态加载
+### 5.1. 静态加载
 
 **ES6 模块是编译时加载的。ES6 中模块的设计思想，是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。**CommonJS 和 AMD 模块，都只能在运行时确定这些东西。例如，在 CommonJS 中，模块就是对象；但在 ES6 中模块不是对象，而是通过 export 命令显式指定输出的代码，再通过 import 命令输入：
 ```javascript
@@ -221,14 +221,14 @@ import { stat, exists, readFile } from 'fs';
 ```
 上面代码从 fs 模块加载 3 个方法，其他方法不加载。这种加载称为“编译时加载”或者静态加载，即 ES6 可以在编译时就完成模块加载，效率要比 CommonJS 模块的加载方式高。当然，这也导致了没法引用 ES6 模块本身，因为它不是对象。
 
-### 优点
+### 5.2. 优点
 
 除了静态加载带来的各种好处，ES6 模块还有以下好处：
 - 不再需要 UMD 模块格式了，将来服务器和浏览器都会支持 ES6 模块格式。目前，通过各种工具库，其实已经做到了这一点。
 - 将来浏览器的新 API 就能用模块格式提供，不再必须做成全局变量或者 navigator 对象的属性。
 - 不再需要对象作为命名空间（比如 Math 对象），未来这些功能可以通过模块提供。
 
-## Refer Links
+## 6. Refer Links
 
 [Javascript 模块化编程（一）：模块的写法](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html)
 

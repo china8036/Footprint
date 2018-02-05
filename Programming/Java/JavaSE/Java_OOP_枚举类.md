@@ -1,12 +1,12 @@
 - [Java 枚举类](#java-%E6%9E%9A%E4%B8%BE%E7%B1%BB)
-  - [基本用法](#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
-  - [常用方法](#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95)
-    - [values()](#values)
-    - [switch()](#switch)
-  - [自定义属性](#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
-  - [自定义方法](#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95)
-  - [enum 与静态常量的比较](#enum-%E4%B8%8E%E9%9D%99%E6%80%81%E5%B8%B8%E9%87%8F%E7%9A%84%E6%AF%94%E8%BE%83)
-  - [Refer Links](#refer-links)
+    - [1. 基本用法](#1-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
+    - [2. 常用方法](#2-%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95)
+        - [2.1. values()](#21-values)
+        - [2.2. switch()](#22-switch)
+    - [3. 自定义属性](#3-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7)
+    - [4. 自定义方法](#4-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95)
+    - [5. enum 与静态常量的比较](#5-enum-%E4%B8%8E%E9%9D%99%E6%80%81%E5%B8%B8%E9%87%8F%E7%9A%84%E6%AF%94%E8%BE%83)
+    - [6. Refer Links](#6-refer-links)
 
 # Java 枚举类
 
@@ -16,7 +16,7 @@ java 枚举类是 Java 5 新增的类型，存放在 java.lang 包中。
 
 枚举类的名称一般以 Enum 结尾，比如 ColorEnum 等。如果你写个枚举类，取名为 Color，那么没人能快速知道它是一个枚举类。
 
-## 基本用法
+## 1. 基本用法
 
 创建枚举类型要使用 enum 关键字，隐含了所创建的类型都是 java.lang.Enum 类的子类（java.lang.Enum 是一个抽象类）。枚举类型符合通用模式 Class Enum<E extends Enum<E>>，而 E 表示枚举类型的名称。枚举类型的每一个值都将映射到 protected Enum(String name, int ordinal) 构造函数中。在这里每个值的名称都被转换成一个字符串，并且序数设置表示了此设置被创建的顺序。
 
@@ -82,7 +82,7 @@ NOTE:
 - 枚举类型对象之间的值比较，可以使用==直接来比较值是否相等的，不是必须使用equals方法。
 - 推荐使用枚举单例来实现单例模式，可以使用枚举策略来简化策略模式。
 
-## 常用方法
+## 2. 常用方法
 
 - int ordinal()：返回枚举常量的序数（它在枚举声明中的位置，其中初始常量序数为零）。
 
@@ -96,7 +96,7 @@ NOTE:
 
 - `static <T extends Enum<T>> T valueOf(Class<T> enumType, String name)`：返回指定名称的枚举常量指定的 enumtype 的方法。如：ColorEnum color = ColorEnum.valueOf("RED");
 
-### values()
+### 2.1. values()
 
 Java 中使用values()方法将枚举所有元素item转换成一个数组。这样就可以通过foreach语法来遍历枚举中的所有元素了。
 
@@ -106,7 +106,7 @@ for (ColorEnum color: ColorEnum.values()) {
 }
 ```
 
-### switch()
+### 2.2. switch()
 
 Java 为枚举提供了switch语法的支持:
 ```java
@@ -130,7 +130,7 @@ switch (color) {
 
 - 在使用 Java 的枚举时往往会结合Switch来进行判断以实现不同值的处理，但是我们知道多用switch不是一种很好的代码风格，不利用维护和适应变化，因为这不符合开闭原则。为此一种方法是用策略模式来重构原有的枚举实现。在《Effective Java》一书中提出了一种枚举策略模式很好的解决了这个问题。
 
-## 自定义属性
+## 3. 自定义属性
 
 可以赋予每一个枚举值若干个属性：
 ```java
@@ -200,7 +200,7 @@ public class EnumTest {
     }
 }
 ```
-## 自定义方法
+## 4. 自定义方法
 
 ```java
 public enum Day {
@@ -310,7 +310,7 @@ public class EnumTest {
 }
 ```
 
-## enum 与静态常量的比较
+## 5. enum 与静态常量的比较
 
 很多情况下，enum 都可以用 Java 的静态常量实现相同的效果：
 ```java
@@ -349,7 +349,7 @@ public class EnumTest2 {
 
 - static 方式的静态变量不支持属性扩展，每一个 key 对应一个值，而 enum 的每一个 key 可以拥有自己的属性
 
-## Refer Links
+## 6. Refer Links
 
 https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
 

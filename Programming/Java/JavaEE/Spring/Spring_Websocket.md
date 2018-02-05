@@ -1,32 +1,32 @@
-- [websocket spring 实现](#websocket-spring-%E5%AE%9E%E7%8E%B0)
-  - [介绍](#%E4%BB%8B%E7%BB%8D)
-  - [三个部分](#%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86)
-    - [处理器](#%E5%A4%84%E7%90%86%E5%99%A8)
-    - [拦截器](#%E6%8B%A6%E6%88%AA%E5%99%A8)
-    - [配置](#%E9%85%8D%E7%BD%AE)
-  - [重要类](#%E9%87%8D%E8%A6%81%E7%B1%BB)
-    - [WebSocketSession](#websocketsession)
-    - [WebSocketMessage](#websocketmessage)
-  - [origins 配置](#origins-%E9%85%8D%E7%BD%AE)
-  - [SockJS](#sockjs)
-    - [服务端中开启 SockJS](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%AD%E5%BC%80%E5%90%AF-sockjs)
-    - [客户端使用 sockJS](#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8-sockjs)
-  - [Stomp](#stomp)
-    - [介绍](#%E4%BB%8B%E7%BB%8D)
-    - [STOMP 帧](#stomp-%E5%B8%A7)
-    - [客户端 API](#%E5%AE%A2%E6%88%B7%E7%AB%AF-api)
-  - [实例：Spring MVC + websocket](#%E5%AE%9E%E4%BE%8B%EF%BC%9Aspring-mvc-websocket)
-  - [实例：SpringBoot + websocket + STOMP + SockJS](#%E5%AE%9E%E4%BE%8B%EF%BC%9Aspringboot-websocket-stomp-sockjs)
-    - [服务器端](#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF)
-    - [客户端](#%E5%AE%A2%E6%88%B7%E7%AB%AF)
-    - [广播消息推送](#%E5%B9%BF%E6%92%AD%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81)
-    - [一对一消息推送的几种方法（即服务器收到客户端消息后仅回复给该客户端而非广播）](#%E4%B8%80%E5%AF%B9%E4%B8%80%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%88%E5%8D%B3%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%94%B6%E5%88%B0%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B6%88%E6%81%AF%E5%90%8E%E4%BB%85%E5%9B%9E%E5%A4%8D%E7%BB%99%E8%AF%A5%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%80%8C%E9%9D%9E%E5%B9%BF%E6%92%AD%EF%BC%89)
-    - [异常信息推送](#%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF%E6%8E%A8%E9%80%81)
-  - [Refer Links](#refer-links)
+- [Spring websocket 实现](#spring-websocket-%E5%AE%9E%E7%8E%B0)
+  - [1. 介绍](#1-%E4%BB%8B%E7%BB%8D)
+  - [2. 三个部分](#2-%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86)
+    - [2.1. 处理器](#21-%E5%A4%84%E7%90%86%E5%99%A8)
+    - [2.2. 拦截器](#22-%E6%8B%A6%E6%88%AA%E5%99%A8)
+    - [2.3. 配置](#23-%E9%85%8D%E7%BD%AE)
+  - [3. 重要类](#3-%E9%87%8D%E8%A6%81%E7%B1%BB)
+    - [3.1. WebSocketSession](#31-websocketsession)
+    - [3.2. WebSocketMessage](#32-websocketmessage)
+  - [4. origins 配置](#4-origins-%E9%85%8D%E7%BD%AE)
+  - [5. SockJS](#5-sockjs)
+    - [5.1. 服务端中开启 SockJS](#51-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%AD%E5%BC%80%E5%90%AF-sockjs)
+    - [5.2. 客户端使用 sockJS](#52-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8-sockjs)
+  - [6. Stomp](#6-stomp)
+    - [6.1. 介绍](#61-%E4%BB%8B%E7%BB%8D)
+    - [6.2. STOMP 帧](#62-stomp-%E5%B8%A7)
+    - [6.3. 客户端 API](#63-%E5%AE%A2%E6%88%B7%E7%AB%AF-api)
+  - [7. 实例：Spring MVC + websocket](#7-%E5%AE%9E%E4%BE%8B%EF%BC%9Aspring-mvc-websocket)
+  - [8. 实例：SpringBoot + websocket + STOMP + SockJS](#8-%E5%AE%9E%E4%BE%8B%EF%BC%9Aspringboot-websocket-stomp-sockjs)
+    - [8.1. 服务器端](#81-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF)
+    - [8.2. 客户端](#82-%E5%AE%A2%E6%88%B7%E7%AB%AF)
+    - [8.3. 广播消息推送](#83-%E5%B9%BF%E6%92%AD%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81)
+    - [8.4. 一对一消息推送的几种方法（即服务器收到客户端消息后仅回复给该客户端而非广播）](#84-%E4%B8%80%E5%AF%B9%E4%B8%80%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%88%E5%8D%B3%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%94%B6%E5%88%B0%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B6%88%E6%81%AF%E5%90%8E%E4%BB%85%E5%9B%9E%E5%A4%8D%E7%BB%99%E8%AF%A5%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%80%8C%E9%9D%9E%E5%B9%BF%E6%92%AD%EF%BC%89)
+    - [8.5. 异常信息推送](#85-%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF%E6%8E%A8%E9%80%81)
+  - [9. Refer Links](#9-refer-links)
 
 # Spring websocket 实现
 
-## 介绍
+## 1. 介绍
 
 Spring 从 4.0 开始加入了 spring-websocket 这个模块，并能够全面支持 WebSocket，它与 Java WebSocket API 标准（JSR-356）保持一致，同时提供了额外的服务。
 
@@ -44,7 +44,7 @@ Spring 从 4.0 开始加入了 spring-websocket 这个模块，并能够全面�
 <context:component-scan base-package="xxx.xxx.websocket"/>
 ```
 
-## 三个部分
+## 2. 三个部分
 
 使用 websocket 模块，主要包含 3 个部分：
 
@@ -52,7 +52,7 @@ Spring 从 4.0 开始加入了 spring-websocket 这个模块，并能够全面�
 - 拦截器 WebSocketInterceptor（进行握手连接）
 - 处理类 SocketHandler（处理通信业务）	
 
-### 处理器
+### 2.1. 处理器
 
 ```java
 /**
@@ -112,7 +112,7 @@ public class MyWebSocketHandler implements WebSocketHandler {
 
 ```
 
-### 拦截器
+### 2.2. 拦截器
 
 ```java
 /**
@@ -138,7 +138,7 @@ public class MyHandShake implements HandshakeInterceptor {
 ```
 更高级的做法是继承 DefaultHandshakeHandler，它操作了 WebSocket 握手的步骤，包括验证 client origin、协商一个 sub-protocol 等。
 
-### 配置
+### 2.3. 配置
 
 ```java
 /**
@@ -200,9 +200,9 @@ public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocke
 </beans>
 ```
 
-## 重要类
+## 3. 重要类
 
-### WebSocketSession
+### 3.1. WebSocketSession
 
 http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/socket/WebSocketSession.html 
 
@@ -221,7 +221,7 @@ WebSocketSession 对象表示与一个客户端的一个会话，每个客户端
 
 - void close(CloseStatus status) throws IOException：关闭 WebSocket 连接，指定状态码 status；
 
-### WebSocketMessage
+### 3.2. WebSocketMessage
 
 Interface WebSocketMessage<T>
 
@@ -238,7 +238,7 @@ Interface WebSocketMessage<T>
 [BinaryMessage](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/socket/BinaryMessage.html)
 构造：`new BinaryMessage(byte[] payload)`
 
-## origins 配置
+## 4. origins 配置
 
 https://docs.spring.io/spring/docs/current/spring-framework-reference/html/websocket.html#websocket-server-allowed-origins 
 
@@ -262,7 +262,7 @@ public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 </websocket:handlers>
 ```
 
-## SockJS
+## 5. SockJS
 
 SockJS 是一个浏览器上运行的 JavaScript 库，如果浏览器不支持 WebSocket，该库可以模拟对 WebSocket 的支持，实现浏览器和 Web 服务器之间低延迟、全双工、跨域的通讯通道；
 
@@ -286,7 +286,7 @@ WebSocket transport 需要的是仅仅一个单一的 HTTP 请求来进行 WebSo
 
 HTTP transport 则需要更多请求。例如，Ajax/XHR streaming 依赖于一个长期运行的请求来完成服务器到客户端的消息，额外的 HTTP POST 请求来完成客户端到服务器的消息。Long polling 是类似的 -- 只是 它会在每次服务器到客户端的发送之后结束当前请求。
 
-### 服务端中开启 SockJS
+### 5.1. 服务端中开启 SockJS
 
 由于 spring 内置了 SockJS 服务端，因此只需在注册 websocket handle 时添加`.withSockJS()`即可；
 
@@ -307,7 +307,7 @@ public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 </websocket:handlers>
 ```
 
-### 客户端使用 sockJS
+### 5.2. 客户端使用 sockJS
 
 [SockJS-client API](https://github.com/sockjs/sockjs-client)
 
@@ -358,7 +358,7 @@ websocket.onclose = function(event) {
 }
 ```
 
-## Stomp
+## 6. Stomp
 
 使用方法教程：
 
@@ -384,7 +384,7 @@ STOMP 1.2 协议说明
 
 http://blog.csdn.net/zsomsom/article/details/27076249?utm_source=tuicool 
 
-### 介绍
+### 6.1. 介绍
 
 STOMP(Simple Text-Orientated Messaging Protocol) 面向消息的简单文本协议。
 
@@ -396,7 +396,7 @@ WebSocket 是一个消息架构，不强制使用任何特定的消息协议，�
 2)	直接使用 WebSocket（SockJS） 就很类似于 使用 TCP 套接字来编写 web 应用，因为没有高层协议，就需要我们定义应用间所发送消息的语义，还需要确保连接的两端都能遵循这些语义；
 3)	同 HTTP 在 TCP 套接字上添加请求 - 响应模型层一样，STOMP 在 WebSocket 之上提供了一个基于帧的线路格式层，用来定义消息语义；
 
-### STOMP 帧
+### 6.2. STOMP 帧
 
 STOMP 帧由命令，一个或多个头信息、一个空行及负载（文本或字节）所组成；
 
@@ -433,7 +433,7 @@ CONNECT、SEND、SUBSCRIBE、UNSUBSCRIBE、BEGIN、COMMIT、ABORT、ACK、NACK�
   {"ticker":"MMM","price":129.45}^@
   ```
 
-### 客户端 API
+### 6.3. 客户端 API
 
 官方教程：http://jmesnil.net/stomp-websocket/doc/ 
 
@@ -637,7 +637,7 @@ tx.commit();
 ```
 The nack() method can also be used to inform STOMP 1.1 brokers that the client did not consume the message. It takes the same arguments than the ack() method.
 
-## 实例：Spring MVC + websocket
+## 7. 实例：Spring MVC + websocket
 
 - websocket 配置
 
@@ -788,11 +788,11 @@ The nack() method can also be used to inform STOMP 1.1 brokers that the client d
   }
   ```
 
-## 实例：SpringBoot + websocket + STOMP + SockJS
+## 8. 实例：SpringBoot + websocket + STOMP + SockJS
 
 使用 SpringBoot + websocket + STOMP + SockJS 实现的[多人网页聊天室](https://github.com/firejq/web-chatroom-stomp)
 
-### 服务器端
+### 8.1. 服务器端
 
 服务器端需要编写的有两个地方：配置类和控制器：
 
@@ -852,7 +852,7 @@ The nack() method can also be used to inform STOMP 1.1 brokers that the client d
 
     具体代码见下边的实例；
 
-### 客户端
+### 8.2. 客户端
 
 ```javascript
 var socket = new SockJS('/endpoint');
@@ -890,7 +890,7 @@ stompClient.connect(
 
 ```
 
-### 广播消息推送
+### 8.3. 广播消息推送
 
 Controller
 ```java
@@ -917,7 +917,7 @@ var subscription_broadcast = stompClient.subscribe('/topic/getResponse', functio
 stompClient.send("/chat", headers, JSON.stringify(body));
 ```
 
-### 一对一消息推送的几种方法（即服务器收到客户端消息后仅回复给该客户端而非广播）
+### 8.4. 一对一消息推送的几种方法（即服务器收到客户端消息后仅回复给该客户端而非广播）
 
 - 在 @MessageMapping 匹配的 URL 中携带参数（客户端 id），以区分不同的客户端
 
@@ -1032,7 +1032,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 ```
 因此，订阅的 URL 都应使用 “/user” 作为前缀，否则会出错；
 
-### 异常信息推送
+### 8.5. 异常信息推送
 
 Controller
 ```java
@@ -1056,7 +1056,7 @@ var subscription_errors = stompClient.subscribe('/user/' + sessionId + '/errors'
 });
 ```
 
-## Refer Links
+## 9. Refer Links
 
 [Spring 4.x WebSocket 文档（English）](https://docs.spring.io/spring/docs/current/spring-framework-reference/html/websocket.html )
 

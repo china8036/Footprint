@@ -1,88 +1,88 @@
 - [AngularJS Base Note](#angularjs-base-note)
-  - [作用域与 $scope](#%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E-scope)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [$scope 生命周期](#scope-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
-    - [属性和工具方法](#%E5%B1%9E%E6%80%A7%E5%92%8C%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95)
-      - [属性](#%E5%B1%9E%E6%80%A7)
-      - [工具方法](#%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95)
-  - [双向数据绑定](#%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A)
-    - [ng-moddel](#ng-moddel)
-    - [ng-bind](#ng-bind)
-  - [MVC](#mvc)
-    - [Controller](#controller)
-    - [Model](#model)
-    - [View](#view)
-      - [表达式](#%E8%A1%A8%E8%BE%BE%E5%BC%8F)
-  - [模块](#%E6%A8%A1%E5%9D%97)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [模块定义](#%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89)
-    - [模块加载](#%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD)
-      - [config](#config)
-      - [run](#run)
-    - [项目模块化](#%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9D%97%E5%8C%96)
-  - [服务](#%E6%9C%8D%E5%8A%A1)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [内置服务](#%E5%86%85%E7%BD%AE%E6%9C%8D%E5%8A%A1)
-      - [$location](#location)
-        - [path()](#path)
-        - [replace()](#replace)
-        - [absUrl()](#absurl)
-      - [$http](#http)
-        - [General usage](#general-usage)
-        - [Shortcut](#shortcut)
-        - [文件上传](#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)
-      - [$cookies](#cookies)
-      - [$log](#log)
-      - [$sce](#sce)
-    - [服务定义](#%E6%9C%8D%E5%8A%A1%E5%AE%9A%E4%B9%89)
-  - [依赖注入](#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-    - [隐式依赖注入](#%E9%9A%90%E5%BC%8F%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-    - [显示依赖注入](#%E6%98%BE%E7%A4%BA%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-    - [行内依赖注入](#%E8%A1%8C%E5%86%85%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-    - [应用](#%E5%BA%94%E7%94%A8)
-      - [模块依赖注入](#%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-      - [控制器依赖注入](#%E6%8E%A7%E5%88%B6%E5%99%A8%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-  - [路由](#%E8%B7%AF%E7%94%B1)
-    - [ngRoute](#ngroute)
-    - [uiRoute](#uiroute)
-      - [使用 $stateProvider 和 $urlRouterProvider 配置路由](#%E4%BD%BF%E7%94%A8-stateprovider-%E5%92%8C-urlrouterprovider-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1)
-      - [页面跳转](#%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
-        - [使用 ui-sref 指令](#%E4%BD%BF%E7%94%A8-ui-sref-%E6%8C%87%E4%BB%A4)
-        - [使用 $state 服务](#%E4%BD%BF%E7%94%A8-state-%E6%9C%8D%E5%8A%A1)
-      - [嵌套视图](#%E5%B5%8C%E5%A5%97%E8%A7%86%E5%9B%BE)
-      - [$state 多视图](#state-%E5%A4%9A%E8%A7%86%E5%9B%BE)
-    - [预载入 Resolve](#%E9%A2%84%E8%BD%BD%E5%85%A5-resolve)
-    - [使用 $transition 监控路由变化](#%E4%BD%BF%E7%94%A8-transition-%E7%9B%91%E6%8E%A7%E8%B7%AF%E7%94%B1%E5%8F%98%E5%8C%96)
-    - [onEnter](#onenter)
-    - [onExit](#onexit)
-  - [指令系统](#%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F)
-    - [生命周期](#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
-    - [指定定义](#%E6%8C%87%E5%AE%9A%E5%AE%9A%E4%B9%89)
-      - [restrict 匹配模式](#restrict-%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F)
-      - [replace](#replace)
-      - [templateUrl](#templateurl)
-      - [template](#template)
-      - [scope 作用域](#scope-%E4%BD%9C%E7%94%A8%E5%9F%9F)
-      - [controller、compile、link](#controller%E3%80%81compile%E3%80%81link)
-    - [内置指令](#%E5%86%85%E7%BD%AE%E6%8C%87%E4%BB%A4)
-      - [布尔类型指令](#%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E6%8C%87%E4%BB%A4)
-      - [在指令中使用子作用域](#%E5%9C%A8%E6%8C%87%E4%BB%A4%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AD%90%E4%BD%9C%E7%94%A8%E5%9F%9F)
-  - [过滤器](#%E8%BF%87%E6%BB%A4%E5%99%A8)
-    - [使用过滤器](#%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8)
-    - [内置过滤器](#%E5%86%85%E7%BD%AE%E8%BF%87%E6%BB%A4%E5%99%A8)
-      - [currency](#currency)
-      - [number](#number)
-      - [date](#date)
-      - [lowercase/uppercase](#lowercaseuppercase)
-      - [limitTo](#limitto)
-      - [orderBy](#orderby)
-    - [自定义过滤器](#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8)
-  - [Refer Links](#refer-links)
+	- [1. 作用域与 $scope](#1-%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E-scope)
+		- [1.1. 概述](#11-%E6%A6%82%E8%BF%B0)
+		- [1.2. $scope 生命周期](#12-scope-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+		- [1.3. 属性和工具方法](#13-%E5%B1%9E%E6%80%A7%E5%92%8C%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95)
+			- [1.3.1. 属性](#131-%E5%B1%9E%E6%80%A7)
+			- [1.3.2. 工具方法](#132-%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95)
+	- [2. 双向数据绑定](#2-%E5%8F%8C%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A)
+		- [2.1. ng-moddel](#21-ng-moddel)
+		- [2.2. ng-bind](#22-ng-bind)
+	- [3. MVC](#3-mvc)
+		- [3.1. Controller](#31-controller)
+		- [3.2. Model](#32-model)
+		- [3.3. View](#33-view)
+			- [3.3.1. 表达式](#331-%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+	- [4. 模块](#4-%E6%A8%A1%E5%9D%97)
+		- [4.1. 概述](#41-%E6%A6%82%E8%BF%B0)
+		- [4.2. 模块定义](#42-%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89)
+		- [4.3. 模块加载](#43-%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD)
+			- [4.3.1. config](#431-config)
+			- [4.3.2. run](#432-run)
+		- [4.4. 项目模块化](#44-%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9D%97%E5%8C%96)
+	- [5. 服务](#5-%E6%9C%8D%E5%8A%A1)
+		- [5.1. 概述](#51-%E6%A6%82%E8%BF%B0)
+		- [5.2. 内置服务](#52-%E5%86%85%E7%BD%AE%E6%9C%8D%E5%8A%A1)
+			- [5.2.1. $location](#521-location)
+				- [5.2.1.1. path()](#5211-path)
+				- [5.2.1.2. replace()](#5212-replace)
+				- [5.2.1.3. absUrl()](#5213-absurl)
+			- [5.2.2. $http](#522-http)
+				- [5.2.2.1. General usage](#5221-general-usage)
+				- [5.2.2.2. Shortcut](#5222-shortcut)
+				- [5.2.2.3. 文件上传](#5223-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0)
+			- [5.2.3. $cookies](#523-cookies)
+			- [5.2.4. $log](#524-log)
+			- [5.2.5. $sce](#525-sce)
+		- [5.3. 服务定义](#53-%E6%9C%8D%E5%8A%A1%E5%AE%9A%E4%B9%89)
+	- [6. 依赖注入](#6-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+		- [6.1. 隐式依赖注入](#61-%E9%9A%90%E5%BC%8F%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+		- [6.2. 显示依赖注入](#62-%E6%98%BE%E7%A4%BA%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+		- [6.3. 行内依赖注入](#63-%E8%A1%8C%E5%86%85%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+		- [6.4. 应用](#64-%E5%BA%94%E7%94%A8)
+			- [6.4.1. 模块依赖注入](#641-%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+			- [6.4.2. 控制器依赖注入](#642-%E6%8E%A7%E5%88%B6%E5%99%A8%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
+	- [7. 路由](#7-%E8%B7%AF%E7%94%B1)
+		- [7.1. ngRoute](#71-ngroute)
+		- [7.2. uiRoute](#72-uiroute)
+			- [7.2.1. 使用 $stateProvider 和 $urlRouterProvider 配置路由](#721-%E4%BD%BF%E7%94%A8-stateprovider-%E5%92%8C-urlrouterprovider-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1)
+			- [7.2.2. 页面跳转](#722-%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC)
+				- [7.2.2.1. 使用 ui-sref 指令](#7221-%E4%BD%BF%E7%94%A8-ui-sref-%E6%8C%87%E4%BB%A4)
+				- [7.2.2.2. 使用 $state 服务](#7222-%E4%BD%BF%E7%94%A8-state-%E6%9C%8D%E5%8A%A1)
+			- [7.2.3. 嵌套视图](#723-%E5%B5%8C%E5%A5%97%E8%A7%86%E5%9B%BE)
+			- [7.2.4. $state 多视图](#724-state-%E5%A4%9A%E8%A7%86%E5%9B%BE)
+		- [7.3. 预载入 Resolve](#73-%E9%A2%84%E8%BD%BD%E5%85%A5-resolve)
+		- [7.4. 使用 $transition 监控路由变化](#74-%E4%BD%BF%E7%94%A8-transition-%E7%9B%91%E6%8E%A7%E8%B7%AF%E7%94%B1%E5%8F%98%E5%8C%96)
+		- [7.5. onEnter](#75-onenter)
+		- [7.6. onExit](#76-onexit)
+	- [8. 指令系统](#8-%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F)
+		- [8.1. 生命周期](#81-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+		- [8.2. 指定定义](#82-%E6%8C%87%E5%AE%9A%E5%AE%9A%E4%B9%89)
+			- [8.2.1. restrict 匹配模式](#821-restrict-%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F)
+			- [8.2.2. replace](#822-replace)
+			- [8.2.3. templateUrl](#823-templateurl)
+			- [8.2.4. template](#824-template)
+			- [8.2.5. scope 作用域](#825-scope-%E4%BD%9C%E7%94%A8%E5%9F%9F)
+			- [8.2.6. controller、compile、link](#826-controller%E3%80%81compile%E3%80%81link)
+		- [8.3. 内置指令](#83-%E5%86%85%E7%BD%AE%E6%8C%87%E4%BB%A4)
+			- [8.3.1. 布尔类型指令](#831-%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%E6%8C%87%E4%BB%A4)
+			- [8.3.2. 在指令中使用子作用域](#832-%E5%9C%A8%E6%8C%87%E4%BB%A4%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AD%90%E4%BD%9C%E7%94%A8%E5%9F%9F)
+	- [9. 过滤器](#9-%E8%BF%87%E6%BB%A4%E5%99%A8)
+		- [9.1. 使用过滤器](#91-%E4%BD%BF%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8)
+		- [9.2. 内置过滤器](#92-%E5%86%85%E7%BD%AE%E8%BF%87%E6%BB%A4%E5%99%A8)
+			- [9.2.1. currency](#921-currency)
+			- [9.2.2. number](#922-number)
+			- [9.2.3. date](#923-date)
+			- [9.2.4. lowercase/uppercase](#924-lowercaseuppercase)
+			- [9.2.5. limitTo](#925-limitto)
+			- [9.2.6. orderBy](#926-orderby)
+		- [9.3. 自定义过滤器](#93-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8)
+	- [10. Refer Links](#10-refer-links)
 
 # AngularJS Base Note
 
-## 作用域与 $scope
-### 概述
+## 1. 作用域与 $scope
+### 1.1. 概述
 - 作用域是视图和控制器之间的胶水。在应用将视图渲染并呈现给用户之前，视图中的模板会和作用域进行连接，然后应用会对 DOM 进行设置以便将属性变化通知给 Angular。 我们可以依赖视图在修改数据时立刻更新 $scope，也可以依赖 $scope 在其发生变化时立刻重新渲染视图。我们可以将应用的业务逻辑都放在控制器中，而将相关的数据都放在控制器的作用域中。
 - $scope 是一个指向应用 model 的 object，也是表达式的执行上下文（作用域）；
 - $scope 被放置于一个类似应用的 DOM 结构的树形层次结构中，子 $scope 对象会继承父 $scope 对象的属性和方法；
@@ -93,7 +93,7 @@
 - 默认情况下，AngularJS 在当前作用域中无法找到某个属性时，便会在父级作用域中查找，如果找不到，则会顺着父级作用域一直向上寻找，直到抵达 $rootScope 为止，如果这时也找不到，则继续运行，但是视图无法更新；
 - 可以通过 angular.element($0).scope() 获取和调试 $scope 对象；
 
-### $scope 生命周期
+### 1.2. $scope 生命周期
 
 1)	creation
 
@@ -112,19 +112,19 @@
 
 当 child scope 不再是必须的时候，child scope 的产⽣生者有责任通过 scope.$destroy() API 销毁它们（child scope）。这将会停止 $digest 的调用传播传播到 child scope 中，让被 child scope model 使用的内存可以被 gc 回收；
 
-### 属性和工具方法
+### 1.3. 属性和工具方法
 https://angularjs.shujuwajue.com/apply.html      
 https://angularjs.shujuwajue.com/watchfang_fa.html   
 http://angularjs.cn/A0a6    
 
 $scope 实际上是一个 POJO，即普通 JavaScript 对象，提供了一些属性和工具方法（如 $apply、$watch 等），是 MVC 和双向数据绑定实现的基础；
 
-#### 属性
+#### 1.3.1. 属性
 - $id：唯一标识一个 $scope 对象的值，一般是一个数字；
 - $parent：当控制器发生嵌套或使用指令时，会使得作用域发生嵌套，$parent 指向父作用域；
 - $root：指向根作用域 $rootScope 对象；
 
-#### 工具方法
+#### 1.3.2. 工具方法
 
 - $watch：监控 $scope 中的属性，值发生变化时调用相应的回调函数；    
 	例：   
@@ -138,22 +138,22 @@ $scope 实际上是一个 POJO，即普通 JavaScript 对象，提供了一些�
 - $on、$broadcast、$emit：定义自定义事件，通过 $broadcast 向下进行广播，传给子作用域，通过 $emit 向上进行广播，传给父级作用域，$on 用于接收事件；   
 - $digest：当双向数据绑定失效时，可调用此函数手动同步视图与 controller 的数据，一般用于在指令中使用原生方法（document.getXXX 等方法）操作 DOM 时；若在正常逻辑中调用会报错；   
 
-## 双向数据绑定
+## 2. 双向数据绑定
 
-### ng-moddel
+### 2.1. ng-moddel
 
-### ng-bind
+### 2.2. ng-bind
 
 - ng-model 和 ng-bind 的区别：   
 	- ng-bind 是从 $scope -> view 的单向绑定，也就是说 ng-bind 是相当于{{object.xxx}}，是用于展示数据的，当页面 angularjs 未加载完毕时，显示为空；
 	- ng-model 是 $scope <-> view 的双向绑定，当页面 angularjs 未加载完毕时，显示“{{xxxxxx}}”；
 
-## MVC
+## 3. MVC
 MVC 工作模式：
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/efa776ab6cdbc18a96c8c90995ca1160.jpg)
 
-### Controller
+### 3.1. Controller
 
 - Angular 中控制器的作用是增强视图，Angular 中的控制器是一个函数，用来向视图的作用域中添加额外的功能，我们用它来给作用域对象设置初始状态，并添加自定义行为；
 - AngularJS 不再让用户操作 DOM 和事件，用于只需要关注 JS 与 HTML 的关系，并且实现 HTML 与 JS 的隔离，通过 angularJS 来实现粘合，我们可以把 angularJS 看出 html 与 JS 之间的胶水；
@@ -169,7 +169,7 @@ MVC 工作模式：
 - controller 之间不应相互调用，其通信应通过事件广播 /$rootScope/ 服务进行；
 多个控制器间通信的方式：https://segmentfault.com/a/1190000009167725 
 
-### Model
+### 3.2. Model
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/177ec936519d50809027b31fbbd79cf2.jpg)
 
@@ -177,11 +177,11 @@ MVC 工作模式：
 
 创建数据模型 greeting.text，并将 input 标签的值，与该模型进行双向绑定；
 
-### View
+### 3.3. View
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/50eed8d8a0f65fd7d06c90d534b2d2c0.jpg)
 
-#### 表达式
+#### 3.3.1. 表达式
 
 {{ }}符号将一个变量绑定到 $scope 上。当用 $watch 进行监听时，AngularJS 会对表达式或函数进行运算；
 
@@ -191,9 +191,9 @@ MVC 工作模式：
 - 不允许使用任何流程控制比如 if；
 - 可以接受过滤器和过滤器链；
 
-## 模块
+## 4. 模块
 
-### 概述
+### 4.1. 概述
 
 大部分应用都有⼀一个主方法 (main) 用来实例化、组织、启动应用，AngularJS 应用没有主方法，而是使用模块来声明应用应该如何启动；
 
@@ -209,7 +209,7 @@ AngularJS 本身的一个默认模块叫做 ng ，它提供了 $http ， $scope 
 - 第三方代码可以作为可复用的 module 打包到 angular 中；
 - 模块可以以任何先后或者并行的顺序加载（因为模块的执行本身是延迟的）；
 
-### 模块定义
+### 4.2. 模块定义
 
 ```javascript
 angular.module(name[, requires], configFn);
@@ -223,9 +223,9 @@ angular.module(name[, requires], configFn);
 使用 angular.moudle() 方法创建一个名为 HelloAngular 的模块；   
 使用模块的方法 controller() 创建一个名为 helloNgCtrl 的控制器；   
 
-### 模块加载
+### 4.3. 模块加载
 
-#### config
+#### 4.3.1. config
 
 配置块。在模板的加载阶段，AngularJS 会在提供者注册和配置的过程中对模块进行配置。在整个 AngularJS 工作流中，这个阶段是**唯一能够在应用启动前进行修改的部分**。
 
@@ -268,7 +268,7 @@ angular.module("myApp",[])
 ```
 AngularJS 会以这些函数书写和注册的顺序来执行它们，也就是说我们无法注入一个尚未注册的 provider；
 
-#### run
+#### 4.3.2. run
 
 运行块。和配置块不同，运行块在注入器创建之后被执行，它是所有 AngularJS 应用中第一个被执行的方法。
 
@@ -292,7 +292,7 @@ angular.module("myApp",[])
 });
 ```
 
-### 项目模块化
+### 4.4. 项目模块化
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/b093b727fe23df04a2fba230b23f3e21.jpg)
 
@@ -300,23 +300,23 @@ angular.module("myApp",[])
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/67e523d9d8f5999892424200cafe4040.jpg)
 
-## 服务
+## 5. 服务
 
-### 概述
+### 5.1. 概述
 
 - 控制器只会在需要时被实例化，不再需要就会被销毁。这意味着每次切换路由或重新加载视图时，当前的控制器会被 AngularJS 清除掉。而服务提供了一种能在应用的整个生命周期内保持数据的办法，它能够在控制器之间进行通信，并且能保证数据的一致性。 **服务是一个单例对象，在每个应用中只会被实例化一次（被 $injector 实例化)，并且是延迟加载的，服务提供了把与特定功能相关联的方法集中在一起的接口**；
 - 服务本身是一个任意的对象；
 - Angular 是用 $provider 对象来实现自动依赖注入机制，注入机制通过调用一个 provider 的 $get() 方法，把得到的对象作为参数进行相关调用，$provider 提供很多很定义服务的方法，这些简便的方法还直接被 module 所引用；
 
-### 内置服务
+### 5.2. 内置服务
 
-#### $location
+#### 5.2.1. $location
 Angular 中使用内置的 $location 服务来监听、操作 URL，功能包括了获取、监听、改变地址栏的 URL；  
 与 URL 实现双向数据绑定（地址栏变动、前进后退或者点击页面的链接均会触发）；   
 将 URL 对象封装成了一套方法（protocol、host、port、path、search 和 hash），对 window.location 对象的 API 进行优雅封装，支持 jQuery 风格的链式写法，集成了 HTML5 的 history API；
 
 工具方法：
-##### path()
+##### 5.2.1.1. path()
 
 用来获取页面当前的路径。
 ```javascript
@@ -328,7 +328,7 @@ $location.path('/');// 把路径修改为'/'路由
 ```
 注意：$location 无法使整个页面重新加载。如果改变 URL 后希望重新加载页面，请使用 `$window.location.href`。
 
-##### replace()
+##### 5.2.1.2. replace()
 
 跳转后不能点击后退按钮。
 ```javascript
@@ -338,11 +338,11 @@ $location.replace();
 $location.path('/home').replace(); 
 ```
 
-##### absUrl()
+##### 5.2.1.3. absUrl()
 
 获取编码后的完整 URL。
 
-#### $http
+#### 5.2.2. $http
 https://code.angularjs.org/1.6.4/docs/api/ng/service/$http 
 
 $http 是 angular 中的一个核心服务，利用浏览器的 xmlhttprequest 对象或者 JSONP 与远程 HTTP 服务器进行交互；
@@ -353,7 +353,7 @@ function controller($scope,$http){
 }；
 ```
 
-##### General usage
+##### 5.2.2.1. General usage
 例：
 ```javascript
 $http({
@@ -386,7 +386,7 @@ $http({
 	- config – {Object} – The configuration object that was used to generate the request.
 	- statusText – {string} – HTTP status text of the response.
 
-##### Shortcut
+##### 5.2.2.2. Shortcut
 
 对于几个标准的 HTTP 方法，有对应的简写方法：
 ```javascript
@@ -414,7 +414,7 @@ $http.post('/someUrl', data, config).then(successCallback, errorCallback);
 
 4)	data {key,value} 数据，将被放入请求内发送至服务器；
 
-##### 文件上传
+##### 5.2.2.3. 文件上传
 
 http://blog.csdn.net/u013360850/article/details/57421535
 
@@ -457,7 +457,7 @@ $scope.ok = function () {
 - AngularJS 默认的'Content-Type'是 application/json ，通过设置'Content-Type': undefined，这样浏览器不仅帮我们把 Content-Type 设置为 multipart/form-data，还填充上当前的 boundary，如果手动设置为：'Content-Type': multipart/form-data，后台会抛出异常：the request was rejected because no multipart boundary was found，而 boundary 是随机生成的字符串，用来分隔文本的开始和结束
 - 通过设置 transformRequest: angular.identity ，anjularjs transformRequest function 将序列化我们的 formdata object，也可以不添加
 
-#### $cookies
+#### 5.2.3. $cookies
 
 https://docs.angularjs.org/api/ngCookies/service/$cookies 
 
@@ -492,7 +492,7 @@ angular.module('cookiesExample', ['ngCookies'])
   expireDate.setDate(expireDate.getDate() + 7);// 设置 cookie 保存 7 天
   $cookies.putObject("user", cookieDate, {'expires': expireDate});
 ```
-#### $log
+#### 5.2.4. $log
 
 ng 提供 $log 这个服务用于向终端输出相关信息：
 ```
@@ -502,7 +502,7 @@ log()
 warn()
 ```
 
-#### $sce
+#### 5.2.5. $sce
 
 > $sce is a service that provides Strict Contextual Escaping services to AngularJS. SCE assists in writing code in way that (a) is secure by default and (b) makes auditing for security vulnerabilities such as XSS, clickjacking, etc. a lot easier.
 
@@ -518,7 +518,7 @@ HTML
 
 参考：https://solidfoundationwebdev.com/blog/posts/can-t-interpolate-error-with-iframe-and-ng-src-in-angularjs-1-x
 
-### 服务定义
+### 5.3. 服务定义
 
 - $provider.factory
 factory 方法直接把一个函数当成是一个对象的 $get() 方法；
@@ -559,7 +559,7 @@ var myApp = angular.module('myApp',[],function($provide){
 ```
 **注：factory、service 实际上都是 provider；**
 
-## 依赖注入
+## 6. 依赖注入
 通常一个对象有三种方法可以获得对其依赖的控制权：
 - 在内部创建依赖：这种方法的弊端就是不方便以后的维护，使隔离变的异常困难。
 - 通过全局变量进行引用：这种方法的弊端就是污染了全局作用域，当代码量达到了一定程度后，容易出现问题。
@@ -569,7 +569,7 @@ var myApp = angular.module('myApp',[],function($provide){
 
 内部机制：https://benweizhu.github.io/blog/2015/01/04/yes-angularjs-6/ 
 
-### 隐式依赖注入
+### 6.1. 隐式依赖注入
 
 隐式依赖注入，即通过函数的参数进行推断式注入声明；
 
@@ -593,7 +593,7 @@ var myApp = angular.module('myApp', [], ['$filterProvider', '$provide', '$contro
 
 **这个方法只适合未经过压缩和混淆的代码，因为 AngularJS 需要原始未经压缩的参数列表来进行解析。**
 
-### 显示依赖注入
+### 6.2. 显示依赖注入
 
 AngularJS 提供了显式地方法来明确定义一个函数在被调用时需要用到的依赖关系。
 
@@ -619,7 +619,7 @@ controller('MyController',{$scope:newScope});
 
 对于这种声明方式来讲，参数的顺序是十分重要的，因为 $inject 数组元素的顺序必须和注入的参数的顺序一一对应。
 
-### 行内依赖注入
+### 6.3. 行内依赖注入
 
 AngularJS 提供的行内注入方法实际上是一种语法糖；
 
@@ -644,9 +644,9 @@ angular.module("MyApp", [])
 
 需要注意的是，行内声明的方式允许我们直接传入一个参数数组，而不是一个函数。数组的元素是字符串，它们代表的是可以被注入到对象中的依赖名字，最后一个参数就是依赖注入的目标函数对象本身。
 
-### 应用
+### 6.4. 应用
 
-#### 模块依赖注入
+#### 6.4.1. 模块依赖注入
 
 ```javascript
 // 采用行内依赖注入构造 module
@@ -657,7 +657,7 @@ var myApp = angular.module('myApp', [
 ```
 **注：这里所依赖的模块必须在 html 文件中导入，若没有导入 html 文件却依赖了模块，会导致整个 angularjs 的 module 初始化加载失败（当页面的 ng 指令都失效时很有可能是这个原因导致的）；**
 
-#### 控制器依赖注入
+#### 6.4.2. 控制器依赖注入
 
 ```javascript
 // 采用行内依赖注入构造 controller
@@ -667,7 +667,7 @@ angular.module('myApp',[])
 }])
 ```
 
-## 路由
+## 7. 路由
 <!-- TODO 排版错乱 -->
 除了使用 ng-include 指令在视图中引用多个模板外，更好的做法是将视图分解成布局和模板视图，并且根据用户当前访问的 URL 来展示对应的视图。 我们可以将模板分解到视图中，并在布局模板内进行组装。我们可以在 $route 服务的提供者 $routeProvider 中通过声明路由来实现这个功能。
 
@@ -680,7 +680,7 @@ angular.module('myApp',[])
 	- 通过锚点 # 实现；
 	- 通过 HTML5 的 history API 实现；
 
-### ngRoute
+### 7.1. ngRoute
 
 在 HTML 中引入 angular-route.js 文件
 ```html
@@ -801,13 +801,13 @@ ng-view 是由 ngRoute 模块提供的一个特殊指令，它的独特作用是
 $route 服务在路由过程中的每个阶段都会触发不同的事件，可以为这些不同的路由事件设置监听器并作出响应。我们需要给路由设置事件监听器，用 $rootScope 来监听这些事件；   
 AngularJS 在路由变化之前会广播 $routeChangeStart 事件。路由服务会开始加载路由变化所需要的所有依赖，并且模板和 resolve 键中的 promise 也会被 resolve；
 
-### uiRoute
+### 7.2. uiRoute
 
 UI-Router 是 Angular-UI 提供的客户端路由框架，它解决了原生的 ng-route 的很多不足：
 - 视图不能嵌套。这意味着 $scope 会发生不必要的重新载入。这也是我们在 Onboard 中引入 ui-route 的原因；
 - 同一 URL 下不支持多个视图。这一需求也是常见的：我们希望导航栏用一个视图（和相应的控制器）、内容部分用另一个视图（和相应的控制器）；
 
-#### 使用 $stateProvider 和 $urlRouterProvider 配置路由
+#### 7.2.1. 使用 $stateProvider 和 $urlRouterProvider 配置路由
 
 UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI 的状态，每个 $state 需要绑定一个 URL Pattern。 在控制器和模板中，通过改变 $state 来进行 URL 的跳转和路由；
 
@@ -845,9 +845,9 @@ UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI
 	- '/message?before&after'：使用 URL Query 方式传参；
 	- '/inbox/{inboxId:[0-9a-fA-F]{6}}'：使用正则表达式来匹配，限定 id 为 6 位 16 进制数字
 
-#### 页面跳转
+#### 7.2.2. 页面跳转
 
-##### 使用 ui-sref 指令
+##### 7.2.2.1. 使用 ui-sref 指令
 
 点击该指令配置的标签后，会跳转到对应的路由页面，且在跳转时支持参数传递
 
@@ -885,7 +885,7 @@ UI-Router 提出了 $state 的概念。一个 $state 是一个当前导航和 UI
   }
 ```
 
-##### 使用 $state 服务
+##### 7.2.2.2. 使用 $state 服务
 
 在 ui-router 时，可以使用 $state 来完成页面跳转，而不是直接操作 URL。    
 
@@ -902,7 +902,7 @@ $state.params.id
 $stateParams.id
 ```
 
-#### 嵌套视图
+#### 7.2.3. 嵌套视图
 https://www.cnblogs.com/xf110/p/6838343.html
 
 http://www.jruif.com/2015-05/【Angular 系列】ui-router- 多层 state 与多层 view 的解构 /
@@ -963,7 +963,7 @@ myOrderDetail.detail.html
 嵌套视图采用特殊的语法标记：
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/9425e223da215424d219ab98a8a61070.jpg)
 
-#### $state 多视图
+#### 7.2.4. $state 多视图
 http://bubkoo.com/2014/01/01/angular/ui-router/guide/multiple-named-views/
 
 多视图指的是一个 state 下包含了多个 ui-view，其中每个 ui-view 都有各自的模板和控制器；这一点也是 ng-route 所没有的， 给了前端路由极大的灵活性；
@@ -998,7 +998,7 @@ $stateProvider
 ```
 
 <!-- TODO -->
-### 预载入 Resolve
+### 7.3. 预载入 Resolve
 使用预载入功能，开发者可以预先载入一系列依赖或者数据，然后注入到控制器中。在 ngRoute 中 resolve 选项可以允许开发者在路由到达前载入数据保证（promises）。在使用这个选项时比使用 angular-route 有更大的自由度。
 
 预载入选项需要一个对象，这个对象的 key 即要注入到控制器的依赖，这个对象的 value 为需要被载入的 factory 服务。
@@ -1041,13 +1041,13 @@ $stateProvider.state('home', {
 })
 ```
 
-### 使用 $transition 监控路由变化
+### 7.4. 使用 $transition 监控路由变化
 
 https://ui-router.github.io/ng1/docs/latest/classes/transition.transition-1.html
 
 https://ui-router.github.io/ng1/docs/latest/interfaces/transition.hookmatchcriteria.html
 
-### onEnter
+### 7.5. onEnter
 
 > onEnter(criteria: HookMatchCriteria, callback: TransitionStateHookFn, options?: HookRegOptions)
 
@@ -1086,7 +1086,7 @@ angular.module('app').run(['$transitions', '$cookies', '$state', function ($tran
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/5515e4ebeb63f37163de7f92d8783d67.jpg)
 
-### onExit
+### 7.6. onExit
 
 > onExit(criteria: HookMatchCriteria, callback: TransitionStateHookFn, options?: HookRegOptions)
 
@@ -1094,14 +1094,14 @@ The HookMatchCriteria is used to determine which Transitions the hook should be 
 
 注：在 onExit 中若要使用返回布尔值的 function 判断是否拦截路由，应使用 from 而不是 to。
 
-## 指令系统
+## 8. 指令系统
 
 指令是 AngularJS 的灵魂、最重要的元素；
 
-### 生命周期
+### 8.1. 生命周期
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/d31baf17e0e61ff3117bc42224bc42b8.jpg)
 
-### 指定定义
+### 8.2. 指定定义
 
 - 通过 AngularJS 的 directive() 方法，我们可以传入一个字符串和一个函数来注册一个新指令；   
 	- 字符串是这个指令的名字，指令名是**驼峰命名**风格的，如：指令名 appHead 对应指令 app-head；
@@ -1109,7 +1109,7 @@ The HookMatchCriteria is used to determine which Transitions the hook should be 
 
 例：
 
-#### restrict 匹配模式
+#### 8.2.1. restrict 匹配模式
 
 restrict 匹配模式设置告诉 AngularJS 在编译 HTML 时用哪种声明格式来匹配指令定义：   
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/dee59c3124f6cf458b4786f070522bed.jpg)
@@ -1130,7 +1130,7 @@ angular.module("app",[])
 </script>
 ```
 
-#### replace
+#### 8.2.2. replace
 
 通过浏览器工具可以看到浏览器渲染视图后使用的是我们自定义的标签，这样不利于 SEO：   
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/744762086084973c495384985d9b6180.jpg)
@@ -1149,17 +1149,17 @@ angular.module("app",[])
 ```
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/d31b65b0aac0f5fc022f5941077f0938.jpg)
 
-#### templateUrl
+#### 8.2.3. templateUrl
 
 templateUrl 为指令要加载的模板位置；
 
 注意：要被指令加载的模板只能有一个根元素，不能有任何兄弟节点；
 
-#### template
+#### 8.2.4. template
 
 temple 为指令要加载的模板 HTML 代码；
 
-#### scope 作用域
+#### 8.2.5. scope 作用域
 
 每当一个指令被创建的时候，都会有这样一个选择，是继承自己的父作用域（一般是外部的 Controller 提供的作用域或者根作用域（$rootScope）），还是创建一个新的自己的作用域，AngularJS 为我们指令的 scope 参数提供了三种选择，分别是：false,true,{}；默认情况下是 false。
 
@@ -1226,7 +1226,7 @@ temple 为指令要加载的模板 HTML 代码；
 		</div>
 		```
 
-#### controller、compile、link
+#### 8.2.6. controller、compile、link
 http://hudeyong926.iteye.com/blog/2073488
 
 https://checkcheckzz.gitbooks.io/angularjs-learning-notes/content/chapter18/18-8.html
@@ -1234,13 +1234,13 @@ https://checkcheckzz.gitbooks.io/angularjs-learning-notes/content/chapter18/18-8
 https://xgfe.github.io/2016/08/12/y8n/angular-directive-attributes/
 <!-- TODO -->
 
-### 内置指令
+### 8.3. 内置指令
 
 AngularJS 提供了一系列的内置指令，其中一些指令重载了元素的 HTML 元素，比如 form 和 a 标签。另一些则是 ng 为前缀；
 
 这里有一个最佳实践，就是 ng 开头的都是 AngularJS 提供的内置指令，因此不要把自己开发的指令也以这个前缀命名；
 
-#### 布尔类型指令
+#### 8.3.1. 布尔类型指令
 
 AngularJS 提供了一组带有 ng- 前缀版本的布尔属性，通过运算表达式的值来决定在目标元素上是插入还是移除对应的属性。
 
@@ -1275,7 +1275,7 @@ AngularJS 提供了一组带有 ng- 前缀版本的布尔属性，通过运算�
 	- src 与 ng-src 的区别：    
 		src 是 HTML 的属性，{{}} 是 ng 的表达式，表达式可用于很多地方，包含属性，所以直接 src="{{vm.url}}" 其实就是使用 ng 的表达式给属性赋值，这种做法的缺点是当第一次加载模板的时候浏览器会去请求 “{{vm.url}}” 的地址，当 ng 编译模板后把 {{vm.url}} 替换成对应的 URL 后会再次请求真实的地址，所以为了避免第一次无效的请求
 
-#### 在指令中使用子作用域
+#### 8.3.2. 在指令中使用子作用域
 
 - ng-app    
 
@@ -1367,11 +1367,11 @@ AngularJS 提供了一组带有 ng- 前缀版本的布尔属性，通过运算�
 - ng-options
 	使用 ng-options 结合 select 标签可以创建动态的选择框，教程：https://www.cnblogs.com/wolf-sun/p/4614532.html 
 
-## 过滤器
+## 9. 过滤器
 
 AngularJS 中过滤器一般用于格式化和过滤后展示数据，开发者可以自定义过滤规则，来创建过滤器。
 
-### 使用过滤器
+### 9.1. 使用过滤器
 
 在 HTML 中的模板{{}}内通过 `|` 符号来调用过滤器，在过滤器中使用 `:` 连接过滤器参数；  
 例：字符转大写
@@ -1396,11 +1396,11 @@ javascript 调用方式：
 $filter('filter')(array, expression, comparator)
 ```
 
-### 内置过滤器
+### 9.2. 内置过滤器
 
 过滤器可以链式调用，理论上没有数量限制；
 
-#### currency    
+#### 9.2.1. currency
 currency 过滤器可以将一个数值格式化为特定的货币格式：
 ```html
 <h2>{{ 123 | currency}}</h2><!-- $123.00 --> 
@@ -1410,7 +1410,7 @@ currency 过滤器可以将一个数值格式化为特定的货币格式：
 <h2>{{ 123 | currency:"￥":3}}</h2><!-- ￥123.000 --> 
 ```
 
-#### number
+#### 9.2.2. number
 格式化数值：
 ```html
 <h2>{{1234.56789 | number}}</h2>
@@ -1419,7 +1419,7 @@ currency 过滤器可以将一个数值格式化为特定的货币格式：
 <!-- 保留 1 位小数：1234.6 -->
 ```
 
-#### date    
+#### 9.2.3. date
 date 过滤器可以将日期格式化成需要的格式：
 ```html
 <h1>date 过滤器</h1>
@@ -1437,7 +1437,7 @@ date 过滤器可以将日期格式化成需要的格式：
 	
 ```
 
-#### lowercase/uppercase
+#### 9.2.4. lowercase/uppercase
 lowercase/uppercase 用于大小写的转换：
 ```html
 {{'Abc | lowercase'}}
@@ -1446,7 +1446,7 @@ lowercase/uppercase 用于大小写的转换：
 <!-- ABC -->
 ```
 
-#### limitTo
+#### 9.2.5. limitTo
 limitTo 用于截取数组前 n 位元素进行显示：
 ```html
 {{[1,2,3,4,5,6,7,8,9] | limitTo:4}}
@@ -1455,7 +1455,7 @@ limitTo 用于截取数组前 n 位元素进行显示：
 <!-- abcd -->
 ```
 
-#### orderBy
+#### 9.2.6. orderBy
 orderBy 用于在 ng-repeat 中指定排序的列：
 ```html
 <table>
@@ -1472,7 +1472,7 @@ orderBy 用于在 ng-repeat 中指定排序的列：
 </table>
 ```
 
-### 自定义过滤器
+### 9.3. 自定义过滤器
 
 例：时间格式自定义过滤器：
 ```javascript
@@ -1498,7 +1498,7 @@ angular.module('app').controller('mainCtrl', ['dateFilter', '$scope',  function 
 }]);
 ```
 
-## Refer Links
+## 10. Refer Links
 官方 API 文档：https://code.angularjs.org/1.6.4/docs/api 
 
 Angularjs 权威指南读书笔记：https://github.com/brizer/Study-Notes/tree/master/%E5%BF%83%E5%BE%97%E4%BD%93%E4%BC%9A/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/AngularJS%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97 

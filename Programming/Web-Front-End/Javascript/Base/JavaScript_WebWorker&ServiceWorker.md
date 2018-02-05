@@ -1,22 +1,22 @@
 - [JavaScript Web Workers](#javascript-web-workers)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-  - [专用线程 Dedicated Worker](#%E4%B8%93%E7%94%A8%E7%BA%BF%E7%A8%8B-dedicated-worker)
-    - [兼容性检测](#%E5%85%BC%E5%AE%B9%E6%80%A7%E6%A3%80%E6%B5%8B)
-    - [基本使用](#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
-    - [NOTE](#note)
-    - [应用](#%E5%BA%94%E7%94%A8)
-    - [实例：Worker 进程完成论询](#%E5%AE%9E%E4%BE%8B%EF%BC%9Aworker-%E8%BF%9B%E7%A8%8B%E5%AE%8C%E6%88%90%E8%AE%BA%E8%AF%A2)
-  - [共享线程 Shared Worker](#%E5%85%B1%E4%BA%AB%E7%BA%BF%E7%A8%8B-shared-worker)
-  - [服务线程 Service Worker](#%E6%9C%8D%E5%8A%A1%E7%BA%BF%E7%A8%8B-service-worker)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [基本使用](#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
-    - [NOTE](#note)
-    - [应用](#%E5%BA%94%E7%94%A8)
-  - [Refer Links](#refer-links)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+  - [2. 专用线程 Dedicated Worker](#2-%E4%B8%93%E7%94%A8%E7%BA%BF%E7%A8%8B-dedicated-worker)
+    - [2.1. 兼容性检测](#21-%E5%85%BC%E5%AE%B9%E6%80%A7%E6%A3%80%E6%B5%8B)
+    - [2.2. 基本使用](#22-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
+    - [2.3. NOTE](#23-note)
+    - [2.4. 应用](#24-%E5%BA%94%E7%94%A8)
+    - [2.5. 实例：Worker 进程完成论询](#25-%E5%AE%9E%E4%BE%8B%EF%BC%9Aworker-%E8%BF%9B%E7%A8%8B%E5%AE%8C%E6%88%90%E8%AE%BA%E8%AF%A2)
+  - [3. 共享线程 Shared Worker](#3-%E5%85%B1%E4%BA%AB%E7%BA%BF%E7%A8%8B-shared-worker)
+  - [4. 服务线程 Service Worker](#4-%E6%9C%8D%E5%8A%A1%E7%BA%BF%E7%A8%8B-service-worker)
+    - [4.1. 概述](#41-%E6%A6%82%E8%BF%B0)
+    - [4.2. 基本使用](#42-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8)
+    - [4.3. NOTE](#43-note)
+    - [4.4. 应用](#44-%E5%BA%94%E7%94%A8)
+  - [5. Refer Links](#5-refer-links)
 
 # JavaScript Web Workers
 
-## 概述
+## 1. 概述
 
 Javascript 运行在一个单线程环境中，对 setTimeout/setInterval、ajax 和 dom 事件的异步处理是依赖事件循环实现的。
 
@@ -35,11 +35,11 @@ Worker 线程包括以下几种：
 - 共享线程 Shared Worker
 - 服务线程 Service Worker
 
-## 专用线程 Dedicated Worker
+## 2. 专用线程 Dedicated Worker
 
 一个专用 worker 仅仅能被生成它的脚本所使用。
 
-### 兼容性检测
+### 2.1. 兼容性检测
 
 查浏览器是否支持这个 API：
 ```javascript
@@ -50,7 +50,7 @@ if (window.Worker) {
 }
 ```
 
-### 基本使用
+### 2.2. 基本使用
 
 WEB 主线程中：
 - 通过 `var worker = new Worker(url)` 加载一个 js 文件来创建一个 worker，同时返回一个 worker 实例。
@@ -100,7 +100,7 @@ worker 新线程中：
 
 - 通过 `self.close()` 在子线程内部终止一个 worker 的执行。
 
-### NOTE
+### 2.3. NOTE
 
 - worker 线程的执行流程：
   
@@ -128,7 +128,7 @@ worker 新线程中：
   worker.postMessage(arrayBuffer, [arrayBuffer]);
   window.postMessage(arrayBuffer, targetOrigin, [arrayBuffer]);
   ```
-### 应用
+### 2.4. 应用
 
 既然 Web Worker 为浏览器端 Javascript 带来了后台计算能力，我们便可利用这一能力，将无限循环中第一项“更新数据和对象状态”的耗时部分交由 Web Worker 执行，提升页面性能。
 
@@ -150,7 +150,7 @@ worker 新线程中：
 
   由于在使用 Web Worker 的时候，我们有更多潜在的 CPU 可用时间，我们现在可以考虑一下 JavaScript 中的新应用场景。例如，我们可以想像在不影响 UI 体验的情况下实时处理用户输入。利用这样一种可能，我们可以想像一个像 Word（Office Web Apps 套装）一样的应用：当用户打字时后台在词典中进行查找，帮助用户自动纠错等等。
 
-### 实例：Worker 进程完成论询
+### 2.5. 实例：Worker 进程完成论询
 
 有时，浏览器需要论询服务器状态，以便第一时间得知状态改变。这个工作可以在 Worker 线程里完成：
 ```javascript
@@ -181,7 +181,7 @@ pollingWorker.onmessage = function () {
 pollingWorker.postMessage('init');
 ```
 
-## 共享线程 Shared Worker
+## 3. 共享线程 Shared Worker
 
 一个共享 worker 可以被多个脚本使用——即使这些脚本正在被不同的 window、iframe 或者 worker 访问。适用场合较专有 worker 而言比较少。
 
@@ -193,9 +193,9 @@ myWorker.port.start();  // 父级线程中的调用
 port.start(); // worker 线程中的调用，假设 port 变量代表一个端口
 ```
 
-## 服务线程 Service Worker
+## 4. 服务线程 Service Worker
 
-### 概述
+### 4.1. 概述
 
 在 2014 年，W3C 公布了 service worker 的草案，service worker 提供了很多新的能力，使得 web app 拥有与 native app 相同的离线体验、消息推送体验。
 
@@ -210,7 +210,7 @@ Service Worker 有以下特点：
 - 可以拦截发出的网络请求，从而控制页面的网路通信。
 - 内部大量使用 Promise。
 
-### 基本使用
+### 4.2. 基本使用
 
 向浏览器注册 Service Worker
 ```javascript
@@ -261,13 +261,13 @@ fetch 事件会在两种情况下触发：
 
 这是一个双向的过程，页面可以发消息给 service worker，service worker 也可以发送消息给页面，由于这个特性，可以将 service worker 作为中间纽带，使得一个域名或者子域名下的多个页面可以自由通信。
 
-### NOTE
+### 4.3. NOTE
 
 service worker 并不是一直在后台运行的。在页面关闭后，浏览器可以继续保持 service worker 运行，也可以关闭 service worker，这取决与浏览器自己的行为。所以不要定义一些全局变量。
 
 当 service worker 监听 fetch 事件以后，对应的请求都会经过 service worker。通过 chrome 的 network 工具，可以看到此类请求会标注：from service worker。如果 service worker 中出现了问题，会导致所有请求失败，包括普通的 html 文件。所以 service worker 的代码质量、容错性一定要很好才能保证 web app 正常运行。
 
-### 应用
+### 4.4. 应用
 
 Service workers 可以用来做这些事情：
 - 后台数据同步
@@ -282,7 +282,7 @@ Service workers 可以用来做这些事情：
 - 对时间或日期作出响应
 - 进入地理栅栏
 
-## Refer Links
+## 5. Refer Links
 
 [【转向 Javascript 系列】深入理解 Web Worker](http://www.alloyteam.com/2015/11/deep-in-web-worker/)
 

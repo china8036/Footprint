@@ -1,18 +1,12 @@
-
-
-<!-- toc -->
-
-* [包管理工具：bower](#包管理工具bower)
-  * [安装 bower](#安装-bower)
-  * [使用 bower](#使用-bower)
-    * [安装包](#安装包)
-    * [使用包](#使用包)
-    * [搜索包](#搜索包)
-    * [更新包](#更新包)
-    * [卸载包](#卸载包)
-    * [其它](#其它)
-
-<!-- toc stop -->
+- [包管理工具：bower](#%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%EF%BC%9Abower)
+	- [1. 安装 bower](#1-%E5%AE%89%E8%A3%85-bower)
+	- [2. 使用 bower](#2-%E4%BD%BF%E7%94%A8-bower)
+		- [2.1. 安装包](#21-%E5%AE%89%E8%A3%85%E5%8C%85)
+		- [2.2. 使用包](#22-%E4%BD%BF%E7%94%A8%E5%8C%85)
+		- [2.3. 搜索包](#23-%E6%90%9C%E7%B4%A2%E5%8C%85)
+		- [2.4. 更新包](#24-%E6%9B%B4%E6%96%B0%E5%8C%85)
+		- [2.5. 卸载包](#25-%E5%8D%B8%E8%BD%BD%E5%8C%85)
+		- [2.6. 其它](#26-%E5%85%B6%E5%AE%83)
 
 
 # 包管理工具：bower #
@@ -20,7 +14,7 @@ https://segmentfault.com/a/1190000002971135
 http://javascript.ruanyifeng.com/tool/bower.html   
 
 
-## 安装 bower ##
+## 1. 安装 bower ##
 ```
 npm install -g bower
 ```
@@ -29,10 +23,10 @@ npm install -g bower
 bower --version
 ```
 
-## 使用 bower ##
+## 2. 使用 bower ##
 安装的包会被放置在bower_compontents目录下（该目录会在bower运行的文件夹下自动被创建），也可以通过更改.bowerrc文件中的配置选项来改变改目录创建的路径；
 
-### 安装包 ###
+### 2.1. 安装包 ###
 
 - 基本安装方式
 	安装包的最新版本(会自动在 bower 库中找到对应的 GitHub 地址，并下载最新 release 版本)：
@@ -98,7 +92,7 @@ bower --version
 
 
 
-### 使用包 ###
+### 2.2. 使用包 ###
 - 基本使用
 例：
 在HTML文件中：
@@ -108,7 +102,7 @@ bower --version
 - 搭配 grunt
 <!--TODO-->
 
-### 搜索包 ###
+### 2.3. 搜索包 ###
 
 在Bower只寻找包的方法有两种，一种是查看在线的组件目录 https://bower.io/search/，另一种是直接使用命令行工具：
 ```
@@ -124,7 +118,7 @@ bower search query
 
 
 
-### 更新包 ###
+### 2.4. 更新包 ###
 
 - 基本方式
 ```
@@ -136,7 +130,7 @@ bower update
 ```
 
 
-### 卸载包 ###
+### 2.5. 卸载包 ###
 
 
 ```
@@ -144,7 +138,7 @@ bowser uninstall <package1> <package2> <package3> . . .
 ```
 
 
-### 其它 ###
+### 2.6. 其它 ###
 
 - list
 ```

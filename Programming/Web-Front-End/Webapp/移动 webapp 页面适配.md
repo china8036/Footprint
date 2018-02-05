@@ -1,22 +1,22 @@
 - [移动 WebApp 页面适配](#%E7%A7%BB%E5%8A%A8-webapp-%E9%A1%B5%E9%9D%A2%E9%80%82%E9%85%8D)
-  - [基础要点](#%E5%9F%BA%E7%A1%80%E8%A6%81%E7%82%B9)
-    - [meta 标签：viewport](#meta-%E6%A0%87%E7%AD%BE%EF%BC%9Aviewport)
-    - [流式布局：百分比](#%E6%B5%81%E5%BC%8F%E5%B8%83%E5%B1%80%EF%BC%9A%E7%99%BE%E5%88%86%E6%AF%94)
-    - [CSS Media queries](#css-media-queries)
-    - [REM](#rem)
-  - [适配方法实现](#%E9%80%82%E9%85%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0)
-    - [固定高度，宽度自适应](#%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%BA%A6%EF%BC%8C%E5%AE%BD%E5%BA%A6%E8%87%AA%E9%80%82%E5%BA%94)
-    - [固定宽度，viewport 动态缩放](#%E5%9B%BA%E5%AE%9A%E5%AE%BD%E5%BA%A6%EF%BC%8Cviewport-%E5%8A%A8%E6%80%81%E7%BC%A9%E6%94%BE)
-    - [REM 做宽度，viewport 缩放](#rem-%E5%81%9A%E5%AE%BD%E5%BA%A6%EF%BC%8Cviewport-%E7%BC%A9%E6%94%BE)
-      - [阿里 REM 解决方案](#%E9%98%BF%E9%87%8C-rem-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
-      - [淘宝 REM 解决方案](#%E6%B7%98%E5%AE%9D-rem-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
-    - [rem 做宽度，动态设置 font-size   viewport 不缩放](#rem-%E5%81%9A%E5%AE%BD%E5%BA%A6%EF%BC%8C%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE-font-size-viewport-%E4%B8%8D%E7%BC%A9%E6%94%BE)
-      - [媒体查询设置 font-size](#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E8%AE%BE%E7%BD%AE-font-size)
-      - [根据设备 clientWidth 动态设置 font-size](#%E6%A0%B9%E6%8D%AE%E8%AE%BE%E5%A4%87-clientwidth-%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE-font-size)
-      - [使用 vw 设置 font-size](#%E4%BD%BF%E7%94%A8-vw-%E8%AE%BE%E7%BD%AE-font-size)
-    - [全局使用视窗单位 vw](#%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8%E8%A7%86%E7%AA%97%E5%8D%95%E4%BD%8D-vw)
-      - [FAQs](#faqs)
-  - [参考](#%E5%8F%82%E8%80%83)
+  - [1. 基础要点](#1-%E5%9F%BA%E7%A1%80%E8%A6%81%E7%82%B9)
+    - [1.1. meta 标签：viewport](#11-meta-%E6%A0%87%E7%AD%BE%EF%BC%9Aviewport)
+    - [1.2. 流式布局：百分比](#12-%E6%B5%81%E5%BC%8F%E5%B8%83%E5%B1%80%EF%BC%9A%E7%99%BE%E5%88%86%E6%AF%94)
+    - [1.3. CSS Media queries](#13-css-media-queries)
+    - [1.4. REM](#14-rem)
+  - [2. 适配方法实现](#2-%E9%80%82%E9%85%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0)
+    - [2.1. 固定高度，宽度自适应](#21-%E5%9B%BA%E5%AE%9A%E9%AB%98%E5%BA%A6%EF%BC%8C%E5%AE%BD%E5%BA%A6%E8%87%AA%E9%80%82%E5%BA%94)
+    - [2.2. 固定宽度，viewport 动态缩放](#22-%E5%9B%BA%E5%AE%9A%E5%AE%BD%E5%BA%A6%EF%BC%8Cviewport-%E5%8A%A8%E6%80%81%E7%BC%A9%E6%94%BE)
+    - [2.3. REM 做宽度，viewport 缩放](#23-rem-%E5%81%9A%E5%AE%BD%E5%BA%A6%EF%BC%8Cviewport-%E7%BC%A9%E6%94%BE)
+      - [2.3.1. 阿里 REM 解决方案](#231-%E9%98%BF%E9%87%8C-rem-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
+      - [2.3.2. 淘宝 REM 解决方案](#232-%E6%B7%98%E5%AE%9D-rem-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)
+    - [2.4. rem 做宽度，动态设置 font-size   viewport 不缩放](#24-rem-%E5%81%9A%E5%AE%BD%E5%BA%A6%EF%BC%8C%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE-font-size-viewport-%E4%B8%8D%E7%BC%A9%E6%94%BE)
+      - [2.4.1. 媒体查询设置 font-size](#241-%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E8%AE%BE%E7%BD%AE-font-size)
+      - [2.4.2. 根据设备 clientWidth 动态设置 font-size](#242-%E6%A0%B9%E6%8D%AE%E8%AE%BE%E5%A4%87-clientwidth-%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE-font-size)
+      - [2.4.3. 使用 vw 设置 font-size](#243-%E4%BD%BF%E7%94%A8-vw-%E8%AE%BE%E7%BD%AE-font-size)
+    - [2.5. 全局使用视窗单位 vw](#25-%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8%E8%A7%86%E7%AA%97%E5%8D%95%E4%BD%8D-vw)
+      - [2.5.1. FAQs](#251-faqs)
+  - [3. 参考](#3-%E5%8F%82%E8%80%83)
 
 # 移动 WebApp 页面适配
 
@@ -42,7 +42,7 @@
 设备屏幕宽度 1440px：font-size: 64/1440*1440 = 64px
 ```
 
-## 基础要点 ##
+## 1. 基础要点 ##
 
 
 - **适配的目标是使得改变设备或者改变浏览器大小，用户也能无差别浏览，在任何设备上都能享受到同样的、尽可能多的合理信息和服务**。
@@ -55,7 +55,7 @@
 
 
 
-### meta 标签：viewport ###
+### 1.1. meta 标签：viewport ###
 
 H5 移动端页面自适应普遍使用的方法，理论上讲使用这个标签是可以适应所有尺寸的屏幕的，但是各设备对该标签的解释方式及支持程度不同造成了不能兼容所有浏览器或系统。   
 
@@ -87,7 +87,7 @@ viewport 标签极其属性：
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 ```
 
-### 流式布局：百分比 ###
+### 1.2. 流式布局：百分比 ###
 
 流式布局与固定布局是相对的，核心思想是使用百分比来设置页面各部分的宽度，百分比指的是父元素，如子元素宽度 50%，那么父元素的宽度就是 100%；
 
@@ -95,7 +95,7 @@ viewport 标签极其属性：
 
 为了确保页面兼容各种尺寸设备，页面种各模块宽度、内外边距以及边框的宽度设置必须是相对值，推荐使用百分比设置。
 
-### CSS Media queries ###
+### 1.3. CSS Media queries ###
 
 媒体查询是 CSS3 引入的新特性，通过指定媒体类型的方式来限定所包含的样式的作用范围。
 
@@ -125,7 +125,7 @@ viewport 标签极其属性：
 }
 ```
 
-### REM ###
+### 1.4. REM ###
 
 REM 是 CSS3 新增的一个相对单位（root em，根 em）, 使用 rem 为元素设定字体大小时，是相对大小，但相对的只是 HTML 根元素。通过它既可以做到只修改根元素就成比例地调整所有字体大小，又可以避免字体大小逐层复合的连锁反应。
 
@@ -179,9 +179,9 @@ PC 端浏览器对 rem 单位支持并不友好，因此 rem 单位最好不用�
 一般 font-size 不应该使用 rem 等相对单位，因为字体大小趋向于阅读实用性，并不适合排版布局；   
 类似的，当用作图片或者一些不能缩放的展示时，应使用固定的 px 值，因为缩放可能会导致图片压缩变形等；
 
-## 适配方法实现 ##
+## 2. 适配方法实现 ##
 
-### 固定高度，宽度自适应 ###
+### 2.1. 固定高度，宽度自适应 ###
 
 这是目前使用最多的方法，垂直方向用定值，水平方向用百分比或定值或 flex。[腾讯](http://xw.qq.com/index.htm)、[京东](http://m.jd.com/)、[百度](https://www.baidu.com/)、[天猫](https://www.tmall.com/)、[亚马逊](http://www.amazon.cn/) 的首页都是使用的这种方法。
 
@@ -195,7 +195,7 @@ PC 端浏览器对 rem 单位支持并不友好，因此 rem 单位最好不用�
 
 这样设置之后，我们就可以不用管手机屏幕的尺寸进行开发了。
 
-### 固定宽度，viewport 动态缩放 ###
+### 2.2. 固定宽度，viewport 动态缩放 ###
 
 设计图、页面宽度、viewport width 使用一个宽度，浏览器帮我们完成缩放。单位使用 px 即可。
 
@@ -214,7 +214,7 @@ document.querySelector('meta[name="viewport"]').setAttribute('content','initial-
 缺点：     
 很多安卓机型和浏览器不支持 viewport 设置，并且内联文本元素是无法缩放的。
 
-### REM 做宽度，viewport 缩放 ###
+### 2.3. REM 做宽度，viewport 缩放 ###
 https://www.zhihu.com/question/35710806
 
 注意：
@@ -222,7 +222,7 @@ https://www.zhihu.com/question/35710806
   - 考虑到字体的点阵信息，一般文字尺寸多会采用 16px 20px 24px 等值，若以 rem 指定文字尺寸，会产生诸如 21px，19px 这样的值，会导致字形难看，毛刺，甚至黑块，故大部分文字应该以 px 设置。但一般标题类文字，可能也有要求随屏幕缩放，且考虑到这类文字一般都比较大，超过 30px 的话，也可以用 rem 设置字体。
 - **用于 REM 计算的 js 的加载最好放在 `<head>` 标签中，必须在其它 js 加载之前加载；**   
 
-#### 阿里 REM 解决方案 ####
+#### 2.3.1. 阿里 REM 解决方案 ####
 
 加载 js：
 ```html
@@ -240,7 +240,7 @@ https://www.zhihu.com/question/35710806
 
 加载 js 后，无需再手动设置 viewport，该方案已帮你设置；
 
-#### 淘宝 REM 解决方案 ####
+#### 2.3.2. 淘宝 REM 解决方案 ####
 https://github.com/amfe/article/issues/17   
 
 此方案使用 JavaScript 根据设备 DPR 动态设置 scale 并且动态计算 font-size 的值；
@@ -270,13 +270,13 @@ document.documentElement.style.fontSize = document.documentElement.clientWidth /
 缺点：   
 开头要引入一段 js 代码，单位都要改成 rem(font-size 可以用 px)，计算 rem 比较麻烦（可以引用预处理器，但是增加了编译过程，相对麻烦了点)。pc 和 mobile 要分开。
 
-###  rem 做宽度，动态设置 font-size   viewport 不缩放
+### 2.4. rem 做宽度，动态设置 font-size   viewport 不缩放
 
 https://www.cnblogs.com/gymmer/p/6883063.html
 
 http://www.zhangxinxu.com/wordpress/2016/08/vw-viewport-responsive-layout-typography/
 
-#### 媒体查询设置 font-size
+#### 2.4.1. 媒体查询设置 font-size
 
 <!-- TODO 如果用这种方案怎么计算 css 像素？？？ -->
 
@@ -322,7 +322,7 @@ p.intro {
 }
 ```
 
-#### 根据设备 clientWidth 动态设置 font-size
+#### 2.4.2. 根据设备 clientWidth 动态设置 font-size
 
 ```javascript
 <script type="text/javascript">
@@ -354,7 +354,7 @@ docEl.style.fontSize = clientWidth / 7.5 + 'px'
 因此：      
 客户端尺寸 = （客户端宽度 /7.5) * （设计图尺寸 /100) = 1 rem * （设计图尺寸 /100) 
 ```
-#### 使用 vw 设置 font-size
+#### 2.4.3. 使用 vw 设置 font-size
 
 <!-- TODO: 如果用这种方案怎么计算 css 像素？？？ -->
 
@@ -375,7 +375,7 @@ html{
 
 则**当要实现设计图上尺寸为 x px 的目标时，代码中的 css 像素为 x/37.5 rem**。
 
-### 全局使用视窗单位 vw
+### 2.5. 全局使用视窗单位 vw
 
 参考：https://www.w3cplus.com/css/vw-for-layout.html
 
@@ -414,7 +414,7 @@ html{
   - 若在 PC 端浏览器查看，无法使用 ctrl+ 滚轮缩放网页大小
     <!-- TODO: 如何解决此问题？？ -->
 
-#### FAQs
+#### 2.5.1. FAQs
 
 - 用 vh 布局的时候，手机浏览器顶部的搜索栏那一块有时候会消失，从而影响 viewport，这应该怎么办？元素的宽高会变？
   - 应该用 vh 还是 vw？还是结合使用？
@@ -427,7 +427,7 @@ html{
 
 - 用 vw 是最好的选择吗？还是 vmin 或 vmax 呢？得搞清楚 vmin 和 vmax 应该在哪个场景中使用。使用他们的意义是什么？
 
-## 参考
+## 3. 参考
 
 CSS3 浏览器支持测试：http://css3test.com/
 
