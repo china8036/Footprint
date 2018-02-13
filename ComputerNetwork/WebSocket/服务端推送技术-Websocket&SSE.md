@@ -1,46 +1,46 @@
 - [服务端推送技术](#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%8E%A8%E9%80%81%E6%8A%80%E6%9C%AF)
-  - [概述](#%E6%A6%82%E8%BF%B0)
-  - [长连接 (persistent connection)](#%E9%95%BF%E8%BF%9E%E6%8E%A5-persistent-connection)
-  - [Comet](#comet)
-    - [基于 AJAX 的长轮询 (long-polling)](#%E5%9F%BA%E4%BA%8E-ajax-%E7%9A%84%E9%95%BF%E8%BD%AE%E8%AF%A2-long-polling)
-      - [传统轮询 /AJAX 轮询](#%E4%BC%A0%E7%BB%9F%E8%BD%AE%E8%AF%A2-ajax-%E8%BD%AE%E8%AF%A2)
-      - [长轮询 (long-polling)](#%E9%95%BF%E8%BD%AE%E8%AF%A2-long-polling)
-      - [比较](#%E6%AF%94%E8%BE%83)
-    - [基于 Iframe 及 htmlfile 的流方式 (streaming)](#%E5%9F%BA%E4%BA%8E-iframe-%E5%8F%8A-htmlfile-%E7%9A%84%E6%B5%81%E6%96%B9%E5%BC%8F-streaming)
-  - [客户端套接口](#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%A5%97%E6%8E%A5%E5%8F%A3)
-    - [Flash XMLSocket](#flash-xmlsocket)
-    - [Java Applet 套接口](#java-applet-%E5%A5%97%E6%8E%A5%E5%8F%A3)
-  - [Websocket](#websocket)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [数据帧](#%E6%95%B0%E6%8D%AE%E5%B8%A7)
-    - [握手协议](#%E6%8F%A1%E6%89%8B%E5%8D%8F%E8%AE%AE)
-    - [浏览器支持](#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%94%AF%E6%8C%81)
-    - [安全](#%E5%AE%89%E5%85%A8)
-    - [意义](#%E6%84%8F%E4%B9%89)
-    - [优缺点](#%E4%BC%98%E7%BC%BA%E7%82%B9)
-    - [使用](#%E4%BD%BF%E7%94%A8)
-      - [Font End](#font-end)
-        - [W3C API](#w3c-api)
-          - [基本用法](#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
-      - [Server End](#server-end)
-        - [Node](#node)
-        - [Bash](#bash)
-        - [Python](#python)
-        - [Java:JSR 356](#javajsr-356)
-      - [使用 websocket 传输图片和语音](#%E4%BD%BF%E7%94%A8-websocket-%E4%BC%A0%E8%BE%93%E5%9B%BE%E7%89%87%E5%92%8C%E8%AF%AD%E9%9F%B3)
-  - [Server-sent events(SSE)](#server-sent-eventssse)
-    - [概述](#%E6%A6%82%E8%BF%B0)
-    - [工作原理](#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86)
-    - [浏览器支持](#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%94%AF%E6%8C%81)
-    - [与 websocket 的比较](#%E4%B8%8E-websocket-%E7%9A%84%E6%AF%94%E8%BE%83)
-    - [使用](#%E4%BD%BF%E7%94%A8)
-      - [Font End](#font-end)
-      - [Server End](#server-end)
-  - [Refer Links](#refer-links)
+  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+  - [2. 长连接 (persistent connection)](#2-%E9%95%BF%E8%BF%9E%E6%8E%A5-persistent-connection)
+  - [3. Comet](#3-comet)
+    - [3.1. 基于 AJAX 的长轮询 (long-polling)](#31-%E5%9F%BA%E4%BA%8E-ajax-%E7%9A%84%E9%95%BF%E8%BD%AE%E8%AF%A2-long-polling)
+      - [3.1.1. 传统轮询 /AJAX 轮询](#311-%E4%BC%A0%E7%BB%9F%E8%BD%AE%E8%AF%A2-ajax-%E8%BD%AE%E8%AF%A2)
+      - [3.1.2. 长轮询 (long-polling)](#312-%E9%95%BF%E8%BD%AE%E8%AF%A2-long-polling)
+      - [3.1.3. 比较](#313-%E6%AF%94%E8%BE%83)
+    - [3.2. 基于 Iframe 及 htmlfile 的流方式 (streaming)](#32-%E5%9F%BA%E4%BA%8E-iframe-%E5%8F%8A-htmlfile-%E7%9A%84%E6%B5%81%E6%96%B9%E5%BC%8F-streaming)
+  - [4. 客户端套接口](#4-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%A5%97%E6%8E%A5%E5%8F%A3)
+    - [4.1. Flash XMLSocket](#41-flash-xmlsocket)
+    - [4.2. Java Applet 套接口](#42-java-applet-%E5%A5%97%E6%8E%A5%E5%8F%A3)
+  - [5. Websocket](#5-websocket)
+    - [5.1. 概述](#51-%E6%A6%82%E8%BF%B0)
+    - [5.2. 数据帧](#52-%E6%95%B0%E6%8D%AE%E5%B8%A7)
+    - [5.3. 握手协议](#53-%E6%8F%A1%E6%89%8B%E5%8D%8F%E8%AE%AE)
+    - [5.4. 浏览器支持](#54-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%94%AF%E6%8C%81)
+    - [5.5. 安全](#55-%E5%AE%89%E5%85%A8)
+    - [5.6. 意义](#56-%E6%84%8F%E4%B9%89)
+    - [5.7. 优缺点](#57-%E4%BC%98%E7%BC%BA%E7%82%B9)
+    - [5.8. 使用](#58-%E4%BD%BF%E7%94%A8)
+      - [5.8.1. Font End](#581-font-end)
+        - [5.8.1.1. WC API](#5811-wc-api)
+          - [5.8.1.1.1. 基本用法](#58111-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
+      - [5.8.2. Server End](#582-server-end)
+        - [5.8.2.1. Node](#5821-node)
+        - [5.8.2.2. Bash](#5822-bash)
+        - [5.8.2.3. Python](#5823-python)
+        - [5.8.2.4. Java:JSR](#5824-javajsr)
+      - [5.8.3. 使用 websocket 传输图片和语音](#583-%E4%BD%BF%E7%94%A8-websocket-%E4%BC%A0%E8%BE%93%E5%9B%BE%E7%89%87%E5%92%8C%E8%AF%AD%E9%9F%B3)
+  - [6. Server-sent events(SSE)](#6-server-sent-eventssse)
+    - [6.1. 概述](#61-%E6%A6%82%E8%BF%B0)
+    - [6.2. 工作原理](#62-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86)
+    - [6.3. 浏览器支持](#63-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%94%AF%E6%8C%81)
+    - [6.4. 与 websocket 的比较](#64-%E4%B8%8E-websocket-%E7%9A%84%E6%AF%94%E8%BE%83)
+    - [6.5. 使用](#65-%E4%BD%BF%E7%94%A8)
+      - [6.5.1. Font End](#651-font-end)
+      - [6.5.2. Server End](#652-server-end)
+  - [7. Refer Links](#7-refer-links)
 
 # 服务端推送技术
 
-## 概述
+## 1. 概述
 
 推送技术，一种基于 Internet 通信方式的服务器推送，要求通信的请求是由发布者或中央服务器发起；
 
@@ -60,17 +60,17 @@
 2)	客户与服务器端通信的信息格式，采取怎样的出错处理机制。
 3)	客户端是否需要支持不同类型的浏览器如 IE、Firefox，是否需要同时支持 Windows 和 Linux 平台。
 
-## 长连接 (persistent connection)
+## 2. 长连接 (persistent connection)
 
 基于长连接的服务端推送主要通过 Comet 技术实现。
 
-## Comet
+## 3. Comet
 
 Comet 是一种基于 HTTP 长连接、无须在浏览器端安装插件的 web 服务端推送技术，能使服务器实时地将更新的信息传送到客户端，而无须客户端发出请求，目前有两种实现方式，基于 AJAX 的长轮询和基于 Iframe 及 htmlfile 的流方式。
 
-### 基于 AJAX 的长轮询 (long-polling)
+### 3.1. 基于 AJAX 的长轮询 (long-polling)
 
-#### 传统轮询 /AJAX 轮询
+#### 3.1.1. 传统轮询 /AJAX 轮询
 
 客户端定时向服务器发送 http(ajax) 请求，服务器接到请求后马上返回响应信息并关闭连接。
 
@@ -80,7 +80,7 @@ Comet 是一种基于 HTTP 长连接、无须在浏览器端安装插件的 web 
 
 实例：适于小型应用。
 
-#### 长轮询 (long-polling)
+#### 3.1.2. 长轮询 (long-polling)
 
 客户端像传统轮询一样从服务器请求数据。然而，如果服务器没有可以立即返回给客户端的数据，则不会立刻返回一个空结果，而是保持这个请求等待数据到来（或者恰当的超时），之后将数据作为结果返回给客户端。
 
@@ -90,7 +90,7 @@ Comet 是一种基于 HTTP 长连接、无须在浏览器端安装插件的 web 
 
 实例：WebQQ、Hi 网页版、Facebook IM。
 
-#### 比较
+#### 3.1.3. 比较
 
 基于 AJAX 的长轮询与传统的 AJAX 应用都使用了 AJAX，它们的不同之处在于：
 
@@ -100,7 +100,7 @@ Comet 是一种基于 HTTP 长连接、无须在浏览器端安装插件的 web 
 
 3)	当客户端处理接收的数据、重新建立连接时，服务器端可能有新的数据到达；这些信息会被服务器端保存直到客户端重新建立连接，客户端会一次把当前服务器端所有的信息取回。
 
-### 基于 Iframe 及 htmlfile 的流方式 (streaming)
+### 3.2. 基于 Iframe 及 htmlfile 的流方式 (streaming)
 
 iframe 流方式是在页面中插入一个隐藏的 iframe，利用其 src 属性在服务器和客户端之间建立一条长链接，服务器向 iframe 传输数据（通常是 HTML，内有负责插入信息的 javascript），来实时更新页面。
 
@@ -112,11 +112,11 @@ iframe 流方式是在页面中插入一个隐藏的 iframe，利用其 src 属�
 
 实现：http://liuwanlin.info/shi-shi-kua-yu-tong-xin-iframe/ 
 
-## 客户端套接口
+## 4. 客户端套接口
 
 基于客户端套接口的“服务器推送”技术主要有 Flash XMLSocket 与 Java Applet 套接口；
 
-### Flash XMLSocket
+### 4.1. Flash XMLSocket
 
 http://en.wikipedia.org/wiki/XMLSocket 
 
@@ -137,13 +137,13 @@ http://en.wikipedia.org/wiki/XMLSocket
 2)	因为 XMLSocket 没有 HTTP 隧道功能，XMLSocket 类不能自动穿过防火墙；
 3)	因为是使用套接口，需要设置一个通信端口，防火墙、代理服务器也可能对非 HTTP 通道端口进行限制；
 
-### Java Applet 套接口
+### 4.2. Java Applet 套接口
 
 在客户端使用 Java Applet，通过 java.net.Socket 或 java.net.DatagramSocket 或 java.net.MulticastSocket 建立与服务器端的套接口连接，从而实现“服务器推送”。
 
 这种方案最大的不足在于 Java Applet 在收到服务器端返回的信息后，无法通过 JavaScript 去更新 HTML 页面的内容。
 
-## Websocket
+## 5. Websocket
 
 http://blog.csdn.net/fenglibing/article/details/7108982 
 
@@ -159,7 +159,7 @@ https://www.html5rocks.com/zh/tutorials/websockets/basics/#toc-serverside
 
 [RFC6455](https://datatracker.ietf.org/doc/rfc6455/)
 
-### 概述
+### 5.1. 概述
 
 WebSocket 一种建立在单个 TCP 连接上进行全双工通讯的协议。WebSocket 通信协议于 2011 年被 IETF 定为标准 RFC 6455，并被 RFC7936 所补充规范。HTML5 中的 WebSocket API 也被 W3C 定为标准。
 
@@ -177,7 +177,7 @@ wss://secure.example.com/
 
 WebSocket 使用标准的对防火墙友好的 80 及 443 端口。建立连接时，使用 HTTP Upgrade 机制升级到 Web Socket 协议，有着兼容 HTTP 的握手机制，因此 HTTP 服务器可以与 WebSocket 服务器共享默认的 HTTP 与 HTTPS 端（80 和 443）。
 
-### 数据帧
+### 5.2. 数据帧
 
 官方文档（RFC-6455）提供的一个结构图：
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/23/d872367140877c571356ab47b491b63f.jpg)
@@ -194,7 +194,7 @@ Extension data   x bytes  扩展数据
 Application data y bytes  程序数据  
 ```
 
-### 握手协议
+### 5.3. 握手协议
 
 [websocket 三种握手方式](http://blog.csdn.net/fenglibing/article/details/7100070)
 
@@ -234,7 +234,7 @@ Application data y bytes  程序数据
 
   一旦连接被创建，客户端和服务端可以互相以全双工的方式发送 WebSocket 数据或者文本帧。WebSocket 传输也成为消息，一个单独的消息可以被任意分成多个数据帧。
 
-### 浏览器支持
+### 5.4. 浏览器支持
 
 各大浏览器支持情况：Firefox6，Safari6，Chrome4，Opera12.10，IE10 都实现了一个安全版本的 WebSocket 协议。
 
@@ -253,13 +253,13 @@ $(document).ready(function() {
 });
 ```
 
-### 安全
+### 5.5. 安全
 
 作为现代协议，**跨源通信已内置在 WebSocket 中。WebSocket 可实现任何域上多方之间的通信**。服务器将决定是向所有客户端，还是只向驻留在一组指定域上的客户端提供服务。
 
 从安全角度来说，在服务端建立连接的过程中校验 Origin 头是很重要的，这样可以避免跨站点的 WebSocket 劫持攻击，当连接经过 Cookie 或者 HTTP 认证校验之后，这种攻击是可能的。发送敏感数据时，最好使用 token 或者类似的保护机制来校验 WebSocket 连接。
 
-### 意义
+### 5.6. 意义
 
 https://cnodejs.org/topic/5680fa00952147b71ea37144 
 
@@ -278,7 +278,7 @@ https://cnodejs.org/topic/5680fa00952147b71ea37144
 3)	WebSocket 在连接建立之后，客户端、服务端是完全平等的，不存在主动、被动之说；
 4)	此外还有 multiplexing 功能，几个不同的 URI 可以复用同一个 WebSocket 连接。这些都是原来的 HTTP 不能做到的；
 
-### 优缺点
+### 5.7. 优缺点
 
 - 优点
   
@@ -302,11 +302,11 @@ https://cnodejs.org/topic/5680fa00952147b71ea37144
 
   - WebSocket 在用于双向传输、推送消息方面能够做到灵活、简便、高效，但在普通的 Request-Response 过程中并没有太大用武之地，比起普通的 HTTP 请求来反倒麻烦了许多，甚至更为低效。
 
-### 使用
+### 5.8. 使用
 
-#### Font End
+#### 5.8.1. Font End
 
-##### W3C API
+##### 5.8.1.1. WC API
 
 [W3C API 定义](http://dev.w3.org/html5/websockets/ )
 
@@ -341,7 +341,7 @@ interface WebSocket : EventTarget {
 };
 ```
 
-###### 基本用法
+###### 5.8.1.1.1. 基本用法
 
 https://www.cnblogs.com/shijiaqi1066/p/3795075.html 
 
@@ -528,9 +528,9 @@ https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
 
   ```
 
-#### Server End
+#### 5.8.2. Server End
 
-##### Node
+##### 5.8.2.1. Node
 
 常用的 WebSocket 服务端 Node 实现有以下三种：
 
@@ -540,7 +540,7 @@ b)	Socket.IO
 
 c)	WebSocket-Node
 
-##### Bash
+##### 5.8.2.2. Bash
 
 实例：
 
@@ -567,7 +567,7 @@ tail -n 0 -f chat.log --pid=$$ | grep --line-buffered -v "] ${USER}>" &
 while read MSG; do echo "[$(date)] ${USER}> ${MSG}" >> chat.log; done
 ```
 
-##### Python
+##### 5.8.2.3. Python
 
 实例项目：
 
@@ -575,7 +575,7 @@ websocketd：命令行的 WebSocket 代理，可以通过它使浏览器与服�
 
 回声服务 greeter.js；
 
-##### Java:JSR 356
+##### 5.8.2.4. Java:JSR
 
 [JSR 356 (Java API for WebSocket)](http://www.oracle.com/technetwork/cn/articles/java/jsr356-1937161-zhs.html)
 
@@ -872,13 +872,13 @@ Java EE 对 websocket 的实现主要封装在 JEE JSR356 标准规范 API 中�
   }
   ```
 
-####	使用 websocket 传输图片和语音
+#### 5.8.3. 使用 websocket 传输图片和语音
 
 http://www.alloyteam.com/2015/12/websockets-ability-to-explore-it-with-voice-pictures/ 
 
-## Server-sent events(SSE)
+## 6. Server-sent events(SSE)
 
-### 概述
+### 6.1. 概述
 
 http://www.ruanyifeng.com/blog/2017/05/server-sent_events.html 
 
@@ -887,7 +887,7 @@ https://liangbizhi.github.io/websocket-sse-use-diff-1/
 维基百科：
 > Server-sent events (SSE) is a technology where a browser receives automatic updates from a server via HTTP connection. The Server-Sent Events EventSource API is standardized as part of HTML5 by the W3C.
 
-### 工作原理
+### 6.2. 工作原理
 
 - 客户端通过 new EventSource(url) 向服务端发起 HTTP Request：
   ```
@@ -929,7 +929,7 @@ https://liangbizhi.github.io/websocket-sse-use-diff-1/
 
 - 因此，SSE 传输的过程实际上包括了很多个 HTTP 请求，但效果上看，相当于客户端与服务器一直保持连接，服务端可以随时根据需要向客户端发送 data.
 
-### 浏览器支持
+### 6.3. 浏览器支持
 
 除了 IE 和 Edge，各大浏览器基本都支持 SSE:
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/23/5a5cd52fd3bf94e90a6012465303c3d7.jpg)
@@ -941,7 +941,7 @@ if ('EventSource' in window) {
 }
 ```
 
-### 与 websocket 的比较
+### 6.4. 与 websocket 的比较
 
 对于 Web 的实时应用来说，SSE 与 WebSocket 是最为可行的技术方案。
 
@@ -985,9 +985,9 @@ SSE 工作在传统的 HTTP 协议上，也就是说它不需要一个特定的�
   
   - 浏览器提醒。
 
-### 使用
+### 6.5. 使用
 
-#### Font End
+#### 6.5.1. Font End
 
 - 构造
   
@@ -1086,7 +1086,7 @@ if (!"EventSource" in window) {
 }
 ```
 
-#### Server End
+#### 6.5.2. Server End
 
 ```java
 @Controller
@@ -1110,7 +1110,7 @@ public class SSEController {
 
 ```
 
-## Refer Links
+## 7. Refer Links
 
 https://www.ibm.com/developerworks/cn/web/wa-lo-comet/ 
 
