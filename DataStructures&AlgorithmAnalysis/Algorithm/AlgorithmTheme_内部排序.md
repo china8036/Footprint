@@ -19,7 +19,7 @@
         - [3.2. 计数排序](#32-%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F)
         - [3.3. 基数排序](#33-%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F)
     - [4. 综合比较](#4-%E7%BB%BC%E5%90%88%E6%AF%94%E8%BE%83)
-    - [5. Refer](#5-refer)
+    - [5. Refer Links](#5-refer-links)
 # 内部排序
 
 排序是数据处理过程中常用的一种运算，如何进行高效率的排序是计算机软件理论研究的重要课题之一。
@@ -593,7 +593,7 @@ http://www.acmerblog.com/bucket-sort-4884.html
   - 当 n 较大，则应采用时间复杂度为 O(nlogn) 的排序方法：快速排序、堆排序或归并排序。
   - 当 n 较小，可采用直接插入或直接选择排序。
 
-## 5. Refer
+## 5. Refer Links
 
 http://blog.csdn.net/jnu_simba/article/details/9705111
 
