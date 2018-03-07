@@ -92,7 +92,8 @@
         - [27.2. 使用 Quartz](#272-%E4%BD%BF%E7%94%A8-quartz)
     - [28. 使用 Shiro](#28-%E4%BD%BF%E7%94%A8-shiro)
     - [29. 使用 Spring Security](#29-%E4%BD%BF%E7%94%A8-spring-security)
-    - [30. Refer Links](#30-refer-links)
+    - [30. 使用 Spring AOP](#30-%E4%BD%BF%E7%94%A8-spring-aop)
+    - [31. Refer Links](#31-refer-links)
 
 # Spring Boot Note
 
@@ -2889,6 +2890,148 @@ Apache Shiro 核心通过 Filter 来实现，通过 URL 规则来进行过滤和
 
 官方教程 https://docs.spring.io/spring-security/site/docs/current/guides/html5/helloworld-boot.html 
 
-## 30. Refer Links
+## 30. 使用 Spring AOP
+
+http://blog.csdn.net/gfd54gd5f46/article/details/77001551
+
+http://blog.csdn.net/clementad/article/details/52035199
+
+https://my.oschina.net/itblog/blog/211693
+
+系列教程：http://jinnianshilongnian.iteye.com/blog/1418596
+
+使用 @Aspect 注解将一个 Java 类定义为切面类
+
+- @Pointcut 定义一个切入点，可以是一个规则表达式，比如下例中某个 package 下的所有函数，也可以是一个注解等。
+
+- @Before 在切入点开始处切入内容
+
+- @After 在切入点结尾处切入内容
+
+- @AfterReturning 在切入点 return 内容之后切入内容（可以用来对处理返回值做一些加工处理）
+
+- @Around 在切入点前后切入内容，并自己控制何时执行切入点自身的内容
+
+- @AfterThrowing 用来处理当切入内容部分抛出异常之后的处理逻辑
+
+具体执行顺序：
+- 在 @Around 方法中调用了`proceedingJoinPoint.proceed()`：
+	- 进入 @Around 方法
+	- 执行 @Around 方法中的`proceedingJoinPoint.proceed()`
+	- 进入 @Before 方法
+	- 退出 @Before 方法
+	- 执行目标方法
+	- 退出 @Around 方法
+	- 进入 @After 方法
+	- 退出 @After 方法
+	- 进入 @AfterReturning 方法
+	- 退出 @AfterReturning 方法
+
+- 在 @Around 方法中没有调用`proceedingJoinPoint.proceed()`：
+	- 进入 @Around 方法
+	- 退出 @Around 方法
+	- 进入 @After 方法
+	- 退出 @After 方法
+	- 进入 @AfterReturning 方法
+	- 退出 @AfterReturning 方法
+
+```java
+@Aspect
+@Order(5)
+@Component
+public class WebLogAspect {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	private ThreadLocal<Long> startTime = new ThreadLocal<>();
+
+	/**
+	 * 定义拦截规则
+	 */
+	@Pointcut("execution(public * com.demo.demo.controller..*.*(..))")
+	public void webLog(){}
+
+	@Around("webLog()")
+	public Object Interceptor(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+		logger.info("enter Around");
+
+		Object result = null;
+		//		result = new String("firejq test");
+
+		if (result == null) {
+			// 一切正常的情况下，继续执行被拦截的方法
+			result = proceedingJoinPoint.proceed();
+		}
+
+		logger.info("exit Around");
+
+		return result;
+	}
+
+	@Before("webLog()")
+	public void doBefore(JoinPoint joinPoint) throws Throwable {
+		logger.info("enter before");
+
+		// 接收到请求，记录请求内容
+		startTime.set(System.currentTimeMillis());
+
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
+				.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
+
+		// 记录请求内容
+		logger.info("URL : " + request.getRequestURL().toString());
+		logger.info("HTTP_METHOD : " + request.getMethod());
+		logger.info("IP : " + request.getRemoteAddr());
+		logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+		logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+
+		logger.info("exit before");
+	}
+
+	// 声明例外通知
+	@AfterThrowing(pointcut = "webLog()", throwing = "e")
+	public void doAfterThrowing(Exception e){
+		logger.info("enter afterThrowing");
+		logger.info("exit afterThrowing");
+	}
+
+	@After("webLog()")
+	public void doAfter(JoinPoint joinPoint) throws Throwable {
+		logger.info("enter after");
+		logger.info("exit after");
+	}
+
+	@AfterReturning(pointcut = "webLog()", returning = "returnValue")
+	public void doAfterReturning(JoinPoint joinPoint, Object returnValue) throws Throwable {
+		logger.info("enter afterReturn");
+
+		// 处理完请求，返回内容
+		if (returnValue != null) {
+			logger.info("RESPONSE : " + returnValue);
+			logger.info("SPEND TIME : " +
+								(System.currentTimeMillis() - startTime.get()));
+		}
+
+		logger.info("exit afterReturn");
+	}
+
+}
+```
+```java
+@RestController
+public class UserController {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	@GetMapping(value = "/test")
+	public String test() {
+		logger.info("enter controller");
+		return "test123";
+	}
+}
+```
+
+## 31. Refer Links
 
 官方教程 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/ 
