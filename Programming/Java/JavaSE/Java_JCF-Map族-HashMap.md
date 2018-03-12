@@ -35,9 +35,25 @@ HashMap 特点：
 ## 2. 常用 API
 
 - 构造器
-  - `HashMap​()`
-  - `HashMap​(int initialCapacity)`
-  - `HashMap​(int initialCapacity, float loadFactor)`
+  - `HashMap​()`: Constructs an empty HashMap with the default initial capacity (16) and the default load factor (0.75).
+  - `HashMap​(int initialCapacity)`: Constructs an empty HashMap with the specified initial capacity and the default load factor (0.75).
+  - `HashMap​(int initialCapacity, float loadFactor)`: Constructs an empty HashMap with the specified initial capacity and load factor.
+  - `HashMap​(Map<? extends K,? extends V> m)`: Constructs a new HashMap with the same mappings as the specified Map.
+- 添加 Key-Value 元素
+	- `V	put​(K key, V value)`: Associates the specified value with the specified key in this map.
+	- `V	putIfAbsent​(K key, V value)`: If the specified key is not already associated with a value (or is mapped to null) associates it with the given value and returns null, else returns the current value.
+	- `void	putAll​(Map<? extends K,? extends V> m)`: Copies all of the mappings from the specified map to this map.
+- 删除 Key-Value 元素
+	- `V	remove​(Object key)`: Removes the mapping for the specified key from this map if present.
+	- `boolean	remove​(Object key, Object value)`: Removes the entry for the specified key only if it is currently mapped to the specified value.
+- 根据 Key 获取 Key-Value 元素
+	- `V	get​(Object key)`: Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
+	- `V	getOrDefault​(Object key, V defaultValue)`: Returns the value to which the specified key is mapped, or defaultValue if this map contains no mapping for the key.
+- 遍历集合
+	- `Set<K>	keySet​()`: Returns a Set view of the keys contained in this map.
+	- `Collection<V>	values​()`: Returns a Collection view of the values contained in this map.
+	- `Set<Map.Entry<K,V>>	entrySet​()`: Returns a Set view of the mappings contained in this map.
+	- `void	forEach​(BiConsumer<? super K,? super V> action)`: Performs the given action for each entry in this map until all entries have been processed or the action throws an exception.
 
 ## 3. 源码分析
 
@@ -660,3 +676,5 @@ abstract class HashIterator {
 [JAVA 源码分析 - HashMap 源码分析（二)](https://www.jianshu.com/p/fd22f4965369)
 
 [面试必备：HashMap 源码解析（JDK8）](http://blog.csdn.net/zxt0601/article/details/77413921)
+
+[coolblog: HashMap 源码详细分析 (JDK1.8)](http://www.coolblog.xyz/2018/01/18/HashMap-%E6%BA%90%E7%A0%81%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90-JDK1-8/)
