@@ -93,7 +93,8 @@
     - [28. 使用 Shiro](#28-%E4%BD%BF%E7%94%A8-shiro)
     - [29. 使用 Spring Security](#29-%E4%BD%BF%E7%94%A8-spring-security)
     - [30. 使用 Spring AOP](#30-%E4%BD%BF%E7%94%A8-spring-aop)
-    - [31. Refer Links](#31-refer-links)
+    - [31. 启动时执行](#31-%E5%90%AF%E5%8A%A8%E6%97%B6%E6%89%A7%E8%A1%8C)
+    - [32. Refer Links](#32-refer-links)
 
 # Spring Boot Note
 
@@ -2892,6 +2893,10 @@ Apache Shiro 核心通过 Filter 来实现，通过 URL 规则来进行过滤和
 
 ## 30. 使用 Spring AOP
 
+[官方文档](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/aop.html)
+
+[拦截规则写法](https://www.jianshu.com/p/def4c497571c)
+
 http://blog.csdn.net/gfd54gd5f46/article/details/77001551
 
 http://blog.csdn.net/clementad/article/details/52035199
@@ -2935,6 +2940,7 @@ https://my.oschina.net/itblog/blog/211693
 	- 进入 @AfterReturning 方法
 	- 退出 @AfterReturning 方法
 
+例：拦截指定包下所有类的所有方法
 ```java
 @Aspect
 @Order(5)
@@ -3032,6 +3038,116 @@ public class UserController {
 }
 ```
 
-## 31. Refer Links
+例：拦截指定注解标注的方法
+```java
+@Target(ElementType.METHOD)// 字段注解 , 用于描述方法
+@Retention(RetentionPolicy.RUNTIME)// 在运行期保留注解信息  
+public @interface LogAop {
+    String name() default "Log";
+}
+
+@Component
+@Aspect
+public class LogAspect {
+
+    private static final Logger LOG = LoggerFactory.getLogger(LogAspect.class);
+
+    @Before("@annotation(log)")
+    public void beforeTest(JoinPoint joinPoint, LogAop log) throws Throwable {
+        LOG.info("进入：" + log.name());
+        LOG.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "."
+                + joinPoint.getSignature().getName());
+        LOG.info("参数 : " + Arrays.toString(joinPoint.getArgs()));
+    }
+
+    @After("@annotation(log)")
+    public void afterTest(JoinPoint point, LogAop log) {
+        LOG.info("退出：" + log.name());
+    }
+}
+
+@RestController
+@RequestMapping("/aop")
+public class AopController {
+
+    @LogAop(name="/aop/aop.action") // 添加了注解之后才会被拦截
+    @RequestMapping("/aop")
+    public String aop(){  
+        return "hello world!";  
+    }
+
+    @RequestMapping("/noAop")    // 这个方法是不会被拦截的
+    public String noAop(){
+        return "hello world!";  
+    }
+}
+```
+
+## 31. 启动时执行
+
+http://blog.csdn.net/qq_35981283/article/details/77826537
+
+Springboot 给我们提供了两种“开机启动”某些方法的方式：ApplicationRunner 接口和 CommandLineRunner 接口。
+
+CommandLineRunner 接口可以用来接收字符串数组的命令行参数，而 ApplicationRunner 是使用 ApplicationArguments 用来接收参数的。
+
+例：
+```java
+@Component
+public class MyCommandLineRunner implements CommandLineRunner{
+
+    @Override
+    public void run(String... var1) throws Exception{
+        System.out.println("This will be execute when the project was started!");
+    }
+}
+```
+
+```java
+@Component
+public class MyApplicationRunner implements ApplicationRunner {
+
+    @Override
+    public void run(ApplicationArguments var1) throws Exception{
+        System.out.println("MyApplicationRunner class will be execute when the project was started!");
+    }
+
+}
+```
+
+如果想要指定启动方法执行的顺序，可以通过实现 org.springframework.core.Ordered 接口或者使用 org.springframework.core.annotation.Order 注解来实现。
+
+例：
+```java
+@Component
+public class MyApplicationRunner implements ApplicationRunner,Ordered{
+
+    @Override
+    public int getOrder(){
+        return 1;// 通过设置这里的数字来指定顺序
+    }
+
+    @Override
+    public void run(ApplicationArguments var1) throws Exception{
+        System.out.println("MyApplicationRunner1!");
+    }
+
+}
+```
+
+```java
+@Component
+@Order(value = 1)
+public class MyApplicationRunner implements ApplicationRunner{
+
+    @Override
+    public void run(ApplicationArguments var1) throws Exception{
+        System.out.println("MyApplicationRunner1!");
+    }
+
+}
+```
+
+## 32. Refer Links
 
 官方教程 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/ 

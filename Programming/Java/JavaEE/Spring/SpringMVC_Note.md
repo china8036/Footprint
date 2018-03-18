@@ -1,29 +1,23 @@
-<!-- <style>
-img {
-    box-shadow: 0 0 15px #111;
-}
-</style> -->
-
 - [Spring MVC Note](#spring-mvc-note)
-    - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
-    - [2. Controller](#2-controller)
-        - [2.1. @RequestBody](#21-requestbody)
-        - [2.2. @ResponseBody](#22-responsebody)
-            - [2.2.1. 响应 JSON 数据](#221-%E5%93%8D%E5%BA%94-json-%E6%95%B0%E6%8D%AE)
-            - [2.2.2. 响应 XML 数据](#222-%E5%93%8D%E5%BA%94-xml-%E6%95%B0%E6%8D%AE)
-            - [2.2.3. Accpect 与 produces](#223-accpect-%E4%B8%8E-produces)
-            - [2.2.4. ContentType 与 consumes](#224-contenttype-%E4%B8%8E-consumes)
-            - [2.2.5. 响应媒体类型](#225-%E5%93%8D%E5%BA%94%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B)
-        - [2.3. HttpMessageConverter](#23-httpmessageconverter)
-            - [2.3.1. 自定义 HttpMessageConverter](#231-%E8%87%AA%E5%AE%9A%E4%B9%89-httpmessageconverter)
-        - [2.4. @RequestMapping](#24-requestmapping)
-            - [2.4.1. 支持的方法参数类型](#241-%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B)
-            - [2.4.2. 支持的返回类型](#242-%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B)
-        - [2.5. @SessionAttributes](#25-sessionattributes)
-        - [2.6. 处理 PUT/DELETE/PATCH 请求](#26-%E5%A4%84%E7%90%86-putdeletepatch-%E8%AF%B7%E6%B1%82)
-    - [3. 拦截器](#3-%E6%8B%A6%E6%88%AA%E5%99%A8)
-    - [4. 事务控制](#4-%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6)
-    - [5. Refer Links](#5-refer-links)
+	- [1. 概述](#1-%E6%A6%82%E8%BF%B0)
+	- [2. Controller](#2-controller)
+		- [2.1. @RequestBody](#21-requestbody)
+		- [2.2. @ResponseBody](#22-responsebody)
+			- [2.2.1. 响应 JSON 数据](#221-%E5%93%8D%E5%BA%94-json-%E6%95%B0%E6%8D%AE)
+			- [2.2.2. 响应 XML 数据](#222-%E5%93%8D%E5%BA%94-xml-%E6%95%B0%E6%8D%AE)
+			- [2.2.3. Accpect 与 produces](#223-accpect-%E4%B8%8E-produces)
+			- [2.2.4. ContentType 与 consumes](#224-contenttype-%E4%B8%8E-consumes)
+			- [2.2.5. 响应媒体类型](#225-%E5%93%8D%E5%BA%94%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B)
+		- [2.3. HttpMessageConverter](#23-httpmessageconverter)
+			- [2.3.1. 自定义 HttpMessageConverter](#231-%E8%87%AA%E5%AE%9A%E4%B9%89-httpmessageconverter)
+		- [2.4. @RequestMapping](#24-requestmapping)
+			- [2.4.1. 支持的方法参数类型](#241-%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B)
+			- [2.4.2. 支持的返回类型](#242-%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B)
+		- [2.5. @SessionAttributes](#25-sessionattributes)
+		- [2.6. 处理 PUT/DELETE/PATCH 请求](#26-%E5%A4%84%E7%90%86-putdeletepatch-%E8%AF%B7%E6%B1%82)
+	- [3. 拦截器](#3-%E6%8B%A6%E6%88%AA%E5%99%A8)
+	- [4. 事务控制](#4-%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6)
+	- [5. Refer Links](#5-refer-links)
 
 # Spring MVC Note 
 ## 1. 概述
@@ -40,24 +34,24 @@ Spring MVC 是一个模型 - 视图 - 控制器（MVC）的 Web 框架建立在�
 
 - 作用： 
 
-    - 该注解用于读取 Request 请求的 body 部分数据，使用系统默认配置的 HttpMessageConverter 进行解析，然后把相应的数据绑定到要返回的对象上；
+	- 该注解用于读取 Request 请求的 body 部分数据，使用系统默认配置的 HttpMessageConverter 进行解析，然后把相应的数据绑定到要返回的对象上；
 
-    - 再把 HttpMessageConverter 返回的对象数据绑定到 controller 中方法的参数上。
+	- 再把 HttpMessageConverter 返回的对象数据绑定到 controller 中方法的参数上。
 
 - 使用：
-    - GET、POST 方式提时， 根据 request header Content-Type 的值来判断：
-        - application/x-www-form-urlencoded， 可选（即非必须，因为这种情况的数据 @RequestParam, @ModelAttribute 也可以处理，当然 @RequestBody 也能处理）；
-        - multipart/form-data, 不能处理（即使用 @RequestBody 不能处理这种格式的数据）；
-        - 其他格式， 必须（其他格式包括 application/json, application/xml 等。这些格式的数据，必须使用 @RequestBody 来处理）(POST 模式下，使用 @RequestBody 绑定请求对象，Spring 会帮你进行协议转换，将 Json、Xml 协议转换成你需要的对象。)；
+	- GET、POST 方式提交时， 根据 request header Content-Type 的值来判断：
+		- application/x-www-form-urlencoded， 可选（即非必须，因为这种情况的数据 @RequestParam, @ModelAttribute 也可以处理，当然 @RequestBody 也能处理）；
+		- multipart/form-data, 不能处理（即使用 @RequestBody 不能处理这种格式的数据）；
+		- 其他格式，必须（其他格式包括 application/json, application/xml 等。这些格式的数据，必须使用 @RequestBody 来处理）(POST 模式下，使用 @RequestBody 绑定请求对象，Spring 会帮你进行协议转换，将 Json、Xml 协议转换成你需要的对象)
 
-    - PUT 方式提交时， 根据 request header Content-Type 的值来判断：
-        - application/x-www-form-urlencoded， 必须；
-        - multipart/form-data, 不能处理；
-        - 其他格式， 必须；
+	- PUT 方式提交时， 根据 request header Content-Type 的值来判断：
+		- application/x-www-form-urlencoded， 必须；
+		- multipart/form-data, 不能处理；
+		- 其他格式，必须；
 
 - 说明：
     
-    request 的 body 部分的数据编码格式由 header 部分的 Content-Type 指定；
+	request 的 body 部分的数据编码格式由 header 部分的 Content-Type 指定；
 
 ### 2.2. @ResponseBody
 
@@ -313,7 +307,7 @@ SpringMVC 未指定跳转页面时，有 @ResponseBody 注解则会根据请求�
 
 ### 2.6. 处理 PUT/DELETE/PATCH 请求
 
-浏览器的 form 表单只支持 GET 和 POST 请求，而 DELETE 和 PUT 请求并不支持。为了解决这个问题，Spring MVC 提供了一个 HiddenHttpMethodFilter，可以将带有_method 参数的 POST 请求转换为 PUT 或 DELETE 请求。使用 Spring Boot 时，它已经被默认配置生效了。
+浏览器的 form 表单只支持 GET 和 POST 请求，而 DELETE 和 PUT 请求并不支持。为了解决这个问题，Spring MVC 提供了一个 HiddenHttpMethodFilter，可以将带有 _method 参数的 POST 请求转换为 PUT 或 DELETE 请求。使用 Spring Boot 时，它已经被默认配置生效了。
 
 例：
 ```html

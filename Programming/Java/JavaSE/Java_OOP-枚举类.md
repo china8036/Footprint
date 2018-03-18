@@ -210,19 +210,19 @@ public enum Day {
             return TUESDAY;
         }
     },
-    TUESDAY(2, "星期二", "依旧犯困"){
+    TUESDAY(2, "星期二", "依旧犯困") {
         @Override
         public Day getNext() {
             return WEDNESDAY;
         }
     },
-    WEDNESDAY(3, "星期三", "感觉半周终于过去了"){
+    WEDNESDAY(3, "星期三", "感觉半周终于过去了") {
         @Override
         public Day getNext() {
             return THURSDAY;
         }
     },
-    THURSDAY(4, "星期四", "期待这星期五"){
+    THURSDAY(4, "星期四", "期待这星期五") {
         @Override
         public Day getNext() {
             return FRIDAY;
