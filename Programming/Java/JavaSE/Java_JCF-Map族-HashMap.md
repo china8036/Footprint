@@ -1,23 +1,40 @@
 - [Java 集合：Map 族 - HashMap 实现类](#java-%E9%9B%86%E5%90%88%EF%BC%9Amap-%E6%97%8F---hashmap-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-    - [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2. 常用 API](#2-%E5%B8%B8%E7%94%A8-api)
-    - [3. 源码分析](#3-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-        - [3.1. 存储结构](#31-%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84)
-        - [3.2. 类定义](#32-%E7%B1%BB%E5%AE%9A%E4%B9%89)
-        - [3.3. 关键属性](#33-%E5%85%B3%E9%94%AE%E5%B1%9E%E6%80%A7)
-        - [3.4. 关键内部类](#34-%E5%85%B3%E9%94%AE%E5%86%85%E9%83%A8%E7%B1%BB)
-        - [3.5. 初始化操作](#35-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C)
-        - [3.6. 添加元素](#36-%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
-            - [3.6.1. put() 方法](#361-put-%E6%96%B9%E6%B3%95)
-            - [3.6.2. Key 的 hash 计算](#362-key-%E7%9A%84-hash-%E8%AE%A1%E7%AE%97)
-            - [3.6.3. 扩容运算 resize()](#363-%E6%89%A9%E5%AE%B9%E8%BF%90%E7%AE%97-resize)
-            - [3.6.4. putVal() 方法](#364-putval-%E6%96%B9%E6%B3%95)
-            - [3.6.5. putIfAbsent() 方法](#365-putifabsent-%E6%96%B9%E6%B3%95)
-        - [3.7. 删除元素](#37-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
-        - [3.8. 获取元素](#38-%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0)
-        - [3.9. 遍历集合](#39-%E9%81%8D%E5%8E%86%E9%9B%86%E5%90%88)
-    - [4. 与 HashTable 的区别](#4-%E4%B8%8E-hashtable-%E7%9A%84%E5%8C%BA%E5%88%AB)
-    - [5. Refer Links](#5-refer-links)
+	- [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+	- [2. 常用 API](#2-%E5%B8%B8%E7%94%A8-api)
+	- [3. 源码分析](#3-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+		- [3.1. JDK 对 HashMap 的改进](#31-jdk-%E5%AF%B9-hashmap-%E7%9A%84%E6%94%B9%E8%BF%9B)
+			- [3.1.1. 引入红黑树](#311-%E5%BC%95%E5%85%A5%E7%BA%A2%E9%BB%91%E6%A0%91)
+			- [3.1.2. 用位运算代替常规运算，以提升效率](#312-%E7%94%A8%E4%BD%8D%E8%BF%90%E7%AE%97%E4%BB%A3%E6%9B%BF%E5%B8%B8%E8%A7%84%E8%BF%90%E7%AE%97%EF%BC%8C%E4%BB%A5%E6%8F%90%E5%8D%87%E6%95%88%E7%8E%87)
+			- [3.1.3. 扩容方法的改进](#313-%E6%89%A9%E5%AE%B9%E6%96%B9%E6%B3%95%E7%9A%84%E6%94%B9%E8%BF%9B)
+		- [3.2. 存储结构](#32-%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84)
+		- [3.3. 类定义](#33-%E7%B1%BB%E5%AE%9A%E4%B9%89)
+		- [3.4. 关键属性](#34-%E5%85%B3%E9%94%AE%E5%B1%9E%E6%80%A7)
+		- [3.5. 关键内部类](#35-%E5%85%B3%E9%94%AE%E5%86%85%E9%83%A8%E7%B1%BB)
+		- [3.6. 初始化操作](#36-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C)
+		- [3.7. 添加元素](#37-%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
+			- [3.7.1. put() 方法](#371-put-%E6%96%B9%E6%B3%95)
+			- [3.7.2. Key 的 hash 计算](#372-key-%E7%9A%84-hash-%E8%AE%A1%E7%AE%97)
+			- [3.7.3. 扩容运算 resize()](#373-%E6%89%A9%E5%AE%B9%E8%BF%90%E7%AE%97-resize)
+			- [3.7.4. putVal() 方法](#374-putval-%E6%96%B9%E6%B3%95)
+			- [3.7.5. putIfAbsent() 方法](#375-putifabsent-%E6%96%B9%E6%B3%95)
+		- [3.8. 删除元素](#38-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
+		- [3.9. 获取元素](#39-%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0)
+		- [3.10. 遍历集合](#310-%E9%81%8D%E5%8E%86%E9%9B%86%E5%90%88)
+	- [4. HashTable](#4-hashtable)
+	- [5. Interview FAQ](#5-interview-faq)
+		- [5.1. 关于 Hashmap 的 扩容机制](#51-%E5%85%B3%E4%BA%8E-hashmap-%E7%9A%84-%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6)
+			- [5.1.1. Hashmap 什么时候需要增加容量呢？](#511-hashmap-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E5%A2%9E%E5%8A%A0%E5%AE%B9%E9%87%8F%E5%91%A2%EF%BC%9F)
+			- [5.1.2. Hashmap 是怎么扩容的？](#512-hashmap-%E6%98%AF%E6%80%8E%E4%B9%88%E6%89%A9%E5%AE%B9%E7%9A%84%EF%BC%9F)
+			- [5.1.3. initialCapacity 和 loadFactor 参数应该设为什么样的值？](#513-initialcapacity-%E5%92%8C-loadfactor-%E5%8F%82%E6%95%B0%E5%BA%94%E8%AF%A5%E8%AE%BE%E4%B8%BA%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E5%80%BC%EF%BC%9F)
+		- [5.2. 关于 HashMap 的非线程安全](#52-%E5%85%B3%E4%BA%8E-hashmap-%E7%9A%84%E9%9D%9E%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8)
+			- [5.2.1. 为什么 HashMap 是线程不安全的，实际会如何体现？](#521-%E4%B8%BA%E4%BB%80%E4%B9%88-hashmap-%E6%98%AF%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84%EF%BC%8C%E5%AE%9E%E9%99%85%E4%BC%9A%E5%A6%82%E4%BD%95%E4%BD%93%E7%8E%B0%EF%BC%9F)
+			- [5.2.2. 能否让 HashMap 实现线程安全，如何做？](#522-%E8%83%BD%E5%90%A6%E8%AE%A9-hashmap-%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%EF%BC%8C%E5%A6%82%E4%BD%95%E5%81%9A%EF%BC%9F)
+			- [5.2.3. Collections.synchronizeMap(hashMap) 是如何保证 HashMap 线程安全的？](#523-collectionssynchronizemaphashmap-%E6%98%AF%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81-hashmap-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%EF%BC%9F)
+		- [5.3. 关于 HashMap 与 HashTable 的区别](#53-%E5%85%B3%E4%BA%8E-hashmap-%E4%B8%8E-hashtable-%E7%9A%84%E5%8C%BA%E5%88%AB)
+			- [5.3.1. HashMap 和 HashTable 的区别是什么？](#531-hashmap-%E5%92%8C-hashtable-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F)
+			- [5.3.2. 为什么 HashTable 的默认大小和 HashMap 不一样？](#532-%E4%B8%BA%E4%BB%80%E4%B9%88-hashtable-%E7%9A%84%E9%BB%98%E8%AE%A4%E5%A4%A7%E5%B0%8F%E5%92%8C-hashmap-%E4%B8%8D%E4%B8%80%E6%A0%B7%EF%BC%9F)
+		- [5.4. JDK Ⅷ 对 HashMap 有了什么改进？说说你对红黑树的理解？](#54-jdk-%E2%85%B7-%E5%AF%B9-hashmap-%E6%9C%89%E4%BA%86%E4%BB%80%E4%B9%88%E6%94%B9%E8%BF%9B%EF%BC%9F%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9%E7%BA%A2%E9%BB%91%E6%A0%91%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F)
+	- [6. Refer Links](#6-refer-links)
 
 # Java 集合：Map 族 - HashMap 实现类
 
@@ -57,14 +74,61 @@ HashMap 特点：
 
 ## 3. 源码分析
 
-HashMap 的源码中，充斥各种位运算代替常规运算的地方，以提升效率： 
-- 与运算替代模运算。
+### 3.1. JDK 对 HashMap 的改进
 
-  要想查找表中元素的位置，需要先计算其散列码，然后与桶的总数取余，所得到的结果就是保存这个元素的桶的索引。例，某个对象散列码为 76268，且有 128 个桶，则对象应保存在第 108 号桶中（76268%128=108）。而从 JDK8 开始，利用哈希表长度总为 2 的幂的特点，使用与运算代替了复杂的模运算（用 `hash & (table.length-1)` 替代 `hash % (table.length)`），大大提高了效率。
+在 JDK8 中对 HashMap 的实现进行许多改进和优化。
+
+#### 3.1.1. 引入红黑树
+
+如果 hash 算法不好，会使得 hash 表蜕化为顺序查找，即使负载因子和 hash 算法优化再多，也无法避免出现链表过长的情景（这个概论虽然很低），于是在 JDK1.8 中，对 hashmap 做了优化，引入红黑树。具体原理就是当 hash 表中每个桶附带的链表长度默认超过 8 时，链表就转换为红黑树结构，提高 HashMap 的性能，因为红黑树的增删改是 O(logn)，而不是 O(n)。
+
+#### 3.1.2. 用位运算代替常规运算，以提升效率
+
+- 散列索引计算的改进：用与运算替代模运算
+
+	要想查找表中元素的位置，需要先计算其散列码，然后与桶的总数取余，所得到的结果就是保存这个元素的桶的索引。例，某个对象散列码为 76268，且有 128 个桶，则对象应保存在第 108 号桶中（76268%128=108）。
+
+	而从 JDK8 开始，利用哈希表长度总为 2 的幂的特点，使用与运算代替了复杂的模运算（用 `hash & (table.length-1)` 替代 `hash % (table.length)`），大大提高了效率。
 
 - 用 `if ((e.hash & oldCap) == 0)` 判断扩容后，节点 e 处于低区还是高区。
 
-### 3.1. 存储结构
+#### 3.1.3. 扩容方法的改进
+
+JDK8 以前的扩容原理是使用新的（2 倍旧长度）的数组代替，把旧数组的内容放到新数组，需要重新计算 hash 和计算 hash 表的位置，非常耗时。JDK 1.8 对 hashmap 的扩容方法有了改进。
+
+假设 hash 表的长度是 16，那么 15 对应二进制是：
+```
+0000 0000， 0000 0000， 0000 0000， 0000 1111 = 15
+```
+扩容之前有两个 key，分别是 k1 和 k2：
+
+k1 的 hash：
+```
+0000 0000， 0000 0000， 0000 0000， 0000 1111 = 15
+```
+k2 的 hash：
+```
+0000 0000， 0000 0000， 0000 0000， 0001 1111 = 15
+```
+hash 值和 15 模得到：
+```
+k1：0000 0000， 0000 0000， 0000 0000， 0000 1111 = 15
+
+k2：0000 0000， 0000 0000， 0000 0000， 0000 1111 = 15
+```
+扩容之后表长对应为 32，则 31 的二进制表示为：
+```
+0000 0000， 0000 0000， 0000 0000， 0001 1111 = 31
+```
+重新 hash 之后得到：
+```
+k1：0000 0000， 0000 0000， 0000 0000， 0000 1111 = 15
+
+k2：0000 0000， 0000 0000， 0000 0000， 0001 1111 = 31 = 15 + 16
+```
+观察发现：如果扩容后新增的位是 0，那么 rehash 索引不变，否则才会改变，并且变为原来的索引 + 旧 hash 表的长度，故我们只需看原 hash 表长新增的 bit 是 1 还是 0，如果是 0，索引不变，如果是 1，索引变成原索引 + 旧表长，根本不用像 JDK 7 那样 rehash，省去了重新计算 hash 值的时间，而且新增的 bit 是 0 还是 1 可以认为是随机的，因此 resize 的过程，还能均匀的把之前的冲突节点分散。 
+
+### 3.2. 存储结构
 
 在 Java 中，散列表一般使用链表数组实现，每个链表称为桶。
 
@@ -78,7 +142,7 @@ HashMap 的源码中，充斥各种位运算代替常规运算的地方，以提
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/12/beb26cb90e5cd32b250b03020b43f1b8.jpg)
 
-### 3.2. 类定义
+### 3.3. 类定义
 
 ```java
 public class HashMap<K,V> 
@@ -86,7 +150,7 @@ public class HashMap<K,V>
                 implements Map<K,V>, Cloneable, Serializable
 ```
 
-### 3.3. 关键属性
+### 3.4. 关键属性
 
 ```java
 // 默认容量，必须是 2 的幂，此处为 2^4
@@ -121,7 +185,7 @@ transient Collection<V> values;
 transient Node<K,V>[] table;
 ```
 
-### 3.4. 关键内部类
+### 3.5. 关键内部类
 
 - Node 类（用于表示一个哈希表的节点和发生哈希冲突时扩展链表的节点，是实际保存 key-value 的数据结构）
   ```java
@@ -174,7 +238,7 @@ transient Node<K,V>[] table;
   }
   ```
 
-### 3.5. 初始化操作
+### 3.6. 初始化操作
 
 ```java
 public HashMap() {
@@ -224,9 +288,9 @@ static final int tableSizeFor(int cap) {
 }
 ```
 
-### 3.6. 添加元素
+### 3.7. 添加元素
 
-#### 3.6.1. put() 方法
+#### 3.7.1. put() 方法
 
 HashMap 中添加元素通过 put() 方法来实现：
 ```java
@@ -235,7 +299,7 @@ public V put(K key, V value) {
 }
 ```
 
-#### 3.6.2. Key 的 hash 计算
+#### 3.7.2. Key 的 hash 计算
 
 ```java
 static final int hash(Object key) {
@@ -260,7 +324,7 @@ static final int hash(Object key) {
 
 - 计算所得到的 hash 值就是键值对存储在数组中的位置。
 
-#### 3.6.3. 扩容运算 resize()
+#### 3.7.3. 扩容运算 resize()
 
 由于哈希桶的数据结构是数组，数组的大小必须在创建时分配完毕，所以自然会涉及到扩容的问题。
 
@@ -375,7 +439,7 @@ final Node<K,V>[] resize() {
 }
 ```
 
-#### 3.6.4. putVal() 方法
+#### 3.7.4. putVal() 方法
 
 从 put() 方法的实现中可以发现，执行添加元素的具体逻辑封装在 `final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict)` 方法中。
 
@@ -481,7 +545,7 @@ Node<K,V> newNode(int hash, K key, V value, Node<K,V> next) {
 - 当 Key 的 equals() 不相等且 hashCode() 不相等时，元素在 HashMap 中的物理存储位置不相同。
 - 当 Key 的 equals() 不相等而 hashCode() 相等时，元素在 HashMap 中的物理存储位置不相同。
 
-#### 3.6.5. putIfAbsent() 方法
+#### 3.7.5. putIfAbsent() 方法
 
 ```java
 // 往表中插入 key-value, 若 key 对应的 value 已存在，不会覆盖旧 value，而是丢弃新 value
@@ -491,7 +555,7 @@ public V putIfAbsent(K key, V value) {
 }
 ```
 
-### 3.7. 删除元素
+### 3.8. 删除元素
 
 ```java
 // 如果 key 存在，则删除这个键值对，并返回 value；如果不存在，返回 null
@@ -560,7 +624,7 @@ final Node<K,V> removeNode(int hash, Object key, Object value,
 }
 ```
 
-### 3.8. 获取元素
+### 3.9. 获取元素
 
 获取元素通过 get() 方法实现。
 ```java
@@ -594,7 +658,7 @@ final Node<K,V> getNode(int hash, Object key) {
 }
 ```
 
-### 3.9. 遍历集合
+### 3.10. 遍历集合
 
 由迭代器的实现可以看出，遍历 HashMap 时，顺序是按照哈希桶从低到高，链表从前往后遍历的。因此，HashMap 的遍历顺序与元素的添加顺序无关，属于无序遍历。
 
@@ -653,21 +717,183 @@ abstract class HashIterator {
 }
 ```
 
-## 4. 与 HashTable 的区别
+## 4. HashTable
+
+[HashTable](https://docs.oracle.com/javase/9/docs/api/java/util/Hashtable.html) 比较古老，是 JDK1.0 就引入的类，而 HashMap 是 1.2 引进的 Map 的一个实现。
+
+HashTable 继承于 Dictionary 类，实现了 Map, Cloneable,Serializable 接口，同样是基于哈希表实现的，其实类似 HashMap，只不过有些区别，HashTable 同样每个元素是一个 key-value 对，其内部也是通过单链表解决冲突问题，容量不足（超过了阀值）时，同样会自动增长。
+
+## 5. Interview FAQ
+
+**凡 Java 相关的面试，都会问及 Java 集合框架；凡问及 Java 集合框架，都会问及与哈希表相关的实现类**。以下总结与此相关的常见面试题。
+
+### 5.1. 关于 Hashmap 的 扩容机制
+
+#### 5.1.1. Hashmap 什么时候需要增加容量呢？
+
+JDK 采用预处理法。
+
+Hashmap 的构造器里指明了两个对于理解 HashMap 比较重要的两个参数 `int initialCapacity` 和 `float loadFactor`，当 `size > initialCapacity * loadFactor` 时，Hashmap 内部的 resize() 方法就被调用。
+
+#### 5.1.2. Hashmap 是怎么扩容的？
+
+HashMap 底层采用的散列数组实现，利用 initialCapacity 这个参数我们可以设置这个数组的大小，也就是散列桶的数量，但是如果需要 Map 的数据过多，在不断的 add 之后，这些桶可能都会被占满。
+
+这种情况下一般有两种策略：
+- 一种是不改变 Capacity，因为即使桶占满了，我们还是可以利用每个桶附带的链表增加元素。但是这有个缺点，此时 HaspMap 就退化成为了 LinkedList，使 get 和 put 方法的时间开销上升。
+- 另一种方法是增加 Hash 桶的数量，这样 get 和 put 的时间开销又回退到近于常数复杂度上。**Hashmap 就是采用的该方法，也就是扩增散列数组的大小。**
+
+```java
+// 重新调整 HashMap 的大小，newCapacity 是调整后的单位
+void resize(int newCapacity) {
+		Entry[] oldTable = table;
+		int oldCapacity = oldTable.length;
+		if (oldCapacity == MAXIMUM_CAPACITY) {
+				threshold = Integer.MAX_VALUE;
+				return;
+		}
+
+		// 新建一个 HashMap，将“旧 HashMap”的全部元素添加到“新 HashMap”中，
+		// 然后，将“新 HashMap”赋值给“旧 HashMap”。
+		Entry[] newTable = new Entry[newCapacity];
+		transfer(newTable);
+		table = newTable;
+		threshold = (int) (newCapacity * loadFactor);
+}
+
+// 将 HashMap 中的全部元素都添加到 newTable 中
+void transfer(Entry[] newTable) {
+		Entry[] src = table;
+		int newCapacity = newTable.length;
+		for (int j = 0; j < src.length; j++) {
+				Entry<K, V> e = src[j];
+				if (e != null) {
+						src[j] = null;
+						do {
+								Entry<K, V> next = e.next;
+								int i = indexFor(e.hash, newCapacity);
+								e.next = newTable[i];
+								newTable[i] = e;
+								e = next;
+						} while (e != null);
+				}
+		}
+}
+```
+从源码可知，扩容时，会新建一个 HashMap 的底层数组，长度为原来的两倍，然后再调用 transfer() 方法，将旧 HashMap 的全部元素添加到新的 HashMap 中（要重新计算元素在新的数组中的索引位置）。因此，扩容是一个相当耗时的操作，我们在用 HashMap 时，最好能提前预估下 HashMap 中元素的个数，这样有助于提高 HashMap 的性能。
+
+#### 5.1.3. initialCapacity 和 loadFactor 参数应该设为什么样的值？
+
+initialCapacity 的默认值是 16。有些人可能会想如果内存足够，是不是可以将 initialCapacity 设大一些，即使用不了这么大，就可避免扩容导致的效率的下降，反正无论 initialCapacity 大小，我们使用的 get 和 put 方法都是常数复杂度的。这么说没什么不对，但是可能会忽略一点，实际的程序可能不仅仅使用 get 和 put 方法，也有可能使用迭代器，如果 initialCapacity 容量较大，那么会使迭代器效率降低。所以**理想的情况还是在使用 HashMap 前估计一下数据量**。
+
+加载因子默认值是 0.75，这是 JDK**权衡时间和空间效率**之后得到的一个相对优良的数值。如果这个值过大，虽然空间利用率是高了，但是对于 HashMap 中的一些方法的效率就下降了，包括 get 和 put 方法，会导致每个 hash 桶所附加的链表增长，影响存取效率。如果比较小，除了导致空间利用率较低外没有什么坏处，只要有的是内存，毕竟现在大多数人把时间看的比空间重要。但是实际中还是很少有人会将这个值设置的低于 0.5。
+
+### 5.2. 关于 HashMap 的非线程安全
+
+#### 5.2.1. 为什么 HashMap 是线程不安全的，实际会如何体现？
+
+具体细节上的原因，可以参考：[不正当使用 HashMap 导致 cpu 100% 的问题追究](http://ifeve.com/hashmap-infinite-loop/)
+
+- 如果多个线程同时使用 put 方法添加元素
+
+	假设正好存在两个 put 的 key 发生了碰撞 (hash 值一样)，那么根据 HashMap 的实现，这两个 key 会添加到数组的同一个位置，这样最终就会发生其中一个线程的 put 的数据被覆盖。
+
+- 如果多个线程同时检测到元素个数超过数组大小*loadFactor
+
+	这样会发生多个线程同时对 hash 数组进行扩容，都在重新计算元素位置以及复制数据，但是最终只有一个线程扩容后的数组会赋给 table，也就是说其他线程的都会丢失，并且各自线程 put 的数据也丢失。且会引起死循环的错误。
+
+#### 5.2.2. 能否让 HashMap 实现线程安全，如何做？
+
+- 使用线程安全的 Hashtable。
+	
+	但当一个线程访问 HashTable 的同步方法时，其他线程如果也要访问同步方法，会被阻塞住。举个例子，当一个线程使用 put 方法时，另一个线程不但不可以使用 put 方法，连 get 方法都不可以，效率很低，因此现在基本不会选择它了。
+
+- 可以通过下面的语句进行 HashMap 的同步：
+	```java
+	Collections.synchronizeMap(hashMap);
+	```
+
+- 若 JDK 版本在 5 之后，应直接使用 ConcurrentHashMap。
+
+#### 5.2.3. Collections.synchronizeMap(hashMap) 是如何保证 HashMap 线程安全的？
+
+```java
+// synchronizedMap 方法
+public static <K,V> Map<K,V> synchronizedMap(Map<K,V> m) {
+		return new SynchronizedMap<>(m);
+}
+// SynchronizedMap 类
+private static class SynchronizedMap<K,V>
+		implements Map<K,V>, Serializable {
+		private static final long serialVersionUID = 1978198479659022715L;
+
+		private final Map<K,V> m;       // Backing Map
+		final Object      mutex;        // Object on which to synchronize
+
+		SynchronizedMap(Map<K,V> m) {
+				this.m = Objects.requireNonNull(m);
+				mutex = this;
+		}
+
+		SynchronizedMap(Map<K,V> m, Object mutex) {
+				this.m = m;
+				this.mutex = mutex;
+		}
+
+		public int size() {
+				synchronized (mutex) {return m.size();}
+		}
+		public boolean isEmpty() {
+				synchronized (mutex) {return m.isEmpty();}
+		}
+		public boolean containsKey(Object key) {
+				synchronized (mutex) {return m.containsKey(key);}
+		}
+		public boolean containsValue(Object value) {
+				synchronized (mutex) {return m.containsValue(value);}
+		}
+		public V get(Object key) {
+				synchronized (mutex) {return m.get(key);}
+		}
+
+		public V put(K key, V value) {
+				synchronized (mutex) {return m.put(key, value);}
+		}
+		public V remove(Object key) {
+				synchronized (mutex) {return m.remove(key);}
+		}
+		// 省略其他方法
+}
+```
+从源码中看出 synchronizedMap() 方法返回一个 SynchronizedMap 类的对象，而在 SynchronizedMap 类中使用了 synchronized 对 Map 的方法加层同步锁，保证对 Map 的操作是线程安全的，故效率其实也不高。
+
+### 5.3. 关于 HashMap 与 HashTable 的区别
+
+#### 5.3.1. HashMap 和 HashTable 的区别是什么？
+
+Hashtable 和 HashMap 最主要的不同在于线程安全和速度。
 
 - HashTable 是线程安全的，且不允许 key、value 是 null；HashMap 是非线程安全的，且允许 key、value 是 null。
 
-- HashTable 默认容量是 11，HashMap 默认容量是 16。
+- HashTable 默认容量是 11，HashMap 默认容量是 16，但默认加载因子都是 0.75。
 
-- HashTable 是直接使用 key 的 hashCode(key.hashCode()) 作为 hash 值，而 HashMap 内部使用 `static final int hash(Object key)` 扰动函数对 key 的 hashCode 进行扰动后作为 hash 值。
+- HashTable 是直接使用 key 的 `hashCode(key.hashCode())` 作为 hash 值，而 HashMap 内部使用 `static final int hash(Object key)` 扰动函数对 key 的 hashCode 进行扰动后作为 hash 值。
 
-- HashTable 取哈希桶下标是直接用模运算 %（因为其默认容量也不是 2 的 n 次方。所以也无法用位运算替代模运算），而 HashMap 通过位运算代替模运算执行取下标运算，提高了效率。
+- HashTable 取哈希桶下标是直接用模运算 %（因为其默认容量不要求是 2 的 n 次方，所以也无法用位运算替代模运算），而 HashMap 通过位运算代替模运算执行取下标运算，提高了效率（因此要求底层数组的容量一定要为 2 的整数次幂）。
 
 - HashTable 扩容时，`int newCapacity = (oldCapacity << 1) + 1`，即新容量是原来的 2 倍加上 1；HashMap 扩容时，新容量是原来的 2 倍。
 
 - Hashtable 是 Dictionary 的扩展类并实现了 Map 接口；HashMap 是 AbstractMap 的扩展类同样也实现了 Map 接口。
 
-## 5. Refer Links
+#### 5.3.2. 为什么 HashTable 的默认大小和 HashMap 不一样？
+
+Hashtable 的扩容方法是乘 2 再加一，而不是简单的乘 2，故 hashtable 保证了容量永远是奇数，结合之前分析 hashmap 的重算 hash 值的逻辑，就明白了：
+
+因为在数据分布在等差数据集合（如偶数) 上时，如果公差与桶容量有公约数 n，则至少有 (n-1)/n 数量的桶是利用不到的。因此 Hashmap 会在取模（使用位与运算代替）哈希前先做一次哈希运算，调整 hash 值。而 Hashtable 比较古老，直接使用了除留余数法，那么就需要设置容量起码不是偶数（除（近似）质数求余的分散效果好），而 JDK 开发者选了 11。
+
+### 5.4. JDK Ⅷ 对 HashMap 有了什么改进？说说你对红黑树的理解？
+
+## 6. Refer Links
 
 [java 集合系列](http://blog.csdn.net/column/details/14681.html)
 
@@ -678,3 +904,7 @@ abstract class HashIterator {
 [面试必备：HashMap 源码解析（JDK8）](http://blog.csdn.net/zxt0601/article/details/77413921)
 
 [coolblog: HashMap 源码详细分析 (JDK1.8)](http://www.coolblog.xyz/2018/01/18/HashMap-%E6%BA%90%E7%A0%81%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90-JDK1-8/)
+
+[Java 集合专题总结（1）：HashMap 和 HashTable 源码学习和面试总结](https://www.cnblogs.com/kubixuesheng/p/6144535.html)
+
+[Java 基础——HashTable 源码分析](http://blog.csdn.net/qq_30379689/article/details/72618060)

@@ -1,29 +1,35 @@
 - [Java 集合：Collection 族 - Set](#java-%E9%9B%86%E5%90%88%EF%BC%9Acollection-%E6%97%8F---set)
-  - [1. Set 接口](#1-set-%E6%8E%A5%E5%8F%A3)
-    - [1.1. 基本概念](#11-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [1.2. 基本 API](#12-%E5%9F%BA%E6%9C%AC-api)
-  - [2. HashSet 类](#2-hashset-%E7%B1%BB)
-    - [2.1. 基本概念](#21-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2.2. 常用 API](#22-%E5%B8%B8%E7%94%A8-api)
-      - [2.2.1. 构造器](#221-%E6%9E%84%E9%80%A0%E5%99%A8)
-      - [2.2.2. 添加 & 删除元素](#222-%E6%B7%BB%E5%8A%A0-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
-      - [2.2.3. 访问元素](#223-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
-      - [2.2.4. 其它](#224-%E5%85%B6%E5%AE%83)
-    - [2.3. 源码分析](#23-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-      - [2.3.1. 关键属性](#231-%E5%85%B3%E9%94%AE%E5%B1%9E%E6%80%A7)
-      - [2.3.2. 初始化](#232-%E5%88%9D%E5%A7%8B%E5%8C%96)
-      - [2.3.3. 添加元素](#233-%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
-      - [2.3.4. 删除元素](#234-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
-      - [2.3.5. 访问元素](#235-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
-  - [3. LinkedHashSet 类](#3-linkedhashset-%E7%B1%BB)
-    - [3.1. 基本概念](#31-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [3.2. 常用 API](#32-%E5%B8%B8%E7%94%A8-api)
-    - [3.3. 源码分析](#33-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-      - [3.3.1. 类定义](#331-%E7%B1%BB%E5%AE%9A%E4%B9%89)
-      - [3.3.2. 初始化](#332-%E5%88%9D%E5%A7%8B%E5%8C%96)
-  - [4. SortedSet 接口 & TreeSet 类](#4-sortedset-%E6%8E%A5%E5%8F%A3-treeset-%E7%B1%BB)
-  - [5. EnumSet 类](#5-enumset-%E7%B1%BB)
-  - [6. Refer Links](#6-refer-links)
+	- [1. Set 接口](#1-set-%E6%8E%A5%E5%8F%A3)
+		- [1.1. 基本概念](#11-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [1.2. 基本 API](#12-%E5%9F%BA%E6%9C%AC-api)
+	- [2. HashSet 类](#2-hashset-%E7%B1%BB)
+		- [2.1. 基本概念](#21-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [2.2. 常用 API](#22-%E5%B8%B8%E7%94%A8-api)
+			- [2.2.1. 构造器](#221-%E6%9E%84%E9%80%A0%E5%99%A8)
+			- [2.2.2. 添加 & 删除元素](#222-%E6%B7%BB%E5%8A%A0-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
+			- [2.2.3. 访问元素](#223-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
+			- [2.2.4. 其它](#224-%E5%85%B6%E5%AE%83)
+		- [2.3. 源码分析](#23-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+			- [2.3.1. 关键属性](#231-%E5%85%B3%E9%94%AE%E5%B1%9E%E6%80%A7)
+			- [2.3.2. 初始化](#232-%E5%88%9D%E5%A7%8B%E5%8C%96)
+			- [2.3.3. 添加元素](#233-%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
+			- [2.3.4. 删除元素](#234-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
+			- [2.3.5. 访问元素](#235-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
+	- [3. LinkedHashSet 类](#3-linkedhashset-%E7%B1%BB)
+		- [3.1. 基本概念](#31-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [3.2. 常用 API](#32-%E5%B8%B8%E7%94%A8-api)
+		- [3.3. 源码分析](#33-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+			- [3.3.1. 类定义](#331-%E7%B1%BB%E5%AE%9A%E4%B9%89)
+			- [3.3.2. 初始化](#332-%E5%88%9D%E5%A7%8B%E5%8C%96)
+	- [4. SortedSet 接口 & NavigableSet 接口 & TreeSet 类](#4-sortedset-%E6%8E%A5%E5%8F%A3-navigableset-%E6%8E%A5%E5%8F%A3-treeset-%E7%B1%BB)
+		- [4.1. 基本概念](#41-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [4.2. 常用 API](#42-%E5%B8%B8%E7%94%A8-api)
+		- [4.3. 源码分析](#43-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+	- [5. 为什么 JCF 中不提供 WeakHashSet 类？](#5-%E4%B8%BA%E4%BB%80%E4%B9%88-jcf-%E4%B8%AD%E4%B8%8D%E6%8F%90%E4%BE%9B-weakhashset-%E7%B1%BB%EF%BC%9F)
+	- [6. EnumSet 类](#6-enumset-%E7%B1%BB)
+		- [6.1. 基本概念](#61-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [6.2. 常用 API](#62-%E5%B8%B8%E7%94%A8-api)
+	- [7. Refer Links](#7-refer-links)
   
 # Java 集合：Collection 族 - Set
 
@@ -231,19 +237,96 @@ HashSet(int initialCapacity, float loadFactor, boolean dummy) {
 }
 ```
 
-## 4. SortedSet 接口 & TreeSet 类
+## 4. SortedSet 接口 & NavigableSet 接口 & TreeSet 类
+
+### 4.1. 基本概念
 
 树集 [TreeSet](https://docs.oracle.com/javase/9/docs/api/java/util/TreeSet.html) 与散列表相似，但有所改进。它是一个有序的集合，可以以任意顺序将元素插入到集合中，但在对集合进行遍历时，每个值将自动按照排序后的顺序呈现。
-
-TreeSet 采用红黑树实现，每次将一个元素添加到树中，都将被放置在正确排序的位置上。因此，迭代器总是以排好序的顺序访问各个元素。若树中包含 n 个元素，则查找新元素位置的操作需要 log2(n) 次比较。因此，将一个元素添加到树中要比添加到散列集中慢，但相比检查数组或链表中的重复元素还是快很多。
 
 树集中的元素必须是可比较的，即必须实现了 Comparable 接口，或者在构造集时必须提供一个 Comparator。
 
 **若不需要对集合的元素进行排序，那么应该选择散列集作为存储结构，可避免用于排序的开销。**
 
-## 5. EnumSet 类
+### 4.2. 常用 API
 
-## 6. Refer Links
+### 4.3. 源码分析
+
+类似于 HashMap 和 HashSet 之间的关系，HashSet 底层依赖于 HashMap 实现，TreeSet 底层则采用一个 NavigableMap 来保存 TreeSet 集合的元素。但实际上，由于 NavigableMap 只是一个接口，因此底层依然是使用 TreeMap 来包含 Set 集合中的所有元素。
+
+```java
+// 使用 NavigableMap 的 key 来保存 Set 集合的元素
+private transient NavigableMap<E,Object> m;
+
+// 使用一个 PRESENT 作为 Map 集合的所有 value
+private static final Object PRESENT = new Object();
+
+// 包访问权限的构造器，以指定的 NavigableMap 对象创建 Set 集合
+TreeSet(NavigableMap<E,Object> m) {
+    this.m = m;
+}
+
+// 以自然顺序方式创建一个新的 TreeMap, 根据该 TreeSet 创建一个 TreeSet
+public TreeSet() {
+    this(new TreeMap<E,Object>());
+}
+
+// 以定制顺序方式创建一个新的 TreeMap, 根据该 TreeSet 创建一个 TreeSet
+public TreeSet(Comparator<? super E> comparator) {
+    this(new TreeMap<>(comparator));
+}
+
+public TreeSet(Collection<? extends E> c) {
+    this();
+    addAll(c);
+}
+
+public TreeSet(SortedSet<E> s) {
+    this(s.comparator());
+    addAll(s);
+}
+```
+
+与 HashSet 完全类似的是，TreeSet 里绝大部分方法都是直接调用 TreeMap 的方法来实现的。
+
+## 5. 为什么 JCF 中不提供 WeakHashSet 类？
+
+https://stackoverflow.com/questions/4062919/why-does-exist-weakhashmap-but-absent-weakset
+
+在 JCF 中，基本上大部分的 Map 接口的实现类都一个与之对应的 Set 实现类，其基于 Map 接口实现。但为什么 WeakHashMap 没有与之对应的 WeakHashSet 呢？
+
+事实上，可以通过以下方法创建一个 WeakHashSet 实例：
+```java
+Set<Object> weakHashSet = Collections.newSetFromMap(
+		new WeakHashMap<Object, Boolean>());
+```
+> Why there is no specific class for such stuff? 
+> It's easy to imagine why the maintainers of java.util might have wanted to stop having to provide dual Map and Set versions of everything they do, and opted to just provide newSetFromMap() instead.
+
+## 6. EnumSet 类
+
+### 6.1. 基本概念
+
+[EnumSet](https://docs.oracle.com/javase/9/docs/api/java/util/EnumSet.html) 是一个专门为枚举类设计的集合类，EnumSet 中的所有元素都必须是指定枚举类型的枚举值，该枚举类型在创建 EnumSet 时显式或隐式的指定。
+
+EnumSet 的集合元素也是有序的，EnumSet 以枚举值在 Enum 类中的定义顺序来决定元素的顺序。
+
+EnumSet 在内部以位向量的形式存储，这种存储形式非常高效紧凑，因此 EnumSet 对象占用内存很小，而且运行效率很好。尤其进行批量操作（如 containsAll()、retainAll() 方法）时，如果其参数也是 EnumSet 集合，则该批量操作的执行速度会非常快。
+
+EnumSet 不允许加入 null 元素，如果试图加入 null 元素，将会导致 NullPointerException 异常。
+
+### 6.2. 常用 API
+
+EnumSet 类没有提供任何 public 的构造器来创建该类的实例，程序应该通过它提供的类方法来创建 EnumSet 对象：
+- `static <E extends Enum<E>> EnumSet<E>	allOf​(Class<E> elementType)`: Creates an enum set containing all of the elements in the specified element type.
+- `static <E extends Enum<E>> EnumSet<E>	complementOf​(EnumSet<E> s)`: Creates an enum set with the same element type as the specified enum set, initially containing all the elements of this type that are not contained in the specified set.
+- `static <E extends Enum<E>> EnumSet<E>	copyOf​(Collection<E> c)`: Creates an enum set initialized from the specified collection.
+- `static <E extends Enum<E>> EnumSet<E>	noneOf​(Class<E> elementType)`: Creates an empty enum set with the specified element type.
+- `static <E extends Enum<E>> EnumSet<E>	of​(E first, E... rest)`: Creates an enum set initially containing the specified elements.
+- `static <E extends Enum<E>> EnumSet<E>	range​(E from, E to)`: Creates an enum set initially containing all of the elements in the range defined by the two specified endpoints.
+
+NOTE: 当试图复制一个 Collection 中的元素来创建 EnumSet 实例时，必须保证 Collection 中的所有元素都是同一个枚举类的枚举值。
+
+## 7. Refer Links
 
 [java 集合系列](http://blog.csdn.net/column/details/14681.html)
 

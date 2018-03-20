@@ -36,13 +36,13 @@ Iterator 接口实际上是 Java 早期 Enumeration 接口的“升级版”。
 
   - `E	next​()`
 
-    Java 迭代器可以认为位于两个元素之间，每次调用 next 方法时，会将集合的“光标”向前移动一个位置，并返回移动时越过的元素的引用。若到达集合的末尾，将抛出一个异常。因此，一般在调用 next 方法之前需要使用 hasNext 进行判断。
+    Java 迭代器可以认为位于两个元素之间，每次调用 next 方法时，会将集合的“光标”向前移动一个位置，并返回移动时越过的元素的引用。**若到达集合的末尾，将抛出一个异常。**因此，一般在调用 next 方法之前需要使用 hasNext 进行判断。
 
   - `default void	remove​()`
 
     删除上次调用 next 方法时返回的元素。
 
-    next 方法与 remove 方法的调用有相互依赖性。若调用 remove 之前没有调用 next 将会抛出一个异常。
+    **next 方法与 remove 方法的调用有相互依赖性。若调用 remove 之前没有调用 next 将会抛出一个异常。**
 
   - `default void	forEachRemaining​(Consumer<? super E> action)`
 

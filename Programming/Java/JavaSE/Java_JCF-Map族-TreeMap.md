@@ -1,24 +1,106 @@
 - [Java 集合：Map 族 - TreeMap 实现类](#java-%E9%9B%86%E5%90%88%EF%BC%9Amap-%E6%97%8F---treemap-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-  - [1. SortedMap 接口](#1-sortedmap-%E6%8E%A5%E5%8F%A3)
-  - [2. TreeMap 实现类](#2-treemap-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-    - [2.1. 基本概念](#21-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2.2. 常用 API](#22-%E5%B8%B8%E7%94%A8-api)
-    - [2.3. 源码分析](#23-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-  - [3. Refer Links](#3-refer-links)
+	- [1. SortedMap 接口](#1-sortedmap-%E6%8E%A5%E5%8F%A3)
+	- [2. NavigableMap 接口](#2-navigablemap-%E6%8E%A5%E5%8F%A3)
+	- [3. TreeMap 实现类](#3-treemap-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
+		- [3.1. 基本概念](#31-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [3.2. 自然排序 & 定制排序](#32-%E8%87%AA%E7%84%B6%E6%8E%92%E5%BA%8F-%E5%AE%9A%E5%88%B6%E6%8E%92%E5%BA%8F)
+		- [3.3. 常用 API](#33-%E5%B8%B8%E7%94%A8-api)
+		- [3.4. 源码分析](#34-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+			- [3.4.1. 类定义](#341-%E7%B1%BB%E5%AE%9A%E4%B9%89)
+			- [3.4.2. 查找](#342-%E6%9F%A5%E6%89%BE)
+			- [3.4.3. 遍历](#343-%E9%81%8D%E5%8E%86)
+			- [3.4.4. 插入元素](#344-%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0)
+			- [3.4.5. 删除元素](#345-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
+	- [4. 与 HashMap、LinkedHashMap 的应用场景区别](#4-%E4%B8%8E-hashmap%E3%80%81linkedhashmap-%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E5%8C%BA%E5%88%AB)
+		- [4.1. 需要基于排序的统计功能 - TreeMap](#41-%E9%9C%80%E8%A6%81%E5%9F%BA%E4%BA%8E%E6%8E%92%E5%BA%8F%E7%9A%84%E7%BB%9F%E8%AE%A1%E5%8A%9F%E8%83%BD---treemap)
+		- [4.2. 需要快速增删改查的存储功能且不需要考虑顺序一致的因素 - HashMap](#42-%E9%9C%80%E8%A6%81%E5%BF%AB%E9%80%9F%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E7%9A%84%E5%AD%98%E5%82%A8%E5%8A%9F%E8%83%BD%E4%B8%94%E4%B8%8D%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%87%B4%E7%9A%84%E5%9B%A0%E7%B4%A0---hashmap)
+		- [4.3. 需要快速增删改查且需要保证遍历和插入顺序一致的存储功能 - LinkedHashMap](#43-%E9%9C%80%E8%A6%81%E5%BF%AB%E9%80%9F%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E4%B8%94%E9%9C%80%E8%A6%81%E4%BF%9D%E8%AF%81%E9%81%8D%E5%8E%86%E5%92%8C%E6%8F%92%E5%85%A5%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%87%B4%E7%9A%84%E5%AD%98%E5%82%A8%E5%8A%9F%E8%83%BD---linkedhashmap)
+	- [5. Refer Links](#5-refer-links)
 
 # Java 集合：Map 族 - TreeMap 实现类
 
 ## 1. SortedMap 接口
 
-## 2. TreeMap 实现类
+SortedMap 接口继承了 Map 接口，它提供了一些基于有序键的操作：
+```java
+/**
+ * 返回包含键值在 [fromKey, toKey) 范围内的 Map
+ */
+SortedMap<K,V> subMap(K fromKey, K toKey);
 
-### 2.1. 基本概念
+/**
+ * 返回包含键值在 (-∞, toKey) 范围内的 Map
+ */
+SortedMap<K,V> headMap(K toKey);();
 
-### 2.2. 常用 API
+/**
+ * 返回包含键值在 [fromKey, +∞) 范围内的 Map
+ */
+SortedMap<K,V> tailMap(K fromKey);
 
-树映射 [TreeMap](https://docs.oracle.com/javase/9/docs/api/java/util/TreeMap.html) 用键的整体顺序对元素进行排序，并将其组织成搜索树。比较函数只能作用于键。
+/**
+ * Returns the first (lowest) key currently in this map.
+ */
+K firstKey();
+
+/**
+ * RReturns the last (highest) key currently in this map.
+ */
+K lastKey();
+
+// ......
+```
+
+## 2. NavigableMap 接口
+
+NavigableMap 接口继承了 SortedMap 接口，它在 SortedMap 接口的基础上声明了一些列具有导航功能的方法，通过这些导航方法，我们可以快速定位到目标的 key 或 Entry：
+```java
+/**
+ * 返回红黑树中最小键所对应的 Entry
+ */
+Map.Entry<K,V> firstEntry();
+
+/**
+ * 返回最大的键 maxKey 所对应的键值对，且 maxKey 仅小于参数 key
+ */
+Map.Entry<K,V> lowerEntry(K key);
+
+/**
+ * 返回最大的键 maxKey，且 maxKey 仅小于参数 key
+ */
+K lowerKey(K key);
+
+/**
+ * 返回最小的键 minKey，且 minKey 仅大于参数 key
+ */
+K higherKey(K key);
+
+// ......
+```
+
+## 3. TreeMap 实现类
+
+### 3.1. 基本概念
+
+[TreeMap](https://docs.oracle.com/javase/9/docs/api/java/util/TreeMap.html) 最早出现在 JDK 1.2 中，是 Java 集合框架中比较重要一个的实现。TreeMap 底层基于红黑树实现，可保证在 log(n) 时间复杂度内完成 containsKey、get、put 和 remove 操作，效率很高。另一方面，由于 TreeMap 基于红黑树实现，这为 TreeMap 保持键的有序性打下了基础，它用键的整体顺序对元素进行排序，并将其组织成搜索树。
 
 若不需要排序，应选择 HashMap，避免用于排序的开销。
+
+TreeMap 中的元素必须是可比较的，即必须实现了 Comparable 接口，或者在构造集时提供一个 Comparator，否则会抛出一个异常。
+
+### 3.2. 自然排序 & 定制排序
+
+TreeMap 支持两种排序方法：自然排序和定制排序。默认情况下，TreeMap 采用自然排序。
+
+- 自然排序
+
+	TreeMap 的自然排序会调用集合元素的 compareTo() 方法来比较元素之间的大小关系，然后将集合元素按升序排列。
+
+- 定制排序
+
+	TreeMap 的定制排序需要在创建 TreeMap 对象时，提供一个 Comparator 对象与该 TreeMap 对象相关联，由该 Comparator 对象负责集合元素的排序逻辑。由于 Comparator 是一个函数式接口，因此可以使用 lambda 表达式来代替 Comparator 对象。
+
+### 3.3. 常用 API
 
 构造器
 - `TreeMap​()	`
@@ -27,22 +109,289 @@
 - `TreeMap​(SortedMap<K,? extends V> m)`
 
 常用 API
-- `Comparator<? super K>	comparator​()`
 
-  返回对键的比较器。如果键使用 Comparable 接口的 compareTo 方法进行比较，返回 null。
+与 HashMap 相比，TreeMap 还提供了以下方法：
+- `Comparator<? super K>	comparator​()`: 如果 TreeMap 采用定制排序，则此方法返回对键的比较器。如果键使用自然排序，即通过 Comparable 接口的 compareTo 方法进行比较，则此方法返回 null。
 
-- `K	firstKey​()`
+- `K	firstKey​()`: 返回映射中的最小元素。
 
-  返回映射中的最小元素。
-
-- `K	lastKey​()`
-
-  返回映射中的最大元素。
+- `K	lastKey​()`: 返回映射中的最大元素。
 
 - `Map.Entry<K,V>	firstEntry​()`
 
-### 2.3. 源码分析
+### 3.4. 源码分析
 
-## 3. Refer Links
+JDK 1.8 中的 TreeMap 源码有三千多行。
+
+#### 3.4.1. 类定义
+
+TreeMap 继承自 AbstractMap，并实现了 NavigableMap 接口。
+
+```java
+public class TreeMap<K,V>
+    extends AbstractMap<K,V>
+    implements NavigableMap<K,V>, Cloneable, java.io.Serializable
+```
+
+#### 3.4.2. 查找
+
+TreeMap 基于红黑树实现，而红黑树是一种自平衡二叉查找树，所以 TreeMap 的查找操作流程和二叉查找树一致。只不过在 TreeMap 中，节点（Entry）存储的是键值对<k,v>。在查找过程中，比较的是键的大小，返回的是值，如果没找到，则返回 null。TreeMap 中的查找方法是 get，具体实现在 getEntry 方法中，相关源码如下：
+
+```java
+public V get(Object key) {
+    Entry<K,V> p = getEntry(key);
+    return (p==null ? null : p.value);
+}
+
+final Entry<K,V> getEntry(Object key) {
+    // Offload comparator-based version for sake of performance
+    if (comparator != null)
+        return getEntryUsingComparator(key);
+    if (key == null)
+        throw new NullPointerException();
+    @SuppressWarnings("unchecked")
+        Comparable<? super K> k = (Comparable<? super K>) key;
+    Entry<K,V> p = root;
+    
+    // 查找操作的核心逻辑就在这个 while 循环里
+    while (p != null) {
+        int cmp = k.compareTo(p.key);
+        if (cmp < 0)
+            p = p.left;
+        else if (cmp > 0)
+            p = p.right;
+        else
+            return p;
+    }
+    return null;
+}
+```
+
+#### 3.4.3. 遍历
+
+TreeMap 有一个特性，即可以保证键的有序性，默认是正序。所以在遍历过程中，大家会发现 TreeMap 会从小到大输出键的值。那么，接下来就来分析一下 keySet 方法，以及在遍历 keySet 方法产生的集合时，TreeMap 是如何保证键的有序性的。相关代码如下：
+```java
+public Set<K> keySet() {
+    return navigableKeySet();
+}
+
+public NavigableSet<K> navigableKeySet() {
+    KeySet<K> nks = navigableKeySet;
+    return (nks != null) ? nks : (navigableKeySet = new KeySet<>(this));
+}
+
+static final class KeySet<E> extends AbstractSet<E> implements NavigableSet<E> {
+    private final NavigableMap<E, ?> m;
+    KeySet(NavigableMap<E,?> map) { m = map; }
+
+    public Iterator<E> iterator() {
+        if (m instanceof TreeMap)
+            return ((TreeMap<E,?>)m).keyIterator();
+        else
+            return ((TreeMap.NavigableSubMap<E,?>)m).keyIterator();
+    }
+
+    // 省略非关键代码
+}
+
+Iterator<K> keyIterator() {
+    return new KeyIterator(getFirstEntry());
+}
+
+final class KeyIterator extends PrivateEntryIterator<K> {
+    KeyIterator(Entry<K,V> first) {
+        super(first);
+    }
+    public K next() {
+        return nextEntry().key;
+    }
+}
+
+abstract class PrivateEntryIterator<T> implements Iterator<T> {
+    Entry<K,V> next;
+    Entry<K,V> lastReturned;
+    int expectedModCount;
+
+    PrivateEntryIterator(Entry<K,V> first) {
+        expectedModCount = modCount;
+        lastReturned = null;
+        next = first;
+    }
+
+    public final boolean hasNext() {
+        return next != null;
+    }
+
+    final Entry<K,V> nextEntry() {
+        Entry<K,V> e = next;
+        if (e == null)
+            throw new NoSuchElementException();
+        if (modCount != expectedModCount)
+            throw new ConcurrentModificationException();
+        // 寻找节点 e 的后继节点
+        next = successor(e);
+        lastReturned = e;
+        return e;
+    }
+
+    // 其他方法省略
+}
+```
+从上面源码可以看出 keySet 方法返回的是 KeySet 类的对象。这个类实现了 Iterable 接口，可以返回一个迭代器。该迭代器的具体实现是 KeyIterator，而 KeyIterator 类的核心逻辑是在 PrivateEntryIterator 中实现的。上面的代码虽多，但核心代码还是 KeySet 类和 PrivateEntryIterator 类的 nextEntry 方法。KeySet 类就是一个集合，这里不分析了。而 nextEntry 方法比较重要，下面简单分析一下。
+
+在初始化 KeyIterator 时，会将 TreeMap 中包含最小键的 Entry 传给 PrivateEntryIterator。当调用 nextEntry 方法时，通过调用 successor 方法找到当前 entry 的后继，并让 next 指向后继，最后返回当前的 entry。通过这种方式即可实现按正序返回键值的的逻辑。
+
+#### 3.4.4. 插入元素
+
+```java
+public V put(K key, V value) {
+    Entry<K,V> t = root;
+    // 1. 如果根节点为 null，将新节点设为根节点
+    if (t == null) {
+        compare(key, key);
+        root = new Entry<>(key, value, null);
+        size = 1;
+        modCount++;
+        return null;
+    }
+    int cmp;
+    Entry<K,V> parent;
+    // split comparator and comparable paths
+    Comparator<? super K> cpr = comparator;
+    if (cpr != null) {
+        // 2. 为 key 在红黑树找到合适的位置
+        do {
+            parent = t;
+            cmp = cpr.compare(key, t.key);
+            if (cmp < 0)
+                t = t.left;
+            else if (cmp > 0)
+                t = t.right;
+            else
+                return t.setValue(value);
+        } while (t != null);
+    } else {
+        // 与上面代码逻辑类似，省略
+    }
+    Entry<K,V> e = new Entry<>(key, value, parent);
+    // 3. 将新节点链入红黑树中
+    if (cmp < 0)
+        parent.left = e;
+    else
+        parent.right = e;
+    // 4. 插入新节点可能会破坏红黑树性质，这里修正一下
+    fixAfterInsertion(e);
+    size++;
+    modCount++;
+    return null;
+}
+```
+
+插入后的平衡调整 fixAfterInsertion() 方法：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/18/0998db93ad58a364f46d49edaee22db0.jpg)
+
+#### 3.4.5. 删除元素
+
+删除操作是红黑树最复杂的部分，原因是该操作可能会破坏红黑树性质 5（从任一节点到其每个叶子的所有简单路径都包含相同数目的黑色节点），修复性质 5 要比修复其他性质（性质 2 和 4 需修复，性质 1 和 3 不用修复）复杂的多。
+
+```java
+public V remove(Object key) {
+    Entry<K,V> p = getEntry(key);
+    if (p == null)
+        return null;
+
+    V oldValue = p.value;
+    deleteEntry(p);
+    return oldValue;
+}
+
+private void deleteEntry(Entry<K,V> p) {
+    modCount++;
+    size--;
+
+    /* 
+     * 1. 如果 p 有两个孩子节点，则找到后继节点，
+     * 并把后继节点的值复制到节点 P 中，并让 p 指向其后继节点
+     */
+    if (p.left != null && p.right != null) {
+        Entry<K,V> s = successor(p);
+        p.key = s.key;
+        p.value = s.value;
+        p = s;
+    } // p has 2 children
+
+    // Start fixup at replacement node, if it exists.
+    Entry<K,V> replacement = (p.left != null ? p.left : p.right);
+
+    if (replacement != null) {
+        /*
+         * 2. 将 replacement parent 引用指向新的父节点，
+         * 同时让新的父节点指向 replacement。
+         */ 
+        replacement.parent = p.parent;
+        if (p.parent == null)
+            root = replacement;
+        else if (p == p.parent.left)
+            p.parent.left  = replacement;
+        else
+            p.parent.right = replacement;
+
+        // Null out links so they are OK to use by fixAfterDeletion.
+        p.left = p.right = p.parent = null;
+
+        // 3. 如果删除的节点 p 是黑色节点，则需要进行调整
+        if (p.color == BLACK)
+            fixAfterDeletion(replacement);
+    } else if (p.parent == null) { // 删除的是根节点，且树中当前只有一个节点
+        root = null;
+    } else { // 删除的节点没有孩子节点
+        // p 是黑色，则需要进行调整
+        if (p.color == BLACK)
+            fixAfterDeletion(p);
+
+        // 将 P 从树中移除
+        if (p.parent != null) {
+            if (p == p.parent.left)
+                p.parent.left = null;
+            else if (p == p.parent.right)
+                p.parent.right = null;
+            p.parent = null;
+        }
+    }
+}
+```
+
+删除后的平衡调整 fixAfterDeletion () 方法：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/18/dea8f2e55cb857ed5b589931aff029ec.jpg)
+
+## 4. 与 HashMap、LinkedHashMap 的应用场景区别
+
+HashMap 有相对最好的时间效率，但不具有排序功能。
+
+LinkedHashMap 具有排序功能，且是根据元素的插入顺序进行排序的。
+
+TreeMap 具有排序功能，且是根据元素实际值的大小进行排序的。
+
+### 4.1. 需要基于排序的统计功能 - TreeMap
+
+由于 TreeMap 是基于红黑树的实现的排序 Map，对于增删改查以及统计的时间复杂度都控制在 O(logn) 的级别上，相对于 HashMap 和 LinkedHashMap 的统计操作的（最大的 key，最小的 key，大于某一个 key 的所有 Entry 等等) 时间复杂度 O(n) 具有更高的时间效率 O(logn)。
+
+因此，这种场景下更适合使用 TreeMap
+
+### 4.2. 需要快速增删改查的存储功能且不需要考虑顺序一致的因素 - HashMap
+
+相对于 HashMap 和 LinkedHashMap 这些 hash 表的时间复杂度 O(1)（不考虑冲突情况），TreeMap 的增删改查的时间复杂度为 O(logn) 就显得效率较低。而由于 LinkedHashMap 需要维护元素的插入顺序，因此性能略低于 HashMap。
+
+因此，这种场景下更适合使用 HashMap。
+
+### 4.3. 需要快速增删改查且需要保证遍历和插入顺序一致的存储功能 - LinkedHashMap
+
+HashMap 并不保证任何顺序性，而 LinkedHashMap 额外保证了 Map 的遍历顺序与 put 顺序一致的有序性。LinkedHashMap 可以避免对 HashMap/HashTable 中 Key-Value 进行排序，只要在插入时按顺序插入即可，同时又避免使用 TreeMap 所增加的成本。
+
+因此，这种场景下更适合使用 LinkedHashMap。
+
+## 5. Refer Links
 
 [TreeMap 源码分析](http://www.coolblog.xyz/2018/01/11/TreeMap%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/)
