@@ -122,8 +122,6 @@ ArrayDeque 底层基于**循环数组**（circular array）实现，也就是说
 
 ## 5. LinkedList 实现类
 
-见 [LinkedList](./Java_JCF-Collection 族 -List.md)
-
 ## 6. Refer Links
 
 [PriorityQueue 源码分析](https://www.jianshu.com/p/f79e4e2bd071)
