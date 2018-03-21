@@ -1,20 +1,20 @@
 - [Java JCF Arrays 工具类](#java-jcf-arrays-%E5%B7%A5%E5%85%B7%E7%B1%BB)
-  - [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-  - [2. 数组拷贝：asList()](#2-%E6%95%B0%E7%BB%84%E6%8B%B7%E8%B4%9D%EF%BC%9Aaslist)
-    - [2.1. 基本概念](#21-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2.2. 源码分析](#22-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-  - [3. 排序 sort()](#3-%E6%8E%92%E5%BA%8F-sort)
-    - [3.1. 基本概念](#31-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [3.2. 源码分析](#32-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-  - [4. 查找 binarySearch()](#4-%E6%9F%A5%E6%89%BE-binarysearch)
-    - [4.1. 基本概念](#41-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [4.2. 源码分析](#42-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-  - [5. 元素填充 fill()](#5-%E5%85%83%E7%B4%A0%E5%A1%AB%E5%85%85-fill)
-  - [6. 复制 copyOf()](#6-%E5%A4%8D%E5%88%B6-copyof)
-    - [6.1. 基本概念](#61-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [6.2. 源码分析](#62-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-  - [7. 元素交换](#7-%E5%85%83%E7%B4%A0%E4%BA%A4%E6%8D%A2)
-  - [8. Refer Links](#8-refer-links)
+	- [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+	- [2. 数组拷贝：asList()](#2-%E6%95%B0%E7%BB%84%E6%8B%B7%E8%B4%9D%EF%BC%9Aaslist)
+		- [2.1. 基本概念](#21-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [2.2. 源码分析](#22-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+	- [3. 排序 sort()](#3-%E6%8E%92%E5%BA%8F-sort)
+		- [3.1. 基本概念](#31-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [3.2. 源码分析](#32-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+	- [4. 查找 binarySearch()](#4-%E6%9F%A5%E6%89%BE-binarysearch)
+		- [4.1. 基本概念](#41-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [4.2. 源码分析](#42-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+	- [5. 元素填充 fill()](#5-%E5%85%83%E7%B4%A0%E5%A1%AB%E5%85%85-fill)
+	- [6. 复制 copyOf()](#6-%E5%A4%8D%E5%88%B6-copyof)
+		- [6.1. 基本概念](#61-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [6.2. 源码分析](#62-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
+	- [7. 元素交换](#7-%E5%85%83%E7%B4%A0%E4%BA%A4%E6%8D%A2)
+	- [8. Refer Links](#8-refer-links)
 
 # Java JCF Arrays 工具类
 
@@ -215,7 +215,7 @@ Arrays.sort() 主要使用了 2 种排序方法：快速排序、优化的归并
   ```java
   // 对数组排序
   public static void sort(int[] a) {
-      // 直接调用双路快排
+      // 直接调用双基准快排
       DualPivotQuicksort.sort(a, 0, a.length - 1, null, 0, 0);
   }
 
@@ -223,7 +223,7 @@ Arrays.sort() 主要使用了 2 种排序方法：快速排序、优化的归并
   public static void sort(int[] a, int fromIndex, int toIndex) {
       // 检测参数是否越界
       rangeCheck(a.length, fromIndex, toIndex);
-      // 调用双路快排
+      // 调用双基准快排
       DualPivotQuicksort.sort(a, fromIndex, toIndex - 1, null, 0, 0);
   }
   ```
@@ -326,6 +326,7 @@ Arrays.sort() 主要使用了 2 种排序方法：快速排序、优化的归并
   // 进行多线程排序的数组最小长度 2^13
   public static final int MIN_ARRAY_SORT_GRAN = 1 << 13;
 
+	// 使用fork-Join框架，充分利用多核，对大的集合进行切分然后再归并排序
   public static void parallelSort(int[] a) {
       int n = a.length, p, g;
       if (n <= MIN_ARRAY_SORT_GRAN ||
