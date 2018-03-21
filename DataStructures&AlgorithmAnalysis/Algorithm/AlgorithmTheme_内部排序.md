@@ -1,25 +1,25 @@
 - [内部排序](#%E5%86%85%E9%83%A8%E6%8E%92%E5%BA%8F)
-    - [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2. 比较排序](#2-%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F)
-        - [2.1. 插入排序](#21-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
-            - [2.1.1. 直接插入排序 (Straight insertion Sort)](#211-%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F-straight-insertion-sort)
-            - [2.1.2. 希尔排序 (Shell Sort)](#212-%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F-shell-sort)
-        - [2.2. 选择排序](#22-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F)
-            - [2.2.1. 直接选择排序 （Straight Selection Sort）](#221-%E7%9B%B4%E6%8E%A5%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F-%EF%BC%88straight-selection-sort%EF%BC%89)
-            - [2.2.2. 堆排序 (Heap Sort)](#222-%E5%A0%86%E6%8E%92%E5%BA%8F-heap-sort)
-        - [2.3. 交换排序](#23-%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F)
-            - [2.3.1. 冒泡排序 (Bubble Sort)](#231-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F-bubble-sort)
-            - [2.3.2. 快速排序 (Quick Sort)](#232-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-quick-sort)
-                - [2.3.2.1. 针对短序列的优化：直接使用插入排序](#2321-%E9%92%88%E5%AF%B9%E7%9F%AD%E5%BA%8F%E5%88%97%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
-                - [2.3.2.2. 针对基本有序序列的优化：随机化基准](#2322-%E9%92%88%E5%AF%B9%E5%9F%BA%E6%9C%AC%E6%9C%89%E5%BA%8F%E5%BA%8F%E5%88%97%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E9%9A%8F%E6%9C%BA%E5%8C%96%E5%9F%BA%E5%87%86)
-                - [2.3.2.3. 针对重复元素的优化：三路快排](#2323-%E9%92%88%E5%AF%B9%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E4%B8%89%E8%B7%AF%E5%BF%AB%E6%8E%92)
-        - [2.4. （二路）归并排序 (Merge Sort)](#24-%EF%BC%88%E4%BA%8C%E8%B7%AF%EF%BC%89%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F-merge-sort)
-    - [3. 非比较排序 / 分布排序](#3-%E9%9D%9E%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F-%E5%88%86%E5%B8%83%E6%8E%92%E5%BA%8F)
-        - [3.1. 桶排序](#31-%E6%A1%B6%E6%8E%92%E5%BA%8F)
-        - [3.2. 计数排序](#32-%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F)
-        - [3.3. 基数排序](#33-%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F)
-    - [4. 综合比较](#4-%E7%BB%BC%E5%90%88%E6%AF%94%E8%BE%83)
-    - [5. Refer Links](#5-refer-links)
+	- [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+	- [2. 比较排序](#2-%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F)
+		- [2.1. 插入排序](#21-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
+			- [2.1.1. 直接插入排序 (Straight insertion Sort)](#211-%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F-straight-insertion-sort)
+			- [2.1.2. 希尔排序 (Shell Sort)](#212-%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F-shell-sort)
+		- [2.2. 选择排序](#22-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F)
+			- [2.2.1. 直接选择排序 （Straight Selection Sort）](#221-%E7%9B%B4%E6%8E%A5%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F-%EF%BC%88straight-selection-sort%EF%BC%89)
+			- [2.2.2. 堆排序 (Heap Sort)](#222-%E5%A0%86%E6%8E%92%E5%BA%8F-heap-sort)
+		- [2.3. 交换排序](#23-%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F)
+			- [2.3.1. 冒泡排序 (Bubble Sort)](#231-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F-bubble-sort)
+			- [2.3.2. 快速排序 (Quick Sort)](#232-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-quick-sort)
+				- [2.3.2.1. 针对短序列的优化：直接使用插入排序](#2321-%E9%92%88%E5%AF%B9%E7%9F%AD%E5%BA%8F%E5%88%97%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
+				- [2.3.2.2. 针对基本有序序列的优化：随机化基准](#2322-%E9%92%88%E5%AF%B9%E5%9F%BA%E6%9C%AC%E6%9C%89%E5%BA%8F%E5%BA%8F%E5%88%97%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E9%9A%8F%E6%9C%BA%E5%8C%96%E5%9F%BA%E5%87%86)
+				- [2.3.2.3. 针对重复元素的优化：三路快排](#2323-%E9%92%88%E5%AF%B9%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E4%B8%89%E8%B7%AF%E5%BF%AB%E6%8E%92)
+		- [2.4. （二路）归并排序 (Merge Sort)](#24-%EF%BC%88%E4%BA%8C%E8%B7%AF%EF%BC%89%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F-merge-sort)
+	- [3. 非比较排序 / 分布排序](#3-%E9%9D%9E%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F-%E5%88%86%E5%B8%83%E6%8E%92%E5%BA%8F)
+		- [3.1. 桶排序](#31-%E6%A1%B6%E6%8E%92%E5%BA%8F)
+		- [3.2. 计数排序](#32-%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F)
+		- [3.3. 基数排序](#33-%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F)
+	- [4. 综合比较](#4-%E7%BB%BC%E5%90%88%E6%AF%94%E8%BE%83)
+	- [5. Refer Links](#5-refer-links)
 # 内部排序
 
 排序是数据处理过程中常用的一种运算，如何进行高效率的排序是计算机软件理论研究的重要课题之一。
@@ -592,6 +592,39 @@ http://www.acmerblog.com/bucket-sort-4884.html
   设待排序元素的个数为 n，则：
   - 当 n 较大，则应采用时间复杂度为 O(nlogn) 的排序方法：快速排序、堆排序或归并排序。
   - 当 n 较小，可采用直接插入或直接选择排序。
+
+	P.S.
+
+	在 Java 的 java.util.DualPivotQuicksort 类中，定义了以下排序算法转换的阈值：
+	```java
+	/**
+		* If the length of an array to be sorted is less than this
+		* constant, Quicksort is used in preference to merge sort.
+		*/
+	private static final int QUICKSORT_THRESHOLD = 286;
+
+	/**
+		* If the length of an array to be sorted is less than this
+		* constant, insertion sort is used in preference to Quicksort.
+		*/
+	private static final int INSERTION_SORT_THRESHOLD = 47;
+
+	/**
+		* If the length of a byte array to be sorted is greater than this
+		* constant, counting sort is used in preference to insertion sort.
+		*/
+	private static final int COUNTING_SORT_THRESHOLD_FOR_BYTE = 29;
+
+	/**
+		* If the length of a short or char array to be sorted is greater
+		* than this constant, counting sort is used in preference to Quicksort.
+		*/
+	private static final int COUNTING_SORT_THRESHOLD_FOR_SHORT_OR_CHAR = 3200;
+	```
+	- 当待排序元素的个数小于 47 时，插入排序比快速排序更加高效。
+	- 当待排序元素的个数小于 286 时，快速排序比归并排序更加高效。
+	- 对 byte 类型的数组而言，当待排序元素的个数大于 29 时，计数排序比插入排序更加高效。
+	- 对 short 类型的数组而言，当待排序元素的个数大于 3200 时，计数排序比快速排序更加高效。
 
 ## 5. Refer Links
 
