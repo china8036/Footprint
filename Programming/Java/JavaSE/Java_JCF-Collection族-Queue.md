@@ -18,6 +18,8 @@
 
 # Java 集合：Collection 族 - Queue
 
+![image](/resources/images/queue-api-class-diagram.png)
+
 ## 1. Queue 接口
 
 ### 1.1. 基本概念

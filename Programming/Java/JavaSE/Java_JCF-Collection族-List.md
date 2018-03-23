@@ -63,6 +63,8 @@
   
 # Java 集合：Collection 族 - List
 
+![image](/resources/images/list-api-class-diagram.png)
+
 ## 1. List 接口
 
 ### 1.1. 基本概念

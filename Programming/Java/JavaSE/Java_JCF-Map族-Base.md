@@ -1,9 +1,11 @@
 - [Java 集合：Map 族 - 概述](#java-%E9%9B%86%E5%90%88%EF%BC%9Amap-%E6%97%8F---%E6%A6%82%E8%BF%B0)
-    - [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2. 常用 API](#2-%E5%B8%B8%E7%94%A8-api)
-    - [3. Refer Links](#3-refer-links)
+  - [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+  - [2. 常用 API](#2-%E5%B8%B8%E7%94%A8-api)
+  - [3. Refer Links](#3-refer-links)
 
 # Java 集合：Map 族 - 概述
+
+![image](/resources/images/map-api-class-diagram.png)
 
 ## 1. 基本概念
 
