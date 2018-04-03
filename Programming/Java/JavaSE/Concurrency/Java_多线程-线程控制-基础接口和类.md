@@ -65,6 +65,9 @@ NOTE：
 - 不要调用 Thread 类或 Runnable 接口中的 run 方法，直接调用该方法只会执行同一个线程中的任务，而不会启动新线程。只有调用 start 方法，才会创建一个执行 run 方法的新线程。
 - 当 Java 程序开始允许后，程序至少会创建一个主线程，主线程的执行体不是由 run() 方法确定的，而是由 main() 方法确定的。
 - 默认情况下，主线程的 name 为 main，其它线程的 name 依次为 thread-0、thread-1...thread-n 等。
+- [Q](https://www.zhihu.com/question/53459084): 对于多核 CPU java 中 Thread.currentThread() 指的是哪个核上的线程？
+
+	Thread.currentThread() 返回的是代表当前 Java 线程的 java.lang.Thread 对象的引用。而所谓“当前线程”只跟调用 Thread.currentThread() 的方法在哪个线程上执行有关系。JVM 线程与内核态线程并不是直接映射的关系，因此这跟单核多核没有任何关系。
 
 ### 2.2. 实现分析
 
