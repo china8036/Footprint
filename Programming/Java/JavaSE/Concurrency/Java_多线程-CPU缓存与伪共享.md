@@ -1,17 +1,17 @@
 - [Java 多线程 - CPU 缓存与伪共享](#java-%E5%A4%9A%E7%BA%BF%E7%A8%8B---cpu-%E7%BC%93%E5%AD%98%E4%B8%8E%E4%BC%AA%E5%85%B1%E4%BA%AB)
-  - [1. CPU 缓存](#1-cpu-%E7%BC%93%E5%AD%98)
-    - [1.1. 基本概念](#11-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [1.2. 多级缓存](#12-%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98)
-  - [2. MESI 协议及 RFO 请求](#2-mesi-%E5%8D%8F%E8%AE%AE%E5%8F%8A-rfo-%E8%AF%B7%E6%B1%82)
-    - [2.1. 跨核访问](#21-%E8%B7%A8%E6%A0%B8%E8%AE%BF%E9%97%AE)
-    - [2.2. MESI 协议](#22-mesi-%E5%8D%8F%E8%AE%AE)
-  - [3. 缓存行](#3-%E7%BC%93%E5%AD%98%E8%A1%8C)
-  - [4. 伪共享](#4-%E4%BC%AA%E5%85%B1%E4%BA%AB)
-    - [4.1. 基本概念](#41-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [4.2. 实例分析](#42-%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90)
-    - [4.3. 避免方案](#43-%E9%81%BF%E5%85%8D%E6%96%B9%E6%A1%88)
-    - [4.4. 实际开发](#44-%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91)
-  - [5. Refer Links](#5-refer-links)
+	- [1. CPU 缓存](#1-cpu-%E7%BC%93%E5%AD%98)
+		- [1.1. 基本概念](#11-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [1.2. 多级缓存](#12-%E5%A4%9A%E7%BA%A7%E7%BC%93%E5%AD%98)
+	- [2. MESI 协议及 RFO 请求](#2-mesi-%E5%8D%8F%E8%AE%AE%E5%8F%8A-rfo-%E8%AF%B7%E6%B1%82)
+		- [2.1. 跨核访问](#21-%E8%B7%A8%E6%A0%B8%E8%AE%BF%E9%97%AE)
+		- [2.2. MESI 协议](#22-mesi-%E5%8D%8F%E8%AE%AE)
+	- [3. 缓存行](#3-%E7%BC%93%E5%AD%98%E8%A1%8C)
+	- [4. 伪共享](#4-%E4%BC%AA%E5%85%B1%E4%BA%AB)
+		- [4.1. 基本概念](#41-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+		- [4.2. 实例分析](#42-%E5%AE%9E%E4%BE%8B%E5%88%86%E6%9E%90)
+		- [4.3. 避免方案](#43-%E9%81%BF%E5%85%8D%E6%96%B9%E6%A1%88)
+		- [4.4. 实际开发](#44-%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91)
+	- [5. Refer Links](#5-refer-links)
 
 # Java 多线程 - CPU 缓存与伪共享
 
@@ -160,6 +160,133 @@ public class FalseShareTest implements Runnable {
 
 - 使用编译指示：强制使每一个变量对齐
 
+- 使用`@sun.misc.Contended`注解
+
+  在 Java 8 中，提供了 @sun.misc.Contended 注解来避免伪共享，原理是在使用此注解的对象或字段的前后各增加 128 字节大小的 padding，使用 2 倍于大多数硬件缓存行的大小来避免相邻扇区预取导致的伪共享冲突。参考[这里](https://link.jianshu.com/?t=http://mail.openjdk.java.net/pipermail/hotspot-dev/2012-November/007309.html)。
+
+	e.g.
+
+	```java
+	public class FalseSharing implements Runnable {
+
+			public final static int NUM_THREADS = 4; // change
+			public final static long ITERATIONS = 500L * 1000L * 1000L;
+			private final int arrayIndex;
+
+			private static VolatileLong[] longs = new VolatileLong[NUM_THREADS];
+			// private static VolatileLong2[] longs = new VolatileLong2[NUM_THREADS];
+			// private static VolatileLong3[] longs = new VolatileLong3[NUM_THREADS];
+
+			static {
+					for (int i = 0; i < longs.length; i++) {
+							longs[i] = new VolatileLong();
+					}
+			}
+
+			public FalseSharing(final int arrayIndex) {
+					this.arrayIndex = arrayIndex;
+			}
+
+			public static void main(final String[] args) throws Exception {
+					long start = System.nanoTime();
+					runTest();
+					System.out.println("duration = " + (System.nanoTime() - start));
+			}
+
+			private static void runTest() throws InterruptedException {
+					Thread[] threads = new Thread[NUM_THREADS];
+
+					for (int i = 0; i < threads.length; i++) {
+							threads[i] = new Thread(new FalseSharing(i));
+					}
+
+					for (Thread t : threads) {
+							t.start();
+					}
+
+					for (Thread t : threads) {
+							t.join();
+					}
+			}
+
+			public void run() {
+					long i = ITERATIONS + 1;
+					while (0 != --i) {
+							longs[arrayIndex].value = i;
+					}
+			}
+
+			public final static class VolatileLong {
+					public volatile long value = 0L;
+			}
+
+			// long padding 避免 false sharing
+			// 按理说 jdk7 以后 long padding 应该被优化掉了，但是从测试结果看 padding 仍然起作用
+			public final static class VolatileLong2 {
+					volatile long p0, p1, p2, p3, p4, p5, p6;
+					public volatile long value = 0L;
+					volatile long q0, q1, q2, q3, q4, q5, q6;
+			}
+
+			/**
+			* jdk8 新特性，@sun.misc.Contended 注解避免 false sharing
+			* Restricted on user classpath
+			* Unlock: -XX:-RestrictContended
+			*/
+			@sun.misc.Contended
+			public final static class VolatileLong3 {
+					public volatile long value = 0L;
+			}
+	}
+	```
+	`@sun.misc.Contended`注解还可以指定某个字段，并且可以为字段进行分组。
+
+	```java
+	/**
+	* VM Options: 
+	* -javaagent:/Users/sangjian/dev/source-files/classmexer-0_03/classmexer.jar
+	* -XX:-RestrictContended
+	*/
+	public class ContendedTest {
+
+			byte a;
+			@sun.misc.Contended("a")
+			long b;
+			@sun.misc.Contended("a")
+			long c;
+			int d;
+
+			private static Unsafe UNSAFE;
+
+			static {
+					try {
+							Field f = Unsafe.class.getDeclaredField("theUnsafe");
+							f.setAccessible(true);
+							UNSAFE = (Unsafe) f.get(null);
+					} catch (NoSuchFieldException e) {
+							e.printStackTrace();
+					} catch (IllegalAccessException e) {
+							e.printStackTrace();
+					}
+			}
+
+			public static void main(String[] args) throws NoSuchFieldException {
+					System.out.println("offset-a: " + UNSAFE.objectFieldOffset(ContendedTest.class.getDeclaredField("a")));
+					System.out.println("offset-b: " + UNSAFE.objectFieldOffset(ContendedTest.class.getDeclaredField("b")));
+					System.out.println("offset-c: " + UNSAFE.objectFieldOffset(ContendedTest.class.getDeclaredField("c")));
+					System.out.println("offset-d: " + UNSAFE.objectFieldOffset(ContendedTest.class.getDeclaredField("d")));
+
+					ContendedTest contendedTest = new ContendedTest();
+
+					// 打印对象的 shallow size
+					System.out.println("Shallow Size: " + MemoryUtil.memoryUsageOf(contendedTest) + " bytes");
+					// 打印对象的 retained size
+					System.out.println("Retained Size: " + MemoryUtil.deepMemoryUsageOf(contendedTest) + " bytes");
+			}
+
+	}
+	```
+
 ### 4.4. 实际开发
 
 伪共享是很隐蔽的，我们暂时无法从系统层面上通过工具来探测伪共享事件。其次，不同类型的计算机具有不同的微架构（如 32 位系统和 64 位系统的 java 对象所占自己数就不一样），如果设计到跨平台的设计，那就更难以把握了，一个确切的填充方案只适用于一个特定的操作系统。还有，缓存的资源是有限的，如果填充会浪费珍贵的 cache 资源，并不适合大范围应用。
@@ -171,3 +298,5 @@ public class FalseShareTest implements Runnable {
 [伪共享（false sharing），并发编程无声的性能杀手](https://www.cnblogs.com/cyfonly/p/5800758.html)
 
 [CPU 缓存与伪共享](http://geek.csdn.net/news/detail/114619)
+
+[Java8 使用 @sun.misc.Contended 避免伪共享](https://www.jianshu.com/p/c3c108c3dcfd)
