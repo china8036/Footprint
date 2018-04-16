@@ -103,7 +103,7 @@
 
 ## 4. 二分查找
 
-**二分查找适用于顺序存储的有序表**。
+二分查找的思想在 1946 年就被提出，但第一个没有 bug 的二分查找实现到 1962 年才出现。**二分查找适用于顺序存储的有序表**。
 
 - 算法流程
   
@@ -113,6 +113,7 @@
 
   ```cpp
   // 二分查找（折半查找），非递归实现
+  // 如果找到 value, 返回相应的索引 index；如果没有找到 value, 返回 -1
   int BinarySearch(int a[], int value, int n)
   {
       int low, high, mid;
@@ -120,7 +121,8 @@
       high = n-1;
       while(low<=high)
       {
-          mid = (low+high)/2;
+          //int mid = (l + r)/2; // 这种写法若 l 和 r 刚好是 int 的最大值，会导致程序溢出
+          int mid = l + (r-l)/2; // 使用减法代替加法，从而防止极端情况下的整形溢出
           if(a[mid]==value)
               return mid;
           if(a[mid]>value)
@@ -134,9 +136,13 @@
 
   ```cpp
   // 二分查找，递归实现
+  // 如果找到 value, 返回相应的索引 index；如果没有找到 value, 返回 -1
   int BinarySearch(int a[], int value, int low, int high)
   {
-      int mid = low+(high-low)/2;
+      if (low > high)
+          return -1;
+      //int mid = (l + r)/2; // 这种写法若 l 和 r 刚好是 int 的最大值，会导致程序溢出
+      int mid = l + (r-l)/2; // 使用减法代替加法，从而防止极端情况下的整形溢出
       if(a[mid]==value)
           return mid;
       if(a[mid]>value)
@@ -148,7 +154,7 @@
 
 - 时间复杂度分析
 
-  最坏情况下，关键词比较次数为 log2(n+1)，且期望时间复杂度为 O(logn)。
+  最坏情况下，关键词比较次数为 log(n+1)，时间复杂度的期望值为 O(logn)。
 
 - 特点
 
@@ -157,6 +163,63 @@
 - [相关题目](https://www.nowcoder.com/questionTerminal/468dafd5578047fb993d9b5db35f3ea4)
   - 二分查找只能用于数组。（×）
   - 二分查找只能用于顺序结构。（√）（链式结构需借助跳转表才能实现二分查找）
+
+- 利用二分查找的思想，实现 floor() 和 ceil() 函数
+  ```cpp
+  // 二分查找法，在有序数组 arr 中，查找 target
+  // 如果找到 target, 返回第一个 target 相应的索引 index
+  // 如果没有找到 target, 返回比 target 小的最大值相应的索引，如果这个最大值有多个，返回最大索引
+  // 如果这个 target 比整个数组的最小元素值还要小，则不存在这个 target 的 floor 值，返回 -1
+  template<typename T>
+  int floor(T arr[], int n, T target){
+      assert( n >= 0 );
+
+      // 寻找比 target 小的最大索引
+      int l = -1, r = n-1;
+      while( l < r ){
+          // 使用向上取整避免死循环
+          int mid = l + (r-l+1)/2;
+          if( arr[mid] >= target )
+              r = mid - 1;
+          else
+              l = mid;
+      }
+      assert( l == r );
+      // 如果该索引 +1 就是 target 本身，该索引 +1 即为返回值
+      if( l + 1 < n && arr[l+1] == target )
+          return l + 1;
+
+      // 否则，该索引即为返回值
+      return l;
+  }
+
+  // 二分查找法，在有序数组 arr 中，查找 target
+  // 如果找到 target, 返回最后一个 target 相应的索引 index
+  // 如果没有找到 target, 返回比 target 大的最小值相应的索引，如果这个最小值有多个，返回最小的索引
+  // 如果这个 target 比整个数组的最大元素值还要大，则不存在这个 target 的 ceil 值，返回整个数组元素个数 n
+  template<typename T>
+  int ceil(T arr[], int n, T target){
+      assert( n >= 0 );
+
+      // 寻找比 target 大的最小索引值
+      int l = 0, r = n;
+      while( l < r ){
+          // 使用普通的向下取整即可避免死循环
+          int mid = l + (r-l)/2;
+          if( arr[mid] <= target )
+              l = mid + 1;
+          else // arr[mid] > target
+              r = mid;
+      }
+      assert( l == r );
+      // 如果该索引 -1 就是 target 本身，该索引 +1 即为返回值
+      if( r - 1 >= 0 && arr[r-1] == target )
+          return r-1;
+
+      // 否则，该索引即为返回值
+      return r;
+  }
+  ```
 
 ## 5. 插值查找
 
@@ -181,6 +244,8 @@
   // 插值查找，递归实现
   int InsertionSearch(int a[], int value, int low, int high)
   {
+      if (low > high)
+          return -1;
       int mid = low+(value-a[low])/(a[high]-a[low])*(high-low);
       if(a[mid]==value)
           return mid;
@@ -213,7 +278,7 @@
 
 - 代码实现
   ```cpp
-  // 斐波那契查找。cpp 
+  // 斐波那契查找
   #include "stdafx.h"
   #include <memory>
   #include  <iostream>
@@ -230,8 +295,9 @@
           F[i]=F[i-1]+F[i-2];
   }
 
-  /*定义斐波那契查找法*/  
-  int FibonacciSearch(int *a, int n, int key)  //a 为要查找的数组，n 为要查找的数组长度，key 为要查找的关键字
+  // 定义斐波那契查找法
+  // a 为要查找的数组，n 为要查找的数组长度，key 为要查找的关键字
+  int FibonacciSearch(int *a, int n, int key)  
   {
     int low=0;
     int high=n-1;
@@ -248,28 +314,28 @@
     memcpy(temp,a,n*sizeof(int));
 
     for(int i=n;i<F[k]-1;++i)
-      temp[i]=a[n-1];
+        temp[i]=a[n-1];
     
     while(low<=high)
     {
-      int mid=low+F[k-1]-1;
-      if(key<temp[mid])
-      {
-        high=mid-1;
-        k-=1;
-      }
-      else if(key>temp[mid])
-      {
-      low=mid+1;
-      k-=2;
-      }
-      else
-      {
-        if(mid<n)
-            return mid; // 若相等则说明 mid 即为查找到的位置
-        else
-            return n-1; // 若 mid>=n 则说明是扩展的数值，返回 n-1
-      }
+        int mid=low+F[k-1]-1;
+        if(key<temp[mid])
+        {
+            high=mid-1;
+            k-=1;
+        } 
+        else if(key>temp[mid]) 
+        {
+            low=mid+1;
+            k-=2;
+        } 
+        else 
+        {
+            if(mid<n)
+                return mid; // 若相等则说明 mid 即为查找到的位置
+            else
+                return n-1; // 若 mid>=n 则说明是扩展的数值，返回 n-1
+        }
     }  
     delete [] temp;
     return -1;

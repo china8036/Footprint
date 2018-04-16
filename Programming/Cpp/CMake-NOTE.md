@@ -1,17 +1,13 @@
 - [CMake](#cmake)
-  - [获取CMake](#%E8%8E%B7%E5%8F%96cmake)
-  - [Refer Links](#refer-links)
+  - [1. 获取 CMake](#1-%E8%8E%B7%E5%8F%96-cmake)
+  - [2. Refer Links](#2-refer-links)
 
 # CMake 
 
-## 获取CMake
+## 1. 获取 CMake
 
 https://cmake.org/download/
 
-
-
-
-## Refer Links
+## 2. Refer Links
 
 http://www.hahack.com/codes/cmake/
-
