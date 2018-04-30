@@ -1,19 +1,19 @@
-- [Java 集合：Collection 族 - Queue](#java-%E9%9B%86%E5%90%88%EF%BC%9Acollection-%E6%97%8F---queue)
-  - [1. Queue 接口](#1-queue-%E6%8E%A5%E5%8F%A3)
-    - [1.1. 基本概念](#11-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [1.2. 常用 API](#12-%E5%B8%B8%E7%94%A8-api)
-  - [2. PriorityQueue 实现类](#2-priorityqueue-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-    - [2.1. 基本概念](#21-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2.2. 存储结构](#22-%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84)
-    - [2.3. 常用 API](#23-%E5%B8%B8%E7%94%A8-api)
-  - [3. Deque 扩展接口](#3-deque-%E6%89%A9%E5%B1%95%E6%8E%A5%E5%8F%A3)
-    - [3.1. 基本概念](#31-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [3.2. 常用 API](#32-%E5%B8%B8%E7%94%A8-api)
-  - [4. ArrayDeque 实现类](#4-arraydeque-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-    - [4.1. 基本概念](#41-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [4.2. 存储结构](#42-%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84)
-    - [4.3. 常用 API](#43-%E5%B8%B8%E7%94%A8-api)
-  - [5. LinkedList 实现类](#5-linkedlist-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
+- [Java 集合：Collection 族 - Queue](#java-collection----queue)
+  - [1. Queue 接口](#1-queue)
+    - [1.1. 基本概念](#11)
+    - [1.2. 常用 API](#12--api)
+  - [2. PriorityQueue 实现类](#2-priorityqueue)
+    - [2.1. 基本概念](#21)
+    - [2.2. 存储结构](#22)
+    - [2.3. 常用 API](#23--api)
+  - [3. Deque 扩展接口](#3-deque)
+    - [3.1. 基本概念](#31)
+    - [3.2. 常用 API](#32--api)
+  - [4. ArrayDeque 实现类](#4-arraydeque)
+    - [4.1. 基本概念](#41)
+    - [4.2. 存储结构](#42)
+    - [4.3. 常用 API](#43--api)
+  - [5. LinkedList 实现类](#5-linkedlist)
   - [6. Refer Links](#6-refer-links)
 
 # Java 集合：Collection 族 - Queue
@@ -101,7 +101,11 @@ Java 为 Deque 接口提供了两个实现类：基于数组实现的 ArrayDeque
 
 ### 4.1. 基本概念
 
-[ArrayDeque](https://docs.oracle.com/javase/9/docs/api/java/util/ArrayDeque.html) 是 Deque 接口的实现类。作为栈来使用时，效率要高于 Stack；作为队列使用时，效率相较于基于双向链表的 LinkedList 也要更好一些。因此，**官方推荐使用 ArrayDeque 作为栈与队列的实现类**。
+[ArrayDeque](https://docs.oracle.com/javase/9/docs/api/java/util/ArrayDeque.html) 是 Deque 接口的实现类。
+
+> This class is likely to be faster than Stack when used as a stack, and faster than LinkedList when used as a queue.
+
+**官方推荐使用 ArrayDeque 作为栈与队列的实现类**。作为栈来使用时，效率要高于 Stack；作为队列使用时，效率相较于基于双向链表的 LinkedList 也要更好一些。
 
 ArrayDeque 是非线程安全的。
 
@@ -120,6 +124,7 @@ ArrayDeque 底层基于**循环数组**（circular array）实现，也就是说
 - 构造器
   - `ArrayDeque​()`
   - `ArrayDeque​(int numElements)`：用给定的初始容量构造一个无限双端队列。
+  - `ArrayDeque​(Collection<? extends E> c)	`: 使用指定集合构造一个无限双端队列。
 - ArrayDeque 的其它 API 与 Deque 接口的 API 基本相同。
 
 ## 5. LinkedList 实现类

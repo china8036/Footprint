@@ -1,9 +1,10 @@
-- [Java 集合：概述](#java-%E9%9B%86%E5%90%88%EF%BC%9A%E6%A6%82%E8%BF%B0)
-  - [1. 设计思想](#1-%E8%AE%BE%E8%AE%A1%E6%80%9D%E6%83%B3)
-  - [2. 类谱图](#2-%E7%B1%BB%E8%B0%B1%E5%9B%BE)
-  - [3. 其它](#3-%E5%85%B6%E5%AE%83)
-    - [3.1. 元素都是对象](#31-%E5%85%83%E7%B4%A0%E9%83%BD%E6%98%AF%E5%AF%B9%E8%B1%A1)
-    - [3.2. 快速失败机制](#32-%E5%BF%AB%E9%80%9F%E5%A4%B1%E8%B4%A5%E6%9C%BA%E5%88%B6)
+- [Java 集合：概述](#java)
+  - [1. 设计思想](#1)
+  - [2. 类谱图](#2)
+  - [3. 其它](#3)
+    - [3.1. 元素都是对象](#31)
+    - [3.2. API 对比](#32-api)
+    - [3.3. 快速失败机制](#33)
   - [4. Refer Links](#4-refer-links)
 
 # Java 集合：概述
@@ -37,11 +38,77 @@ Java 集合框架中有两个基本接口：Collection 和 Map。
 
 集合类与数组不同，数组的元素既可以是基本类型的值，也可以是对象的引用；而集合中只能保存对象的引用，不能保存基本数据类型的值。
 
-### 3.2. 快速失败机制
+### 3.2. API 对比
+
+- 统一 API
+
+  - JCF 中的所有类都支持以下两个构造器：
+    - `X()`: 空构造器，构造一个空的集合。
+    - `X(Collection<? extends E> c)`: 使用指定集合构造一个新的集合。
+  
+  - `int size()`: 返回集合元素数量。
+  
+  - `boolean isEmpty()`: 返回集合是否为空。
+
+  - `Object clone​()`: 返回集合对象的复制。
+
+  - Collection 统一 API( 定义在 AbstractCollection 中 ):
+    - `boolean contains(Object o)`:
+    - `Object[] toArray()`:
+    - `boolean add(E e)`:
+    - `boolean addAll(Collection<? extends E> c)`:
+    - `boolean remove(Object o)`: 
+    - `boolean removeAll(Collection<?> c)`: 
+  
+  - Map 统一 API( 定义在 AbstractMap 中 ):
+    - `V get(Object key)`: 
+    - `V put(K key, V value)`: 
+    - `void putAll(Map<? extends K, ? extends V> m)`:
+    - `V remove(Object key)`:
+    - `boolean containsValue(Object value)`: 
+    - `boolean containsKey(Object key)`: 
+
+- 特有 API
+  
+  - 栈结构
+    - 基于双向链表实现：LinkedList
+    - 基于循环数组实现：ArrayDeque
+      - `void push(E e)`/`void addFirst(E e)`: 将指定元素压入栈。
+      - `E pop()`/`E removeFirst()`: 返回栈顶元素，并将栈顶元素移除。栈为空时抛出 NoSuchElementException 异常。
+      - `E element()`/`E getFirst()`: 返回栈顶元素但不移除。栈为空时抛出 NoSuchElementException 异常。
+
+  - 队列结构
+    - 基于双向链表实现：LinkedList
+    - 基于循环数组实现：ArrayDeque
+      - `boolean add(E e)`/`void addLast(E e)`: 将指定元素加入队列尾部。
+      - `E remove()`/`E removeFirst()`: 返回队列头部元素，并将队列头部元素移除。队列为空时抛出 NoSuchElementException 异常。
+      - `E element()`/`E getFirst()`: 返回队列头部元素但不移除。队列为空时抛出 NoSuchElementException 异常。
+
+  - 优先队列结构
+    - 基于最小堆实现：PriorityQueue
+      - `boolean add(E e)`/`boolean offer(E e)`: 将指定元素加入队列。
+      - `E poll​()`: 返回队列头部元素，并将队列头部元素移除。队列为空时返回 null。
+      - `E peek()`: 返回队列头部元素但不移除。队列为空时返回 null。
+    
+  - map 结构
+    - 基于哈希表实现：HashMap
+    - 基于红黑树实现：TreeMap
+
+  - set 结构
+    - 基于哈希表实现：HashSet
+    - 基于红黑树实现：TreeSet
+
+  - 可变数组结构
+    - ArrayList
+
+  - 双向链表结构
+    - LinkedList
+
+### 3.3. 快速失败机制
 
 TODO:
 
-在 Java 集合框架中，很多类都实现了快速失败机制。该机制被触发时，会抛出并发修改异常ConcurrentModificationException，以避免程序在将来不确定的时间里出现不确定的行为。
+在 Java 集合框架中，很多类都实现了快速失败机制。该机制被触发时，会抛出并发修改异常 ConcurrentModificationException，以避免程序在将来不确定的时间里出现不确定的行为。
 
 ## 4. Refer Links
 
