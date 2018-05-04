@@ -37,3 +37,5 @@ todo:
 https://blog.csdn.net/v_july_v/article/details/6897097 
 
 https://www.kancloud.cn/kancloud/the-art-of-programming/41620
+
+https://www.coursera.org/learn/gaoji-shuju-jiegou/lecture/1s2Nc/trie-shu
