@@ -24,7 +24,9 @@
     - [5. 最长上升子序列 （LIS 问题）](#5--lis)
         - [5.1. Longest Increasing Subsequence](#51-longest-increasing-subsequence)
         - [5.2. Wiggle Subsequence](#52-wiggle-subsequence)
-    - [6. 最长公共子序列（LCS 问题）](#6-lcs)
+    - [6. LCSs 问题](#6-lcss)
+        - [6.1. 最长公共子序列问题](#61)
+        - [6.2. 最长公共子串问题](#62)
     - [7. Refer Links](#7-refer-links)
 
 # Dynamic programming
@@ -619,7 +621,15 @@ public:
 
 [376. Wiggle Subsequence](https://leetcode.com/problems/wiggle-subsequence/description/)
 
-## 6. 最长公共子序列（LCS 问题）
+## 6. LCSs 问题
+
+LCSs 问题实际上是指最长公共子序列问题（Longest-Common-Subsequence）和最长公共子串（Longest-Common-Substring）问题，这两个问题非常的相似，区别在于：
+- 子序列是有序的，但不一定是连续，作用对象是序列。例如：序列 X = <B, C, D, B> 是序列 Y = <A, B, C, B, D, A, B> 的子序列，对应的下标序列为 <2, 3, 5, 7>。
+- 子串是有序且连续的，左右对象是字符串。例如：a = abcd 是 c = aaabcdddd 的一个子串；但是 b = acdddd 就不是 c 的子串。
+
+两者问题很相似，均可以使用动态规划的思想进行求解。
+
+### 6.1. 最长公共子序列问题
 
 > 给出 s1 和 s2，求出它们的最长公共子序列的长度。
 
@@ -755,4 +765,8 @@ public:
 };
 ```
 
+### 6.2. 最长公共子串问题
+
 ## 7. Refer Links
+
+[LCSs——最长公共子序列和最长公共子串](https://www.cnblogs.com/maybe2030/p/5469877.html)
