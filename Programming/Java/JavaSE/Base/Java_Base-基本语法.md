@@ -18,51 +18,23 @@
   - [5. 变量 & 常量](#5)
     - [5.1. 变量](#51)
     - [5.2. 常量](#52)
-  - [6. 数据类型](#6)
-    - [6.1. 基本数据类型](#61)
-      - [6.1.1. 整型](#611)
-      - [6.1.2. 浮点型](#612)
-      - [6.1.3. char](#613-char)
-      - [6.1.4. boolean](#614-boolean)
-    - [6.2. 引用类型](#62)
-    - [6.3. 内存存储结构](#63)
-  - [7. 类型转换](#7)
-    - [7.1. 自动转换](#71)
-    - [7.2. 强制转换](#72)
-  - [8. 枚举类型](#8)
-  - [9. 大数值](#9)
-  - [10. 运算符](#10)
-    - [10.1. 算术运算符](#101)
-    - [10.2. 赋值运算符](#102)
-    - [10.3. 关系运算符](#103)
-    - [10.4. 逻辑运算符](#104)
-    - [10.5. 位运算符](#105)
-    - [10.6. 条件运算符](#106)
-  - [11. 流程控制](#11)
-    - [11.1. 条件控制](#111)
-    - [11.2. 循环控制](#112)
-      - [11.2.1. while](#1121-while)
-      - [11.2.2. for](#1122-for)
-    - [11.3. 中断控制](#113)
-    - [11.4. switch](#114-switch)
-  - [12. 输入输出](#12)
-    - [12.1. 控制台输入输出](#121)
-    - [12.2. 文件输入输出](#122)
-  - [13. 字符串](#13)
-    - [13.1. 子串](#131)
-    - [13.2. 拼接](#132)
-    - [13.3. 相等判断](#133)
-    - [13.4. 字符串长度](#134)
-    - [13.5. 空串和 Null 串](#135--null)
-    - [13.6. 不可变字符串](#136)
-    - [13.7. 字符串构建](#137)
-  - [14. 数组](#14)
-    - [14.1. 创建与初始化](#141)
-    - [14.2. 多维数组](#142)
-    - [14.3. 数组拷贝](#143)
-    - [14.4. 数组填充](#144)
-    - [14.5. 快速排序](#145)
-    - [14.6. 二分查找](#146)
+  - [6. 运算符](#6)
+    - [6.1. 算术运算符](#61)
+    - [6.2. 赋值运算符](#62)
+    - [6.3. 关系运算符](#63)
+    - [6.4. 逻辑运算符](#64)
+    - [6.5. 位运算符](#65)
+    - [6.6. 条件运算符](#66)
+  - [7. 流程控制](#7)
+    - [7.1. 条件控制](#71)
+    - [7.2. 循环控制](#72)
+      - [7.2.1. while](#721-while)
+      - [7.2.2. for](#722-for)
+    - [7.3. 中断控制](#73)
+    - [7.4. switch](#74-switch)
+  - [8. 输入输出](#8)
+    - [8.1. 控制台输入输出](#81)
+    - [8.2. 文件输入输出](#82)
 
 # Java 基础语法
 
@@ -291,231 +263,9 @@ final double HEIGHT = 1.85;
 
 NOTE: `const`是 Java 的保留字，但目前（JDK 9）并未使用该关键字。
 
-## 6. 数据类型
+## 6. 运算符
 
-Java 是一种强类型的语言，这意味着必须为每一个变量都声明一种类型。
-
-### 6.1. 基本数据类型
-
-在 Java 中，一共有 8 种基本数据类型，包裹 4 种整型、2 种浮点型、1 种用于标识 Unicode 编码的字符单元的字符类型和 1 种用于表示真值的 boolean 类型。
-
-#### 6.1.1. 整型
-
-整型用于表示没有小数部分的数值，允许为负数。Java 提供了 4 种整型：
-- int
-
-  占 4 字节，-2147483648(-2^31) ~ 2147483647(2^31 - 1)（正好超过 30 亿），默认值是 0。
-
-  没有使用后缀的整型数值都为 int 型。
-
-- short
-
-  占 2 字节，-32768(-2^15) ~ 32767(2^15 - 1)，默认值是 0。
-
-  Short 数据类型也可以像 byte 那样节省空间。一个 short 变量是 int 型变量所占空间的二分之一。
-
-- byte
-
-  占 1 字节，-128(-2^7) ~ 127(2^7 - 1)，默认值是 0。
-
-  byte 类型用在大型数组中节约空间，主要代替整数，因为 byte 变量占用的空间只有 int 类型的四分之一。
-
-- long
-
-  占 8 字节，-9,223,372,036,854,775,808(-2^63) ~ 9,223,372,036,854,775,807(2^63 -1)，默认值是 0L。
-  
-  长整型数值有一个后缀"L"，"L"理论上不分大小写，但是若写成"l"容易与数字"1"混淆，不容易分辩，所以最好大写。
-
-  long 类型主要使用在需要比较大整数的系统上。
-
-Java 中整型数值默认为 int 类型。
-
-在 Java 中，整型的范围与运行 Java 代码的机器无关，这解决了代码的移植性问题。
-
-使用非十进制表示数时，需要使用不同的前缀：
-- 二进制：0b 或 0B
-- 八进制：0
-- 十六进制：0x 或 0X
-
-从 Java7 开始，支持使用下划线作为数字字面量的分隔符，以增强可读性。例如：10000000 可写作 10_000_000，让人更容易读。
-
-在 Java 中，没有任何无符号形式的 int、long、short、byte 类型。
-
-#### 6.1.2. 浮点型
-
-浮点型用于表示有小数部分的数值。Java 提供了 2 种浮点型：
-- float
-
-  单精度浮点型，占 4 字节，有效位数为 6~7 位，默认值是 0.0f。
-
-  float 型数值有一个后缀 F 或 f，**没有后缀的浮点数默认为 double 类型**。
-
-- double
-
-  双精度浮点型，占 8 字节，有效位数为 15 为，默认值是 0.0d。
-
-  double 型数值可使用后缀 D 或 d，也可不使用。
-
-Java 中的浮点数值默认为 double 类型。
-
-实际上绝大部分应用程序都使用 double 类型，很少情况适合使用 float 类型（如：在储存大型浮点数组时使用 float 以节省空间）。
-
-Java 中的浮点数都遵循 IEEE 754 标准。
-
-可以使用十六进制表示浮点数值。例如，0.125 也就是 2^-3 可以表示为 0x1.0p-3（十六进制的浮点数表示法中，p 表示基数为 2 的指数，且尾数采用十六进制，但指数采用十进制表示）。
-
-Java 中提供了三个特殊的浮点数值：
-- 正无穷大：用常量 Double.POSITIVE_INFINITY 表示。一个正整数除以 0 的结果为正无穷大。
-
-- 负无穷大：用常量 Double.NEGATIVE_INFINITY 表示。一个负整数除以 0 的结果为正无穷大。
-
-- 不合法的数：用常量 Double.NaN 表示。0/0 或负数的平方根结果为 NaN。
-  
-  NOTE: 不可通过 == 检测一个特定值是否为 NaN，因为 NaN 不等于任何数，包括它本身。但可使用 Double.isNaN(x) 方法来判断。
-
-P.S. 浮点数的误差问题：
-- 对于浮点数的等值判断，由于 IEEE 754 标准的浮点数表示，当二进制不能精确表示的数进行运算时就可能会出现浮点误差，导致使用`==`可能会出现不符合常理的情况。
-  
-  因此：
-  - 对于一般情况，应使用两个浮点数之差是否小于某个极小数（一般小于 0.000000001）来判断两个数是否相等。我们并不能保证比较一定得出正确的结果，但只要在 99.99999....% 的情况下能够正确就够了。
-  - 对于需要精确的进行浮点数运算（比较）的情况，应该用 BigDecimal 类来解决，它帮你解决了所有必要的精度问题，当然，代价就是性能。
-  <!-- todo: -->
-
-  https://www.zhihu.com/question/21175703
-
-  https://bbs.csdn.net/topics/330141975
-  
-  https://www.zhihu.com/question/29064056
-
-#### 6.1.3. char
-
-- char 类型占 2 字节，用于表示 UTF-16 编码中的一个代码单元。
-
-  **一个 char 类型的值不一定能表示单个 Unicode 字符**。由于 16 位的长度无法表示所有 Unicode 字符（大于 65536 个），因此 UTF-16 编码采用不同长度的编码表示所有的 Unicode 码点：在基本的多语言级别中，每个字符用 16 位表示，称为代码单元；而辅助字符采用连续 2 个代码单元进行编码。通过这样的设计，才能使用 16 位的长度表示所有 Unicode 字符。但这就导致了**有些 Unicode 字符可以用一个 char 值描述，另外一些 Unicode 字符需要 2 个 char 值才能表示**。
-
-  core Java 10th:
-  > 我们强烈简易不要在程序中使用 char 类型，除非确实需要处理 UTF-16 代码单元。最好将字符串作为抽象数据类型处理。
-
-- char 类型的字面量要使用单引号括起来。
-  
-  'A'与"A"表示不同的值。'A'是编码值位 65 所对应的字符常量，而"A"是包含一个字符 A 的字符串。
-
-- char 类型的值也可以表示为十六进制值，其范围为、u0000~\uffff。
-
-- 在 Java 中，Unicode 转义序列会在解析代码之前得到处理，而其它转义序列不会。因此，转义序列、u 可以出现在加引号的常量之外，而其它转义序列不可以。
-  
-  例如：
-  
-  `public static void main(String \u005B \u005D args)`是完全合法的。
-
-  `// \u00A0 is a newline`会导致语法错误，因为、u00A0 会被替换为一个换行符。
-
-  `// look inside c:\users`会导致语法错误，因为、u 后没有跟着 4 个十六进制数。
-
-- 在表示用户密码时，使用 `char []` 代替 `String` 是更安全的做法。
-
-  https://stackoverflow.com/questions/8881291/why-is-char-preferred-over-string-for-passwords?rq=1
-
-  **Strings are immutable. That means once you've created the String, if another process can dump memory, there's no way (aside from reflection) you can get rid of the data before garbage collection kicks in.**
-
-  **With an array, you can explicitly wipe the data after you're done with it. You can overwrite the array with anything you like, and the password won't be present anywhere in the system, even before garbage collection.**
-
-  So yes, this is a security concern - **but even using char[] only reduces the window of opportunity for an attacker**, and it's only for this specific type of attack.
-
-  It's possible that arrays being moved by the garbage collector will leave stray copies of the data in memory. I believe this is implementation-specific - the garbage collector may clear all memory as it goes, to avoid this sort of thing. Even if it does, there's still the time during which the char[] contains the actual characters as an attack window.
-
-#### 6.1.4. boolean
-
-boolean 类型占 1 字节，有两个取值：false 和 true（默认值为 false），用于进行逻辑判断。
-
-整型值与布尔值之间不能进行相互转换，因此，0 不等价于 false，1 不等价于 true。
-
-### 6.2. 引用类型
-
-在 Java 中，引用类型的变量非常类似于 C/C++ 的指针。引用类型指向一个对象，指向对象的变量是引用变量。这些变量在声明时被指定为一个特定的类型，变量一旦声明后，类型就不能被改变了。
-
-对象、数组都是引用数据类型。
-
-所有引用类型的默认值都是 null。
-
-一个引用变量可以用来引用任何与之兼容的类型。
-
-### 6.3. 内存存储结构
-
-对于基本类型和引用类型，在内存中的存储结构如下：
-
-- 定义
-  ```java
-  int num = 10;
-  String str = "hello";
-  ```
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/43dd8c214a38cf62387886cbdb778972.jpg)
-
-  - 基本类型：值就直接保存在变量中。
-  - 引用类型：变量中保存的只是实际对象的地址。一般称这种变量为"引用"，引用指向实际对象，实际对象中保存着内容。
-
-- 赋值
-  ```java
-  num = 20;
-  str = "java";
-  ```
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/3171f746c645585b49474d0ab78499eb.jpg)
-
-  - 基本类型：赋值运算符会直接改变变量的值，原来的值被覆盖掉。
-  - 引用类型：赋值运算符会改变引用中所保存的地址，原来的地址被覆盖掉。**原来的对象不会被改变**，但没有被任何引用所指向的对象将会被 GC 回收。
-
-## 7. 类型转换
-
-### 7.1. 自动转换
-
-下图给出数值类型之间的合法转换规则：
-
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/25/c22c9e291a897e9967753c3caaca04f4.jpg)
-
-（转换原则：往表数范围更大的方向转换）
-
-其中，实心箭头表示无信息丢失的转换；虚箭头表示可能会有精度损失的转换。
-
-**当对两个不同类型的操作数进行运算时，会按照合法转换规则发生类型的自动转换，使得转换后的两个操作数类型相同后再进行运算**。例：若两个操作数中有一个 double，则另一个操作数无论是什么类型都会自动转换为 double。
-
-### 7.2. 强制转换
-
-在 Java 中，允许进行数值类型的强制类型转换，当然这种操作可能会导致丢失数值的精度甚至会导致原值被截断成一个完全不同的值。
-
-```java
-double x = 9.997;
-int nx = (int)x; // nx = 9
-
-int a = 300;
-byte b = (byte)a; // b = 44
-```
-
-## 8. 枚举类型
-
-```java
-enum Size {
-  SMALL,
-  MEDIUM,
-  LARGE,
-  X-LARGE
-};
-
-Size s = Size.SMALL;
-Size s = Size.MEDIUM;
-Size s = Size.LARGE;
-Size s = Size.X-LARGE;
-Size s = Size.a; // error
-```
-
-## 9. 大数值
-
-若基本的数值类型不能满足需求，可使用 BigInteger 和 BigDecimal。
-
-这两个类可以处理包含任意长度的数字序列的数值，实现了任意精度的整数运算和浮点运算。
-
-## 10. 运算符
-
-### 10.1. 算术运算符
+### 6.1. 算术运算符
 
 - `+`：加法
 
@@ -535,7 +285,7 @@ Size s = Size.a; // error
 
 - `--`：自减
 
-### 10.2. 赋值运算符
+### 6.2. 赋值运算符
 
 - `=`：简单的赋值运算符，将右操作数的值赋给左侧操作数。
 
@@ -559,7 +309,7 @@ Size s = Size.a; // error
 
 - `|=`：按位或赋值操作符。
 
-### 10.3. 关系运算符
+### 6.3. 关系运算符
 
 - `==`：检查如果两个操作数的值是否相等，如果相等则条件为真。
 
@@ -573,7 +323,7 @@ Size s = Size.a; // error
 
 - `<=`：检查左操作数的值是否小于或等于右操作数的值，如果是那么条件为真。	
 
-### 10.4. 逻辑运算符
+### 6.4. 逻辑运算符
 
 - `&&`：逻辑与运算符。当且仅当两个操作数都为真，条件才为真。
 
@@ -581,7 +331,7 @@ Size s = Size.a; // error
 
 - `！`：逻辑非运算符。用来反转操作数的逻辑状态。如果条件为 true，则逻辑非运算符将得到 false。
 
-### 10.5. 位运算符
+### 6.5. 位运算符
 
 - `&`：按位与。
 
@@ -597,15 +347,15 @@ Size s = Size.a; // error
 
 - `>>>`：按位右移补零操作符。左操作数的值按右操作数指定的位数右移，移动得到的空位以零填充。
 
-### 10.6. 条件运算符
+### 6.6. 条件运算符
 
 ```
 variable x = (expression) ? value if true : value if false
 ```
 
-## 11. 流程控制
+## 7. 流程控制
 
-### 11.1. 条件控制
+### 7.1. 条件控制
 
 ```java
 if（布尔表达式 1){
@@ -619,9 +369,9 @@ if（布尔表达式 1){
 }
 ```
 
-### 11.2. 循环控制
+### 7.2. 循环控制
 
-#### 11.2.1. while
+#### 7.2.1. while
 
 ```java
 while( 布尔表达式 ) {
@@ -635,7 +385,7 @@ do {
 }while（布尔表达式);
 ```
 
-#### 11.2.2. for
+#### 7.2.2. for
 
 ```java
 for（初始化；布尔表达式；更新) {
@@ -650,13 +400,13 @@ for（声明语句 : 表达式)
 }
 ```
 
-### 11.3. 中断控制
+### 7.3. 中断控制
 
 - break 主要用在循环语句或者 switch 语句中，用来跳出整个语句块。
 
 - continue 适用于任何循环控制结构中。作用是让程序立刻跳转到下一次循环的迭代。
 
-### 11.4. switch
+### 7.4. switch
 
 ```java
 switch(expression){
@@ -678,9 +428,9 @@ case 标签可以是：
 - 枚举常量
 - 字符串字面值
 
-## 12. 输入输出
+## 8. 输入输出
 
-### 12.1. 控制台输入输出
+### 8.1. 控制台输入输出
 
 - 输入
 
@@ -761,7 +511,7 @@ case 标签可以是：
     System.out.printf("%s",a%(a%100?4:400)?"NO":"YES");
     ```
 
-### 12.2. 文件输入输出
+### 8.2. 文件输入输出
 
 - 输入
 
@@ -773,165 +523,3 @@ case 标签可以是：
   ```java
   PrintWriter out = new PrintWriter("myfile.txt", "UTF-8");
   ```
-
-## 13. 字符串
-
-Java 字符串就是 Unicode 字符序列。例如：字符串"java/u2122"由 5 个 Unicode 字符组成，分别是 j、a、v、a、™。
-
-Java 没有设计内置的字符串类型，而是在 Java 标准库中提供了一个预定义类 [String](https://docs.oracle.com/javase/9/docs/api/java/lang/String.html)。每个用双引号括起来的字符串都是 String 类的一个实例。
-
-### 13.1. 子串
-
-`String	substring​(int beginIndex, int endIndex)`：从一个较大的字符串中提取一个子串。子串从 beginIndex 开始，到 endIndex 为止（不包括 endIndex）。
-```java
-String sub = "hello".substring(1, 3); // "el"
-```
-
-### 13.2. 拼接
-
-使用 + 拼接两个字符串，任何类型的值与字符串进行 "+" 运算时，非字符串的值总是被转换为字符串。
-
-`static String	join​(CharSequence delimiter, CharSequence... elements)`：将多个字符串用分隔符进行连接。
-
-### 13.3. 相等判断
-
-使用`String.equals()`方法检测两个字符串的内容是否完全相同，使用`String.equalsIgnoreCase()`进行不区分大小写的判断。
-
-NOTE：使用 `==` 判断的是两个是否指向同一个字符串，而不是判断内容是否相同。
-
-### 13.4. 字符串长度
-
-Java 字符串由 char 值序列组成。`String.length`方法返回采用 UTF-16 编码表示的给定字符串所需要的代码单元数量。
-
-### 13.5. 空串和 Null 串
-
-空串是长度为 0 的字符串对象，写为 `""`，有自己的长度（0）和内容（空）。
-
-Null 串表示没有任何对象与该字符串变量关联，没有长度也没有内容。若对一个 Null 串调用 length 方法，会抛出异常。
-
-一般使用以下条件检查字符串不为 null 也不为空串：
-```java
-if (str != null && str.length != 0) {//...}
-```
-
-### 13.6. 不可变字符串
-
-Java 中将 String 类对象定义为不可变字符串，即**不能修改字符串中的某个字符**（但可以修改字符串变量 a 引用的字符串字面量）。
-
-NOTE: 区分字符串拼接和字符串修改
-```java
-String str = "hello";
-str = str + "world";// 字符串拼接
-str += "world";// 字符串拼接
-str[2] // error
-str = str.substring(0, 2) + "p" + str.substring(3, 5);// "heplo" 字符串修改（实际上仍旧是字符串的拼接）
-```
-
-不可变字符串让编译器可以共享字符串，即在公共存储池中存放各种字符串常量，多个字符串变量可以指向同一个字符串常量（只有字符串常量是共享的，`+` 或 `substring()` 产生的临时字符串值并不是共享的）。虽然这样的设计导致**修改字符串时需要进行子串提取、拼接操作**，但共享带来的高效率远胜于多出的操作。因为实际上只有很少的情况需要修改字符串，而对于需要频繁拼接的字符串，Java 提供了 [StringBuilder](https://docs.oracle.com/javase/9/docs/api/java/lang/StringBuilder.html) 类。
-
-P.S. 在 C++ 中字符串是可修改的，即可以修改字符串的单个字符。
-
-### 13.7. 字符串构建
-
-由于 Java 字符串不可修改，而每次拼接字符串时都会产生一个新的 String 临时对象。当需要对一个字符串变量进行频繁的拼接时，耗时与空间的浪费就显得非常严重，因此 Java 提供了 [StringBuilder](https://docs.oracle.com/javase/9/docs/api/java/lang/StringBuilder.html) 类，用于字符串的构建。
-
-```java
-// 创建一个空的字符串构建起
-StringBuilder builder = new StringBuilder();
-// 每次需要进行字符串拼接时，调用 append 方法
-builder.append("xxx");
-// 修改字符串中的字符，将第 i 个代码单圈设置为 (char)c
-builder.setCharAt(i, 'c');
-// 在 offset 位置插入一个字符串
-builder.insert(offset, s);
-// 构建完成，返回一个 String 对象
-String str = builder.toString();
-```
-
-P.S. [StringBuffer](https://docs.oracle.com/javase/9/docs/api/java/lang/StringBuffer.html) 类是 StringBuilder 类的前身，两者 API 基本上完全相同，效率稍低，但允许采用多线程的方式执行添加或删除字符的操作。但若所有字符串在单线程中编译（通常情况都是这样），应使用 StringBuilder 进行字符串的构建。
-
-## 14. 数组
-
-数组是一种用于存储同一类型的值集合的数据结构。
-
-Java 中对数组的操作主要通过工具类 [Arrays](https://docs.oracle.com/javase/9/docs/api/java/util/Arrays.html) 完成。
-
-### 14.1. 创建与初始化
-
-数组的声明 / 创建：
-```java
-int [] a;
-int a[];
-```
-
-数组的初始化：
-```java
-a = new int[100]; // 固定长度初始化
-a = {2,3,4,56,7,78,57}; // 直接赋值初始化
-a= new int[] {2,3,4,56,7,78,57}; // 使用匿名数组进行初始化
-```
-
-NOTE：
-- 在 Java 中不要求数组长度是常量，`new int[n]`是完全合法的。
-- 在 Java 中允许数组长度为 0。
-- 初始化数组后，数值数值所有元素默认值为 0，boolean 数组所有元素默认值为 false，对象数组所有元素默认值为 null。
-- 数组创建初始化后，便无法再改变长度。若需要在运行过程中扩展数组的大小，应使用数组列表 [ArrayList](https://docs.oracle.com/javase/9/docs/api/java/util/ArrayList.html)。
-- 数组的声明 / 创建可与初始化同时完成，如：`int [] a = new int[n];`。
-
-### 14.2. 多维数组
-
-```java
-int [][] a = new int[X](Y);
-int [][] b = new int[X][];// 先创建一维数组
-int [][] b = new int[][Y];//error，必须从低维到高维创建
-int [][] c = {// 创建不规则数组
-  {1,2,3},
-  {4,5},
-  {6,7,8,9}
-};
-```
-- NOTE: 不同于 C++ 中存在真正的多维数组，在 Java 中实际上没有真正的多维数组，只有一维数组。
-
-  ```java
-  //java
-  int [][] a = new int[10](6);
-  ```
-  在 C++ 中相当于创建了一个包含 10 个指针的数组，然后再为每个数组元素填充一个包含 6 个数字的数组：
-  ```cpp
-  //cpp
-  // 不等价
-  int a[10](6);
-  // 不等价
-  int (*a)[6] = new int[10](6); 
-  // 等价
-  int **a = new int*[10];
-  for (i = 0; i < 10; i++) {
-    a[i] = new int[6];
-  }
-  ```
-
-### 14.3. 数组拷贝
-
-在 Java 中，数组的拷贝主要通过`Arrays.copyOf​(U [] original, int newLength)`完成，其中 original 为要复制的原数组，newLength 为要返回的数组副本的长度（若长度小于原数组长度，则只拷贝前部分的元素；若长度大小原数组的长度，则多出的部分赋默认值）。
-
-`Arrays.copyOf`常用于数组扩容：
-```java
-int [] originalArray = {1,2,3,4,5};
-int [] newArray = Arrays.copyOf(originalArray, 2 * originalArray.length);
-```
-
-NOTE：使用`System.arraycopy()`方法同样可完成数组的拷贝，两者的不同在于：
-- `System.arraycopy()` 调用其它语言编写的底层函数，完成数组拷贝。
-- `Arrays.copyOf` 实际上是对 `System.arraycopy()` 的二次封装，可以选择拷贝的起点和长度以及放入新数组中的位置。
-
-### 14.4. 数组填充
-
-通过`Arrays.fill​(type [] a, type val)`方法，可将数组的所有元素设置为 val 值。
-
-### 14.5. 快速排序
-
-通过`Arrays.sort​(type [] a, int fromIndex, int toIndex)`方法，可对数值型数组进行优化的快速排序，其中 type 可为 byte、char、double、float、int、long、short。
-
-### 14.6. 二分查找
-
-通过`Arrays.binarySearch​(type [] a, int fromIndex, int toIndex, type key)`方法，可对数组进行二分查找。若查找成功，返回相应下标值；否则，返回一个负数值 r（`-r-1` 是为了保持原数组 a 有序，key 值应插入的位置）。

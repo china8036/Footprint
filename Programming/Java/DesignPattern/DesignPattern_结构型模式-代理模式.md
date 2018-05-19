@@ -1,40 +1,40 @@
-- [Design Pattern 结构型模式 - 代理模式](#design-pattern-%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F---%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F)
-	- [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-	- [2. 代理类型](#2-%E4%BB%A3%E7%90%86%E7%B1%BB%E5%9E%8B)
-	- [3. 静态代理](#3-%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86)
-		- [3.1. 继承方式](#31-%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F)
-		- [3.2. 聚合方式](#32-%E8%81%9A%E5%90%88%E6%96%B9%E5%BC%8F)
-		- [3.3. 比较](#33-%E6%AF%94%E8%BE%83)
-	- [4. 动态代理](#4-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)
-		- [4.1. JDK 动态代理](#41-jdk-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)
-			- [4.1.1. API 说明](#411-api-%E8%AF%B4%E6%98%8E)
-			- [4.1.2. 使用示例](#412-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B)
-			- [4.1.3. 优缺点](#413-%E4%BC%98%E7%BC%BA%E7%82%B9)
-		- [4.2. Cglib 动态代理](#42-cglib-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)
-			- [4.2.1. 基本概念](#421-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-			- [4.2.2. 原理分析](#422-%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90)
-			- [4.2.3. API 说明](#423-api-%E8%AF%B4%E6%98%8E)
-			- [4.2.4. 使用示例](#424-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B)
-			- [4.2.5. 与 JDK 动态代理的比较](#425-%E4%B8%8E-jdk-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%9A%84%E6%AF%94%E8%BE%83)
-			- [4.2.6. 应用](#426-%E5%BA%94%E7%94%A8)
-		- [4.3. 模拟 JDK Proxy 实现动态代理](#43-%E6%A8%A1%E6%8B%9F-jdk-proxy-%E5%AE%9E%E7%8E%B0%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)
-		- [4.4. JAVAASSIST 动态代理](#44-javaassist-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)
-		- [4.5. AspectJ 动态代理](#45-aspectj-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86)
-		- [4.6. 动态代理应用](#46-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%BA%94%E7%94%A8)
-			- [4.6.1. AOP](#461-aop)
-			- [4.6.2. 数据库连接](#462-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5)
-			- [4.6.3. 事务管理](#463-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86)
-			- [4.6.4. 单元测试动态 mock 对象](#464-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%8A%A8%E6%80%81-mock-%E5%AF%B9%E8%B1%A1)
-	- [5. 适用场景](#5-%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF)
-	- [6. Refer Links](#6-refer-links)
+- [Design Pattern 结构型模式 - 代理模式](#design-pattern)
+    - [1. 基本概念](#1)
+    - [2. 代理类型](#2)
+    - [3. 静态代理](#3)
+        - [3.1. 继承方式](#31)
+        - [3.2. 聚合方式](#32)
+        - [3.3. 比较](#33)
+    - [4. 动态代理](#4)
+        - [4.1. JDK 动态代理](#41-jdk)
+            - [4.1.1. API 说明](#411-api)
+            - [4.1.2. 使用示例](#412)
+            - [4.1.3. 优缺点](#413)
+        - [4.2. Cglib 动态代理](#42-cglib)
+            - [4.2.1. 基本概念](#421)
+            - [4.2.2. 原理分析](#422)
+            - [4.2.3. API 说明](#423-api)
+            - [4.2.4. 使用示例](#424)
+            - [4.2.5. 与 JDK 动态代理的比较](#425--jdk)
+            - [4.2.6. 应用](#426)
+        - [4.3. 模拟 JDK Proxy 实现动态代理](#43--jdk-proxy)
+        - [4.4. JAVAASSIST 动态代理](#44-javaassist)
+        - [4.5. AspectJ 动态代理](#45-aspectj)
+        - [4.6. 动态代理应用](#46)
+            - [4.6.1. AOP](#461-aop)
+            - [4.6.2. 数据库连接池](#462)
+            - [4.6.3. 事务管理](#463)
+            - [4.6.4. 单元测试动态 mock 对象](#464--mock)
+    - [5. 适用场景](#5)
+    - [6. Refer Links](#6-refer-links)
 
 # Design Pattern 结构型模式 - 代理模式
 
 ## 1. 基本概念
 
-代理模式是面向对象编程中比较常见的结构型设计模式。举例来说，顾客可以直接从厂家购买产品，但是现实生活中，很少有这样的销售模式。一般都是厂家委托给代理商进行销售，顾客跟代理商打交道，而不直接与产品实际生产者进行关联。在这个过程中，代理商就起着代理的作用。
+代理模式是面向对象编程中比较常见的结构型设计模式。代理模式通过**为其他对象提供一种代理对象（中间层）以控制对这个对象的访问**，可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。代理对象在客户端对象和目标对象之间起到中介的作用，它去掉客户不能看到的内容和服务或者增添客户需要的额外的新服务。
 
-代理模式通过**为其他对象提供一种代理对象（中间层）以控制对这个对象的访问**，可以在不修改被代理对象的基础上，通过扩展代理类，进行一些功能的附加与增强。代理对象在客户端对象和目标对象之间起到中介的作用，它去掉客户不能看到的内容和服务或者增添客户需要的额外的新服务。
+举例来说，现实生活中顾客可以直接从厂家购买产品，但实际上很少有这样的销售模式，一般都是厂家委托给代理商进行销售，顾客跟代理商打交道，而不直接与产品实际生产者进行关联。在这个过程中，代理商就起着代理的作用。
 
 为了保证客户端使用的透明性，通常所访问的真实对象与代理对象需要实现相同的接口或继承相同的抽象基类。
 
@@ -96,7 +96,7 @@ public class CinemaProxy extends RealMovie {
         super();
     }
 
-    // 它在重写的 play() 方法中调用父类的 play() 方法，但在调用前后添加了广告操作
+    // 在重写的 play() 方法中调用父类的 play() 方法，但在调用前后添加了广告操作
     @Override
     public void play() {
         ad(true);
@@ -313,7 +313,7 @@ public class ProxyTest {
   } 
   ```
 
-如果业务需求发生改变，我们需要能够在代理时多样化各个动作执行的顺序（如广播广告环境 / 广告广播环境 / 环境广告广播 ...）
+如果我们需要能够在代理时多样化各个动作执行的顺序（如广播广告环境 / 广告广播环境 / 环境广告广播 ...）
 - 如果继承方式来实现：若有 3 个代理动作我们就需要添加 7 个新的代理类。因此，若使用继承方式来实现代理功能的叠加，必定会导致代理类数量的无限膨胀下去。
 - 如果采用聚合方式来实现：若有 3 个代理动作我们无须对原来的 3 个代理类进行任何改动，只需在创建实例时，根据需要的顺序改变代理类的创建顺序即可：
   ```java
@@ -333,13 +333,13 @@ public class ProxyTest {
 
 在静态代理的示例中，如果现在除了电影院 Cinema 要代理播放这部电影，有一些线上网站 Website、电影软件 App 也要代理播放这个电影，根据静态代理的实现方式，我们需要建立 WebsiteAdProxy、WebsiteBroacastProxy、WebsiteEnvOptProxy 和 AppAdProxy、AppBroacastProxy、AppEnvOptProxy 这些代理类。
 
-可见，如果要想为多个类进行代理，则需要建立多个代理类。由于静态代理模式中代理对象和被代理对象以硬编码的形式在程序运行之前就确定好了，非常不利于代理对象的横向扩展。因此，出现了在运行时动态确定代理对象和被代理对象的动态代理。在静态代理中，Cinema 类是代理对象，我们需要手动编写代码让 Cinema 实现 Movie 接口。而在动态代理中，我们可以通过 Java 的反射机制让程序在运行期自动在内存中创建一个实现 Movie 接口的代理实现，而不需要去定义 Cinema 这个类。这就是它被称为动态的原因。
+可见，如果要想为多个类进行代理，则需要建立多个代理类。由于静态代理模式中代理对象和被代理对象以硬编码的形式在程序运行之前就确定好了，非常不利于代理对象的横向扩展。因此，出现了在运行时才动态确定代理对象和被代理对象的动态代理模式。在静态代理中，Cinema 类是代理对象，我们需要手动编写代码让 Cinema 实现 Movie 接口。而在动态代理中，我们可以通过 Java 的反射机制让程序在运行期自动在内存中创建一个实现 Movie 接口的代理实现，而不需要去定义 Cinema 这个类。这就是它被称为动态的原因。
 
-动态代理是代理模式实现的一种，它的用途十分广泛，比如数据库连接、事务管理（transaction management）、单元测试时用到的动态 mock 对象以及 AOP 中的方法拦截功能等都使用到了动态代理。
+动态代理是代理模式实现的一种，它的用途十分广泛，比如数据库连接池、事务管理（transaction management）、单元测试时用到的动态 mock 对象以及 AOP 中的方法拦截功能等都使用到了动态代理。
 
 ### 4.1. JDK 动态代理
 
-JDK 从 1.3 版本开始，在 `java.lang.reflect` 包下提供了一个 [Proxy](https://docs.oracle.com/javase/9/docs/api/java/lang/reflect/Proxy.html) 类和一个 [InvocationHandler](https://docs.oracle.com/javase/9/docs/api/java/lang/reflect/InvocationHandler.html) 接口，它们对动态代理机制进行了封装和实现，可供程序员调用。通过使用这个类和接口，就可以生成 JDK 动态代理类或动态代理对象。
+从 JDK 1.3 版本开始，在 `java.lang.reflect` 包下提供了一个 [Proxy](https://docs.oracle.com/javase/9/docs/api/java/lang/reflect/Proxy.html) 类和一个 [InvocationHandler](https://docs.oracle.com/javase/9/docs/api/java/lang/reflect/InvocationHandler.html) 接口，它们对动态代理机制进行了封装和实现，可供程序员调用。通过使用这个类和接口，就可以生成 JDK 动态代理类或动态代理对象。
 
 #### 4.1.1. API 说明
 
@@ -418,12 +418,12 @@ public class Test {
         InvocationHandler jingxiao1 = new GuitaiA(maotaijiu);
         InvocationHandler jingxiao2 = new GuitaiA(wu);
 
-        SellWine dynamicProxy = (SellWine) Proxy.newProxyInstance(MaotaiJiu.class.getClassLoader(),
-                MaotaiJiu.class.getInterfaces(), jingxiao1);
         SellWine dynamicProxy1 = (SellWine) Proxy.newProxyInstance(MaotaiJiu.class.getClassLoader(),
-                MaotaiJiu.class.getInterfaces(), jingxiao2);
-        dynamicProxy.mainJiu();
+                MaotaiJiu.class.getInterfaces(), jingxiao1);
+        SellWine dynamicProxy2 = (SellWine) Proxy.newProxyInstance(Wuliangye.class.getClassLoader(),
+                Wuliangye.class.getInterfaces(), jingxiao2);
         dynamicProxy1.mainJiu();
+        dynamicProxy2.mainJiu();
     }
 
 }
@@ -454,28 +454,30 @@ public class Test {
 
 > cglib is a powerful, high performance and quality Code Generation Library, It is used to extend JAVA classes and implements interfaces at runtime. 
 
-[cglib](https://github.com/cglib/cglib)，即 Code Generation Library，是一个强大、高性能、高质量的 Code 生成类库，它可以在运行期扩展 Java 类与创建 Java 接口的实现。cglib 可以为没有实现接口的类提供代理，为 JDK 的动态代理提供了很好的补充，当要代理的类没有实现接口或者为了更好的性能，cglib 是一个更好的选择。
+[cglib](https://github.com/cglib/cglib)，即 Code Generation Library，是一个强大、高性能、高质量的字节码生成类库，它可以在运行期扩展 Java 类与创建 Java 接口的实现。
+
+Cglib 可以为没有实现接口的类提供代理，为 JDK 的动态代理提供了很好的补充，当要代理的类没有实现接口或者为了更好的性能，cglib 是一个更好的选择。
 
 #### 4.2.2. 原理分析
 
-cglib 是针对类来实现代理的，它需要指定父类和回调方法，然后动态生成一个被代理类的子类，并在子类中覆盖被代理类所有非 final 的方法，实现 MethodInterceptor 接口的 intercept 方法。当调用父类方法时，在子类中采用方法拦截的技术拦截所有父类方法的调用，织入横切逻辑，从而实现动态代理。
+Cglib 是针对类来实现代理的，它需要指定父类和回调方法，然后动态生成一个实现了 MethodInterceptor 接口、继承自被代理类的代理类，并在代理类中覆盖被代理类所有非 final 的方法，实现 MethodInterceptor 接口的 intercept 方法。当调用父类方法时，在子类中采用方法拦截的技术拦截所有父类方法的调用，织入横切逻辑，从而实现动态代理。
 
-**cglib 底层通过使用一个小而快的字节码处理框架 ASM，来转换字节码并生成新的类**。除了 CGLIB 包，许多 JVM 脚本语言（如 Groovy 和 BeanShell）也是使用 ASM 来生成 java 的字节码（但不鼓励直接使用 ASM，因为它要求你必须对 JVM 内部结构包括 class 文件的格式和指令集都很熟悉）。
+**Cglib 底层使用一个小而快的字节码处理框架 [ASM](http://asm.ow2.io/)，来转换字节码并生成新的类**。除了 Cglib 包，许多 JVM 脚本语言（如 Groovy 和 BeanShell）也是使用 ASM 来生成 Java 的字节码（但不鼓励直接使用 ASM，因为它要求你必须对 JVM 内部结构包括 class 文件的格式和指令集都很熟悉）。
 
-由于采用的是继承，所以不能对 final 修饰的类进行代理，但 cglib 也可以与 Java 动态代理一样面向接口，因为本质是继承。
+由于采用的是继承，所以**不能对 final 修饰的类进行继承方式的代理**，但 Cglib 也可以与 Java 动态代理一样面向接口，因为实现接口的本质也是继承。
 
 #### 4.2.3. API 说明
 
-cglib 库的代码量不多，但是由于缺乏文档导致学习起来比较困难。2.1.2 版本的 CGLIB 库组织如下所示：
+Cglib 库的代码量不多，但是由于缺乏文档导致学习起来比较困难。2.1.2 版本的 Cglib 库源码组织如下所示：
 - `net.sf.cglib.core`: 底层字节码操作类；大部分与 ASP 相关。
 - `net.sf.cglib.transform`: 编译期、运行期的 class 文件转换类。
 - `net.sf.cglib.proxy`: 代理创建类、方法拦截类。
-- `net.sf.cglib.reflect`: 更快的反射类、C#风格的代理类。
-- `net.sf.cglib.util`: 集合排序工具类
-- `net.sf.cglib.beans`: JavaBean 相关的工具类
+- `net.sf.cglib.reflect`: 更快的反射类、C# 风格的代理类。
+- `net.sf.cglib.util`: 集合排序工具类。
+- `net.sf.cglib.beans`: JavaBean 相关的工具类。
 对于创建动态代理，大部分情况下你只需要使用 proxy 包的一部分 API 即可。
 
-在 cglib 中实现动态代理，主要用到的相关 API 如下：
+在 Cglib 中实现动态代理，主要用到的相关 API 如下：
 - `Enhancer`类：用于指定被代理类、回调拦截器对象（或对象数组）和拦截过滤器，然后动态创建代理类实例。
  - `setSuperclass()`: 指定代理类的父类（即被代理类），传入被代理类的 Class 对象。
  - `setCallback()`: 指定回调拦截器对象，传入一个实现 MethodInterceptor 接口的对象。当调用代理类的方法时，会触发该拦截器中`intercept()`方法的回调。
@@ -483,24 +485,24 @@ cglib 库的代码量不多，但是由于缺乏文档导致学习起来比较�
  - `setCallbackFilter()`: 指定拦截过滤器，传入一个实现 CallbackFilter 接口的对象。
  - `create()`: 动态创建代理对象，返回一个 Object 对象，需要进行强制类型转换。
 
-- `Callback`接口：所有回调拦截器都会实现该接口。
-	- `MethodInterceptor`接口：用于实现一个回调拦截器，需要实现其中的 intercept() 方法，调用被代理类的任意方法时，会触发该方法的执行。
+- `Callback`接口：所有回调拦截器都会继承该接口。
+	- `MethodInterceptor`接口：扩展自 Callback 接口，用于实现一个回调拦截器，需要实现其中的 intercept() 方法，调用被代理类的任意方法时，会触发该方法的执行。
 		- `Object intercept(Object obj, Method method, Object[] params,  MethodProxy proxy) throws Throwable`
-			- Object obj: 由 cglib 动态生成的代理类实例对象。
+			- Object obj: 由 Cglib 动态生成的代理类实例对象。
 			- Method method: 被调用的被代理方法引用对象。
 			- Object[] params: 被调用方法的参数值列表。
 			- MethodProxy proxy: 代理类对方法的代理引用对象，需要在 intercept() 方法中调用该对象的方法`proxy.invokeSuper(obj,arg)`，执行原调用的父类方法。
 	
-	- `FixedValue`接口：用于实现一个锁定方法返回值的回调过滤器，即无论被代理类的方法返回什么值，回调方法都返回固定值。 实现该接口需要实现 loadObject() 方法：
+	- `FixedValue`接口：扩展自 Callback 接口，用于实现一个锁定方法返回值的回调过滤器，即无论被代理类的方法返回什么值，回调方法都返回固定值。实现该接口需要实现 loadObject() 方法：
 		- `Object loadObject() throws Exception`
 
-	- `NoOp.INSTANCE`对象：NoOp.INSTANCE 对象表示一个直接被代理对象方法的回调拦截器。NoOp 表示 no operator，即什么操作也不做，代理类直接调用被代理的方法不进行拦截。 
+	- `NoOp.INSTANCE`对象：扩展自 Callback 接口，NoOp.INSTANCE 对象表示一个直接被代理对象方法的回调拦截器。NoOp 表示 no operator，即什么操作也不做，代理类直接调用被代理的方法不进行拦截。 
 
 - `CallbackFilter` 接口：用于实现一个回调过滤器，可以在回调时指定对不同方法使用不同的回调拦截器，或者根本不执行回调。
 
 	P.S. 在 JDK 动态代理中并没有类似的功能，对 InvocationHandler 接口方法的调用对代理类内的所以方法都有效。
 
-	实现一个回调过滤器，需要实现该接口的`accept()`方法。
+	实现一个回调过滤器，需要实现该接口的`accept()`方法：
 	- `int accept(Method method)`: 参数 Method 对象为被调用的被代理对象方法，返回一个 int 数值，表示调用回调拦截器对象的数组中的位置索引。
 
 #### 4.2.4. 使用示例
@@ -575,19 +577,14 @@ public class TargetMethodCallbackFilter implements CallbackFilter {
 public static void main(String args[]) {  
 		Enhancer enhancer = new Enhancer();  
 		enhancer.setSuperclass(TargetObject.class);  
-		
-		Callback [] callbackArray = new Callback[]{
-			new TargetInterceptor(), 
-			NoOp.INSTANCE, 
-			new TargetResultFixed()
-		};  
-		enhancer.setCallbacks(callbackArray);  
-
-		CallbackFilter callbackFilter = new TargetMethodCallbackFilter();  
-		enhancer.setCallbackFilter(callbackFilter);  
+		enhancer.setCallbacks(new Callback[] {
+				new TargetInterceptor(), 
+				NoOp.INSTANCE, 
+				new TargetResultFixed()
+		});  
+		enhancer.setCallbackFilter(new TargetMethodCallbackFilter());  
 
 		TargetObject targetProxy = (TargetObject)enhancer.create();  
-
 		System.out.println(targetObject2.method1("mmm1"));  
 		System.out.println(targetObject2.method2(100));  
 		System.out.println(targetObject2.method3(100));  
@@ -599,30 +596,28 @@ public static void main(String args[]) {
 
 在动态生成代理对象这一 feature 上，cglib 与 JDK 动态代理的区别在于：
 - 实现方式
-	
-	JDK 动态代理是由 Java 内部的反射机制生成一个实现代理接口的匿名类来实现的，cglib 动态代理底层则是借助 ASM 生成字节码文件创建一个被代理类的子类并覆盖其中的方法来实现的。
+	- JDK 动态代理是由 Java 内部的反射机制生成一个实现代理接口的匿名类来实现的。
+	- Cglib 动态代理是借助 ASM 生成字节码文件创建一个被代理类的子类并覆盖其中的方法来实现的。
 
 - 执行效率
-	
-	反射机制在生成类的过程中比较高效，而 asm 在生成类之后的相关执行过程中比较高效（可以通过将 asm 生成的类进行缓存，这样解决 asm 生成类过程低效问题）。
+	- 反射机制在生成类的过程中更加高效。
+	- ASM 在生成类之后的相关执行过程中比较高效（但可以通过将 ASM 生成的类进行缓存，这样解决 ASM 生成类过程低效问题）。
 
-	参考[性能测试](https://www.jianshu.com/p/1aaacf92e2cd) 可知
-	- 相同情况下，cglib 两种实现方式，`invokeSuper` 和 `setSuperClass` 组合实现方式永远比 `invoke` 和 `setInterfaces` 组合实现方式慢。
-	- cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在代理方法数量较少、函数平均调用的情况下，执行速度比 JDK Proxy 快。但随着代理方法的数量增多，优势越来越不明显，到达某个数量级速度比 JDK Proxy 慢。
-	- cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在调用特定函数（在 switch 中靠后的 case) 会比 JDK Proxy 慢。
+	参考这里的 [性能测试](https://www.jianshu.com/p/1aaacf92e2cd) 可知：
+	- 相同情况下，Cglib 两种实现方式，`invokeSuper` 和 `setSuperClass` 组合实现方式永远比 `invoke` 和 `setInterfaces` 组合实现方式**慢**。
+	- Cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在代理方法数量较少、函数平均调用的情况下，执行速度比 JDK Proxy 快。但随着代理方法的数量增多，优势越来越不明显，到达某个数量级速度比 JDK Proxy 慢。
+	- Cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在调用特定函数（在 switch 中靠后的 case) 会比 JDK Proxy 慢。
 	
 - 使用限制
-	
-	JDK 动态代理的应用前提，必须是目标类基于统一的接口。如果没有上述前提，jdk 动态代理不能应用。由此可以看出，jdk 动态代理有一定的局限性。
-	
-	相比之下 cglib 由于采用字节码生成代理对象，实现的动态代理应用更加广泛。
+	- JDK 动态代理的使用前提，必须是目标类基于统一的接口。如果没有上述前提，JDK 动态代理不能应用。由此可以看出，JDK 动态代理有一定的局限性。
+	- 相比之下 Cglib 由于采用字节码生成代理对象，实现的动态代理没有多余限制，应用更加广泛。
 
 #### 4.2.6. 应用
 
-cglib 广泛的被许多 AOP 的框架使用，例如：
+Cglib 广泛的被许多 AOP 的框架使用，例如：
 - Spring AOP 和 dynaop，为他们提供方法的 interception（拦截）。
-- 最流行的 ORM 工具 hibernate 使用 CGLIB 来代理单端 single-ended（多对一和一对一) 关联（对集合的延迟抓取，是采用其他机制实现的）。
-- EasyMock 和 jMock 通过使用模仿（mock）对象来测试 Java 代码的包，它们都通过使用 cglib 来为那些没有接口的类创建模仿（mock）对象。
+- 最流行的 ORM 工具 hibernate 使用 Cglib 来代理单端 single-ended（多对一和一对一) 关联（对集合的延迟抓取，是采用其他机制实现的）。
+- EasyMock 和 jMock 通过使用模仿（mock）对象来测试 Java 代码的包，它们都通过使用 Cglib 来为那些没有接口的类创建模仿（mock）对象。
 
 ### 4.3. 模拟 JDK Proxy 实现动态代理
 
@@ -638,9 +633,9 @@ https://www.imooc.com/video/4903
 
 #### 4.6.1. AOP
 
-开发软件时，经常会遇到存在相同代码段重复出现的情况，在这种情况下，可通过将这些代码不断地复制粘贴，快速实现软件功能。但采用这样的方法，若在维护时需要修改这部分重复的代码，就需要在每一处粘贴的地方进行修改，工作量巨大。
+开发软件时，经常会遇到存在相同代码段重复出现的情况，在这种情况下，可通过将这些代码不断地复制粘贴，快速实现软件功能。但采用这样的方法，若在维护时需要修改这部分重复的代码，就需要在每一处粘贴的地方进行修改，工作量巨大。因此，可以将这部分重复代码封装成一个方法，再在每处用到该代码段的地方调用该方法即可。通过这种方式，大大降低了后期维护的复杂度，但在每处用到该代码段的地方硬编码调用特定的方法，又产生了新的耦合。
 
-因此，可以将这部分重复代码封装成一个方法，再在每处用到该代码段的地方调用该方法即可。通过这种方式，大大降低了后期维护的复杂度，但在每处用到该代码段的地方硬编码调用特定的方法，又产生了新的耦合。**最理想的效果应是：在每处需要用到该代码段的地方即可以执行该代码段，又无需在程序中以硬编码的方式直接调用特定的封装方法。**这时就可以使用动态代理来实现。
+**最理想的效果应是：在每处需要用到该代码段的地方即可以执行该代码段，又无需在程序中以硬编码的方式直接调用特定的封装方法。**这时就可以使用动态代理来实现。
 
 例：使用 JDK 动态代理实现 AOP。
 ```java
@@ -721,7 +716,7 @@ public class Test {
 
 Spring AOP 中封装了 JDK 和 CGLIB 的动态代理实现，同时引入了 AspectJ 的编程方式和注解，使得可以使用标准的 AOP 编程规范来编写代码外，还提供了多种代理方式选择，可以根据需求来选择最合适的代理模式。而且，Spring 也提供了 XML 配置的方式实现 AOP 配置。可以说是把所有想要的都做出来了，因此，Spring 是在平时编程中使用动态代理的不二选择。
 
-#### 4.6.2. 数据库连接
+#### 4.6.2. 数据库连接池
 
 #### 4.6.3. 事务管理
 
