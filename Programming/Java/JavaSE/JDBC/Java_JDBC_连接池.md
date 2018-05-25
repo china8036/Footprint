@@ -154,3 +154,8 @@ public class ConnectionPool implement DataSource {
 ## 4. Refer Links
 
 [JDBC 第四篇 --【数据库连接池、DbUtils 框架、分页】](https://zhongfucheng.bitcron.com/post/jdbc/jdbcdi-si-pian-shu-ju-ku-lian-jie-chi-dbutilskuang-jia-fen-ye)
+
+[自己动手开发 Java DataSource](http://www.open-open.com/lib/view/open1338106062370.html)
+
+<!-- todo: -->
+[MyBatis 源码分析（5）——内置 DataSource 实现](http://www.cnblogs.com/jabnih/p/5738432.html)

@@ -1,32 +1,32 @@
 - [Design Pattern 结构型模式 - 代理模式](#design-pattern)
-    - [1. 基本概念](#1)
-    - [2. 代理类型](#2)
-    - [3. 静态代理](#3)
-        - [3.1. 继承方式](#31)
-        - [3.2. 聚合方式](#32)
-        - [3.3. 比较](#33)
-    - [4. 动态代理](#4)
-        - [4.1. JDK 动态代理](#41-jdk)
-            - [4.1.1. API 说明](#411-api)
-            - [4.1.2. 使用示例](#412)
-            - [4.1.3. 优缺点](#413)
-        - [4.2. Cglib 动态代理](#42-cglib)
-            - [4.2.1. 基本概念](#421)
-            - [4.2.2. 原理分析](#422)
-            - [4.2.3. API 说明](#423-api)
-            - [4.2.4. 使用示例](#424)
-            - [4.2.5. 与 JDK 动态代理的比较](#425--jdk)
-            - [4.2.6. 应用](#426)
-        - [4.3. 模拟 JDK Proxy 实现动态代理](#43--jdk-proxy)
-        - [4.4. JAVAASSIST 动态代理](#44-javaassist)
-        - [4.5. AspectJ 动态代理](#45-aspectj)
-        - [4.6. 动态代理应用](#46)
-            - [4.6.1. AOP](#461-aop)
-            - [4.6.2. 数据库连接池](#462)
-            - [4.6.3. 事务管理](#463)
-            - [4.6.4. 单元测试动态 mock 对象](#464--mock)
-    - [5. 适用场景](#5)
-    - [6. Refer Links](#6-refer-links)
+	- [1. 基本概念](#1)
+	- [2. 代理类型](#2)
+	- [3. 静态代理](#3)
+		- [3.1. 继承方式](#31)
+		- [3.2. 聚合方式](#32)
+		- [3.3. 比较](#33)
+	- [4. 动态代理](#4)
+		- [4.1. JDK 动态代理](#41-jdk)
+			- [4.1.1. API 说明](#411-api)
+			- [4.1.2. 使用示例](#412)
+			- [4.1.3. 优缺点](#413)
+		- [4.2. Cglib 动态代理](#42-cglib)
+			- [4.2.1. 基本概念](#421)
+			- [4.2.2. 原理分析](#422)
+			- [4.2.3. API 说明](#423-api)
+			- [4.2.4. 使用示例](#424)
+			- [4.2.5. 与 JDK 动态代理的比较](#425--jdk)
+			- [4.2.6. 应用](#426)
+		- [4.3. 模拟 JDK Proxy 实现动态代理](#43--jdk-proxy)
+		- [4.4. JAVAASSIST 动态代理](#44-javaassist)
+		- [4.5. AspectJ 动态代理](#45-aspectj)
+		- [4.6. 动态代理应用](#46)
+			- [4.6.1. AOP](#461-aop)
+			- [4.6.2. 数据库连接池](#462)
+			- [4.6.3. 事务管理](#463)
+			- [4.6.4. 单元测试动态 mock 对象](#464--mock)
+	- [5. 适用场景](#5)
+	- [6. Refer Links](#6-refer-links)
 
 # Design Pattern 结构型模式 - 代理模式
 
@@ -403,9 +403,9 @@ public class GuitaiA implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args)
             throws Throwable {
         System.out.println("销售开始  柜台是： "+this.getClass().getSimpleName());
-        method.invoke(pingpai, args);
+        Object res = method.invoke(pingpai, args);
         System.out.println("销售结束");
-        return null;
+        return res;
     }
 }
 
@@ -491,12 +491,17 @@ Cglib 库的代码量不多，但是由于缺乏文档导致学习起来比较�
 			- Object obj: 由 Cglib 动态生成的代理类实例对象。
 			- Method method: 被调用的被代理方法引用对象。
 			- Object[] params: 被调用方法的参数值列表。
-			- MethodProxy proxy: 代理类对方法的代理引用对象，需要在 intercept() 方法中调用该对象的方法`proxy.invokeSuper(obj,arg)`，执行原调用的父类方法。
+			- MethodProxy proxy: 代理类对方法的代理引用对象，原始类里每一个方法都会在动态的子类里有一个对应的 MethodProxy。
+				
+				我们一般使用 `proxy.invokeSuper(obj,args)` 方法，这个很好理解，就是执行原始类的方法。还有一个方法 `proxy.invoke(obj,args)`，这是执行生成子类的方法，但如果传入的 obj 就是子类的话，会发生内存溢出，因为子类的方法不停地进入 intercept 方法，而这个方法又去调用子类的方法，两个方法直接循环调用了。
+
+				一个 MethodProxy 又对应了两个动态生成的 FastClass 类，一个是对应原始方法，一个对应新生成的子类，MethodProxy.invokeSuper 就是交给对应原始方法那个 FastClass，MethodProxy.invoke 交给另一个。
 	
 	- `FixedValue`接口：扩展自 Callback 接口，用于实现一个锁定方法返回值的回调过滤器，即无论被代理类的方法返回什么值，回调方法都返回固定值。实现该接口需要实现 loadObject() 方法：
 		- `Object loadObject() throws Exception`
 
-	- `NoOp.INSTANCE`对象：扩展自 Callback 接口，NoOp.INSTANCE 对象表示一个直接被代理对象方法的回调拦截器。NoOp 表示 no operator，即什么操作也不做，代理类直接调用被代理的方法不进行拦截。 
+	- [`NoOp.INSTANCE`对象](http://cglib.sourceforge.net/apidocs/net/sf/cglib/proxy/NoOp.html)：扩展自 Callback 接口，NoOp.INSTANCE 对象表示一个没有任何操作的拦截器。NoOp 表示 no operator，即什么操作也不做。 
+	  > Methods using this Enhancer callback will delegate directly to the default (super) implementation in the base class.
 
 - `CallbackFilter` 接口：用于实现一个回调过滤器，可以在回调时指定对不同方法使用不同的回调拦截器，或者根本不执行回调。
 
@@ -528,7 +533,8 @@ public class TargetInterceptor implements MethodInterceptor {
     public Object intercept(Object obj, Method method, Object[] params,  
             MethodProxy proxy) throws Throwable {  
         System.out.println("调用前");  
-        Object result = proxy.invokeSuper(obj, params);  
+        Object result = proxy.invokeSuper(obj, params);  // 执行原始类的方法
+        // Object result = method.invoke(conn, params); // 执行生成子类的方法，obj 是调用该方法的对象
         System.out.println(" 调用后"+result);  
         return result;  
     }  
@@ -624,6 +630,10 @@ Cglib 广泛的被许多 AOP 的框架使用，例如：
 https://www.imooc.com/video/4903
 
 ### 4.4. JAVAASSIST 动态代理
+
+[数据库连接池 HikariCP 中就采用了 JAVAASSIST 实现连接对象的动态代理](https://www.javafm.com/issue/141)。
+
+JAVAASSIST 的字节码生成方式比 ASM 方便，JAVAASSIST 只需用字符串拼接出 Java 源码，便可生成相应字节码，而 ASM 需要手工写字节码。
 
 ### 4.5. AspectJ 动态代理
 
@@ -754,3 +764,5 @@ Spring AOP 中封装了 JDK 和 CGLIB 的动态代理实现，同时引入了 As
 [AOP 的底层实现 -CGLIB 动态代理和 JDK 动态代理](https://blog.csdn.net/dreamrealised/article/details/12885739)
 
 [代理 10 cglib 和 jdk 动态代理 调用性能测试](https://www.jianshu.com/p/1aaacf92e2cd)
+
+[jdk 和 cglib 简单理解](http://www.cnblogs.com/onlywujun/p/3524690.html)

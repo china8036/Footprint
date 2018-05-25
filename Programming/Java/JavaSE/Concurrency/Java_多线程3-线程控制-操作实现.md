@@ -19,7 +19,10 @@
 
 ## 1. 创建线程
 
-在 Java 中线程的创建有三种方式：继承 Thread，实现 Runnable 接口，利用 Callable 与 Future。
+在 Java 中线程的创建有三种方式：
+- 继承 Thread。
+- 实现 Runnable 接口。
+- 利用 Callable 与 Future。
 
 ### 1.1. 继承 Thread 类
 

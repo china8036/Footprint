@@ -50,8 +50,6 @@ Java 的 IO 流是实现输入 / 输出的基础，它可以方便地实现数�
 
 ## 3. 类谱图
 
-![image](C:\Users\firej\Desktop\414ba84babdb0d535594fbeb490e3612.jpg)
-
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/6f4008b30f3cb326d939e005c613ee2d.jpg)
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/f7d1564780c2b981c09e1bc17f157e39.jpg)

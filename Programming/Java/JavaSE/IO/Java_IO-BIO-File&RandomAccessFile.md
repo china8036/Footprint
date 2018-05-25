@@ -1,23 +1,23 @@
 - [Java IO File & RandomAccessFile](#java-io-file-randomaccessfile)
-  - [1. File 类](#1-file-%E7%B1%BB)
-    - [1.1. 基本概念](#11-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [1.2. 常用 API](#12-%E5%B8%B8%E7%94%A8-api)
-      - [1.2.1. 文件 / 路径分隔符](#121-%E6%96%87%E4%BB%B6-%E8%B7%AF%E5%BE%84%E5%88%86%E9%9A%94%E7%AC%A6)
-      - [1.2.2. 构造方法](#122-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95)
-      - [1.2.3. 文件名 / 路径名方法](#123-%E6%96%87%E4%BB%B6%E5%90%8D-%E8%B7%AF%E5%BE%84%E5%90%8D%E6%96%B9%E6%B3%95)
-      - [1.2.4. 文件属性操作方法](#124-%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95)
-      - [1.2.5. 文件信息获取方法](#125-%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95)
-      - [1.2.6. 文件操作方法](#126-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95)
-      - [1.2.7. 目录操作方法](#127-%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95)
-  - [2. RandomAccessFile 类](#2-randomaccessfile-%E7%B1%BB)
-    - [2.1. 基本概念](#21-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2.2. 常用 API](#22-%E5%B8%B8%E7%94%A8-api)
-      - [2.2.1. 构造方法](#221-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95)
-      - [2.2.2. 指针操作](#222-%E6%8C%87%E9%92%88%E6%93%8D%E4%BD%9C)
-      - [2.2.3. 读写操作](#223-%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C)
-      - [2.2.4. 其它操作](#224-%E5%85%B6%E5%AE%83%E6%93%8D%E4%BD%9C)
-    - [2.3. 应用](#23-%E5%BA%94%E7%94%A8)
-      - [2.3.1. 多线程断点网络下载工具](#231-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%96%AD%E7%82%B9%E7%BD%91%E7%BB%9C%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7)
+  - [1. File 类](#1-file)
+    - [1.1. 基本概念](#11)
+    - [1.2. 常用 API](#12--api)
+      - [1.2.1. 文件 / 路径分隔符](#121)
+      - [1.2.2. 构造方法](#122)
+      - [1.2.3. 文件名 / 路径名方法](#123)
+      - [1.2.4. 文件属性操作方法](#124)
+      - [1.2.5. 文件信息获取方法](#125)
+      - [1.2.6. 文件操作方法](#126)
+      - [1.2.7. 目录操作方法](#127)
+  - [2. RandomAccessFile 类](#2-randomaccessfile)
+    - [2.1. 基本概念](#21)
+    - [2.2. 常用 API](#22--api)
+      - [2.2.1. 构造方法](#221)
+      - [2.2.2. 指针操作](#222)
+      - [2.2.3. 读写操作](#223)
+      - [2.2.4. 其它操作](#224)
+    - [2.3. 应用](#23)
+      - [2.3.1. 多线程断点网络下载工具](#231)
   - [3. Refer Links](#3-refer-links)
 
 # Java IO File & RandomAccessFile
@@ -114,7 +114,7 @@ implements Serializable, Comparable<File>
 [RandomAccessFile](https://docs.oracle.com/javase/9/docs/api/java/io/RandomAccessFile.html) 是 Java 输入输出流体系中功能最丰富的文件内容访问类，它封装了字节流，同时还封装了一个缓冲区（字符数组），通过内部的指针来操作字符数组中的数据，提供了众多方法来访问文件内容。
 
 特点：
-- RandomAccessFile 虽然位于 java.io 包下，但它不是 InputStream 或 OutputStream 的子类，但 RandomAccessFile 包含 InputStream 的三个 read 方法，也包含 OutputStream 的三个 write 方法。
+- RandomAccessFile 位于 java.io 包下，虽然它不是 InputStream 或 OutputStream 的子类，但 RandomAccessFile 包含 InputStream 的三个 read 方法，也包含 OutputStream 的三个 write 方法。
 
 - FileInputStream 只能对文件进行读操作，FileOutputStream 只能对文件进行写操作，而 RandomAccessFile 同时支持对文件内容的读取和写入。
 

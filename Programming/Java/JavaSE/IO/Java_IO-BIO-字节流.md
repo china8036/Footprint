@@ -27,7 +27,7 @@ Java IO 字节流是指在输入输出的过程中，操作以 1 个字节作为
 
 ### 2.1. 字节输入流
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/22/600402c869c5fc6f30e54320482e6263.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/25/18a349bab0b81330ce3e4ad842008e39.jpg)
 
 `InputStream`: Java IO 中的顶级的字节输入流的抽象基类，定义了最基础的输入、读取的相关方法。实现了 Closeable 接口。
 

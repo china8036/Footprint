@@ -1,28 +1,28 @@
-- [Java 反射 - Class 类](#java-%E5%8F%8D%E5%B0%84---class-%E7%B1%BB)
-    - [1. 反射的定义](#1-%E5%8F%8D%E5%B0%84%E7%9A%84%E5%AE%9A%E4%B9%89)
-    - [2. Class 类的定义](#2-class-%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89)
-    - [3. Class 对象的获取](#3-class-%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%8E%B7%E5%8F%96)
-        - [3.1. 通过 .class](#31-%E9%80%9A%E8%BF%87-class)
-        - [3.2. 通过 Object.getClass()](#32-%E9%80%9A%E8%BF%87-objectgetclass)
-        - [3.3. 通过 Class.forName()](#33-%E9%80%9A%E8%BF%87-classforname)
+- [Java 反射 - Class 类](#java----class)
+    - [1. 反射的定义](#1)
+    - [2. Class 类的定义](#2-class)
+    - [3. Class 对象的获取](#3-class)
+        - [3.1. 通过 .class](#31--class)
+        - [3.2. 通过 Object.getClass()](#32--objectgetclass)
+        - [3.3. 通过 Class.forName()](#33--classforname)
         - [3.4. NOTE](#34-note)
-    - [4. Class 对象的操作](#4-class-%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%93%8D%E4%BD%9C)
-        - [4.1. 类名](#41-%E7%B1%BB%E5%90%8D)
-        - [4.2. 类的修饰符](#42-%E7%B1%BB%E7%9A%84%E4%BF%AE%E9%A5%B0%E7%AC%A6)
-        - [4.3. 类的成员变量 Field](#43-%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F-field)
-            - [4.3.1. 获取 Field 对象（使用 Class 类中的方法）](#431-%E8%8E%B7%E5%8F%96-field-%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%BD%BF%E7%94%A8-class-%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%89)
-            - [4.3.2. 获取 Field 类型（使用 Field 类中的方法）](#432-%E8%8E%B7%E5%8F%96-field-%E7%B1%BB%E5%9E%8B%EF%BC%88%E4%BD%BF%E7%94%A8-field-%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%89)
-                - [4.3.2.1. 数组类型的反射操作](#4321-%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%8D%E5%B0%84%E6%93%8D%E4%BD%9C)
-                - [4.3.2.2. 枚举类型的反射操作](#4322-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%8D%E5%B0%84%E6%93%8D%E4%BD%9C)
-            - [4.3.3. 读取 / 修改 Field 值（使用 Field 类中的方法）](#433-%E8%AF%BB%E5%8F%96-%E4%BF%AE%E6%94%B9-field-%E5%80%BC%EF%BC%88%E4%BD%BF%E7%94%A8-field-%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%89)
-        - [4.4. 类的方法 Method](#44-%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95-method)
-            - [4.4.1. 获取 Method 对象（使用 Class 类中的方法）](#441-%E8%8E%B7%E5%8F%96-method-%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%BD%BF%E7%94%A8-class-%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%89)
-            - [4.4.2. 获取方法要素（使用 Method 类中的方法）](#442-%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E8%A6%81%E7%B4%A0%EF%BC%88%E4%BD%BF%E7%94%A8-method-%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%89)
-            - [4.4.3. 执行方法（使用 Method 类的方法）](#443-%E6%89%A7%E8%A1%8C%E6%96%B9%E6%B3%95%EF%BC%88%E4%BD%BF%E7%94%A8-method-%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%89)
-        - [4.5. 类的构造方法 Constructor](#45-%E7%B1%BB%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95-constructor)
-            - [4.5.1. 获取 Constructor 对象（使用 Class 类的方法）](#451-%E8%8E%B7%E5%8F%96-constructor-%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%BD%BF%E7%94%A8-class-%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%89)
-            - [4.5.2. 创建类的实例对象（使用 Constructor 类的方法）](#452-%E5%88%9B%E5%BB%BA%E7%B1%BB%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%BD%BF%E7%94%A8-constructor-%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%89)
-    - [5. 反射操作常见的异常](#5-%E5%8F%8D%E5%B0%84%E6%93%8D%E4%BD%9C%E5%B8%B8%E8%A7%81%E7%9A%84%E5%BC%82%E5%B8%B8)
+    - [4. Class 对象的操作](#4-class)
+        - [4.1. 类名](#41)
+        - [4.2. 类的修饰符](#42)
+        - [4.3. 类的成员变量 Field](#43--field)
+            - [4.3.1. 获取 Field 对象（使用 Class 类中的方法）](#431--field--class)
+            - [4.3.2. 获取 Field 类型（使用 Field 类中的方法）](#432--field--field)
+                - [4.3.2.1. 数组类型的反射操作](#4321)
+                - [4.3.2.2. 枚举类型的反射操作](#4322)
+            - [4.3.3. 读取 / 修改 Field 值（使用 Field 类中的方法）](#433-----field--field)
+        - [4.4. 类的方法 Method](#44--method)
+            - [4.4.1. 获取 Method 对象（使用 Class 类中的方法）](#441--method--class)
+            - [4.4.2. 获取方法要素（使用 Method 类中的方法）](#442--method)
+            - [4.4.3. 执行方法（使用 Method 类的方法）](#443--method)
+        - [4.5. 类的构造方法 Constructor](#45--constructor)
+            - [4.5.1. 获取 Constructor 对象（使用 Class 类的方法）](#451--constructor--class)
+            - [4.5.2. 创建类的实例对象（使用 Constructor 类的方法）](#452--constructor)
+    - [5. 反射操作常见的异常](#5)
     - [6. Refer Links](#6-refer-links)
 
 # Java 反射 - Class 类
@@ -642,7 +642,7 @@ Object invoke(Object obj, Object... args) {}
 ```
 
 NOTE
-- 第一个参数 Object 实质上是 Method 所依附的 Class 对应的类的实例，如果这个方法是一个静态方法，那么 ojb 为 null。
+- 第一个参数 Object 实质上是 Method 所依附的 Class 对应的类的实例，如果这个方法是一个静态方法，那么 obj 为 null。
 - 第二个参数是可变参数，对应的是调用方法时要传递的参数。
 - 返回的对象是 Object，所以实际上执行的时候要进行强制转换。
 - 在对 Method 调用 invoke() 的时候，如果方法本身会抛出异常，那么这个异常就会经过包装，由 Method 统一抛出 InvocationTargetException，而通过 InvocationTargetException.getCause() 可以获取真正的异常。
