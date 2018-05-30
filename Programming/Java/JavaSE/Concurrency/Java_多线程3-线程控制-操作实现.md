@@ -27,7 +27,7 @@
 ### 1.1. 继承 Thread 类
 
 通过继承 Thread 类来创建并启动多线程的步骤如下：
-1. 定义 Thread 类的子类，并重写该类的 run 方法，该 run 方法的方法体就代表了线程要完成的任务。因此把 run() 方法称为执行体。 
+1. 定义 Thread 类的子类，并重写该类的 run 方法，该 run 方法的方法体就代表了线程要完成的任务，因此把 run() 方法称为执行体。 
 1. 创建 Thread 子类的实例，即创建了线程对象。 
 1. 调用线程对象的 start() 方法来启动该线程。
 
@@ -51,7 +51,7 @@ public class FirstMethod extends Thread {
 ### 1.2. 实现 Runnable
 
 实现 Runnable 接口来创建并启动多线程的步骤如下：
-1. 定义 runnable 接口的实现类，并重写该接口的 run() 方法，该 run() 方法的方法体同样是该线程的线程执行体。
+1. 定义 Runnable 接口的实现类，并重写该接口的 run() 方法，该 run() 方法的方法体同样是该线程的线程执行体。
 1. 创建 Runnable 实现类的实例，并依此实例作为 Thread 的 target 来创建 Thread 对象，该 Thread 对象才是真正的线程对象。
 1. 调用线程对象的 start() 方法来启动该线程。
 
@@ -106,7 +106,7 @@ public class Test {
         System.out.println("主线程在执行任务");
          
         try {
-            System.out.println("task 运行结果"+futureTask.get());
+            System.out.println("task 运行结果" + futureTask.get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -169,20 +169,22 @@ task 运行结果 4950
 
 ### 1.4. 比较
 
-实现 Runnable 和实现 Callable 接口的方式基本相同，不过是后者执行 call() 方法有返回值，后者线程执行体 run() 方法无返回值，因此可以把这两种方式归为一种方式。
+优缺点：
+- 实现 Runnable 或实现 Callable 接口
 
-实现 Runnable 或实现 Callable 接口的优缺点：
-- 优点
-  - 接口创建线程可以实现资源共享，比如多个线程可以共享一个 Runnable 资源。从而将 CPU、代码和数据分开，形成清晰的模型，充分体现了面向对象的思想。
-  - 接口创建线程可以避免由于 Java 的单继承特性而带来的局限。
-- 缺点
-  - 编程稍微复杂，如果需要访问当前线程，必须调用 Thread.currentThread() 方法。 
+	实现 Runnable 和实现 Callable 接口的方式基本相同，不过是后者执行 call() 方法有返回值，前者线程执行体 run() 方法无返回值，因此可以把这两种方式归为一种方式。
 
-继承 Thread 的优缺点：
-- 优点
-  - 编程简单，若需要访问当前线程，直接使用 this 即可获取当前线程对象。
-- 缺点
-  - 由于 Java 是单继承的，所以无法再继承其它父类。
+	- 优点
+		- 接口创建线程可以实现资源共享，比如多个线程可以共享一个 Runnable 资源。从而将 CPU、代码和数据分开，形成清晰的模型，充分体现了面向对象的思想。
+		- 接口创建线程可以避免由于 Java 的单继承特性而带来的局限。
+	- 缺点
+		- 编程稍微复杂，如果需要访问当前线程，必须调用 Thread.currentThread() 方法。 
+
+- 继承 Thread 的优缺点：
+	- 优点
+		- 编程简单，若需要访问当前线程，直接使用 this 即可获取当前线程对象。
+	- 缺点
+		- 由于 Java 是单继承的，所以无法再继承其它父类。
 
 综合以上比较，**一般更加推荐采用实现 Runnable 或实现 Callable 接口的方式来创建多线程**。
 
@@ -191,9 +193,9 @@ task 运行结果 4950
 线程的退出有以下 3 种情况：
 - 线程中的 run 方法执行完方法体中的最后一条语句后，经由执行 return 语句自然返回。
 - 出现了在方法中没有捕获的异常，意外退出。
-- 调用 [Thread.stop](https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html#stop--)​() 方法终止线程，但该方法在新版 JDK 中已被弃用。
+- 调用 [Thread.stop](https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html#stop--)​() 方法终止线程，但**该方法在新版 JDK 中已被弃用**。
 
-因此，没有可以强制线程终止的方法。但推荐使用 [interrupt](https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html#interrupt--)() 方法请求终止线程。
+因此，**没有可以强制线程终止的方法**。但推荐使用 [interrupt](https://docs.oracle.com/javase/9/docs/api/java/lang/Thread.html#interrupt--)() 方法请求终止线程。
 
 interrupt() 方法会将该线程的中断状态被置为 true，而每个线程应不断地检查该状态标志，以判断线程是否被请求中断，然后定义处理请求的响应方式：
 ```java
@@ -287,13 +289,13 @@ public enum State {
 
 ## 4. 线程优先级
 
-在 Java 的多线程中，每一个线程都有一个优先级。默认情况下，一个线程继承它的父线程的优先级。
+在 Java 的多线程中，每一个线程都有一个优先级。**默认情况下，一个线程继承它的父线程的优先级**。
 
 通过 `void	setPriority​(int newPriority)` 方法可以手动设置线程的优先级（可将优先级设置为`MIN_PRIORITY`与`MAX_PRIORITY`之间的任意值，Thread 中`MAX_PRIORITY`为 10，`MIN_PRIORITY`为 1，`NORM_PRIORITY`为 5）。
 
 NOTE：
 
-线程优先级是高度依赖于操作系统的。当虚拟机依赖于宿主机平台的线程实现机制时，Java 线程优先级会被映射到宿主机平台的优先级上，可能更多也可能更少。因此，不要将应用程序构建为功能的正确性依赖于优先级，建议只使用 MIN_PRIORITY、NORM_PRIORITY、MAX_PRIORITY。
+**线程优先级是高度依赖于操作系统的**。当虚拟机依赖于宿主机平台的线程实现机制时，Java 线程优先级会被映射到宿主机平台的优先级上，可能更多也可能更少。因此，不要将应用程序构建为功能的正确性依赖于优先级，建议只使用 MIN_PRIORITY、NORM_PRIORITY、MAX_PRIORITY。
 
 相关 API
 ```java
@@ -316,7 +318,7 @@ public final void setPriority(int newPriority) {
 private native void setPriority0(int newPriority);
 ```
 
-## 5. 后台线程
+## 5. 后台线程 / 守护线程
 
 后台线程的唯一用途是为其它线程提供服务，例如用于计时的线程，JVM 的 GC 线程就是典型的后台线程。因此，当所有前台线程都死亡，只剩下后台线程时，虚拟机会自动退出。
 
@@ -330,7 +332,7 @@ private native void setPriority0(int newPriority);
 
 ## 6. 线程睡眠
 
-sleep() 可使线程睡眠，交出 CPU，让 CPU 去执行其他的任务。sleep 方法不会释放锁，也就是说如果当前线程持有对某个对象的锁，则即使调用 sleep 方法，其他线程也无法访问这个对象。sleep 方法相当于让线程进入阻塞状态。
+sleep() 可使线程睡眠，交出 CPU，让 CPU 去执行其他的任务，相当于让线程进入阻塞状态。**sleep 方法不会释放锁，也就是说如果当前线程持有对某个对象的锁，则即使调用 sleep 方法，其他线程也无法访问这个对象**。
 ```java
 public static native void sleep(long millis) throws InterruptedException;	
 

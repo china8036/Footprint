@@ -21,6 +21,7 @@
 如 ISP、ARPANET（分组交换网络)(Internet 前身)
 
 ### 其它概念
+
 - 多个网络的链接称为互联网络，Internet 是最著名的互联网络实例，但不是唯一的
 - 对等通信：
 - vLAN 和 LAN 的区别：
@@ -28,9 +29,15 @@ vLAN 可以把一个屋子里的网划分成若干个局域网，而 LAN 只是�
 - 网关：连接两个网络，属于网络层设备；
 - 路由器可以作网关，集线器、交换机不可以；
 
-## OSI 模型
+## 网络模型
 
-## TCP/IP 模型
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/26/af86b13a2995d8ace66981d17431d9f0.jpg)
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/26/8157d0c701a589af3f2843e4ef4fb0d5.jpg)
+
+### OSI 模型
+
+### TCP/IP 模型
 
 广播的类型可分为二层广播和三层广播：
 二层广播：目的 MAC（广播地址） xx.xx.xx.xx.xx.FF，不可跨路由器；
@@ -67,3 +74,11 @@ https://www.zhihu.com/question/20465477
 集线器不能将网络分段，而交换机可以。
 详细来讲，交换机会划分冲突域，路由器作为一种特殊的交换机，除了划分冲突域之外还可以划分广播域。而集线器，什么都不划分。
 使用集线器将多台 PC 连接起来是一种廉价的解决方案，适合用于家庭网络和故障排除，仅此而已。
+
+## Refer Links
+
+http://blog.51cto.com/yaocoder/1553513
+
+http://blog.51cto.com/yaocoder/1556742
+
+http://blog.51cto.com/yaocoder/1565740
