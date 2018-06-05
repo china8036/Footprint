@@ -39,7 +39,7 @@
 
 Serializable 接口是一个标记接口，其源码中没有包含任何内容，因此，实现该接口无须实现任何方法，它仅仅用于在执行对象序列化时向序列化处理流表明该类的实例是可序列化的。
 
-由于序列化机制是 Java EE 平台的基础，因此通常建议 Java EE 中创建的每一个 JavaBean 都应实现 Serializable 接口。
+由于序列化机制是 Java EE 平台的基础，因此**通常建议 Java EE 中创建的每一个 JavaBean 都应实现 Serializable 接口**。
 
 ### 2.2. Externalizable 接口
 
@@ -75,11 +75,11 @@ serialVersionUID 有两种生成方式：默认生成和显示指定。
   private static final long serialVersionUID = 1L;
   ```
 
-那两种方式使用的情景是什么呢？我认为应该把握一个判断原则：是否允许向下兼容。
+那两种方式使用的情景是什么呢？应该把握一个判断原则：是否允许向下兼容。
 - 默认方式使用情景：一旦创建则不允许改变。
 - 显式方式使用情景：对类有一定的向下兼容性，当不允许兼容时，可以通过改变 UID 的值在实现。
 
-**强烈建议使用显式指定的方式，以防范潜在的不兼容根源，且可以带来小小的性能提升。**
+**因此，强烈建议使用显式指定的方式，以防范潜在的不兼容根源，且可以带来小小的性能提升。**
 
 ## 5. 对象操作处理流
 
@@ -116,7 +116,7 @@ serialVersionUID 有两种生成方式：默认生成和显示指定。
 - `void	close​()`: Closes the stream.
 - `void	flush​()`: Flushes the stream.
 
-#### 5.1.3. 序列化 NOTE
+NOTE:
 
 - 若一个类实现了序列化接口，那么其子类都可以进行序列化。
 
@@ -124,9 +124,9 @@ serialVersionUID 有两种生成方式：默认生成和显示指定。
   - 若某个父类是不可序列化的，但带有无参构造器，则该父类中定义的成员变量值不会被序列化到二进制流中。
   - 若某个父类是不可序列化的，且没有无参构造器，则反序列化时会抛出 InvalidClassException 异常。
 
-- 若一个实现了序列化接口的类中包含了引用类型的属性，则只有该属性的类是可序列化的，该类才是可序列化的，否则会导致异常。
+- **若一个实现了序列化接口的类中包含了引用类型的属性，则只有该属性的类是可序列化的，该类才是可序列化的**，否则会导致异常。
 
-- 只有对象中的类名、实例变量（包括基本数据类型、数组、引用类型）才会被序列化，类中的其它成分（如方法、静态变量、transient 变量等）都不会被序列化。
+- **只有对象中的类名、实例变量（包括基本数据类型、数组、引用类型）才会被序列化**，类中的其它成分（如方法、静态变量、transient 变量等）都不会被序列化。
 
 ### 5.2. 对象反序列化：ObjectOutputStream
 
@@ -159,7 +159,7 @@ serialVersionUID 有两种生成方式：默认生成和显示指定。
 - `int	readUnsignedShort​()`: Reads an unsigned 16 bit short.
 - `String	readUTF​()`: Reads a String in modified UTF-8 format.
 
-#### 5.2.3. 反序列化 NOTE
+NOTE:
 
 - 若调用`readObject​()`方法读取二进制流中的对象，该方法只返回一个 Object 类型的对象，需要将对象强制类型转换成真实的类型。
 
@@ -195,12 +195,10 @@ public class UseStudent {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try (
-            // 用于 Student 对象序列化
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-            // 用于 Student 对象反序列化
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-        ) {
+        try ( // 用于 Student 对象序列化
+              ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+              // 用于 Student 对象反序列化
+              ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             // 对象序列化
             oos.writeObject(st);
             oos.flush();

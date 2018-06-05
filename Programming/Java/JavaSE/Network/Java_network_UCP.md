@@ -1,5 +1,8 @@
 - [Java 网络编程：UDP 编程](#java-udp)
-  - [Refer Links](#refer-links)
+	- [1. DatagramSocket](#1-datagramsocket)
+	- [2. DatagramPacket](#2-datagrampacket)
+	- [3. MulticastSocket](#3-multicastsocket)
+	- [4. Refer Links](#4-refer-links)
 
 # Java 网络编程：UDP 编程
 
@@ -25,7 +28,7 @@ java.net.[DatagramPacket](https://docs.oracle.com/javase/9/docs/api/java/net/Dat
 DatagramPacket 提供了以下构造器：
 - `DatagramPacket​(byte[] buf, int length)`: 以一个空数组来创建 DatagramPacket 对象，该对象的作用是接收 DatagramSocket 中的数据。
 - `DatagramPacket​(byte[] buf, int offset, int length, InetAddress address, int port)`: 以一个包含数据的数组来创建 DatagramPacket 对象，同时指定目的地的 IP 地址和端口，作为要发送的数据报。
-- `DatagramPacket​(byte[] buf, int offset, int length)`: 以一个空数组来创建 DatagramPacket 对象，并指定接收到的数据放入 buf 数组中时从 offset 开始，最多方 length 个字节。
+- `DatagramPacket​(byte[] buf, int offset, int length)`: 以一个空数组来创建 DatagramPacket 对象，并指定接收到的数据放入 buf 数组中时从 offset 开始，最多放 length 个字节。
 - `DatagramPacket​(byte[] buf, int length, InetAddress address, int port)`: 创建一个用于发送的 DatagramPacket 对象，指定发送 buf 数组中从 offset 开始，总共 length 个字节的部分内容。
 
 NOTE: UDP 数据报文一次传送的最大数据为**65507**个字节，因此接收方应该提供一个有足够大的缓存空间的 DatagramPacket 实例，以完整地存放调用 receive() 方法时应用程序协议所允许的最大长度的消息。
@@ -46,7 +49,7 @@ MulticastSocket 提供了以下构造器：
 - `MulticastSocket​(int port)`: 使用本机默认地址、指定端口来创建一个 MulticastSocket​对象。
 - `MulticastSocket​(SocketAddress bindaddr)`: 使用本机指定地址、指定端口来创建一个 MulticastSocket​对象。
 
-创建 MulticastSocket​ 对象后，需要将该对象加入指定的多点广播地址：
+创建 MulticastSocket​ 对象后，需要将该对象加入指定的多点广播地址 (224.0.0.0 ~ 239.255.255.255)：
 - `void	joinGroup​(InetAddress mcastaddr)`: Joins a multicast group.
 - `void	joinGroup​(SocketAddress mcastaddr, NetworkInterface netIf)`: Joins the specified multicast group at the specified interface.
 - `void	leaveGroup​(InetAddress mcastaddr)`: Leave a multicast group.
@@ -71,7 +74,7 @@ eg:
 try {
     String message[] = {"这是一条广播信息"}; 
     int port = 9876; // 组播的端口  
-    InetAddress group = InetAddress.getByName("230.198.112.0"); // 设置广播组地址  
+    InetAddress group = InetAddress.getByName("230.198.112.0"); // 设置广播组地址 224.0.0.0 ~ 239.255.255.255
     MulticastSocket mutiSocket = new MulticastSocket(port); // 广播套接字将在 port 端口广播  
     mutiSocket.setTimeToLive(1); // 可省略  
     mutiSocket.joinGroup(group); // 加入组播地址 

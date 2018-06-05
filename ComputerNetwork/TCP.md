@@ -14,3 +14,9 @@ https://blog.insanecoder.top/tcp-packet-splice-and-split-issue/
 
 
 UDP是基于报文发送的，从UDP的帧结构可以看出，在UDP首部采用了16bit来指示UDP数据报文的长度，因此在应用层能很好的将不同的数据报文区分开，从而避免粘包和拆包的问题。而TCP是基于字节流的，虽然应用层和TCP传输层之间的数据交互是大小不等的数据块，但是TCP把这些数据块仅仅看成一连串无结构的字节流，没有边界；另外从TCP的帧结构也可以看出，在TCP的首部没有表示数据长度的字段，基于上面两点，在使用TCP传输数据时，才有粘包或者拆包现象发生的可能。
+
+
+Linux中，一个端口能够接受tcp链接数量的理论上限是？
+https://www.nowcoder.com/questionTerminal/997f45dddc9b4c8ea7da76288aa439d1
+
+http://wanshi.iteye.com/blog/1256282
