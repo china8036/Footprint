@@ -118,7 +118,7 @@ IO 多路复用的操作流程如下：
 
 用户线程首先需要把需要监听的 socket 注册至 selector，然后 selector 负责去轮询各个 socket 通道是否有数据到来，一旦有数据到来，select 返回，最后用户程序读取 IO 数据，这个过程仍然是用户线程阻塞直至数据读取完成。在整个过程中，只在调用 select、poll、epoll 的时候才会阻塞，读写操作是不会阻塞的，从而整个进程或者线程就被充分利用起来。
 
-IO 多路复用采用 Reactor 设计模式（事件驱动模式）:
+IO 多路复用采用 **Reactor 设计模式**（事件驱动模式）:
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/65bad25a2277c4ab4028d661827a4132.jpg)
 
@@ -126,7 +126,7 @@ IO 多路复用采用 Reactor 设计模式（事件驱动模式）:
 
 ### 2.4. 异步非阻塞式 IO / 异步 IO
 
-异步 IO 模型由 POSIX 规范定义，需要操作系统更强的支持，它采用 Proactor 设计模式，操作流程如下：
+异步 IO 模型由 POSIX 规范定义，需要操作系统更强的支持，它采用 **Proactor 设计模式**，操作流程如下：
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/76a2c346cbf2a69a4a50e39a0f8a4c20.jpg)
 

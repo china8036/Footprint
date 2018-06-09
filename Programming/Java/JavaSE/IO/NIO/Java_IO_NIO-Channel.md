@@ -422,7 +422,7 @@ NOTE：
 [SelectableChannel](https://docs.oracle.com/javase/9/docs/api/java/nio/channels/SelectableChannel.html) 抽象类是所有可用于 IO 多路复用器 Selector 的基类，它提供了多个用于实现基于 IO 多路复用的非阻塞 IO 的方法：
 - `SelectableChannel	configureBlocking​(boolean block)`: 设置 Channel 是否运行在阻塞模式下，若设置为 false，则 Channel 调用 connect()，read() 和 write() 等方法时都会立即返回而不会阻塞线程。
 - `boolean	isBlocking​()`: Tells whether or not every I/O operation on this channel will block until it completes.
-- `SelectionKey	register​(Selector sel, int ops)`: 将 Channel 注册到指定的 IO 复用器上，并返回注册后的 SelectorKey。
+- `SelectionKey	register​(Selector sel, int ops)`: 将 Channel 注册到指定的 IO 复用器 Selector 上，并返回注册后的 SelectorKey。
   - 参数 ops 指定了需要 Selector 监听的 IO 操作，在 SelectionKey 类中用静态变量定义了 4 种 IO 操作：
     ```java
     // Operation-set bit for read operations.

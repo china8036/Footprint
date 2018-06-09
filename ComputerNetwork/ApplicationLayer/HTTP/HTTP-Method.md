@@ -1,3 +1,15 @@
+- [HTTP Method NOTE](#http-method-note)
+  - [1. GET](#1-get)
+    - [1.1. 编码](#11-编码)
+  - [2. POST](#2-post)
+    - [2.1. 编码](#21-编码)
+    - [2.2. GET 与 POST 的区别：](#22-get-与-post-的区别)
+  - [3. PUT](#3-put)
+  - [4. HEAD](#4-head)
+  - [5. DELETE](#5-delete)
+  - [6. OPTIONS](#6-options)
+  - [7. TRACE](#7-trace)
+  - [8. CONNECT](#8-connect)
 
 # HTTP Method NOTE
 
@@ -20,7 +32,7 @@ webservice： http://www.w3school.com.cn/webservices/
 
 Http 协议定义了客户端与服务器交互的不同方法，最基本的方法有 4 种，分别是 GET，POST，PUT，DELETE。URL 定位了这个资源，而 HTTP 中的 GET，POST，PUT，DELETE 就是对应着对这个资源的查，改，增，删 4 个操作；
 
-## GET
+## 1. GET
 
 get 方法用于请求访问已被 URI 识别的资源，指定的资源经服务器端解析后返回响应内容；
 
@@ -31,7 +43,8 @@ GET 方法是浏览器默认传递参数的方法，一些敏感信息，如密�
 
 GET 方法传输数据的大小有限制；实际上，URL 不存在参数上限的问题，HTTP 协议规范没有对 URL 长度进行限制。这个限制是特定的浏览器及服务器对它的限制。IE 对 URL 长度的限制是 2083 字节 (2K+35)。对于其他浏览器，如 Netscape、FireFox 等，理论上没有长度限制，其限制取决于操作系统的支持。
 
-### 	编码
+### 1.1. 编码
+
 http://blog.csdn.net/yanwushu/article/details/8088260
 
 客户端：
@@ -50,7 +63,7 @@ http://blog.csdn.net/yanwushu/article/details/8088260
     <Connector port="8080" protocol="HTTP/1.1" maxThreads="150" connectionTimeout="20000" redirectPort="8443" URIEncoding="GBK"/>   // 或 utf-8
     ```
 
-## POST
+## 2. POST
 
 post 方法用于传输实体的主体；
 
@@ -62,9 +75,10 @@ JSP 使用 getParameter() 来获得传递的参数，getInputStream() 方法用�
 
 POST 是没有大小限制的，HTTP 协议规范也没有进行大小限制。POST 数据是没有限制的；起限制作用的顶多是服务器的处理程序的处理能力，而这个限制是针对所有 HTTP 请求的，与 GET、POST 没有多少关系；
 
-### 编码
+### 2.1. 编码
 
 - 客户端（浏览器）编码
+ 
   在 form 所在的 html 文件里如果有段`<meta http-equiv="Content-Type" content="text/html; charset= 字符集（GBK，utf-8 等）"/>`，那么 post 就会用此处指定的编码方式编码，指定 form 表单的 post 方法提交数据的 URL encode 编码方式；
 
   从这里可以看出对于 get 方法来说，URL encode 的编码方式是由浏览器设置来决定，（可以用 js 做统一指定），而 post 方法，开发人员可以指定。
@@ -73,7 +87,7 @@ POST 是没有大小限制的，HTTP 协议规范也没有进行大小限制。P
   
   如果用 tomcat 默认缺省设置，也没做过滤器等编码设置，那么他也是用 iso-8859-1 解码的，但是 request.setCharacterEncoding("字符集") 可以派上用场
 
-### GET 与 POST 的区别：
+### 2.2. GET 与 POST 的区别：
 
 1、Get 是用来从服务器上获得数据（没有请求体)，而 Post 是用来向服务器上传递数据（包含请求体)。 
 
@@ -89,26 +103,26 @@ POST 是没有大小限制的，HTTP 协议规范也没有进行大小限制。P
 
 7、使用 GET 方法时，浏览器可能会缓存你的地址等信息，还会留下历史记录，而对于 POST 方法呢，则不会进行缓存；
 
-## PUT
+## 3. PUT
 
 put 方法用于传输文件，要求在请求报文的主体中包含文件内容，然后保存到请求 URI 指定的位置；
 
-## HEAD
+## 4. HEAD
 
 head 方法等同于 get 方法，区别在于要求响应不返回报文主体部分，只返回请求头部；
 
-## DELETE
+## 5. DELETE
 
 delete 方法用于删除文件，是与 put 方法相反的方法；
 
-## OPTIONS
+## 6. OPTIONS
 
 options 方法用于查询针对指定 URI 服务器支持的所有 HTTP 方法；
 
-## TRACE
+## 7. TRACE
 
 trace 方法要求 web 服务器端将之前的请求通信环回给客户端；
 
-## 	CONNECT
+## 8. CONNECT
 
 connect 方法要求在与代理服务器通信时建立隧道，实现用隧道协议进行 TCP 通信；
