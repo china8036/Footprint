@@ -35,11 +35,11 @@
 
   指明了 TCP header 包含多少个 32 位的字。这个字段实际上指明了数据部门在 TCP 段内的起始位置。
 
-- Reserved (3 bits)
+- Reserved (**3 bits**)
   
   3 bits 没有被使用的保留位置，通常设置为 0，用于将来修正协议的错误，而 30 年来 TCP 协议没有使用该字段也说明了 TCP 协议自始至终运行良好。
 
-- Flags (9 bits): 包含了 8 个 1 bit 的标志位，指定包的类型，操作 TCP 状态机。
+- Flags (**9 bits**): 包含了 9 个 1 bit 的标志位，用于指定包的类型，操作 TCP 状态机。
   - `NS (1 bit)`: 隐私保护 (experimental: see RFC 3540).
   
   - `CWR (1 bit)`: 用于 ECN 拥塞控制。Congestion Window Reduced (CWR) flag is set by the sending host to indicate that it received a TCP segment with the ECE flag set and had responded in congestion control mechanism (added to header by RFC 3168).

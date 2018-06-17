@@ -1,36 +1,35 @@
 - [nmap](#nmap)
-  - [基本用法](#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95)
-  - [核心功能](#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD)
-  - [PORT SCANNING](#port-scanning)
-  - [HOST DISCOVERY](#host-discovery)
-  - [OS DETECTION](#os-detection)
-  - [其它选项](#%E5%85%B6%E5%AE%83%E9%80%89%E9%A1%B9)
-  - [扫描目标](#%E6%89%AB%E6%8F%8F%E7%9B%AE%E6%A0%87)
-  - [脚本引擎](#%E8%84%9A%E6%9C%AC%E5%BC%95%E6%93%8E)
-    - [用法](#%E7%94%A8%E6%B3%95)
-    - [示例](#%E7%A4%BA%E4%BE%8B)
-  - [常用用法](#%E5%B8%B8%E7%94%A8%E7%94%A8%E6%B3%95)
-    - [存活主机发现](#%E5%AD%98%E6%B4%BB%E4%B8%BB%E6%9C%BA%E5%8F%91%E7%8E%B0)
-    - [单个主机扫描](#%E5%8D%95%E4%B8%AA%E4%B8%BB%E6%9C%BA%E6%89%AB%E6%8F%8F)
-  - [Related Links](#related-links)
+	- [1. 基本用法](#1-基本用法)
+	- [2. 核心功能](#2-核心功能)
+	- [3. PORT SCANNING](#3-port-scanning)
+	- [4. HOST DISCOVERY](#4-host-discovery)
+	- [5. OS DETECTION](#5-os-detection)
+	- [6. 其它选项](#6-其它选项)
+	- [7. 扫描目标](#7-扫描目标)
+	- [8. 脚本引擎](#8-脚本引擎)
+		- [8.1. 用法](#81-用法)
+		- [8.2. 示例](#82-示例)
+	- [9. 常用用法](#9-常用用法)
+		- [9.1. 存活主机发现](#91-存活主机发现)
+		- [9.2. 单个主机扫描](#92-单个主机扫描)
+	- [10. Related Links](#10-related-links)
 
 # nmap 
 
 Nmap (Network Mapper) 是一款用于网络发现和安全审计的网络安全工具。
 
-
-## 基本用法 
+## 1. 基本用法
 ```
 nmap [Scan Type(s)] [Options] {target specification}
 ```
 
-## 核心功能 
+## 2. 核心功能
 
 - Host discovery
 
 	用于发现目标主机是否处于活动状态。
 
-	Nmap 提供了多种检测机制，可以更有效地辨识主机。例如可用来列举目标网络中哪些主机已经开启，类似于Ping命令的功能。
+	Nmap 提供了多种检测机制，可以更有效地辨识主机。例如可用来列举目标网络中哪些主机已经开启，类似于 Ping 命令的功能。
 
 - Port scanning
 	
@@ -46,51 +45,45 @@ nmap [Scan Type(s)] [Options] {target specification}
 	
 	用于识别端口上运行的应用程序与程序版本。
 
-	Nmap目前可以识别数千种应用的签名（Signatures）,检测数百种应用协议。而对于不识别的应用，Nmap默认会将应用的指纹(Fingerprint)打印出来，如果用户确知该应用程序，那么用户可以将信息提交到社区，为社区做贡献。
+	Nmap 目前可以识别数千种应用的签名（Signatures）, 检测数百种应用协议。而对于不识别的应用，Nmap 默认会将应用的指纹 (Fingerprint) 打印出来，如果用户确知该应用程序，那么用户可以将信息提交到社区，为社区做贡献。
 
 - OS detection
 	
 	用于识别目标主机的操作系统类型、版本编号及设备类型。
 
-	Nmap 目前提供1500个操作系统或设备的指纹数据库，可以识别通用PC系统、路由器、交换机等设备类型。
+	Nmap 目前提供 1500 个操作系统或设备的指纹数据库，可以识别通用 PC 系统、路由器、交换机等设备类型。
 
 - NSE 脚本引擎
 	
-	NSE是Nmap最强大最灵活的特性之一，可以用于增强主机发现、端口扫描、版本侦测和操作系统侦测等功能，还可以用来扩展高级的功能如web扫描、漏洞发现和漏洞利用等。Nmap使用Lua语言来作为NSE脚本语言，目前的Nmap脚本库已经支持350多个脚本。
+	NSE 是 Nmap 最强大最灵活的特性之一，可以用于增强主机发现、端口扫描、版本侦测和操作系统侦测等功能，还可以用来扩展高级的功能如 web 扫描、漏洞发现和漏洞利用等。Nmap 使用 Lua 语言来作为 NSE 脚本语言，目前的 Nmap 脚本库已经支持 350 多个脚本。
 
 - Firewall/IDS 规避和哄骗
 
-	Nmap提供多种机制来规避防火墙、IDS的的屏蔽和检查，便于秘密地探查目标主机的状况。
+	Nmap 提供多种机制来规避防火墙、IDS 的的屏蔽和检查，便于秘密地探查目标主机的状况。
 	
-	基本的规避方式包括：分片、IP诱骗、IP伪装、MAC地址伪装。
+	基本的规避方式包括：分片、IP 诱骗、IP 伪装、MAC 地址伪装。
 
-## PORT SCANNING
+## 3. PORT SCANNING
 
 - **-sS**: TCP SYN scan，nmap 默认使用该类型进行扫描；
 
-
 - **-sT**: TCP connect scan，会调用系统 connect()，完成完整的 TCP 三次握手，当 SYN scan 不可用时，nmap 默认使用该类型进行扫描；
-
 
 - **-sN**; **-sF**; **-sX**；
 	- **-sN**：TCP NULL scan；
 	- **-sF**：TCP FIN scan；
 	- **-sX**：TCP XMAS scan；
 
-
 - **-sA**：TCP ACK scan
-
 
 - **-sW**：TCP Window scan
 	- 窗口扫描与 ACK 扫描完全相同，但它能利用某些系统的实现细节来区分端口的 open / closed；
 	
 	This scan relies on an implementation detail of a minority of systems out on the Internet, so you can't always trust it. Systems that don't support it will usually return all ports closed. Of course, it is possible that the machine really has no open ports. If most scanned ports are closed but a few common port numbers (such as 22, 25, 53) are filtered, the system is most likely susceptible. Occasionally, systems will even show the exact opposite behavior. If your scan shows 1,000 open ports and three closed or filtered ports, then those three may very well be the truly open ones.
 
-
 - **-sM**：TCP Maimon scan
 	
 	- The Maimon scan is named after its discoverer, Uriel Maimon. He described the technique in Phrack Magazine issue #49 (November 1996). Nmap, which included this technique, was released two issues later. This technique is exactly the same as NULL, FIN, and Xmas scans, except that the probe is FIN/ACK. According to RFC 793 (TCP), a RST packet should be generated in response to such a probe whether the port is open or closed. However, Uriel noticed that many BSD-derived systems simply drop the packet if the port is open.
-
 
 - **-sU**：UDP scan
 	
@@ -100,45 +93,32 @@ nmap [Scan Type(s)] [Options] {target specification}
 	
 	- 针对 UDP 扫描速度慢的问题，可使用`--host-timeout`跳过响应过慢的主机扫描；
 
-
 - **--scanflags**：Custom TCP scan
 	
 	- nmap 允许用户自定义扫描类型，使用 `--scanflags` 指定探测包的 flags，然后使用其它扫描类型（如`-sS`，`-sA`等）指定结果判断标准（若不指定其它扫描类型，则默认使用 SYN 扫描的检测标准作为结果判断标准）；
 	
-	- `--scanflags` 允许使用数字或flags名称指定要发送的flags，如 `--scanflags 9` 相当于 `--scanflags PSHFIN`；
-
+	- `--scanflags` 允许使用数字或 flags 名称指定要发送的 flags，如 `--scanflags 9` 相当于 `--scanflags PSHFIN`；
 
 - **-sI `<zombie host>[:<probeport>]`**：idle scan
 	
-	- 僵尸网络扫描/匿名扫描，使用其他网络的主机发检测包进行扫描，意味着没有数据包从您的真实IP地址发送到目标；
+	- 僵尸网络扫描 / 匿名扫描，使用其他网络的主机发检测包进行扫描，意味着没有数据包从您的真实 IP 地址发送到目标；
 
-
-- **-sO**：IP protocol scan，用于确定目标机器支持哪些 IP 协议（TCP，ICMP，IGMP等）；
-
-
-
+- **-sO**：IP protocol scan，用于确定目标机器支持哪些 IP 协议（TCP，ICMP，IGMP 等）；
 
 - **-b `<FTP relay host>`**：FTP bounce scan
-	- 利用 FTP 代理连接，即允许用户连接到一个FTP服务器，然后要求将文件发送到第三方服务器；
+	- 利用 FTP 代理连接，即允许用户连接到一个 FTP 服务器，然后要求将文件发送到第三方服务器；
 	- 参数 `<username>：<password> @ <target server>：<target port>`；
 
-
-
-
 - **-sY**：SCTP INIT scan
-	- SCTP是TCP和UDP协议的一个相对较新的替代方案，结合了TCP和UDP的大多数特性，并添加了诸如多归属和多流传输等新功能，主要用于SS7 / SIGTRAN相关服务；
+	- SCTP 是 TCP 和 UDP 协议的一个相对较新的替代方案，结合了 TCP 和 UDP 的大多数特性，并添加了诸如多归属和多流传输等新功能，主要用于 SS7 / SIGTRAN 相关服务；
 	- SCTP INIT 扫描相当于 TCP SYN 扫描在 SCIP 协议上的实现版本，具有隐蔽性和速度快的特点；
-
 
 - **-sZ**： SCTP COOKIE ECHO scan
 	- SCTP COOKIE ECHO scan is a more advanced SCTP scan. It takes advantage of the fact that SCTP implementations should silently drop packets containing COOKIE ECHO chunks on open ports, but send an ABORT if the port is closed. The advantage of this scan type is that it is not as obvious a port scan than an INIT scan. Also, there may be non-stateful firewall rulesets blocking INIT chunks, but not COOKIE ECHO chunks. Don't be fooled into thinking that this will make a port scan invisible; a good IDS will be able to detect SCTP COOKIE ECHO scans too. The downside is that SCTP COOKIE ECHO scans cannot differentiate between open and filtered ports, leaving you with the state open|filtered in both cases.
 
-
 - **-sP**：ICMP 扫描
 
-
-
-## HOST DISCOVERY
+## 4. HOST DISCOVERY
 
 - **-sn**：No port scan, 使用 IMCP 扫描
 	
@@ -170,7 +150,6 @@ nmap [Scan Type(s)] [Options] {target specification}
 		```
 		nmap –Pn –n mmsec.science
 		```
-
 
 - **-PS port list**: TCP SYN Ping
 
@@ -221,7 +200,6 @@ nmap [Scan Type(s)] [Options] {target specification}
 		nmap –sn –PO –packet-trace mmsec.science
 		```
 
-
 - **-PR**: ARP Ping 
 	
 	- scan an ethernet LAN 
@@ -230,23 +208,18 @@ nmap [Scan Type(s)] [Options] {target specification}
 	nmap –sn –PR –packet-trace mmsec.science
 	```
 
-## OS DETECTION
-
+## 5. OS DETECTION
 
 - **-O**：开启 OS detection，发送 TCP and UDP 包，检测目标响应的 TCP/IP 协议栈指纹，与结果数据库 nmap-OS-DB 进行比对，从而推测操作系统信息；
 	- **--osscan-guess**：开启模糊猜测，适用于无法准确匹配结果指纹的情况；
 	eg: `nmap -O --osscan-guess 192.168.1.150`
 	- **--osscan-limit**: Limit OS detection to promising targets；
 
-
-
-
-## 其它选项 
+## 6. 其它选项
 
 https://nmap.org/book/man-briefoptions.html
 
-
-- **-P** `<port>`：指定探测的端口，默认情况下，Nmap会扫描 1660 个常用的端口，可以覆盖大多数基本应用情况
+- **-P** `<port>`：指定探测的端口，默认情况下，Nmap 会扫描 1660 个常用的端口，可以覆盖大多数基本应用情况
 	- `-P 80, 8080, 22, 443, 445`
 	- `-P 1-65535`
 	- `-P 80, 125, 3380-3389`
@@ -261,7 +234,6 @@ https://nmap.org/book/man-briefoptions.html
 
 - **-v**：显示扫描进程，一般都会使用该选项；
 
-
 - **-T**
 	- **-T0**：串行扫描，每两次扫描间隔 5min；
 	- **-T1**：串行扫描，每两次扫描间隔 15s；
@@ -270,20 +242,17 @@ https://nmap.org/book/man-briefoptions.html
 	- **-T4**：并行扫描，每两次扫描间隔 xx，速度较快；
 	- **-T5**：并行扫描，每两次扫描间隔 xx，速度极快；
 
-
 - **-A**：全面扫描，Enable OS detection, version detection, script scanning, and traceroute；
 
 - **-6**： Enable IPv6 scanning；
 
 - **-F**： 执行快速扫描模式，即只扫描常见端口而不扫描所有端口
 
-
 - **--reason**: 显示端口处于特定状态的原因
-
 
 - **-n/-R**: Never do DNS resolution/Always resolve [default: sometimes]
 
-## 扫描目标 
+## 7. 扫描目标
 
 - 单一主机
 	
@@ -296,7 +265,6 @@ https://nmap.org/book/man-briefoptions.html
 	```
 	nmap www.baidu.com
 	```
-
 
 - 多个主机
 	
@@ -332,18 +300,15 @@ https://nmap.org/book/man-briefoptions.html
 	nmap -iR 10
 	```
 
-
-
-## 脚本引擎 
+## 8. 脚本引擎
 
 参考：http://www.vuln.cn/2444   
 
 Nmap Scripting Engine (NSE) 是 Nmap 最强大最灵活的特性之一，可以用于增强主机发现、端口扫描、版本侦测和操作系统侦测等功能，还可以用来扩展高级的功能如 web 扫描、漏洞发现和漏洞利用等；  
 
-Nmap使用 Lua 语言来作为 NSE 脚本语言，目前的 Nmap 脚本库已经支持 350 多个脚本。
+Nmap 使用 Lua 语言来作为 NSE 脚本语言，目前的 Nmap 脚本库已经支持 350 多个脚本。
 
-
-### 用法 
+### 8.1. 用法
 - `-sC`: 等价于 `--script=default`，使用默认类别的脚本进行扫描，可更换其他类别 
 - `--script=<Lua scripts>`: <Lua scripts>使用某个或某类脚本进行扫描，支持通配符描述
 - `--script-args=<n1=v1,[n2=v2,...]>`: 为脚本提供默认参数
@@ -352,38 +317,33 @@ Nmap使用 Lua 语言来作为 NSE 脚本语言，目前的 Nmap 脚本库已经
 - `--script-updatedb`: 更新脚本数据库
 - `--script-help=<scripts>`: 显示脚本的帮助信息，其中<scripts>部分可以逗号分隔的文件或脚本类别
 
-
-
 nmap 的脚本默认目录为：/usr/share/nmap/scripts/
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/22/291c071fe78b648f1ff1aea5c24f0878.jpg)
 
-
-nmap 脚本根据前缀可分为以下类型，可根据需要设置 `--script=类别` 这种方式进行比较笼统的扫描
+nmap 脚本根据前缀可分为以下类型，可根据需要设置 `--script= 类别` 这种方式进行比较笼统的扫描
 
 - auth: 负责处理鉴权证书（绕开鉴权）的脚本  
-- broadcast: 在局域网内探查更多服务开启状况，如dhcp/dns/sqlserver等服务  
-- brute: 提供暴力破解方式，针对常见的应用如 http/snmp等  
-- default: 使用-sC或-A选项扫描时候默认的脚本，提供基本脚本扫描能力  
-- discovery: 对网络进行更多的信息，如SMB枚举、SNMP查询等  
+- broadcast: 在局域网内探查更多服务开启状况，如 dhcp/dns/sqlserver 等服务  
+- brute: 提供暴力破解方式，针对常见的应用如 http/snmp 等  
+- default: 使用 -sC 或 -A 选项扫描时候默认的脚本，提供基本脚本扫描能力  
+- discovery: 对网络进行更多的信息，如 SMB 枚举、SNMP 查询等  
 - dos: 用于进行拒绝服务攻击  
 - exploit: 利用已知的漏洞入侵系统  
-- external: 利用第三方的数据库或资源，例如进行whois解析  
-- fuzzer: 模糊测试的脚本，发送异常的包到目标机，探测出潜在漏洞 intrusive: 入侵性的脚本，此类脚本可能引发对方的IDS/IPS的记录或屏蔽  
+- external: 利用第三方的数据库或资源，例如进行 whois 解析  
+- fuzzer: 模糊测试的脚本，发送异常的包到目标机，探测出潜在漏洞 intrusive: 入侵性的脚本，此类脚本可能引发对方的 IDS/IPS 的记录或屏蔽  
 - malware: 探测目标机是否感染了病毒、开启了后门等信息  
-- safe: 此类与intrusive相反，属于安全性脚本  
+- safe: 此类与 intrusive 相反，属于安全性脚本  
 - version: 负责增强服务与版本扫描（Version Detection）功能的脚本  
 - vuln: 负责检查目标机是否有常见的漏洞（Vulnerability），如是否有 MS08_067
 
-
-### 示例 
+### 8.2. 示例
 
 - 使用默认脚本
 	
 	`nmap -sC` 或 `nmap --script=default`
 	
 	默认的脚本扫描，主要是搜集各种应用服务的信息，收集到后，可再针对具体服务进行攻击。
-
 
 - 扫描局域网内的 DHCP 服务器
 	
@@ -396,7 +356,6 @@ nmap 脚本根据前缀可分为以下类型，可根据需要设置 `--script=�
 	nmap -sU -p 67 --script=dhcp-discover 192.168.1.1
 	```
 
-
 - 扫描 SQL 注入
 	```
 	nmap -p 80 www.baidu.com  --script=sql.injection.nse
@@ -407,15 +366,14 @@ nmap 脚本根据前缀可分为以下类型，可根据需要设置 `--script=�
 	nmap --script="http-*" www.baidu.com
 	```
 
-
 - 使用 SMB 系列脚本
 	```
 	nmap --script="smb*"
 	```
 
-## 常用用法 
+## 9. 常用用法
 
-### 存活主机发现 
+### 9.1. 存活主机发现
 
 - 扫描局域网内所有存活的主机的 ip 和 对应的 mac 地址
 	
@@ -457,16 +415,14 @@ nmap 脚本根据前缀可分为以下类型，可根据需要设置 `--script=�
 	$ arp -n 192.168.1.66
 	```
 
-
-
-- 快速扫描网段内存活主机 ip、mac 地址和其开放的端口(-F 只扫描常见端口)(可使用 -Pn 以规避防火墙对 ICMP 扫描的 rule)
+- 快速扫描网段内存活主机 ip、mac 地址和其开放的端口 (-F 只扫描常见端口)（可使用 -Pn 以规避防火墙对 ICMP 扫描的 rule)
 	
 	```
 	nmap -F 192.168.1.0/24
 	```
 	注意：若对整个网段的所有主机进行全端口扫描，可能会造成卡死，最好是先挑出个别 ip 后再进一步针对性扫描；
 
-### 单个主机扫描 
+### 9.2. 单个主机扫描
 
 - 扫描指定的主机的所有端口
 	```
@@ -478,19 +434,17 @@ nmap 脚本根据前缀可分为以下类型，可根据需要设置 `--script=�
 	nmap -sV -v targetip 
 	```
 
-
 - 操作系统扫描
 	```
 	nmap -O -v targetip
 	```
 
-
-- 全面进攻性扫描（包括各种主机发现、端口扫描、版本扫描、OS扫描及默认脚本扫描）:
+- 全面进攻性扫描（包括各种主机发现、端口扫描、版本扫描、OS 扫描及默认脚本扫描）:
 	```
 	nmap -A -v targetip
 	```
 
-## Related Links 
+## 10. Related Links
 
 https://nmap.org/man/zh/index.html   
 

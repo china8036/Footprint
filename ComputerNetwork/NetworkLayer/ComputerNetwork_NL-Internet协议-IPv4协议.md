@@ -118,7 +118,7 @@ IP 协议就是以这种方式进行工作的，IP 协议会为每个分片设�
 
 IP 数据报头的传输从左到右，再从上到下。Version 字段的高序字节最先被传送出去，因此 little-endian 字节序的机器（如 Intel x86）在传输和接收 IP 报文时需要进行字节序转换。
 
-- Version 协议的版本号（4 bits）
+- Version 协议的版本号（**4 bits**）
   - IPv4: 0100
   - IPv6: 0110
   - IPv5 是一个实验性的实时流协议，一直没有被广泛使用。
@@ -139,9 +139,10 @@ IP 数据报头的传输从左到右，再从上到下。Version 字段的高序
 - Identification 数据报标识号
   - 标识当前数据报的序列号，由发送者分配，以便接收方可以依据来做重组。
 
-- Flags 标志位
+- Flags 标志位 (**3 bits**)
 
   A three-bit field follows and is used to control or identify fragments. They are (in order, from most significant to least significant):
+
   - bit 0: Reserved; must be zero.
 
   - bit 1: Don't Fragment (DF)
@@ -160,7 +161,7 @@ IP 数据报头的传输从左到右，再从上到下。Version 字段的高序
 
 - Protocol
 
-  用来指定传输层协议。如 ICMP 为 1，TCP 为 6，UDP 为 7。
+  用来指定传输层协议。如 **ICMP 为 1，TCP 为 6，UDP 为 7**。
 
 - Header Checksum
 
@@ -431,8 +432,12 @@ IPv4 中的 ICMP 被称作 ICMPv4，IPv6 中的 ICMP 则被称作 ICMPv6。
 
 #### 4.2.1. Header
 
+ICMP 报文包含在 IP 数据报中，IP 报头在 ICMP 报文的最前面。一个 ICMP 报文包括 IP 报头（至少 20 字节）、ICMP 报头（至少八字节）和 ICMP 报文（属于 ICMP 报文的数据部分）。当 IP 报头中的协议字段值为 1 时，就说明这是一个 ICMP 报文。
+
 ICMP 报头从 IP 报头的第 160 位开始（IP 首部 20 字节）（除非使用了 IP 报头的可选部分），ICMP 包有一个 8 字节长的报头，其中前 4 个字节是固定的格式（包含 8 位类型字段，8 位代码字段和 16 位的校验和），后 4 个字节根据 ICMP 包的类型而取不同的值。
- 
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/16/a70ea2c9da40b68b80ddfcc933f89b1f.jpg)
+
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/ee70d44a03aeac47ca145e81def9c439.jpg)
 
 - Type

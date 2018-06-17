@@ -1,5 +1,5 @@
 - [计算机网络 - 传输层：Transport control protocol 传输策略](#计算机网络---传输层transport-control-protocol-传输策略)
-  - [1. 可靠性保证：重传 (Retransmit)](#1-可靠性保证重传-retransmit)
+  - [1. TCP 重传 (Retransmit)](#1-tcp-重传-retransmit)
     - [1.1. 计时器管理](#11-计时器管理)
       - [1.1.1. RFC 经典算法](#111-rfc-经典算法)
       - [1.1.2. Karn / Partridge 算法](#112-karn--partridge-算法)
@@ -26,9 +26,7 @@
 
 # 计算机网络 - 传输层：Transport control protocol 传输策略
 
-## 1. 可靠性保证：重传 (Retransmit)
- 
-可靠性是指需要保证数据确实到达目的地；如果未到达，能够发现并重传。因此，TCP 要保证所有的数据包都可以到达，必需要有重传机制。
+## 1. TCP 重传 (Retransmit)
 
 ### 1.1. 计时器管理
 

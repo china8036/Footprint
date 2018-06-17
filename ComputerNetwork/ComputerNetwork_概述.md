@@ -54,6 +54,8 @@
 
 #### 2.1.1. 内容
 
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/16/951d80ecfc09b9e6c00f2b7aa0b56e39.jpg)
+
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/49971354a6408e2f739d3d50efc4042c.jpg)
 
 根据建议 X.200，OSI 将计算机网络体系结构划分为以下七层：
@@ -341,8 +343,8 @@ TCP/IP 模型将计算机通信过程抽象为 4 个层次，采取协定堆叠�
 - IPv4 Header: 20 bytes
 - IPv6 Header: 40 bytes
 - ICMP Header: 8 bytes
-- UDP Header: 8 bytes
 - TCP Header: 20 bytes
+- UDP Header: 8 bytes
 
 ## 5. Refer Links
 
