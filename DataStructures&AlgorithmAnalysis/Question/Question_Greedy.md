@@ -37,7 +37,7 @@
   ```
 - Solution
   
-  使用贪心算法，每次尝试将最大价值的 cookie 分给最贪心的 children，若无法满足，说明所有 cookie 都无法满足该 children，则放弃此 children。
+  使用贪心算法，**每次尝试将最大价值的 cookie 分给最贪心的 children，若无法满足，说明所有 cookie 都无法满足该 children，则放弃此 children**。
 
   ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/99e4a0f1b1deccaaa2c27e5d0278367f.jpg)
   
@@ -91,7 +91,7 @@ class Solution {
 
 [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/description/)
 
-贪心算法：按照区间的结尾进行排序，每次都选择结尾最早且和前一个区间不重叠的区间加入最长不重叠区间，最后返回区间总数与最长不重叠区间长度的差即可。
+贪心算法：**按照区间的结尾进行排序，每次都选择结尾最早且和前一个区间不重叠的区间加入最长不重叠区间，最后返回区间总数与最长不重叠区间长度的差即可**。
 
 ```cpp
 // Definition for an interval.

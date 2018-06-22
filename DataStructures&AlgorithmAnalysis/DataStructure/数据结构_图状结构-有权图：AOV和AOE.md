@@ -8,7 +8,7 @@
 
 ## 1. DAG
 
-有向无环图 (directed acyclic graph，简称 DAG) 是指一个无环的有向图，它是一种类似于有向树的特殊有向图。
+**有向无环图** (directed acyclic graph，简称 DAG) 是指一个无环的有向图，它是一种类似于有向树的特殊有向图。
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/25/85101484af413f92682e9575ac989c32.jpg)
 

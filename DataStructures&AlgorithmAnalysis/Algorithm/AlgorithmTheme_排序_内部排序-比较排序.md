@@ -53,7 +53,7 @@
 
 - 时间复杂度：O(n^2)。
 
-	由于 StraightInsertionSort 拥有提前终止循环机制，当待排序序列基本有序 / 有大量重复元素 / 元素个数较少时，StraightInsertionSort 能有极好的时间效率，**这种情况下，StraightInsertionSort 甚至比 O(nlogn) 的排序算法还要快**。在序列完全有序的极端情况下，StraightInsertionSort 的时间复杂度上升到 O(n) 级别。
+	由于 StraightInsertionSort 拥有提前终止循环机制，**当待排序序列基本有序 / 有大量重复元素 / 元素个数较少时，StraightInsertionSort 能有极好的时间效率，这种情况下，StraightInsertionSort 甚至比 O(nlogn) 的排序算法还要快。在序列完全有序的极端情况下，StraightInsertionSort 的时间复杂度上升到 O(n) 级别。**
 
 - 空间复杂度：O(1)。
 
@@ -71,7 +71,7 @@
   ```
 	此版本的 StraightInsertionSort 每次比较都需要进行元素交换，而每次交换实际上都包含了 3 次赋值操作，因此效率稍低。
   
-	优化版本（每次循环都在找到合适的位置后再进行赋值，将多次赋值操作操作简化为 1 次，优化了效率）：
+	优化版本（**每次循环都在找到合适的位置后再进行赋值，将多次赋值操作操作简化为 1 次，优化了效率**）：
   ```cpp
   // 搜索和后移同时进行
   void StraightInsertionSort(int a[], int n)
@@ -81,7 +81,7 @@
           if(a[i] < a[i-1])
           {
               int temp = a[i];
-							int j;
+	            int j;
               for(j=i; j>=0 && a[j-1]>temp; j--)
                   a[j] = a[j-1]; // 边移动元素边搜索合适的插入位置
               a[j] = temp;
@@ -113,7 +113,7 @@
 
 - [步长序列](https://en.wikipedia.org/wiki/Shellsort#Gap_sequences)
 	
-	Shell Sort 中 gap sequence 有各种不同的取法，其选择影响着排序的最终时间效率。**一般认为，步长都取成奇数且步长之间互素比较好**。但如何选取步长最好，至今在理论上仍没有得到论证：
+	Shell Sort 中 gap sequence 有多种不同的取法，其选择影响着排序的最终时间效率。**一般认为，步长都取成奇数且步长之间互素比较好**。但如何选取步长最好，至今在理论上仍没有得到论证：
 	- 1959 年 Shell 提出的 n/(2^k) 序列时间复杂度为 O(n^2)。
 	- 1971 年 Pratt 提出的 3n+1 序列时间复杂度为 O(n^(3/2))，权衡实现难度与时间效率，这种序列使用最为广泛。
 	- 1986 年 Sedgewick 提出了 O(n^(4/3)) 的序列，但实现较为复杂。
@@ -126,16 +126,16 @@
 		// 希尔排序
 		void ShellSort(int a[], int n)
 		{
-				// 分组，初始步长为 n/2，且每次循环缩小一半
-				for(int gap=n/2; gap>0; gap/=2)
-						// 直接插入排序
-						for(int i=gap; i<n; i++) {
-								int temp = a[i];
-								int j;
-								for(j=i; j>=0 && a[j-gap]>temp; j-=gap)
-										a[j] = a[j-1];
-								a[j] = temp;
-						}
+		    // 分组，初始步长为 n/2，且每次循环缩小一半
+		    for(int gap=n/2; gap>0; gap/=2)
+		        // 直接插入排序
+		        for(int i=gap; i<n; i++) {
+		            int temp = a[i];
+		            int j;
+		            for(j=i; j>=0 && a[j-gap]>temp; j-=gap)
+		                    a[j] = a[j-1];
+		            a[j] = temp;
+		        }
 		} 
 		```
 	- 使用 Pratt 步长序列：
@@ -143,23 +143,23 @@
 		// 希尔排序
 		void ShellSort(int a[], int n)
 		{
-				// 计算 increment sequence: 1, 4, 13, 40, 121, 364, 1093...
-				int gap = 1;
-				while( gap < n/3 )
-						gap = 3 * gap + 1;
+		    // 计算 increment sequence: 1, 4, 13, 40, 121, 364, 1093...
+		    int gap = 1;
+		    while( gap < n/3 )
+		        gap = 3 * gap + 1;
 
-				for(; gap>=1; gap/=3) {
-						// 直接插入排序
-						for(int i=gap; i<n; i++) {
-								if (a[i] < a[i-gap]) {
-										int temp = a[i];
-										int j;
-										for(j=i; j>=0 && a[j-1]>temp; j-=gap)
-												a[j] = a[j-1];
-										a[j] = temp;
-								}
-						}
-				}
+		    for(; gap>=1; gap/=3) {
+		        // 直接插入排序
+		        for(int i=gap; i<n; i++) {
+		            if (a[i] < a[i-gap]) {
+		                int temp = a[i];
+		                int j;
+		                for(j=i; j>=0 && a[j-1]>temp; j-=gap)
+		                        a[j] = a[j-1];
+		                a[j] = temp;
+		            }
+		        }
+		    }
 		} 
 		```
 
@@ -216,9 +216,9 @@
 
 	由于每次取出堆顶元素的时间效率为 O(logn)，因此对一个序列进行堆排序的时间复杂度为 O(nlogn)。
 
-  当记录数比较少时，堆排序的效率并不理想，但当记录数很大时，堆排序是非常有效的。同时堆排序的时间效率与待排序记录的初始次序无关，这是堆排序优于简单选择排序的地方。
+  当记录数比较少时，堆排序的效率并不理想，但**当记录数很大时，堆排序是非常有效的。同时堆排序的时间效率与待排序记录的初始次序无关，这是堆排序优于简单选择排序的地方**。
 
-	由于堆排序相比其它排序算法，没有明显的优势，但拥有独特的特性，更多地被应用在系统地动态数据结构中。
+	由于堆排序相比其它排序算法，没有明显的优势，但拥有独特的特性，**更多地被应用在系统的动态数据结构中**。
 
 - 空间复杂度：O(1)。
 
@@ -325,7 +325,7 @@
 
 在堆排序中，通过不断的向最大堆中插入待排序序列的元素，来构造一个最大堆，构造操作的时间复杂度为 O(nlogn)。
 
-但若直接将待排序序列构造成无序的完全二叉树，再对每一个非叶子节点进行向下调整，即 heapify 操作，构造操作的时间复杂度可优化为 O(n)。虽然堆排序的总体时间复杂度依然是 O(nlogn)，但整个堆排序的性能还是得到了提升。
+但**若直接将待排序序列构造成无序的完全二叉树，再对每一个非叶子节点进行向下调整，即 heapify 操作，构造操作的时间复杂度可优化为 O(n)**。虽然堆排序的总体时间复杂度依然是 O(nlogn)，但整个堆排序的性能还是得到了提升。
 
 ```cpp
 template<typename Item>
@@ -422,8 +422,8 @@ void __shiftDown(T arr[], int n, int k){
 // 注意，此时的堆是从 0 开始索引的，非叶子节点从（最后一个元素的索引 - 1)/2 开始，最后一个元素的索引 = n-1
 template<typename T>
 void heapSort3(T arr[], int n){
-    // 在原数组上进行堆化操作
-		for( int i = (n-1-1)/2 ; i >= 0 ; i -- )
+    // 在原数组上进行堆化操作，初始化一个最大堆
+    for( int i = (n-1-1)/2 ; i >= 0 ; i -- )
         __shiftDown(arr, n, i);
 		// 每次将数组最后一个元素与最大堆的堆顶元素交换，并对新的堆顶元素进行向下调整
 		// 相当于不断的把“最大”的元素排到队尾，从而实现从小到大排序
@@ -460,7 +460,7 @@ void heapSort3(T arr[], int n){
   void BubbleSort(int a[], int n)
   {
       // 最多遍历 n 次
-      for(int i=0; i<n; i++)
+      for (int i=0; i<n; i++)
       {
           int flag =  0;
           // 每次遍历的起始位置为 0，终止位置为 n-i
@@ -505,19 +505,19 @@ void heapSort3(T arr[], int n){
     ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/8c7a0779fee100060f37fbef0e782723.jpg)
 
 - 时间复杂度
-	- 平均时间复杂度：O(nlogn)。
+	- **平均时间复杂度：O(nlogn)。**
 
-		**对于乱序的序列，没有任何优化的快速排序的速度要比优化后的归并排序更快**。
+		**对于乱序的序列，没有任何优化的快速排序的速度要比优化后的归并排序还要快**。
 
-  - 最坏时间复杂度：O(n^2)。
+  - **最坏时间复杂度：O(n^2)。**
     
 		与其它排序算法不同的是，**快速排序极其不适用于基本有序序列的排序**。当所有元素都相同的极端情况下，partition 将一直返回 R, 递归的深度高达 N，每一次递归中 partition 又循环 N 次，时间复杂度退化为了 O(N^2)。
 
-- 空间复杂度：O(log n)。
+- **空间复杂度：O(log n)。**
 
   快速排序算法的递归实现需要栈的辅助，由于递归深度为 O(log n)，因此需要 O(log n) 层的栈空间来保存每次递归过程中的临时变量以供递归返回时继续使用。
 	
-	当整个数列完全有序的极端情况时，栈的深度会达到 O(n)。
+	**当整个数列完全有序的极端情况时，栈的深度会达到 O(n)。**
 
 - 代码实现
 
@@ -525,17 +525,17 @@ void heapSort3(T arr[], int n){
   ```cpp
   //Quick sort, L 为起始索引，R 为结束索引
   void Quicksort(int a[], int L, int R) {
-			if (L < R) { // 当被排序的元素大于 1 个时才执行快排
-					// partition
-					int pivot = L; // 预留基准位置
-					for (int i = L; i < R; i++)  // 遍历整个序列
-							if (a[i] <= a[R])  // 以末尾元素为基准元素
-									Swap(a[i], a[pivot++]);// 将比基准元素小的元素移动到基准位置左边，并将基准位置右移一位
-					Swap(a[R], a[pivot]); // 最后将基准元素放到基准位置
+	    if (L < R) { // 当被排序的元素大于 1 个时才执行快排
+	        // partition
+	        int pivot = L; // 预留基准位置
+	        for (int i = L; i < R; i++)  // 遍历整个序列
+	            if (a[i] <= a[R])  // 以末尾元素为基准元素
+	                Swap(a[i], a[pivot++]);// 将比基准元素小的元素移动到基准位置左边，并将基准位置右移一位
+	        Swap(a[R], a[pivot]); // 最后将基准元素放到基准位置
 
-					Quicksort(a, L, pivot - 1); // 递归调用，对基准位置左边的子序列进行快排
-					Quicksort(a, pivot + 1, R); // 递归调用，对基准位置右边的子序列进行快排
-			}
+	        Quicksort(a, L, pivot - 1); // 递归调用，对基准位置左边的子序列进行快排
+	        Quicksort(a, pivot + 1, R); // 递归调用，对基准位置右边的子序列进行快排
+	    }
   }
   ```
 
@@ -589,11 +589,11 @@ swap(arr[R], arr[rand()%(r-l+1)+l]);// 在 l~r 范围内随机选择一个元素
 
 对于快速排序算法，当待排序序列中的元素随机分布时，算法可以取得非常可观的效率。但随着待排序序列中的重复（相等）元素增多，快排的效率显著下降。**在所有元素都相同的极端情况下，partition 将一直返回 R, 递归的深度高达 N，每一次递归中 partition 又循环 N 次，时间复杂度到了 O(N^2)**。
 
-在传统的快速排序算法中，每次选取基准后，会将序列划分为小于基准和大于基准的两个部分。而针对有大量重复元素的序列，我们可以使用二路快排和三路排序。
+在传统的快速排序算法中，每次选取基准后，会将序列划分为小于基准和大于基准的两个部分。而**针对有大量重复元素的序列，我们可以使用二路快排和三路排序**。
 
 ##### 3.2.3.1. 二路快排
 
-二路快排使用 2 个索引，从序列的两端同时向中间进行排序，将等于基准的元素均分到了 pivot 的两边，从而避免了算法退化成 O(n^2)。
+二路快排使用 2 个索引，从序列的两端同时向中间进行排序，**将等于基准的元素均分到了 pivot 的两边，从而避免了算法退化成 O(n^2)**。
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/4e75b9f4a1f7b0a438d0f25bec65ba47.jpg)
 
@@ -642,7 +642,7 @@ void quickSort(T arr[], int n){
 
 ##### 3.2.3.2. 三路快排
 
-三路快排指的是在每次选取基准后，将序列划分为小于基准、等于**基准**和大于基准的三个部分。在递归的过程中，中间部分不参与递归，分治的是两边。三路快排比二路快排拥有更高的效率。
+三路快排指的是在每次选取基准后，将序列划分为小于基准、等于**基准**和大于基准的三个部分。在递归的过程中，中间部分不参与递归，分治的是两边。**三路快排比二路快排拥有更高的效率**。
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/f9ee21efd3f1fb90ee352bcc769a5c96.jpg)
 
@@ -704,7 +704,7 @@ void quickSort(T arr[], int n){
   }
   ```
 
-三路快排很好的解决了近乎有序的数组和有大量重复数组的元素排序问题，对于随机序列也有很好的性能，因此在很多语言的标准库中，排序接口使用的就是三路快排的思路，比如 Java 语言中的 Array.sort()。
+三路快排很好的解决了近乎有序的数组和有大量重复数组的元素排序问题，对于随机序列也有很好的性能，因此**在很多语言的标准库中，排序接口使用的就是三路快排的思路，比如 Java 语言中的 Array.sort()。**
 
 - 经典例题：[Sort Color](https://leetcode.com/problems/sort-colors/)
   > 有一个数组，其中的元素取值只有可能是 0，1，2。为这样一个数组排序。
@@ -732,31 +732,31 @@ void quickSort(T arr[], int n){
     }
     ```
 
-    - 解法二：三路快排，时间效率为 O(n)。
+  - 解法二：三路快排，时间效率为 O(n)。
 
-      如果我们对这个数组进行三路快排的话，并且选择 1 是 pivot，那么第一次 partition 的过程，就会把数组分成小于 1 的部分和大于 1 的部分，也就是所有的 0 在 1 的左边；所有的 2 在 1 的右边，就已经完成了排序。换句话说，我们对整个数组进行一次以 1 为 pivot 的三路快排的 partition 就完成了排序，整个过程只有一次遍历。
+    如果我们对这个数组进行三路快排的话，并且选择 1 是 pivot，那么第一次 partition 的过程，就会把数组分成小于 1 的部分和大于 1 的部分，也就是所有的 0 在 1 的左边；所有的 2 在 1 的右边，就已经完成了排序。换句话说，我们**对整个数组进行一次以 1 为 pivot 的三路快排的 partition 就完成了排序**，整个过程只有一次遍历。
 
-      ```cpp
-      void sortColors(vector<int>& nums) {
-          int i = 0;  // nums[0..<i) == 0
-          int j = 0;  // nums[i..<j) == 1
-          int k = nums.size(); // nums[k..<n) == 2
+    ```cpp
+    void sortColors(vector<int>& nums) {
+        int i = 0;  // nums[0..<i) == 0
+        int j = 0;  // nums[i..<j) == 1
+        int k = nums.size(); // nums[k..<n) == 2
 
-          while( j < k ){
-              if( nums[j] == 1 )
-                  j++;
-              else if( nums[j] == 0 )
-                  swap( nums[i++] , nums[j++] );
-              else{ // nums[j] == 2
-                  assert( nums[j] == 2 );
-                  swap( nums[j] , nums[k-1] );
-                  k --;
-              }
+        while( j < k ){
+          if( nums[j] == 1 )
+              j++;
+          else if( nums[j] == 0 )
+              swap( nums[i++] , nums[j++] );
+          else{ // nums[j] == 2
+              assert( nums[j] == 2 );
+              swap( nums[j] , nums[k-1] );
+              k --;
           }
+        }
 
-          return;
-      }
-      ```
+        return;
+    }
+    ```
 
 #### 3.2.4. 算法思想扩展
 
@@ -764,12 +764,12 @@ void quickSort(T arr[], int n){
 
 ## 4. （两路）归并排序 (Merge Sort)
 
-归并排序（merge sort）也是一种基于分治思想的排序算法。它将两个（或两个以上）有序表合并成一个新的有序表。即把待排序序列分为若干个子序列，每个子序列是有序的，然后再把有序子序列合并为整体有序序列。归并排序算法依赖归并操作。
+归并排序（merge sort）也是一种**基于分治思想**的排序算法。它将两个（或两个以上）有序表合并成一个新的有序表。即**把待排序序列分为若干个子序列，每个子序列是有序的，然后再把有序子序列合并为整体有序序列**。归并排序算法依赖归并操作。
 
 归并排序有多路归并排序、两路归并排序，可用于内排序，也可以用于外排序。这里仅对内排序的两路归并方法进行讨论。
 
 根据具体的实现，归并排序包括"从上往下"和"从下往上"2 种方式：
-- 从上往下
+- **从上往下**
 
 	从上往下的归并排序指的是先从上往下进行分解，再从下往上进行合并。基本包括 3 步：
 	1. 分解 -- 将当前区间一分为二，即求分裂点 mid = (low + high)/2; 
@@ -778,7 +778,7 @@ void quickSort(T arr[], int n){
 
 	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/be0fdc4760a7ee4f4eca12176ba0917f.jpg)
 
-	由于序列分解后，共有 logn 层，因此要实现 O(nlogn) 的归并排序，就变成：如何使用 O(n) 的算法将各自有序的两个子序列，合并成一个完全有序的序列？
+	由于序列分解后，共有 logn 层，因此要实现 O(nlogn) 的归并排序，就变成：**如何使用 O(n) 的算法将各自有序的两个子序列，合并成一个完全有序的序列**？
 
 	这个问题的实现，无法通过原地交换位置来完全，因此需要借助一个 O(n) 的辅助空间。通过与辅助数组进行比较，在原数组上进行赋值。
 	
@@ -800,7 +800,7 @@ void quickSort(T arr[], int n){
 
 	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/43318a9ef0aad21918b6a6b72007ec0d.jpg)
 
-- 从下往上
+- **从下往上**
 
 	从下往上的归并排序与"从下往上"在排序上是反方向的。它将待排序的数列分成若干个长度为 1 的子数列，然后将这些数列两两合并；得到若干个长度为 2 的有序数列，再将这些数列两两合并；得到若干个长度为 4 的有序数列，再将它们两两合并；直接合并成一个数列为止。这样就得到了我们想要的排序结果。
 
@@ -808,17 +808,15 @@ void quickSort(T arr[], int n){
 	
 	这种方式的实现不需要递归，只须迭代就可以完成归并排序。
 
-归并过程：
-
 **归并排序是一种稳定的排序算法**。
 
 - 时间复杂度
 	
-	归并排序将待排序序列分为了 logn 个级别，每个级别包含了多个待排序子序列，其排序耗时为 O(N)，因此，归并排序的时间复杂度为 O(nlog(n))。
+	归并排序将待排序序列分为了 logn 个级别，每个级别包含了多个待排序子序列，其排序耗时为 O(N)，因此，归并排序的**时间复杂度为 O(nlogn)**。
 
 - 空间复杂度
 
-	在归并排序的归并实现中，需要将各自有序的子序列整合为完全有序的序列，实现这一点需要 O(n) 的辅助空间；若不使用辅助空间，则实现起来非常困难。
+	在归并排序的归并实现中，需要将各自有序的子序列整合为完全有序的序列，实现这一点**需要 O(n) 的辅助空间**；若不使用辅助空间，则实现起来非常困难。
 
 	**归并排序是唯一一种无法实现原地排序的排序算法，这也是归并排序的一个缺点**。
 
@@ -826,7 +824,7 @@ void quickSort(T arr[], int n){
 	- 从上往下（递归实现）
 		```cpp
 		// 将 arr[l...mid] 和 arr[mid+1...r] 两部分进行归并
-		template<typename  T>
+		template<typename T>
 		void __merge(T arr[], int l, int mid, int r){
 				// 申请辅助空间
 				T *aux = new T[r-l+1];
@@ -835,7 +833,7 @@ void quickSort(T arr[], int n){
 						aux[i-l] = arr[i];// 注意 aux 与 arr 有位移差 l
 
 				// 初始化，i 指向辅助数组左半部分的起始索引位置 l；j 指向辅助数组右半部分起始索引位置 mid+1
-				for( int i = l, j = mid+1, k = l ; k <= r; k ++ ) { k 指向原数组（目标数组）的当前索引位置
+				for( int i = l, j = mid+1, k = l; k <= r; k ++ ) { // k 指向原数组（目标数组）的当前索引位置
 						if( i > mid ){  // 如果左半部分元素已经全部处理完毕
 								arr[k] = aux[j-l];
 								j ++;
@@ -860,14 +858,14 @@ void quickSort(T arr[], int n){
 		template<typename T>
 		void mergeSort(T arr[], int l, int r){
 				if( l >= r )
-						// 递归到达终点，子序列元素为 1
-						return;
+		            // 递归到达终点，子序列元素为 1
+		            return;
 				int mid = (l+r)/2;
 				mergeSort(arr, l, mid); // 对左边的子序列进行归并排序
 				mergeSort(arr, mid+1, r); // 对右边的子序列进行归并排序
 				__merge(arr, l, mid, r); // 将 arr[l...mid] 和 arr[mid+1...r] 两部分进行合并
 		}
-		```	
+		```
 
 	- 从下往上（迭代实现）
 		```cpp
@@ -907,9 +905,9 @@ void quickSort(T arr[], int n){
 		// 使用自底向上的归并排序算法
 		template <typename T>
 		void mergeSortBU(T arr[], int n){
-				// sz 表示每次循环的各个子序列的长度
+		    // sz 表示每次循环的各个子序列的长度
 		    for( int sz = 1; sz < n ; sz *= 2 )
-						// 两两进行合并
+		        // 两两进行合并
 		        for( int i = 0 ; i < n - sz ; i += sz*2 ) 
 		            // 对 arr[i...i+sz-1] 和 arr[i+sz...i+2*sz-1] 进行归并
 		            __merge(arr, i, i+sz-1, min(i+sz*2-1, n-1) ); // min(i+sz*2-1, n-1) 防止越界
@@ -928,8 +926,8 @@ void quickSort(T arr[], int n){
 
 			// 优化：对于小规模数组，使用插入排序
 			if( r - l <= 15 ){
-					insertionSort(arr, l, r);
-					return;
+	            insertionSort(arr, l, r);
+	            return;
 			}
 
 			int mid = (l+r)/2;
@@ -949,9 +947,9 @@ void quickSort(T arr[], int n){
 
 		// sz 表示每次循环的各个子序列的长度
 		for( int sz = 16; sz < n ; sz *= 2 )
-				for( int i = 0 ; i < n - sz ; i += sz+sz )
-						// 对 arr[i...i+sz-1] 和 arr[i+sz...i+2*sz-1] 进行归并
-						__merge(arr, i, i+sz-1, min(i+sz+sz-1,n-1) );
+	        for( int i = 0 ; i < n - sz ; i += sz+sz )
+	            // 对 arr[i...i+sz-1] 和 arr[i+sz...i+2*sz-1] 进行归并
+	            __merge(arr, i, i+sz-1, min(i+sz+sz-1,n-1) );
 	}
 	```
 
@@ -1041,7 +1039,7 @@ Test for nearly ordered array, size = 100000, swap time = 100
 
 ### 5.2. 空间复杂度
 
-归并排序（但根据 TAOCP，合并排序也有原地排序的版本），计数排序等不是原地排序。
+归并排序（但根据 TAOCP，合并排序也有原地排序的版本）、计数排序等不是原地排序。
 
 希尔排序、冒泡排序、插入排序、选择排序、堆排序、快速排序都可以实现原地排序。
 

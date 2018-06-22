@@ -23,12 +23,12 @@
   
 # Map 和 Set
 
-Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。使用平衡 BST 实现的版本具有数据的顺序性，而使用 HashTable 实现的版本操作时间效率更高。
+Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用平衡 BST 实现的版本具有数据的顺序性，而使用 HashTable 实现的版本操作时间效率更高。**
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/85fed795cf64a2532bc134d85b5abbde.jpg)
 
-- 在 Java 中，使用 HashTable 实现的为 HashMap 和 HashSet，使用平衡 BST 实现的为 TreeMap 和 TreeSet。
-- 在 C++ 中，使用 HashTable 实现的为 unordered_map 和 unordered_set，使用平衡 BST 实现的为 map 和 set。
+- **在 Java 中，使用 HashTable 实现的为 HashMap 和 HashSet，使用平衡 BST 实现的为 TreeMap 和 TreeSet。**
+- **在 C++ 中，使用 HashTable 实现的为 unordered_map 和 unordered_set，使用平衡 BST 实现的为 map 和 set。**
 
 Map 和 Set 数据结构广泛应用于查找问题中，查找问题一般分为以下 2 种：
 - 查找有无 - 使用 set 结构
@@ -81,7 +81,7 @@ Map 和 Set 数据结构广泛应用于查找问题中，查找问题一般分�
 
 [202. Happy Number](https://leetcode.com/problems/happy-number/description/)
 
-  
+
 ### 1.3. Contains Duplicate
 
 [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/description/)
@@ -154,7 +154,7 @@ Map 和 Set 数据结构广泛应用于查找问题中，查找问题一般分�
 
   ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/9fffd463423b84122e750046043c3d8d.jpg)
 
-  因此，这里使用基于红黑树实现的 set 结构 TreeSet 作为查找表：
+  因此，这里**使用基于红黑树实现的 set 结构 TreeSet 作为查找表**：
   ```java
   // 时间复杂度：O(nlogk)
   // 空间复杂度：O(k)

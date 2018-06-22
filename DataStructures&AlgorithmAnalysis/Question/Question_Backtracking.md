@@ -58,7 +58,7 @@
 
   递归表达式：
   ```
-  Perms(nums[0...n-1]) = {取出一个数字} + Perms(nums[{0...n-1} - 这个数字』)
+  Perms(nums[0...n-1]) = {取出一个数字} + Perms(nums[ {0...n-1} - 这个数字 ])
   ```
 
   代码实现：
@@ -72,12 +72,12 @@
       // p 中保存了一个有 index-1 个元素的排列
       // 向这个排列的末尾添加第 index 个元素，获得一个有 index 个元素的排列
       void generatePermutation(const vector<int>& nums, int index, vector<int>& p){
-          if(index == nums.size()){
+          if(index == nums.size()) { 
               res.push_back(p);
               return;
           }
           for(int i = 0 ; i < nums.size() ; i ++)
-              if(!used[i]){
+              if(!used[i]) {
                   used[i] = true;
                   p.push_back(nums[i]);
                   generatePermutation(nums, index + 1, p );

@@ -56,16 +56,16 @@
   // 空间复杂度：O(1)
   class Solution2 {
       public void moveZeroes(int[] nums) {
-          int k = 0; // nums 中，[0...k) 的元素均为非 0 元素
-          // 遍历到第 i 个元素后，保证 [0...i] 中所有非 0 元素
-          // 都按照顺序排列在 [0...k) 中
+          // 使用 k 索引，使得在 nums 中，[0...k) 的元素均为非 0 元素
+          int k = 0; 
+          // 遍历到第 i 个元素后，保证 [0...i] 中所有非 0 元素都按照顺序排列在 [0...k) 中
           // 同时，[k...i] 为 0
           for(int i = 0 ; i < nums.length ; i ++)
-              if(nums[i] != 0)
+              if(nums[i] != 0) {
                   if(k != i)
-                      swap(nums, k++, i);
-                  else
-                      k ++;
+                      swap(nums, k, i);
+                  k ++;
+              }
       }
       private void swap(int[] nums, int i, int j){
           int t = nums[i];
@@ -235,7 +235,7 @@
         public int[] twoSum(int[] numbers, int target) {
             if(numbers.length < 2 /*|| !isSorted(numbers)*/)
                 throw new IllegalArgumentException("Illegal argument numbers");
-            for(int i = 0 ; i < numbers.length - 1 ; i ++){
+            for(int i = 0 ; i < numbers.length - 1 ; i ++) {
                 int j = binarySearch(numbers, i+1, numbers.length-1, target - numbers[i]);
                 if(j != -1){
                     int[] res = {i+1, j+1};
@@ -245,7 +245,7 @@
             throw new IllegalStateException("The input has no solution");
         }
 
-        private int binarySearch(int[] nums, int l, int r, int target){
+        private int binarySearch(int[] nums, int l, int r, int target) {
             if(l < 0 || l > nums.length)
                 throw new IllegalArgumentException("l is out of bound");
 

@@ -56,10 +56,7 @@ F(n)=F(n-1)+F(n-2)
       if(n == 1)
           return 1;
 
-      if(memo[n] == -1)
-          memo[n] = fib(n - 1) + fib(n - 2);
-
-      return memo[n];
+      return memo[n] == -1 ? fib(n - 1) + fib(n - 2) : memo[n];
   }
   ```
 
@@ -187,15 +184,11 @@ F(n)=F(n-1)+F(n-2)
             if(n == 1)
                 return 1;
 
-            if(memo[n] != -1)
-                return memo[n];
+            if(memo[n] == -1) 
+                for(int i = 1 ; i < n; i ++)
+                    memo[n] = max3(memo[n], i * (n - i) , i * breakInteger(n - i));
 
-            int res = -1;
-            for(int i = 1 ; i <= n - 1 ; i ++)
-                res = max3(res, i * (n - i) , i * breakInteger(n - i));
-            memo[n] = res;
-
-            return res;
+            return memo[n];
         }
 
     public:
@@ -225,8 +218,9 @@ F(n)=F(n-1)+F(n-2)
             // memo[i] 表示将数字 i 分割（至少分割成两部分) 后得到的最大乘积
             vector<int> memo(n + 1, -1);
             memo[1] = 1;
-            for(int i = 2 ; i <= n ; i ++)
-                for(int j = 1 ; j <= i - 1 ; j ++) // 求解 memo[i]
+            for (int i = 2 ; i <= n ; i ++)
+                for (int j = 1; j <= i - 1; j ++) // 求解 memo[i]
+                    // 分别表示：1. 已有最大值 2. 当前值不再分割 3. 当前值继续分割
                     memo[i] = max3(memo[i], j * (i - j), j * memo[i - j]);
 
             return memo[n];
@@ -269,64 +263,63 @@ F(n)=F(n-1)+F(n-2)
 	时间复杂度为 O((2^n)*n)。
 
 - 动态规划
-	
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/23/24c86a15cf1e053e9658340ff06ae592.jpg)
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/23/071ec2923b07b87330f52a8b2611baad.jpg)
+  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/23/24c86a15cf1e053e9658340ff06ae592.jpg)
 
-	```cpp
-	// 时间复杂度：O(n^2), 空间复杂度：O(n)
-	class Solution {
-	private:
-			// memo[i] 表示考虑抢劫 nums[i...n) 所能获得的最大收益
-			vector<int> memo;
+  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/23/071ec2923b07b87330f52a8b2611baad.jpg)
 
-			// 考虑抢劫 nums[index...nums.size()) 这个范围的所有房子
-			int tryRob(const vector<int> &nums, int index){
+  ```cpp
+  // 时间复杂度：O(n^2), 空间复杂度：O(n)
+  class Solution {
+  private:
+  		// memo[i] 表示考虑抢劫 nums[i...n) 所能获得的最大收益
+  		vector<int> memo;
 
-					if(index >= nums.size())
-							return 0;
+  		// 考虑抢劫 nums[index...nums.size()) 这个范围的所有房子
+  		int tryRob(const vector<int> &nums, int index){
 
-					if(memo[index] != -1)
-							return memo[index];
+  				if(index >= nums.size())
+  						return 0;
 
-					int res = 0;
-					for(int i = index ; i < nums.size() ; i ++)
-							res = max(res, nums[i] + tryRob(nums, i + 2));
-					memo[index] = res;
-					return res;
-			}
+  				if(memo[index] != -1)
+  						return memo[index];
 
-	public:
-			int rob(vector<int>& nums) {
-					memo.clear();
-					for(int i = 0 ; i < nums.size() ; i ++)
-							memo.push_back(-1);
-					return tryRob(nums, 0);
-			}
-	};
-	```
+  				int res = 0;
+  				for(int i = index ; i < nums.size() ; i ++)
+  						res = max(res, nums[i] + tryRob(nums, i + 2));
+  				memo[index] = res;
+  				return res;
+  		}
 
-	```cpp
-	// 时间复杂度：O(n^2), 空间复杂度：O(n)
-	class Solution {
-	public:
-			int rob(vector<int>& nums) {
-					int n = nums.size();
-					if(n == 0)
-							return 0;
-					// memo[i] 表示考虑抢劫 nums[i...n) 所能获得的最大收益
-					vector<int> memo(n, 0);
-					memo[n - 1] = nums[n - 1];
-					for(int i = n - 2 ; i >= 0 ; i --)
-							for (int j = i; j < n; j++)
-									memo[i] = max(memo[i],
-																nums[j] + (j + 2 < n ? memo[j + 2] : 0));
+  public:
+  		int rob(vector<int>& nums) {
+  				memo.clear();
+  				for(int i = 0 ; i < nums.size() ; i ++)
+  						memo.push_back(-1);
+  				return tryRob(nums, 0);
+  		}
+  };
+  ```
 
-					return memo[0];
-			}
-	};
-	```
+  ```cpp
+  // 时间复杂度：O(n^2), 空间复杂度：O(n)
+  class Solution {
+  public:
+      int rob(vector<int>& nums) {
+          int n = nums.size();
+          if(n == 0)
+              return 0;
+          // memo[i] 表示考虑抢劫 nums[i...n) 所能获得的最大收益
+          vector<int> memo(n, 0);
+          memo[n - 1] = nums[n - 1];
+          for(int i = n - 2 ; i >= 0 ; i --)
+              for (int j = i; j < n; j++)
+                  memo[i] = max(memo[i], nums[j] + (j + 2 < n ? memo[j + 2] : 0));
+
+          return memo[0];
+      }
+  };
+  ```
 
 ### 3.2. House Robber II
 
@@ -343,9 +336,9 @@ F(n)=F(n-1)+F(n-2)
 ## 4. 背包问题
 
 对于 0-1 背包问题，需要用 2 个维度的参数进行状态定义：
-```
-F(n, C) 表示将 n 个物品放进容量为 C 的背包，使其总价值最大。
-```
+
+> F(n, C) 表示将 n 个物品放进容量为 C 的背包的最大总价值。
+
 则状态转移方程为：
 ```
 F(i, c) = max(F(i-1, c), v(i) + F(i-1, c-w(i)))
@@ -397,7 +390,7 @@ public:
         int n = w.size();
         if(n == 0 || C == 0)
             return 0;
-				// 二维数组 memo 表示用 [0...n) 的物品，填充容积为 C 的背包的最大价值
+        // 二维数组 memo 表示用 [0...n) 的物品，填充容积为 C 的背包的最大价值
         vector<vector<int>> memo(n, vector<int>(C + 1,0));
 
         for(int j = 0 ; j <= C ; j ++)
@@ -405,10 +398,10 @@ public:
 
         for(int i = 1 ; i < n ; i ++)
             for(int j = 0 ; j <= C ; j ++){
-								// 策略 1：不放第 i 个物品
+                // 策略 1：不放第 i 个物品
                 memo[i] [j] = memo[i-1] [j];
                 if(j >= w[i])
-										// 策略 2：放第 i 个物品
+                    // 策略 2：放第 i 个物品
                     memo[i] [j] = max(memo[i] [j], v[i] + memo[i - 1] [j - w[i]]);
             }
         return memo[n - 1] [C];
@@ -550,9 +543,9 @@ public:
 
 		由于在该问题的解空间中存在重叠子问题和最优子结构，因此可以采用记忆化搜索 / 动态规划的方法进行求解。
 
-		状态定义：LIS(i) 表示以第 i 个数字为结尾的最长上升子序列的长度。
+		状态定义：**LIS(i) 表示以第 i 个数字为结尾的最长上升子序列的长度**。
 
-		状态转移方程：LIS(i) = max(1 + LIS(j) if nums[i] > nums[j]) (i > j).
+		状态转移方程：**LIS(i) = max(1 + LIS(j) if nums[i] > nums[j]) (i > j).**
 
 		例：
 		
@@ -567,28 +560,28 @@ public:
 
 				// 以 nums[index] 为结尾的最长上升子序列的长度
 				int getMaxLength(const vector<int> &nums, int index){
-						if(memo[index] != -1)
-								return memo[index];
+		            if(memo[index] != -1)
+		                return memo[index];
 
-						int res = 1;
-						for(int i = 0 ; i <= index-1 ; i ++)
-								if(nums[index] > nums[i])
-										res = max(res, 1 + getMaxLength(nums, i));
+		            int res = 1;
+		            for(int i = 0 ; i <= index-1 ; i ++)
+		                if(nums[index] > nums[i])
+		                    res = max(res, 1 + getMaxLength(nums, i));
 
-						memo[index] = res;
-						return res;
+		            memo[index] = res;
+		            return res;
 				}
 		public:
 				int lengthOfLIS(vector<int>& nums) {
-						if(nums.size() == 0)
-								return 0;
+		            if(nums.size() == 0)
+		                return 0;
 
-						memo = vector<int>(nums.size(), -1);
-						int res = 1;
-						for(int i = 0 ; i < nums.size() ; i ++)
-								res = max(res, getMaxLength(nums, i));
+		            memo = vector<int>(nums.size(), -1);
+		            int res = 1;
+		            for(int i = 0 ; i < nums.size() ; i ++)
+		                res = max(res, getMaxLength(nums, i));
 
-						return res;
+		            return res;
 				}
 		};
 		```
@@ -597,22 +590,22 @@ public:
 		class Solution {
 		public:
 				int lengthOfLIS(vector<int>& nums) {
-						if(nums.size() == 0)
-								return 0;
+		            if(nums.size() == 0)
+		                 return 0;
 
-						// memo[i] 表示以 nums[i] 为结尾的最长上升子序列的长度
-						vector<int> memo(nums.size(), 1);
-						for(int i = 1 ; i < nums.size() ; i ++)
-								for(int j = 0 ; j < i ; j ++)
-										if(nums[i] > nums[j])
-												memo[i] = max(memo[i], 1 + memo[j]);
+		            // memo[i] 表示以 nums[i] 为结尾的最长上升子序列的长度
+		            vector<int> memo(nums.size(), 1);
+		            for(int i = 1 ; i < nums.size() ; i ++)
+		                for(int j = 0 ; j < i ; j ++)
+		                    if(nums[i] > nums[j])
+		                        memo[i] = max(memo[i], 1 + memo[j]);
 
-						// 求出最长的长度
-						int res = memo[0];
-						for(int i = 1 ; i < nums.size() ; i ++)
-								res = max(res, memo[i]);
+		            // 求出最长的长度
+		            int res = memo[0];
+		            for(int i = 1 ; i < nums.size() ; i ++)
+		                res = max(res, memo[i]);
 
-						return res;
+		            return res;
 				}
 		};
 		```
@@ -623,9 +616,9 @@ public:
 
 ## 6. LCSs 问题
 
-LCSs 问题实际上是指最长公共子序列问题（Longest-Common-Subsequence）和最长公共子串（Longest-Common-Substring）问题，这两个问题非常的相似，区别在于：
-- 子序列是有序的，但不一定是连续，作用对象是序列。例如：序列 X = <B, C, D, B> 是序列 Y = <A, B, C, B, D, A, B> 的子序列，对应的下标序列为 <2, 3, 5, 7>。
-- 子串是有序且连续的，左右对象是字符串。例如：a = abcd 是 c = aaabcdddd 的一个子串；但是 b = acdddd 就不是 c 的子串。
+**LCSs 问题实际上是指最长公共子序列问题（Longest-Common-Subsequence）和最长公共子串（Longest-Common-Substring）问题**，这两个问题非常的相似，区别在于：
+- **子序列是有序的，但不一定是连续，作用对象是序列**。例如：序列 X = <B, C, D, B> 是序列 Y = <A, B, C, B, D, A, B> 的子序列，对应的下标序列为 <2, 3, 5, 7>。
+- **子串是有序且连续的，左右对象是字符串**。例如：a = abcd 是 c = aaabcdddd 的一个子串；但是 b = acdddd 就不是 c 的子串。
 
 两者问题很相似，均可以使用动态规划的思想进行求解。
 
@@ -638,9 +631,9 @@ LCSs 问题实际上是指最长公共子序列问题（Longest-Common-Subsequen
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/23/a3eab068b81da598f8f918123dcca890.jpg)
 
 LCS 问题需要使用 2 个维度的参数进行状态定义：
-```
-LCS(m, n) 表示 s1[0...m] 和 s2[0...n] 的最长公共子序列的长度。
-```
+
+> LCS(m, n) 表示 s1[0...m] 和 s2[0...n] 的最长公共子序列的长度。
+
 状态转移方程：
 ```
 LCS(m, n) = 1 + LCS(m-1, n-1). (s1[m] == s2[n])

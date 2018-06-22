@@ -13,7 +13,7 @@
   - [7. 最佳归并树 - 赫夫曼树](#7)
   - [8. Refer Links](#8-refer-links)
 
-# 外部排序 (External sorting)
+# 外部排序 (External Sorting)
 
 ## 1. 基本概念
 

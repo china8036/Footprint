@@ -47,15 +47,13 @@
     9  20
       /  \
     15   7
-  ```   
+  ```
   return its depth = 3.
 - Solution
   ```java
   class Solution {
       public int maxDepth(TreeNode root) {
-          if(root == null)
-              return 0;
-          return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+          return root == null ? 0 : Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
       }
   }
   ```
@@ -84,7 +82,7 @@
   return its minimum depth = 2.
 - Solution
   
-  需要特别注意递归终止条件：当左子树 / 右子树为空时，最小高度取决于非空的另一边。
+  **需要特别注意递归终止条件：当左子树 / 右子树为空时，最小高度取决于非空的另一边**。
   ```java
   public int minDepth(TreeNode root) {
       if (root == null)
@@ -120,6 +118,7 @@
   ```
 - Solution
   ```java
+  // 返回翻转后的根结点
   public TreeNode invertTree(TreeNode root) {
       if(root == null)
           return null;
@@ -242,7 +241,7 @@
               rh++;
               right = right.right;
           }
-          if(lh == rh) 
+          if(lh == rh) // full binary tree
               return (1 << lh) - 1;
           return 1 + countNodes(root.left) + countNodes(root.right);
       }
