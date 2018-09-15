@@ -1,21 +1,17 @@
-- [Java 集合：Map 族 - TreeMap 实现类](#java-%E9%9B%86%E5%90%88%EF%BC%9Amap-%E6%97%8F---treemap-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-	- [1. SortedMap 接口](#1-sortedmap-%E6%8E%A5%E5%8F%A3)
-	- [2. NavigableMap 接口](#2-navigablemap-%E6%8E%A5%E5%8F%A3)
-	- [3. TreeMap 实现类](#3-treemap-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-		- [3.1. 基本概念](#31-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-		- [3.2. 自然排序 & 定制排序](#32-%E8%87%AA%E7%84%B6%E6%8E%92%E5%BA%8F-%E5%AE%9A%E5%88%B6%E6%8E%92%E5%BA%8F)
-		- [3.3. 常用 API](#33-%E5%B8%B8%E7%94%A8-api)
-		- [3.4. 源码分析](#34-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-			- [3.4.1. 类定义](#341-%E7%B1%BB%E5%AE%9A%E4%B9%89)
-			- [3.4.2. 查找](#342-%E6%9F%A5%E6%89%BE)
-			- [3.4.3. 遍历](#343-%E9%81%8D%E5%8E%86)
-			- [3.4.4. 插入元素](#344-%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0)
-			- [3.4.5. 删除元素](#345-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
-	- [4. 与 HashMap、LinkedHashMap 的应用场景区别](#4-%E4%B8%8E-hashmap%E3%80%81linkedhashmap-%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E5%8C%BA%E5%88%AB)
-		- [4.1. 需要基于排序的统计功能 - TreeMap](#41-%E9%9C%80%E8%A6%81%E5%9F%BA%E4%BA%8E%E6%8E%92%E5%BA%8F%E7%9A%84%E7%BB%9F%E8%AE%A1%E5%8A%9F%E8%83%BD---treemap)
-		- [4.2. 需要快速增删改查的存储功能且不需要考虑顺序一致的因素 - HashMap](#42-%E9%9C%80%E8%A6%81%E5%BF%AB%E9%80%9F%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E7%9A%84%E5%AD%98%E5%82%A8%E5%8A%9F%E8%83%BD%E4%B8%94%E4%B8%8D%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%87%B4%E7%9A%84%E5%9B%A0%E7%B4%A0---hashmap)
-		- [4.3. 需要快速增删改查且需要保证遍历和插入顺序一致的存储功能 - LinkedHashMap](#43-%E9%9C%80%E8%A6%81%E5%BF%AB%E9%80%9F%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E4%B8%94%E9%9C%80%E8%A6%81%E4%BF%9D%E8%AF%81%E9%81%8D%E5%8E%86%E5%92%8C%E6%8F%92%E5%85%A5%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%87%B4%E7%9A%84%E5%AD%98%E5%82%A8%E5%8A%9F%E8%83%BD---linkedhashmap)
-	- [5. Refer Links](#5-refer-links)
+- [Java 集合：Map 族 - TreeMap 实现类](#java- 集合 map- 族 ---treemap- 实现类)
+    - [1. SortedMap 接口](#1-sortedmap- 接口)
+    - [2. NavigableMap 接口](#2-navigablemap- 接口)
+    - [3. TreeMap 实现类](#3-treemap- 实现类)
+        - [3.1. 基本概念](#31- 基本概念)
+        - [3.2. 自然排序 & 定制排序](#32- 自然排序 -- 定制排序)
+        - [3.3. 常用 API](#33- 常用 -api)
+        - [3.4. 源码分析](#34- 源码分析)
+            - [3.4.1. 类定义](#341- 类定义)
+            - [3.4.2. 查找](#342- 查找)
+            - [3.4.3. 遍历](#343- 遍历)
+            - [3.4.4. 插入元素](#344- 插入元素)
+            - [3.4.5. 删除元素](#345- 删除元素)
+    - [5. Refer Links](#5-refer-links)
 
 # Java 集合：Map 族 - TreeMap 实现类
 
@@ -24,31 +20,48 @@
 SortedMap 接口继承了 Map 接口，它提供了一些基于有序键的操作：
 ```java
 /**
- * 返回包含键值在 [fromKey, toKey) 范围内的 Map
+ * 返回包含 Key 值在 [fromKey, toKey) 范围内的 Map
  */
 SortedMap<K,V> subMap(K fromKey, K toKey);
 
 /**
- * 返回包含键值在 (-∞, toKey) 范围内的 Map
+ * 返回包含 Key 值在 (-∞, toKey) 范围内的 Map
  */
 SortedMap<K,V> headMap(K toKey);();
 
 /**
- * 返回包含键值在 [fromKey, +∞) 范围内的 Map
+ * 返回包含 Key 值在 [fromKey, +∞) 范围内的 Map
  */
 SortedMap<K,V> tailMap(K fromKey);
 
 /**
- * Returns the first (lowest) key currently in this map.
+ * 返回 Key 值最小的 K-V 的 Key 值
  */
 K firstKey();
 
 /**
- * RReturns the last (highest) key currently in this map.
+ * 返回 Key 值最大的 K-V 的 Key 值
  */
 K lastKey();
 
 // ......
+```
+
+NOTE: **所有的有序的操作的顺序，都是基于 Key 值的排序，而不是 Value 值的排序**。若希望按 Value 值排序，可通过以下方法：
+```java
+int [] nums = new int[]{4, 1, 4, 4, 5, 5, 5, 5, 8, 2, 2, 3, 4, 1, 2};
+Map<Integer, Integer> map = new TreeMap<>();
+for (int i = 0; i < nums.length; i++)
+	map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+
+System.out.println(map.toString()); // 默认按照 Key 值排序
+
+List<Map.Entry<Integer, Integer>> entries = new ArrayList<>(map.entrySet());
+Collections.sort(entries, (e1, e2) -> {
+	return e1.getValue().compareTo(e2.getValue());	// 升序
+	// return -e1.getValue().compareTo(e2.getValue()); 	// 降序
+});
+System.out.println(entries);				// 按照 Value 值排序
 ```
 
 ## 2. NavigableMap 接口
@@ -56,14 +69,24 @@ K lastKey();
 NavigableMap 接口继承了 SortedMap 接口，它在 SortedMap 接口的基础上声明了一些列具有导航功能的方法，通过这些导航方法，我们可以快速定位到目标的 key 或 Entry：
 ```java
 /**
- * 返回红黑树中最小键所对应的 Entry
+ * 返回红黑树中最小 Key 值所对应的 Entry
  */
 Map.Entry<K,V> firstEntry();
+
+/**
+ * 返回红黑树中最大 Key 值所对应的 Entry
+ */
+Map.Entry<K,V> lastEntry();
 
 /**
  * 返回最大的键 maxKey 所对应的键值对，且 maxKey 仅小于参数 key
  */
 Map.Entry<K,V> lowerEntry(K key);
+
+/**
+ * 返回最小的键 minKey 所对应的键值对，且 minKey 仅大于参数 key
+ */
+Map.Entry<K,V> higherEntry(K key);
 
 /**
  * 返回最大的键 maxKey，且 maxKey 仅小于参数 key
@@ -103,7 +126,7 @@ TreeMap 支持两种排序方法：自然排序和定制排序。默认情况下
 ### 3.3. 常用 API
 
 构造器
-- `TreeMap​()	`
+- `TreeMap​()`
 - `TreeMap​(Comparator<? super K> comparator)	`
 - `TreeMap​(Map<? extends K,? extends V> m)	`
 - `TreeMap​(SortedMap<K,? extends V> m)`
@@ -111,14 +134,16 @@ TreeMap 支持两种排序方法：自然排序和定制排序。默认情况下
 常用 API
 
 与 HashMap 相比，TreeMap 还提供了以下方法：
-- `Comparator<? super K>	comparator​()`: 如果 TreeMap 采用定制排序，则此方法返回对键的比较器。如果键使用自然排序，即通过 Comparable 接口的 compareTo 方法进行比较，则此方法返回 null。
+- `Comparator<? super K> comparator​()`: 如果 TreeMap 采用定制排序，则此方法返回对键的比较器。如果键使用自然排序，即通过 Comparable 接口的 compareTo 方法进行比较，则此方法返回 null。
 
-- `K	firstKey​()`: 返回映射中的最小元素。
+- `K firstKey​()`: 返回映射中的最小元素。
 
-- `K	lastKey​()`: 返回映射中的最大元素。
+- `K lastKey​()`: 返回映射中的最大元素。
 
-- `Map.Entry<K,V>	firstEntry​()`
+- `Map.Entry<K,V> firstEntry​()`: 返回映射中
 
+- `Map.Entry<K,V> lastEntry​()`: 返回映射中
+  
 ### 3.4. 源码分析
 
 JDK 1.8 中的 TreeMap 源码有三千多行。
@@ -365,32 +390,6 @@ private void deleteEntry(Entry<K,V> p) {
 删除后的平衡调整 fixAfterDeletion () 方法：
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/18/dea8f2e55cb857ed5b589931aff029ec.jpg)
-
-## 4. 与 HashMap、LinkedHashMap 的应用场景区别
-
-HashMap 有相对最好的时间效率，但不具有排序功能。
-
-LinkedHashMap 具有排序功能，且是根据元素的插入顺序进行排序的。
-
-TreeMap 具有排序功能，且是根据元素实际值的大小进行排序的。
-
-### 4.1. 需要基于排序的统计功能 - TreeMap
-
-由于 TreeMap 是基于红黑树的实现的排序 Map，对于增删改查以及统计的时间复杂度都控制在 O(logn) 的级别上，相对于 HashMap 和 LinkedHashMap 的统计操作的（最大的 key，最小的 key，大于某一个 key 的所有 Entry 等等) 时间复杂度 O(n) 具有更高的时间效率 O(logn)。
-
-因此，这种场景下更适合使用 TreeMap
-
-### 4.2. 需要快速增删改查的存储功能且不需要考虑顺序一致的因素 - HashMap
-
-相对于 HashMap 和 LinkedHashMap 这些 hash 表的时间复杂度 O(1)（不考虑冲突情况），TreeMap 的增删改查的时间复杂度为 O(logn) 就显得效率较低。而由于 LinkedHashMap 需要维护元素的插入顺序，因此性能略低于 HashMap。
-
-因此，这种场景下更适合使用 HashMap。
-
-### 4.3. 需要快速增删改查且需要保证遍历和插入顺序一致的存储功能 - LinkedHashMap
-
-HashMap 并不保证任何顺序性，而 LinkedHashMap 额外保证了 Map 的遍历顺序与 put 顺序一致的有序性。LinkedHashMap 可以避免对 HashMap/HashTable 中 Key-Value 进行排序，只要在插入时按顺序插入即可，同时又避免使用 TreeMap 所增加的成本。
-
-因此，这种场景下更适合使用 LinkedHashMap。
 
 ## 5. Refer Links
 

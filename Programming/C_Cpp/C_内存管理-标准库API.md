@@ -1,0 +1,442 @@
+- [C 内存管理: 标准库API](#c-内存管理-标准库api)
+	- [1. 内存分配](#1-内存分配)
+		- [1.1. alloca](#11-alloca)
+		- [1.2. malloc](#12-malloc)
+			- [1.2.1. 基本使用](#121-基本使用)
+			- [1.2.2. 模拟实现](#122-模拟实现)
+		- [1.3. calloc](#13-calloc)
+		- [1.4. realloc](#14-realloc)
+	- [2. 内存填充 memset](#2-内存填充-memset)
+	- [3. 内存拷贝](#3-内存拷贝)
+		- [3.1. memcpy](#31-memcpy)
+		- [3.2. memmove](#32-memmove)
+		- [3.3. memccpy](#33-memccpy)
+		- [3.4. strcpy](#34-strcpy)
+		- [3.5. strncpy](#35-strncpy)
+	- [4. 内存释放 free](#4-内存释放-free)
+	- [5. Refer Links](#5-refer-links)
+
+# C 内存管理: 标准库API
+
+## 1. 内存分配
+
+### 1.1. alloca
+
+alloca 是向栈申请内存，因此无需释放。
+
+### 1.2. malloc
+
+#### 1.2.1. 基本使用
+
+[malloc](http://repo.or.cz/w/glibc.git/blob/HEAD:/malloc/malloc.c) 可以在堆内存中分配一段**连续的可用的**内存空间，并且在不再使用时需要通过 free 释放掉。由于 malloc 没有初始化内存的内容，因此一般 malloc 之后，需要调用函数 memset 来初始化这部分的内存空间。
+
+- P.S. malloc/free 和 new/delete 的区别
+	- 许多人把 malloc/free 当做操作系统所提供的系统调用或 C 的关键字，但实际上 malloc/free 只是 C 的标准库中提供的一个普通函数。而 new/delete 是 C++ 的运算符。
+	- 对于非内部数据类型的对象而言，光用 maloc/free 无法满足动态对象的要求。对象在创建的同时要自动执行构造函数，对象在消亡之前要自动执行析构函数。由于 malloc/free 是库函数而不是运算符，不在编译器控制权限之内，不能够把执行构造函数和析构函数的任务强加于 malloc/free。因此 C++ 语言需要一个能完成动态内存分配和初始化工作的运算符 new，以一个能完成清理与释放内存工作的运算符 delete。
+	- new 可以认为是 malloc 加构造函数的执行。new 出来的指针是直接带类型信息的。而 malloc 返回的都是 void 指针。
+	- delete 可以认为是 free 加析构函数的执行。
+	- new 操作符从自由存储区（free store）上为对象动态分配内存空间，而 malloc 函数从堆上动态分配内存。自由存储区是 C++ 基于 new 操作符的一个抽象概念，凡是通过 new 操作符进行内存申请，该内存即为自由存储区。那么自由存储区是否能够是堆？这取决于 operator new 的实现细节。自由存储区不仅可以是堆，还可以是静态存储区，这都看 operator new 在哪里为对象分配内存。
+
+```c
+void* malloc(size_t size);
+```
+
+malloc 具体有如下要求：
+- malloc 分配的内存大小至少为 size 参数所指定的字节数。
+- malloc 的返回值是一个指针，指向一段可用内存的起始地址。
+- 多次调用 malloc 所分配的地址不能有重叠部分，除非某次 malloc 所分配的地址被释放掉。
+- malloc 应该尽快完成内存分配并返回（不能使用 NP-hard 的内存分配算法）。
+- 实现 malloc 时应同时实现内存大小调整和内存释放函数（即 realloc 和 free）。
+
+#### 1.2.2. 模拟实现
+
+一般来说，malloc 所申请的内存主要从 Heap 区域分配（暂不考虑通过 mmap 申请大块内存的情况）。
+
+首先我们要确定所采用的数据结构。一个简单可行方案是将堆内存空间以块（Block）的形式组织起来，每个块由 meta 区和数据区组成，meta 区记录数据块的元信息（数据区大小、空闲标志位、指针等等），数据区是真实分配的内存区域，并且数据区的第一个字节地址即为 malloc 返回的地址。定义一个 block：
+```c
+typedef struct s_block *t_block;
+struct s_block {
+    size_t size;  /* 数据区大小 */
+    t_block next; /* 指向下个块的指针 */
+    int free;     /* 是否是空闲块 */
+    int padding;  /* 填充 4 字节，保证 meta 块长度为 8 的倍数 */
+    char data[1]  /* 这是一个虚拟字段，表示数据块的第一个字节，长度不应计入 meta */
+};
+```
+
+然后需要考虑如何在 block 链中查找合适的 block。一般来说有两种查找算法：
+- First fit：从头开始，使用第一个数据区大小大于要求 size 的块所谓此次分配的块。First fit 具有更高的执行效率。
+- Best fit：从头开始，遍历所有块，使用数据区大小大于 size 且差值最小的块作为此次分配的块。Best fit 具有较高的内存使用率（payload 较高）。
+此处采用 First fit 算法：
+```c
+/* First fit */
+t_block find_block(t_block *last, size_t size) {
+    t_block b = first_block;
+    while(b && !(b->free && b->size >= size)) {
+        *last = b;
+        b = b->next;
+    }
+    return b;
+}
+```
+find_block 从 frist_block 开始，查找第一个符合要求的 block 并返回 block 起始地址，如果找不到这返回 NULL。这里在遍历时会更新一个叫 last 的指针，这个指针始终指向当前遍历的 block，这是为了如果找不到合适的 block 而开辟新 block 使用的。
+
+如果现有 block 都不能满足 size 的要求，则需要在链表最后开辟一个新的 block。这里**关键是如何只使用 sbrk 创建一个 struct**：
+```c
+/* 由于存在虚拟的 data 字段，sizeof 不能正确计算 meta 长度，这里手工设置 */
+#define BLOCK_SIZE 24 
+
+t_block extend_heap(t_block last, size_t s) {
+    t_block b;
+    b = sbrk(0);
+    if(sbrk(BLOCK_SIZE + s) == (void *)-1)
+        return NULL;
+    b->size = s;
+    b->next = NULL;
+    if(last)
+        last->next = b;
+    b->free = 0;
+    return b;
+}
+```
+
+First fit 有一个比较致命的缺点，就是可能会让很小的 size 占据很大的一块 block，此时，为了提高 payload，应该在剩余数据区足够大的情况下，将其分裂为一个新的 block，示意如下：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/29/4673aecf688d23257f428ea195e8fa11.jpg)
+
+```c
+void split_block(t_block b, size_t s) {
+    t_block new;
+    new = b->data + s;
+    new->size = b->size - s - BLOCK_SIZE ;
+    new->next = b->next;
+    new->free = 1;
+    b->size = s;
+    b->next = new;
+}
+```
+
+由于我们希望 malloc 分配的数据区是按 8 字节对齐，所以在 size 不为 8 的倍数时，我们需要将 size 调整为大于 size 的最小的 8 的倍数：
+```c
+size_t align8(size_t s) {
+    if(s & 0x7 == 0)
+        return s;
+    return ((s >> 3) + 1) << 3;
+}
+```
+
+最后将以上的代码整合成一个简单但初步可用的 malloc。注意首先我们要定义个 block 链表的头 first_block，初始化为 NULL。另外，我们需要剩余空间至少有 BLOCK_SIZE + 8 才执行分裂操作：
+```c
+#define BLOCK_SIZE 24
+
+void *first_block=NULL;
+ 
+/* other functions... */
+ 
+void *malloc(size_t size) {
+    t_block b, last;
+    size_t s;
+    /* 对齐地址 */
+    s = align8(size);
+    if(first_block) {
+        /* 查找合适的 block */
+        last = first_block;
+        b = find_block(&last, s);
+        if(b) {
+            /* 如果可以，则分裂 */
+            if ((b->size - s) >= ( BLOCK_SIZE + 8))
+                split_block(b, s);
+            b->free = 0;
+        } else {
+            /* 没有合适的 block，开辟一个新的 */
+            b = extend_heap(last, s);
+            if(!b)
+                return NULL;
+        }
+    } else {
+        b = extend_heap(NULL, s);
+        if(!b)
+            return NULL;
+        first_block = b;
+    }
+    return b->data;
+}
+```
+
+以上是一个较为简陋，但是初步可用的 malloc 实现。还有很多遗留的可能优化点，例如：
+- 同时兼容 32 位和 64 位系统。
+- 在分配较大快内存时，考虑使用 mmap 而非 sbrk，这通常更高效。
+- 可以考虑维护多个链表而非单个，每个链表中的 block 大小均为一个范围内，例如 8 字节链表、16 字节链表、24-32 字节链表等等。此时可以根据 size 到对应链表中做分配，可以有效减少碎片，并提高查询 block 的速度。
+- 可以考虑链表中只存放 free 的 block，而不存放已分配的 block，可以减少查找 block 的次数，提高效率。
+
+### 1.3. calloc
+
+calloc 与 malloc 的区别在于 calloc 在分配内存之后会自动初始化这部分内存为 0。
+
+```c
+void* calloc(size_t numElements, size_t sizeOfElement); 
+```
+参数 sizeOfElement 为申请地址的单位元素长度，numElements 为元素个数，即在内存中申请 numElements*sizeOfElement 字节大小的连续地址空间。
+
+### 1.4. realloc
+
+realloc 用于给一个已经分配了地址的指针重新分配空间，可以对给定的指针所指的空间进行扩大或者缩小，无论是扩张或是缩小，原有内存的中内容将保持不变。当然，对于缩小，则被缩小的那一部分的内容会丢失。
+
+realloc 并不保证调整后的内存空间和原来的内存空间保持同一内存地址，相反，realloc 返回的指针很可能指向一个新的地址。
+
+```c
+void* realloc(void* ptr, unsigned newsize);  
+```
+参数 ptr 为原有的空间地址，newsize 是重新申请的地址长度。
+
+## 2. 内存填充 memset
+
+memset 用于在一段内存块中填充某个给定的值，它是对较大的结构体或数组进行清零操作的一种最快方法。
+```c
+void * memset(void *s, int ch, size_t n);
+```
+memset() 会将参数 s 所指的内存区域前 n 个字节以参数 c 填入，然后返回指向 s 的指针。在编写程序时，若需要将某一数组作初始化，memset() 会相当方便。其中，参数 c 虽声明为 int， 但必须是 unsigned char ，所以范围在 0 到 255 之间。
+
+eg:
+```c
+int main()
+{
+  char s[30];
+  memset(s,'A',sizeof(s));
+  s[30]='\0';
+  printf("%s\n",s);
+}
+```
+
+需要注意的是，赋值是逐字节进行的，因此：
+- 若 s 指向 char 型地址，由于每个 char 类型只占 1 个字节，与 memset 赋值的步长相同，因此 ch 可为任意字符值。
+
+- 若 s 指向非 char 型，如 int 型地址，由于每个 int 类型占 4 个字节，要想赋值正确，ch 的值只能是 -1 或 0，因为 -1 和 0 转化成二进制后每一位都是一样的。
+
+	错误例子：
+	```c
+	int a[2];
+	memset(a, 1, 2*sizeof(int));
+	```
+	由于 memset 是逐个字节进行赋值的，因此上边的代码会将 a 指向内存后续的 8 个字节都逐个赋值为 1，即 {00000001000000010000000100000001, 00000001000000010000000100000001}，因此执行后 a 为 {16843009, 16843009}
+
+模拟实现一个 memset：
+```c
+void * memset(void* s, int ch, size_t n)
+{
+    // 参数检查
+    if ( NULL == s || n<= 0)
+    {
+        return NULL;
+    }
+
+    char *pS = (char *)s;
+    for ( size_t i = 0; i<n; i++)
+    {
+        pS[i] = ch;
+    }
+
+    return pS;
+}
+```
+
+## 3. 内存拷贝
+
+### 3.1. memcpy
+
+memcpy 是标准 C 库函数。memcpy 提供了一般内存的复制，对于需要复制的内容没有限制，可以复制任意内容，例如字符数组、整型、结构体、类等，因此用途很广。
+```c
+void * memcpy(void * dest ,const void *src, size_t n);
+```
+该函数从源 src 所指的内存地址的起始位置开始拷贝 n 个字节到目标 dest 所指的内存地址的起始位置中，函数返回指向 dest 的指针。
+
+需要注意的是，由于 memcpy 实现中地址复制为正向复制，因此 memcpy 不能处理 src 和 dest 有重叠的情况：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/15/c1f319b4b554797617701ec2c08ffbcb.jpg)
+
+模拟实现一个 memcpy 函数：
+```c
+void * memcpy(void * dest ,const void *src, size_t n)
+{
+　　if((dest == NULL) || (src == NULL))           // dest 和 src 必须有效
+         return NULL;
+　　char *tempFrom = (char *)src;                 // 保存 src 首地址
+　　char *tempTo = (char *)dest;                  // 保存 dest 首地址     
+　　while(n -- > 0)                               // 循环 n 次，复制 src 的值到 dest 中
+       　　*tempTo++ = *tempFrom++ ; 
+　　return dest;
+}
+```
+
+eg:
+```c
+char a[100],b[50]; 
+memcpy(b, a, sizeof(b)); // 若用 sizeof(a)，会造成 b 的内存地址溢出
+```
+
+### 3.2. memmove
+
+memmove() 与 memcpy() 一样都是用来拷贝 src 所指的内存内容前 n 个字节到 dest 所指的地址上。不同的是，当 src 和 dest 所指的内存区域重叠时，memmove() 仍然可以正确的处理，不过执行效率上会比使用 memcpy() 略慢些。
+```c
+void * memmove(void *dest,const void *src,size_t n);
+```
+实际上，memcpy 可以看作是 memmove 的子集。
+
+模拟实现一个 memmove 函数：
+```c
+void * memmove( void * const dest, const char * const src, size_t count )
+{
+    // 参数检查
+    if( NULL == dest || NULL == src || count<=0 )
+    {
+        return NULL;
+    }
+
+    char * pSrc = (char *)src;
+    char * pDest = (char *)dest;
+    if(pDest > Psrc && pDest < Psrc + count )
+    {
+       for( size_t i = count-1; i>=0; i--)
+       {
+          pDest[i] = pSrc[i];
+       }
+    }
+    else
+    {
+        for(size_t i=0; i<count; i++)
+        {
+            pDest[i]=pSrc[i];
+        }
+    }
+    return pDest;
+}
+```
+
+### 3.3. memccpy
+
+```c
+void * memccpy(void *dest, const void * src, int c, size_t n);
+```
+memccpy() 用来拷贝 src 所指的内存内容前 n 个字节到 dest 所指的地址上。与 memcpy() 不同的是，memccpy() 会在复制时检查参数 c 是否出现，若是则返回 dest 中值为 c 的下一个字节地址。
+
+返回指向 dest 中值为 c 的下一个字节指针。返回值为 0 表示在 src 所指内存前 n 个字节中没有值为 c 的字节。
+
+### 3.4. strcpy
+
+```c
+#include <string.h>
+char strcpy(char *dest, const char *src);
+```
+函数功能是把从 src 地址开始且含有 NULL 结束符的字符串复制到以 dest 开始的地址空间，返回指向 dest 的指针，其中，src 和 dest 所指内存区域不可以重叠且 dest 必须有足够的空间来容纳 src 的字符串。
+
+模拟实现一个 strcpy：
+```c
+char *strcpy(char *dest, const char* src)
+{
+    // 参数检查
+    if ( NULL == dest || NULL == src )
+    {
+        return NULL;
+    }
+
+    char *pDest = dest;
+    while ( *src != '\0')
+    {
+        *pDest++ = *src++;
+    }
+    *pDest = '\0';
+
+    return pDest;
+}
+```
+
+strcpy 和 memcpy 主要有以下 3 方面的区别：
+- 复制的内容不同。strcpy 只能复制字符串，而 memcpy 可以复制任意内容，例如字符数组、整型、结构体、类等。
+- 复制的方法不同。strcpy 不需要指定长度，它遇到被复制字符的串结束符"\0"才结束，所以容易溢出。memcpy 则是根据其第 3 个参数决定复制的长度。
+- 用途不同。通常在复制字符串时用 strcpy，而需要复制其他类型数据时则一般用 memcpy。
+
+### 3.5. strncpy
+
+```c
+char * strncpy(char*dest, char *src, size_t n);
+```
+- 若 num < source 串的长度（包含最后的'\0'字符）: 那么该函数将会拷贝 source 的前 num 个字符到 destination 串中（不会自动为 destination 串加上结尾的'\0'字符）；
+- 若 num = source 串的长度（包含最后的'\0'字符）: 那么该函数将会拷贝 source 的全部字符到 destination 串中（包括 source 串结尾的'\0'字符）；
+- 若 num > source 串的长度（包含最后的'\0'字符）: 那么该函数将会拷贝 source 的全部字符到 destination 串中（包括 source 串结尾的'\0'字符），并且在 destination 串的结尾继续加上'\0'字符，直到拷贝的字符总个数等于 num 为止。
+
+## 4. 内存释放 free
+
+free 可用于释放之前调用 calloc、malloc 或 realloc 所分配的内存空间。
+
+```c
+void free(void* ptr)
+```
+ptr 指针指向一个要释放内存的内存块，该内存块之前是通过调用 malloc、calloc 或 realloc 进行分配内存的。如果传递的参数是一个空指针，则不会执行任何动作。该函数不返回任何值。
+
+free 的实现并不像看上去那么简单，这里我们要解决两个关键问题：
+- 如何验证所传入的地址是有效地址，即确实是通过 malloc 方式分配的数据区首地址
+
+	首先要保证传入 free 的地址是有效的，这个有效包括两方面：
+	- 地址应该在之前 malloc 所分配的区域内，即在 first_block 和当前 break 指针范围内。
+		
+		这个问题比较好解决，只要进行地址比较就可以了。
+
+	- 这个地址确实是之前通过我们自己的 malloc 分配的。
+		
+		这个问题有两种解决方案：
+		- 一是在结构体内埋一个 magic number 字段，free 之前通过相对偏移检查特定位置的值是否为我们设置的 magic number。
+		- 另一种方法是在结构体内增加一个 magic pointer，这个指针指向数据区的第一个字节（也就是在合法时 free 时传入的地址），我们在 free 前检查 magic pointer 是否指向参数所指地址。
+
+- 如何解决碎片问题
+
+	当多次 malloc 和 free 后，整个内存池可能会产生很多碎片 block，这些 block 很小，经常无法使用，甚至出现许多碎片连在一起，虽然总体能满足某此 malloc 要求，但是由于分割成了多个小 block 而无法 fit，这就是碎片问题。
+
+	一个简单的解决方式时当 free 某个 block 时，如果发现它相邻的 block 也是 free 的，则将 block 和相邻 block 合并。为了满足这个实现，需要将 s_block 改为双向链表。
+
+解决了上边 2 个问题，free 的实现思路就比较清晰了：首先检查参数地址的合法性，如果不合法则不做任何事；否则，将此 block 的 free 标为 1，并且在可以的情况下与后面的 block 进行合并。如果当前是最后一个 block，则回退 break 指针释放进程内存，如果当前 block 是最后一个 block，则回退 break 指针并设置 first_block 为 NULL。
+```c
+void free(void *p) {
+    t_block b;
+    if(valid_addr(p)) {
+        b = get_block(p);
+        b->free = 1;
+        if(b->prev && b->prev->free)
+            b = fusion(b->prev);
+        if(b->next)
+            fusion(b);
+        else {
+            if(b->prev)
+                b->prev->prev = NULL;
+            else
+                first_block = NULL;
+            brk(b);
+        }
+    }
+}
+```
+
+## 5. Refer Links
+
+[C 语言 - 内存管理基础](https://www.jianshu.com/p/b2380e47d005)
+
+[C 语言 - 内存管理深入](https://www.jianshu.com/p/ccb337572498)
+
+TODO:
+
+https://blog.csdn.net/daiyutage/article/details/8605580
+
+https://zh.cppreference.com/w/c/language/memory_model
+
+https://zh.cppreference.com/w/cpp/language/memory_model
+
+http://cdeveloper.cn/posts/type
+
+[memcpy、memmove、memset 及 strcpy 函数实现和理解](https://www.cnblogs.com/scut-linmaojiang/p/5283838.html)
+
+[张洋：如何实现一个 malloc](http://blog.codinglabs.org/articles/a-malloc-tutorial.html)
+
+[malloc 和 free 的实现原理](https://michaelyou.github.io/2015/03/27/malloc%E5%92%8Cfree%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/)
+
+[为什么 malloc 时需要指定 size，对应的 free 时不需要指定 size](http://michaelyou.github.io/2015/03/20/%E4%B8%BA%E4%BB%80%E4%B9%88malloc%E6%97%B6%E9%9C%80%E8%A6%81%E6%8C%87%E5%AE%9Asize%EF%BC%8C%E5%AF%B9%E5%BA%94%E7%9A%84free%E6%97%B6%E4%B8%8D%E9%9C%80%E8%A6%81%E6%8C%87%E5%AE%9Asize/)
+
+[细说 new 与 malloc 的 10 点区别](https://www.cnblogs.com/QG-whz/p/5140930.html)

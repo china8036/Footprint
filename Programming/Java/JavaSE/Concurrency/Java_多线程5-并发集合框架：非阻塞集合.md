@@ -1,17 +1,17 @@
-- [Java 多线程 并发集合框架：非阻塞集合](#java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%EF%BC%9A%E9%9D%9E%E9%98%BB%E5%A1%9E%E9%9B%86%E5%90%88)
-  - [1. 非阻塞 Map: ConcurrentHashMap](#1-%E9%9D%9E%E9%98%BB%E5%A1%9E-map-concurrenthashmap)
-    - [1.1. 常用 API](#11-%E5%B8%B8%E7%94%A8-api)
-    - [1.2. 实现原理](#12-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-      - [1.2.1. Java 基于分段锁的 ConcurrentHashMap](#121-java-%E5%9F%BA%E4%BA%8E%E5%88%86%E6%AE%B5%E9%94%81%E7%9A%84-concurrenthashmap)
-        - [1.2.1.1. 寻址方式](#1211-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F)
-        - [1.2.1.2. 同步方式](#1212-%E5%90%8C%E6%AD%A5%E6%96%B9%E5%BC%8F)
-      - [1.2.2. Java 基于 CAS 的 ConcurrentHashMap](#122-java-%E5%9F%BA%E4%BA%8E-cas-%E7%9A%84-concurrenthashmap)
-        - [1.2.2.1. 寻址方式](#1221-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F)
-        - [1.2.2.2. 同步方式](#1222-%E5%90%8C%E6%AD%A5%E6%96%B9%E5%BC%8F)
-    - [1.3. ConcurrentHashMap 与 HashMap 比较](#13-concurrenthashmap-%E4%B8%8E-hashmap-%E6%AF%94%E8%BE%83)
-  - [2. 非阻塞 Queue: ConcurrentLinkedQueue](#2-%E9%9D%9E%E9%98%BB%E5%A1%9E-queue-concurrentlinkedqueue)
-  - [3. 非阻塞 List: CopyOnWriteArrayList](#3-%E9%9D%9E%E9%98%BB%E5%A1%9E-list-copyonwritearraylist)
-  - [4. 非阻塞 Set: CopyOnWriteArraySet](#4-%E9%9D%9E%E9%98%BB%E5%A1%9E-set-copyonwritearrayset)
+- [Java 多线程 并发集合框架：非阻塞集合](#java-多线程-并发集合框架非阻塞集合)
+  - [1. 非阻塞 Map: ConcurrentHashMap](#1-非阻塞-map-concurrenthashmap)
+    - [1.1. 常用 API](#11-常用-api)
+    - [1.2. 实现原理](#12-实现原理)
+      - [1.2.1. 基于分段锁的 ConcurrentHashMap](#121-基于分段锁的-concurrenthashmap)
+        - [1.2.1.1. 寻址方式](#1211-寻址方式)
+        - [1.2.1.2. 同步方式](#1212-同步方式)
+      - [1.2.2. 基于 CAS 的 ConcurrentHashMap](#122-基于-cas-的-concurrenthashmap)
+        - [1.2.2.1. 寻址方式](#1221-寻址方式)
+        - [1.2.2.2. 同步方式](#1222-同步方式)
+    - [1.3. ConcurrentHashMap 与 HashMap 比较](#13-concurrenthashmap-与-hashmap-比较)
+  - [2. 非阻塞 Queue: ConcurrentLinkedQueue](#2-非阻塞-queue-concurrentlinkedqueue)
+  - [3. 非阻塞 List: CopyOnWriteArrayList](#3-非阻塞-list-copyonwritearraylist)
+  - [4. 非阻塞 Set: CopyOnWriteArraySet](#4-非阻塞-set-copyonwritearrayset)
   - [5. Refer Links](#5-refer-links)
 
 # Java 多线程 并发集合框架：非阻塞集合
@@ -29,27 +29,27 @@
 
 ## 1. 非阻塞 Map: ConcurrentHashMap
 
-HashMap 是线程不安全的，在并发环境下，可能会形成环状链表，导致 get 操作时 cpu 空转，因此在并发环境中使用 HashMap 是非常危险的。
+HashMap 是线程不安全的，在并发环境下，可能会形成环状链表，导致 get 操作时 CPU 空转，因此在并发环境中使用 HashMap 是非常危险的。
 
 HashTable 和 HashMap 的实现原理几乎一样，但 HashTable 是线程安全的。然而 HashTable 为实现线程安全，将 get/put 的所有相关操作都加上了 synchronized 修饰，相当于给整个哈希表加了一把全表的大锁，多线程访问时候，只要有一个线程访问或操作该对象，那其他线程只能阻塞，相当于将所有的操作串行化，在竞争激烈的并发场景中性能就会非常差。
 
-[ConcurrentHashMap](https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ConcurrentHashMap.html) 是 J.U.C(java.util.concurrent 包) 的重要成员，也是 HashMap 的一个线程安全的、支持高效并发的版本。在默认理想状态下，ConcurrentHashMap 可以支持 16 个线程执行并发写操作及任意数量线程的读操作。
+[ConcurrentHashMap](https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ConcurrentHashMap.html) 是 J.U.C(java.util.concurrent 包) 的重要成员，也是 HashMap 的一个线程安全的、支持高效并发的版本。**在默认理想状态下，ConcurrentHashMap 可以支持 16 个线程执行并发写操作及任意数量线程的读操作**。
 
 ### 1.1. 常用 API
 TODO:
 ### 1.2. 实现原理
 
-#### 1.2.1. Java 基于分段锁的 ConcurrentHashMap
+#### 1.2.1. 基于分段锁的 ConcurrentHashMap
 
-Java 7 中的 ConcurrentHashMap 的底层数据结构仍然是数组和链表。与 HashMap 不同的是，ConcurrentHashMap 最外层不是一个大的数组，而是一个 Segment 的数组，每个 Segment 包含一个与 HashMap 数据结构差不多的链表数组。
+Java 7 中 ConcurrentHashMap 的底层数据结构仍然是数组和链表。但与 HashMap 不同的是，ConcurrentHashMap 最外层不是一个大的数组，而是一个 Segment 的数组，每个 Segment 包含一个与 HashMap 数据结构差不多的链表数组。
 
 整体数据结构如下图所示：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/2/d1d0685ba39492b07c0f5c9d6847bd40.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/25/8aa8315514d1f8a0c66f1588a6d7cf94.jpg)
 
-ConcurrentHashMap 采用了非常精妙的"分段锁"策略，每一把锁锁一段数据，从而在多线程访问时不同段的数据时，就不会存在锁竞争了，有效地提高了并发效率。
+ConcurrentHashMap 采用了非常精妙的**"分段锁"策略**，每一把锁锁一段数据，从而在多线程访问时不同段的数据时，就不会存在锁竞争了，有效地提高了并发效率。
 
-根据分段锁策略，对于同一个 Segment 的操作才需考虑线程同步，不同的 Segment 则无需考虑。由于 ConcurrentLeve 默认将哈希表分为 16 个 Segment，理论上就允许 16 个线程并发执行。
+**根据分段锁策略，对于同一个 Segment 的操作才需考虑线程同步，不同的 Segment 则无需考虑。**由于 ConcurrentHashMap 默认将哈希表分为 16 个 Segment，理论上就允许 16 个线程并发执行。
 
 ##### 1.2.1.1. 寻址方式
 
@@ -99,13 +99,13 @@ Segment 继承自 ReentrantLock，所以我们可以很方便的对每一个 Seg
 
   同时由于其它 Segment 的锁并未被获取，因此理论上可支持 concurrencyLevel（等于 Segment 的个数）个线程安全的并发读写。
 
-  获取锁时，并不直接使用 lock 来获取，因为该方法获取锁失败时会挂起（参考可重入锁）。事实上，它使用了自旋锁，如果 tryLock 获取锁失败，说明锁被其它线程占用，此时通过循环再次以 tryLock 的方式申请锁。如果在循环过程中该 Key 所对应的链表头被修改，则重置 retry 次数。如果 retry 次数超过一定值，则使用 lock 方法申请锁。但由于自旋操作消耗 CPU 资源比较多，因此在自旋次数超过阈值时切换为互斥锁。
+  获取锁时，并不直接使用 lock 来获取，因为该方法获取锁失败时会挂起（参考可重入锁）。**事实上，它使用了自旋锁，如果 tryLock 获取锁失败，说明锁被其它线程占用，此时通过循环再次以 tryLock 的方式申请锁**。如果在循环过程中该 Key 所对应的链表头被修改，则重置 retry 次数。如果 retry 次数超过一定值，则使用 lock 方法申请锁。但由于自旋操作消耗 CPU 资源比较多，因此在自旋次数超过阈值时切换为互斥锁。
 
-#### 1.2.2. Java 基于 CAS 的 ConcurrentHashMap
+#### 1.2.2. 基于 CAS 的 ConcurrentHashMap
 
 Java 7 为实现并行访问，引入了 Segment 这一结构，实现了分段锁，理论上最大并发度与 Segment 个数相等。Java 8 为进一步提高并发性，摒弃了分段锁的方案，直接使用一个大的数组。并且与 Java 8 的 HashMap 一样，在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为 O(N)）转换为红黑树（寻址时间复杂度为 O(long(N))）。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/2/70769879f306c8d7113947f64e4bf1e1.jpg)
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/25/b89c34eda0b2d1308cf4f7cbb724c94e.jpg)
 
 ##### 1.2.2.1. 寻址方式
 
@@ -145,7 +145,7 @@ static final int spread(int h) {
 ### 1.3. ConcurrentHashMap 与 HashMap 比较
 
 - ConcurrentHashMap 线程安全，而 HashMap 非线程安全。
-- HashMap 允许 Key 和 Value 为 null，而 ConcurrentHashMap 不允许。
+- **HashMap 允许 Key 和 Value 为 null，而 ConcurrentHashMap 不允许**。
 - HashMap 不允许通过 Iterator 遍历的同时通过 HashMap 修改，而 ConcurrentHashMap 允许该行为，并且该更新对后续的遍历可见。
 
 ## 2. 非阻塞 Queue: ConcurrentLinkedQueue
@@ -154,11 +154,11 @@ ArrayBlockingQueue 和 LinkedBlockingQueue 都是使用 lock 来实现的阻塞�
 
 与其它队列一样，ConcurrentLinkedQueue 按照 FIFO（先进先出）原则对元素进行排序，队列的头部是队列中时间最长的元素，队列的尾部是队列中时间最短的元素。新的元素插入到队列的尾部，队列检索操作从队列头部获得元素。
 
-ConcurrentLinkedQueue 源代码的实现有点复杂，具体的可看[这篇文章](http://www.infoq.com/cn/articles/ConcurrentLinkedQueue) 的分析
+ConcurrentLinkedQueue 源代码的实现有点复杂，具体的可看[这篇文章](http://www.infoq.com/cn/articles/ConcurrentLinkedQueue)的分析
 
 ## 3. 非阻塞 List: CopyOnWriteArrayList
 
-CopyOnWriteArrayList 是一种即写时复制的容器。**所有可变操作（添加、设置等）都是通过对基础数组进行一次新的复制来实现的**，往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行 Copy，复制出一个新的容器，然后新的容器里添加元素，添加完元素之后，再将原容器的引用指向新的容器。这样做的好处是可以对 CopyOnWrite 容器进行并发的读，而不需要加锁，因为当前容器不会添加任何元素。所以 CopyOnWrite 容器也是一种读写分离的思想，读和写不同的容器。这一般需要很大的开销，但是当遍历操作的数量大大超过可变操作的数量时，这种方法可能比其他替代方法更有效。
+CopyOnWriteArrayList 是一种即写时复制的容器。**所有可变操作（添加、设置等）都是通过对基础数组进行一次新的复制来实现的，往一个容器添加元素的时候，不直接往当前容器添加，而是先将当前容器进行 Copy，复制出一个新的容器，然后新的容器里添加元素，添加完元素之后，再将原容器的引用指向新的容器**。这样做的好处是可以对 CopyOnWrite 容器进行并发的读，而不需要加锁，因为当前容器不会添加任何元素。所以 CopyOnWrite 容器也是一种读写分离的思想，读和写不同的容器。**这一般需要很大的开销，但是当遍历操作的数量大大超过可变操作的数量时，这种方法可能比其他替代方法更有效**。
 
 在不能或不想进行同步遍历，但又需要从并发线程中排除冲突时，它也很有用。“快照”风格的迭代器方法在创建迭代器时使用了对数组状态的引用。此数组在迭代器的生存期内绝不会更改，因此不可能发生冲突，并且迭代器保证不会抛出 ConcurrentModificationException。
 
@@ -167,9 +167,9 @@ CopyOnWriteArrayList 是一种即写时复制的容器。**所有可变操作（
 ## 4. 非阻塞 Set: CopyOnWriteArraySet
 
 CopyOnWriteArraySet 是对其所有操作使用 CopyOnWriteArrayList 的 Set。因此，它共享以下相同的基本属性：
-- 它最适合于 set 大小通常保持很小、只读操作远多于可变操作以及需要在遍历期间防止线程间冲突的应用程序。
+- 它**最适合于 set 大小通常保持很小、只读操作远多于可变操作以及需要在遍历期间防止线程间冲突的应用程序**。
 - 它是线程安全的。
-- 因为通常需要复制整个基础数组，所以可变操作（添加、设置、移除，等等）的开销巨大。
+- **因为通常需要复制整个基础数组，所以可变操作（添加、设置、移除，等等）的开销巨大**。
 - 迭代器不支持可变移除操作。
 - 使用迭代器进行遍历的速度很快，并且不会与其他线程发生冲突。在构造迭代器时，迭代器依赖于不变的数组快照。 
 

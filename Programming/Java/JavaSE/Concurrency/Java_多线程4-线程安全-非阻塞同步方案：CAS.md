@@ -54,11 +54,11 @@ CAS 操作的运算过程如下：
 
 也就是说，CAS 操作需要我们提供一个期望值，当期望值与当前线程的变量值相同时，说明还没线程修改该值，当前线程可以进行修改，也就是执行 CAS 操作，但如果期望值与当前线程不符，则说明该值已被其他线程修改，此时不执行更新操作，但可以选择重新读取该变量再尝试再次修改该变量，也可以放弃操作。
 
-基于这样的原理，CAS 操作即使没有锁，同样知道其他线程对共享资源操作影响，并执行相应的处理措施。同时从这点也可以看出，由于无锁操作中没有锁的存在，因此不可能出现死锁的情况，也就是说无锁操作天生免疫死锁。
+基于这样的原理，CAS 操作即使没有锁，同样知道其他线程对共享资源操作影响，并执行相应的处理措施。同时从这点也可以看出，**由于无锁操作中没有锁的存在，因此不可能出现死锁的情况，也就是说无锁操作天生免疫死锁**。
 
 ## 2. Unsafe 类
 
-sun.misc.Unsafe 至少从 2004 年 JDK1.4 开始就存在于 Java 中了，但在 Java9 中，为了提高 JVM 的可维护性和安全性，Unsafe 类被作为内部使用类隐藏了起来，即将原本的 Unsafe 类定义转移到了 jdk.internal.misc 包下，再在对外提供 sun.misc.Unsafe 类中使用 jdk.internal.misc.Unsafe 对象。
+sun.misc.Unsafe 至少从 2004 年 JDK1.4 开始就存在于 Java 中了，但在 Java9 中，为了提高 JVM 的可维护性和安全性，Unsafe 类被作为内部使用类隐藏了起来，即将原本的 Unsafe 类定义转移到了 jdk.internal.misc 包下，再在对外提供的 sun.misc.Unsafe 类中使用 jdk.internal.misc.Unsafe 对象。
 
 ### 2.1. 获取实例
 
@@ -103,7 +103,7 @@ public final class Unsafe {
     }
 }
 ```
-可知，sun.misc.Unsafe 与 jdk.internal.misc.Unsafe 都只包含了一个私有构造方法，且在 sun.misc.Unsafe 的 getUnsafe() 方法中，限制了只有启动类加载器 (bootstrap class loader) 加载的 Class 才能够获取其实例对象。因此，只能通过反射的方法来获取获取到该成员属性 theUnsafe 对应的 Field 对象，并将其设置为可访问，从而得到 theUnsafe 具体对象。
+可知，sun.misc.Unsafe 与 jdk.internal.misc.Unsafe 都只包含了一个私有构造方法，且在 sun.misc.Unsafe 的 getUnsafe() 方法中，限制了只有启动类加载器 (bootstrap class loader) 加载的 Class 才能够获取其实例对象。因此，**只能通过反射的方法来获取获取到该成员属性 theUnsafe 对应的 Field 对象，并将其设置为可访问，从而得到 theUnsafe 具体对象**。
 ```java
 // import sun.misc.Unsafe;
 public static void main(String[] args) throws NoSuchFieldException,
@@ -314,7 +314,7 @@ public class AtomicIntegerDemo {
 
     public static class AddThread implements Runnable{
         public void run(){
-           for(int k=0;k<10000;k++)
+           for (int k=0;k<10000;k++)
                i.incrementAndGet();
         }
     }
@@ -322,12 +322,14 @@ public class AtomicIntegerDemo {
     public static void main(String[] args) throws InterruptedException {
         Thread[] ts=new Thread[10];
         // 开启 10 条线程同时执行 i 的自增操作
-        for(int k=0;k<10;k++){
+        for (int k=0;k<10;k++)
             ts[k]=new Thread(new AddThread());
-        }
+        
         // 启动线程
-        for(int k=0;k<10;k++){ts[k].start();}
-        for(int k=0;k<10;k++){ts[k].join();}
+        for (int k=0;k<10;k++)
+            ts[k].start();
+        for (int k=0;k<10;k++)
+            ts[k].join();
 
         System.out.println(i);// 输出结果：100000
     }
@@ -432,7 +434,7 @@ public class AtomicReferenceDemo2 {
         User updateUser = new User("Shine", 25);
         atomicUserRef.compareAndSet(user, updateUser);
         // 执行结果：User{name='Shine', age=25}
-              System.out.println(atomicUserRef.get().toString());  
+      	System.out.println(atomicUserRef.get().toString());  
     }
 
     static class User {
@@ -501,7 +503,7 @@ public final Object getAndSetObject(Object o, long offset, Object newValue) {
 
 ### 3.3. 原子数组类型
 
-原子数组类型允许通过原子的方式更新数组里的某个元素，主要有以下 3 个类
+原子数组类型允许通过原子的方式更新数组里的某个元素，主要有以下 3 个类：
 - [AtomicIntegerArray](https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/atomic/AtomicIntegerArray.html)：原子更新整数数组里的元素
 - [AtomicLongArray](https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/atomic/AtomicLongArray.html)：原子更新长整数数组里的元素
 - [AtomicReferenceArray](https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/atomic/AtomicReferenceArray.html)：原子更新引用类型数组里的元素
@@ -516,8 +518,8 @@ public class AtomicIntegerArrayDemo {
     static AtomicIntegerArray arr = new AtomicIntegerArray(10);
 
     public static class AddThread implements Runnable{
-        public void run(){
-           for(int k=0;k<10000;k++)
+        public void run() {
+           for (int k=0;k<10000;k++)
                // 执行数组中元素自增操作，参数为 index, 即数组下标
                arr.getAndIncrement(k%arr.length());
         }
@@ -526,12 +528,14 @@ public class AtomicIntegerArrayDemo {
 
         Thread[] ts=new Thread[10];
         // 创建 10 条线程
-        for(int k=0;k<10;k++){
+        for(int k=0;k<10;k++)
             ts[k]=new Thread(new AddThread());
-        }
+        
         // 启动 10 条线程
-        for(int k=0;k<10;k++){ts[k].start();}
-        for(int k=0;k<10;k++){ts[k].join();}
+        for(int k=0;k<10;k++)
+            ts[k].start();
+        for(int k=0;k<10;k++)
+            ts[k].join();
         // 执行结果
         // [10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000]
         System.out.println(arr);
@@ -779,9 +783,9 @@ CAS 操作虽然简洁有效，但显然这种操作无法涵盖同步的所有�
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/2/643ef64a67cc1cc48c939f1b46f5abce.jpg)
 
-这就是典型的 CAS 的 ABA 问题。
+这就是典型的 CAS 的 **ABA 问题**。
 
-大部分情况下这种情况发现的概率比较小，且就算发生了也不会影响并发程序的正确性（比如说我们对某个做加减法，不关心数字的过程，那么发生 ABA 问题也没啥关系）。但是在某些情况下还是需要防止 ABA 问题的发生，J.U.C 包为解决这个问题，提供了 AtomicStampedReference 和 AtomicMarkableReference 类。
+大部分情况下这种情况发生的概率比较小，且就算发生了也不会影响并发程序的正确性（比如说我们对某个做加减法，不关心数字的过程，那么发生 ABA 问题也没啥关系）。但是**在某些情况下还是需要防止 ABA 问题的发生，J.U.C 包为解决这个问题，提供了 AtomicStampedReference 和 AtomicMarkableReference 类**。
 
 但实际上，若需要解决 ABA 问题，改为采用传统的阻塞同步互斥方案，会比原子类更加高效。
 

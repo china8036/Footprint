@@ -1,11 +1,12 @@
-- [Java 多线程 - 线程间协作](#java-%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%8D%8F%E4%BD%9C)
-  - [1. 使用 Object 类的方法](#1-%E4%BD%BF%E7%94%A8-object-%E7%B1%BB%E7%9A%84%E6%96%B9%E6%B3%95)
-  - [2. 使用 Condition 接口的方法](#2-%E4%BD%BF%E7%94%A8-condition-%E6%8E%A5%E5%8F%A3%E7%9A%84%E6%96%B9%E6%B3%95)
-    - [2.1. 常用 API](#21-%E5%B8%B8%E7%94%A8-api)
-      - [2.1.1. 获取 Condition 实例](#211-%E8%8E%B7%E5%8F%96-condition-%E5%AE%9E%E4%BE%8B)
-      - [2.1.2. 线程间协作](#212-%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%8D%8F%E4%BD%9C)
-    - [2.2. 实现原理](#22-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-  - [3. Refer Links](#3-refer-links)
+- [Java 多线程 - 线程间协作](#java-多线程---线程间协作)
+	- [1. 使用 Object 类的方法](#1-使用-object-类的方法)
+	- [2. 使用 Condition 接口的方法](#2-使用-condition-接口的方法)
+		- [2.1. 常用 API](#21-常用-api)
+			- [2.1.1. 获取 Condition 实例](#211-获取-condition-实例)
+			- [2.1.2. 线程间协作](#212-线程间协作)
+		- [2.2. 实现原理](#22-实现原理)
+	- [3. 生产者消费者模型](#3-生产者消费者模型)
+	- [4. Refer Links](#4-refer-links)
 
 # Java 多线程 - 线程间协作
 
@@ -13,9 +14,9 @@
 
 ## 1. 使用 Object 类的方法
 
-在 Java 中，可以通过配合调用 Object 对象的 wait() 方法、 notify() 方法或 notifyAll() 方法来实现线程间的通信。这三个方法在 Object 类中定义，不属于 Thread 类的方法。
+在 Java 中，可以通过配合调用 Object 对象的 `wait()` 方法、 `notify()` 方法或 `notifyAll()` 方法来实现线程间的通信。这三个方法在 Object 类中定义，不是属于 Thread 类的方法。
 
-Object 是所有类的超类，因此，所有的类都拥有 Object 类的方法。但为实现线程间协作，需要由同步监视器对象来调用这 3 个方法，即必须使用 synchronized 关键字修饰方法或代码块，并先获得锁：
+Object 是所有类的超类，因此，所有的类都拥有 Object 类的方法。但**为实现线程间协作，需要由同步监视器对象来调用这 3 个方法**，即必须使用 synchronized 关键字修饰方法或代码块，并先获得锁：
 - 使用 synchronized 修饰的同步方法，同步监视器是该类的实例对象 this，因此可直接调用这 3 个方法。
 - 使用 synchronized 修饰的代码块，同步监视器是 synchronized 括号内指定的对象，必须由该对象调用这 3 个方法。
 
@@ -23,7 +24,7 @@ Object 是所有类的超类，因此，所有的类都拥有 Object 类的方�
 
 - `wait()`
 
-  该方法释放同步锁，并将当前线程置入休眠状态，直到接到通知或被中断为止。
+  该方法**释放同步锁，并将当前线程置入休眠状态**，直到接到通知或被中断为止。
 
   `wait()`方法有三种重载形式：
   - `public final native void wait(long timeout) throws InterruptedException`: 指定超时时间的等待（毫秒）。
@@ -51,9 +52,9 @@ class Info{ // 定义信息类
     public synchronized void set(String name,String content){  
         while(!flag){  
             try{  
-                super.wait() ;  
+                super.wait();  
             }catch(InterruptedException e){  
-                e.printStackTrace() ;  
+                e.printStackTrace();  
             }  
         }  
         this.setName(name) ;    // 设置名称  
@@ -153,29 +154,34 @@ public class ThreadCaseDemo03{
 Condition 接口比 synchronized 的等待唤醒机制具有更多的灵活性以及精确性，其特性可简单归纳为以下两点：
 - 通过 Condition 能够精细的控制多线程的休眠与唤醒。
 - 对于一个锁，我们可以为多个线程间建立不同的 Condition。
-在这种情况下，Lock 替代了同步方法或同步代码块，Condition 替代了同步监视器的功能。
+
+**在这种情况下，Lock 替代了同步方法或同步代码块，Condition 替代了同步监视器的功能**。
+
+Condition.await & Condition.signal 与 Object.wait & Object.notify 的区别：
+- 当队列已满时，所有的生产者线程都会阻塞，若某个时刻消费者消费了一个元素，则需要唤醒某个生产者线程。
+	- 若通过 Object notify 方式唤醒的线程不能确保一定就是一个生产者线程，因为 notify 是随机唤醒某一个正在该 synchronized 对应的锁上面通过 wait 方式阻塞的线程，如果这时正好还有消费者线程也在阻塞中，则很可能唤醒的是一个消费者线程；notifyAll 更是会唤醒所有在对应锁上通过 wait 方式阻塞的线程，而不管是生产者还是消费者线程。
+	- 与之不同的 Condition.await & Condition.signal 方式则可以对应多个谓词条件（notEmpty, notFull），可以很方便的实现让生产者线程和消费者线程分别在不同的谓词条件上进行等待。比如让所有的生产者线程在 notEmpty 谓词条件上等待，所有的消费者线程在 notFull 谓词条件上等待，当队列满的时候所有的生产者线程阻塞，添加元素之后则唤醒某个消费者线程，从而不用担心会唤醒消费者线程。
 
 ### 2.1. 常用 API
 
 #### 2.1.1. 获取 Condition 实例
 
-Java 以 AQS 的内部类的形式为 Condition 接口提供了实现类 AbstractQueuedSynchronizer.ConditionObject，
+Java 以 AQS 的内部类的形式为 Condition 接口提供了实现类 `AbstractQueuedSynchronizer.ConditionObject`：
 ```java
 public class ConditionObject implements Condition, java.io.Serializable {
       /** First node of condition queue. */
       private transient Node firstWaiter;
       /** Last node of condition queue. */
       private transient Node lastWaiter;
-
       /**
         * Creates a new {@code ConditionObject} instance.
         */
-      public ConditionObject() { }
-
+      public ConditionObject() {}
       // 省略其它
 }
 ```
-在 Lock 接口的各个实现类中，都包含了扩展自 AQS 的同步器：
+
+在 Lock 接口的各个实现类中，都包含了扩展自 AQS 的同步器 Sync：
 ```java
 abstract static class Sync extends AbstractQueuedSynchronizer {
     private final Sync sync;
@@ -185,13 +191,13 @@ abstract static class Sync extends AbstractQueuedSynchronizer {
     }
 }
 ```
-因此，利用 Lock 对象的 newCondition() 方法即可获得 Condition 接口的实现类：
+因此，利用 Lock 对象的 newCondition() 方法就可获得 Condition 接口的实现类：
 ```java
 public Condition newCondition() {
     return sync.newCondition();
 }
 ```
-也就是说，Condition 实例被绑定在一个 Lock 对象上，要获得特定 Lock 实例的 Condition 实例对象，只需调用 Lock 对象的 `newCondition()` 方法即可，习惯上为条件对象命名为可以反映它所表达的条件的名字。一个锁对象上可以有一个或多个相关联的条件对象。
+也就是说，Condition 实例被绑定在每一个 Lock 对象上，要获得特定 Lock 实例的 Condition 实例对象，只需调用 Lock 对象的 `newCondition()` 方法即可，**习惯上为条件对象命名为可以反映它所表达的条件的名字，一个锁对象上可以有一个或多个相关联的条件对象**。
 
 #### 2.1.2. 线程间协作
 
@@ -222,10 +228,10 @@ public class ResourceByCondition {
     private int count = 1;
     private boolean flag = false;
 
-    // 创建一个锁对象。
+    // 创建一个锁对象
     Lock lock = new ReentrantLock();
 
-    // 通过已有的锁获取两组监视器，一组监视生产者，一组监视消费者。
+    // 通过已有的锁获取两组监视器，一组监视生产者，一组监视消费者
     Condition producer_con = lock.newCondition();
     Condition consumer_con = lock.newCondition();
 
@@ -349,7 +355,15 @@ public class ConditionObject implements Condition, java.io.Serializable {
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/3/d3e7be31993b0e96c7cfc5af9f58930c.jpg)
 
-## 3. Refer Links
+## 3. 生产者消费者模型
+
+TODO:
+
+[生产者 / 消费者问题的多种 Java 实现方式](https://blog.csdn.net/MONKEY_D_MENG/article/details/6251879)
+
+[一种面向作业流（工作流) 的轻量级可复用的异步流水开发框架 JobFlow 的设计与实现](https://blog.csdn.net/MONKEY_D_MENG/article/details/6419246)
+
+## 4. Refer Links
 
 [深入理解 Java 并发之 synchronized 实现原理](http://blog.csdn.net/javazejian/article/details/72828483)
 
@@ -358,3 +372,5 @@ public class ConditionObject implements Condition, java.io.Serializable {
 [线程间协作：wait、notify、notifyAll](http://wiki.jikexueyuan.com/project/java-concurrency/collaboration-between-threads.html)
 
 [生产者—消费者模型](http://wiki.jikexueyuan.com/project/java-concurrency/pc.html)
+
+[Condition.await, signal 与 Object.wait, notify 的区别](https://my.oschina.net/u/174366/blog/608509)

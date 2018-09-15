@@ -1,18 +1,18 @@
-- [Java 面向对象：封装](#java)
-	- [1. 构造器](#1)
-	- [2. 属性](#2)
-	- [3. 方法](#3)
-		- [3.1. 参数传递](#31)
-		- [3.2. 静态方法](#32)
-		- [3.3. 静态域](#33)
-		- [3.4. 静态常量](#34)
-		- [3.5. 静态方法](#35)
-		- [3.6. 工厂方法](#36)
-		- [3.7. main 方法](#37-main)
-	- [4. 访问控制](#4)
+- [Java 面向对象：封装](#java-面向对象封装)
+	- [1. 构造器](#1-构造器)
+	- [2. 属性](#2-属性)
+	- [3. 方法](#3-方法)
+		- [3.1. 参数传递](#31-参数传递)
+		- [3.2. 静态方法](#32-静态方法)
+		- [3.3. 静态域](#33-静态域)
+		- [3.4. 静态常量](#34-静态常量)
+		- [3.5. 静态方法](#35-静态方法)
+		- [3.6. 工厂方法](#36-工厂方法)
+		- [3.7. main 方法](#37-main-方法)
+	- [4. 访问控制](#4-访问控制)
 	- [5. this](#5-this)
-	- [6. 内部类](#6)
-	- [7. 包](#7)
+	- [6. 内部类](#6-内部类)
+	- [7. 包](#7-包)
 
 # Java 面向对象：封装
 
@@ -74,6 +74,54 @@ eg:
 ### 3.2. 静态方法
 
 ### 3.3. 静态域
+
+TODO: 
+
+http://www.cnblogs.com/jerry007/archive/2013/01/18/java%E4%B8%AD%E5%9F%9F.html
+
+https://www.zhihu.com/question/59174759
+
+https://www.zhihu.com/question/41924954
+
+加载顺序辨析：
+```java
+public class Main {
+	public static void main(String[] args) throws ClassNotFoundException {
+		// Class.forName("A"); // 提前加载类 A，则 static 域提前输出
+		System.out.println("1");
+		System.out.println(A.A);
+		System.out.println(A.B);
+		System.out.println("========");
+		System.out.println(new A().A);
+		System.out.println("========");
+		System.out.println(new A().A);
+		System.out.println("2");
+	}
+}
+class A {
+	static {
+		System.out.println("static1");
+	}
+	{
+		System.out.println("no static 1");
+	}
+
+	static String A = "A";
+	static String B = "B";
+
+	public A() {
+		System.out.println("constructor");
+	}
+
+	static {
+		System.out.println("static2");
+	}
+
+	{
+		System.out.println("no static 2");
+	}
+}
+```
 
 ### 3.4. 静态常量
 

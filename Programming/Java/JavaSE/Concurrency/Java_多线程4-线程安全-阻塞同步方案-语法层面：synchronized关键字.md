@@ -1,17 +1,17 @@
-- [Java 多线程 - 线程安全 - 阻塞同步方案 - 语法层面：synchronized 关键字](#java-%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8---%E9%98%BB%E5%A1%9E%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88---%E8%AF%AD%E6%B3%95%E5%B1%82%E9%9D%A2%EF%BC%9Asynchronized-%E5%85%B3%E9%94%AE%E5%AD%97)
-    - [1. 使用方法](#1-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
-        - [1.1. 同步实例方法](#11-%E5%90%8C%E6%AD%A5%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95)
-        - [1.2. 同步静态方法](#12-%E5%90%8C%E6%AD%A5%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95)
-        - [1.3. 同步代码块](#13-%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%E5%9D%97)
-    - [2. 实现原理](#2-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-        - [2.1. 对象锁 monitor](#21-%E5%AF%B9%E8%B1%A1%E9%94%81-monitor)
-        - [2.2. 显式同步](#22-%E6%98%BE%E5%BC%8F%E5%90%8C%E6%AD%A5)
-        - [2.3. 隐式同步](#23-%E9%9A%90%E5%BC%8F%E5%90%8C%E6%AD%A5)
-    - [3. Refer Links](#3-refer-links)
+- [Java 多线程 - 线程安全 - 阻塞同步方案 - 语法层面：synchronized 关键字](#java-多线程---线程安全---阻塞同步方案---语法层面synchronized-关键字)
+	- [1. 使用方法](#1-使用方法)
+		- [1.1. 同步实例方法](#11-同步实例方法)
+		- [1.2. 同步静态方法](#12-同步静态方法)
+		- [1.3. 同步代码块](#13-同步代码块)
+	- [2. 实现原理](#2-实现原理)
+		- [2.1. 对象锁 monitor](#21-对象锁-monitor)
+		- [2.2. 显式同步](#22-显式同步)
+		- [2.3. 隐式同步](#23-隐式同步)
+	- [3. Refer Links](#3-refer-links)
 
 # Java 多线程 - 线程安全 - 阻塞同步方案 - 语法层面：synchronized 关键字
 
-Java 中，最基本的互斥同步手段就是 synchronized 关键字，它可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块。由于 synchronized 在 Java 语言层面以关键字形式提供，因此也称为内置锁。
+在 Java 中最基本的互斥同步手段是 synchronized 关键字，它可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块。由于 synchronized 在 Java 语言层面以关键字形式提供，因此也称为**内置锁**。
 
 ## 1. 使用方法
 
@@ -52,7 +52,7 @@ public class AccountingSync implements Runnable{
     }
 }
 ```
-上述代码对同一共享资源创建了一个对象实例进行多线程的访问，由于 synchronized 修饰的是实例方法，进入实例方法前要获得当前实例的锁，而一个对象只有一个锁，因此可以在多线程访问的环境下保障线程安全。
+上述代码对同一共享资源创建了一个对象实例进行多线程的访问，**由于 synchronized 修饰的是实例方法，进入实例方法前要获得当前实例的锁**，而一个对象只有一个锁，因此可以在多线程访问的环境下保障线程安全。
 
 ```java
 public class AccountingSyncBad implements Runnable{
@@ -82,7 +82,7 @@ public class AccountingSyncBad implements Runnable{
 
 ### 1.2. 同步静态方法
 
-使用 synchronized 关键字修饰静态方法，创建同步静态方法。锁是当前类的 Class 对象，进入静态方法前要获得当前类 Class 对象的锁。由于静态成员不专属于任何一个实例对象，因此通过 Class 对象锁可以控制静态成员的并发操作。
+使用 synchronized 关键字修饰静态方法，可创建同步静态方法。**锁是当前类的 Class 对象，进入静态方法前要获得当前类 Class 对象的锁**。由于静态成员不专属于任何一个实例对象，因此通过 Class 对象锁可以控制静态成员的并发操作。
 
 NOTE: 若两个线程同时调用同步实例方法和同步静态方法，是可以同时执行的。因为同步实例方法需要获得的是实例对象锁，而同步静态方法需要获得的是类的 Class 对象锁。
 
@@ -113,7 +113,7 @@ public class AccountingSyncClass implements Runnable{
 
 ### 1.3. 同步代码块
 
-除了使用关键字修饰实例方法和静态方法外，还可以使用 synchronized 关键字修饰代码块，创建同步代码块。在 synchronized 括号中指定要加锁的对象，进入同步代码块前要获得给定对象的锁。
+除了使用关键字修饰实例方法和静态方法外，还可以使用 synchronized 关键字修饰代码块，创建同步代码块。**在 synchronized 括号中指定要加锁的对象，进入同步代码块前要获得给定对象的锁**。
 
 在某些情况下，我们编写的方法体可能比较大，同时存在一些比较耗时的操作，而需要同步的代码又只有一小部分，如果直接对整个方法进行同步操作，可能会得不偿失，此时我们可以使用同步代码块的方式对需要同步的代码进行包裹，这样就无需对整个方法进行同步操作了。
 
@@ -125,10 +125,9 @@ public class AccountingSync implements Runnable{
     public void run() {
         // 省略其他耗时操作。...
         // 使用同步代码块对变量 i 进行同步操作，锁对象为 instance
-        synchronized(instance){
-            for(int j=0;j<1000000;j++){
+        synchronized(instance) {
+            for (int j=0;j<1000000;j++)
                   i++;
-            }
         }
     }
     public static void main(String[] args) throws InterruptedException {
@@ -143,27 +142,25 @@ public class AccountingSync implements Runnable{
 还可以使用 this 对象（代表当前实例) 或者当前类的 class 对象作为锁：
 ```java
 // this, 当前实例对象锁
-synchronized(this){
-    for(int j=0;j<1000000;j++){
+synchronized(this) {
+    for(int j=0;j<1000000;j++)
         i++;
-    }
 }
 
 // Class 对象锁
-synchronized(AccountingSync.class){
-    for(int j=0;j<1000000;j++){
+synchronized(AccountingSync.class) {
+    for(int j=0;j<1000000;j++)
         i++;
-    }
 }
 ```
 
 ## 2. 实现原理
 
-Java 虚拟机中的同步 (Synchronization) 基于进入和退出监视器 (Monitor) 对象实现，无论是显式同步（有明确的 monitorenter 和 monitorexit 指令，即同步代码块) 还是隐式同步（同步方法）都是如此。
+JVM 中的同步 (Synchronization) 基于进入和退出监视器 (Monitor) 对象实现，无论是显式同步（有明确的 monitorenter 和 monitorexit 指令，即同步代码块) 还是隐式同步（同步方法）都是如此。
 
 ### 2.1. 对象锁 monitor
 
-在 HotSpot 中，每个 Java 对象都存在着一个 monitor 对象与之关联。当对象头中 Mark Word 的锁标志位为 `10` 时，表明该对象持有一个重量级锁，此时对象头中就存储着指向 monitor 对象起始地址的指针。
+**在 HotSpot 中，每个 Java 对象都存在着一个 monitor 对象与之关联**。当对象头中 Mark Word 的锁标志位为 `10` 时，表明该对象持有一个重量级锁，此时对象头中就存储着指向 monitor 对象起始地址的指针。
 
 monitor 是 ObjectMonitor 结构的实例对象，查看 JVM 源码可知 ObjectMonitor 的主要数据结构如下：
 ```cpp
@@ -176,21 +173,21 @@ ObjectMonitor() {
     _object       = NULL;
     _owner        = NULL;   // 指向持有 ObjectMonitor 对象的线程
     _WaitSet      = NULL;   // 处于 wait 状态的线程，会被加入到_WaitSet 队列，保存 ObjectWaiter 对象
-    _WaitSetLock  = 0 ;
-    _Responsible  = NULL ;
-    _succ         = NULL ;
-    _cxq          = NULL ;
-    FreeNext      = NULL ;
-    _EntryList    = NULL ;  // 处于 block 状态（等待锁）的线程，会被加入到_EntryList 队列，保存 ObjectWaiter 对象
-    _SpinFreq     = 0 ;
-    _SpinClock    = 0 ;
-    OwnerIsThread = 0 ;
+    _WaitSetLock  = 0;
+    _Responsible  = NULL;
+    _succ         = NULL;
+    _cxq          = NULL;
+    FreeNext      = NULL;
+    _EntryList    = NULL;  // 处于 block 状态（等待锁）的线程，会被加入到_EntryList 队列，保存 ObjectWaiter 对象
+    _SpinFreq     = 0;
+    _SpinClock    = 0;
+    OwnerIsThread = 0;
 }
 ```
 当多个线程同时访问一段同步代码时，会依次进入 monitor 的 _EntryList 队列，
 - 若某个线程获取到对象的 monitor，会把 monitor 中的 _owner 变量设置为当前线程，同时将 monitor 中的计数器 _count 加 1 （由此可知 **synchronized 锁是可重入锁**）。
 - 若线程调用 wait() 方法，将释放当前持有的 monitor， _owner 变量恢复为 null， _count 自减 1，同时该线程进入 _WaitSet 队列中等待被唤醒。
-- 若当前线程执行完毕也将释放 monitor（锁) 并复位变量的值，以便其他线程进入获取 monitor（锁)。
+- 若当前线程执行完毕也将释放 monitor（锁) 并复位变量的值，以便其他线程进入获取 monitor（锁）。
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/31/a7cd1289359cd279095af6a87c35a497.jpg)
 
@@ -198,11 +195,11 @@ ObjectMonitor() {
 
 ### 2.2. 显式同步
 
-显式同步指的是使用 synchronized 关键字修饰代码块的同步，由于在代码中明确确定了锁对象，因此称为显式同步。它是由 monitorenter 和 monitorexit 指令来实现的。
+**显式同步指的是使用 synchronized 关键字修饰代码块的同步，由于在代码中明确确定了锁对象，因此称为显式同步。它是由 monitorenter 和 monitorexit 指令来实现的。**
 
 synchronized 关键字经过编译之后，会在同步块的前后分别形成 monitorenter 和 monitorexit 这两个字节码指令，其中 monitorenter 指令指向同步代码块的开始位置，monitorexit 指令则指明同步代码块的结束位置。这两个指令都需要一个 reference 类型的参数来指明要锁定和解锁的对象。
 
-- 在执行 monitorenter 指令时，首先要尝试获取 objectref（即对象锁） 所对应的 monitor 的持有权。
+- 在执行 monitorenter 指令时，首先会尝试获取 objectref（即对象锁） 所对应的 monitor 的持有权。
   - 如果这个对象没被锁定，或者当前线程已经拥有了那个对象的锁，那么线程可以成功取得 monitor 或重入这个 monitor，并把锁的计数器加 1。
   - 如果其它线程已经拥有 objectref 的 monitor 的所有权，那当前线程将被阻塞，直到正在执行线程执行完毕。
 - 在执行 monitorexit 指令时，会将锁计数器减 1。当计数器为 0 时，执行线程将释放 monitor（锁），从而使其它线程将有机会持有 monitor。
@@ -261,13 +258,13 @@ NOTE:
 
 编译器会确保无论方法通过何种方式完成，方法中调用过的每条 monitorenter 指令都有执行其对应 monitorexit 指令，而无论这个方法是正常结束还是异常结束。
 
-为了保证在方法异常完成时 monitorenter 和 monitorexit 指令依然可以正确配对执行，编译器会自动产生一个异常处理器，这个异常处理器声明可处理所有的异常，它的目的就是用来执行 monitorexit 指令。从以上字节码中可以看到多了一个 monitorexit 指令，事实上它就是异常结束时被执行的释放 monitor 的指令。
+为了保证在方法异常完成时 monitorenter 和 monitorexit 指令依然可以正确配对执行，编译器会自动产生一个异常处理器，这个异常处理器声明可处理所有的异常，它的目的就是用来执行 monitorexit 指令。**从以上字节码中可以看到多了一个 monitorexit 指令，事实上它就是异常结束时被执行的释放 monitor 的指令**。
 
 ### 2.3. 隐式同步
 
-隐式同步指的是使用 synchronized 关键字修饰方法（实例方法和静态方法）的同步。它是由方法调用指令，读取运行时常量池中方法的 ACC_SYNCHRONIZED 标志来隐式实现的。
+**隐式同步指的是使用 synchronized 关键字修饰方法（实例方法和静态方法）的同步。它是由方法调用指令，读取运行时常量池中方法的 ACC_SYNCHRONIZED 标志来隐式实现的。**
 
-JVM 可以从方法常量池中的方法表结构 (method_info Structure) 中的 ACC_SYNCHRONIZED 访问标志区分一个方法是否同步方法。当方法调用时，调用指令将会 检查方法的 ACC_SYNCHRONIZED 访问标志是否被设置，如果设置了，执行线程将先持有 monitor（虚拟机规范中用的是管程一词）， 然后再执行方法，最后再方法完成（无论是正常完成还是非正常完成) 时释放 monitor。在方法执行期间，执行线程持有了 monitor，其他任何线程都无法再获得同一个 monitor。如果一个同步方法执行期间抛 出了异常，并且在方法内部无法处理此异常，那这个同步方法所持有的 monitor 将在异常抛到同步方法之外时自动释放。
+JVM 可以从方法常量池中的方法表结构 (method_info Structure) 中的 ACC_SYNCHRONIZED 访问标志区分一个方法是否同步方法。**当方法调用时，调用指令将会检查方法的 ACC_SYNCHRONIZED 访问标志是否被设置**，如果设置了，执行线程将先持有 monitor， 然后再执行方法，最后在方法完成（无论是正常完成还是非正常完成) 时释放 monitor。在方法执行期间，执行线程持有了 monitor，其他任何线程都无法再获得同一个 monitor。如果一个同步方法执行期间抛出了异常，并且在方法内部无法处理此异常，那这个同步方法所持有的 monitor 将在异常抛到同步方法之外时自动释放。
 
 例：
 ```java

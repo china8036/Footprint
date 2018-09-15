@@ -1,20 +1,21 @@
-- [Java 集合：Collection 族 - Queue](#java-collection----queue)
-  - [1. Queue 接口](#1-queue)
-    - [1.1. 基本概念](#11)
-    - [1.2. 常用 API](#12--api)
-  - [2. PriorityQueue 实现类](#2-priorityqueue)
-    - [2.1. 基本概念](#21)
-    - [2.2. 存储结构](#22)
-    - [2.3. 常用 API](#23--api)
-  - [3. Deque 扩展接口](#3-deque)
-    - [3.1. 基本概念](#31)
-    - [3.2. 常用 API](#32--api)
-  - [4. ArrayDeque 实现类](#4-arraydeque)
-    - [4.1. 基本概念](#41)
-    - [4.2. 存储结构](#42)
-    - [4.3. 常用 API](#43--api)
-  - [5. LinkedList 实现类](#5-linkedlist)
-  - [6. Refer Links](#6-refer-links)
+- [Java 集合：Collection 族 - Queue](#java-集合collection-族---queue)
+  - [1. Queue 接口](#1-queue-接口)
+    - [1.1. 基本概念](#11-基本概念)
+    - [1.2. 常用 API](#12-常用-api)
+  - [2. AbstractQueue 抽象类](#2-abstractqueue-抽象类)
+  - [3. PriorityQueue 实现类](#3-priorityqueue-实现类)
+    - [3.1. 基本概念](#31-基本概念)
+    - [3.2. 存储结构](#32-存储结构)
+    - [3.3. 常用 API](#33-常用-api)
+  - [4. Deque 扩展接口](#4-deque-扩展接口)
+    - [4.1. 基本概念](#41-基本概念)
+    - [4.2. 常用 API](#42-常用-api)
+  - [5. ArrayDeque 实现类](#5-arraydeque-实现类)
+    - [5.1. 基本概念](#51-基本概念)
+    - [5.2. 存储结构](#52-存储结构)
+    - [5.3. 常用 API](#53-常用-api)
+  - [6. LinkedList 实现类](#6-linkedlist-实现类)
+  - [7. Refer Links](#7-refer-links)
 
 # Java 集合：Collection 族 - Queue
 
@@ -29,20 +30,24 @@
 ### 1.2. 常用 API
 
 - Insert：将给定元素添加到队列末尾。
-  - `boolean	add​(E e)`：若队列已满，抛出一个异常。
-  - `boolean	offer​(E e)`：若队列已满，返回 false。
+  - `boolean add​(E e)`：若队列已满，抛出一个异常。
+  - `boolean offer​(E e)`：若队列已满，返回 false。
   
 - Remove：删除并返回队列头部的元素。
-  - `E	remove​()`：若队列为空，抛出一个异常。
-  - `E	poll​()`：若队列为空，返回 false。
+  - `E remove​()`：若队列为空，抛出一个异常。
+  - `E poll​()`：若队列为空，返回 false。
 
 - Examine：返回队列头部的元素但不删除。
-  - `E	element​()`：若队列为空，抛出一个异常。
-  - `E	peek​()`：若队列为空，返回 null。
+  - `E element​()`：若队列为空，抛出一个异常。
+  - `E peek​()`：若队列为空，返回 null。
 
-## 2. PriorityQueue 实现类
+## 2. AbstractQueue 抽象类
 
-### 2.1. 基本概念
+AbstractQueue 是 Queue 接口的抽象实现类，它同时扩展了 AbstractCollection 抽象类。
+
+## 3. PriorityQueue 实现类
+
+### 3.1. 基本概念
 
 [PriorityQueue](https://docs.oracle.com/javase/9/docs/api/java/util/PriorityQueue.html) 是 AbstractQueue 抽象类的扩展，并没有直接实现 Queue 接口。它是一个**相对**标准的队列实现类，用于实现**优先级队列**这种数据结构。在 PriorityQueue 中，元素可以按照任意的顺序插入，但当调用 API 方法取出队列中的元素时，并不是取出最先进入队列的元素，而是取出队列中最小（或最大）的元素。从这个意义上看，PriorityQueue 违反了队列的基本规则：FIFO。
 
@@ -50,11 +55,11 @@
 
 PriorityQueue 是非线程安全的，若对线程安全有要求，应该使用线程安全的 PriorityBlockingQueue 类。
 
-PriorityQueue 不允许元素为 null，当添加一个 null 元素时，将抛出 java.lang.NullPointerException 异常。
+**PriorityQueue 不允许元素为 null**，当添加一个 null 元素时，将抛出 java.lang.NullPointerException 异常。
 
-优先级队列的典型应用场景是任务的调度。任务以随机顺序添加到任务队列中，但每一次进行任务调度时，都会将一个优先级最高的元素从队列中删除并开始执行（可设置优先级为 1 时最高）。
+**优先级队列的典型应用场景是任务的调度。任务以随机顺序添加到任务队列中，但每一次进行任务调度时，都会将一个优先级最高的元素从队列中删除并开始执行（可设置优先级为 1 时最高）**。
 
-### 2.2. 存储结构
+### 3.2. 存储结构
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/20/2b732a7bbc959afc42d013cb40523a18.jpg)
 
@@ -62,44 +67,44 @@ PriorityQueue 内部实际上是一个**平衡二叉最小堆**，底层基于�
 - 不需要在每次添加 / 删除元素时对所有的元素进行排序。每次调用 remove 方法，都会删除当前优先级队列中最小的元素；每次调用 add 方法，都会将最小的元素移动到根。
 - 当使用迭代器 iterator() 遍历 PriorityQueue 时，会按照内部数组的索引顺序进行返回，也就是二叉堆层序遍历的次序、元素添加的顺序。如果需要有序的遍历，可以考虑使用 `Arrays.sort(priorityQueue.toArray())` 或者通过使用 for 循环结合 `element​()` 方法 / `peek​()` 方法进行遍历。
 
-### 2.3. 常用 API
+### 3.3. 常用 API
 
 - 构造器
   - `PriorityQueue​()`
-  - `PriorityQueue​(int initialCapacity)`	
+  - `PriorityQueue​(int initialCapacity)`
   - `PriorityQueue​(int initialCapacity, Comparator<? super E> comparator)`
 
 - PriorityQueue​的 API 基本上与 Queue 接口的 API 相同。
 
-## 3. Deque 扩展接口
+## 4. Deque 扩展接口
 
-### 3.1. 基本概念
+### 4.1. 基本概念
 
 [Deque](https://docs.oracle.com/javase/9/docs/api/java/util/Deque.html) 接口是 Queue 接口的扩展接口，用于实现一个双端队列（double ended queue），它支持同时在头部和尾部同时添加或删除元素，但同样不支持在集合的中间位置添加元素。**由于双端队列可以在头部和尾部添加元素，因此既可以当作栈使用，也可以当作队列使用。**
 
 Java 为 Deque 接口提供了两个实现类：基于数组实现的 ArrayDeque 和基于链表实现的 LinkedList。由于实现了 Deque 接口，因此 **ArrayDeque 和 LinkedList 都可以用于栈和队列的实现，但官方更推荐使用 ArrayDeque 用作栈和队列**。
 
-### 3.2. 常用 API
+### 4.2. 常用 API
 
 - Insert：将给定元素添加到双端队列的头部或末尾。
-  - `void	addFirst​(E e)`: Inserts the specified element at the front of this deque if it is possible to do so immediately without violating capacity restrictions, throwing an IllegalStateException if no space is currently available.
-  - `void	addLast​(E e)`: Inserts the specified element at the end of this deque if it is possible to do so immediately without violating capacity restrictions, throwing an IllegalStateException if no space is currently available.
-  - `boolean	offerFirst​(E e)`: Inserts the specified element at the front of this deque unless it would violate capacity restrictions.
-  - `boolean	offerLast​(E e)`: Inserts the specified element at the end of this deque unless it would violate capacity restrictions.
+  - `void addFirst​(E e)`: Inserts the specified element at the front of this deque if it is possible to do so immediately without violating capacity restrictions, throwing an IllegalStateException if no space is currently available.
+  - `void addLast​(E e)`: Inserts the specified element at the end of this deque if it is possible to do so immediately without violating capacity restrictions, throwing an IllegalStateException if no space is currently available.
+  - `boolean offerFirst​(E e)`: Inserts the specified element at the front of this deque unless it would violate capacity restrictions.
+  - `boolean offerLast​(E e)`: Inserts the specified element at the end of this deque unless it would violate capacity restrictions.
 - Remove：删除并返回队列头部或尾部的元素。
-  - `E	removeFirst​()`: Retrieves and removes the first element of this deque.
-  - `E	removeLast​()`: Retrieves and removes the last element of this deque.
-  - `E	pollFirst​()`: Retrieves and removes the first element of this deque, or returns null if this deque is empty.
-  - `E	pollLast​()`: Retrieves and removes the last element of this deque, or returns null if this deque is empty.
+  - `E removeFirst​()`: Retrieves and removes the first element of this deque.
+  - `E removeLast​()`: Retrieves and removes the last element of this deque.
+  - `E pollFirst​()`: Retrieves and removes the first element of this deque, or returns null if this deque is empty.
+  - `E pollLast​()`: Retrieves and removes the last element of this deque, or returns null if this deque is empty.
 - Examine：返回双端队列头部或尾部的元素但不删除。
-  - `E	getFirst​()`: Retrieves, but does not remove, the first element of this deque.
-  - `E	getLast​()`: Retrieves, but does not remove, the last element of this deque.
-  - `E	peekFirst​()`: Retrieves, but does not remove, the first element of this deque, or returns null if this deque is empty.
-  - `E	peekLast​()`: Retrieves, but does not remove, the last element of this deque, or returns null if this deque is empty.
+  - `E getFirst​()`: Retrieves, but does not remove, the first element of this deque.
+  - `E getLast​()`: Retrieves, but does not remove, the last element of this deque.
+  - `E peekFirst​()`: Retrieves, but does not remove, the first element of this deque, or returns null if this deque is empty.
+  - `E peekLast​()`: Retrieves, but does not remove, the last element of this deque, or returns null if this deque is empty.
 
-## 4. ArrayDeque 实现类
+## 5. ArrayDeque 实现类
 
-### 4.1. 基本概念
+### 5.1. 基本概念
 
 [ArrayDeque](https://docs.oracle.com/javase/9/docs/api/java/util/ArrayDeque.html) 是 Deque 接口的实现类。
 
@@ -109,9 +114,9 @@ Java 为 Deque 接口提供了两个实现类：基于数组实现的 ArrayDeque
 
 ArrayDeque 是非线程安全的。
 
-ArrayDeque 不允许元素为 null，当添加一个 null 元素时，将抛出 java.lang.NullPointerException 异常。
+**ArrayDeque 不允许元素为 null**，当添加一个 null 元素时，将抛出 java.lang.NullPointerException 异常。
 
-### 4.2. 存储结构
+### 5.2. 存储结构
 
 ArrayDeque 底层基于**循环数组**（circular array）实现，也就是说数组的任何一点都可能被看作起点或者终点，从而实现可以同时在数组两端插入或删除元素的需求。
 
@@ -119,7 +124,7 @@ ArrayDeque 底层基于**循环数组**（circular array）实现，也就是说
 
 上图中我们看到，head 指向首端第一个有效元素，tail 指向尾端第一个可以插入元素的空位。因为是循环数组，所以 head 不一定总等于 0，tail 也不一定总是比 head 大。
 
-### 4.3. 常用 API
+### 5.3. 常用 API
 
 - 构造器
   - `ArrayDeque​()`
@@ -127,9 +132,9 @@ ArrayDeque 底层基于**循环数组**（circular array）实现，也就是说
   - `ArrayDeque​(Collection<? extends E> c)	`: 使用指定集合构造一个无限双端队列。
 - ArrayDeque 的其它 API 与 Deque 接口的 API 基本相同。
 
-## 5. LinkedList 实现类
+## 6. LinkedList 实现类
 
-## 6. Refer Links
+## 7. Refer Links
 
 [PriorityQueue 源码分析](https://www.jianshu.com/p/f79e4e2bd071)
 

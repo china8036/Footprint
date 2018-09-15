@@ -119,7 +119,7 @@ public class Test {
 ```
 #### 1.3.2. 使用 Callable 和线程池创建多线程
 
-可以使用线程池的方式来将当前实现 Callable 任务通过 ThreadPoolExecutor 的 submit 方法添加到线程池，submit 方法会返回一个 FutureTask 对象，而 FutureTask 是实现了 Future 接口的，我们可以使用 submit 返回的 FutureTask 对象的 get 方法获取到任务的返回值。
+可以使用线程池的方式来将当前实现 Callable 接口的任务通过 ThreadPoolExecutor 的 submit 方法添加到线程池，submit 方法会返回一个 FutureTask 对象，而 FutureTask 是实现了 Future 接口的，因此我们可以使用该对象的 get 方法获取到任务的返回值。
 ```java
 public class Test {
     public static void main(String[] args) {
@@ -291,11 +291,11 @@ public enum State {
 
 在 Java 的多线程中，每一个线程都有一个优先级。**默认情况下，一个线程继承它的父线程的优先级**。
 
-通过 `void	setPriority​(int newPriority)` 方法可以手动设置线程的优先级（可将优先级设置为`MIN_PRIORITY`与`MAX_PRIORITY`之间的任意值，Thread 中`MAX_PRIORITY`为 10，`MIN_PRIORITY`为 1，`NORM_PRIORITY`为 5）。
+通过 `void setPriority​(int newPriority)` 方法可以手动设置线程的优先级（可将优先级设置为 `MIN_PRIORITY` 与 `MAX_PRIORITY` 之间的任意值，Thread 中`MAX_PRIORITY`为 10，`MIN_PRIORITY`为 1，`NORM_PRIORITY`为 5）。
 
 NOTE：
-
-**线程优先级是高度依赖于操作系统的**。当虚拟机依赖于宿主机平台的线程实现机制时，Java 线程优先级会被映射到宿主机平台的优先级上，可能更多也可能更少。因此，不要将应用程序构建为功能的正确性依赖于优先级，建议只使用 MIN_PRIORITY、NORM_PRIORITY、MAX_PRIORITY。
+- **线程优先级的值越高，表示越优先**。
+- **线程优先级是高度依赖于操作系统的**。当虚拟机依赖于宿主机平台的线程实现机制时，Java 线程优先级会被映射到宿主机平台的优先级上，可能更多也可能更少。因此，不要将应用程序构建为功能的正确性依赖于优先级，建议只使用 MIN_PRIORITY、NORM_PRIORITY、MAX_PRIORITY。
 
 相关 API
 ```java
@@ -332,7 +332,7 @@ private native void setPriority0(int newPriority);
 
 ## 6. 线程睡眠
 
-sleep() 可使线程睡眠，交出 CPU，让 CPU 去执行其他的任务，相当于让线程进入阻塞状态。**sleep 方法不会释放锁，也就是说如果当前线程持有对某个对象的锁，则即使调用 sleep 方法，其他线程也无法访问这个对象**。
+Thread.sleep() 方法可使线程睡眠，交出 CPU，让 CPU 去执行其他的任务，相当于让线程进入阻塞状态。**sleep 方法不会释放锁，也就是说如果当前线程持有对某个对象的锁，则即使调用 sleep 方法，其他线程也无法访问这个对象**。
 ```java
 public static native void sleep(long millis) throws InterruptedException;	
 
@@ -371,8 +371,8 @@ public static native void yield();
 可通过静态方法 `Thread.setDefaultUncaughtExceptionHandler​(Thread.UncaughtExceptionHandler eh)` 为所有线程安装一个默认的处理器，也可以通过方法 `setUncaughtExceptionHandler​(Thread.UncaughtExceptionHandler eh)` 为任何线程安装一个处理器。若不安装处理器，默认处理器为空。
 
 相关 API
-- `static void	setDefaultUncaughtExceptionHandler​(Thread.UncaughtExceptionHandler eh)`
-- `void	setUncaughtExceptionHandler​(Thread.UncaughtExceptionHandler eh)`
+- `static void setDefaultUncaughtExceptionHandler​(Thread.UncaughtExceptionHandler eh)`
+- `void setUncaughtExceptionHandler​(Thread.UncaughtExceptionHandler eh)`
 
 ## 9. Refer Links
 

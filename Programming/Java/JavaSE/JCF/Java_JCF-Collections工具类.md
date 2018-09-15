@@ -1,52 +1,52 @@
-- [Java 集合：算法包装类 Collections](#java-%E9%9B%86%E5%90%88%EF%BC%9A%E7%AE%97%E6%B3%95%E5%8C%85%E8%A3%85%E7%B1%BB-collections)
-  - [1. 针对 List 集合提供的方法](#1-%E9%92%88%E5%AF%B9-list-%E9%9B%86%E5%90%88%E6%8F%90%E4%BE%9B%E7%9A%84%E6%96%B9%E6%B3%95)
-    - [1.1. 排序 sort()](#11-%E6%8E%92%E5%BA%8F-sort)
-      - [1.1.1. API](#111-api)
-      - [1.1.2. 实现原理](#112-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [1.2. 混排 shuffle()](#12-%E6%B7%B7%E6%8E%92-shuffle)
-      - [1.2.1. API](#121-api)
-      - [1.2.2. 实现原理](#122-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [1.3. 交换元素 swap()](#13-%E4%BA%A4%E6%8D%A2%E5%85%83%E7%B4%A0-swap)
-      - [1.3.1. API](#131-api)
-      - [1.3.2. 实现原理](#132-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [1.4. 反转 reverse()](#14-%E5%8F%8D%E8%BD%AC-reverse)
-      - [1.4.1. API](#141-api)
-      - [1.4.2. 实现原理](#142-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [1.5. 二分查找 binarySearch​()](#15-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE-binarysearch%E2%80%8B)
-      - [1.5.1. API](#151-api)
-      - [1.5.2. 实现原理](#152-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [1.6. 旋转 rotate()](#16-%E6%97%8B%E8%BD%AC-rotate)
-      - [1.6.1. API](#161-api)
-      - [1.6.2. 实现原理](#162-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [1.7. 填充 fill()](#17-%E5%A1%AB%E5%85%85-fill)
-      - [1.7.1. API](#171-api)
-      - [1.7.2. 实现原理](#172-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [1.8. 替换 replaceAll()](#18-%E6%9B%BF%E6%8D%A2-replaceall)
-      - [1.8.1. API](#181-api)
-      - [1.8.2. 实现原理](#182-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [1.9. 索引查询 indexOfSubList() 和 lastIndexOfSubList()](#19-%E7%B4%A2%E5%BC%95%E6%9F%A5%E8%AF%A2-indexofsublist-%E5%92%8C-lastindexofsublist)
-      - [1.9.1. API](#191-api)
-      - [1.9.2. 实现原理](#192-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [1.10. 复制 copy​()](#110-%E5%A4%8D%E5%88%B6-copy%E2%80%8B)
-  - [2. 为所有 Collection 提供的方法](#2-%E4%B8%BA%E6%89%80%E6%9C%89-collection-%E6%8F%90%E4%BE%9B%E7%9A%84%E6%96%B9%E6%B3%95)
-    - [2.1. 最值 max​() 和 min​()](#21-%E6%9C%80%E5%80%BC-max%E2%80%8B-%E5%92%8C-min%E2%80%8B)
-      - [2.1.1. API](#211-api)
-      - [2.1.2. 实现原理](#212-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [2.2. 其它方法](#22-%E5%85%B6%E5%AE%83%E6%96%B9%E6%B3%95)
-  - [3. 集合转换](#3-%E9%9B%86%E5%90%88%E8%BD%AC%E6%8D%A2)
-    - [3.1. 不可变集合](#31-%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88)
-      - [3.1.1. API](#311-api)
-      - [3.1.2. 实现原理](#312-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [3.2. 线程同步集合](#32-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E9%9B%86%E5%90%88)
-      - [3.2.1. API](#321-api)
-      - [3.2.2. 实现原理](#322-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [3.3. 类型检查集合](#33-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E9%9B%86%E5%90%88)
-      - [3.3.1. API](#331-api)
-      - [3.3.2. 实现原理](#332-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-    - [3.4. 单一元素集合](#34-%E5%8D%95%E4%B8%80%E5%85%83%E7%B4%A0%E9%9B%86%E5%90%88)
-      - [3.4.1. API](#341-api)
-      - [3.4.2. 实现原理](#342-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-  - [4. Refer Links](#4-refer-links)
+- [Java 集合：算法包装类 Collections](#java-集合算法包装类-collections)
+	- [1. 针对 List 集合提供的方法](#1-针对-list-集合提供的方法)
+		- [1.1. 排序 sort()](#11-排序-sort)
+			- [1.1.1. API](#111-api)
+			- [1.1.2. 实现原理](#112-实现原理)
+		- [1.2. 混排 shuffle()](#12-混排-shuffle)
+			- [1.2.1. API](#121-api)
+			- [1.2.2. 实现原理](#122-实现原理)
+		- [1.3. 交换元素 swap()](#13-交换元素-swap)
+			- [1.3.1. API](#131-api)
+			- [1.3.2. 实现原理](#132-实现原理)
+		- [1.4. 反转 reverse()](#14-反转-reverse)
+			- [1.4.1. API](#141-api)
+			- [1.4.2. 实现原理](#142-实现原理)
+		- [1.5. 二分查找 binarySearch​()](#15-二分查找-binarysearch)
+			- [1.5.1. API](#151-api)
+			- [1.5.2. 实现原理](#152-实现原理)
+		- [1.6. 旋转 rotate()](#16-旋转-rotate)
+			- [1.6.1. API](#161-api)
+			- [1.6.2. 实现原理](#162-实现原理)
+		- [1.7. 填充 fill()](#17-填充-fill)
+			- [1.7.1. API](#171-api)
+			- [1.7.2. 实现原理](#172-实现原理)
+		- [1.8. 替换 replaceAll()](#18-替换-replaceall)
+			- [1.8.1. API](#181-api)
+			- [1.8.2. 实现原理](#182-实现原理)
+		- [1.9. 索引查询 indexOfSubList() 和 lastIndexOfSubList()](#19-索引查询-indexofsublist-和-lastindexofsublist)
+			- [1.9.1. API](#191-api)
+			- [1.9.2. 实现原理](#192-实现原理)
+		- [1.10. 复制 copy​()](#110-复制-copy)
+	- [2. 为所有 Collection 提供的方法](#2-为所有-collection-提供的方法)
+		- [2.1. 最值 max​() 和 min​()](#21-最值-max-和-min)
+			- [2.1.1. API](#211-api)
+			- [2.1.2. 实现原理](#212-实现原理)
+		- [2.2. 其它方法](#22-其它方法)
+	- [3. 集合转换](#3-集合转换)
+		- [3.1. 不可变集合](#31-不可变集合)
+			- [3.1.1. API](#311-api)
+			- [3.1.2. 实现原理](#312-实现原理)
+		- [3.2. 线程同步集合](#32-线程同步集合)
+			- [3.2.1. API](#321-api)
+			- [3.2.2. 实现原理](#322-实现原理)
+		- [3.3. 类型检查集合](#33-类型检查集合)
+			- [3.3.1. API](#331-api)
+			- [3.3.2. 实现原理](#332-实现原理)
+		- [3.4. 单一元素集合](#34-单一元素集合)
+			- [3.4.1. API](#341-api)
+			- [3.4.2. 实现原理](#342-实现原理)
+	- [4. Refer Links](#4-refer-links)
 
 # Java 集合：算法包装类 Collections
 
@@ -61,9 +61,9 @@ Collections 工具类中，包含了一部分专门用于 List 集合的方法�
 #### 1.1.1. API
 
 Collections 中提供了对 List 集合进行排序的方法：
-- `static <T extends Comparable<? super T>> void	sort​(List<T> list)`: 该方法假定集合的元素都实现了 Comparable 接口。
+- `static <T extends Comparable<? super T>> void sort​(List<T> list)`: 该方法假定集合的元素都实现了 Comparable 接口。
 
-- `static <T> void	sort​(List<T> list, Comparator<? super T> c)`: 该方法可通过传入 Comparator 对象，从而自定义排序的规则。
+- `static <T> void sort​(List<T> list, Comparator<? super T> c)`: 该方法可通过传入 Comparator 对象，从而自定义排序的规则。
 
 #### 1.1.2. 实现原理
 
@@ -115,8 +115,8 @@ List 集合包含了数组结构和链表结构，其中对数组的排序算法
 #### 1.2.1. API
 
 Collections.shuffle() 方法的功能与 sort() 正好相反，该方法会随机地混排列表中元素的顺序，可用于模拟“洗牌”操作。
-- `static void	shuffle​(List<?> list)`
-- `static void	shuffle​(List<?> list, Random rnd)`
+- `static void shuffle​(List<?> list)`
+- `static void shuffle​(List<?> list, Random rnd)`
 
 #### 1.2.2. 实现原理
 
@@ -164,7 +164,7 @@ public static void shuffle(List<?> list, Random rnd) {
 #### 1.3.1. API
 
 Collections.swap() 方法用于交换 List 集合中指定位置的两个元素。
-- `static void	swap​(List<?> list, int i, int j)`
+- `static void swap​(List<?> list, int i, int j)`
 
 #### 1.3.2. 实现原理
 
@@ -193,7 +193,7 @@ E get(int index);
 #### 1.4.1. API
 
 Collections.reverse() 方法可用于反转指定 List 集合中元素的顺序，复杂度为 O(n)。
-- `static void	reverse​(List<?> list)`
+- `static void reverse​(List<?> list)`
 
 #### 1.4.2. 实现原理
 
@@ -539,7 +539,7 @@ public static int lastIndexOfSubList(List<?> source, List<?> target) {
 ### 1.10. 复制 copy​()
 
 将原列表的所有元素赋值到目标列表的相应位置上，新列表的长度至少应与原列表长度一样。
-- `static <T> void	copy​(List<? super T> dest, List<? extends T> src)`
+- `static <T> void copy​(List<? super T> dest, List<? extends T> src)`
 
 ## 2. 为所有 Collection 提供的方法
 
@@ -548,10 +548,10 @@ public static int lastIndexOfSubList(List<?> source, List<?> target) {
 #### 2.1.1. API
 
 返回集合中最大或最小的元素
-- `static <T extends Object & Comparable<? super T>> T	max​(Collection<? extends T> coll)`
-- `static <T> T	max​(Collection<? extends T> coll, Comparator<? super T> comp)`
-- `static <T extends Object & Comparable<? super T>> T	min​(Collection<? extends T> coll)`
-- `static <T> T	min​(Collection<? extends T> coll, Comparator<? super T> comp)`
+- `static <T extends Object & Comparable<? super T>> T max​(Collection<? extends T> coll)`
+- `static <T> T max​(Collection<? extends T> coll, Comparator<? super T> comp)`
+- `static <T extends Object & Comparable<? super T>> T min​(Collection<? extends T> coll)`
+- `static <T> T min​(Collection<? extends T> coll, Comparator<? super T> comp)`
 
 #### 2.1.2. 实现原理
 
@@ -612,7 +612,7 @@ Collections 工具类中除了对各种常用算法和操作进行了封装，�
 
 #### 3.1.2. 实现原理
 
-首先看下最大范围的 Collections.unmodifiableCollection(c) 方法，它可以返回一个容器的包装类，这个包装类的添加、替换、删除操作都会抛出异常 UnsupportedOperationException。
+首先看下最大范围的 `Collections.unmodifiableCollection(c)` 方法，它可以返回一个容器的包装类，这个包装类的添加、替换、删除操作都会抛出异常 UnsupportedOperationException。
 ```java
 public static <T> Collection<T> unmodifiableCollection(Collection<? extends T> c) {
     return new UnmodifiableCollection<>(c);
@@ -806,19 +806,19 @@ static class SynchronizedCollection<E> implements Collection<E>, Serializable {
     }
 }
 ```
-可以看到，该内部类的实现很简单，几乎在所有方法上都添加了 synchronized，这样得到的集合在并发环境中效率会大打折扣，只适合对准确率要求比性能高的场景。
+可以看到，该内部类的实现很简单，几乎在所有方法上都添加了 synchronized，这样得到的集合在并发环境中效率会大打折扣，只适合对准确率要求比性能要求高的场景。
 
 需要注意的是，我们在使用 Collections.synchronizedCollection(c) 返回的迭代器时，需要手动对迭代器进行同步，否则在迭代时有并发操作，可能会导致不确定性问题。
 
 例：
 ```java
 Collection c = Collections.synchronizedCollection(myCollection);
-  ...
-  synchronized (c) {
-     Iterator i = c.iterator(); // Must be in the synchronized block
-     while (i.hasNext())
-        foo(i.next());
-  }
+// ...
+synchronized (c) {
+		Iterator i = c.iterator(); // Must be in the synchronized block
+		while (i.hasNext())
+			foo(i.next());
+}
 ```
 
 ### 3.3. 类型检查集合
@@ -957,7 +957,7 @@ static class CheckedCollection<E> implements Collection<E>, Serializable {
     public Stream<E> parallelStream()   {return c.parallelStream();
 }
 ```
-可以看到，只是在 add(e) 和 addAll() 时进行了类型检查而已，不符合目标类型就会抛出 ClassCastException 异常。
+可以看到，**只是在 add(e) 和 addAll() 时进行了类型检查而已，不符合目标类型就会抛出 ClassCastException 异常**。
 
 ### 3.4. 单一元素集合
 

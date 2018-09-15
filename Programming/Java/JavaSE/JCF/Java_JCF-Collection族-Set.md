@@ -1,35 +1,30 @@
-- [Java 集合：Collection 族 - Set](#java-%E9%9B%86%E5%90%88%EF%BC%9Acollection-%E6%97%8F---set)
-    - [1. Set 接口](#1-set-%E6%8E%A5%E5%8F%A3)
-        - [1.1. 基本概念](#11-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-        - [1.2. 基本 API](#12-%E5%9F%BA%E6%9C%AC-api)
-    - [2. HashSet 类](#2-hashset-%E7%B1%BB)
-        - [2.1. 基本概念](#21-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-        - [2.2. 常用 API](#22-%E5%B8%B8%E7%94%A8-api)
-            - [2.2.1. 构造器](#221-%E6%9E%84%E9%80%A0%E5%99%A8)
-            - [2.2.2. 添加 & 删除元素](#222-%E6%B7%BB%E5%8A%A0-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
-            - [2.2.3. 访问元素](#223-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
-            - [2.2.4. 其它](#224-%E5%85%B6%E5%AE%83)
-        - [2.3. 源码分析](#23-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-            - [2.3.1. 关键属性](#231-%E5%85%B3%E9%94%AE%E5%B1%9E%E6%80%A7)
-            - [2.3.2. 初始化](#232-%E5%88%9D%E5%A7%8B%E5%8C%96)
-            - [2.3.3. 添加元素](#233-%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
-            - [2.3.4. 删除元素](#234-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
-            - [2.3.5. 访问元素](#235-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0)
-    - [3. LinkedHashSet 类](#3-linkedhashset-%E7%B1%BB)
-        - [3.1. 基本概念](#31-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-        - [3.2. 常用 API](#32-%E5%B8%B8%E7%94%A8-api)
-        - [3.3. 源码分析](#33-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-            - [3.3.1. 类定义](#331-%E7%B1%BB%E5%AE%9A%E4%B9%89)
-            - [3.3.2. 初始化](#332-%E5%88%9D%E5%A7%8B%E5%8C%96)
-    - [4. SortedSet 接口 & NavigableSet 接口 & TreeSet 类](#4-sortedset-%E6%8E%A5%E5%8F%A3-navigableset-%E6%8E%A5%E5%8F%A3-treeset-%E7%B1%BB)
-        - [4.1. 基本概念](#41-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-        - [4.2. 常用 API](#42-%E5%B8%B8%E7%94%A8-api)
-        - [4.3. 源码分析](#43-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-    - [5. 为什么 JCF 中不提供 WeakHashSet 类？](#5-%E4%B8%BA%E4%BB%80%E4%B9%88-jcf-%E4%B8%AD%E4%B8%8D%E6%8F%90%E4%BE%9B-weakhashset-%E7%B1%BB%EF%BC%9F)
-    - [6. EnumSet 类](#6-enumset-%E7%B1%BB)
-        - [6.1. 基本概念](#61-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-        - [6.2. 常用 API](#62-%E5%B8%B8%E7%94%A8-api)
-    - [7. Refer Links](#7-refer-links)
+- [Java 集合：Collection 族 - Set](#java-集合collection-族---set)
+	- [1. Set 接口](#1-set-接口)
+		- [1.1. 基本概念](#11-基本概念)
+		- [1.2. 基本 API](#12-基本-api)
+	- [2. HashSet 类](#2-hashset-类)
+		- [2.1. 基本概念](#21-基本概念)
+		- [2.2. 常用 API](#22-常用-api)
+		- [2.3. 源码分析](#23-源码分析)
+			- [2.3.1. 关键属性](#231-关键属性)
+			- [2.3.2. 初始化](#232-初始化)
+			- [2.3.3. 添加元素](#233-添加元素)
+			- [2.3.4. 删除元素](#234-删除元素)
+			- [2.3.5. 访问元素](#235-访问元素)
+	- [3. LinkedHashSet 类](#3-linkedhashset-类)
+		- [3.1. 基本概念](#31-基本概念)
+		- [3.2. 常用 API](#32-常用-api)
+		- [3.3. 源码分析](#33-源码分析)
+			- [3.3.1. 类定义](#331-类定义)
+			- [3.3.2. 初始化](#332-初始化)
+	- [4. SortedSet 接口 & NavigableSet 接口 & TreeSet 类](#4-sortedset-接口--navigableset-接口--treeset-类)
+		- [4.1. 基本概念](#41-基本概念)
+		- [4.2. 常用 API](#42-常用-api)
+		- [4.3. 源码分析](#43-源码分析)
+	- [6. EnumSet 类](#6-enumset-类)
+		- [6.1. 基本概念](#61-基本概念)
+		- [6.2. 常用 API](#62-常用-api)
+	- [7. Refer Links](#7-refer-links)
   
 # Java 集合：Collection 族 - Set
 
@@ -39,7 +34,7 @@
 
 ### 1.1. 基本概念
 
-[Set](https://docs.oracle.com/javase/9/docs/api/java/util/Set.html) 接口是 Collection 接口的扩展，但与 Collection 接口基本相同，没有添加任何额外的方法，只是行为实现略有不同。
+[Set](https://docs.oracle.com/javase/9/docs/api/java/util/Set.html) 接口是 Collection 接口的扩展，但与 Collection 接口基本相同，没有添加任何额外的方法，只是行为的实现略有不同。
 
 - 特点
   - 不能保证元素的排列顺序。顺序可能与添加的顺序不同，也可能发生变化。
@@ -54,15 +49,15 @@
 ### 1.2. 基本 API
 
 Set 接口提供的方法的行为相比 Collection 接口有更严谨的定义：
-- `boolean	add​(E e)`
+- `boolean add​(E e)`
 
   添加元素时不允许添加重复的元素。若添加失败，返回 false。
 
-- `boolean	equals​(Object o)`
+- `boolean equals​(Object o)`
   
   只要两个集合包含的元素相同就返回 true，不要求有相同的顺序。
 
-- `int	hashCode​()`
+- `int hashCode​()`
 
   要保证包含相同元素的两个集合会得到相同的散列码。
 
@@ -74,52 +69,48 @@ Set 接口提供的方法的行为相比 Collection 接口有更严谨的定义�
 
 特点：
 - HashSet 是非线程安全的。若有多个线程同时修改 HashSet，必须通过代码保证其同步。
-- HashSet 中的元素值可以为 null。
+- **HashSet 中的元素值可以为 null**。
 
 ### 2.2. 常用 API
 
-#### 2.2.1. 构造器
+- 构造器
+	- `HashSet​()`
 
-- `HashSet​()`
+		构造一个空的散列表。
 
-  构造一个空的散列表。
+	- `HashSet​(Collection<? extends E> c)`
 
-- `HashSet​(Collection<? extends E> c)`
+		构造一个散列集，并将所给集合中的所有集合添加到该散列集中。
 
-  构造一个散列集，并将所给集合中的所有集合添加到该散列集中。
+	- `HashSet​(int initialCapacity)`
 
-- `HashSet​(int initialCapacity)`
+		构造一个空的具有指定容量 / 桶数的散列表。
 
-  构造一个空的具有指定容量 / 桶数的散列表。
+	- `HashSet​(int initialCapacity, float loadFactor)`
 
-- `HashSet​(int initialCapacity, float loadFactor)`
+		构造一个空的具有指定容量 / 桶数和装填因子的散列表。
 
-  构造一个空的具有指定容量 / 桶数和装填因子的散列表。
+- 添加 & 删除元素
+	- `boolean add​(E e)`
+	- `boolean remove​(Object o)`
 
-#### 2.2.2. 添加 & 删除元素
+- 访问元素
 
-- `boolean	add​(E e)`
+	```java
+	Set<String> words = new HashSet<>();
+	//...
+	Iterator iter = words.iterator();
+	for (int i =1; i <= 20 && iter.hasNext(); i ++) {
+		System.out.println(iter.next());
+	}
+	```
 
-- `boolean	remove​(Object o)`
-
-#### 2.2.3. 访问元素
-
-```java
-Set<String> words = new HashSet<>();
-//...
-Iterator iter = words.iterator();
-for (int i =1; i <= 20 && iter.hasNext(); i ++) {
-  System.out.println(iter.next());
-}
-```
-
-#### 2.2.4. 其它
-
-- `boolean	contains​(Object o)`：用于快速查看某个元素是否已经出现在散列集中。该方法不会查看集合中的所有元素，而只会在某个桶中查找元素。
+- 其它
+	- `boolean contains​(Object o)`：用于快速查看某个元素是否已经出现在散列集中。**该方法不会查看集合中的所有元素，而只会在某个桶中查找元素**。
 
 ### 2.3. 源码分析
 
-在实现上，HashSet 实际上是对 HashMap 的简单包装，对 HashSet 的函数调用都会转换成相应的 HashMap 方法，因此 HashSet 的实现非常简单，代码只有三百多行。
+**在实现上，HashSet 实际上是对 HashMap 的简单包装，对 HashSet 的函数调用都会转换成相应的 HashMap 方法**，因此 HashSet 的实现非常简单，代码只有三百多行。
 
 #### 2.3.1. 关键属性
 
@@ -290,20 +281,6 @@ public TreeSet(SortedSet<E> s) {
 
 与 HashSet 完全类似的是，TreeSet 里绝大部分方法都是直接调用 TreeMap 的方法来实现的。
 
-## 5. 为什么 JCF 中不提供 WeakHashSet 类？
-
-https://stackoverflow.com/questions/4062919/why-does-exist-weakhashmap-but-absent-weakset
-
-在 JCF 中，基本上大部分的 Map 接口的实现类都一个与之对应的 Set 实现类，其基于 Map 接口实现。但为什么 WeakHashMap 没有与之对应的 WeakHashSet 呢？
-
-事实上，可以通过以下方法创建一个 WeakHashSet 实例：
-```java
-Set<Object> weakHashSet = Collections.newSetFromMap(
-		new WeakHashMap<Object, Boolean>());
-```
-> Why there is no specific class for such stuff? 
-> It's easy to imagine why the maintainers of java.util might have wanted to stop having to provide dual Map and Set versions of everything they do, and opted to just provide newSetFromMap() instead.
-
 ## 6. EnumSet 类
 
 ### 6.1. 基本概念
@@ -314,17 +291,17 @@ EnumSet 的集合元素也是有序的，EnumSet 以枚举值在 Enum 类中的�
 
 EnumSet 在内部以位向量的形式存储，这种存储形式非常高效紧凑，因此 EnumSet 对象占用内存很小，而且运行效率很好。尤其进行批量操作（如 containsAll()、retainAll() 方法）时，如果其参数也是 EnumSet 集合，则该批量操作的执行速度会非常快。
 
-EnumSet 不允许加入 null 元素，如果试图加入 null 元素，将会导致 NullPointerException 异常。
+**EnumSet 不允许加入 null 元素**，如果试图加入 null 元素，将会导致 NullPointerException 异常。
 
 ### 6.2. 常用 API
 
 EnumSet 类没有提供任何 public 的构造器来创建该类的实例，程序应该通过它提供的类方法来创建 EnumSet 对象：
-- `static <E extends Enum<E>> EnumSet<E>	allOf​(Class<E> elementType)`: Creates an enum set containing all of the elements in the specified element type.
-- `static <E extends Enum<E>> EnumSet<E>	complementOf​(EnumSet<E> s)`: Creates an enum set with the same element type as the specified enum set, initially containing all the elements of this type that are not contained in the specified set.
-- `static <E extends Enum<E>> EnumSet<E>	copyOf​(Collection<E> c)`: Creates an enum set initialized from the specified collection.
-- `static <E extends Enum<E>> EnumSet<E>	noneOf​(Class<E> elementType)`: Creates an empty enum set with the specified element type.
-- `static <E extends Enum<E>> EnumSet<E>	of​(E first, E... rest)`: Creates an enum set initially containing the specified elements.
-- `static <E extends Enum<E>> EnumSet<E>	range​(E from, E to)`: Creates an enum set initially containing all of the elements in the range defined by the two specified endpoints.
+- `static <E extends Enum<E>> EnumSet<E> allOf​(Class<E> elementType)`: Creates an enum set containing all of the elements in the specified element type.
+- `static <E extends Enum<E>> EnumSet<E> complementOf​(EnumSet<E> s)`: Creates an enum set with the same element type as the specified enum set, initially containing all the elements of this type that are not contained in the specified set.
+- `static <E extends Enum<E>> EnumSet<E> copyOf​(Collection<E> c)`: Creates an enum set initialized from the specified collection.
+- `static <E extends Enum<E>> EnumSet<E> noneOf​(Class<E> elementType)`: Creates an empty enum set with the specified element type.
+- `static <E extends Enum<E>> EnumSet<E> of​(E first, E... rest)`: Creates an enum set initially containing the specified elements.
+- `static <E extends Enum<E>> EnumSet<E> range​(E from, E to)`: Creates an enum set initially containing all of the elements in the range defined by the two specified endpoints.
 
 NOTE: 当试图复制一个 Collection 中的元素来创建 EnumSet 实例时，必须保证 Collection 中的所有元素都是同一个枚举类的枚举值。
 

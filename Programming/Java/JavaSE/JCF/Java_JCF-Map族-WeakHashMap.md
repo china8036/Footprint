@@ -1,22 +1,22 @@
-- [Java 集合：Map 族 - WeakHashMap 实现类](#java-%E9%9B%86%E5%90%88%EF%BC%9Amap-%E6%97%8F---weakhashmap-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-	- [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-		- [1.1. 强引用、软引用、弱引用](#11-%E5%BC%BA%E5%BC%95%E7%94%A8%E3%80%81%E8%BD%AF%E5%BC%95%E7%94%A8%E3%80%81%E5%BC%B1%E5%BC%95%E7%94%A8)
-		- [1.2. weakhashmap 的弱引用](#12-weakhashmap-%E7%9A%84%E5%BC%B1%E5%BC%95%E7%94%A8)
-	- [2. 常用 API](#2-%E5%B8%B8%E7%94%A8-api)
-	- [3. 应用](#3-%E5%BA%94%E7%94%A8)
-		- [3.1. 利用 WeakHashMap 存储大对象](#31-%E5%88%A9%E7%94%A8-weakhashmap-%E5%AD%98%E5%82%A8%E5%A4%A7%E5%AF%B9%E8%B1%A1)
-	- [4. 源码分析](#4-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-		- [4.1. 类定义](#41-%E7%B1%BB%E5%AE%9A%E4%B9%89)
-		- [4.2. 构造方法](#42-%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95)
+- [Java 集合：Map 族 - WeakHashMap 实现类](#java-集合map-族---weakhashmap-实现类)
+	- [1. 基本概念](#1-基本概念)
+		- [1.1. 强引用、软引用、弱引用](#11-强引用软引用弱引用)
+		- [1.2. weakhashmap 的弱引用](#12-weakhashmap-的弱引用)
+	- [2. 常用 API](#2-常用-api)
+	- [3. 应用](#3-应用)
+		- [3.1. 利用 WeakHashMap 存储大对象](#31-利用-weakhashmap-存储大对象)
+	- [4. 源码分析](#4-源码分析)
+		- [4.1. 类定义](#41-类定义)
+		- [4.2. 构造方法](#42-构造方法)
 	- [5. Refer Links](#5-refer-links)
     
 # Java 集合：Map 族 - WeakHashMap 实现类
 
+对于 HashMap，存在这样的问题：由于 GC 跟踪活动的对象，只要映射对象是活动的，其中所有的桶也是活动的，因此**即使一条映射的键值已不再使用了，GC 也不会回收，这导致了开发者需要负责从长期存活的映射表中删除无用的值**。 
+
+为解决这个问题，Java 集合框架提供了 [WeakHashMap](https://docs.oracle.com/javase/9/docs/api/java/util/WeakHashMap.html)。**WeakHashMap 是基于 Java 弱引用实现的 HashMap，当对键的唯一引用来自散列条目时，WeakHashMap 将与 GC 协同工作一起删除键值对**。
+
 ## 1. 基本概念
-
-对于 HashMap，存在这样的问题：由于 GC 跟踪活动的对象，只要映射对象是活动的，其中所有的桶也是活动的，因此即时一条映射的键值已不再使用了，GC 也不会回收，这导致了开发者需要负责从长期存活的映射表中删除无用的值。
-
-为解决这个问题，Java 集合框架提供了 [WeakHashMap](https://docs.oracle.com/javase/9/docs/api/java/util/WeakHashMap.html)。WeakHashMap 是基于 java 弱引用实现的 HashMap，当对键的唯一引用来自散列条目时，WeakHashMap 将与 GC 协同工作一起删除键值对。
 
 ### 1.1. 强引用、软引用、弱引用
 
@@ -34,8 +34,9 @@
 	```java
 	Integer prime = 1;  
 	SoftReference<Integer> soft = new SoftReference<Integer>(prime);
-	prime = null;
+	prime = null; // 移除强引用
 	```
+	当把 prime 赋值为 null 的时候，已经没有强引用指向它而只有 SoftReference 引用它，因此原 prime 对象会在 JVM 内存不够的情况下被回收。
 
 - 弱引用
 
@@ -45,9 +46,9 @@
 	```java
 	Integer prime = 1;  
 	WeakReference<Integer> soft = new WeakReference<Integer>(prime);
-	prime = null;
+	prime = null; // 移除强引用
 	```
-	当把 prime 赋值为 null 的时候，原 prime 对象会在下一个垃圾收集周期中被回收，因为已经没有强引用指向它。
+	当把 prime 赋值为 null 的时候，已经没有强引用指向它而只有 WeakReference 引用它，因此原 prime 对象会在下一个垃圾收集周期中被回收。
 	
 ### 1.2. weakhashmap 的弱引用
 
@@ -106,17 +107,17 @@ B --> BBB
 ```
 
 NOTE：
-- 由于 WeakHashMap 的行为一定程度上基于垃圾收集器的行为，因此 WeakHashMap 跟普通的 HashMap 不同，Map 数据结构对应的常识在 WeakHashMap 上会失效，如 size() 方法的返回值会随着程序的运行变小，isEmpty() 方法的返回值会从 false 变成 true 等。
+- **由于 WeakHashMap 的行为一定程度上基于垃圾收集器的行为，因此 WeakHashMap 跟普通的 HashMap 不同，Map 数据结构对应的常识在 WeakHashMap 上会失效，如 `size()` 方法的返回值会随着程序的运行变小，`isEmpty()` 方法的返回值会从 false 变成 true 等**。
 
-- WeakHashMap 并不是你什么也不干它就能自动释放内部不用的对象的，而是在你访问它内容的时候才调用内部 expungeStaleEntries() 方法，来释放内部不用的对象。因此，如果初始化好 WeakHashMap 中相关数据后，一直不调用 put、get、remove、size 等相关方法，是不能够正常回收的，依然会导致内存泄漏。
+- **WeakHashMap 并不是你什么也不干它就能自动释放内部不用的对象的，而是在你访问它内容的时候才调用内部 expungeStaleEntries() 方法，来释放内部不用的对象。因此，如果初始化好 WeakHashMap 中相关数据后，一直不调用 put、get、remove、size 等相关方法，是不能够正常回收的，依然会导致内存泄漏**。
 
 ## 2. 常用 API
 
 WeakHashMap 的 API 与 HashMap 的 API 基本相同：
 
-- `V	get​(Object key)`: Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
-- `V	put​(K key, V value)`: Associates the specified value with the specified key in this map.
-- `V	remove​(Object key)`: Removes the mapping for a key from this weak hash map if it is present.
+- `V get​(Object key)`: Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
+- `V put​(K key, V value)`: Associates the specified value with the specified key in this map.
+- `V remove​(Object key)`: Removes the mapping for a key from this weak hash map if it is present.
 
 ## 3. 应用
 
@@ -159,7 +160,7 @@ public class WeakHashMap<K,V>
 
 在类定义方面与 HashMap 并没有什么不同，而且在结构上也基本和 HashMap 一致。
 
-在 Java8 中，与 HashMap 唯一存储上的不同点就是，当冲突的 key 变多时，HashMap 引入了二叉树（红黑树）进行存储，而 WeakHashMap 则一直使用链表进行存储。
+**在 Java 8 中，与 HashMap 唯一存储上的不同点就是，当冲突的 key 变多时，HashMap 引入了二叉树（红黑树）进行存储，而 WeakHashMap 则一直使用链表进行存储**。
 
 ### 4.2. 构造方法
 

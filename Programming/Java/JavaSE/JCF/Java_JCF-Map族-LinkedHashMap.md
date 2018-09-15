@@ -1,16 +1,16 @@
-- [Java 集合：Map 族 - LinkedHashMap 实现类](#java-%E9%9B%86%E5%90%88%EF%BC%9Amap-%E6%97%8F---linkedhashmap-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-	- [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-	- [2. 常用 API](#2-%E5%B8%B8%E7%94%A8-api)
-	- [3. 源码分析](#3-%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90)
-		- [3.1. 类定义](#31-%E7%B1%BB%E5%AE%9A%E4%B9%89)
-		- [3.2. 存储结构](#32-%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84)
-		- [3.3. 关键属性](#33-%E5%85%B3%E9%94%AE%E5%B1%9E%E6%80%A7)
-		- [3.4. 关键内部类](#34-%E5%85%B3%E9%94%AE%E5%86%85%E9%83%A8%E7%B1%BB)
-		- [3.5. 初始化](#35-%E5%88%9D%E5%A7%8B%E5%8C%96)
-		- [3.6. 添加元素](#36-%E6%B7%BB%E5%8A%A0%E5%85%83%E7%B4%A0)
-		- [3.7. 删除元素](#37-%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0)
-		- [3.8. 获取元素](#38-%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0)
-		- [3.9. containsValue() 方法](#39-containsvalue-%E6%96%B9%E6%B3%95)
+- [Java 集合：Map 族 - LinkedHashMap 实现类](#java-集合map-族---linkedhashmap-实现类)
+	- [1. 基本概念](#1-基本概念)
+	- [2. 常用 API](#2-常用-api)
+	- [3. 源码分析](#3-源码分析)
+		- [3.1. 类定义](#31-类定义)
+		- [3.2. 存储结构](#32-存储结构)
+		- [3.3. 关键属性](#33-关键属性)
+		- [3.4. 关键内部类](#34-关键内部类)
+		- [3.5. 初始化](#35-初始化)
+		- [3.6. 添加元素](#36-添加元素)
+		- [3.7. 删除元素](#37-删除元素)
+		- [3.8. 获取元素](#38-获取元素)
+		- [3.9. containsValue() 方法](#39-containsvalue-方法)
 	- [4. Refer Links](#4-refer-links)
     
 # Java 集合：Map 族 - LinkedHashMap 实现类
@@ -21,9 +21,9 @@
 
 由于继承自 HashMap，因此 HashMap 所具有的特性 LinkedHashMap 都有，比如扩容的策略，哈希桶长度一定是 2 的 N 次方等。**相比较 HashMap，LinkedHashMap 最大的区别在于，它使用双向链表根据 Key 来维护 Key-Value 的次序，使得遍历 LinkedHashMap 时，元素的访问顺序与元素的插入顺序相同。**
 
-LinkedHashMap 可以避免对 HashMap/HashTable 中 Key-Value 进行排序，只要在插入时按顺序插入即可，同时又避免使用 TreeMap 所增加的成本。
+**LinkedHashMap 可以避免对 HashMap/HashTable 中 Key-Value 进行排序，只要在插入时按顺序插入即可，同时又避免使用 TreeMap 所增加的成本**。
 
-由于 LinkedHashMap 需要维护元素的插入顺序，因此性能略低于 HashMap，但由于它以双向链表维护着内部顺序，所以在迭代访问 Map 中的全部元素时将会比 HashMap 有更快的迭代速度。
+由于 LinkedHashMap 需要维护元素的插入顺序，因此性能略低于 HashMap，但由于它以双向链表维护着内部顺序，所以**在迭代访问 Map 中的全部元素时将会比 HashMap 有更快的迭代速度**。
 
 ## 2. 常用 API
 
@@ -50,11 +50,11 @@ public static void main(String [] args) {
 		map.put("2", "b");
 		map.put("3", "c");
 		map.put("4", "d");
-		map.get("2");// 2 移动到了内部的链表末尾
-		map.get("4");// 4 移动到了内部的链表末尾
-		map.put("3", "e");// 3 移动到了内部的链表末尾
-		map.put(null, null);// 插入新的节点 null
-		map.put("5", null);// 插入新的节点 5
+		map.get("2");						// 2 移动到了内部的链表末尾
+		map.get("4");						// 4 移动到了内部的链表末尾
+		map.put("3", "e");			// 3 移动到了内部的链表末尾
+		map.put(null, null);		// 插入新的节点 null
+		map.put("5", null);			// 插入新的节点 5
 		iterator = map.entrySet().iterator();
 		while (iterator.hasNext()) {
 				System.out.println(iterator.next());
@@ -105,14 +105,14 @@ transient LinkedHashMap.Entry<K,V> head;
 // 双向链表的尾结点 (youngest)
 transient LinkedHashMap.Entry<K,V> tail;
 
-// 若为 false，则迭代时输出的顺序是插入节点的顺序；若为 true，则迭代时输出的顺序是按照访问节点的顺序。
+// 若为 false，则迭代时输出的顺序是插入节点的顺序；若为 true，则迭代时输出的顺序是按照插入和访问节点的顺序。
 // 初始化时会默认设置为 false
 final boolean accessOrder;
 ```
 
 ### 3.4. 关键内部类
 
-- Entry<K,V>：表示 LinkedHashMap 中双向链表的的每一个节点（相当于 HashMap 中的 Node<K,V>）
+- `Entry<K,V>`：表示 `LinkedHashMap` 中双向链表的的每一个节点（相当于 `HashMap` 中的 `Node<K,V>`）
 	```java
 	static class Entry<K,V> extends HashMap.Node<K,V> {
 			Entry<K,V> before, after;
@@ -216,7 +216,7 @@ LinkedHashMap 并没有重写 HashMap 的 put() 方法、 putVal() 方法或 put
 	}
 	```
 
-	例：覆写 LinkedHashMap 的 removeEldestEntry() 方法，实现 LRU 缓存策略。
+	例：覆写 LinkedHashMap 的 `removeEldestEntry()` 方法，实现 LRU 缓存策略。
 	```java
 	public class SimpleCache<K, V> extends LinkedHashMap<K, V> {
 			private static final int MAX_NODE_NUM = 100;

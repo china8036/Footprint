@@ -20,7 +20,7 @@
 
 可重入性是更基本的特性，所有的可重入代码都是线程安全的，但并非所有线程安全的代码都是可重入的。
 
-可重入代码都有一些共同的特征，例如不依赖存储在堆上的数据和公用的系统资源，用到的状态量都由参数中传入、不调用非可重入的方法等。
+**可重入代码都有一些共同的特征，例如不依赖存储在堆上的数据和公用的系统资源，用到的状态量都由参数中传入、不调用非可重入的方法等**。
 
 可以通过以下原则来判断代码是否具有可重入性：如果一个方法的返回结果是可预测的，只要输入了相同的数据，就都能返回相同的结果，那么这个方法就是可重入的，自然也就是线程安全的。
 
@@ -28,30 +28,30 @@
 
 当多个线程同时访问共享变量时，会出现并发安全问题。因此，我们可以避免使用共享变量，转而把共享数据的可见范围限制在同一个线程内，自然也就不会出现数据争用的问题了。
 
-Java 提供了 java.lang.[ThreadLocal](https://docs.oracle.com/javase/9/docs/api/java/lang/ThreadLocal.html) 类，为每个线程提供各自的变量实例，也就是每个线程都保存有一个变量副本，在不同的 Thread 中有不同的副本，即线程局部变量。
+**Java 提供了 java.lang.[ThreadLocal](https://docs.oracle.com/javase/9/docs/api/java/lang/ThreadLocal.html) 类，为每个线程提供各自的变量实例，也就是每个线程都保存有一个变量副本，在不同的 Thread 中有不同的副本，即线程局部变量**。
 
 NOTE:
 - ThreadLocal 并不解决线程间共享数据的问题，它相当于提供了一种线程隔离，将变量与线程相绑定，每个使用该变量的线程都会初始化一个完全独立的实例副本，因此完全不涉及数据共享。
 
 - ThreadLocal 通常定义为 private static 类型。
 
-- ThreadLocalMap 的 Entry 对 ThreadLocal 的引用为弱引用，避免了 ThreadLocal 对象无法被回收的问题。当一个线程结束时，它所使用的所有 ThreadLocal 相应的实例副本都可被回收。
+- **ThreadLocalMap 的 Entry 对 ThreadLocal 的引用为弱引用，避免了 ThreadLocal 对象无法被回收的问题。当一个线程结束时，它所使用的所有 ThreadLocal 相应的实例副本都可被回收**。
 
 ### 2.1. 适用场景
 
 ThreadLocal 适用于如下两种场景：
 - 每个线程需要有自己单独的实例。
-- 实例需要在多个方法中共享，但不希望被多线程共享。
+- **实例需要在多个方法中共享，但不希望被多线程共享**。
 
 当然，在以上场景下，并非必须使用 ThreadLocal，其它方式完全可以实现同样的效果，只是 ThreadLocal 使得实现更简洁。
 
 ### 2.2. 常用 API
 
-- `void	set​(T value)`：为当前的线程的局部变量设置一个新值。
-- `T	get​()`：获取当前线程的变量局部实例。首次调用 get 时，会调用 initialize 来得到初始值。
-- `protected T	initialValue​()`：应覆盖该方法来提供一个初始值。默认返回 null。
-- `void	remove​()`：删除对应这个线程的值。
-- `static <S> ThreadLocal<S>	withInitial​(Supplier<? extends S> supplier)`：创建一个线程局部变量，初始值通过调用给定的 supplier 生成。
+- `void set(T value)`：为当前的线程的局部变量设置一个新值。
+- `T get()`：获取当前线程的变量局部实例。首次调用 get 时，会调用 initialize 来得到初始值。
+- `protected T initialValue()`：应覆盖该方法来提供一个初始值。默认返回 null。
+- `void remove()`：删除对应这个线程的值。
+- `static <S> ThreadLocal<S> withInitial(Supplier<? extends S> supplier)`：创建一个线程局部变量，初始值通过调用给定的 supplier 生成。
   ```java
   ThreadLocal<SimpleDateFormat> dateFormat = ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
   String date = dateFormat.get().format(new Date());
@@ -161,7 +161,7 @@ ThreadLocalMap(ThreadLocal<?> firstKey, Object firstValue) {
 }
 ```
 
-ThreadLocalMap 解决冲突的方法是线性探测法（不断加 1），而不是 HashMap 的链地址法，这一点也能从 Entry 的结构上推断出来。
+**ThreadLocalMap 解决冲突的方法是线性探测法（不断加 1），而不是 HashMap 的链地址法**，这一点也能从 Entry 的结构上推断出来。
 
 对于已经不再被使用且已被回收的 ThreadLocal 对象，它在每个线程内对应的实例由于被线程的 ThreadLocalMap 的 Entry 强引用，无法被回收，可能会造成内存泄漏。针对该问题，ThreadLocalMap 的 set 方法中，通过 replaceStaleEntry 方法将所有键为 null 的 Entry 的值设置为 null，从而使得该值可被回收。另外，会在 rehash 方法中通过 expungeStaleEntry 方法将键和值为 null 的 Entry 设置为 null 从而使得该 Entry 可被回收。
 
@@ -196,7 +196,7 @@ void createMap(Thread t, T firstValue) {
 }
 ```
 
-该方法先获取当前线程的 ThreadLocalMap 对象，然后直接将 ThreadLocal 对象（即代码中的 this）与目标实例的映射添加进 ThreadLocalMap 中。
+**该方法先获取当前线程的 ThreadLocalMap 对象，然后直接将 ThreadLocal 对象（即代码中的 this）与目标实例的映射添加进 ThreadLocalMap 中**。
 
 当然，如果映射已经存在，就直接覆盖。另外，如果获取到的 ThreadLocalMap 为 null，则先创建该 ThreadLocalMap 对象。
 
@@ -232,9 +232,7 @@ private T setInitialValue() {
   return value;
 }
 ```
-读取实例时，线程首先通过 getMap(t) 方法获取自身的 ThreadLocalMap。从如下该方法的定义可见，该 ThreadLocalMap 的实例是 Thread 类的一个字段，即由 Thread 维护 ThreadLocal 对象与具体实例的映射。
-
-获取到 ThreadLocalMap 后，通过 map.getEntry(this) 方法获取该 ThreadLocal 在当前线程的 ThreadLocalMap 中对应的 Entry。该方法中的 this 即当前访问的 ThreadLocal 对象。
+**读取实例时，线程首先通过 getMap(t) 方法获取自身的 ThreadLocalMap。获取到 ThreadLocalMap 后，通过 map.getEntry(this) 方法获取该 ThreadLocal 在当前线程的 ThreadLocalMap 中对应的 Entry。**该方法中的 this 即当前访问的 ThreadLocal 对象。
 
 如果获取到的 Entry 不为 null，从 Entry 中取出值即为所需访问的本线程对应的实例。如果获取到的 Entry 为 null，则通过 setInitialValue() 方法设置该 ThreadLocal 变量在该线程中对应的具体实例的初始值。
 
