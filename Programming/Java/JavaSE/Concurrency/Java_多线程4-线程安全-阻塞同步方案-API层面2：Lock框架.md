@@ -149,10 +149,10 @@ public interface Lock {
 
 常用 API：
 - `int getHoldCount()`: 查询当前线程保持此锁的次数。
-- `protected  Thread   getOwner()`: 返回目前拥有此锁的线程，如果此锁不被任何线程拥有，则返回 null。      
-- `protected  Collection<Thread>   getQueuedThreads()`: 返回一个 collection，它包含可能正等待获取此锁的线程，其内部维持一个队列，这点稍后会分析。 
+- `protected Thread getOwner()`: 返回目前拥有此锁的线程，如果此锁不被任何线程拥有，则返回 null。      
+- `protected Collection<Thread> getQueuedThreads()`: 返回一个 collection，它包含可能正等待获取此锁的线程，其内部维持一个队列，这点稍后会分析。 
 - `int getQueueLength();`: 返回正等待获取此锁的线程估计数。 
-- `protected  Collection<Thread>   getWaitingThreads(Condition condition); `: 返回一个 collection，它包含可能正在等待与此锁相关给定条件的那些线程。
+- `protected Collection<Thread> getWaitingThreads(Condition condition); `: 返回一个 collection，它包含可能正在等待与此锁相关给定条件的那些线程。
 - `int getWaitQueueLength(Condition condition);`: 返回等待与此锁相关的给定条件的线程估计数。  
 - `boolean hasQueuedThread(Thread thread); `: 查询给定线程是否正在等待获取此锁。    
 - `boolean hasQueuedThreads();`: 查询是否有些线程正在等待获取此锁。 

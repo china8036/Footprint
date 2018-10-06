@@ -1,15 +1,15 @@
-- [Java JDBC: 常见面试题](#java-jdbc)
-	- [1. JDBC 是如何实现 Java 程序和 JDBC 驱动的松耦合的？](#1-jdbc--java--jdbc)
-	- [2. JDBC 操作数据库的步骤？](#2-jdbc)
-	- [3. execute，executeQuery，executeUpdate 的区别是什么？](#3-executeexecutequeryexecuteupdate)
-	- [4. JDBC 中的 Statement 和 PreparedStatement，CallableStatement 的区别？](#4-jdbc--statement--preparedstatementcallablestatement)
-	- [5. PreparedStatement 的缺点是什么？怎么解决这个问题？](#5-preparedstatement)
-	- [6. JDBC 如何进行事务的处理？](#6-jdbc)
-	- [7. 数据库连接池工作原理和实现方案？](#7)
-	- [8. JAVA 访问数据库，从数据库连接池开始到数据库返回结果，都发生了哪些事情？](#8-java)
-	- [9. 常见的 JDBC 异常有哪些？](#9--jdbc)
-	- [10. java.util.Date 和 java.sql.Date 有什么区别？](#10-javautildate--javasqldate)
-	- [11. JDBC 的 RowSet 是什么，有哪些不同的 RowSet？](#11-jdbc--rowset--rowset)
+- [Java JDBC: 常见面试题](#java-jdbc-常见面试题)
+	- [1. JDBC 是如何实现 Java 程序和 JDBC 驱动的松耦合的？](#1-jdbc-是如何实现-java-程序和-jdbc-驱动的松耦合的)
+	- [2. JDBC 操作数据库的步骤？](#2-jdbc-操作数据库的步骤)
+	- [3. execute，executeQuery，executeUpdate 的区别是什么？](#3-executeexecutequeryexecuteupdate-的区别是什么)
+	- [4. JDBC 中的 Statement 和 PreparedStatement，CallableStatement 的区别？](#4-jdbc-中的-statement-和-preparedstatementcallablestatement-的区别)
+	- [5. PreparedStatement 的缺点是什么？怎么解决这个问题？](#5-preparedstatement-的缺点是什么怎么解决这个问题)
+	- [6. JDBC 如何进行事务的处理？](#6-jdbc-如何进行事务的处理)
+	- [7. 数据库连接池工作原理和实现方案？](#7-数据库连接池工作原理和实现方案)
+	- [8. JAVA 访问数据库，从数据库连接池开始到数据库返回结果，都发生了哪些事情？](#8-java-访问数据库从数据库连接池开始到数据库返回结果都发生了哪些事情)
+	- [9. 常见的 JDBC 异常有哪些？](#9-常见的-jdbc-异常有哪些)
+	- [10. java.util.Date 和 java.sql.Date 有什么区别？](#10-javautildate-和-javasqldate-有什么区别)
+	- [11. JDBC 的 RowSet 是什么，有哪些不同的 RowSet？](#11-jdbc-的-rowset-是什么有哪些不同的-rowset)
 	- [12. Refer Links](#12-refer-links)
 
 # Java JDBC: 常见面试题
@@ -18,7 +18,7 @@
 
 通过制定符合 JDBC 规范的接口，要求数据库厂商来实现。程序员只要通过接口调用即可。
 
-随便看一个简单的 JDBC 示例，你会发现所有操作都是通过 JDBC 接口完成的，而驱动只有在通过 Class.forName 反射机制来加载的时候才会出现。
+随便看一个简单的 JDBC 示例，你会发现所有操作都是通过 JDBC 接口完成的，而驱动只有在通过 `Class.forName` 反射机制来加载的时候才会出现。
 
 ## 2. JDBC 操作数据库的步骤？
 

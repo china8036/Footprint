@@ -763,3 +763,7 @@ https://github.com/Valloric/YouCompleteMe
 [在 Vim 中进行文件目录操作](https://harttle.land/2016/10/14/vim-file-and-directory.html)
 
 [Vim 是从何而来：智慧积累的伟大力量](https://mp.weixin.qq.com/s?__biz=MjM5NzU0MzU0Nw==&mid=2651379681&idx=1&sn=0c7d146e329c0950dd1d6ac448e8f376&chksm=bd241cf58a5395e3f5c784d6af2cc47246c473f29e2fc87cdb3a46f918ecfe452e38c5c4bcba&mpshare=1&scene=1&srcid=0825kbOSWUzxWZcNOoQ7tB8M#rd)
+
+TODO:
+
+[所需即所获：像 IDE 一样使用 vim](https://github.com/yangyangwithgnu/use_vim_as_ide)

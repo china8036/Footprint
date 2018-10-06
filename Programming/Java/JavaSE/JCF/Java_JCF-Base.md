@@ -69,7 +69,7 @@ Java 集合框架中有两个基本接口：Collection 和 Map。
     - `boolean containsKey(Object key)`: 
 
 - 特有 API
-  
+
   - 栈结构
     - 基于双向链表实现：LinkedList
     - 基于循环数组实现：ArrayDeque
@@ -116,7 +116,7 @@ TODO:
 
 - Map
   - Hashtable: Key 不允许为 null，Value 不允许为 null。
-  - ConcurrentMaps (ConcurrentHashMaps/ConcurrentSkipListMaps): Key 不允许为 null，Value 不允许为 null。
+  - ConcurrentMap (ConcurrentHashMap/ConcurrentSkipListMap): Key 不允许为 null，Value 不允许为 null。
   - TreeMap: Key 不允许为 null，Value 允许为 null。
   - EnumMap: Key 不允许为 null，Value 允许为 null。
   - HashMap/LinkedHashMap: Key 允许为 null（Hash 函数将 null 作为 0 处理），Value 允许为 null。
@@ -128,7 +128,7 @@ TODO:
 - Queue (PriorityQueue/ArrayDeque): 不允许存储 null。
 
 P.S. [为什么线程不安全的 HashMap 允许 K/V 为 null 而线程安全的 Hashtable/ConcurrentHashMaps 都不允许？](https://stackoverflow.com/questions/698638/why-does-concurrenthashmap-prevent-null-keys-and-values)
-> The main one is that if map.get(key) returns null, you can't detect whether the key explicitly maps to null vs the key isn't mapped. In a non-concurrent map, you can check this via  map.contains(key), but in a concurrent one, the map might have changed between calls.
+> The main one is that if map.get(key) returns null, you can't detect whether the key explicitly maps to null vs the key isn't mapped. In a non-concurrent map, you can check this via map.contains(key), but in a concurrent one, the map might have changed between calls.
 
 ### 3.5. 遍历方法
 

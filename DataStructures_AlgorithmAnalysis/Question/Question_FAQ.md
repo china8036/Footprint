@@ -27,13 +27,15 @@
 	- [8. 验证一个无向图是否是树](#8-验证一个无向图是否是树)
 		- [8.1. 并查集法](#81-并查集法)
 		- [8.2. BFS/DFS 法](#82-bfsdfs-法)
-	- [9. 设计一个带有 getMin 功能的栈](#9-设计一个带有-getmin-功能的栈)
+	- [9. 数据结构设计题](#9-数据结构设计题)
+		- [9.1. 设计一个支持常数时间增加、删除和随机选择操作的数据结构](#91-设计一个支持常数时间增加删除和随机选择操作的数据结构)
+		- [9.2. 设计一个带有 getMin 功能的栈](#92-设计一个带有-getmin-功能的栈)
 	- [10. 最大公因数 && 最小公倍数](#10-最大公因数--最小公倍数)
-	- [众数 / 主元素](#众数--主元素)
-	- [11. 生成随机数](#11-生成随机数)
-		- [11.1. Java](#111-java)
-		- [11.2. C++](#112-c)
-	- [12. Refer Links](#12-refer-links)
+	- [11. 众数 / 主元素](#11-众数--主元素)
+	- [12. 生成随机数](#12-生成随机数)
+		- [12.1. Java](#121-java)
+		- [12.2. C++](#122-c)
+	- [13. Refer Links](#13-refer-links)
 
 # 常见问题
 
@@ -628,7 +630,83 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
 
 DFS 过程中如果碰到访问过的节点（当然这个节点不能是来时的节点），就是有环。
 
-## 9. 设计一个带有 getMin 功能的栈
+## 9. 数据结构设计题
+
+### 9.1. 设计一个支持常数时间增加、删除和随机选择操作的数据结构
+
+[支持 O(1) 时间增加，删除和随机选择操作的数据结构](https://blog.csdn.net/whuwangyi/article/details/18897387)
+
+[实现一个插入，删除，随机都是 O(1) 复杂度的 Set](https://blog.csdn.net/u010157717/article/details/42339539)
+
+[O(1) 时间插入、删除和获取随机元素 - 允许重复](https://www.jianshu.com/p/ab1091eba727)
+
+- Question:
+
+	设计一个支持在平均时间复杂度为 O(1) 下，执行以下操作的数据结构：
+	- insert(val)：向集合中插入元素 val。
+	- remove(val)：当 val 存在时，从集合中移除一个 val。
+	- getRandom()：从现有集合中随机获取一个元素，要求每个元素被返回的概率为 1/n。
+
+	进一步设计：在以上要求的基础上，允许数据结构中出现重复元素，且调用 getRandom() 时，每个元素被返回的概率与其在集合中的数量呈线性相关，即 m/n。
+
+- Solution:
+
+	使用一个变长数组和一个 HashMap 组合即可，其中，变长数组用于保存所有元素，HashMap 的 key 为元素值，value 为元素在 ArrayList 中的索引：
+	- Insert: 将元素添加到数组尾部，并以元素为 key、元素在 ArrayList 中的下标为 value 添加到 HashMap 中。
+	- Get Randomly: 生成一个范围是 0~n-1 的随机索引，返回数组中该索引位置的元素。
+	- Delete: 
+		1. 在 HashMap 中找到该元素 x 的 value，即在数组中的索引值 xi。
+		1. 在 HashMap 中删除该元素 x。
+		1. 将数组的最后一个元素 y 复制到索引 xi 的位置，覆盖被删除元素。
+		1. 删除数组最后一个元素 y。
+		1. 在 HashMap 中将 key 为元素 y 的 map 的 value 更新为 xi。
+
+	```java
+	public class RandomSet<E> {
+			List<E> dta = new ArrayList<E>();
+			Map<E, Integer> idx = new HashMap<E, Integer>();
+			public boolean add(E item) {
+					if (idx.containsKey(item))
+							return false;
+					idx.put(item, dta.size());
+					dta.add(item);
+					return true;
+			}
+			public E removeAt(int id) {
+					if (id >= dta.size())
+							return null;
+					
+					E res = dta.get(id);
+					idx.remove(res);
+					E last = dta.remove(dta.size() - 1);
+					// skip filling the hole if last is removed
+					if (id < dta.size()) {
+							idx.put(last, id);
+							dta.set(id, last);
+					}
+					return res;
+			}
+			public boolean remove(E item) {
+					Integer id = idx.get(item);
+					if (id == null) {
+							return false;
+					}
+					removeAt(id);
+					return true;
+			}
+			public E random(Random rnd) {
+					if (dta.isEmpty()) {
+							return null;
+					}
+					int id = rnd.nextInt(dta.size());
+					return removeAt(id);
+			}
+	}
+	```
+
+	对于要求允许重复元素的设计，只需将上述结构中，HashMap 的 value 更改为一个 HashSet，并在 HashSet 中存储所有相同元素值的数组索引即可。
+
+### 9.2. 设计一个带有 getMin 功能的栈
 
 使用一个辅助栈，用于存储当前所有元素中的最小值。
 
@@ -676,7 +754,7 @@ public class MyStack {
 ## 10. 最大公因数 && 最小公倍数
 
 ```java
-// 使用辗转相除法求最大公因数 (a < b)
+// 使用辗转相除法求最大公因数 (Greatest common divisor)(a < b) 
 public int gcd(int a, int b) {
     if (b == 0)
         return a;
@@ -684,13 +762,13 @@ public int gcd(int a, int b) {
     return c == 0 ? b : gcd(b, c);
 }
 
-// 求最小公倍数
+// 求最小公倍数 (Least common multiple)
 public int lcm(int a, int b) { 
     return a * b / gcd(a, b);
 }
 ```
 
-## 众数 / 主元素
+## 11. 众数 / 主元素
 
 基本概念：
 - 众数 / 主元素是指一个序列中出现次数最多的那个数。
@@ -761,7 +839,7 @@ public int lcm(int a, int b) {
 
 	- 摩尔投票法
 
-		对于绝对众数，拥有这样的性质：删除数组 A 中两个不同的数，绝对众数不变。
+		对于绝对众数，拥有这样的性质：**删除数组 A 中两个不同的数，绝对众数不变**。
 		- 若两个数中有 1 个是绝对众数，则剩余的 N-2 个数中，绝对众数仍然大于 (N-2)/2。
 		- 若两个数中没有绝对众数，显然不影响绝对众数。
 
@@ -794,9 +872,9 @@ public int lcm(int a, int b) {
 
 	直接遍历序列，使用临时变量存储出现次数的最大值以及对于的元素即可（时间效率是 O(n)，空间效率是 O(1)）。
 
-## 11. 生成随机数
+## 12. 生成随机数
 
-### 11.1. Java
+### 12.1. Java
 
 - 通过 `System.currentTimeMillis()` 来获取一个当前时间毫秒数的 long 型数字。
 
@@ -841,7 +919,7 @@ public int lcm(int a, int b) {
 	int rand = random.nextInt(100);
 	```
 	
-### 11.2. C++
+### 12.2. C++
 
 ```cpp
 int generateRandom(int i, int j) 
@@ -852,7 +930,7 @@ int generateRandom(int i, int j)
 }
 ```
 
-## 12. Refer Links
+## 13. Refer Links
 
 [O(n) 时间快速选择](http://www.shadowxh.com/?p=598)
 

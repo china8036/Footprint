@@ -1,28 +1,28 @@
-- [Java 网络编程：基本 API](#java--api)
-    - [1. InetAddress](#1-inetaddress)
-        - [1.1. 常用 API](#11--api)
-        - [1.2. 类定义](#12)
-        - [1.3. 静态变量](#13)
-        - [1.4. 静态内部类](#14)
-        - [1.5. 静态代码块](#15)
-        - [1.6. 方法实现](#16)
-            - [1.6.1. getByName 和 getAllByName](#161-getbyname--getallbyname)
-            - [1.6.2. getByAddress](#162-getbyaddress)
-    - [2. URI](#2-uri)
-    - [3. URL](#3-url)
-        - [3.1. 常用 API](#31--api)
-        - [3.2. 类定义](#32)
-        - [3.3. 内部属性](#33)
-        - [3.4. 构造方法](#34)
-    - [4. URLConnection](#4-urlconnection)
-        - [4.1. HttpURLConnection](#41-httpurlconnection)
-        - [4.2. JarURLConnection](#42-jarurlconnection)
-    - [5. URLPermission](#5-urlpermission)
-    - [6. Refer Links](#6-refer-links)
+- [Java 网络编程：基本 API](#java-网络编程基本-api)
+	- [1. InetAddress](#1-inetaddress)
+		- [1.1. 常用 API](#11-常用-api)
+		- [1.2. 类定义](#12-类定义)
+		- [1.3. 静态变量](#13-静态变量)
+		- [1.4. 静态内部类](#14-静态内部类)
+		- [1.5. 静态代码块](#15-静态代码块)
+		- [1.6. 方法实现](#16-方法实现)
+			- [1.6.1. getByName 和 getAllByName](#161-getbyname-和-getallbyname)
+			- [1.6.2. getByAddress](#162-getbyaddress)
+	- [2. URI](#2-uri)
+	- [3. URL](#3-url)
+		- [3.1. 常用 API](#31-常用-api)
+		- [3.2. 类定义](#32-类定义)
+		- [3.3. 内部属性](#33-内部属性)
+		- [3.4. 构造方法](#34-构造方法)
+	- [4. URLConnection](#4-urlconnection)
+		- [4.1. HttpURLConnection](#41-httpurlconnection)
+		- [4.2. JarURLConnection](#42-jarurlconnection)
+	- [5. URLPermission](#5-urlpermission)
+	- [6. Refer Links](#6-refer-links)
 
 # Java 网络编程：基本 API
 
-Java 为网络支持提供了 java.net 包，该包提供了以编程方式进行网络操作的一系列相关接口。
+Java 为网络支持提供了 `java.net` 包，该包提供了以编程方式进行网络操作的一系列相关接口。
 
 ## 1. InetAddress
 
@@ -35,12 +35,13 @@ Java 为网络支持提供了 java.net 包，该包提供了以编程方式进�
 ### 1.1. 常用 API
 
 InetAddress 类没有提供构造器，因此需要通过以下静态工厂方法来获取 InetAddress 实例：
-- `static InetAddress	getLocalHost​()`: 返回表示本机在网络中地址的 InetAddress 对象，如 192.168.56.1。
-- `static InetAddress	getLoopbackAddress​()`: 返回表示本地回环地址的 InetAddress 对象，即 127.0.0.1。
-- `static InetAddress	getByName​(String host)`: 返回表示指定主机名地址的 InetAddress 对象。若不能解析主机名，将引发一个 UnknownHostException 异常。
-- `static InetAddress[]	getAllByName​(String host)`: 返回表示由一个特殊名称分解的所有地址的 InetAddresses 类数组。若不能把名称分解成至少一个地址，它将引发一个 UnknownHostException 异常。
-- `static InetAddress	getByAddress​(byte[] addr)`: 返回指定 IP 地址的 InetAddress 对象。
-- `static InetAddress	getByAddress​(String host, byte[] addr)`: 返回指定主机名地址和 IP 地址的 InetAddress 对象。
+- `static InetAddress getLocalHost​()`: 返回表示本机在网络中地址的 InetAddress 对象，如 192.168.56.1。
+- `static InetAddress getLoopbackAddress​()`: 返回表示本地回环地址的 InetAddress 对象，即 127.0.0.1。
+- `static InetAddress getByName​(String host)`: 返回表示指定主机名地址的 InetAddress 对象。若不能解析主机名，将引发一个 UnknownHostException 异常。
+- `static InetAddress[] getAllByName​(String host)`: 返回表示由一个特殊名称分解的所有地址的 InetAddresses 类数组。若不能把名称分解成至少一个地址，它将引发一个 UnknownHostException 异常。
+- `static InetAddress getByAddress​(byte[] addr)`: 返回指定 IP 地址的 InetAddress 对象。
+- `static InetAddress getByAddress​(String host, byte[] addr)`: 返回指定主机名地址和 IP 地址的 InetAddress 对象。
+
 eg:
 ```java
 jshell> InetAddress.getLocalHost()

@@ -24,7 +24,7 @@ while (true) {
 }
 ```
 
-Java 堆内存的 OOM 异常是实际应用中非常常见的异常情况，当异常出现时，异常堆栈信息`java.lang.OutOfMemoryError`会跟着进一步提示`Java heap space`。
+Java 堆内存的 OOM 异常是实际应用中非常常见的异常情况，当异常出现时，异常堆栈信息 `java.lang.OutOfMemoryError` 会跟着进一步提示 `Java heap space`。
 
 要解决 Java 堆的 OOM 异常，一般的手段是闲通过内存映像分析工具堆 Dump 出来的堆转储快照进行分析，重点是确认内存中的对象是否是必要的，也就是要先弄清楚到底是出现了内存泄露 (Memory Leak) 还是内存溢出 (Memory Overflow)：
 - 内存泄露
@@ -52,7 +52,7 @@ NOTE: 由于在 HotSpot 虚拟机中并不区分虚拟机栈和本地方法栈�
 
   在单线程的操作中，无论是定义大量的本地变量以大幅度增大栈帧，还是使用 -Xss 参数减少栈内存的容量，当栈空间无法分配时，虚拟机抛出的都是 StackOverflowError 异常，而无法得到 OutOfMemoryError 异常。
   
-  以下代码使用 -Xss 参数减少栈内存的容量，并通过无限递归占满 Java 虚拟机栈：
+  以下代码使用 `-Xss` 参数减少栈内存的容量，并通过无限递归占满 Java 虚拟机栈：
   ```java
   // java -Xss128k
   public class VMStackSOF {
@@ -89,7 +89,7 @@ NOTE: 由于在 HotSpot 虚拟机中并不区分虚拟机栈和本地方法栈�
 
 ### 3.1. 运行时常量池溢出
 
-以下代码通过 -XX:PermSize 和 -XX:MaxPermSize 限制方法区大小，从而间接限制其中的常量池的容量：
+以下代码通过 `-XX:PermSize` 和 `-XX:MaxPermSize` 限制方法区大小，从而间接限制其中的常量池的容量：
 ```java
 // java -XX:PermSize=10M -XX:MaxPermSize=10M
 List<String> list = new ArrayList<>();
@@ -150,7 +150,7 @@ public class JavaMethodAreaOOM {
 
 <!-- TODO: -->
 
-DirectMemory 容量可以通过 -XX:MaxDirectMemorySize 指定，如果不指定，则默认与 Java 堆最大值（-Xmx 指定）一样。
+DirectMemory 容量可以通过 `-XX:MaxDirectMemorySize` 指定，如果不指定，则默认与 Java 堆最大值（-Xmx 指定）一样。
 
 以下代码越过了 DirectByteBuffer 类，直接通过反射获取 Unsafe 实例进行内存分配（Unsafe 类的 getUnsafe 方法限制了只有引导类加载器才会返回实例，也就是设计者希望只有 rt.jar 中的类才能使用 Unsafe 的功能）。因为，虽然使用 DirectByteBuffer 分配内存也会抛出内存异常，但它抛出异常时并没有真正向操作系统申请内存分配，而是通过计算得知内存无法分配，于是手动抛出异常，真正申请分配内存的方法是 unsafe.allocateMemory。
 ```java

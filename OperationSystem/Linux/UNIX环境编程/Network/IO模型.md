@@ -77,7 +77,7 @@ Reactor 实现了一个被动的事件分离和分发模型，服务等待请求
 
 eg: Reactor 将 handle 放到 select()，等待可写就绪，然后调用 write() 写入数据，写完处理后续逻辑。
 
-Reactor 模型实例：libevent/libev/libuv/Event Library in Redis/ACE/select/epoll/ZeroMQ。
+Reactor 模型实例：libevent/libev/libuv/Event Library in Redis/ACE/Select/Epoll/ZeroMQ。
 
 优点：
 - Reactor 实现相对简单，对于耗时短的处理场景处理高效。
@@ -117,7 +117,7 @@ Actors 一大重要特征在于 actors 之间相互隔离，它们并不互相�
 
 Actor 模型 = 数据 + 行为 + 消息。
 
-Actor 模型内部的状态由自己的行为维护，外部线程不能直接调用对象的行为，必须通过消息才能激发行为，这样就保证 Actor 内部数据只有被自己修改。
+**Actor 模型内部的状态由自己的行为维护，外部线程不能直接调用对象的行为，必须通过消息才能激发行为，这样就保证 Actor 内部数据只有被自己修改**。
 
 Proactor 模型实例：Erlang/Skynet/Akka。
 
@@ -163,7 +163,7 @@ NOTE: [不存在 “异步阻塞式 IO” 的说法](https://www.zhihu.com/quest
 伪代码：
 ```
 {
-    while(read(socket, buffer) != SUCCESS);
+  while(read(socket, buffer) != SUCCESS);
 	process(buffer);
 }
 ```
@@ -241,11 +241,7 @@ select 的调用过程如下所示：
 
 1. **使用 copy_from_user 从用户空间拷贝 fd_set 到内核空间**。
 
-1. 注册回调函数 __pollwait。
-
-1. 遍历所有 fd，调用其对应的 poll 方法（对于 socket，这个 poll 方法是 sock_poll，sock_poll 根据情况会调用到 tcp_poll,udp_poll 或者 datagram_poll）。
-
-1. 以 tcp_poll 为例，其核心实现就是 __pollwait，也就是上面注册的回调函数。
+1. 遍历所有 fd，调用其对应的回调函数（对于 socket，这个 poll 方法是 `sock_poll`，sock_poll 根据情况会调用到 tcp_poll,udp_poll 或者 datagram_poll）。以 tcp_poll 为例，其核心实现就是 `__pollwait()`。
 
 1. __pollwait 的主要工作就是把 current（当前进程）挂到设备的等待队列中，不同的设备有不同的等待队列，对于 tcp_poll 来说，其等待队列是 sk->sk_sleep（注意把进程挂到等待队列中并不代表进程已经睡眠了）。**在设备收到一条消息（网络设备）或填写完文件数据（磁盘设备）后，会唤醒设备等待队列上睡眠的进程**，这时 current 便被唤醒了。
 
@@ -481,7 +477,7 @@ int main(int argc,char* argv[])
 
 #### 3.3.3. epoll
 
-epoll 从 Linux 2.5.44 开始引入，是 select/poll 的升级版本，其**设计目的旨在取代原有的 POSIX select() 与 poll() 系统调用，解决 select/poll 中存在的缺陷**。
+epoll 从 **Linux 2.5.44** 开始引入，是 select/poll 的升级版本，其**设计目的旨在取代原有的 POSIX select() 与 poll() 系统调用，解决 select/poll 中存在的缺陷**。
 
 **epoll 函数的时间复杂度都为 O(logn)**。
 
@@ -496,7 +492,7 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 	```
 	创建一个 epoll 的句柄，size 用来告诉内核这个监听的数目一共有多大，它并不是限制了 epoll 所能监听的描述符最大个数，只是对内核初始分配内部数据结构的一个建议。
 	
-	需要注意的是，当创建好 epoll 句柄后，它就是会占用一个 fd 值，在 linux 下如果查看 /proc/ 进程 id/fd/，是能够看到这个 fd 的，所以在使用完 epoll 后，必须调用 close() 关闭，否则可能导致 fd 被耗尽。
+	需要注意的是，当创建好 epoll 句柄后，它就是会占用一个 fd 值，在 Linux 下如果查看 /proc/ 进程 id/fd/，是能够看到这个 fd 的，所以在使用完 epoll 后，必须调用 close() 关闭，否则可能导致 fd 被耗尽。
 
 - epoll_ctl
 	```c
@@ -561,8 +557,8 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 - 存放就绪状态的文件资源描述符 (fds) 的数据结构：一个**双向链表 (ready_list)**.
 
 由于 epoll 通过 epoll_ctl 来对监控的 fds 集合来进行增、删、改，那么必会涉及到 fd 的快速查找问题，因此**需要一个低时间复杂度的增、删、改、查的数据结构来组织被监控的 fds 集合**：
-- 在 linux 2.6.8 之前的内核，epoll 使用 HashTable 来组织 fds 集合，于是在创建 epoll fd 的时候，epoll 需要初始化 hash 的大小。于是 epoll_create(int size) 有一个参数 size，以便内核根据 size 的大小来分配 hash 的大小。
-- 在 linux 2.6.8 之后的内核中，epoll 使用红黑树来组织监控的 fds 集合，因此 `epoll_create(int size)` 的参数 size 实际上已经没有意义了。
+- 在 linux 2.6.8 之前的内核，epoll 使用 HashTable 来组织 fds 集合，因此在创建 epoll fd 的时候，epoll 需要初始化 hash 的大小。于是 epoll_create(int size) 有一个参数 size，以便内核根据 size 的大小来分配 hash 的大小。
+- 在 linux 2.6.8 之后的内核中，epoll 使用红黑树来组织监控的 fds 集合，因此 `epoll_create(int size)` 的参数 size 实际上已经没有意义了。TODO: 为什么要用红黑树代替哈希表？
 
 ###### 3.3.3.2.2. 解决拷贝问题
 
@@ -617,6 +613,10 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 - 仅在缓冲区状态变化时触发事件，比如数据缓冲去从无到有的时候（不可读 - 可读)。
 
 **ET 模式在很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高**。epoll 工作在 ET 模式的时候，必须使用非阻塞套接口，以避免由于一个文件句柄的阻塞读 / 阻塞写操作把处理多个文件描述符的任务饿死。
+
+###### 3.3.3.3.3. 实现原理
+
+LT, ET 这件事怎么做到的呢？当一个 socket 句柄上有事件时，内核会把该句柄插入上面所说的准备就绪 list 链表，这时我们调用 epoll_wait，会把准备就绪的 socket 拷贝到用户态内存，然后清空准备就绪 list 链表，最后，epoll_wait 干了件事，就是检查这些 socket，如果不是 ET 模式（就是 LT 模式的句柄了），并且这些 socket 上确实有未处理的事件时，又把该句柄放回到刚刚清空的准备就绪链表了。所以，非 ET 的句柄，只要它上面还有事件，epoll_wait 每次都会返回。而 ET 模式的句柄，除非有新中断到，即使 socket 上的事件没有处理完，也是不会次次从 epoll_wait 返回的。（从上面这段，可以看出，LT 还有个回放的过程，低效了）
 
 ##### 3.3.3.4. 使用示例
 
@@ -762,7 +762,7 @@ void UserCompletionHandler::handle_event(buffer) {
 
 目前常用的异步 IO 分两种：POSIX IO 和 libaio：
 - POSIX IO 是 glibc 实现和维护的使用线程 + 阻塞调用来模拟的异步 IO，不需要内核支持。这种异步 IO 的实现方式占用线程资源而且受可用线程的数量限制。
-- [libaio](http://oss.oracle.com/projects/libaio-oracle/) 由 oracle 维护，是真正的原生的内核级别的异步 IO，IO 请求完全由底层自由调度。因此，效率较前者能高出很多。需要注意的是，linux 内核 2.6 版本以后有了对内核级别的异步 IO 支持，另外，想要使用该种方式的文件必须支持以 O_DIRECT 标志打开，然而并不是所有的文件系统都支持。如果你没有使用 O_DIRECT 打开文件，它可能仍然“工作”，但它可能不是异步完成的，而是变为了阻塞的。
+- [libaio](http://oss.oracle.com/projects/libaio-oracle/) 由 Oracle 维护，是真正的原生的内核级别的异步 IO，IO 请求完全由底层自由调度。因此，效率较前者能高出很多。需要注意的是，linux 内核 2.6 版本以后有了对内核级别的异步 IO 支持，另外，想要使用该种方式的文件必须支持以 O_DIRECT 标志打开，然而并不是所有的文件系统都支持。如果你没有使用 O_DIRECT 打开文件，它可能仍然“工作”，但它可能不是异步完成的，而是变为了阻塞的。
 
 TODO:
 - POSIX AIO
@@ -822,3 +822,5 @@ TODO:
 [为什么 Actor 模型是高并发事务的终极解决方案？](https://www.jdon.com/45728)
 
 [如何深刻理解 reactor 和 proactor？](https://www.zhihu.com/question/26943938)
+
+[epoll 的边沿触发模式 (ET) 真的比水平触发模式 (LT) 快吗？](https://www.zhihu.com/question/20502870)

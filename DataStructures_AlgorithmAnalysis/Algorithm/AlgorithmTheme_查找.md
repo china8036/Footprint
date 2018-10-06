@@ -41,7 +41,7 @@
   - Pi 是查找到第 i 条记录的概率。若不特别声明，则认为查找每条记录的概率相等，即 `P1 = P2 = ... = Pn = 1/n`。
   - Ci 是找到第 i 条记录所需进行的比较次数。
 
-	NOTE: **平均查找长度去掉系数之后就是时间复杂度**。
+  NOTE: **平均查找长度去掉系数之后就是时间复杂度**。
 
 ## 2. 顺序查找
 
@@ -222,6 +222,32 @@
       return r;
   }
   ```
+
+eg: [69. Sqrt(x)](https://leetcode.com/problems/sqrtx/description/)
+- Question
+	> Implement int sqrt(int x).
+	> 
+	> Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
+	> 
+	> Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.
+
+- Solution
+	```java
+	public int mySqrt(int x) {
+			if (x == 0)
+					return 0;
+			int left = 1, right = Integer.MAX_VALUE;
+			while (true) {
+					int mid = left + (right - left)/2;
+					if (mid * mid > x) 
+							right = mid - 1;
+					else if ((mid + 1) * (mid + 1) > x)
+							return mid;
+					else
+							left = mid + 1;
+			}
+	}
+	```
 
 ## 5. 插值查找
 

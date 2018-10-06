@@ -6,12 +6,15 @@ There are already a lot of good tutorials and articles online for the knowledge 
 
 - [计算机网络](/ComputerNetwork)
 - [数据结构与算法分析](/DataStructures%26AlgorithmAnalysis)
+- [操作系统](/OperationSystem)
 - [数据库](/Database)
 - [计算机组成](/FoundationsofComputerScience)
-- [Linux](/Linux)
-- [操作系统](/OperationSystem)
-- [渗透测试](/PenetrationTesting)
 - [编程语言](/Programming)
+  - Java
+  - C/C++
+  - python
+  - Web 前端
 - [软件使用](/SoftwareUsing)
+- [渗透测试](/PenetrationTesting)
 - [UI 设计](/UI)
-- [Web 架构](/WebPattern)
+- [系统设计](/SystemDesign)

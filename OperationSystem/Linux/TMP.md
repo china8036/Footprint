@@ -1,15 +1,17 @@
-- [Linux 各种限制](#linux-%E5%90%84%E7%A7%8D%E9%99%90%E5%88%B6)
-  - [1. Linux 理论最大进程数](#1-linux-%E7%90%86%E8%AE%BA%E6%9C%80%E5%A4%A7%E8%BF%9B%E7%A8%8B%E6%95%B0)
-  - [2. Linux 理论最大线程数](#2-linux-%E7%90%86%E8%AE%BA%E6%9C%80%E5%A4%A7%E7%BA%BF%E7%A8%8B%E6%95%B0)
-  - [3. Linux 最大打开文件数](#3-linux-%E6%9C%80%E5%A4%A7%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%95%B0)
+- [Linux 各种限制](#linux-各种限制)
+  - [1. Linux 理论最大进程数](#1-linux-理论最大进程数)
+  - [2. Linux 理论最大线程数](#2-linux-理论最大线程数)
+  - [3. Linux 最大打开文件数](#3-linux-最大打开文件数)
   - [4. Refer Links](#4-refer-links)
+- [字节序](#字节序)
+- [文件指针/句柄 & 文件描述符 & 文件路径](#文件指针句柄--文件描述符--文件路径)
 
 TODO: [计算机底层知识拾遗](https://blog.csdn.net/column/details/computer-os-network.html)
 
 # Linux 各种限制
 
-可以使用 ulimit -a 查看我们系统的大部分限制：
-```
+可以使用 `ulimit -a` 查看我们系统的大部分限制：
+```bash
 # ulimit -a
 core file size          (blocks, -c) 0
 data seg size           (kbytes, -d) unlimited
@@ -31,10 +33,10 @@ file locks                      (-x) unlimited
 
 ## 1. Linux 理论最大进程数
 
-- pid 限制
+- PID 限制
 
-  linux 内核通过进程标识值 PID(process identification value) 来标示进程，PID 是一个 pid_t 类型的数，实际上就是 int 类型。通过查看 /proc/sys/kernel/pid_max 可得到当前系统中的 pid 上限：
-  ```
+  Linux 内核通过进程标识值 PID(process identification value) 来标示进程，PID 是一个 pid_t 类型的数，实际上就是 int 类型。通过查看 /proc/sys/kernel/pid_max 可得到当前系统中的 pid 上限：
+  ```bash
   # cat /proc/sys/kernel/pid_max 
   32768
   ```
@@ -43,7 +45,7 @@ file locks                      (-x) unlimited
 - GDT 限制
   - 每个进程都要在全局段描述表 GDT 中占据两个表项
     
-    每个进程的局部段描述表 LDT 都作为一个独立的段而存在，在全局段描述表 GDT 中要有一个表项指向这个段的起始地址，并说明该段的长度以及其他一些 参数。除上之外，每个进程还有一个 TSS 结构（任务状态段) 也是一样。所以，每个进程都要在全局段描述表 GDT 中占据两个表项。
+    每个进程的局部段描述表 LDT 都作为一个独立的段而存在，在全局段描述表 GDT 中要有一个表项指向这个段的起始地址，并说明该段的长度以及其他一些参数。除上之外，每个进程还有一个 TSS 结构（任务状态段) 也是一样。所以，每个进程都要在全局段描述表 GDT 中占据两个表项。
 
   - GDT 的容量有多大呢？
     
@@ -88,3 +90,13 @@ file locks                      (-x) unlimited
 ## 4. Refer Links
 
 [linux 下进程的进程最大数、最大线程数、进程打开的文件数和 ulimit 命令修改硬件资源限制](https://blog.csdn.net/gatieme/article/details/51058797)
+
+# 字节序
+
+https://zh.wikipedia.org/zh-hans/%E5%AD%97%E8%8A%82%E5%BA%8F
+
+http://www.ruanyifeng.com/blog/2016/11/byte-order.html
+
+# 文件指针/句柄 & 文件描述符 & 文件路径
+
+https://www.cnblogs.com/niocai/archive/2011/11/24/2261686.html

@@ -1,32 +1,32 @@
-- [Design Pattern 结构型模式 - 代理模式](#design-pattern)
-	- [1. 基本概念](#1)
-	- [2. 代理类型](#2)
-	- [3. 静态代理](#3)
-		- [3.1. 继承方式](#31)
-		- [3.2. 聚合方式](#32)
-		- [3.3. 比较](#33)
-	- [4. 动态代理](#4)
-		- [4.1. JDK 动态代理](#41-jdk)
-			- [4.1.1. API 说明](#411-api)
-			- [4.1.2. 使用示例](#412)
-			- [4.1.3. 优缺点](#413)
-		- [4.2. Cglib 动态代理](#42-cglib)
-			- [4.2.1. 基本概念](#421)
-			- [4.2.2. 原理分析](#422)
-			- [4.2.3. API 说明](#423-api)
-			- [4.2.4. 使用示例](#424)
-			- [4.2.5. 与 JDK 动态代理的比较](#425--jdk)
-			- [4.2.6. 应用](#426)
-		- [4.3. 模拟 JDK Proxy 实现动态代理](#43--jdk-proxy)
-		- [4.4. JAVAASSIST 动态代理](#44-javaassist)
-		- [4.5. AspectJ 动态代理](#45-aspectj)
-		- [4.6. 动态代理应用](#46)
-			- [4.6.1. AOP](#461-aop)
-			- [4.6.2. 数据库连接池](#462)
-			- [4.6.3. 事务管理](#463)
-			- [4.6.4. 单元测试动态 mock 对象](#464--mock)
-	- [5. 适用场景](#5)
-	- [6. Refer Links](#6-refer-links)
+- [Design Pattern 结构型模式 - 代理模式](#design-pattern-结构型模式---代理模式)
+    - [1. 基本概念](#1-基本概念)
+    - [2. 代理类型](#2-代理类型)
+    - [3. 静态代理](#3-静态代理)
+        - [3.1. 继承方式](#31-继承方式)
+        - [3.2. 聚合方式](#32-聚合方式)
+        - [3.3. 比较](#33-比较)
+    - [4. 动态代理](#4-动态代理)
+        - [4.1. JDK 动态代理](#41-jdk-动态代理)
+            - [4.1.1. API 说明](#411-api-说明)
+            - [4.1.2. 使用示例](#412-使用示例)
+            - [4.1.3. 优缺点](#413-优缺点)
+        - [4.2. Cglib 动态代理](#42-cglib-动态代理)
+            - [4.2.1. 基本概念](#421-基本概念)
+            - [4.2.2. 原理分析](#422-原理分析)
+            - [4.2.3. API 说明](#423-api-说明)
+            - [4.2.4. 使用示例](#424-使用示例)
+            - [4.2.5. 与 JDK 动态代理的比较](#425-与-jdk-动态代理的比较)
+            - [4.2.6. 应用](#426-应用)
+        - [4.3. 模拟 JDK Proxy 实现动态代理](#43-模拟-jdk-proxy-实现动态代理)
+        - [4.4. JAVAASSIST 动态代理](#44-javaassist-动态代理)
+        - [4.5. AspectJ 动态代理](#45-aspectj-动态代理)
+        - [4.6. 动态代理应用](#46-动态代理应用)
+            - [4.6.1. AOP](#461-aop)
+            - [4.6.2. 数据库连接池](#462-数据库连接池)
+            - [4.6.3. 事务管理](#463-事务管理)
+            - [4.6.4. 单元测试动态 mock 对象](#464-单元测试动态-mock-对象)
+    - [5. 适用场景](#5-适用场景)
+    - [6. Refer Links](#6-refer-links)
 
 # Design Pattern 结构型模式 - 代理模式
 
@@ -344,13 +344,13 @@ public class ProxyTest {
 #### 4.1.1. API 说明
 
 Proxy 类是所有动态代理类的父类，它提供了用于创建动态代理类和动态代理对象的静态方法：
-- `static Class<?>	getProxyClass​(ClassLoader loader, Class<?>... interfaces)`
+- `static Class<?> getProxyClass​(ClassLoader loader, Class<?>... interfaces)`
 	
 	创建一个动态代理类，返回类所对应的 Class 对象，但该方法官方文档不推荐使用。
 	
 	> Constructor.newInstance will throw IllegalAccessException when it is called on an inaccessible proxy class. Use newProxyInstance(ClassLoader, Class[], InvocationHandler) to create a proxy instance instead.
 
-- `static Object	newProxyInstance​(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)`
+- `static Object newProxyInstance​(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)`
 
 	直接创建一个动态代理对象，官方推荐使用此方法。
   

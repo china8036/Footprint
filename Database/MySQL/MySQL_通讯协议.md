@@ -1,12 +1,14 @@
-- [MySQL 通讯协议](#mysql)
-  - [1. 基本概念](#1)
-  - [2. 连接方式](#2)
-  - [3. 通讯过程](#3)
-  - [4. 报文内容](#4)
+- [MySQL 通讯协议](#mysql-通讯协议)
+  - [1. 基本概念](#1-基本概念)
+  - [2. 连接方式](#2-连接方式)
+  - [3. 通讯过程](#3-通讯过程)
+  - [4. 报文内容](#4-报文内容)
   - [5. Refer Links](#5-refer-links)
 
 # MySQL 通讯协议
+
 <!-- todo: 待补充 -->
+
 ## 1. 基本概念
 
 > The MySQL protocol is used between MySQL Clients and a MySQL Server. It is implemented by:

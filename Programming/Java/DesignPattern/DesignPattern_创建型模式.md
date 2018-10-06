@@ -91,7 +91,7 @@ public class Singleton {
     }  
 }  
 ```
-该单例类在`getInstance()` 方法被调用时才执行类的初始化，避免内存的浪费，因此称为“懒汉式”。
+该单例类在 `getInstance()` 方法被调用时才执行类的初始化，避免内存的浪费，因此称为“懒汉式”。
 
 这是单例模式最基本的实现方式，这种实现最大的问题就是不支持多线程。因为没有加锁 synchronized，所以严格意义上它并不算单例模式。因此，一般情况下不建议使用。
 
@@ -115,13 +115,13 @@ public class Singleton {
 #### 1.2.3. 饿汉式
 
 ```java
-public class Singleton {  
+public class Singleton {
     private static Singleton instance = new Singleton();  // 直接初始化
-    private Singleton (){}  
-    public static Singleton getInstance() {  
-        return instance;  
-    }  
-}  
+    private Singleton () {}
+    public static Singleton getInstance() {
+        return instance;
+    }
+}
 ```
 
 饿汉式实现在类加载时就初始化，会导致内存的浪费，容易产生垃圾对象，因此称为饿汉式。
@@ -180,7 +180,7 @@ public enum Singleton {
 
 这种实现方式更简洁，自动支持序列化机制，绝对防止多次实例化。
 
-这种方式也是 Effective Java 作者 Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还自动支持序列化机制，防止反序列化重新创建新的对象，绝对防止多次实例化。不过，由于 JDK1.5 之后才加入 enum 特性，用这种方式写不免让人感觉生疏，在实际工作中，也很少用。
+**这种方式也是 《Effective Java》 作者 Josh Bloch 提倡的方式**，它不仅能避免多线程同步问题，而且还自动支持序列化机制，防止反序列化重新创建新的对象，绝对防止多次实例化。不过，由于 JDK1.5 之后才加入 enum 特性，用这种方式写不免让人感觉生疏，在实际工作中，也很少用。
 
 ## 2. 工厂模式
 

@@ -11,7 +11,7 @@ Java 线程在 JDK1.2 之前，是基于“绿色线程”的用户线程实现�
 
 Java SE 最常用的 JVM 是 Oracle/Sun 研发的 HotSpot VM，对于 HotSpot VM：
 - **在除 Solaris 系统外的所有系统中，HotSpot VM 都是使用 1:1 线程模型来实现线程的**，也就是说一个 Java 创建的线程就映射到一个轻量级进程之中。
-- **在 Solaris 系统中，HotSpot VM 支持 M:N 和 1:1 模型，当前默认是用 1:1 模型。当然它也对应提供了专有虚拟机参数：`-XX:+UserLWPSynchronization`和`-XX:+UserBoundThreads`来明确指定 JVM 具体使用的线程模型类型**。
+- **在 Solaris 系统中，HotSpot VM 支持 M:N 和 1:1 模型，当前默认是用 1:1 模型。当然它也对应提供了专有虚拟机参数：`-XX:+UserLWPSynchronization` 和 `-XX:+UserBoundThreads` 来明确指定 JVM 具体使用的线程模型类型**。
 
 ## Refer Links
 

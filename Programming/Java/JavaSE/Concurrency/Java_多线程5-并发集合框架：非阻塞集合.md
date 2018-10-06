@@ -25,7 +25,7 @@
 - `ConcurrentLinkedQueue` 
 - `ConcurrentLinkedDeque` 
 - `CopyOnWriteArrayList` 
-- `CopyOnWriteArraySet`
+- `CopyOnWriteArraySet` 
 
 ## 1. 非阻塞 Map: ConcurrentHashMap
 

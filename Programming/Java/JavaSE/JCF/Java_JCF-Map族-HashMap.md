@@ -320,7 +320,7 @@ P.S. 为什么不直接使用 key 的 hashCode() 作为哈希计算结果，而�
 
 由于哈希桶的数据结构是数组，数组的大小必须在创建时分配完毕，所以自然会涉及到扩容的问题。
 
-当 HashMap 的容量达到 threshold 域值时，就会触发扩容操作`final Node<K,V>[] resize()`。扩容前后，哈希桶的长度一定会是 2 的次方，从而在根据 key 的 hash 值寻找对应的哈希桶时，可以用位运算替代取余操作，更加高效。
+当 HashMap 的容量达到 threshold 域值时，就会触发扩容操作 `final Node<K,V>[] resize()`。扩容前后，哈希桶的长度一定会是 2 的次方，从而在根据 key 的 hash 值寻找对应的哈希桶时，可以用位运算替代取余操作，更加高效。
 
 扩容操作时，会 new 一个新的 Node 数组作为哈希桶，然后将原哈希表中的所有数据 (Node 节点) 移动到新的哈希桶中，相当于对原哈希表中所有的数据重新做了一个 put 操作。所以性能消耗很大，可想而知，在哈希表的容量越大时，性能消耗越明显。
 
@@ -725,7 +725,9 @@ P.S.
 HashMap 的线程不安全主要体现在 resize 时的死循环及使用迭代器时的 fast-fail 上。
 
 #### 3.11.1. resize 死循环
+
 <!-- TODO: -->
+
 [疫苗：JAVA HASHMAP 的死循环](https://coolshell.cn/articles/9606.html)
 
 当 HashMap 的 size 超过 Capacity*loadFactor 时，需要对 HashMap 进行扩容。具体方法是，创建一个新的，长度为原来 Capacity 两倍的数组，保证新的 Capacity 仍为 2 的 N 次方，从而保证上述寻址方式仍适用。同时需要通过如下 transfer 方法将原来的所有数据全部重新插入（rehash）到新的数组中。
