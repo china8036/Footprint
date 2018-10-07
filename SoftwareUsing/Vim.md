@@ -135,7 +135,7 @@ Vim 的可视模式允许我们选中一块文本区域，并且在上面进行�
 ##### 2.1.4.3. 可视块模式
 
 （可视块）批量列操作
-- `ctrl` + `v` 进入（可视块）列选择\模式
+- `ctrl` + `v` 进入（可视块）列选择、模式
 - `shift` + `i` 进入插入模式
 - 输入字符串
 - `ESC`
@@ -767,3 +767,5 @@ https://github.com/Valloric/YouCompleteMe
 TODO:
 
 [所需即所获：像 IDE 一样使用 vim](https://github.com/yangyangwithgnu/use_vim_as_ide)
+
+[VIM 下的跳转练习](http://www.cnblogs.com/moiyer/archive/2010/04/01/1952681.html)

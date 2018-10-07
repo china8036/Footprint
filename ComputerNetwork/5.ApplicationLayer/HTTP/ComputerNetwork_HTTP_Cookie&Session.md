@@ -3,7 +3,7 @@
     - [1.1. 基本概念](#11-基本概念)
     - [1.2. HTTP 首部字段](#12-http-首部字段)
       - [1.2.1. Set-Cookie](#121-set-cookie)
-      - [1.2.2. cookie](#122-cookie)
+      - [1.2.2. Cookie](#122-cookie)
     - [1.3. 编码](#13-编码)
     - [1.4. Cookie 维护](#14-cookie-维护)
       - [1.4.1. 设置 cookie](#141-设置-cookie)
@@ -71,7 +71,7 @@ Cookie 选项（每个选项都规定了什么情况下应该进行 cookie 的�
 - `HttpOnly`
   - 使得 JavaScript 无法获取 cookie，以防止跨站脚本攻击（xss）对 cookie 信息的窃取（但该属性初衷不是针对 xss 开发的）。
 
-#### 1.2.2. cookie
+#### 1.2.2. Cookie
 
 Cookie：客户端向服务器发起请求时，若本地的 Cookie 未过期且没被禁止，会在每次请求时被发送至服务器，cookie 的值被存储在名为 Cookie 的 HTTP 消息头中，并且只包含了 cookie 的值，忽略全部设置选项。
 
@@ -91,9 +91,9 @@ Cookie: value1; value2; name1=value1
 
 ### 1.3. 编码
 
-http://yiminghe.iteye.com/blog/908141
+[cookie 中文编码问题](http://yiminghe.iteye.com/blog/908141)
 
-RFC2616 中规定：HTTP 报文的状态行和头区域只能包含 ASCII(iso-8859-1) 编码的字符，再以 iso—8859-1 的编码方式转换为二进制 / 字节码在网络上传输；而 cookie 属于头区域，因此，cookie 编码必须使得编码后的字符在 ASCII 字符范围内。
+RFC2616 中规定：**HTTP 报文的状态行和头区域只能包含 ASCII(iso-8859-1) 编码的字符，再以 iso—8859-1 的编码方式转换为二进制 / 字节码在网络上传输；而 cookie 属于头区域，因此，cookie 编码必须使得编码后的字符在 ASCII 字符范围内**。
 
 若内容全为英文字符，则符合编码规范（在 ASCII 字符范围内）。
 
@@ -101,11 +101,11 @@ RFC2616 中规定：HTTP 报文的状态行和头区域只能包含 ASCII(iso-88
 
 - base64
 
-    服务器端（Java）：
-    ```java
-    (new BASE64Encoder()).encode(x.getBytes("utf-8"));// getBytes 得到使用 utf-8 编码的字节码
-    ```
-    客户端（JavaScript）：[base64_decode](http://www.webtoolkit.info/javascript-base64.html)
+  服务器端（Java）：
+  ```java
+  (new BASE64Encoder()).encode(x.getBytes("utf-8"));// getBytes 得到使用 utf-8 编码的字节码
+  ```
+  客户端（JavaScript）：[base64_decode](http://www.webtoolkit.info/javascript-base64.html)
 
 - URL
 
@@ -115,9 +115,9 @@ RFC2616 中规定：HTTP 报文的状态行和头区域只能包含 ASCII(iso-88
   ```
   客户端（JavaScript）：[decodeURIComponent()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent)
 
-- unicode
+- UNICODE
 
-  由于 java 与 javascript 内部都是用 unicode 来表示字符，故可以直接使用 unicode 编码不在 ASCII 范围内的字符（如中文、日文等）。
+  由于 Java 与 Javascript 内部都是用 unicode 来表示字符，故可以直接使用 unicode 编码不在 ASCII 范围内的字符（如中文、日文等）。
 
   服务器端（JavaScript）：
   ```javascript
@@ -173,7 +173,7 @@ RFC2616 中规定：HTTP 报文的状态行和头区域只能包含 ASCII(iso-88
 
 #### 1.4.2. 修改 cookie
 
-Cookie 一旦在客户端设置成功后，无法从服务器端直接修改或删除，但可通过间接的方式：
+**Cookie 一旦在客户端设置成功后，无法从服务器端直接修改或删除，但可通过间接的方式，即修改 cookie**。
 
 修改客户端 cookie：覆盖，即从服务器端发送一个除 value 值外完全相同的 cookie，将覆盖客户端对应的原有 cookie，达到修改 value 的目的。
 
@@ -183,13 +183,13 @@ Cookie 一旦在客户端设置成功后，无法从服务器端直接修改或�
 
 - 大小限制
 
-  大多数浏览器只支持发送最大为 4096 字节（4kB）的 Cookie。
+  **大多数浏览器只支持发送最大为 4096 字节（4kB）的 Cookie**。
 
   由于限制了 Cookie 的大小，最好用 Cookie 来存储少量数据，或者存储用户 ID 之类的标识符。用户 ID 随后便可用于标识用户，以及从数据库或其他数据源中读取用户信息。
 
 - 数量限制
 
-  大多数浏览器只允许每个站点存储 20 个 Cookie；如果试图存储更多 Cookie，则最旧的 Cookie 便会被丢弃。有些浏览器还会对它们将接受的来自所有站点的 Cookie 总数作出绝对限制，通常为 300 个。
+  **大多数浏览器只允许每个站点存储 20 个 Cookie；如果试图存储更多 Cookie，则最旧的 Cookie 便会被丢弃。有些浏览器还会对它们将接受的来自所有站点的 Cookie 总数作出绝对限制，通常为 300 个**。
 
   在 IE7 中增加 cookie 的限制数量到 50 个，与此同时 Opera 限定 cookie 数量为 30 个，Safari 和 Chrome 对与每个域名下的 cookie 个数没有限制。
 
@@ -204,11 +204,12 @@ Cookie 一旦在客户端设置成功后，无法从服务器端直接修改或�
 ### 1.6. 安全问题
 
 - cookie 使用明文编码（如 URL 编码，Base64 编码等）传输，可能在传输过程中被劫持，可自定义加密算法以提高安全性。
+
 - 客户端很容易篡改浏览器保存的 cookie。
 
   Cookie 防篡改方案举例：
   
-  服务器可以为每个 Cookie 项生成签名，由于用户篡改 Cookie 后无法生成对应的签名，服务器便可以得知用户对 Cookie 进行了篡改。一个简单的校验过程可能是这样的：
+  **服务器可以为每个 Cookie 项生成签名，由于用户篡改 Cookie 后无法生成对应的签名，服务器便可以得知用户对 Cookie 进行了篡改**。一个简单的校验过程可能是这样的：
   1. 在服务器中配置一个不为人知的字符串（我们叫它 Secret），比如：x$sfz32。
   1. 当服务器需要设置 Cookie 时（比如 authed=false），不仅设置 authed 的值为 false， 在值的后面进一步设置一个签名，最终设置的 Cookie 是 authed=false|6hTiBl7lVpd1P。
   1. 签名 6hTiBl7lVpd1P 是这样生成的：Hash('x$sfz32'+'true')。 要设置的值与 Secret 相加再取哈希。
@@ -217,10 +218,10 @@ Cookie 一旦在客户端设置成功后，无法从服务器端直接修改或�
   1. 服务器收到 HTTP 请求，发现 Cookie: authed=true|???。服务器开始进行校验： Hash('true'+'x$sfz32')，便会发现用户提供的签名不正确。
   1. 通过给 Cookie 添加签名，使得服务器得以知道 Cookie 被篡改。
   
-  但因为 Cookie 是明文传输的，只要服务器设置过一次 authed=true|xxxx，客户端就知道 true 的签名是 xxxx 了，于是以后就可以用这个签名来欺骗服务器了。
+  **但因为 Cookie 是明文传输的，只要服务器设置过一次 authed=true|xxxx，客户端就知道 true 的签名是 xxxx 了，于是以后就可以用这个签名来欺骗服务器了**。
 
 因此：
-- Cookie 始终无法保证绝对的安全，在 cookie 中不可存放敏感数据。一般来讲 Cookie 中只会放一个 Session Id，而 Session 存储在服务器端。
+- **Cookie 始终无法保证绝对的安全，在 cookie 中不可存放敏感数据**。一般来讲 Cookie 中只会放一个 Session Id，而 Session 信息存储在服务器端。
 - **为防止 XSS，一般都要在 cookie 中加入 httponly 属性，以禁止客户端使用 JavaScript 获取 cookie；同时加入 secure 属性，使得只在 https 下才使用 cookie**。
 
 ### 1.7. Cookie 传输优化
@@ -231,7 +232,7 @@ http://www.chinaz.com/web/2009/1012/94335.shtml
 
 ### 2.1. 基本概念
 
-Session 是借 Cookie 实现的更高层的服务器与浏览器之间的会话。
+**Session 是借 Cookie 实现的更高层的服务器与浏览器之间的会话**。
 
 实现请求身份验证的方式很多，其中一种广泛接受的方式是使用服务器端产生的 Session ID 结合浏览器的 Cookie 实现对 Session 的管理。简单来说，一个请求到达的时候，服务器会先判断是否带有 Session 信息。如果有，则根据 Session ID 去数据库中查找是否具有对应的用户身份信息。此处可能会出现 Session 失效、非法的 Session 信息等可能性，那么服务器视同无 Ssession 信息的情况，重新的产生一个随机的字符串，并且在 Http 返回头中写入新的 Session ID 信息。另一者，如果服务器成功获取了用户的身份信息则以该身份为请求者提供服务。
 
@@ -254,7 +255,7 @@ Session 生命周期：
 1. 这个 ID 称为 Session ID，通过 Session ID 可以从 Redis 中取出对应的用户对象， 敏感数据（比如 authed=true）都存储在这个用户对象中。
 1. 设置 Cookie 为 sessionId=xxxxxx|checksum 并发送 HTTP 响应， 仍然为每一项 Cookie 都设置签名。
 1. 用户收到 HTTP 响应后，便看不到任何敏感数据了。在此后的请求中发送该 Cookie 给服务器。
-1. 服务器收到此后的 HTTP 请求后，发现 Cookie 中有 SessionID，进行放篡改验证。
+1. 服务器收到此后的 HTTP 请求后，发现 Cookie 中有 SessionID，进行防篡改验证。
 1. 如果通过了验证，根据该 ID 从 Redis 中取出对应的用户对象， 查看该对象的状态并继续执行业务逻辑。
 
 ### 2.3. sessionID
@@ -306,7 +307,7 @@ Session 常见的攻击方式有三种：
   对于 Session 监听劫取的攻击，几种有效的防止办法是：
   - 禁止使用 URL (GET) 方式来传递 Session ID。
   
-  - Https
+  - HTTPS
     
     很多网站仅仅在 Login 的阶段使用 Https 防止用户的用户名、密码信息被监听者获取，但是随后的 SessionId 同样有可能被监听者获取而伪造登录者的身份信息。因此更加推荐的方式是所有的信息传递全部使用 Https 实现，这样即使监听着截获了信息也无法破解其中的内容。
   
@@ -316,7 +317,7 @@ Session 常见的攻击方式有三种：
   
   - 设置 cookie 加强安全的属性：Secure
     
-    使得仅在 https/ssl 通信时才允许传递 cookie。
+    使得仅在 HTTPS/SSL 通信时才允许传递 cookie。
 
 - 固定 Session ID (Session Fixation)
 
@@ -334,7 +335,7 @@ Session 常见的攻击方式有三种：
 
 #### 2.4.2. 防范措施
 
-- 如果服务端单靠 sessionid 识别会话信息，那么一旦被窃取了 sessionid 后，就会泄露用户信息，因此应该通过 ip，useragent 信息、sessionID 三者结合加以校验，可以减少风险，提高安全性。
+- 如果服务端单靠 sessionid 识别会话信息，那么一旦被窃取了 sessionid 后，就会泄露用户信息，因此**应该通过 IP，USERAGENT 信息、sessionID 三者结合加以校验，可以减少风险，提高安全性**。
 - 防止 xss，一旦被拿到 xss，随时会被攻陷。
 - HTTPS。
 - cookie 安全属性：httponly 和 secure。
