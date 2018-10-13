@@ -1,26 +1,27 @@
 - [Array & String](#array--string)
-    - [1. 元素移动](#1-元素移动)
-        - [1.1. Move Zeros](#11-move-zeros)
-    - [2. 元素删除](#2-元素删除)
-        - [2.1. Remove Element](#21-remove-element)
-        - [2.2. Remove Duplicates from Sorted Array](#22-remove-duplicates-from-sorted-array)
-        - [2.3. Remove Duplicates from Sorted Array II](#23-remove-duplicates-from-sorted-array-ii)
-    - [3. 数组排序](#3-数组排序)
-        - [3.1. Sort Colors](#31-sort-colors)
-        - [3.2. Merge Sorted Array](#32-merge-sorted-array)
-        - [3.3. Kth Largest Element in an Array](#33-kth-largest-element-in-an-array)
-    - [4. 双索引 Two Pointer](#4-双索引-two-pointer)
-        - [4.1. Two Sum II - Input array is sorted](#41-two-sum-ii---input-array-is-sorted)
-        - [4.2. Valid Palindrome](#42-valid-palindrome)
-        - [4.3. Reverse String](#43-reverse-string)
-        - [4.4. Reverse Vowels of a String](#44-reverse-vowels-of-a-string)
-        - [4.5. Container With Most Water](#45-container-with-most-water)
-    - [5. 滑动窗口](#5-滑动窗口)
-        - [5.1. Minimum Size Subarray Sum](#51-minimum-size-subarray-sum)
-        - [5.2. Longest Substring Without Repeating Characters](#52-longest-substring-without-repeating-characters)
-        - [5.3. Find All Anagrams in a String](#53-find-all-anagrams-in-a-string)
-        - [5.4. Minimum Window Substring](#54-minimum-window-substring)
-    - [6. Refer Links](#6-refer-links)
+	- [1. 元素移动](#1-元素移动)
+		- [1.1. Move Zeros](#11-move-zeros)
+	- [2. 元素删除](#2-元素删除)
+		- [2.1. Remove Element](#21-remove-element)
+		- [2.2. Remove Duplicates from Sorted Array](#22-remove-duplicates-from-sorted-array)
+		- [2.3. Remove Duplicates from Sorted Array II](#23-remove-duplicates-from-sorted-array-ii)
+	- [3. 数组排序](#3-数组排序)
+		- [3.1. Sort Colors](#31-sort-colors)
+		- [3.2. Merge Sorted Array](#32-merge-sorted-array)
+		- [3.3. Kth Largest Element in an Array](#33-kth-largest-element-in-an-array)
+	- [4. 双索引 Two Pointer](#4-双索引-two-pointer)
+		- [4.1. Two Sum II - Input array is sorted](#41-two-sum-ii---input-array-is-sorted)
+		- [4.2. Valid Palindrome](#42-valid-palindrome)
+		- [4.3. Reverse String](#43-reverse-string)
+		- [4.4. Reverse Vowels of a String](#44-reverse-vowels-of-a-string)
+		- [4.5. Container With Most Water](#45-container-with-most-water)
+		- [4.6. Trapping Rain Water](#46-trapping-rain-water)
+	- [5. 滑动窗口](#5-滑动窗口)
+		- [5.1. Minimum Size Subarray Sum](#51-minimum-size-subarray-sum)
+		- [5.2. Longest Substring Without Repeating Characters](#52-longest-substring-without-repeating-characters)
+		- [5.3. Find All Anagrams in a String](#53-find-all-anagrams-in-a-string)
+		- [5.4. Minimum Window Substring](#54-minimum-window-substring)
+	- [6. Refer Links](#6-refer-links)
 
 # Array & String
 
@@ -92,8 +93,8 @@
 	public int removeElement(int[] nums, int val) {
 			int i = 0;
 			for (int j = 0; j < nums.length; j++)
-					if (nums[j] != val)
-							nums[i++] = nums[j];
+	            if (nums[j] != val)
+	                nums[i++] = nums[j];
 			return i;
 	}
 	```
@@ -111,8 +112,8 @@
 	public int removeDuplicates(int[] nums) {
 			int i = 0;
 			for (int j = 1; j < nums.length; j++)
-					if (nums[j - 1] != nums[j])
-							nums[++i] = nums[j];
+	            if (nums[j - 1] != nums[j])
+	                nums[++i] = nums[j];
 			return i + 1;
 	}
 	```
@@ -130,7 +131,7 @@
 			int ret=0;
 			for (int i = 0; i < nums.length; i++) {
 					int count=1;
-					int num = nums[i];            
+					int num = nums[i];
 					while (i<nums.length-1 && nums[i] == nums[i+1]) {
 							i++;
 							count++;
@@ -138,7 +139,7 @@
 					count = count >= 2 ? 2 : count;
 					ret +=count;
 					for (int j = 0; j < count; j++)
-							nums[index++] = num; 
+							nums[index++] = num;
 			}
 			return ret;
 	}
@@ -380,9 +381,46 @@
 
 ### 4.5. Container With Most Water
 
-[11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/description/)
+[11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/ad145121d2296bc0e4d0fe0b51c7ad24.jpg)
+- Question
+
+	> Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+
+	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/ad145121d2296bc0e4d0fe0b51c7ad24.jpg)
+
+	Example:
+	```
+	Input: [1,8,6,2,5,4,8,3,7]
+	Output: 49
+	```
+
+- Solution
+
+	根据题意，要求从 height 数组中任选两项 i 和 j（i <= j），使得 `Math.min(height[i], height[j]) * (j - i)` 最大化，求解这个最大值。
+	- 暴力解法，枚举所有情况，时间效率为 O(n^2)
+
+	- 双指针对撞（夹逼），时间效率为 O(n)
+		```java
+		public int maxArea(int[] height) {
+			int left = 0, right = height.length - 1;
+			int maxArea = 0;
+
+			while (left < right) {
+				maxArea = Math.max(maxArea, Math.min(height[left], height[right]) * (right - left));
+				if (height[left] < height[right])
+					left++;
+				else
+					right--;
+			}
+
+			return maxArea;
+		}
+		```
+
+### 4.6. Trapping Rain Water
+
+[42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
 
 ## 5. 滑动窗口
 
@@ -390,7 +428,7 @@
 
 ### 5.1. Minimum Size Subarray Sum
 
-[209. Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/description/)
+[209. Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)
 
 - Question
   > Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.

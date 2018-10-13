@@ -571,7 +571,7 @@
 			public TreeNode helper(int[] num, int low, int high) {
 					if (low > high) // Done
 							return null;
-							
+	
 					int mid = (low + high) / 2;
 					TreeNode node = new TreeNode(num[mid]);
 					node.left = helper(num, low, mid - 1);
@@ -586,34 +586,35 @@
 [230. Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/)
 
 - Question
-  > Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+  > Given a binary search tree, write a function kth Smallest to find the kth smallest element in it.
 
 - Solution
-	
-	<!-- TODO: 可使用快排 partition 的思想 -->
+
+  <!-- TODO: 可使用快排 partition 的思想 -->
   ```java
-	public int kthSmallest(TreeNode root, int k) {
-		Stack<TreeNode> st = new Stack<>();
+  public int kthSmallest(TreeNode root, int k) {
+  	Stack<TreeNode> st = new Stack<>();
 
-		while (root != null) {
-				st.push(root);	
-				root = root.left;
-		}
+  	while (root != null) {
+  			st.push(root);	
+  			root = root.left;
+  	}
 
-		while (k != 0) {
-				TreeNode n = st.pop();
-				k--;
-				if (k == 0) return n.val;
-				TreeNode right = n.right;
-				while (right != null) {
-						st.push(right);
-						right = right.left;
-				}
-		}
+  	while (k != 0) {
+  			TreeNode n = st.pop();
+  			k--;
+  			if (k == 0)
+                  return n.val;
+  			TreeNode right = n.right;
+  			while (right != null) {
+  					st.push(right);
+  					right = right.left;
+  			}
+  	}
 
-		return -1; // never hit if k is valid
-	}
-	```
+  	return -1; // never hit if k is valid
+  }
+  ```
 
 ## 3. Balanced Binary Tree
 

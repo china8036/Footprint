@@ -126,10 +126,10 @@ TreeMap 支持两种排序方法：自然排序和定制排序。默认情况下
 ### 3.3. 常用 API
 
 构造器
-- `TreeMap​()`
-- `TreeMap​(Comparator<? super K> comparator)	`
-- `TreeMap​(Map<? extends K,? extends V> m)	`
-- `TreeMap​(SortedMap<K,? extends V> m)`
+- `TreeMap()`
+- `TreeMap(Comparator<? super K> comparator)`
+- `TreeMap(Map<? extends K,? extends V> m)	`
+- `TreeMap(SortedMap<K,? extends V> m)`
 
 常用 API
 

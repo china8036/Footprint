@@ -47,20 +47,20 @@ HashMap 特点：
   - `HashMap​(int initialCapacity, float loadFactor)`: Constructs an empty HashMap with the specified initial capacity and load factor.
   - `HashMap​(Map<? extends K,? extends V> m)`: Constructs a new HashMap with the same mappings as the specified Map.
 - 添加 Key-Value 元素
-	- `V put​(K key, V value)`: Associates the specified value with the specified key in this map.
-	- `V putIfAbsent​(K key, V value)`: If the specified key is not already associated with a value (or is mapped to null) associates it with the given value and returns null, else returns the current value.
-	- `void	putAll​(Map<? extends K,? extends V> m)`: Copies all of the mappings from the specified map to this map.
+  - `V put​(K key, V value)`: Associates the specified value with the specified key in this map.
+  - `V putIfAbsent(K key, V value)`: If the specified key is not already associated with a value (or is mapped to null) associates it with the given value and returns null, else returns the current value.
+  - `void putAll(Map<? extends K,? extends V> m)`: Copies all of the mappings from the specified map to this map.
 - 删除 Key-Value 元素
-	- `V remove​(Object key)`: Removes the mapping for the specified key from this map if present.
-	- `boolean	remove​(Object key, Object value)`: Removes the entry for the specified key only if it is currently mapped to the specified value.
+  - `V remove(Object key)`: Removes the mapping for the specified key from this map if present.
+  - `boolean remove(Object key, Object value)`: Removes the entry for the specified key only if it is currently mapped to the specified value.
 - 根据 Key 获取 Key-Value 元素
-	- `V get​(Object key)`: Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
-	- `V getOrDefault​(Object key, V defaultValue)`: Returns the value to which the specified key is mapped, or defaultValue if this map contains no mapping for the key.
+  - `V get​(Object key)`: Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
+  - `V getOrDefault​(Object key, V defaultValue)`: Returns the value to which the specified key is mapped, or defaultValue if this map contains no mapping for the key.
 - 遍历集合
-	- `Set<K> keySet​()`: Returns a Set view of the keys contained in this map.
-	- `Collection<V> values​()`: Returns a Collection view of the values contained in this map.
-	- `Set<Map.Entry<K,V>> entrySet​()`: Returns a Set view of the mappings contained in this map.
-	- `void	forEach​(BiConsumer<? super K,? super V> action)`: Performs the given action for each entry in this map until all entries have been processed or the action throws an exception.
+  - `Set<K> keySet​()`: Returns a Set view of the keys contained in this map.
+  - `Collection<V> values​()`: Returns a Collection view of the values contained in this map.
+  - `Set<Map.Entry<K,V>> entrySet()`: Returns a Set view of the mappings contained in this map.
+  - `void forEach(BiConsumer<? super K,? super V> action)`: Performs the given action for each entry in this map until all entries have been processed or the action throws an exception.
 
 ## 3. 源码分析
 
@@ -78,9 +78,9 @@ HashMap 特点：
 
 - 定址方法（散列索引计算）的改进：用与运算替代模运算
 
-	要想查找表中元素的位置，需要先计算其散列码，然后与桶的总数取余，所得到的结果就是保存这个元素的桶的索引。例，某个对象散列码为 76268，且有 128 个桶，则对象应保存在第 108 号桶中（76268%128=108）。
+	要想查找表中元素的位置，需要先计算其散列码，然后与桶的总数取余，所得到的结果就是保存这个元素的桶的索引。例，某个对象散列码为 76268，且有 128 个桶，则对象应保存在第 108 号桶中（``76268 % 128=108`）。
 
-	而从 JDK8 开始，利用了哈希表桶的数量总为 2 的幂的特点，使用与运算代替了复杂的模运算（用 `hashcode & (table.length-1)` 替代 `hashcode % (table.length)`），大大提高了效率。
+	而**从 JDK8 开始，利用了哈希表桶的数量总为 2 的幂的特点，使用与运算代替了复杂的模运算（用 `hashcode & (table.length-1)` 替代 `hashcode % (table.length)`），大大提高了效率**。
 
 - 用 `if ((e.hash & oldCap) == 0)` 来判断扩容之后节点 e 处于低区还是高区。
 
@@ -120,7 +120,7 @@ k2：0000 0000， 0000 0000， 0000 0000， 0001 1111 = 31 = 15 + 16
 ```
 观察发现：
 
-如果扩容后新增的位是 0，那么 rehash 索引不变，否则才会改变，并且变为 `原来的索引 + 旧 hash 表的长度`，故我们只需看原 hash 表长新增的 bit 是 1 还是 0，如果是 0，索引不变，如果是 1，索引变成原索引 + 旧表长，根本不用像 JDK 7 那样 rehash，省去了重新计算 hash 值的时间。
+**如果扩容后新增的位是 0，那么 rehash 索引不变，否则才会改变，并且变为 `原来的索引 + 旧 hash 表的长度`，故我们只需看原 hash 表长新增的 bit 是 1 还是 0，如果是 0，索引不变，如果是 1，索引变成原索引 + 旧表长，根本不用像 JDK 7 那样 rehash，省去了重新计算 hash 值的时间**。
 
 而且新增的 bit 是 0 还是 1 可以认为是随机的，因此 resize 的过程，还能均匀的把之前的冲突节点分散。 
 
@@ -312,7 +312,7 @@ P.S. 为什么不直接使用 key 的 hashCode() 作为哈希计算结果，而�
 
 由于 hashCode() 是 int 类型，取值范围是 40 多亿，只要哈希函数映射的比较均匀松散，碰撞几率是很小的。但就算原本的 hashCode() 取得很好，每个 key 的 hashCode() 不同，但是由于 HashMap 的哈希桶的长度远比 hash 取值范围小，默认是 16，所以当对 hash 值以桶的长度取余，以找到存放该 key 的桶的下标时，由于取余是通过与操作完成的，会忽略 hash 值的高位。因此**只有 hashCode() 的低位参加运算，发生不同的 hash 值，但是得到的 index 相同的情况的几率（hash 碰撞碰撞率）会大大增加**。
 
-扰动函数就是为了解决 hash 碰撞的。它会综合 hash 值高位和低位的特征，并存放在低位，因此在与运算时，相当于高低位一起参与了运算，从而减少了 hash 碰撞的概率（在 JDK8 之前，扰动函数会扰动四次，JDK8 简化了这个操作，降低了混淆程度）。
+**扰动函数就是为了解决 hash 碰撞的。它会综合 hash 值高位和低位的特征，并存放在低位，因此在与运算时，相当于高低位一起参与了运算，从而减少了 hash 碰撞的概率（在 JDK8 之前，扰动函数会扰动四次，JDK8 简化了这个操作，降低了混淆程度）**。
 
 因此，HashMap 中 hash 值的计算过程不应只是直接使用 key 的 hashCode() 返回值，还会经过扰动函数的扰动，以使 hash 值分布更加均衡。
 
@@ -320,7 +320,7 @@ P.S. 为什么不直接使用 key 的 hashCode() 作为哈希计算结果，而�
 
 由于哈希桶的数据结构是数组，数组的大小必须在创建时分配完毕，所以自然会涉及到扩容的问题。
 
-当 HashMap 的容量达到 threshold 域值时，就会触发扩容操作 `final Node<K,V>[] resize()`。扩容前后，哈希桶的长度一定会是 2 的次方，从而在根据 key 的 hash 值寻找对应的哈希桶时，可以用位运算替代取余操作，更加高效。
+**当 HashMap 的容量达到 threshold 域值时，就会触发扩容操作 `final Node<K,V>[] resize()`。扩容前后，哈希桶的长度一定会是 2 的次方，从而在根据 key 的 hash 值寻找对应的哈希桶时，可以用位运算替代取余操作，更加高效**。
 
 扩容操作时，会 new 一个新的 Node 数组作为哈希桶，然后将原哈希表中的所有数据 (Node 节点) 移动到新的哈希桶中，相当于对原哈希表中所有的数据重新做了一个 put 操作。所以性能消耗很大，可想而知，在哈希表的容量越大时，性能消耗越明显。
 
@@ -730,7 +730,7 @@ HashMap 的线程不安全主要体现在 resize 时的死循环及使用迭代�
 
 [疫苗：JAVA HASHMAP 的死循环](https://coolshell.cn/articles/9606.html)
 
-当 HashMap 的 size 超过 Capacity*loadFactor 时，需要对 HashMap 进行扩容。具体方法是，创建一个新的，长度为原来 Capacity 两倍的数组，保证新的 Capacity 仍为 2 的 N 次方，从而保证上述寻址方式仍适用。同时需要通过如下 transfer 方法将原来的所有数据全部重新插入（rehash）到新的数组中。
+当 HashMap 的 size 超过 `Capacity*loadFactor` 时，需要对 HashMap 进行扩容。具体方法是，创建一个新的，长度为原来 Capacity 两倍的数组，保证新的 Capacity 仍为 2 的 N 次方，从而保证上述寻址方式仍适用。同时需要通过如下 transfer 方法将原来的所有数据全部重新插入（rehash）到新的数组中。
 ```java
 void transfer(Entry[] newTable, boolean rehash) {
   int newCapacity = newTable.length;

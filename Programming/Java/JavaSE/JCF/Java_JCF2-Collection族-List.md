@@ -176,99 +176,102 @@ ArrayList 是 List 接口的典型实现类，完全支持 List 接口的所有�
 
 - 构造器
 
-	ArrayList 由三种构造方式：
+  ArrayList 由三种构造方式：
 
-	- `ArrayList​()`：构造一个空的数组列表。
-		```java
-		ArrayList<Employee> staff = new ArrayList<>(); 
-		```
+  - `ArrayList​()`：构造一个空的数组列表。
+  	```java
+  	ArrayList<Employee> staff = new ArrayList<>(); 
+  	```
 
-	- `ArrayList​(int initialCapacity)`：构造一个具有初始容量的数组列表。
-		```java
-		ArrayList<Employee> staff = new ArrayList<>(100); 
-		```
-		NOTE：数组列表的容量与普通数组的大小是有区别的。
-		- 普通数组的大小，指的是数组初始化时已分配了 100 个元素的存储空间可供使用；
-		- 数组列表的容量，指的是该数组列表拥有保存 100 个元素的潜力（实际上还可以通过重新分配空间从而超过 100 个），但是在完成初始化时，数组列表根本不含有任何元素空间。
+  - `ArrayList​(int initialCapacity)`：构造一个具有初始容量的数组列表。
+  	```java
+  	ArrayList<Employee> staff = new ArrayList<>(100); 
+  	```
+  	NOTE：数组列表的容量与普通数组的大小是有区别的。
+  	- 普通数组的大小，指的是数组初始化时已分配了 100 个元素的存储空间可供使用；
+  	- 数组列表的容量，指的是该数组列表拥有保存 100 个元素的潜力（实际上还可以通过重新分配空间从而超过 100 个），但是在完成初始化时，数组列表根本不含有任何元素空间。
 
-	- `ArrayList​(Collection<? extends E> c)`：以集合元素作为初始值构造一个数组列表。
+  - `ArrayList​(Collection<? extends E> c)`：以集合元素作为初始值构造一个数组列表。
 
-	NOTE: 
-	- **尖括号内不可使用基本数据类型**。
-	- 一维 ArrayList 的初始化方法：
-		- （常规方式）使用 add 方法
-			```java
-			ArrayList<T> obj = new ArrayList<>();
-			obj.add("o1");
-			obj.add("o2");
-			// ...
-			```
-		- 使用 `Arrays.asList`
-			```java
-			ArrayList<T> obj = new ArrayList<>(Arrays.asList(Object o1, Object o2, Object o3, ....));
-			```
-		- 使用 `Collections.ncopies`
-			```java
-			ArrayList<T> obj = new ArrayList<>(Collections.nCopies(count, element)); // 把 element 复制 count 次填入 ArrayList 中
-			```
-		- 使用匿名内部类
-			```java
-			ArrayList<T> obj = new ArrayList<>() {{
-					add(Object o1);
-					add(Object o2);
-					// ...
-			}};
-			```
-	- 多维 ArrayList 的初始化方法：
-		```java
-		List<List<Integer>> list = new ArrayList<List<Integer>>();
-		for (int i = 0; i < 3; i++)
-			list.add((List<Integer>)Arrays.asList(arr[i]));
-		```
-	- ArrayList 数组的初始化方法：
-		```java
-		ArrayList<Integer> [] g = (ArrayList<Integer>[]) new ArrayList[n];
-		for (int i = 0; i < n; i ++)
-			g[i] = new ArrayList<>();
-		```
+  NOTE: 
+  - **尖括号内不可使用基本数据类型**。
+  - 一维 ArrayList 的初始化方法：
+    - （常规方式）使用 add 方法
+    	```java
+    	ArrayList<T> obj = new ArrayList<>();
+    	obj.add("o1");
+    	obj.add("o2");
+    	// ...
+    	```
+    - 使用 `Arrays.asList`
+      ```java
+      ArrayList<T> obj = new ArrayList<>(Arrays.asList(Object o1, Object o2, Object o3, ....));
+      // 或者
+      Integer [] arr = new Integer[10];
+      List<Integer> list = new ArrayList<>(Arrays.asList(arr));
+      ```
+    - 使用 `Collections.ncopies`
+    	```java
+    	ArrayList<T> obj = new ArrayList<>(Collections.nCopies(count, element)); // 把 element 复制 count 次填入 ArrayList 中
+    	```
+    - 使用匿名内部类
+    	```java
+    	ArrayList<T> obj = new ArrayList<>() {{
+    			add(Object o1);
+    			add(Object o2);
+    			// ...
+    	}};
+    	```
+  - 多维 ArrayList 的初始化方法：
+  	```java
+  	List<List<Integer>> list = new ArrayList<List<Integer>>();
+  	for (int i = 0; i < 3; i++)
+  		list.add((List<Integer>)Arrays.asList(arr[i]));
+  	```
+  - ArrayList 数组的初始化方法：
+  	```java
+  	ArrayList<Integer> [] g = (ArrayList<Integer>[]) new ArrayList[n];
+  	for (int i = 0; i < n; i ++)
+  		g[i] = new ArrayList<>();
+  	```
 
 - 添加 & 删除元素
 
-	- `void add​(E element)`：可为数组列表创建一块新的存储空间并添加元素。若调用 add 时内部数组已满，数组列表将自动创建一个更大的数组，并将所有的对象从较小的数组中拷贝到一个较大的数组中。
+  - `void add​(E element)`：可为数组列表创建一块新的存储空间并添加元素。若调用 add 时内部数组已满，数组列表将自动创建一个更大的数组，并将所有的对象从较小的数组中拷贝到一个较大的数组中。
 
-	- `void add​(int index, E element)`：在数组指定位置插入元素。为插入该元素，位于 index 之后的所有元素都要向后移动一个位置，若插入的元素导致数组列表大小超过了容量，数组列表会被重新分配存储空间，在原来基础上增大一半。
+  - `void add​(int index, E element)`：在数组指定位置插入元素。为插入该元素，位于 index 之后的所有元素都要向后移动一个位置，若插入的元素导致数组列表大小超过了容量，数组列表会被重新分配存储空间，在原来基础上增大一半。
 
-	- `E remove​(int index)`：删除数组列表中指定位置的元素。位于 index 之后的元素都向前移动一个位置，并且数组大小减一。
+  - `E remove​(int index)`：删除数组列表中指定位置的元素。位于 index 之后的元素都向前移动一个位置，并且数组大小减一。
 
-	- `boolean remove​(Object o)`：删除数组列表中值为 o 的元素。
+  - `boolean remove(Object o)`：删除数组列表中值为 o 的元素。
 
-	NOTE：
+  NOTE：
 
-	**对数组进行插入或删除元素的操作效率都比较低**。对小型数组而言，这部分效率的损失还不必担心；但对于大型数组，频繁的在数组的中间位置插入、删除元素，将耗费大量时间成本在元素的移动上，事实上这种情况下应该使用链表作为数据结构存储。
+  **对数组进行插入或删除元素的操作效率都比较低**。对小型数组而言，这部分效率的损失还不必担心；但对于大型数组，频繁的在数组的中间位置插入、删除元素，将耗费大量时间成本在元素的移动上，事实上这种情况下应该使用链表作为数据结构存储。
 
 - 访问元素
 
-	数组列表的自动扩展容量带来了便利，但也增加了访问元素时语法的复杂性。因为 ArrayList 不是 Java 程序设计语言的一部分，只是由其他人编写并包含在标准库中的实用工具类，而 **Java 中不支持重载运算符的特性，因此在 ArrayList 中访问元素无法使用普通数组的 `[]` 格式，而需要使用 get 和 set 方法进行访问**。
+  数组列表的自动扩展容量带来了便利，但也增加了访问元素时语法的复杂性。因为 ArrayList 不是 Java 程序设计语言的一部分，只是由其他人编写并包含在标准库中的实用工具类，而 **Java 中不支持重载运算符的特性，因此在 ArrayList 中访问元素无法使用普通数组的 `[]` 格式，而需要使用 get 和 set 方法进行访问**。
 
-	- `E get​(int index)`：获取数组列表指定位置的元素。
+  - `E get(int index)`：获取数组列表指定位置的元素。
 
-	- `E set​(int index, E element)`: 设置数组列表指定位置的元素的值。该方法不会创建新的存储空间，因此不可用于添加新元素。
+  - `E set​(int index, E element)`: 设置数组列表指定位置的元素的值。该方法不会创建新的存储空间，因此不可用于添加新元素。
 
 - 转换为数组
 
-	`Object[]	toArray​()`：使用该方法将数组列表中的数组元素拷贝到一个数组中。
+  `Object[] toArray()`：使用该方法将数组列表中的数组元素拷贝到一个数组中。
 
 - 容量控制
 
-	- `int size​()`：返回数组列表的元素个数。
+  - `int size()`：返回数组列表的元素个数。
 
-	- `void	ensureCapacity​(int minCapacity)`：将 ArrayList 集合的 Object[] 数组长度增加大于或等于 minCapacity 的值。
+  - `void ensureCapacity(int minCapacity)`：将 ArrayList 集合的 Object[] 数组长度增加大于或等于 minCapacity 的值。
 
-		若能够知道数组可能存储的元素数量，可在填充数组之前调用该方法。该方法会分配一个包含 minCapacity 个对象的内部数组，再调用 minCapacity 次 add() 方法，而不用重新分配空间。
+     若能够知道数组可能存储的元素数量，可在填充数组之前调用该方法。该方法会分配一个包含 minCapacity 个对象的内部数组，再调用 minCapacity 次 add() 方法，而不用重新分配空间。
 
-	- `void trimToSize​()`：调整 ArrayList 集合的 Object[] 数组长度为当前元素的个数，通过该方法可减少 ArrayList 集合对象占用的存储空间。
+  - `void trimToSize()`：调整 ArrayList 集合的 Object[] 数组长度为当前元素的个数，通过该方法可减少 ArrayList 集合对象占用的存储空间。
 
-		当确认数组列表的大小将不再发生变化，可以调用该方法，将存储区域的大小调整为当前元素数量所需要的存储空间数目，多余的空间由垃圾回收器回收。一旦调用该方法整理数组列表的大小后，添加新元素就需要耗费时间再次移动存储块，因此应该在确认不会再添加任何元素时，才调用该方法。
+    当确认数组列表的大小将不再发生变化，可以调用该方法，将存储区域的大小调整为当前元素数量所需要的存储空间数目，多余的空间由垃圾回收器回收。一旦调用该方法整理数组列表的大小后，添加新元素就需要耗费时间再次移动存储块，因此应该在确认不会再添加任何元素时，才调用该方法。
 
 ### 2.3. 源码分析
 
@@ -812,7 +815,7 @@ public abstract ListIterator<E> listIterator(int index);
 
 - 访问元素
 
-	LinkedList 提供了一个用于访问元素的 `get​(int index)` 方法，但该方法的实现效率很低。
+	LinkedList 提供了一个用于访问元素的 `get(int index)` 方法，但该方法的实现效率很低。
 
 	**虽然 get 方法做了优化（索引大于 size/2 时，从链表尾部开始搜索元素），但是，若要访问第 n 个元素，就需要从链表头部开始，越过 n-1 个元素，没有任何捷径可走，且 LinkedList 对象访问元素时不做任何缓存位置信息的操作**。因此，若必须需要使用该方法访问元素，应考虑是否更换所用的数据结构。
 

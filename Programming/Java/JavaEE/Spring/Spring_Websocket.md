@@ -1,27 +1,27 @@
-- [Spring websocket 实现](#spring-websocket-%E5%AE%9E%E7%8E%B0)
-  - [1. 介绍](#1-%E4%BB%8B%E7%BB%8D)
-  - [2. 三个部分](#2-%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86)
-    - [2.1. 处理器](#21-%E5%A4%84%E7%90%86%E5%99%A8)
-    - [2.2. 拦截器](#22-%E6%8B%A6%E6%88%AA%E5%99%A8)
-    - [2.3. 配置](#23-%E9%85%8D%E7%BD%AE)
-  - [3. 重要类](#3-%E9%87%8D%E8%A6%81%E7%B1%BB)
+- [Spring websocket 实现](#spring-websocket-实现)
+  - [1. 介绍](#1-介绍)
+  - [2. 三个部分](#2-三个部分)
+    - [2.1. 处理器](#21-处理器)
+    - [2.2. 拦截器](#22-拦截器)
+    - [2.3. 配置](#23-配置)
+  - [3. 重要类](#3-重要类)
     - [3.1. WebSocketSession](#31-websocketsession)
     - [3.2. WebSocketMessage](#32-websocketmessage)
-  - [4. origins 配置](#4-origins-%E9%85%8D%E7%BD%AE)
+  - [4. origins 配置](#4-origins-配置)
   - [5. SockJS](#5-sockjs)
-    - [5.1. 服务端中开启 SockJS](#51-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%AD%E5%BC%80%E5%90%AF-sockjs)
-    - [5.2. 客户端使用 sockJS](#52-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8-sockjs)
+    - [5.1. 服务端中开启 SockJS](#51-服务端中开启-sockjs)
+    - [5.2. 客户端使用 sockJS](#52-客户端使用-sockjs)
   - [6. Stomp](#6-stomp)
-    - [6.1. 介绍](#61-%E4%BB%8B%E7%BB%8D)
-    - [6.2. STOMP 帧](#62-stomp-%E5%B8%A7)
-    - [6.3. 客户端 API](#63-%E5%AE%A2%E6%88%B7%E7%AB%AF-api)
-  - [7. 实例：Spring MVC + websocket](#7-%E5%AE%9E%E4%BE%8B%EF%BC%9Aspring-mvc-websocket)
-  - [8. 实例：SpringBoot + websocket + STOMP + SockJS](#8-%E5%AE%9E%E4%BE%8B%EF%BC%9Aspringboot-websocket-stomp-sockjs)
-    - [8.1. 服务器端](#81-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF)
-    - [8.2. 客户端](#82-%E5%AE%A2%E6%88%B7%E7%AB%AF)
-    - [8.3. 广播消息推送](#83-%E5%B9%BF%E6%92%AD%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81)
-    - [8.4. 一对一消息推送的几种方法（即服务器收到客户端消息后仅回复给该客户端而非广播）](#84-%E4%B8%80%E5%AF%B9%E4%B8%80%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%88%E5%8D%B3%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%94%B6%E5%88%B0%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B6%88%E6%81%AF%E5%90%8E%E4%BB%85%E5%9B%9E%E5%A4%8D%E7%BB%99%E8%AF%A5%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%80%8C%E9%9D%9E%E5%B9%BF%E6%92%AD%EF%BC%89)
-    - [8.5. 异常信息推送](#85-%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF%E6%8E%A8%E9%80%81)
+    - [6.1. 介绍](#61-介绍)
+    - [6.2. STOMP 帧](#62-stomp-帧)
+    - [6.3. 客户端 API](#63-客户端-api)
+  - [7. 实例：Spring MVC + websocket](#7-实例spring-mvc--websocket)
+  - [8. 实例：SpringBoot + websocket + STOMP + SockJS](#8-实例springboot--websocket--stomp--sockjs)
+    - [8.1. 服务器端](#81-服务器端)
+    - [8.2. 客户端](#82-客户端)
+    - [8.3. 广播消息推送](#83-广播消息推送)
+    - [8.4. 一对一消息推送的几种方法（即服务器收到客户端消息后仅回复给该客户端而非广播）](#84-一对一消息推送的几种方法即服务器收到客户端消息后仅回复给该客户端而非广播)
+    - [8.5. 异常信息推送](#85-异常信息推送)
   - [9. Refer Links](#9-refer-links)
 
 # Spring websocket 实现
@@ -388,12 +388,11 @@ http://blog.csdn.net/zsomsom/article/details/27076249?utm_source=tuicool
 
 STOMP(Simple Text-Orientated Messaging Protocol) 面向消息的简单文本协议。
 
-WebSocket 是一个消息架构，不强制使用任何特定的消息协议，它依赖于应用层解释消息的含义；
-与处在应用层的 HTTP 不同，WebSocket 处在 TCP 上非常薄的一层，会将字节流转换为文本 / 二进制消息，因此，对于实际应用来说，WebSocket 的通信形式层级过低，因此，可以在 WebSocket 之上使用 STOMP 协议，来为浏览器 和 server 间的 通信增加适当的消息语义。
+WebSocket 是一个消息架构，不强制使用任何特定的消息协议，它依赖于应用层解释消息的含义；与处在应用层的 HTTP 不同，WebSocket 处在 TCP 上非常薄的一层，会将字节流转换为文本 / 二进制消息，**对于实际应用来说，WebSocket 的通信形式层级过低，因此，可以在 WebSocket 之上使用 STOMP 协议，来为浏览器 和 server 间的通信增加适当的消息语义**。
 
 如何理解 STOMP 与 WebSocket 的关系：
 1)	HTTP 协议解决了 web 浏览器发起请求以及 web 服务器响应请求的细节，假设 HTTP 协议 并不存在，只能使用 TCP 套接字来 编写 web 应用，你可能认为这是一件疯狂的事情；
-2)	直接使用 WebSocket（SockJS） 就很类似于 使用 TCP 套接字来编写 web 应用，因为没有高层协议，就需要我们定义应用间所发送消息的语义，还需要确保连接的两端都能遵循这些语义；
+2)	直接使用 WebSocket（SockJS） 就很类似于使用 TCP 套接字来编写 web 应用，因为没有高层协议，就需要我们定义应用间所发送消息的语义，还需要确保连接的两端都能遵循这些语义；
 3)	同 HTTP 在 TCP 套接字上添加请求 - 响应模型层一样，STOMP 在 WebSocket 之上提供了一个基于帧的线路格式层，用来定义消息语义；
 
 ### 6.2. STOMP 帧

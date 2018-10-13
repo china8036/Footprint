@@ -1,30 +1,30 @@
 - [POSIX Thread](#posix-thread)
-	- [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-	- [2. 两大保证](#2-%E4%B8%A4%E5%A4%A7%E4%BF%9D%E8%AF%81)
-	- [3. 创建线程](#3-%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B)
-	- [4. 线程同步](#4-%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5)
-		- [4.1. 互斥锁 Mutex Lock](#41-%E4%BA%92%E6%96%A5%E9%94%81-mutex-lock)
-		- [4.2. 自旋锁 Spin Lock](#42-%E8%87%AA%E6%97%8B%E9%94%81-spin-lock)
-		- [4.3. 读写锁 Reader-Writter Lock](#43-%E8%AF%BB%E5%86%99%E9%94%81-reader-writter-lock)
-		- [4.4. 条件变量 Condition Variable](#44-%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F-condition-variable)
-		- [4.5. 信号量 Semaphore](#45-%E4%BF%A1%E5%8F%B7%E9%87%8F-semaphore)
+	- [1. 基本概念](#1-基本概念)
+	- [2. 两大保证](#2-两大保证)
+	- [3. 创建线程](#3-创建线程)
+	- [4. 线程同步](#4-线程同步)
+		- [4.1. 互斥锁 Mutex Lock](#41-互斥锁-mutex-lock)
+		- [4.2. 自旋锁 Spin Lock](#42-自旋锁-spin-lock)
+		- [4.3. 读写锁 Reader-Writter Lock](#43-读写锁-reader-writter-lock)
+		- [4.4. 条件变量 Condition Variable](#44-条件变量-condition-variable)
+		- [4.5. 信号量 Semaphore](#45-信号量-semaphore)
 		- [4.6. Barriers](#46-barriers)
-	- [5. 退出线程](#5-%E9%80%80%E5%87%BA%E7%BA%BF%E7%A8%8B)
-	- [6. 线程回调](#6-%E7%BA%BF%E7%A8%8B%E5%9B%9E%E8%B0%83)
-	- [7. 其它 API](#7-%E5%85%B6%E5%AE%83-api)
+	- [5. 退出线程](#5-退出线程)
+	- [6. 线程回调](#6-线程回调)
+	- [7. 其它 API](#7-其它-api)
 	- [9. Refer Links](#9-refer-links)
 
 # POSIX Thread
 
 ## 1. 基本概念
 
-**POSIX 线程**（英语：POSIX Threads，常被缩写为 Pthreads）是 [POSIX](https://zh.wikipedia.org/wiki/POSIX) 的[线程](https://zh.wikipedia.org/wiki/%E7%BA%BF%E7%A8%8B) 标准，定义了创建和操纵线程的一套 [API](https://zh.wikipedia.org/wiki/Application_programming_interface)。 实现 POSIX 线程标准的库常被称作**Pthreads**，一般用于 [Unix-like](https://zh.wikipedia.org/wiki/Unix-like) POSIX 系统，如 [Linux](https://zh.wikipedia.org/wiki/Linux)、 [Solaris](https://zh.wikipedia.org/wiki/Solaris)。但是 [Microsoft Windows](https://zh.wikipedia.org/wiki/Microsoft_Windows) 上的实现也存在，例如直接使用 Windows API 实现的第三方库 pthreads-w32；而利用 Windows 的 SFU/SUA 子系统，则可以使用微软提供的一部分原生 POSIX API。 
+**POSIX 线程**（POSIX Threads，常被缩写为 Pthreads）是 [POSIX](https://zh.wikipedia.org/wiki/POSIX) 的[线程](https://zh.wikipedia.org/wiki/%E7%BA%BF%E7%A8%8B) 标准，定义了创建和操纵线程的一套 [API](https://zh.wikipedia.org/wiki/Application_programming_interface)。 实现 POSIX 线程标准的库常被称作**Pthreads**，一般用于 [Unix-like](https://zh.wikipedia.org/wiki/Unix-like) POSIX 系统，如 [Linux](https://zh.wikipedia.org/wiki/Linux)、 [Solaris](https://zh.wikipedia.org/wiki/Solaris)。但是 [Microsoft Windows](https://zh.wikipedia.org/wiki/Microsoft_Windows) 上的实现也存在，例如直接使用 Windows API 实现的第三方库 pthreads-w32；而利用 Windows 的 SFU/SUA 子系统，则可以使用微软提供的一部分原生 POSIX API。 
 
 Pthreads 是 IEEE（电子和电气工程师协会）委员会开发的一组线程接口，负责指定便携式操作系统接口（POSIX）. Pthreads 中的 P 表示 POSIX，实际上，Pthreads 有时候也代表 POSIX 线程。
 
 POSIX 委员会定义了一系列基本功能和数据结构，希望能够被大量厂商采用，以便线程代码能够轻松地在各种操作系统上移植。委员会的梦想由 UNIX 厂商实现了，他们都广泛 Pthreads . 最著名的例外就是 Sun，它继续采用 Solaris 线程作为其主要线程 API。
 
-在 Linux 环境下，可以在 Shell 中通过 man 查询到 Pthreads 的部分函数命令，如： man pthread_create。编写 Linux 下的多线程程序，需要使用头文件 pthread.h，连接时需要使用库 libpthread.a。
+在 Linux 环境下，可以在 Shell 中通过 man 查询到 Pthreads 的部分函数命令，如：`man pthread_create`。编写 Linux 下的多线程程序，需要使用头文件 `pthread.h`，连接时需要使用库 `libpthread.a`。
 
 **Linux 下 pthread 的实现是通过系统调用 clone() 来实现的**。clone() 是 Linux 所特有的系统调用，它的使用方式类似 fork。
 
@@ -34,7 +34,7 @@ POSIX 的 [Semaphore](https://zh.wikipedia.org/wiki/%E4%BF%A1%E8%99%9F%E6%A8%99)
 
 ## 2. 两大保证
 
-为了解决各线程同时访问一段内存，**pthread 库提供了原子访问和内存可见性两大保证**，这里举一个可见性原则：当线程 A 修改变量后调用 pthread_unlock mutex，且线程 B 成功 pthread_lock mutex 后，对线程 A 之前的变量修改是立即可见的。
+为了解决各线程同时访问一段内存，**pthread 库提供了原子访问和内存可见性两大保证**，这里举一个可见性原则：当线程 A 修改变量后调用 pthread_unlock_mutex，且线程 B 成功 pthread_lock_mutex 后，对线程 A 之前的变量修改是立即可见的。
 
 但 mutex 往往也会造成性能过低，当临界区过大会限制线程的并发，而临界区过小会造成上下文的频繁切换（此时应考虑 adaptive mutex)。而随着硬件的发展，并行编程变得越来越重要。
 
@@ -277,7 +277,7 @@ sem 为指向信号量结构的一个指针；pshared 不为 0 时此信号量�
 
 - `int sem_wait(sem_t *sem);`: 如果 sempahore 的数值还够，那就 semaphore 数值减 1，然后进入临界区，也就是 P 操作。
 - `int sem_post(sem_t *sem);`: 该函数会给 semphore 的值加 1，也就是 V 操作。
-- `sem_trywait ( sem_t *sem )`: 该函数是 sem_wait（）的非阻塞版本，它直接将信号量 sem 的值减一。
+- `int sem_trywait(sem_t *sem )`: 该函数是 sem_wait() 的非阻塞版本，它直接将信号量 sem 的值减一。
 
 - `int sem_getvalue(sem_t *sem, int *valp);`: 该函数把 semaphore 的值通过你传进去的指针告诉你，而不是用这个函数的返回值告诉你。
 
@@ -370,6 +370,7 @@ callback 只有在以下情况下才会被调用：
 [多线程编程指南  > 第 4 章 用同步对象编程  > 使用条件变量](https://docs.oracle.com/cd/E19253-01/819-7051/sync-41991/index.html)
 
 TODO:
+
 http://blog.csdn.net/modiziri/article/details/41960179
 
 https://hanbingyan.github.io/2016/03/07/pthread_on_linux/#section-3

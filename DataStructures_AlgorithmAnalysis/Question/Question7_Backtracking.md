@@ -217,57 +217,7 @@ public class Main {
 典型的组合问题：在一个给定的长度为 N 的序列中选取 M 个元素形成一个组合，求所有组合的方案。
 
 ```java
-/**
- * input case: 
- * 1
- * 5 2
- * 1 2 3 4 5
- */
-public class Main {
-	private static ArrayList<Integer> nums;
-
-	public static void main(String[] args) {
-		/* get input */
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt();
-		int M = sc.nextInt();
-		nums = new ArrayList<>(N);
-		for (int j = 0; j < N; j++) {
-			nums.add(sc.nextInt());
-		}
-
-		/* backtrack solution */
-		List<List<Integer>> res = combination(nums, M);
-
-		/* print result */
-		for (List<Integer> l : res) {
-			l.forEach(ele -> System.out.print(ele + " "));
-			System.out.println(" ");
-		}
-	}
-
-	public static List<List<Integer>> combination(int[] nums, int M) {
-		List<List<Integer>> res = new ArrayList<>();
-		// Arrays.sort(nums); // not necessary
-		__combination(res, new ArrayList<>(), nums, M);
-		return res;
-	}
-
-	private static void __combination(List<List<Integer>> res,
-									  List<Integer> tmpList, int[] nums,
-									  int M) {
-		if (tmpList.size() == M) {
-			res.add(new ArrayList<>(tmpList));
-		} else {
-			for (int i = 0; i < nums.length; i++) {
-				tmpList.add(nums[i]);
-				__combination(res, tmpList, nums, M);
-				tmpList.remove(tmpList.size() - 1);
-			}
-		}
-
-	}
-}
+TODO:
 ```
 
 ### 2.1. Combinations

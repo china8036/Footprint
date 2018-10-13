@@ -150,3 +150,9 @@
 ## 4. Refer Links
 
 http://c.biancheng.net/cpp/u/shuju8/  
+
+TODO:
+
+[拓扑排序在工程实践中有什么具体的应用？](https://www.zhihu.com/question/39748146)
+
+[拓扑排序的应用（hdu1285、hdu3342、hdu2647）](https://www.jianshu.com/p/1cda977685b6)

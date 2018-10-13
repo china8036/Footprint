@@ -276,3 +276,7 @@ TCP 的连接的终止过程总共需要发送四个包，因此称为四次挥�
 [大量 TIME_WAIT 解决办法](http://coolnull.com/3605.html)
 
 [再叙 TIME_WAIT](https://huoding.com/2013/12/31/316)
+
+TODO:
+
+[Linux 4.4 之后 TCP 三路握手的新流程](https://zhuanlan.zhihu.com/p/25313903)

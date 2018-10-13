@@ -92,6 +92,8 @@
   
   TCP Segement 的理论上限为 65515 字节（65535-20）。
 
+  UDP 报文长度一般限制为 512 字节（540-20-8）。
+
 ### 1.4. Address Length
 
 - IPv4 Address: 32 bits / 4 bytes

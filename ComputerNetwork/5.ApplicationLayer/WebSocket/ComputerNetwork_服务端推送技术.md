@@ -229,7 +229,7 @@ Application data y bytes  程序数据
   - Origin 字段是可选的，通常用来表示在浏览器中发起此 Websocket 连接所在的页面，类似于 Referer。但是，于 Referer 不同的是，Origin 只包含了协议和主机名称。
   - 其他一些定义在 HTTP 协议中的字段，如 Cookie 等，也可以在 Websocket 中使用。
 
-  **一旦连接被创建，客户端和服务端可以互相以全双工的方式发送 WebSocket 数据或者文本帧**。WebSocket 传输也称为消息，**一个单独的消息可以被任意分成多个数据帧**。
+- **一旦连接被创建，客户端和服务端可以互相以全双工的方式发送 WebSocket 数据或者文本帧**。WebSocket 传输也称为消息，**一个单独的消息可以被任意分成多个数据帧**。
 
 ### 4.4. 浏览器支持
 
@@ -823,7 +823,7 @@ Java EE 对 websocket 的实现主要封装在 JEE JSR356 标准规范 API 中�
               person.setName("Mr. John");
           }
           try {
-        // 直接发送 POJO 对象，Encoder 会自动在发送前将 POJO 转换为 string
+              // 直接发送 POJO 对象，Encoder 会自动在发送前将 POJO 转换为 string
               session.getBasicRemote().sendObject(person);
               System.out.println("sent ");
           } catch (Exception ex) {

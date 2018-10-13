@@ -51,7 +51,7 @@ Arrays.asList() 方法通过拷贝的方式，返回一个固定长度的内部�
 
 方法接口：
 
-`static <T> List<T>	asList​(T... a)`: Returns a fixed-size list backed by the specified array.
+`static <T> List<T> asList(T... a)`: Returns a fixed-size list backed by the specified array.
 
 使用示例：
 ```java
@@ -376,12 +376,12 @@ Arrays.sort() 主要使用了 2 种排序方法：快速排序、优化的归并
 
 Arrays 工具类对查找的实现，主要支持二分查找 binarySearch()，其方法 API 与排序类似，分为基本数据类型数组的查找和对象数据类型的查找。
 
-- `static int	binarySearch​(xxx[] a, xxx key)`: Searches the specified array of bytes for the specified value using the binary search algorithm.
-- `static int	binarySearch​(xxx[] a, int fromIndex, int toIndex, xxx key)`: Searches a range of the specified array of bytes for the specified value using the binary search algorithm.
-- `static int	binarySearch​(Object[] a, int fromIndex, int toIndex, Object key)`: Searches a range of the specified array for the specified object using the binary search algorithm.
-- `static int	binarySearch​(Object[] a, Object key)`: Searches the specified array for the specified object using the binary search algorithm.
-- `static <T> int	binarySearch​(T[] a, int fromIndex, int toIndex, T key, Comparator<? super - T> c)`: Searches a range of the specified array for the specified object using the binary search algorithm.
-- `static <T> int	binarySearch​(T[] a, T key, Comparator<? super T> c)`: Searches the specified array for the specified object using the binary search algorithm.
+- `static int binarySearch(xxx[] a, xxx key)`: Searches the specified array of bytes for the specified value using the binary search algorithm.
+- `static int binarySearch(xxx[] a, int fromIndex, int toIndex, xxx key)`: Searches a range of the specified array of bytes for the specified value using the binary search algorithm.
+- `static int binarySearch(Object[] a, int fromIndex, int toIndex, Object key)`: Searches a range of the specified array for the specified object using the binary search algorithm.
+- `static int binarySearch(Object[] a, Object key)`: Searches the specified array for the specified object using the binary search algorithm.
+- `static <T> int	binarySearch(T[] a, int fromIndex, int toIndex, T key, Comparator<? super - T> c)`: Searches a range of the specified array for the specified object using the binary search algorithm.
+- `static <T> int binarySearch(T[] a, T key, Comparator<? super T> c)`: Searches the specified array for the specified object using the binary search algorithm.
 
 ### 5.2. 源码分析
 
@@ -417,7 +417,7 @@ public static <T> int binarySearch(T[] a, T key, Comparator<? super T> c) {
 
 ### 7.1. 基本概念
 
-`static boolean[]	copyOf​(xxx[] original, int newLength)`: 将原数组拷贝到一个长度为 newLength 的新数组中，然后返回该数组。该方法适用于数组的扩容或缩容，在 java.util.ArrayList 类的扩容机制中被广泛使用。
+`static boolean[] copyOf​(xxx[] original, int newLength)`: 将原数组拷贝到一个长度为 newLength 的新数组中，然后返回该数组。该方法适用于数组的扩容或缩容，在 java.util.ArrayList 类的扩容机制中被广泛使用。
 
 参数说明：
 - original - 要复制的数组

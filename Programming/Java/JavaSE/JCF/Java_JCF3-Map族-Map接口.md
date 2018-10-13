@@ -37,14 +37,14 @@ public interface Map<K,V> {/* ... */}
 
   通过 key 从 Map 获取键值。若在映射中未找到这个键，则返回 defaultValue。
 
-- `default void	forEach​(BiConsumer<? super K,? super V> action)`
+- `default void forEach(BiConsumer<? super K,? super V> action)`
 
   该方法从 Java SE 8 开始加入，可通过为该方法提供一个 lambda 表达式，对迭代器的每一个元素调用该 lambda 表达式进行处理。
   ```java
   maps.forEach((k, v) -> System,out,println(k, v));
   ```
 
-- `boolean containsKey​(Object key`
+- `boolean containsKey(Object key)`
 
   若映射中已存在该键，返回 true。
 
@@ -56,7 +56,7 @@ public interface Map<K,V> {/* ... */}
 
 - HashMap
   
-  HashMap 有相对最好的时间效率，但不保证有序（[当 Key 为 Integer 且在 0~2^32-1 范围内时是按 Key 值有序的](https://www.zhihu.com/question/28414001)）。
+  **HashMap 有相对最好的时间效率，但不保证有序（[当 Key 为 Integer 且在 0~2^32-1 范围内时是按 Key 值有序的](https://www.zhihu.com/question/28414001)）**。
 
   相对于 HashMap 和 LinkedHashMap 这些 hash 表的时间复杂度 O(1)（不考虑冲突情况），TreeMap 的增删改查的时间复杂度为 O(logn) 就显得效率较低。而由于 LinkedHashMap 需要维护元素的插入顺序，因此性能略低于 HashMap。
 
@@ -64,7 +64,7 @@ public interface Map<K,V> {/* ... */}
 
 - LinkedHashMap 
 
-  LinkedHashMap 具有排序功能，且是根据元素的插入顺序进行排序的。
+  **LinkedHashMap 具有排序功能，且是根据元素的插入顺序进行排序的**。
   
   HashMap 并不保证任何顺序性，而 LinkedHashMap 额外保证了 Map 的遍历顺序与 put 顺序一致的有序性。LinkedHashMap 可以避免对 HashMap/HashTable 中 Key-Value 进行排序，只要在插入时按顺序插入即可，同时又避免使用 TreeMap 所增加的成本。
 
@@ -72,7 +72,7 @@ public interface Map<K,V> {/* ... */}
 
 - TreeMap 
 
-  TreeMap 具有排序功能，且是根据元素的 Key 值的大小进行排序的。
+  **TreeMap 具有排序功能，且是根据元素的 Key 值的大小进行排序的**。
 
   由于 TreeMap 是基于红黑树的实现的排序 Map，对于增删改查以及统计的时间复杂度都控制在 O(logn) 的级别上，相对于 HashMap 和 LinkedHashMap 的统计操作的（最大的 key，最小的 key，大于某一个 key 的所有 Entry 等等) 时间复杂度 O(n) 具有更高的时间效率 O(logn)。
 

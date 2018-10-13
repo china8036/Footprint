@@ -87,7 +87,7 @@ Java 集合框架中有两个基本接口：Collection 和 Map。
   - 优先队列结构
     - 基于最小堆实现：PriorityQueue
       - `boolean add(E e)`/`boolean offer(E e)`: 将指定元素加入队列。
-      - `E poll​()`: **返回队列头部元素，并将队列头部元素移除**。队列为空时返回 null。
+      - `E poll()`: **返回队列头部元素，并将队列头部元素移除**。队列为空时返回 null。
       - `E peek()`: 返回队列头部元素但不移除。队列为空时返回 null。
     
   - map 结构
@@ -134,7 +134,7 @@ P.S. [为什么线程不安全的 HashMap 允许 K/V 为 null 而线程安全的
 
 #### 3.5.1. 遍历 Collection
 
-Collection 集合元素被访问的顺序取决于集合类型。
+Collection 集合元素被访问的顺序取决于集合类型：
 
 - 若对 List 进行迭代，则迭代器将从索引 0 处开始，每迭代一次索引值加 1。
 - 若对 Set 进行迭代，虽能确定最终结果能遍历所有元素，但无法预知元素被访问的顺序。
@@ -196,7 +196,7 @@ Collection 集合的遍历主要有以下方法：
       }
     }
     ```
-    foreach循环编译后实际上也是基于Iterator 迭代器遍历集合。
+    **foreach 循环编译后实际上也是基于Iterator 迭代器遍历集合**。
 
   - 通过 Iterator 接口的 forEachRemaining​() 方法使用 Lambda 表达式遍历集合
     ```java
@@ -261,9 +261,9 @@ Map 集合的遍历主要有以下方法：
       entry.getValue();
     }
     ```
-    foreach循环编译后实际上也是基于Iterator 迭代器遍历集合。
+    foreach 循环编译后实际上也是基于Iterator 迭代器遍历集合。
 
-  - 通过 Iterator 接口的 forEachRemaining​() 方法使用 Lambda 表达式遍历集合
+  - 通过 Iterator 接口的 forEachRemaining() 方法使用 Lambda 表达式遍历集合
     ```java
     Map<String, String> map = new HashMap<String, String>();
     // ...
@@ -291,7 +291,7 @@ Map 集合的遍历主要有以下方法：
       map.get(key);
     }
     ```
-    foreach循环编译后实际上也是基于Iterator 迭代器遍历集合。
+    foreach 循环编译后实际上也是基于Iterator 迭代器遍历集合。
 
   - forEachRemaining
     ```java

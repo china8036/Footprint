@@ -74,13 +74,13 @@ t.start();// 启动线程
 
 直接继承 Thread 或实现 Runnable 接口来创建线程的方式，都有一个缺陷：在执行完任务之后无法获取执行结果。如果需要获取执行结果，就必须通过共享变量或者使用线程通信的方式来达到效果，这样使用起来就比较麻烦。从 JDK1.5 开始，可以通过 Callable 在任务执行完毕之后得到任务执行结果。
 
+#### 1.3.1. 使用 Callable 和 FutureTask 创建多线程
+
 实现 Callable 接口来创建并启动多线程的步骤如下：
 1. 创建 Callable 接口的实现类，并实现 call() 方法，该 call() 方法将作为线程执行体，并且有返回值。
-1. 创建 Callable 实现类的实例，使用 FutureTask 类来包装 Callable 对象，该 FutureTask 对象封装了该 Callable 对象的 call() 方法的返回值。
+1. 创建 Callable 实现类的实例，使用 FutureTask 类来包装 Callable 实现类的对象，该 FutureTask 对象封装了该 Callable 对象的 call() 方法的返回值。
 1. 使用 FutureTask 对象作为 Thread 对象的 target 创建并启动新线程。
 1. 调用 FutureTask 对象的 get() 方法来获得子线程执行结束后的返回值。
-
-#### 1.3.1. 使用 Callable 和 FutureTask 创建多线程
 
 ```java
 public class Test {
@@ -93,7 +93,7 @@ public class Test {
                 sum += i;
             return sum;
         };
-        FutureTask<Integer> futureTask = new FutureTask<Integer>(task);
+        FutureTask<Integer> futureTask = new FutureTask<>(task);
         Thread thread = new Thread(futureTask);
         thread.start();
          
@@ -117,6 +117,7 @@ public class Test {
     }
 }
 ```
+
 #### 1.3.2. 使用 Callable 和线程池创建多线程
 
 可以使用线程池的方式来将当前实现 Callable 接口的任务通过 ThreadPoolExecutor 的 submit 方法添加到线程池，submit 方法会返回一个 FutureTask 对象，而 FutureTask 是实现了 Future 接口的，因此我们可以使用该对象的 get 方法获取到任务的返回值。

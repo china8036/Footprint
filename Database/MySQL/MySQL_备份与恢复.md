@@ -1,18 +1,19 @@
-- [MySQL 备份与恢复](#mysql)
-  - [1. 导出数据](#1)
-    - [1.1. SELECT ... INTO OUTFILE](#11-select-into-outfile)
+- [MySQL 备份与恢复](#mysql-备份与恢复)
+  - [1. 导出数据](#1-导出数据)
+    - [1.1. SELECT ... INTO OUTFILE](#11-select--into-outfile)
     - [1.2. mysqldump](#12-mysqldump)
-    - [1.3. mysql 命令重定向](#13-mysql)
-    - [1.4. 示例：定时导出数据后删除](#14)
-      - [1.4.1. SELECT … INTO OUTFILE+ 存储过程 + 事件](#141-select--into-outfile)
-      - [1.4.2. mysql 命令重定向 +PowerShell+ 定时任务](#142-mysql--powershell)
-      - [1.4.3. mysql 命令重定向 +shell+crontab](#143-mysql--shellcrontab)
-      - [1.4.4. python 实现](#144-python)
-  - [2. 导入数据](#2)
+    - [1.3. mysql 命令重定向](#13-mysql-命令重定向)
+    - [1.4. 示例：定时导出数据后删除](#14-示例定时导出数据后删除)
+      - [1.4.1. SELECT … INTO OUTFILE+ 存储过程 + 事件](#141-select--into-outfile-存储过程--事件)
+      - [1.4.2. mysql 命令重定向 +PowerShell+ 定时任务](#142-mysql-命令重定向-powershell-定时任务)
+      - [1.4.3. mysql 命令重定向 +shell+crontab](#143-mysql-命令重定向-shellcrontab)
+      - [1.4.4. python 实现](#144-python-实现)
+  - [2. 导入数据](#2-导入数据)
     - [2.1. LOAD DATA INFILE](#21-load-data-infile)
     - [2.2. source](#22-source)
     - [2.3. mysqldump](#23-mysqldump)
     - [2.4. mysqlimport](#24-mysqlimport)
+  - [3. Refer Links](#3-refer-links)
 
 # MySQL 备份与恢复
 
@@ -20,24 +21,22 @@
 
 ### 1.1. SELECT ... INTO OUTFILE
 
-使用 SELECT...INTO OUTFILE 语句可以将查询结果数据导出为纯文本，到 csv、xls、sql、txt 文件中；
+使用 `SELECT...INTO OUTFILE` 语句可以将查询结果数据导出为纯文本，到 csv、xls、sql、txt 文件中。
 
-示例：MySQL 命令行中
+eg:
 ```sql
 SELECT 
-* 
+  * 
 FROM 
-`table_name` 
+  `table_name` 
 WHERE 
-`id` BETWEEN 1 AND 1000 
-INTO OUTFILE 
-“D:/test_file.csv”
+  `id` BETWEEN 1 AND 1000 
+INTO OUTFILE "D:/test_file.csv"
 [
-FIELDS 
-TERMINATED BY ', ' -- 指定字段分割符
-ENCLOSED BY ''  -- 指定字段包围符号
-LINES 
-	TERMINATED BY '\n'  -- 指定换行符
+  FIELDS 
+  TERMINATED BY ', ' -- 指定字段分割符
+  ENCLOSED BY ''  -- 指定字段包围符号
+  LINES TERMINATED BY '\n'  -- 指定换行符
 ] -- 方括号内为可选项
 ```
 效果：
@@ -63,19 +62,17 @@ NOTE:
 
 - null 值会被处理成`\N`。
 
-- 导出的 csv 文件中没有列名，只有数据。
+- **导出的 csv 文件中没有列名，只有数据**。
 
 ### 1.2. mysqldump
 
-mysqldump 将数据库表的结构和数据导出为 SQL 脚本，到 sql、txt 文件中，其中包含从头重新创建数据库和插入数据所需的命令 CREATE TABLE 和 INSERT 等。
+`mysqldump` 将数据库表的结构和数据导出为 SQL 脚本，到 sql、txt 文件中，其中包含从头重新创建数据库和插入数据所需的命令 `CREATE TABLE` 和 `INSERT` 等。
 
-格式：Cmd/Powershell/Bash 中
-
-导出一个数据表
+导出一个数据表：
 ```
 mysqldump -u<username> -p <db_name> <table_name> --where/-w=“筛选条件” > <file_path>
 ```
-导出一个数据库
+导出一个数据库：
 ```
 mysqldump -u<username> -p <db_name> > <file_path>
 ```
@@ -92,7 +89,7 @@ mysqldump -u<username> -p --all-databases > <file_path>
 - `--lock-all-tables,  -x`：提交请求锁定所有数据库中的所有表，以保证数据的一致性。这是一个全局读锁，并且自动关闭 --single-transaction 和 --lock-tables 选项。
 - `--lock-tables`,  -l：开始导出前，锁定所有表。用 READ  LOCAL 锁定表以允许 MyISAM 表并行插入。对于支持事务的表例如 InnoDB 和 BDB，--single-transaction 是一个更好的选择，因为它根本不需要锁定表。
 - `--xml, -X`：导出 XML 格式。
-- `--debug`：输出 debug 信息，用于调试；。
+- `--debug`：输出 debug 信息，用于调试。
 
 例：
 
@@ -103,20 +100,20 @@ mysqldump -u<username> -p --all-databases > <file_path>
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/fc08f845c3e09bab7409c83b17d1ad3f.jpg)
 
 注意：
-- null 值会被处理成、N。
+- null 值会被处理成 `\N`。
 - 导出的文件名是固定的。
 
 ### 1.3. mysql 命令重定向
 
 PowerShell 中
 ```
-mysql -u 用户名 -p 密码 -e “SELECT * FROM test WHERE id BETWEEN 1 AND 1000;” 数据库名 > 文件路径名。csv
+mysql -u username -p password -e “SELECT * FROM test WHERE id BETWEEN 1 AND 1000;” db_name > file_path.csv
 ```
 
 NOTE:
 - null 值会被处理成字符串"NULL"。
 - 可以和 Windows powershell/Linux shell 结合使用，灵活性比较大，其中在 Windows 下时，使用 powershell 可以自动在各字段间添加分隔符，以被 excel 识别，而若使用 dos，各字段间没有分隔符。
-- 导出的 csv 文件默认包含列名，若不要列名，加上 -N 参数即可。
+- 导出的 csv 文件默认包含列名，若不要列名，加上 `-N` 参数即可。
 
 ### 1.4. 示例：定时导出数据后删除
 
@@ -229,7 +226,7 @@ https://zmobi.github.io/2016/09/27/export-csv-and-charset.html
 
 ### 2.1. LOAD DATA INFILE
 
-使用 LOAD DATA INFILE 语句将文本文件 (txt、csv、xls 等) 中的数据导入到指定的数据表中：
+使用 `LOAD DATA INFILE` 语句将文本文件 (txt、csv、xls 等) 中的数据导入到指定的数据表中：
 ```sql
 LOAD DATA INFILE '/tmp/test123.txt' INTO TABLE `test123`;
 ```
@@ -242,7 +239,7 @@ NOTE:
 
 ### 2.2. source
 
-在 MySQL 命令行中，可以使用 source 命令导入 sql 脚本文件：
+在 MySQL 命令行中，可以使用 `source` 命令导入 sql 脚本文件：
 ```
 mysql>source d:\wcnc_db.sql
 ```
@@ -280,3 +277,9 @@ NOTE:
   $ mysqlimport -u root -p --local --fields-terminated-by=":" --lines-terminated-by="\r\n"  database_name dump.txt
   ```
 - `-l or -lock-tables`：数据被插入之前锁住表，这样就防止了， 你在更新数据库时，用户的查询和更新受到影响；
+
+## 3. Refer Links
+
+TODO:
+
+[8 种手动和自动备份 MySQL 数据库的方法](http://database.51cto.com/art/201810/584673.htm)

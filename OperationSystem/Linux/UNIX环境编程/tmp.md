@@ -1,4 +1,4 @@
-- [Others](#others)
+- [OTHERS](#others)
   - [1. UNIX 信号机制](#1-unix-信号机制)
   - [2. 可重入函数 & 不可重入函数](#2-可重入函数--不可重入函数)
   - [3. Linux C 头文件](#3-linux-c-头文件)
@@ -16,7 +16,7 @@
     - [9.1. ldd](#91-ldd)
   - [10. Refer Links](#10-refer-links)
 
-# Others
+# OTHERS
 
 TODO:
 
@@ -33,6 +33,12 @@ https://www.google.com/search?q=unix+%E4%BF%A1%E5%8F%B7+%E5%8E%9F%E7%90%86
 https://www.cnblogs.com/parrynee/archive/2010/01/29/1659071.html
 
 https://blog.csdn.net/DLUTBruceZhang/article/details/8817587
+
+所谓可重入是指一个可以被多个任务调用的过程，任务在调用时不必担心数据是否会出错。不可重入函数在实时系统设计中被视为不安全函数。
+
+如何写出可重入的函数？在函数体内不访问那些全局变量，不使用静态局部变量，坚持只使用缺省态（auto）局部变量，写出的函数就将是可重入的。如果必须访问全局变量，记住利用互斥信号量来保护全局变量。或者调用该函数前关中断，调用后再开中断。
+
+可重入函数可以被一个以上的任务调用，而不必担心数据被破坏。**可重入函数任何时候都可以被中断，一段时间以后又可以运行，而相应的数据不会丢失**。可重入函数或者只使用局部变量，即保存在 CPU 寄存器中或堆栈中；或者使用予以保护的全局变量。
 
 ## 3. Linux C 头文件
 
@@ -90,7 +96,7 @@ https://www.cnblogs.com/liuhao/archive/2012/06/21/2558069.html
 
 #### 8.1.2. sched_setaffinity 系统调用
 
-sched_setaffinity 系统调用，两者均可以指定进程运行的 CPU 实例。
+sched_setaffinity 系统调用，可以指定进程运行的 CPU 实例。
 
 https://linux.die.net/man/2/sched_setaffinity
 
@@ -107,11 +113,9 @@ https://stackoverflow.com/questions/5578965/if-i-do-sched-setaffinity-in-a-proce
 ### 8.2. 线程绑定 CPU
 
 线程亲和性的设置和获取主要通过 pthread 的两个函数来实现：
-```
-int pthread_setaffinity_np(pthread_t thread, size_t cpusetsize，
-const cpu_set_t *cpuset);
-int pthread_getaffinity_np(pthread_t thread, size_t cpusetsize, 
-cpu_set_t *cpuset);
+```cpp
+int pthread_setaffinity_np(pthread_t thread, size_t cpusetsize，const cpu_set_t *cpuset);
+int pthread_getaffinity_np(pthread_t thread, size_t cpusetsize, cpu_set_t *cpuset);
 ```
 
 ## 9. 调试
