@@ -1,18 +1,18 @@
-- [Java 多线程 并发集合框架：阻塞集合](#java-%E5%A4%9A%E7%BA%BF%E7%A8%8B-%E5%B9%B6%E5%8F%91%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%EF%BC%9A%E9%98%BB%E5%A1%9E%E9%9B%86%E5%90%88)
-	- [1. BlockingQueue 接口](#1-blockingqueue-%E6%8E%A5%E5%8F%A3)
-		- [1.1. 常用 API](#11-%E5%B8%B8%E7%94%A8-api)
-		- [1.2. 实现原理](#12-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-		- [1.3. 存在问题](#13-%E5%AD%98%E5%9C%A8%E9%97%AE%E9%A2%98)
-	- [2. ArrayBlockingQueue 实现类](#2-arrayblockingqueue-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-		- [2.1. 常用 API](#21-%E5%B8%B8%E7%94%A8-api)
-		- [2.2. 实现原理](#22-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-	- [3. LinkedBlockingQueue 实现类](#3-linkedblockingqueue-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-		- [3.1. 常用 API](#31-%E5%B8%B8%E7%94%A8-api)
-		- [3.2. 实现原理](#32-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-	- [4. PriorityBlockingQueue 实现类](#4-priorityblockingqueue-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-	- [5. DelayQueue 实现类](#5-delayqueue-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-	- [6. LinkedTransferQueue 实现类](#6-linkedtransferqueue-%E5%AE%9E%E7%8E%B0%E7%B1%BB)
-	- [7. Refer Links](#7-refer-links)
+- [Java 多线程 并发集合框架：阻塞集合](#java-多线程-并发集合框架阻塞集合)
+    - [1. BlockingQueue 接口](#1-blockingqueue-接口)
+        - [1.1. 常用 API](#11-常用-api)
+        - [1.2. 源码分析](#12-源码分析)
+        - [1.3. 存在问题](#13-存在问题)
+    - [2. ArrayBlockingQueue 实现类](#2-arrayblockingqueue-实现类)
+        - [2.1. 常用 API](#21-常用-api)
+        - [2.2. 实现原理](#22-实现原理)
+    - [3. LinkedBlockingQueue 实现类](#3-linkedblockingqueue-实现类)
+        - [3.1. 常用 API](#31-常用-api)
+        - [3.2. 实现原理](#32-实现原理)
+    - [4. PriorityBlockingQueue 实现类](#4-priorityblockingqueue-实现类)
+    - [5. DelayQueue 实现类](#5-delayqueue-实现类)
+    - [6. LinkedTransferQueue 实现类](#6-linkedtransferqueue-实现类)
+    - [7. Refer Links](#7-refer-links)
 
 # Java 多线程 并发集合框架：阻塞集合
 
@@ -140,17 +140,17 @@ ArrayBlockingQueue 是一个典型的“有界缓冲区”，固定大小的数�
 例：通过 ArrayBlockingQueue 队列实现一个生产者消费者模型。
 ```java
 public class ArrayBlockingQueueDemo {
-    private final static ArrayBlockingQueue<Apple> queue= new ArrayBlockingQueue<>(1);
+    private final static ArrayBlockingQueue<Apple> queue = new ArrayBlockingQueue<>(1);
     public static void main(String[] args){
         new Thread(new Producer(queue)).start();
         new Thread(new Consumer(queue)).start();
     }
 }
 
- class Apple {
+class Apple {
     public Apple(){
     }
- }
+}
 
 /**
  * 生产者线程
@@ -168,7 +168,7 @@ class Producer implements Runnable{
         }
     }
 
-    private void Produce(){
+    private void Produce() {
         try {
             Apple apple = new Apple();
             mAbq.put(apple);
@@ -182,7 +182,7 @@ class Producer implements Runnable{
 /**
  * 消费者线程
  */
-class Consumer implements Runnable{
+class Consumer implements Runnable {
 
     private ArrayBlockingQueue<Apple> mAbq;
     Consumer(ArrayBlockingQueue<Apple> arrayBlockingQueue){

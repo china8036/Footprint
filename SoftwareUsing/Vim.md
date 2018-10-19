@@ -769,3 +769,5 @@ TODO:
 [所需即所获：像 IDE 一样使用 vim](https://github.com/yangyangwithgnu/use_vim_as_ide)
 
 [VIM 下的跳转练习](http://www.cnblogs.com/moiyer/archive/2010/04/01/1952681.html)
+
+<!-- TODO: 目录模式下按 v 的效果？ -->

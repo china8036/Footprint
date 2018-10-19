@@ -5,23 +5,30 @@
 		- [2.1. Remove Element](#21-remove-element)
 		- [2.2. Remove Duplicates from Sorted Array](#22-remove-duplicates-from-sorted-array)
 		- [2.3. Remove Duplicates from Sorted Array II](#23-remove-duplicates-from-sorted-array-ii)
-	- [3. 数组排序](#3-数组排序)
-		- [3.1. Sort Colors](#31-sort-colors)
-		- [3.2. Merge Sorted Array](#32-merge-sorted-array)
-		- [3.3. Kth Largest Element in an Array](#33-kth-largest-element-in-an-array)
-	- [4. 双索引 Two Pointer](#4-双索引-two-pointer)
-		- [4.1. Two Sum II - Input array is sorted](#41-two-sum-ii---input-array-is-sorted)
-		- [4.2. Valid Palindrome](#42-valid-palindrome)
-		- [4.3. Reverse String](#43-reverse-string)
-		- [4.4. Reverse Vowels of a String](#44-reverse-vowels-of-a-string)
-		- [4.5. Container With Most Water](#45-container-with-most-water)
-		- [4.6. Trapping Rain Water](#46-trapping-rain-water)
-	- [5. 滑动窗口](#5-滑动窗口)
-		- [5.1. Minimum Size Subarray Sum](#51-minimum-size-subarray-sum)
-		- [5.2. Longest Substring Without Repeating Characters](#52-longest-substring-without-repeating-characters)
-		- [5.3. Find All Anagrams in a String](#53-find-all-anagrams-in-a-string)
-		- [5.4. Minimum Window Substring](#54-minimum-window-substring)
-	- [6. Refer Links](#6-refer-links)
+	- [3. 元素替换](#3-元素替换)
+		- [3.1. 不等长度的替换](#31-不等长度的替换)
+	- [4. 数组排序](#4-数组排序)
+		- [4.1. Sort Colors](#41-sort-colors)
+		- [4.2. Merge Sorted Array](#42-merge-sorted-array)
+		- [4.3. Kth Largest Element in an Array](#43-kth-largest-element-in-an-array)
+	- [5. 双索引 Two Pointer](#5-双索引-two-pointer)
+		- [5.1. Two Sum II - Input array is sorted](#51-two-sum-ii---input-array-is-sorted)
+		- [5.2. Valid Palindrome](#52-valid-palindrome)
+		- [5.3. Reverse String](#53-reverse-string)
+		- [5.4. Reverse Vowels of a String](#54-reverse-vowels-of-a-string)
+		- [5.5. Container With Most Water](#55-container-with-most-water)
+		- [5.6. Trapping Rain Water](#56-trapping-rain-water)
+	- [6. 滑动窗口](#6-滑动窗口)
+		- [6.1. Minimum Size Subarray Sum](#61-minimum-size-subarray-sum)
+		- [6.2. Longest Substring Without Repeating Characters](#62-longest-substring-without-repeating-characters)
+		- [6.3. Find All Anagrams in a String](#63-find-all-anagrams-in-a-string)
+		- [6.4. Minimum Window Substring](#64-minimum-window-substring)
+	- [7. 其它问题](#7-其它问题)
+		- [7.1. 变位词](#71-变位词)
+		- [7.2. 字符串旋转](#72-字符串旋转)
+		- [7.3. 矩阵旋转](#73-矩阵旋转)
+		- [7.4. 矩阵清零](#74-矩阵清零)
+	- [8. Refer Links](#8-refer-links)
 
 # Array & String
 
@@ -145,9 +152,42 @@
 	}
 	```
 
-## 3. 数组排序
+## 3. 元素替换
 
-### 3.1. Sort Colors
+### 3.1. 不等长度的替换
+
+- Question
+
+	编写程序，将字符串中的空格全部替换成 `%20`（假定该字符串有足够的空间存放新字符），要求空间效率为 O(1)。
+
+- Solution
+
+	扫描 2 次字符串，第一次统计空格个数，计算新字符串长度；第二次从后往前遍历（避免覆写原有数据），将字符复制成新的值。
+	```java
+	public void replaceSpace(char [] str) {
+		int spaceCnt;
+		for (int i = 0; i < str.length; i++)
+			if (str[i] == ' ')
+				spaceCnt++;
+		
+		int newLength = str.length + spaceCnt * 2;
+		str[newLength] = '\0';
+		for (int i = str.length - 1, j = newLength - 1; i >= 0 && j >= 0; i--, j--) {
+			if (str[i] == ' ') {
+				str[j] = '0';
+				str[--j] = '2';
+				str[--j] = '%';
+			} else {
+				str[j] == str[i];
+			}
+		}
+
+	}
+	```
+
+## 4. 数组排序
+
+### 4.1. Sort Colors
 
 [75. Sort Colors](https://leetcode.com/problems/sort-colors/description/)
 
@@ -206,13 +246,13 @@
   }
   ```
 
-### 3.2. Merge Sorted Array
+### 4.2. Merge Sorted Array
 
 [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)
 
 <!-- 利用归并排序 merge 的思路 -->
 
-### 3.3. Kth Largest Element in an Array
+### 4.3. Kth Largest Element in an Array
 
 [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/description/)
 
@@ -264,9 +304,9 @@
   }
   ```
 
-## 4. 双索引 Two Pointer
+## 5. 双索引 Two Pointer
 
-### 4.1. Two Sum II - Input array is sorted
+### 5.1. Two Sum II - Input array is sorted
 
 [167. Two Sum II - Input array is sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/)
 
@@ -367,19 +407,19 @@
     }
     ```
 
-### 4.2. Valid Palindrome
+### 5.2. Valid Palindrome
 
 [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/description/)
 
-### 4.3. Reverse String
+### 5.3. Reverse String
 
 [344. Reverse String](https://leetcode.com/problems/reverse-string/)
 
-### 4.4. Reverse Vowels of a String
+### 5.4. Reverse Vowels of a String
 
 [345. Reverse Vowels of a String](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
 
-### 4.5. Container With Most Water
+### 5.5. Container With Most Water
 
 [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
 
@@ -418,15 +458,15 @@
 		}
 		```
 
-### 4.6. Trapping Rain Water
+### 5.6. Trapping Rain Water
 
 [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
 
-## 5. 滑动窗口
+## 6. 滑动窗口
 
 在 ACM 中一般将滑动窗口技巧称为“尺取法”。
 
-### 5.1. Minimum Size Subarray Sum
+### 6.1. Minimum Size Subarray Sum
 
 [209. Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/)
 
@@ -468,7 +508,7 @@
     }
     ```
 
-### 5.2. Longest Substring Without Repeating Characters
+### 6.2. Longest Substring Without Repeating Characters
 
 [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/description/)
 
@@ -507,12 +547,106 @@
   }
   ```
 
-### 5.3. Find All Anagrams in a String
+### 6.3. Find All Anagrams in a String
 
 [438. Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/description/)
 
-### 5.4. Minimum Window Substring
+### 6.4. Minimum Window Substring
 
 [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/description/)
 
-## 6. Refer Links
+## 7. 其它问题
+
+### 7.1. 变位词
+
+- Question
+
+	给定 2 个字符串，判断其中一个字符串的字符重新排序后，能否变成另一个字符串。
+
+- Solution
+	- 解法 1：先排序后比较。若 2 个字符串拥有同一组字符，那么排序后肯定会变成完全相同的 2 个字符串。
+
+	- 解法 2：统计字符频度。遍历字符串的每个字符，统计出现次数，再进行比较即可。
+
+### 7.2. 字符串旋转
+
+- Question
+
+	给定 2 个字符串，判断其中一个字符串旋转后，能否变成另一个字符串。如：`waterbottle` 以 `wat` 旋转后，就会得到 `erbottlewat`。
+
+- Solution
+
+	假定 s2可以由s1旋转而来，此时令 `x = wat`, `y = erbottle`，则 `s1 = xy = waterbottle`，`s2 = yx = erbottlewat`。由于 `yx` 是 `xyxy` 的子串，因此 `s2` 是 `s1s1` 的子串。也就是说，解决这个问题只需要判断 `s2` 是不是 `s1s1` 的子串即可。
+	```java
+	public boolean isRotation(String s1, String s2) {
+		if (s1.length() > 0 && s1.length() == s2.length()) 
+			return isSubstring(s1+s1, s2);
+		return false;
+	}
+	```
+
+### 7.3. 矩阵旋转
+
+- Question
+	
+	给定一个 n*n 的二维矩阵，编写程序将矩阵旋转 90°，要求空间效率为 O(1)。
+
+	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/726c2bdd26fcae49f9efa8407fdea6c0.jpg)
+
+- Solution
+
+	从最外面一层开始，逐渐向里（也可以从内层向外），在每一层上进行旋转，即将上边移到右边，右边移到下边，下边移到左边，左边移到上边。同时为实现空间效率为 O(1)，每次移动时都按索引一个个进行交换。
+	```java
+	public void rotate(int [][] matrix, int n) {
+		for (int layer = 0; layer < n / 2; layer++) {
+			int first = layer;
+			int last = n - layer - 1;
+			for (int i = first; i < largest; i++) {
+				int offset = i - first;
+				int top  = matrix[first](i);
+				matrix[first](i) = matrix[last - offset](first); // left to top
+				matrix[last - offset](first) = matrix[last](last - offset); // bottom to left
+				matrix[last](last - offset) = matrix[i](last); // right to bottom
+				matrix[i](last) = top; // top to right
+			}
+		}
+	}
+	```
+	时间效率为 O(n^2)，但已是最优解法，因为任何算法都至少需要访问 n^2 个元素。
+
+### 7.4. 矩阵清零
+
+- Question
+
+	给定一个 m*n 的二维矩阵，编写程序实现：如果某个元素为 0，则将该元素所在的行和列清零。
+
+- Solution
+
+	注意陷阱：如果直接遍历矩阵进行操作，清零操作会导致下一步判断出错，在读取被清零的行或列时，读到的尽是零，很可能很快会就将整个矩阵清零。
+
+	因此，可以使用额外的矩阵来标记 0 元素的位置，然后在第二次遍历时将 0 元素所在的行和列清零，空间效率为 O(mn)。
+
+	进一步优化，实际上题目并不需要记录 0 元素的确切位置，因此可以只用 2 个数组来记录包含 0 元素的所有行和列，然后再第二次遍历时将这些行和列清零，空间效率为 O(m+n)。
+	
+	```java
+	public void setZeros(int [][] m) {
+		boolean [] row = new boolean[m.length];
+		boolean [] col = new boolean[m[0].length];
+
+		for (int i = 0; i < m.length; i++)
+			for (int j = 0; j < m[0].length; j++)
+				if (m[i][j] == 0) {
+					row[i] = true;
+					col[j] = true;
+				}
+		
+		for (int i = 0; i < m.length; i++)
+			for (int j = 0; j < m[0].length; j++)
+				if (row[i] || col[j])
+					m[i][j] = 0;
+	}
+	```
+
+	再进一步优化，可以使用位向量来代替 2 个布尔数组，空间效率为 O(1)。
+
+## 8. Refer Links

@@ -2,8 +2,8 @@
   - [1. Redis 与 Memcached 的区别？](#1-redis-与-memcached-的区别)
   - [2. Redis 为什么这么快？](#2-redis-为什么这么快)
   - [3. Redis 怎么利用多核 CPU？](#3-redis-怎么利用多核-cpu)
-  - [Redis 的同步机制？](#redis-的同步机制)
-  - [4. Refer Links](#4-refer-links)
+  - [4. Redis 的同步机制？](#4-redis-的同步机制)
+  - [5. Refer Links](#5-refer-links)
 
 # Redis 面试 FAQ
 
@@ -45,11 +45,11 @@ Redis is single threaded. How can I exploit multiple CPU / cores?
 
 但是，可以在同一个多核的服务器中，可以**启动多个 Redis-server 实例，组成 master-master 或者 master-slave 的形式**，需要执行耗时的命令时可以完全在 slave 进行，从而避免执行耗时命令时网络服务的并发下降。由于是单线程模型，Redis 更喜欢大缓存快速 CPU 而不是多核，因此可进一步为各个实例绑定独立的 CPU，避免不必要的 CPU 切换。
 
-## Redis 的同步机制？
+## 4. Redis 的同步机制？
 
-Redis 可以使用主从同步，从从同步。第一次同步时，主节点做一次 bgsave，并同时将后续修改操作记录到内存 buffer，待完成后将 rdb 文件全量同步到复制节点，复制节点接受完成后将 rdb 镜像加载到内存。加载完成后，再通知主节点将期间修改的操作记录同步到复制节点进行重放就完成了同步过程。
+Redis 可以使用主从同步，从从同步。第一次同步时，主节点做一次 BGSAVE，并同时将后续修改操作记录到内存 buffer，待完成后将 rdb 文件全量同步到复制节点，复制节点接受完成后将 rdb 镜像加载到内存。加载完成后，再通知主节点将期间修改的操作记录同步到复制节点进行重放就完成了同步过程。
 
-## 4. Refer Links
+## 5. Refer Links
 
 [为什么说 Redis 是单线程的以及 Redis 为什么这么快！](https://blog.csdn.net/xlgen157387/article/details/79470556)
 

@@ -1,10 +1,12 @@
 - [Linux 各种限制](#linux-各种限制)
+- [ulimit -a](#ulimit--a)
   - [1. Linux 理论最大进程数](#1-linux-理论最大进程数)
   - [2. Linux 理论最大线程数](#2-linux-理论最大线程数)
   - [3. Linux 最大打开文件数](#3-linux-最大打开文件数)
+- [cat /proc/sys/fs/file-max](#cat-procsysfsfile-max)
   - [4. Refer Links](#4-refer-links)
 - [字节序](#字节序)
-- [文件指针/句柄 & 文件描述符 & 文件路径](#文件指针句柄--文件描述符--文件路径)
+- [文件指针 / 句柄 & 文件描述符 & 文件路径](#文件指针--句柄--文件描述符--文件路径)
 
 TODO: [计算机底层知识拾遗](https://blog.csdn.net/column/details/computer-os-network.html)
 
@@ -97,6 +99,57 @@ https://zh.wikipedia.org/zh-hans/%E5%AD%97%E8%8A%82%E5%BA%8F
 
 http://www.ruanyifeng.com/blog/2016/11/byte-order.html
 
-# 文件指针/句柄 & 文件描述符 & 文件路径
+https://www.cnblogs.com/onepixel/p/7468343.html
+
+https://blog.csdn.net/K346K346/article/details/79053136
+
+字节序，顾名思义就是字节的顺序，就是大于一个字节类型的数据在内存中的存放顺序（一个字节的数据当然就无需谈顺序的问题了）。 
+
+- 主机字节序
+
+  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/19/5ce1dbc0feb12be92794be63d1ed956e.jpg)
+
+  CPU 存储数据时采用的字节顺序。不同的 CPU 设计时采用的字节序是不同的，谈到字节序的问题，必然牵涉到两大 CPU 派系。那就是 Motorola 的 PowerPC 系列 CPU 和 Intel 的 x86 与 x86_64（该指令集由 AMD 率先设计推出）系列 CPU：
+  - PowerPC 系列采用 big endian 方式存储数据。
+  - x86 与 x86_64 系列则采用 little endian 方式存储数据。
+  平常大多数 PC 与服务器如果使用的是 Intel 与 AMD CPU，因此一般都是 little endian。
+
+  如何具体判断本机的主机字节序呢？
+  ```c
+  //
+  //@ret：返回 0 小端字节序，返回 1 大端字节序
+  //
+  int dGetHostByteOrder()
+  {
+      uint32_t a = 0x12345678;  
+      uint8_t *p = (uint8_t *)(&a);  
+      if(*p==0x78)
+      {
+          return 0
+      }
+      else
+      {
+          return 1;
+      }
+  }
+  ```
+
+- 网络字节序 -- big endian
+
+  网络字节序，是 TCP/IP 中规定好的一种数据表示格式，它与具体的 CPU 类型、操作系统等无关，从而可以保证数据在不同主机之间传输时能够被正确解释。网络字节顺序采用 big endian 排序方式。IP 数据报头的传输从左到右，再从上到下。**Version 字段的高序字节最先被传送出去，因此 little-endian 字节序的机器（如 Intel x86）在传输和接收 IP 报文时需要进行字节序转换**。
+
+- 字节序转换
+
+  Linux socket 网络编程中，经常会使用下面四个 C 标准库函数进行字节序间的转换：
+  ```c
+  #include <arpa/inet.h>
+
+  uint32_t htonl(uint32_t hostlong);      // 把 uint32_t 类型从主机序转换到网络序
+  uint16_t htons(uint16_t hostshort);     // 把 uint16_t 类型从主机序转换到网络序
+  uint32_t ntohl(uint32_t netlong);       // 把 uint32_t 类型从网络序转换到主机序
+  uint16_t ntohs(uint16_t netshort);      // 把 uint16_t 类型从网络序转换到主机序
+  ```
+  
+# 文件指针 / 句柄 & 文件描述符 & 文件路径
 
 https://www.cnblogs.com/niocai/archive/2011/11/24/2261686.html

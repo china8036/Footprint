@@ -1,29 +1,37 @@
-- [Binary Tree](#binary-tree)
+- [Binary Tree & Graphs](#binary-tree--graphs)
 	- [1. Binary Tree](#1-binary-tree)
 		- [1.1. Maximum Depth of Binary Tree](#11-maximum-depth-of-binary-tree)
 		- [1.2. Minimum Depth of Binary Tree](#12-minimum-depth-of-binary-tree)
 		- [1.3. Invert Binary Tree](#13-invert-binary-tree)
 		- [1.4. Same Tree](#14-same-tree)
 		- [1.5. Symmetric Tree](#15-symmetric-tree)
-		- [1.6. Count Complete Tree Nodes](#16-count-complete-tree-nodes)
-		- [1.7. Path Sum](#17-path-sum)
+		- [1.6. Children Tree](#16-children-tree)
+		- [1.7. Count Complete Tree Nodes](#17-count-complete-tree-nodes)
 		- [1.8. Sum of Left Leaves](#18-sum-of-left-leaves)
 		- [1.9. Binary Tree Paths](#19-binary-tree-paths)
-		- [1.10. Path Sum II](#110-path-sum-ii)
-		- [1.11. Sum Root to Leaf Numbers](#111-sum-root-to-leaf-numbers)
-		- [1.12. Path Sum III](#112-path-sum-iii)
-		- [1.13. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)](#113-lowest-common-ancestor-of-a-binary-tree-bt---lca-%E9%97%AE%E9%A2%98)
+		- [1.10. Sum Root to Leaf Numbers](#110-sum-root-to-leaf-numbers)
+		- [1.11. Path Sum](#111-path-sum)
+		- [1.12. Path Sum II](#112-path-sum-ii)
+		- [1.13. Path Sum III](#113-path-sum-iii)
+		- [1.14. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)](#114-lowest-common-ancestor-of-a-binary-tree-bt---lca-问题)
 	- [2. Binary Search Tree](#2-binary-search-tree)
-		- [2.1. Lowest Common Ancestor of a Binary Search Tree (BST - LCA 问题)](#21-lowest-common-ancestor-of-a-binary-search-tree-bst---lca-%E9%97%AE%E9%A2%98)
-		- [2.2. Validate Binary Search Tree](#22-validate-binary-search-tree)
+		- [2.1. Lowest Common Ancestor of a Binary Search Tree (BST - LCA 问题)](#21-lowest-common-ancestor-of-a-binary-search-tree-bst---lca-问题)
+		- [2.2. 判断一棵二叉树是否是 BST](#22-判断一棵二叉树是否是-bst)
 		- [2.3. Delete Node in a BST](#23-delete-node-in-a-bst)
 		- [2.4. Convert Sorted Array to Binary Search Tree](#24-convert-sorted-array-to-binary-search-tree)
 		- [2.5. kth Smallest Element in a BST](#25-kth-smallest-element-in-a-bst)
 	- [3. Balanced Binary Tree](#3-balanced-binary-tree)
-		- [3.1. Balanced Binary Tree](#31-balanced-binary-tree)
-	- [4. Refer Links](#4-refer-links)
+		- [3.1. 判断一棵二叉树是否平衡](#31-判断一棵二叉树是否平衡)
+	- [4. Graphs](#4-graphs)
+		- [4.1. 判断一个有向图是否有环](#41-判断一个有向图是否有环)
+			- [4.1.1. DFS](#411-dfs)
+			- [4.1.2. 拓扑排序](#412-拓扑排序)
+		- [4.2. 判断一个无向图是否是树](#42-判断一个无向图是否是树)
+			- [4.2.1. 并查集法](#421-并查集法)
+			- [4.2.2. BFS/DFS 法](#422-bfsdfs-法)
+	- [5. Refer Links](#5-refer-links)
 
-# Binary Tree
+# Binary Tree & Graphs
 
 ## 1. Binary Tree
 
@@ -207,7 +215,7 @@
           return root == null || _isSymmetric(root.left, root.right);
       }
       
-      private boolean _isSymmetric(TreeNode left, TreeNode right){
+      private boolean _isSymmetric(TreeNode left, TreeNode right) {
           if (left == null || right == null)
               return left == right;
           if (left.val == right.val)
@@ -218,7 +226,24 @@
   }
   ```
 
-### 1.6. Count Complete Tree Nodes
+### 1.6. Children Tree
+
+- Question
+
+	有 2 棵二叉树 T1 和 T2，T1 的节点数远大于 T2，编写程序判断 T2 是否是 T1 的子树，即是否存在节点 n，使得从 n 把 T1 砍断后得到的树与 T2 完全相同。
+
+- Solution
+	- 解法 1
+
+		可以为每棵树创建 2 个字符串，分别表示前序遍历和中序遍历，若 T2 前序遍历是 T1 前序遍历的子串，且 T2 中序遍历是 T1 中序遍历的子串，则 T2 是 T1 的子树。其中，利用后缀树可以在 O(n) 时间内检查是否为子串；同时需要在节点为 null 时用特殊字符来表示，否则无法区分元素相同而形态不同的情况。
+
+		这种解法存在的问题是，算法空间复杂度为 O(n+m)，如果树的节点数量非常大，会造成大量内存空间的占用。
+
+	- 解法 2
+
+		遍历 T1，每当 T1 的某个节点与 T2 的根结点相同时，则调用 `treeMatch()` 进行匹配，即比较两颗子树是否完全相同。时间效率为 O(n+km)，n 为 T1 的节点数，m 为 T2 的节点数，k 为 T2 根结点在 T1 中出现的次数。而事实上，在进行匹配时，一旦发现有节点不同就可以提前结束 `treeMatch()`，因此实际的时间效率会更高，空间复杂度为 O(logn+logm)。
+
+### 1.7. Count Complete Tree Nodes
 
 [222. Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/description/)
 
@@ -243,40 +268,7 @@
       return 1 + countNodes(root.left) + countNodes(root.right);
   }
   ```
-
-### 1.7. Path Sum
-
-[112. Path Sum](https://leetcode.com/problems/path-sum/description/)
-
-- Question
-  > Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
-
-  Note: A leaf is a node with no children.
-
-  Example:
-  ```
-  Given the below binary tree and sum = 22,
-
-        5
-      / \
-      4   8
-    /   / \
-    11  13  4
-  /  \      \
-  7    2      1
-  ```
-  return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
-- Solution
-  ```java
-  public boolean hasPathSum(TreeNode root, int sum) {
-      if (root == null)
-          return false;
-      if (root.left == null && root.right == null) // 注意终止条件
-          return root.val == sum;
-      return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
-  }
-  ```
-
+	
 ### 1.8. Sum of Left Leaves
 
 [404. Sum of Left Leaves](https://leetcode.com/problems/sum-of-left-leaves/description/)
@@ -353,15 +345,49 @@
   }
   ```
 
-### 1.10. Path Sum II
-
-[113. Path Sum II](https://leetcode.com/problems/path-sum-ii/description/)
-
-### 1.11. Sum Root to Leaf Numbers
+### 1.10. Sum Root to Leaf Numbers
 
 [129. Sum Root to Leaf Numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/description/)
 
-### 1.12. Path Sum III
+### 1.11. Path Sum
+
+[112. Path Sum](https://leetcode.com/problems/path-sum/description/)
+
+- Question
+  > Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+
+  Note: A leaf is a node with no children.
+
+  Example:
+  ```
+  Given the below binary tree and sum = 22,
+
+        5
+      / \
+      4   8
+    /   / \
+    11  13  4
+  /  \      \
+  7    2      1
+  return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.  
+	```
+
+- Solution
+  ```java
+  public boolean hasPathSum(TreeNode root, int sum) {
+      if (root == null)
+          return false;
+      if (root.left == null && root.right == null) // 注意终止条件
+          return root.val == sum;
+      return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+  }
+  ```
+
+### 1.12. Path Sum II
+
+[113. Path Sum II](https://leetcode.com/problems/path-sum-ii/description/)
+
+### 1.13. Path Sum III
 
 [437. Path Sum III](https://leetcode.com/problems/path-sum-iii/description/)
 
@@ -420,7 +446,7 @@
   }
   ```
 
-### 1.13. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)
+### 1.14. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)
 
 [236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree)
 
@@ -491,7 +517,7 @@
   }
   ```
 
-### 2.2. Validate Binary Search Tree
+### 2.2. 判断一棵二叉树是否是 BST
 
 [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/description/)
 
@@ -499,21 +525,23 @@
 	> Given a binary tree, determine if it is a valid binary search tree (BST).
 
 - Solution
-	```java
-	class Solution {
-			public boolean isValidBST(TreeNode root) {
-					return _isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
-			}
-			
-			public boolean _isValidBST(TreeNode root, long minVal, long maxVal) {
-					if (root == null) 
-							return true;
-					if (root.val >= maxVal || root.val <= minVal) 
-							return false;
-					return _isValidBST(root.left, minVal, root.val) && _isValidBST(root.right, root.val, maxVal);
-			}
-	}
-	```
+	- 解法 1：中序遍历判断，比较每一个元素与下一个元素是否有序。
+	- 解法 2：最大最小值递归判断。
+		```java
+		class Solution {
+				public boolean isValidBST(TreeNode root) {
+						return _isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+				}
+				
+				public boolean _isValidBST(TreeNode root, long minVal, long maxVal) {
+						if (root == null) 
+								return true;
+						if (root.val >= maxVal || root.val <= minVal) 
+								return false;
+						return _isValidBST(root.left, minVal, root.val) && _isValidBST(root.right, root.val, maxVal);
+				}
+		}
+		```
 
 ### 2.3. Delete Node in a BST
 
@@ -591,6 +619,7 @@
 - Solution
 
   <!-- TODO: 可使用快排 partition 的思想 -->
+
   ```java
   public int kthSmallest(TreeNode root, int k) {
   	Stack<TreeNode> st = new Stack<>();
@@ -604,7 +633,7 @@
   			TreeNode n = st.pop();
   			k--;
   			if (k == 0)
-                  return n.val;
+          	return n.val;
   			TreeNode right = n.right;
   			while (right != null) {
   					st.push(right);
@@ -618,7 +647,7 @@
 
 ## 3. Balanced Binary Tree
 
-### 3.1. Balanced Binary Tree
+### 3.1. 判断一棵二叉树是否平衡
 
 [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/description/)
 
@@ -654,6 +683,8 @@
   ```
 
 - Solution
+
+	**计算高度的同时，检查是否平衡，若不平衡则直接返回**。时间效率为 O(N)，空间效率为 O(H)。
   ```java
   class Solution {
       public boolean isBalanced(TreeNode root) {
@@ -675,4 +706,33 @@
   }
   ```
 
-## 4. Refer Links
+## 4. Graphs
+
+### 4.1. 判断一个有向图是否有环
+
+#### 4.1.1. DFS
+
+#### 4.1.2. 拓扑排序
+
+### 4.2. 判断一个无向图是否是树
+
+一个无向图要成为树，需要满足两个性质：
+- 连通
+- 无环
+
+#### 4.2.1. 并查集法
+
+无向图边的两端是对称的，无向图讲究连通这个概念，没有方向，没有拓扑，很像集合，所以非常适合用并查集来解决。
+
+解决的方法：
+1. 想象一开始这个图只有顶点，没有边，我们来一条一条的添加边。
+1. 每遇到一条边，判断这边的两个端点是否在同一个集合里：
+		- 不在的话，表示不构成环，我们应该合并这两个集合。
+		- 在的话，表示有环，因为两个点在一个集合里就表示这两个点已经有一条路径了，现在再加一条路径，必然构成环。此时说明该无向图不是树。
+1. 添加完所有边后，没有遇到成环的情况，且所有顶点在同一个集合中，说明该无向图是一棵树。
+
+#### 4.2.2. BFS/DFS 法
+
+DFS 过程中如果碰到访问过的节点（当然这个节点不能是来时的节点），就是有环。
+
+## 5. Refer Links

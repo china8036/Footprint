@@ -1,22 +1,22 @@
-- [C 内存管理: 标准库API](#c-内存管理-标准库api)
-    - [1. 内存分配](#1-内存分配)
+- [C 内存管理：标准库 API](#c- 内存管理 - 标准库 api)
+    - [1. 内存分配](#1- 内存分配)
         - [1.1. alloca](#11-alloca)
         - [1.2. malloc](#12-malloc)
-            - [1.2.1. 基本使用](#121-基本使用)
-            - [1.2.2. 模拟实现](#122-模拟实现)
+            - [1.2.1. 基本使用](#121- 基本使用)
+            - [1.2.2. 模拟实现](#122- 模拟实现)
         - [1.3. calloc](#13-calloc)
         - [1.4. realloc](#14-realloc)
-    - [2. 内存填充 memset](#2-内存填充-memset)
-    - [3. 内存拷贝](#3-内存拷贝)
+    - [2. 内存填充 memset](#2- 内存填充 -memset)
+    - [3. 内存拷贝](#3- 内存拷贝)
         - [3.1. memcpy](#31-memcpy)
         - [3.2. memmove](#32-memmove)
         - [3.3. memccpy](#33-memccpy)
         - [3.4. strcpy](#34-strcpy)
         - [3.5. strncpy](#35-strncpy)
-    - [4. 内存释放 free](#4-内存释放-free)
+    - [4. 内存释放 free](#4- 内存释放 -free)
     - [5. Refer Links](#5-refer-links)
 
-# C 内存管理: 标准库API
+# C 内存管理：标准库 API
 
 ## 1. 内存分配
 
@@ -28,7 +28,7 @@ alloca 是向栈申请内存，因此无需释放。
 
 #### 1.2.1. 基本使用
 
-[malloc](http://repo.or.cz/w/glibc.git/blob/HEAD:/malloc/malloc.c) 可以在堆内存中分配一段**连续的可用的**内存空间，并且在不再使用时需要通过 free 释放掉。由于 malloc 没有初始化内存的内容，因此一般 malloc 之后，需要调用函数 memset 来初始化这部分的内存空间。
+[malloc](http://repo.or.cz/w/glibc.git/blob/HEAD:/malloc/malloc.c) 可以在堆内存中分配一段**连续的可用的**内存空间，并且在不再使用时需要通过 free 释放掉。**由于 malloc 没有初始化内存的内容，因此一般 malloc 之后，需要调用函数 memset 来初始化这部分的内存空间**。
 
 - P.S. malloc/free 和 new/delete 的区别
 	- 许多人把 malloc/free 当做操作系统所提供的系统调用或 C 的关键字，但实际上 malloc/free 只是 C 的标准库中提供的一个普通函数。而 new/delete 是 C++ 的运算符。

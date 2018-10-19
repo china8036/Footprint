@@ -7,7 +7,12 @@
     - [2.4. SYN Flood](#24-syn-flood)
     - [2.5. 为什么握手的次数是三次？](#25-为什么握手的次数是三次)
   - [3. 终止连接：四次挥手](#3-终止连接四次挥手)
-    - [3.1. TIME_WAIT 状态的意义](#31-time_wait-状态的意义)
+    - [3.1. TIME_WAIT 状态](#31-time_wait-状态)
+      - [3.1.1. 为什么要有 TIME_WAIT，而不直接转成 CLOSED 状态呢？TIME_WAIT 状态存在的意义？](#311-为什么要有-time_wait而不直接转成-closed-状态呢time_wait-状态存在的意义)
+      - [3.1.2. 为什么等待时间设置为 MSL？](#312-为什么等待时间设置为-msl)
+      - [3.1.3. 怎么查看 TIME_WAIT 状态的具体持续时间？](#313-怎么查看-time_wait-状态的具体持续时间)
+      - [3.1.4. TIME_WAIT 状态可能产生什么危害？](#314-time_wait-状态可能产生什么危害)
+      - [3.1.5. TIME_WAIT 状态如何避免？](#315-time_wait-状态如何避免)
   - [4. Refer Links](#4-refer-links)
 
 # 计算机网络 - 传输层：Transport control protocol 基本操作
@@ -50,7 +55,7 @@ TIME_WAIT 18122
 
 为获得 TCP 服务，必须显式地在一台机器的套接字和另一台机器的套接字之间建立一个连接。TCP 连接的建立采用三次握手 (Three-way Handshake) 的过程，即整个过程由发送方请求建立连接、接收方确认、发送方再发送关于确认的确认三个过程组成。**所谓三次握手，是指建立一个 TCP 连接时，需要客户端和服务器总共发送 3 个包**。
 
-在 socket 编程中，客户端执行 connect() 时就将触发三次握手的过程。
+在 socket 编程中，客户端执行 `connect()` 时就将触发三次握手的过程。
 
 ### 2.1. 过程
 
@@ -213,55 +218,58 @@ TCP 的连接的终止过程总共需要发送四个包，因此称为四次挥�
 
   客户端等待了某个固定时间（即 2 Maximum Segment Lifetime 即 2MSL）之后，若没有收到服务器端的 ACK，即可认为服务器端已经正常关闭连接，于是自己也关闭连接，进入 `CLOSED` 状态。
 
-### 3.1. TIME_WAIT 状态的意义
+### 3.1. TIME_WAIT 状态
 
 [TIME_WAIT and its design implications for protocols and scalable client server systems](http://www.serverframework.com/asynchronousevents/2011/01/time-wait-and-its-design-implications-for-protocols-and-scalable-servers.html)
 
-- 为什么要有 TIME_WAIT，而不直接转成 CLOSED 状态呢？TIME_WAIT 状态存在的意义？
-  - 实现 TCP 全双工连接的可靠释放。
+#### 3.1.1. 为什么要有 TIME_WAIT，而不直接转成 CLOSED 状态呢？TIME_WAIT 状态存在的意义？
 
-    TCP 协议在关闭连接的四次握手过程中，最终的 ACK 是由主动关闭连接的一端（A 端）发出的，如果这个 ACK 丢失，对方（B 端）将重发最终的 FIN，因此 A 端必须维护状态信息（TIME_WAIT）允许它重发最终的 ACK。**如果 A 端不维持 TIME_WAIT 状态，而是直接进入 CLOSED 状态，那么 A 端收到重发的 ACK 后将响应 RST，进而 B 端收到 RST 后将解释成一个错误**（在 java 中会抛出 connection reset 的 SocketException)，然而这事实上只是正常的关闭连接过程，并非异常。
+- 实现 TCP 全双工连接的可靠释放。
 
-    因而，要实现 TCP 全双工连接的正常终止，必须处理终止过程中四个阶段中任何一个阶段握手包的丢失情况，因此主动关闭连接的 A 端必须维持 TIME_WAIT 状态 。
+  TCP 协议在关闭连接的四次握手过程中，最终的 ACK 是由主动关闭连接的一端（A 端）发出的，如果这个 ACK 丢失，对方（B 端）将重发最终的 FIN，因此 A 端必须维护状态信息（TIME_WAIT）允许它重发最终的 ACK。**如果 A 端不维持 TIME_WAIT 状态，而是直接进入 CLOSED 状态，那么 A 端收到重发的 ACK 后将响应 RST，进而 B 端收到 RST 后将解释成一个错误**（在 Java 中会抛出 connection reset 的 SocketException)，然而这事实上只是正常的关闭连接过程，并非异常。
 
-  - 为旧的数据包在网络因过期而消失留足时间，避免前后两次连接数据错乱的情况。
+  因而，要实现 TCP 全双工连接的正常终止，必须处理终止过程中四个阶段中任何一个阶段握手包的丢失情况，因此主动关闭连接的 A 端必须维持 TIME_WAIT 状态 。
 
-    TCP 分节可能由于路由器异常而“迷途”，在迷途期间，TCP 发送端可能因确认超时而重发这个分节，迷途的分节在路由器修复后也会被送到最终目的地，这个迟到的迷途分节到达时就可能会引起问题。在关闭“前一个连接”之后，如果马上又重新建立起一个相同的 IP 和端口之间的“新连接”，“前一个连接”的迷途重复分组就可能在“前一个连接”终止后到达，被“新连接”收到了。
-    
-    为了避免这个情况，TCP 协议不允许处于 TIME_WAIT 状态的连接启动一个新的可用连接，即**使 TIME_WAIT 状态持续 2MSL，就可以保证当成功建立一个新 TCP 连接的时候，来自旧连接重复分组已经在网络中消逝，避免 2 次连接的数据发生混乱的情况**。
+- 为旧的数据包在网络因过期而消失留足时间，避免前后两次连接数据错乱的情况。
 
-- 为什么等待时间设置为 2MSL？
+  TCP 分节可能由于路由器异常而“迷途”，在迷途期间，TCP 发送端可能因确认超时而重发这个分节，而迷途的分节在路由器修复后也会被送到最终目的地，这个迟到的迷途分节到达时就可能会引起问题。在关闭“前一个连接”之后，如果马上又重新建立起一个相同的 IP 和端口之间的“新连接”，“前一个连接”的迷途重复分组就可能在“前一个连接”终止后到达，被“新连接”收到了。
   
-  TIME_WAIT 的等待时间需要确保有足够的时间让对方收到了 ACK。如果被动关闭的那方没有收到 ACK，就会重发 FIN，一来一去正好是 2 MSL。
+  为了避免这个情况，TCP 协议不允许处于 TIME_WAIT 状态的连接启动一个新的可用连接，即**使 TIME_WAIT 状态持续 2MSL，就可以保证当成功建立一个新 TCP 连接的时候，来自旧连接重复分组已经在网络中消逝，避免 2 次连接的数据发生混乱的情况**。
 
-- 怎么查看 TIME_WAIT 状态的具体持续时间？
-  ```shell
-  cat /proc/sys/net/ipv4/tcp_fin_timeout
-  ```
-  或者
-  ```shell
-  sysctl net.ipv4.tcp_fin_timeout
-  ```
-  通过查看 TIME_WAIT 状态的具体时间，也可间接的查看系统 MSL 的具体时间设置（除以 2 即可）。
+#### 3.1.2. 为什么等待时间设置为 MSL？
 
-- TIME_WAIT 状态可能产生什么危害？
-  - 对于大多数网络服务，一般是由客户端主动断开连接，因此 TIME_WAIT 状态发生在客户端，不会造成危害。
-  - 但如果是由服务器主动关闭 TCP 连接，将导致服务器端存在大量的处于 TIME_WAIT 状态的 socket, 甚至可能比处于 ESTABLISHED 状态下的 socket 还要多。每一个状态非 CLOSED 的 socket 连接都至少需要占用一个五元组表项、一个文件描述符 (fd)，而由于 TIME_WAIT 状态下的 socket 不能被回收使用，因此这将严重影响服务器的处理能力，甚至耗尽可用的 socket，拒绝服务。
+TIME_WAIT 的等待时间需要确保有足够的时间让对方收到了 ACK。如果被动关闭的那方没有收到 ACK，就会重发 FIN，一来一去正好是 2 MSL。
 
-- TIME_WAIT 状态如何避免？
+#### 3.1.3. 怎么查看 TIME_WAIT 状态的具体持续时间？
 
-  - 设置 TIME_WAIT 状态的 TCP 连接端口可重用
-  
-    服务器可以设置 SO_REUSEADDR 套接字选项来通知内核，如果端口忙，但 TCP 连接位于 TIME_WAIT 状态时，可以重用端口。在一个非常有用的场景就是，如果你的服务器程序停止后想立即重启，而新的套接字依旧希望使用同一端口，此时 SO_REUSEADDR 选项就可以避免 TIME_WAIT 状态。
+```shell
+cat /proc/sys/net/ipv4/tcp_fin_timeout
+```
+或者
+```shell
+sysctl net.ipv4.tcp_fin_timeout
+```
+通过查看 TIME_WAIT 状态的具体时间，也可间接的查看系统 MSL 的具体时间设置（乘以 2 即可）。
 
-  - 修改 / 缩短 TIME_WAIT 状态的持续时间
-    - 在 Linux 下可通过修改 `/etc/sysctl.conf` 中的内核参数 `net.ipv4.tcp_fin_timeout` 来实现。
-    - 在 Windows 下可通过在 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters, 添加名为 TcpTimedWaitDelay 的 DWORD 键来实现。
+#### 3.1.4. TIME_WAIT 状态可能产生什么危害？
 
-  - ip_conntrack
-  - tcp_tw_recycle
-  - tcp_tw_reuse
-  - tcp_max_tw_buckets
+- 对于大多数网络服务，一般是由客户端主动断开连接，因此 TIME_WAIT 状态发生在客户端，不会造成危害。
+- 但如果是由服务器主动关闭 TCP 连接，将导致服务器端存在大量的处于 TIME_WAIT 状态的 socket, 甚至可能比处于 ESTABLISHED 状态下的 socket 还要多。每一个状态非 CLOSED 的 socket 连接都至少需要占用一个五元组表项、一个文件描述符 (fd)，而由于 TIME_WAIT 状态下的 socket 不能被回收使用，因此这将严重影响服务器的处理能力，甚至耗尽可用的 socket，拒绝服务。
+
+#### 3.1.5. TIME_WAIT 状态如何避免？
+
+- 设置 TIME_WAIT 状态的 TCP 连接端口可重用
+
+  服务器可以设置 SO_REUSEADDR 套接字选项来通知内核，如果端口忙，但 TCP 连接位于 TIME_WAIT 状态时，可以重用端口。在一个非常有用的场景就是，如果你的服务器程序停止后想立即重启，而新的套接字依旧希望使用同一端口，此时 SO_REUSEADDR 选项就可以避免 TIME_WAIT 状态。
+
+- 修改 / 缩短 TIME_WAIT 状态的持续时间
+  - 在 Linux 下可通过修改 `/etc/sysctl.conf` 中的内核参数 `net.ipv4.tcp_fin_timeout` 来实现。
+  - 在 Windows 下可通过在 `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters`, 添加名为 `TcpTimedWaitDelay` 的 `DWORD` 键来实现。
+
+- ip_conntrack
+- tcp_tw_recycle
+- tcp_tw_reuse
+- tcp_max_tw_buckets
 
 ## 4. Refer Links
 

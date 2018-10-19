@@ -170,7 +170,7 @@ TODO:
 
 **为解决这个问题，在传输层 TCP 提供了 [KeepAlive 机制](http://www.tldp.org/HOWTO/html_single/TCP-Keepalive-HOWTO/)，主流的操作系统内核都支持了这个机制的实现，其基本原理是，隔一段时间给连接对端发送一个探测包，如果收到对方回应的 ACK，则认为连接还是存活的，在超过一定重试次数之后还是没有收到对方的回应，则丢弃该 TCP 连接**。
 
-但 TCP 的 KeepAlive 机制默认是不打开的，可通过修改内核参数 SO_KEEPALIVE 为 1 来开启，并通过以下内核参数进行配置：
+但 **TCP 的 KeepAlive 机制默认是不打开的，可通过修改内核参数 SO_KEEPALIVE 为 1 来开启**，并通过以下内核参数进行配置：
 - `/proc/sys/net/ipv4/tcp_keepalive_time` 表示连接闲置多久开始发 keepalive 的 ACK 包。
 - `/proc/sys/net/ipv4/tcp_keepalive_probes` 表示重试多少次未收到 ACK 响应才丢弃 TCP 连接。
 - `/proc/sys/net/ipv4/tcp_keepalive_intvl` 表示两个 ACK 包之间间隔多长。

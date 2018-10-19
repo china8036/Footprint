@@ -76,7 +76,7 @@ private transient volatile Node tail;
 private volatile int state;
 ```
 
-AQS 内部通过一个 int 类型的成员变量 state 来控制同步状态：
+**AQS 内部通过一个 int 类型的成员变量 state 来控制同步状态**：
 - 当 state=0 时，则说明没有任何线程占有共享资源的锁。
 - 当 state=1 时，则说明有线程目前正在使用共享变量，其他线程必须加入同步队列进行等待，AQS 内部通过内部类 Node 构成 FIFO 的同步队列来完成线程获取锁的排队工作，同时利用内部类 ConditionObject 构建等待队列。
   - 当 Condition 调用 wait() 方法后，线程将会加入等待队列中。

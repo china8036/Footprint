@@ -1,34 +1,41 @@
 - [LinkedList](#linkedlist)
-  - [1. TIP](#1-tip)
-  - [2. 链表反转](#2- 链表反转)
-    - [2.1. Reverse Linked List](#21-reverse-linked-list)
-    - [2.2. Reverse Linked List II](#22-reverse-linked-list-ii)
-  - [3. 删除节点](#3- 删除节点)
-    - [3.1. Remove Linked List Elements](#31-remove-linked-list-elements)
-    - [3.2. Remove Duplicates from Sorted List II](#32-remove-duplicates-from-sorted-list-ii)
-    - [3.3. Delete Node in a Linked List](#33-delete-node-in-a-linked-list)
-  - [4. 虚拟头节点](#4- 虚拟头节点)
-    - [4.1. Merge Two Sorted Lists](#41-merge-two-sorted-lists)
-    - [4.2. Swap Nodes in Pairs](#42-swap-nodes-in-pairs)
-    - [4.3. Reverse Nodes in k-Group](#43-reverse-nodes-in-k-group)
-  - [5. 链表排序](#5- 链表排序)
-    - [5.1. Insertion Sort List](#51-insertion-sort-list)
-    - [5.2. Sort List](#52-sort-list)
-  - [6. 快行指针](#6- 快行指针)
-    - [6.1. Remove Nth Node From End of List](#61-remove-nth-node-from-end-of-list)
-    - [6.2. Rotate List](#62-rotate-list)
-    - [6.3. Reorder List](#63-reorder-list)
-    - [6.4. Palindrome Linked List](#64-palindrome-linked-list)
-  - [7. 水池采样问题 (Reservoir Sampling Problem)](#7- 水池采样问题 -reservoir-sampling-problem)
-    - [7.1. Linked List Random Node](#71-linked-list-random-node)
-    - [7.2. Random Pick Index](#72-random-pick-index)
-  - [8. Refer Links](#8-refer-links)
+	- [1. TIP](#1-tip)
+	- [2. 链表反转](#2-链表反转)
+		- [2.1. Reverse Linked List](#21-reverse-linked-list)
+		- [2.2. Reverse Linked List II](#22-reverse-linked-list-ii)
+	- [3. 删除节点](#3-删除节点)
+		- [3.1. Remove Linked List Elements](#31-remove-linked-list-elements)
+		- [3.2. Remove Duplicates from Sorted List II](#32-remove-duplicates-from-sorted-list-ii)
+		- [3.3. Delete Node in a Linked List](#33-delete-node-in-a-linked-list)
+	- [4. 虚拟头节点](#4-虚拟头节点)
+		- [4.1. Merge Two Sorted Lists](#41-merge-two-sorted-lists)
+		- [4.2. Swap Nodes in Pairs](#42-swap-nodes-in-pairs)
+		- [4.3. Reverse Nodes in k-Group](#43-reverse-nodes-in-k-group)
+	- [5. 链表排序](#5-链表排序)
+		- [5.1. Insertion Sort List](#51-insertion-sort-list)
+		- [5.2. Sort List](#52-sort-list)
+	- [6. 快行指针](#6-快行指针)
+		- [6.1. Remove Nth Node From End of List](#61-remove-nth-node-from-end-of-list)
+		- [6.2. Rotate List](#62-rotate-list)
+		- [6.3. Reorder List](#63-reorder-list)
+		- [6.4. Palindrome Linked List](#64-palindrome-linked-list)
+		- [6.5. 有环链表问题](#65-有环链表问题)
+			- [6.5.1. 是否有环](#651-是否有环)
+			- [6.5.2. 环路长度](#652-环路长度)
+			- [6.5.3. 环路起点](#653-环路起点)
+	- [7. 链表相交问题](#7-链表相交问题)
+		- [7.1. 判断链表是否相交](#71-判断链表是否相交)
+		- [7.2. 求相交链表的交点](#72-求相交链表的交点)
+	- [8. 水池采样问题 (Reservoir Sampling Problem)](#8-水池采样问题-reservoir-sampling-problem)
+		- [8.1. Linked List Random Node](#81-linked-list-random-node)
+		- [8.2. Random Pick Index](#82-random-pick-index)
+	- [9. Refer Links](#9-refer-links)
 
 # LinkedList
 
 ## 1. TIP
 
-链表操作类题目，一般有以下技巧：
+链表操作类题目，非常依赖基础概念，从无到有实现链表也是一项基本要求。求解此类问题一般有以下技巧：
 - 多指针操作
 
 - 虚拟头节点
@@ -182,8 +189,8 @@
 
   ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/11c73cde0d2a7c16b846e5671cf7c122.jpg)
 
-  **需要注意的是，该方法不适用于尾节点。**
-
+  **需要注意的是，该方法不适用于尾节点。若待删除节点刚好是尾结点，则此问题无解，但可通过将尾结点作特殊标记来达到“删除”的效果。**
+·
   ```java
   // 时间复杂度：O(1)
   // 空间复杂度：O(1)
@@ -319,7 +326,93 @@
 
 [234. Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/description/)
 
-## 7. 水池采样问题 (Reservoir Sampling Problem)
+### 6.5. 有环链表问题
+
+#### 6.5.1. 是否有环
+
+- Question 
+
+	给定一个单向链表，编写程序判断该链表是否有环。
+
+- Solution
+	
+	定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**：
+	- 如果 fast 指针撞上了 slow 指针，那么说明该链表中有环。
+	- 如果 fast 指针走到了链表的末尾（next 指向 NULL）都没有撞上 slow 指针，那么说明该链表中没有环。
+
+	证明：
+	1. 在一个环形赛道上，方向相同而速度不相同的 2 辆车迟早会相遇。
+	1. 速度快多少才能保证一定刚好“追上”而不是刚好“越过”？相差 1 步。因为如果 fast 真的刚好“越过”了 slow，假设 fast 位于 `i` 位置，slow 位于 `i-1` 位置，那么可知在上一个单位时间，fast 就位于 `i-2` 位置，而 slow 位于 `i-1-1 = i-2`，也就是说，在上一个单位时间 2 者就已经“追上”了。
+
+#### 6.5.2. 环路长度
+
+- Question
+
+	给定一个有环链表，遍写程序返回环路的长度。
+
+- Solution	
+
+	定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**，由于链表有环，fast 和 slow 会不断相遇，那么 fast 和 slow 第一次相遇和第二次相遇之间，slow 走过的节点处即为环的长度。
+
+#### 6.5.3. 环路起点
+
+- Question
+
+	给定一个有环链表，编写程序返回环路的起点（开头节点）。
+
+- Solution
+
+	定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**，由于链表有环，fast 和 slow 会不断相遇，当 fast 和 slow 第一次相遇时，将 slow 指向链表头部 head，那么**此时 fast 和 slow 离环路起点的距离是相同的**，因此让 fast 和 slow 以相同速度 1 步 / 次前进，第二次相遇的位置即为环路的起点。
+	```java
+	public Node findBeginning(Node head) {
+		Node fast = head;
+		Node slow = head;
+
+		while (fast != null && fast.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			if (slow == fast)
+				break;
+		}
+
+		if (fast == null || fast.next == null) // no loop
+			return null;
+		
+		slow = head;
+		while (slow != fast) {
+			slow = slow.next;
+			fast = fast.next;
+		}
+
+		return fast;
+	}
+	```
+
+## 7. 链表相交问题
+
+假设两个单链表**只存在 Y 型交叉，不会存在 X 型交叉**，即：
+
+![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/19/ba560e8520787dcb3cbbc7227c1e478d.jpg)
+
+### 7.1. 判断链表是否相交
+
+[如何高效地判断两个单链表是否有交叉？](https://www.zhihu.com/question/20218641)
+
+- 解法 1：先遍历链表 A，遍历链表 A 的时候将 node 加入到一个 hash 表或者二叉树中。之后遍历链表 B 的 node 时，检查该 node 是否存在在数据结构中对应的位置就可以了。时间复杂度为 O(n+m)，空间复杂度为 O(n+m)。
+
+- 解法 2：遍历两个链表分别知道两个表的长度 n, m。然后让长表先走 `|n-m|` 步后，短表再开始走，如果有（内存地址）相同的节点并且不为空，则说明这两个链表是相交的。时间复杂度为 o(m+n)，空间复杂度为 O(1)。
+
+### 7.2. 求相交链表的交点
+
+[160. Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
+
+- 解法 1：将其中一个链表的头尾相连，那么可以将问题转化为求另一个链表中环的开始节点，使用快行指针（fast 走 2 步 / 次，slow 走 1 步 / 次）即可。
+
+- 解法 2：用两个栈分别记录两个链表的节点，再弹出，找到最后一个相等的节点，即为这两个链表的交点。
+
+- 解法 3：将长的链表移动长度差的距离，然后同时移动两个链表，找到第一个相等的节点，即为这两个链表的交点。
+
+## 8. 水池采样问题 (Reservoir Sampling Problem)
 
 [Stackoverflow: Efficiently selecting a set of random elements from a linked list](https://stackoverflow.com/questions/54059/efficiently-selecting-a-set-of-random-elements-from-a-linked-list)
 
@@ -347,7 +440,7 @@
 实际上，这个方法的思路属于[蒙特卡罗 (Monte Carlo) 算法](http://www.ruanyifeng.com/blog/2015/07/monte-carlo-method.html)。
 > 举个例子，假如筐里有 100 个苹果，让我每次闭眼拿 1 个，挑出最大的。于是我随机拿 1 个，再随机拿 1 个跟它比，留下大的，再随机拿 1 个……我每拿一次，留下的苹果都至少不比上次的小。拿的次数越多，挑出的苹果就越大，但我除非拿 100 次，否则无法肯定挑出了最大的。这个挑苹果的算法，就属于蒙特卡罗算法，即**尽量找好的，但不保证是最好的**。
 
-### 7.1. Linked List Random Node
+### 8.1. Linked List Random Node
 
 [382. Linked List Random Node](https://leetcode.com/problems/linked-list-random-node)
 
@@ -379,8 +472,8 @@
   }
   ```
 
-### 7.2. Random Pick Index
+### 8.2. Random Pick Index
 
 [398. Random Pick Index](https://leetcode.com/problems/random-pick-index/)
 
-## 8. Refer Links
+## 9. Refer Links
