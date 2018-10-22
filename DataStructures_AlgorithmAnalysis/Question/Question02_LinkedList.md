@@ -1,35 +1,35 @@
 - [LinkedList](#linkedlist)
-	- [1. TIP](#1-tip)
-	- [2. 链表反转](#2-链表反转)
-		- [2.1. Reverse Linked List](#21-reverse-linked-list)
-		- [2.2. Reverse Linked List II](#22-reverse-linked-list-ii)
-	- [3. 删除节点](#3-删除节点)
-		- [3.1. Remove Linked List Elements](#31-remove-linked-list-elements)
-		- [3.2. Remove Duplicates from Sorted List II](#32-remove-duplicates-from-sorted-list-ii)
-		- [3.3. Delete Node in a Linked List](#33-delete-node-in-a-linked-list)
-	- [4. 虚拟头节点](#4-虚拟头节点)
-		- [4.1. Merge Two Sorted Lists](#41-merge-two-sorted-lists)
-		- [4.2. Swap Nodes in Pairs](#42-swap-nodes-in-pairs)
-		- [4.3. Reverse Nodes in k-Group](#43-reverse-nodes-in-k-group)
-	- [5. 链表排序](#5-链表排序)
-		- [5.1. Insertion Sort List](#51-insertion-sort-list)
-		- [5.2. Sort List](#52-sort-list)
-	- [6. 快行指针](#6-快行指针)
-		- [6.1. Remove Nth Node From End of List](#61-remove-nth-node-from-end-of-list)
-		- [6.2. Rotate List](#62-rotate-list)
-		- [6.3. Reorder List](#63-reorder-list)
-		- [6.4. Palindrome Linked List](#64-palindrome-linked-list)
-		- [6.5. 有环链表问题](#65-有环链表问题)
-			- [6.5.1. 是否有环](#651-是否有环)
-			- [6.5.2. 环路长度](#652-环路长度)
-			- [6.5.3. 环路起点](#653-环路起点)
-	- [7. 链表相交问题](#7-链表相交问题)
-		- [7.1. 判断链表是否相交](#71-判断链表是否相交)
-		- [7.2. 求相交链表的交点](#72-求相交链表的交点)
-	- [8. 水池采样问题 (Reservoir Sampling Problem)](#8-水池采样问题-reservoir-sampling-problem)
-		- [8.1. Linked List Random Node](#81-linked-list-random-node)
-		- [8.2. Random Pick Index](#82-random-pick-index)
-	- [9. Refer Links](#9-refer-links)
+  - [1. TIP](#1-tip)
+  - [2. 链表反转](#2-链表反转)
+    - [2.1. Reverse Linked List](#21-reverse-linked-list)
+    - [2.2. Reverse Linked List II](#22-reverse-linked-list-ii)
+  - [3. 删除节点](#3-删除节点)
+    - [3.1. Remove Linked List Elements](#31-remove-linked-list-elements)
+    - [3.2. Remove Duplicates from Sorted List II](#32-remove-duplicates-from-sorted-list-ii)
+    - [3.3. Delete Node in a Linked List](#33-delete-node-in-a-linked-list)
+  - [4. 虚拟头节点](#4-虚拟头节点)
+    - [4.1. Merge Two Sorted Lists](#41-merge-two-sorted-lists)
+    - [4.2. Swap Nodes in Pairs](#42-swap-nodes-in-pairs)
+    - [4.3. Reverse Nodes in k-Group](#43-reverse-nodes-in-k-group)
+  - [5. 链表排序](#5-链表排序)
+    - [5.1. Insertion Sort List](#51-insertion-sort-list)
+    - [5.2. Sort List](#52-sort-list)
+  - [6. 快行指针](#6-快行指针)
+    - [6.1. Remove Nth Node From End of List](#61-remove-nth-node-from-end-of-list)
+    - [6.2. Rotate List](#62-rotate-list)
+    - [6.3. Reorder List](#63-reorder-list)
+    - [6.4. Palindrome Linked List](#64-palindrome-linked-list)
+    - [6.5. 有环链表问题](#65-有环链表问题)
+      - [6.5.1. 是否有环](#651-是否有环)
+      - [6.5.2. 环路长度](#652-环路长度)
+      - [6.5.3. 环路起点](#653-环路起点)
+  - [7. 链表相交问题](#7-链表相交问题)
+    - [7.1. 判断链表是否相交](#71-判断链表是否相交)
+    - [7.2. 求相交链表的交点](#72-求相交链表的交点)
+  - [8. 水池采样问题 (Reservoir Sampling Problem)](#8-水池采样问题-reservoir-sampling-problem)
+    - [8.1. Linked List Random Node](#81-linked-list-random-node)
+    - [8.2. Random Pick Index](#82-random-pick-index)
+  - [9. Refer Links](#9-refer-links)
 
 # LinkedList
 
@@ -332,61 +332,61 @@
 
 - Question 
 
-	给定一个单向链表，编写程序判断该链表是否有环。
+  给定一个单向链表，编写程序判断该链表是否有环。
 
 - Solution
-	
-	定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**：
-	- 如果 fast 指针撞上了 slow 指针，那么说明该链表中有环。
-	- 如果 fast 指针走到了链表的末尾（next 指向 NULL）都没有撞上 slow 指针，那么说明该链表中没有环。
+  
+  定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**：
+  - 如果 fast 指针撞上了 slow 指针，那么说明该链表中有环。
+  - 如果 fast 指针走到了链表的末尾（next 指向 NULL）都没有撞上 slow 指针，那么说明该链表中没有环。
 
-	证明：
-	1. 在一个环形赛道上，方向相同而速度不相同的 2 辆车迟早会相遇。
-	1. 速度快多少才能保证一定刚好“追上”而不是刚好“越过”？相差 1 步。因为如果 fast 真的刚好“越过”了 slow，假设 fast 位于 `i` 位置，slow 位于 `i-1` 位置，那么可知在上一个单位时间，fast 就位于 `i-2` 位置，而 slow 位于 `i-1-1 = i-2`，也就是说，在上一个单位时间 2 者就已经“追上”了。
+  证明：
+  1. 在一个环形赛道上，方向相同而速度不相同的 2 辆车迟早会相遇。
+  1. 速度快多少才能保证一定刚好“追上”而不是刚好“越过”？相差 1 步。因为如果 fast 真的刚好“越过”了 slow，假设 fast 位于 `i` 位置，slow 位于 `i-1` 位置，那么可知在上一个单位时间，fast 就位于 `i-2` 位置，而 slow 位于 `i-1-1 = i-2`，也就是说，在上一个单位时间 2 者就已经“追上”了。
 
 #### 6.5.2. 环路长度
 
 - Question
 
-	给定一个有环链表，遍写程序返回环路的长度。
+  给定一个有环链表，遍写程序返回环路的长度。
 
 - Solution	
 
-	定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**，由于链表有环，fast 和 slow 会不断相遇，那么 fast 和 slow 第一次相遇和第二次相遇之间，slow 走过的节点处即为环的长度。
+  定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**，由于链表有环，fast 和 slow 会不断相遇，那么 fast 和 slow 第一次相遇和第二次相遇之间，slow 走过的节点处即为环的长度。
 
 #### 6.5.3. 环路起点
 
 - Question
 
-	给定一个有环链表，编写程序返回环路的起点（开头节点）。
+  给定一个有环链表，编写程序返回环路的起点（开头节点）。
 
 - Solution
 
-	定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**，由于链表有环，fast 和 slow 会不断相遇，当 fast 和 slow 第一次相遇时，将 slow 指向链表头部 head，那么**此时 fast 和 slow 离环路起点的距离是相同的**，因此让 fast 和 slow 以相同速度 1 步 / 次前进，第二次相遇的位置即为环路的起点。
-	```java
-	public Node findBeginning(Node head) {
-		Node fast = head;
-		Node slow = head;
+  定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**，由于链表有环，fast 和 slow 会不断相遇，当 fast 和 slow 第一次相遇时，将 slow 指向链表头部 head，那么**此时 fast 和 slow 离环路起点的距离是相同的**，因此让 fast 和 slow 以相同速度 1 步 / 次前进，第二次相遇的位置即为环路的起点。
+  ```java
+  public Node findBeginning(Node head) {
+    Node fast = head;
+    Node slow = head;
 
-		while (fast != null && fast.next != null) {
-			slow = slow.next;
-			fast = fast.next.next;
-			if (slow == fast)
-				break;
-		}
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if (slow == fast)
+        break;
+    }
 
-		if (fast == null || fast.next == null) // no loop
-			return null;
-		
-		slow = head;
-		while (slow != fast) {
-			slow = slow.next;
-			fast = fast.next;
-		}
+    if (fast == null || fast.next == null) // no loop
+      return null;
+    
+    slow = head;
+    while (slow != fast) {
+      slow = slow.next;
+      fast = fast.next;
+    }
 
-		return fast;
-	}
-	```
+    return fast;
+  }
+  ```
 
 ## 7. 链表相交问题
 

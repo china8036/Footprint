@@ -1,30 +1,30 @@
 - [Stack & Queue & Heap](#stack--queue--heap)
-	- [1. Stack](#1-stack)
-		- [1.1. 实现一个栈](#11-实现一个栈)
-		- [1.2. Tower of Hanoi](#12-tower-of-hanoi)
-		- [1.3. Valid Parentheses](#13-valid-parentheses)
-		- [1.4. Evaluate Reverse Polish Notation](#14-evaluate-reverse-polish-notation)
-		- [1.5. Simplify Path](#15-simplify-path)
-		- [1.6. 二叉树的 DFS](#16-二叉树的-dfs)
-			- [1.6.1. Binary Tree Preorder Traversal](#161-binary-tree-preorder-traversal)
-			- [1.6.2. Binary Tree Inorder Traversal](#162-binary-tree-inorder-traversal)
-			- [1.6.3. Binary Tree Postorder Traversal](#163-binary-tree-postorder-traversal)
-		- [1.7. 栈排序](#17-栈排序)
-	- [2. Queue](#2-queue)
-		- [2.1. 实现一个队列](#21-实现一个队列)
-		- [2.2. 二叉树的层序遍历](#22-二叉树的层序遍历)
-			- [2.2.1. Binary Tree Level Order Traversal](#221-binary-tree-level-order-traversal)
-			- [2.2.2. Binary Tree Level Order Traversal Ⅱ](#222-binary-tree-level-order-traversal-Ⅱ)
-			- [2.2.3. Binary Tree Zigzag Level Order Traversal](#223-binary-tree-zigzag-level-order-traversal)
-			- [2.2.4. Binary Tree Right Side View](#224-binary-tree-right-side-view)
-		- [2.3. 无权图的最短路径](#23-无权图的最短路径)
-			- [2.3.1. Perfect Squares](#231-perfect-squares)
-			- [2.3.2. Word Ladder](#232-word-ladder)
-			- [2.3.3. Word Ladder II](#233-word-ladder-ii)
-	- [3. Heap](#3-heap)
-		- [3.1. Top K Frequent Elements](#31-top-k-frequent-elements)
-		- [3.2. Merge k Sorted Lists](#32-merge-k-sorted-lists)
-	- [4. Refer Links](#4-refer-links)
+  - [1. Stack](#1-stack)
+    - [1.1. 实现一个栈](#11-实现一个栈)
+    - [1.2. Tower of Hanoi](#12-tower-of-hanoi)
+    - [1.3. Valid Parentheses](#13-valid-parentheses)
+    - [1.4. Evaluate Reverse Polish Notation](#14-evaluate-reverse-polish-notation)
+    - [1.5. Simplify Path](#15-simplify-path)
+    - [1.6. 二叉树的 DFS](#16-二叉树的-dfs)
+      - [1.6.1. Binary Tree Preorder Traversal](#161-binary-tree-preorder-traversal)
+      - [1.6.2. Binary Tree Inorder Traversal](#162-binary-tree-inorder-traversal)
+      - [1.6.3. Binary Tree Postorder Traversal](#163-binary-tree-postorder-traversal)
+    - [1.7. 双栈排序](#17-双栈排序)
+  - [2. Queue](#2-queue)
+    - [2.1. 实现一个队列](#21-实现一个队列)
+    - [2.2. 二叉树的层序遍历](#22-二叉树的层序遍历)
+      - [2.2.1. Binary Tree Level Order Traversal](#221-binary-tree-level-order-traversal)
+      - [2.2.2. Binary Tree Level Order Traversal Ⅱ](#222-binary-tree-level-order-traversal-Ⅱ)
+      - [2.2.3. Binary Tree Zigzag Level Order Traversal](#223-binary-tree-zigzag-level-order-traversal)
+      - [2.2.4. Binary Tree Right Side View](#224-binary-tree-right-side-view)
+    - [2.3. 无权图的最短路径](#23-无权图的最短路径)
+      - [2.3.1. Perfect Squares](#231-perfect-squares)
+      - [2.3.2. Word Ladder](#232-word-ladder)
+      - [2.3.3. Word Ladder II](#233-word-ladder-ii)
+  - [3. Heap](#3-heap)
+    - [3.1. Top K Frequent Elements](#31-top-k-frequent-elements)
+    - [3.2. Merge k Sorted Lists](#32-merge-k-sorted-lists)
+  - [4. Refer Links](#4-refer-links)
 
 # Stack & Queue & Heap
 
@@ -35,25 +35,25 @@
 ```java
 // based on linked list
 public class MyStack<T> {
-	private Node<T> top; // 保存栈顶元素
+  private Node<T> top; // 保存栈顶元素
 
-	public T peek() {
-		return top == null ? null : top.data;
-	}
+  public T peek() {
+    return top == null ? null : top.data;
+  }
 
-	public T pop() {
-		if (top == null) 
-			return null;
-		T data = top.data;
-		top = top.next;
-		return data;
-	}
+  public T pop() {
+    if (top == null) 
+      return null;
+    T data = top.data;
+    top = top.next;
+    return data;
+  }
 
-	public void push(T data) {
-		Node<T> node = new Node<>(data);
-		node.next = top;
-		top = node;
-	}
+  public void push(T data) {
+    Node<T> node = new Node<>(data);
+    node.next = top;
+    top = node;
+  }
 }
 ```
 
@@ -61,27 +61,27 @@ public class MyStack<T> {
 
 - Question
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/3b7381aed22b5bbd915208c219d7e586.jpg)
+  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/3b7381aed22b5bbd915208c219d7e586.jpg)
 
-	编写程序，将所有盘子从第 1 个塔移动到第 3 个塔。
+  编写程序，将所有盘子从第 1 个塔移动到第 3 个塔。
 
 - Solution
 
-	采用基本案例构建法进行分析：
-	1. 当 n=1 时，显然可以将盘子从 origin 移动到 destination。
-	1. 当 n=2 时，显然可以将盘子从 origin 移动到 destination。
-	1. 当 n=3 时，先将前 2 个盘子从 origin 移动到 buffer，再把第 3 个盘子从 origin 移动到 destination，最后把前 2 个盘子移动到 destination 即可。
-	
-	因此，可以采用递归的思想：
-	```java
-	public void hanoi(int n, Tower origin, Tower destination, Tower buffer) {
-		if (n <= 0)
-			return;
-		hanoi(n - 1, origin, buffer, destination); 	// 把前 n-1 个盘子从 origin 移到 buffer
-		moveTop(origin, destination);								// 把最大的盘子从 origin 移到 destination
-		hanoi(n - 1, buffer, destination, origin);	// 把前 n-1 个盘子从 buffer 移到 destination
-	}
-	```
+  采用基本案例构建法进行分析：
+  1. 当 n=1 时，显然可以将盘子从 origin 移动到 destination。
+  1. 当 n=2 时，显然可以将盘子从 origin 移动到 destination。
+  1. 当 n=3 时，先将前 2 个盘子从 origin 移动到 buffer，再把第 3 个盘子从 origin 移动到 destination，最后把前 2 个盘子移动到 destination 即可。
+  
+  因此，可以采用递归的思想：
+  ```java
+  public void hanoi(int n, Tower origin, Tower destination, Tower buffer) {
+    if (n <= 0)
+      return;
+    hanoi(n - 1, origin, buffer, destination); 	// 把前 n-1 个盘子从 origin 移到 buffer
+    moveTop(origin, destination);								// 把最大的盘子从 origin 移到 destination
+    hanoi(n - 1, buffer, destination, origin);	// 把前 n-1 个盘子从 buffer 移到 destination
+  }
+  ```
 
 ### 1.3. Valid Parentheses
 
@@ -166,63 +166,63 @@ public class MyStack<T> {
   > 在逆波兰记法中，所有操作符置于操作数的后面，因此也被称为后缀表示法。逆波兰记法不需要括号来标识操作符的优先级，是一种利用栈来进行运算的数学表达式。相比传统的计算机表达式求值，逆波兰表达式算法取得了时间复杂度和空间复杂度上的双重优势。
 
 - Solution
-	```java
-	public int evalRPN(String[] tokens) {
+  ```java
+  public int evalRPN(String[] tokens) {
       int a, b;
-			ArrayDeque<Integer> S = new ArrayDeque<>();
-			for (String s : tokens) {
-					if(s.equals("+"))
-							S.push(S.pop()+S.pop());
-					else if(s.equals("*")) 
-							S.push(S.pop() * S.pop());
-					else if(s.equals("/")) {
-							b = S.pop(); // 栈顶为被除数
-							a = S.pop();
-							S.push(a / b);
-					}
-					else if(s.equals("-")) {
-							b = S.pop(); // 栈顶为被减数
-							a = S.pop();
-							S.push(a - b);
-					}
-					else 
-							S.push(Integer.parseInt(s));
-			}
-			return S.pop();
-	}
-	```
+      ArrayDeque<Integer> S = new ArrayDeque<>();
+      for (String s : tokens) {
+          if(s.equals("+"))
+              S.push(S.pop()+S.pop());
+          else if(s.equals("*")) 
+              S.push(S.pop() * S.pop());
+          else if(s.equals("/")) {
+              b = S.pop(); // 栈顶为被除数
+              a = S.pop();
+              S.push(a / b);
+          }
+          else if(s.equals("-")) {
+              b = S.pop(); // 栈顶为被减数
+              a = S.pop();
+              S.push(a - b);
+          }
+          else 
+              S.push(Integer.parseInt(s));
+      }
+      return S.pop();
+  }
+  ```
 
 ### 1.5. Simplify Path
 
 [71. Simplify Path](https://leetcode.com/problems/simplify-path/description/)
 
 - Question
-	> Given an absolute path for a file (Unix-style), simplify it.	
-	For example,
-	```
-	path = "/home/", => "/home"
-	path = "/a/./b/../../c/", => "/c"
-	```
+  > Given an absolute path for a file (Unix-style), simplify it.	
+  For example,
+  ```
+  path = "/home/", => "/home"
+  path = "/a/./b/../../c/", => "/c"
+  ```
 
 - Solution
-	```java
-	public String simplifyPath(String path) {
-			Deque<String> stack = new LinkedList<>();
-			Set<String> skip = new HashSet<>(Arrays.asList("..", ".", ""));
-			
-			String [] paths = path.split("/");
-			for (String dir : paths) {
-					if (dir.equals("..") && !stack.isEmpty()) 
-							stack.pop();
-					else if (!skip.contains(dir)) 
-							stack.push(dir);
-			}
-			String res = "";
-			for (String dir : stack)
-					res = "/" + dir + res;
-			return res.isEmpty() ? "/" : res;
-	}
-	```
+  ```java
+  public String simplifyPath(String path) {
+      Deque<String> stack = new LinkedList<>();
+      Set<String> skip = new HashSet<>(Arrays.asList("..", ".", ""));
+      
+      String [] paths = path.split("/");
+      for (String dir : paths) {
+          if (dir.equals("..") && !stack.isEmpty()) 
+              stack.pop();
+          else if (!skip.contains(dir)) 
+              stack.push(dir);
+      }
+      String res = "";
+      for (String dir : stack)
+          res = "/" + dir + res;
+      return res.isEmpty() ? "/" : res;
+  }
+  ```
 
 ### 1.6. 二叉树的 DFS
 
@@ -514,42 +514,44 @@ public class MyStack<T> {
     }
     ```
 
-### 1.7. 栈排序
+### 1.7. 双栈排序
+
+[《CC 150 3.6》](https://www.nowcoder.com/questionTerminal/d0d0cddc1489476da6b782a6301e7dec)
 
 - Question
 
-	编写程序对一个栈进行排序（最大元素在栈顶），要求最多只能使用栈作为辅助空间。栈只支持 isEmpty、push、pop 和 peek 操作。
+  编写程序对一个栈进行排序（最大元素在栈顶），要求最多只能使用栈作为辅助空间的数据结构，且该栈只支持 isEmpty、push、pop 和 peek 操作。
 
 - Solution
-	- 解法 1：使用 1 个辅助栈，时间效率为 O(n^2)，空间效率为 O(n)。
+  - 解法 1：使用 1 个辅助栈，时间效率为 O(n^2)，空间效率为 O(n)。
 
-		假设有 2 个栈 s1 和 s2，令 s1 是无序栈，s2 是有序栈（结果栈）：
-		1. 对 s1 执行 pop 操作，并将该栈顶元素存储到一个临时变量 tmp 中。
-		1. 对 s2 不断执行 pop 操作，并将 pop 的元素 push 到 s1 中，直到 s2 为空或者 pop 的元素小于 tmp，则把 tmp 再 push 到 s2 中。
-		1. 重复以上步骤。
+    假设有 2 个栈 s1 和 s2，令 s1 是无序栈，s2 是有序栈（结果栈）：
+    1. 对 s1 执行 pop 操作，并将该栈顶元素存储到一个临时变量 tmp 中。
+    1. 对 s2 不断执行 pop 操作，并将 pop 的元素 push 到 s1 中，直到 s2 为空或者 pop 的元素小于 tmp，则把 tmp 再 push 到 s2 中。
+    1. 重复以上步骤。
 
-		例如：
+    例如：
 
-		![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/ff32d738146875ce65fb5ddf18c4c3d6.jpg)
+    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/ff32d738146875ce65fb5ddf18c4c3d6.jpg)
 
-		![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/53bc29f9c9a531b999e4ea95371c15b7.jpg)
+    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/53bc29f9c9a531b999e4ea95371c15b7.jpg)
 
-		```java
-		public void Stack<Integer> sort(Stack<Integer> s) {
-			Stack<Integer> r = new Stack<>();
-			while (!s.isEmpty()) {
-				int tmp = s.pop();
-				while (!r.isEmpty() && r.peek() > tmp)
-					s.push(r.pop());
-				r.push(tmp);
-			}
-			return r;
-		}
-		```
+    ```java
+    public void Stack<Integer> sort(Stack<Integer> s) {
+      Stack<Integer> res = new Stack<>();
+      while (!s.isEmpty()) {
+        int tmp = s.pop();
+        while (!res.isEmpty() && res.peek() > tmp)
+          s.push(res.pop());
+        res.push(tmp);
+      }
+      return res;
+    }
+    ```
 
-	- 解法 2：使用多个辅助栈，时间效率为 O(nlog n)，空间效率为 O(n^n)。
-		- QuickSort：在每一层递归中，创建 2 个辅助栈，并根据 pivot element 将原栈的元素分到 2 个辅助栈中。进行递归排序后，将所有栈的元素归并放回原栈。
-		- MergeSort：在每一层递归中，创建 2 个辅助栈，递归排序每个栈，然后再把它们归并到一起排好序，放回原来的栈。
+  - 解法 2：使用多个辅助栈，时间效率为 O(nlog n)，空间效率为 O(n^n)。
+    - QuickSort：在每一层递归中，创建 2 个辅助栈，并根据 pivot element 将原栈的元素分到 2 个辅助栈中。进行递归排序后，将所有栈的元素归并放回原栈。
+    - MergeSort：在每一层递归中，创建 2 个辅助栈，递归排序每个栈，然后再把它们归并到一起排好序，放回原来的栈。
 
 ## 2. Queue
 
@@ -558,25 +560,25 @@ public class MyStack<T> {
 ```java
 // based on linked list
 public class MyQueue<T> {
-	private Node<T> head, tail; // head -> ... -> ... -> tail
+  private Node<T> head, tail; // head -> ... -> ... -> tail
 
-	public enqueue(T data) {
-		if (head == null) {
-			tail = new Node<>(data);
-			head = tail;
-		} else {
-			tail.next = new Node<>(data);
-			tail = tail.next;
-		}
-	}
+  public enqueue(T data) {
+    if (head == null) {
+      tail = new Node<>(data);
+      head = tail;
+    } else {
+      tail.next = new Node<>(data);
+      tail = tail.next;
+    }
+  }
 
-	public dequeue() {
-		if (head == null)
-			return null;
-		T data = head.data;
-		head = head.next;
-		return data;
-	}
+  public dequeue() {
+    if (head == null)
+      return null;
+    T data = head.data;
+    head = head.next;
+    return data;
+  }
 
 }
 ```
@@ -706,69 +708,69 @@ public class MyQueue<T> {
 
 - Question
   > Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord.
-	Example 1:
-	```
-	Input:
-	beginWord = "hit",
-	endWord = "cog",
-	wordList = ["hot","dot","dog","lot","log","cog"]
+  Example 1:
+  ```
+  Input:
+  beginWord = "hit",
+  endWord = "cog",
+  wordList = ["hot","dot","dog","lot","log","cog"]
 
-	Output: 5
+  Output: 5
 
-	Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
-	return its length 5.
-	```
+  Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+  return its length 5.
+  ```
 
 - Solution
 
-	同样构造一个无向图，通过 BFS 即可求解。
-	```java
-	public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-			Set<String> beginSet = new HashSet<String>(), endSet = new HashSet<String>();
+  同样构造一个无向图，通过 BFS 即可求解。
+  ```java
+  public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
+      Set<String> beginSet = new HashSet<String>(), endSet = new HashSet<String>();
 
-			int len = 1;
-			int strLen = beginWord.length();
-			HashSet<String> visited = new HashSet<String>();
+      int len = 1;
+      int strLen = beginWord.length();
+      HashSet<String> visited = new HashSet<String>();
 
-			beginSet.add(beginWord);
-			endSet.add(endWord);
-			while (!beginSet.isEmpty() && !endSet.isEmpty()) {
-					if (beginSet.size() > endSet.size()) {
-							Set<String> set = beginSet;
-							beginSet = endSet;
-							endSet = set;
-					}
+      beginSet.add(beginWord);
+      endSet.add(endWord);
+      while (!beginSet.isEmpty() && !endSet.isEmpty()) {
+          if (beginSet.size() > endSet.size()) {
+              Set<String> set = beginSet;
+              beginSet = endSet;
+              endSet = set;
+          }
 
-					Set<String> temp = new HashSet<String>();
-					for (String word : beginSet) {
-							char[] chs = word.toCharArray();
+          Set<String> temp = new HashSet<String>();
+          for (String word : beginSet) {
+              char[] chs = word.toCharArray();
 
-							for (int i = 0; i < chs.length; i++) {
-									for (char c = 'a'; c <= 'z'; c++) {
-											char old = chs[i];
-											chs[i] = c;
-											String target = String.valueOf(chs);
+              for (int i = 0; i < chs.length; i++) {
+                  for (char c = 'a'; c <= 'z'; c++) {
+                      char old = chs[i];
+                      chs[i] = c;
+                      String target = String.valueOf(chs);
 
-											if (endSet.contains(target)) {
-													return len + 1;
-											}
+                      if (endSet.contains(target)) {
+                          return len + 1;
+                      }
 
-											if (!visited.contains(target) && wordList.contains(target)) {
-													temp.add(target);
-													visited.add(target);
-											}
-											chs[i] = old;
-									}
-							}
-					}
+                      if (!visited.contains(target) && wordList.contains(target)) {
+                          temp.add(target);
+                          visited.add(target);
+                      }
+                      chs[i] = old;
+                  }
+              }
+          }
 
-					beginSet = temp;
-					len++;
-			}
+          beginSet = temp;
+          len++;
+      }
 
-			return 0;
-	}
-	```
+      return 0;
+  }
+  ```
 
     TODO: 双向 BFS 求解
 
@@ -778,7 +780,7 @@ public class MyQueue<T> {
 
 - Question
   
-	在 Word Ladder 的基础上，返回整个变化的过程。
+  在 Word Ladder 的基础上，返回整个变化的过程。
 
 - Solution
 

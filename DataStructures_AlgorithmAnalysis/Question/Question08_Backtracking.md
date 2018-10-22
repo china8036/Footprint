@@ -2,6 +2,7 @@
 	- [1. 排列问题 Permutation](#1-排列问题-permutation)
 		- [1.1. Permutations](#11-permutations)
 		- [1.2. Permutations II](#12-permutations-ii)
+		- [1.3. 括号排列](#13-括号排列)
 	- [2. 组合问题 Combination](#2-组合问题-combination)
 		- [2.1. Combinations](#21-combinations)
 		- [2.2. Combination Sum](#22-combination-sum)
@@ -11,15 +12,16 @@
 		- [2.6. Subsets](#26-subsets)
 		- [2.7. Subsets II](#27-subsets-ii)
 		- [2.8. Binary Watch](#28-binary-watch)
+		- [2.9. 硬币表示问题](#29-硬币表示问题)
 	- [3. 二维平面问题](#3-二维平面问题)
-		- [3.1. 送货员问题](#31-送货员问题)
+		- [3.1. 派送员问题](#31-派送员问题)
 		- [3.2. Word Search](#32-word-search)
 		- [3.3. Word Search II](#33-word-search-ii)
 		- [3.4. Flood Fill 问题](#34-flood-fill-问题)
 			- [3.4.1. Number of Islands](#341-number-of-islands)
 			- [3.4.2. Surrounded Regions](#342-surrounded-regions)
 			- [3.4.3. Pacific Atlantic Water Flow](#343-pacific-atlantic-water-flow)
-		- [3.5. N=Queue 问题](#35-nqueue-问题)
+		- [3.5. N-Queues 问题](#35-n-queues-问题)
 			- [3.5.1. N-Queens](#351-n-queens)
 			- [3.5.2. N-Queens II](#352-n-queens-ii)
 		- [3.6. Sudoku Solver](#36-sudoku-solver)
@@ -203,6 +205,50 @@ public class Main {
 							tempList.remove(tempList.size() - 1);
 					}
 			}
+	}
+	```
+
+### 1.3. 括号排列
+
+- Question
+	
+	> 编写程序，输出 n 对括号的全部有序排列（即左右括号可以正确配对）。
+
+- Solution
+
+	从头构造字符串，逐一加入左括号或右括号：
+	- 只要左括号还没用完，就可以加入左括号。
+	- 只要右括号比左括号少，就可以加入右括号。
+
+	也就是说，我们只需要记录允许插入的左右括号的数目。如果还有左括号可用，就插入一个左括号然后递归；如果剩下的右括号比左括号还多，就插入一个右括号然后递归。
+	```java
+	public ArrayList<String> generateParens(int n) {
+		char [] str = new char[n * 2];
+		ArrayList<String> list = new ArrayList<>();
+		addParens(list, n, n, str, 0);
+		return list;
+	}
+
+	/**
+		* left 表示剩下的左括号数目
+		* right 表示剩下的右括号数目
+		*/
+	public void addParens(ArrayList<String> list, int left, int right, char [] str, int n) {
+		if (left < 0 || right < left)
+			return;
+		if (left == 0 && right == 0) 
+			list.add(String.copyValueOf(str));
+		else {
+			if (left > 0) {
+				str[n] = '(';
+				addParens(list, left - 1, right, str, n + 1);
+			}
+
+			if (right > left) {
+				str[n] = ')';
+				addParens(list, left, right - 1, str, n + 1);
+			}
+		}
 	}
 	```
 
@@ -567,13 +613,57 @@ TODO:
 
 [401. Binary Watch](https://leetcode.com/problems/binary-watch/description/)
 
+### 2.9. 硬币表示问题
+
+《CC150》 9.8
+
+- Question
+  > 给定数量不限的硬币，币值分别为 25 分、10 分、5 分和 1 分，编写程序求得 n 分有几种表示方法。
+
+- Solution
+
+	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/21/91ca283f09b814ece6acab4f76818c87.jpg)
+
+	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/21/1882cec5bda5a5af1ebea1353c01cd88.jpg)
+
+	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/21/70d74cde74bea5893ce6816bb03dbbe6.jpg)
+
+  ```java
+	public int solve(int n) {
+		return makeChange(n, 25);
+	}
+
+	public int makeChange(int n, int denom) {
+		int nextDenom = 0;
+		switch (denom) {
+		case 25:
+			nextDenom = 10;
+			break;
+		case 10:
+			nextDenom = 5;
+			break;
+		case 5:
+			nextDenom = 1;
+			break;
+		case 1:
+			return 1;
+		}
+
+		int ways = 0;
+		for (int i = 0; i * denom <= n; i++)
+			ways += makeChange(n - i * denom, nextDenom);
+		
+		return ways;
+	}
+	```
+
 ## 3. 二维平面问题
 
-### 3.1. 送货员问题
+### 3.1. 派送员问题
 
 - Question
   
-  某物流派送员 p，需要给 a、b、c、d4 个快递点派送包裹，请问派送员需要选择什么的路线，才能完成最短路程的派送。假设如图派送员的起点坐标 (0,0)，派送路线只能沿着图中的方格边行驶，每个小格都是正方形，且边长为 1，如 p 到 d 的距离就是 4。随机输入 n 个派送点坐标，求输出最短派送路线值（从起点开始完成 n 个点派送并回到起始点的距离）。
+  某物流派送员 p，需要给 a、b、c、d 共 4 个快递点派送包裹，请问派送员需要选择什么的路线，才能完成最短路程的派送。假设如图派送员的起点坐标 (0,0)，派送路线只能沿着图中的方格边行驶，每个小格都是正方形，且边长为 1，如 p 到 d 的距离就是 4。随机输入 n 个派送点坐标，求输出最短派送路线值（从起点开始完成 n 个点派送并回到起始点的距离）。
 
 	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/22/d63ab524c1a5e6d852e4f250a6b71fae.jpg)
 
@@ -609,7 +699,7 @@ TODO:
 		private static int minPath = Integer.MAX_VALUE;
 
 		// 需要派送的坐标数组
-		private static Point[] targetPoints;
+		private static Point [] targetPoints;
 
 		/**
 		* 回溯法求出最小的派送距离
@@ -628,7 +718,7 @@ TODO:
 				int distance = point.getDistance(curPosition);
 				if (!point.visted && sumOfPath + distance < minPath) {
 					point.visted = true;
-					caculate(point, sumOfPath + distance, finishedNum + 1);
+					caculate(point, sumOfPath + distance, finishedNum + 1); // TODO: 为什么这里不设置回 false？
 				}
 			}
 			return minPath;
@@ -639,7 +729,7 @@ TODO:
 			int num = Integer.parseInt(input.nextLine().trim());
 			Point [] points = new Point[num];
 			for (int i = 0; i < num; i++) {
-				String pointsStr[] = input.nextLine().trim().split(",");
+				String pointsStr [] = input.nextLine().trim().split(",");
 				points[i] = new Point(Integer.parseInt(pointsStr[0]), Integer.parseInt(pointsStr[1]));
 			}
 			Main.targetPoints = points;
@@ -825,7 +915,9 @@ TODO:
   Answer: 3
   ```
 - Solution
-  ```cpp
+  
+	使用递归实现的 DFS：
+	```cpp
   // 时间复杂度：O(n*m), 空间复杂度：O(n*m)
   class Solution {
   private:
@@ -883,7 +975,7 @@ TODO:
 
 [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/description/)
 
-### 3.5. N=Queue 问题
+### 3.5. N-Queues 问题
 
 #### 3.5.1. N-Queens
 

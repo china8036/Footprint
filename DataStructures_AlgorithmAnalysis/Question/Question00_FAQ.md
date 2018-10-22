@@ -33,7 +33,9 @@
   - [10. 生成随机数](#10-生成随机数)
     - [10.1. Java](#101-java)
     - [10.2. C++](#102-c)
-  - [11. Refer Links](#11-refer-links)
+  - [11. 实现随机数](#11-实现随机数)
+  - [12. 洗牌算法实现](#12-洗牌算法实现)
+  - [13. Refer Links](#13-refer-links)
 
 # 常见问题
 
@@ -345,6 +347,8 @@ int getmid(int L[], int low, int high)
 <!-- TODO: 复杂度为什么是 O(n) ？尾递归优化？-->
 
 ### 4.2. 动态求中位数
+
+《CC 150》 18.9
 
 所谓“动态”求中位数，指的是对一个元素动态改变的数据流，在每次元素更改时求出其中位数。
 
@@ -946,7 +950,36 @@ int generateRandom(int i, int j)
 }
 ```
 
-## 11. Refer Links
+## 11. 实现随机数
+
+《CC 150 17.11》
+
+- Question
+  > 给定一个可以产生 0~4 随机数的函数 rand5()，编写 rand7() 方法，来产生 0~6 的随机数。
+
+- Solution
+  
+  我们只需要产生出一个范围的数值，且每个数值出现的概率相同（这个范围至少有 7 个元素），然后舍弃后边大于 7 的倍数的部分，将余下元素除以 7 取余数即可。
+  ```java
+  public int rand7() {
+    while (true) {
+      int num = 5 * rand5() + rand5(); // 产生 0~24 的一个数 TODO: 直接 6 * rand5() ?
+      if (num < 21) // 舍弃 21~24 之间的数值，否则 rand7() 返回 0~3 的值就会偏多
+        return num % 7;
+    }
+  }
+  ```
+
+## 12. 洗牌算法实现
+
+```java
+public void shuffle(int [] a) {
+  for (int i = 0; i < a.length; i++)
+    Array.swap(a, i, rand(0, i));
+}
+```
+
+## 13. Refer Links
 
 [O(n) 时间快速选择](http://www.shadowxh.com/?p=598)
 

@@ -1,34 +1,35 @@
 - [Array & String](#array--string)
-	- [1. 元素移动](#1-元素移动)
-		- [1.1. Move Zeros](#11-move-zeros)
-	- [2. 元素删除](#2-元素删除)
-		- [2.1. Remove Element](#21-remove-element)
-		- [2.2. Remove Duplicates from Sorted Array](#22-remove-duplicates-from-sorted-array)
-		- [2.3. Remove Duplicates from Sorted Array II](#23-remove-duplicates-from-sorted-array-ii)
-	- [3. 元素替换](#3-元素替换)
-		- [3.1. 不等长度的替换](#31-不等长度的替换)
-	- [4. 数组排序](#4-数组排序)
-		- [4.1. Sort Colors](#41-sort-colors)
-		- [4.2. Merge Sorted Array](#42-merge-sorted-array)
-		- [4.3. Kth Largest Element in an Array](#43-kth-largest-element-in-an-array)
-	- [5. 双索引 Two Pointer](#5-双索引-two-pointer)
-		- [5.1. Two Sum II - Input array is sorted](#51-two-sum-ii---input-array-is-sorted)
-		- [5.2. Valid Palindrome](#52-valid-palindrome)
-		- [5.3. Reverse String](#53-reverse-string)
-		- [5.4. Reverse Vowels of a String](#54-reverse-vowels-of-a-string)
-		- [5.5. Container With Most Water](#55-container-with-most-water)
-		- [5.6. Trapping Rain Water](#56-trapping-rain-water)
-	- [6. 滑动窗口](#6-滑动窗口)
-		- [6.1. Minimum Size Subarray Sum](#61-minimum-size-subarray-sum)
-		- [6.2. Longest Substring Without Repeating Characters](#62-longest-substring-without-repeating-characters)
-		- [6.3. Find All Anagrams in a String](#63-find-all-anagrams-in-a-string)
-		- [6.4. Minimum Window Substring](#64-minimum-window-substring)
-	- [7. 其它问题](#7-其它问题)
-		- [7.1. 变位词](#71-变位词)
-		- [7.2. 字符串旋转](#72-字符串旋转)
-		- [7.3. 矩阵旋转](#73-矩阵旋转)
-		- [7.4. 矩阵清零](#74-矩阵清零)
-	- [8. Refer Links](#8-refer-links)
+  - [1. 元素移动](#1-元素移动)
+    - [1.1. Move Zeros](#11-move-zeros)
+  - [2. 元素删除](#2-元素删除)
+    - [2.1. Remove Element](#21-remove-element)
+    - [2.2. Remove Duplicates from Sorted Array](#22-remove-duplicates-from-sorted-array)
+    - [2.3. Remove Duplicates from Sorted Array II](#23-remove-duplicates-from-sorted-array-ii)
+  - [3. 元素替换](#3-元素替换)
+    - [3.1. 不等长度的替换](#31-不等长度的替换)
+  - [4. 数组排序](#4-数组排序)
+    - [4.1. Sort Colors](#41-sort-colors)
+    - [4.2. Merge Sorted Array](#42-merge-sorted-array)
+    - [4.3. Kth Largest Element in an Array](#43-kth-largest-element-in-an-array)
+  - [5. 双索引 Two Pointer](#5-双索引-two-pointer)
+    - [5.1. Two Sum II - Input array is sorted](#51-two-sum-ii---input-array-is-sorted)
+    - [5.2. Valid Palindrome](#52-valid-palindrome)
+    - [5.3. Reverse String](#53-reverse-string)
+    - [5.4. Reverse Vowels of a String](#54-reverse-vowels-of-a-string)
+    - [5.5. Container With Most Water](#55-container-with-most-water)
+    - [5.6. Trapping Rain Water](#56-trapping-rain-water)
+  - [6. 滑动窗口](#6-滑动窗口)
+    - [6.1. Minimum Size Subarray Sum](#61-minimum-size-subarray-sum)
+    - [6.2. Longest Substring Without Repeating Characters](#62-longest-substring-without-repeating-characters)
+    - [6.3. Find All Anagrams in a String](#63-find-all-anagrams-in-a-string)
+    - [6.4. Minimum Window Substring](#64-minimum-window-substring)
+  - [7. 其它问题](#7-其它问题)
+    - [7.1. 变位词](#71-变位词)
+    - [7.2. 字符串旋转](#72-字符串旋转)
+    - [7.3. 矩阵旋转](#73-矩阵旋转)
+    - [7.4. 矩阵清零](#74-矩阵清零)
+    - [7.5. 连续序列最大和](#75-连续序列最大和)
+  - [8. Refer Links](#8-refer-links)
 
 # Array & String
 
@@ -94,17 +95,17 @@
 > Given an array nums and a value val, remove all instances of that value in-place and return the new length.
 
 - Solution
-	```java
-	// Time complexity: O(n)
-	// Space complexity: O(1)
-	public int removeElement(int[] nums, int val) {
-			int i = 0;
-			for (int j = 0; j < nums.length; j++)
-	            if (nums[j] != val)
-	                nums[i++] = nums[j];
-			return i;
-	}
-	```
+  ```java
+  // Time complexity: O(n)
+  // Space complexity: O(1)
+  public int removeElement(int[] nums, int val) {
+      int i = 0;
+      for (int j = 0; j < nums.length; j++)
+              if (nums[j] != val)
+                  nums[i++] = nums[j];
+      return i;
+  }
+  ```
 
 ### 2.2. Remove Duplicates from Sorted Array
 
@@ -113,17 +114,17 @@
 > Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.
 
 - Solution
-	```java
-	// Time complexity: O(n)
-	// Space complexity: O(1)
-	public int removeDuplicates(int[] nums) {
-			int i = 0;
-			for (int j = 1; j < nums.length; j++)
-	            if (nums[j - 1] != nums[j])
-	                nums[++i] = nums[j];
-			return i + 1;
-	}
-	```
+  ```java
+  // Time complexity: O(n)
+  // Space complexity: O(1)
+  public int removeDuplicates(int[] nums) {
+      int i = 0;
+      for (int j = 1; j < nums.length; j++)
+              if (nums[j - 1] != nums[j])
+                  nums[++i] = nums[j];
+      return i + 1;
+  }
+  ```
 
 ### 2.3. Remove Duplicates from Sorted Array II
 
@@ -132,25 +133,25 @@
 > Given a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length.
 
 - Solution
-	```java
-	public int removeDuplicates(int[] nums) {
-			int index=0;
-			int ret=0;
-			for (int i = 0; i < nums.length; i++) {
-					int count=1;
-					int num = nums[i];
-					while (i<nums.length-1 && nums[i] == nums[i+1]) {
-							i++;
-							count++;
-					}
-					count = count >= 2 ? 2 : count;
-					ret +=count;
-					for (int j = 0; j < count; j++)
-							nums[index++] = num;
-			}
-			return ret;
-	}
-	```
+  ```java
+  public int removeDuplicates(int[] nums) {
+      int index=0;
+      int ret=0;
+      for (int i = 0; i < nums.length; i++) {
+          int count=1;
+          int num = nums[i];
+          while (i<nums.length-1 && nums[i] == nums[i+1]) {
+              i++;
+              count++;
+          }
+          count = count >= 2 ? 2 : count;
+          ret +=count;
+          for (int j = 0; j < count; j++)
+              nums[index++] = num;
+      }
+      return ret;
+  }
+  ```
 
 ## 3. 元素替换
 
@@ -158,32 +159,32 @@
 
 - Question
 
-	编写程序，将字符串中的空格全部替换成 `%20`（假定该字符串有足够的空间存放新字符），要求空间效率为 O(1)。
+  编写程序，将字符串中的空格全部替换成 `%20`（假定该字符串有足够的空间存放新字符），要求空间效率为 O(1)。
 
 - Solution
 
-	扫描 2 次字符串，第一次统计空格个数，计算新字符串长度；第二次从后往前遍历（避免覆写原有数据），将字符复制成新的值。
-	```java
-	public void replaceSpace(char [] str) {
-		int spaceCnt;
-		for (int i = 0; i < str.length; i++)
-			if (str[i] == ' ')
-				spaceCnt++;
-		
-		int newLength = str.length + spaceCnt * 2;
-		str[newLength] = '\0';
-		for (int i = str.length - 1, j = newLength - 1; i >= 0 && j >= 0; i--, j--) {
-			if (str[i] == ' ') {
-				str[j] = '0';
-				str[--j] = '2';
-				str[--j] = '%';
-			} else {
-				str[j] == str[i];
-			}
-		}
+  扫描 2 次字符串，第一次统计空格个数，计算新字符串长度；第二次从后往前遍历（避免覆写原有数据），将字符复制成新的值。
+  ```java
+  public void replaceSpace(char [] str) {
+    int spaceCnt;
+    for (int i = 0; i < str.length; i++)
+      if (str[i] == ' ')
+        spaceCnt++;
+    
+    int newLength = str.length + spaceCnt * 2;
+    str[newLength] = '\0';
+    for (int i = str.length - 1, j = newLength - 1; i >= 0 && j >= 0; i--, j--) {
+      if (str[i] == ' ') {
+        str[j] = '0';
+        str[--j] = '2';
+        str[--j] = '%';
+      } else {
+        str[j] == str[i];
+      }
+    }
 
-	}
-	```
+  }
+  ```
 
 ## 4. 数组排序
 
@@ -321,7 +322,7 @@
   Output: [1,2]
   Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
   ```
-	
+  
 - Solution
   - 暴力解法：双层遍历，O(n^2)。
   - 二分查找：O(nlogn)
@@ -425,38 +426,38 @@
 
 - Question
 
-	> Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+  > Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/ad145121d2296bc0e4d0fe0b51c7ad24.jpg)
+  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/ad145121d2296bc0e4d0fe0b51c7ad24.jpg)
 
-	Example:
-	```
-	Input: [1,8,6,2,5,4,8,3,7]
-	Output: 49
-	```
+  Example:
+  ```
+  Input: [1,8,6,2,5,4,8,3,7]
+  Output: 49
+  ```
 
 - Solution
 
-	根据题意，要求从 height 数组中任选两项 i 和 j（i <= j），使得 `Math.min(height[i], height[j]) * (j - i)` 最大化，求解这个最大值。
-	- 暴力解法，枚举所有情况，时间效率为 O(n^2)
+  根据题意，要求从 height 数组中任选两项 i 和 j（i <= j），使得 `Math.min(height[i], height[j]) * (j - i)` 最大化，求解这个最大值。
+  - 暴力解法，枚举所有情况，时间效率为 O(n^2)
 
-	- 双指针对撞（夹逼），时间效率为 O(n)
-		```java
-		public int maxArea(int[] height) {
-			int left = 0, right = height.length - 1;
-			int maxArea = 0;
+  - 双指针对撞（夹逼），时间效率为 O(n)
+    ```java
+    public int maxArea(int[] height) {
+      int left = 0, right = height.length - 1;
+      int maxArea = 0;
 
-			while (left < right) {
-				maxArea = Math.max(maxArea, Math.min(height[left], height[right]) * (right - left));
-				if (height[left] < height[right])
-					left++;
-				else
-					right--;
-			}
+      while (left < right) {
+        maxArea = Math.max(maxArea, Math.min(height[left], height[right]) * (right - left));
+        if (height[left] < height[right])
+          left++;
+        else
+          right--;
+      }
 
-			return maxArea;
-		}
-		```
+      return maxArea;
+    }
+    ```
 
 ### 5.6. Trapping Rain Water
 
@@ -485,26 +486,26 @@
     // 时间复杂度：O(n)
     // 空间复杂度：O(1)
     class Solution {
-    		public int minSubArrayLen(int s, int[] nums) {
-    				if(s <= 0 || nums == null)
-    						throw new IllegalArgumentException("Illigal Arguments");
+        public int minSubArrayLen(int s, int[] nums) {
+            if(s <= 0 || nums == null)
+                throw new IllegalArgumentException("Illigal Arguments");
           
-    				int l = 0 , r = -1; // nums[l...r] 为我们的滑动窗口
-    				int sum = 0;
-    				int res = nums.length + 1;
-    				while(l < nums.length){   // 窗口的左边界在数组范围内，则循环继续
-    						if(r + 1 < nums.length && sum < s)
-    								sum += nums[++r];
-    						else // r 已经到头 或者 sum >= s
-    								sum -= nums[l++];
+            int l = 0 , r = -1; // nums[l...r] 为我们的滑动窗口
+            int sum = 0;
+            int res = nums.length + 1;
+            while(l < nums.length){   // 窗口的左边界在数组范围内，则循环继续
+                if(r + 1 < nums.length && sum < s)
+                    sum += nums[++r];
+                else // r 已经到头 或者 sum >= s
+                    sum -= nums[l++];
     
-    						if(sum >= s)
-    								res = Math.min(res, r - l + 1);
-    				}
-    				if(res == nums.length + 1)
-    						return 0;
-    				return res;
-    		}
+                if(sum >= s)
+                    res = Math.min(res, r - l + 1);
+            }
+            if(res == nums.length + 1)
+                return 0;
+            return res;
+        }
     }
     ```
 
@@ -561,92 +562,115 @@
 
 - Question
 
-	给定 2 个字符串，判断其中一个字符串的字符重新排序后，能否变成另一个字符串。
+  给定 2 个字符串，判断其中一个字符串的字符重新排序后，能否变成另一个字符串。
 
 - Solution
-	- 解法 1：先排序后比较。若 2 个字符串拥有同一组字符，那么排序后肯定会变成完全相同的 2 个字符串。
+  - 解法 1：先排序后比较。若 2 个字符串拥有同一组字符，那么排序后肯定会变成完全相同的 2 个字符串。
 
-	- 解法 2：统计字符频度。遍历字符串的每个字符，统计出现次数，再进行比较即可。
+  - 解法 2：统计字符频度。遍历字符串的每个字符，统计出现次数，再进行比较即可。
 
 ### 7.2. 字符串旋转
 
 - Question
 
-	给定 2 个字符串，判断其中一个字符串旋转后，能否变成另一个字符串。如：`waterbottle` 以 `wat` 旋转后，就会得到 `erbottlewat`。
+  给定 2 个字符串，判断其中一个字符串旋转后，能否变成另一个字符串。如：`waterbottle` 以 `wat` 旋转后，就会得到 `erbottlewat`。
 
 - Solution
 
-	假定 s2可以由s1旋转而来，此时令 `x = wat`, `y = erbottle`，则 `s1 = xy = waterbottle`，`s2 = yx = erbottlewat`。由于 `yx` 是 `xyxy` 的子串，因此 `s2` 是 `s1s1` 的子串。也就是说，解决这个问题只需要判断 `s2` 是不是 `s1s1` 的子串即可。
-	```java
-	public boolean isRotation(String s1, String s2) {
-		if (s1.length() > 0 && s1.length() == s2.length()) 
-			return isSubstring(s1+s1, s2);
-		return false;
-	}
-	```
+  假定 s2 可以由 s1 旋转而来，此时令 `x = wat`, `y = erbottle`，则 `s1 = xy = waterbottle`，`s2 = yx = erbottlewat`。由于 `yx` 是 `xyxy` 的子串，因此 `s2` 是 `s1s1` 的子串。也就是说，解决这个问题只需要判断 `s2` 是不是 `s1s1` 的子串即可。
+  ```java
+  public boolean isRotation(String s1, String s2) {
+    if (s1.length() > 0 && s1.length() == s2.length()) 
+      return isSubstring(s1+s1, s2);
+    return false;
+  }
+  ```
 
 ### 7.3. 矩阵旋转
 
 - Question
-	
-	给定一个 n*n 的二维矩阵，编写程序将矩阵旋转 90°，要求空间效率为 O(1)。
+  
+  给定一个 n*n 的二维矩阵，编写程序将矩阵旋转 90°，要求空间效率为 O(1)。
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/726c2bdd26fcae49f9efa8407fdea6c0.jpg)
+  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/726c2bdd26fcae49f9efa8407fdea6c0.jpg)
 
 - Solution
 
-	从最外面一层开始，逐渐向里（也可以从内层向外），在每一层上进行旋转，即将上边移到右边，右边移到下边，下边移到左边，左边移到上边。同时为实现空间效率为 O(1)，每次移动时都按索引一个个进行交换。
-	```java
-	public void rotate(int [][] matrix, int n) {
-		for (int layer = 0; layer < n / 2; layer++) {
-			int first = layer;
-			int last = n - layer - 1;
-			for (int i = first; i < largest; i++) {
-				int offset = i - first;
-				int top  = matrix[first](i);
-				matrix[first](i) = matrix[last - offset](first); // left to top
-				matrix[last - offset](first) = matrix[last](last - offset); // bottom to left
-				matrix[last](last - offset) = matrix[i](last); // right to bottom
-				matrix[i](last) = top; // top to right
-			}
-		}
-	}
-	```
-	时间效率为 O(n^2)，但已是最优解法，因为任何算法都至少需要访问 n^2 个元素。
+  从最外面一层开始，逐渐向里（也可以从内层向外），在每一层上进行旋转，即将上边移到右边，右边移到下边，下边移到左边，左边移到上边。同时为实现空间效率为 O(1)，每次移动时都按索引一个个进行交换。
+  ```java
+  public void rotate(int [][] matrix, int n) {
+    for (int layer = 0; layer < n / 2; layer++) {
+      int first = layer;
+      int last = n - layer - 1;
+      for (int i = first; i < largest; i++) {
+        int offset = i - first;
+        int top  = matrix[first](i);
+        matrix[first](i) = matrix[last - offset](first); // left to top
+        matrix[last - offset](first) = matrix[last](last - offset); // bottom to left
+        matrix[last](last - offset) = matrix[i](last); // right to bottom
+        matrix[i](last) = top; // top to right
+      }
+    }
+  }
+  ```
+  时间效率为 O(n^2)，但已是最优解法，因为任何算法都至少需要访问 n^2 个元素。
 
 ### 7.4. 矩阵清零
 
 - Question
 
-	给定一个 m*n 的二维矩阵，编写程序实现：如果某个元素为 0，则将该元素所在的行和列清零。
+  给定一个 m*n 的二维矩阵，编写程序实现：如果某个元素为 0，则将该元素所在的行和列清零。
 
 - Solution
 
-	注意陷阱：如果直接遍历矩阵进行操作，清零操作会导致下一步判断出错，在读取被清零的行或列时，读到的尽是零，很可能很快会就将整个矩阵清零。
+  注意陷阱：如果直接遍历矩阵进行操作，清零操作会导致下一步判断出错，在读取被清零的行或列时，读到的尽是零，很可能很快会就将整个矩阵清零。
 
-	因此，可以使用额外的矩阵来标记 0 元素的位置，然后在第二次遍历时将 0 元素所在的行和列清零，空间效率为 O(mn)。
+  因此，可以使用额外的矩阵来标记 0 元素的位置，然后在第二次遍历时将 0 元素所在的行和列清零，空间效率为 O(mn)。
 
-	进一步优化，实际上题目并不需要记录 0 元素的确切位置，因此可以只用 2 个数组来记录包含 0 元素的所有行和列，然后再第二次遍历时将这些行和列清零，空间效率为 O(m+n)。
-	
-	```java
-	public void setZeros(int [][] m) {
-		boolean [] row = new boolean[m.length];
-		boolean [] col = new boolean[m[0].length];
+  进一步优化，实际上题目并不需要记录 0 元素的确切位置，因此可以只用 2 个数组来记录包含 0 元素的所有行和列，然后再第二次遍历时将这些行和列清零，空间效率为 O(m+n)。
+  
+  ```java
+  public void setZeros(int [][] m) {
+    boolean [] row = new boolean[m.length];
+    boolean [] col = new boolean[m[0].length];
 
-		for (int i = 0; i < m.length; i++)
-			for (int j = 0; j < m[0].length; j++)
-				if (m[i][j] == 0) {
-					row[i] = true;
-					col[j] = true;
-				}
-		
-		for (int i = 0; i < m.length; i++)
-			for (int j = 0; j < m[0].length; j++)
-				if (row[i] || col[j])
-					m[i][j] = 0;
-	}
-	```
+    for (int i = 0; i < m.length; i++)
+      for (int j = 0; j < m[0].length; j++)
+        if (m[i](j) == 0) {
+          row[i] = true;
+          col[j] = true;
+        }
+    
+    for (int i = 0; i < m.length; i++)
+      for (int j = 0; j < m[0].length; j++)
+        if (row[i] || col[j])
+          m[i](j) = 0;
+  }
+  ```
 
-	再进一步优化，可以使用位向量来代替 2 个布尔数组，空间效率为 O(1)。
+  再进一步优化，可以使用位向量来代替 2 个布尔数组，空间效率为 O(1)。
+
+### 7.5. 连续序列最大和
+
+《CC 150 17.8》
+
+- Question
+
+  给定一个整数数组（有正数也有负数），找出总和最大的连续数列，返回最大和。
+
+- Solution
+
+  ```java
+  public int getMaxSum(int [] a) {
+    int maxSum = 0;
+    int sum = 0;
+    for (int i = 0; i < a.length; i++) {
+      sum += a[i];
+      maxSum = Math.max(maxSum, sum);
+      sum = sum < 0 ? 0 : sum;
+    }
+    return maxSum;
+  }
+  ```
 
 ## 8. Refer Links
