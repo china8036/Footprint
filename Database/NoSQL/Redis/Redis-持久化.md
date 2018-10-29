@@ -12,18 +12,18 @@ bgsave 做镜像全量持久化，aof 做增量持久化。因为 bgsave 会耗�
 对方追问 bgsave 的原理是什么？你给出两个词汇就可以了，fork 和 cow。fork 是指 redis 通过创建子进程来进行 bgsave 操作，cow 指的是 copy on write，子进程创建后，父子进程共享数据段，父进程继续提供读写服务，写脏的页面数据会逐渐和子进程分离开来。
 
 Redis 分别提供了 RDB 和 AOF 两种持久化机制：
-- 全量持久化：RDB 将数据库的快照（snapshot）以二进制的方式保存到磁盘中。
+- **RDB 全量持久化**：RDB 将数据库的快照（snapshot）以二进制的方式保存到磁盘中。
   - 设置持久化周期
   - 手动调用持久化
-    - SAVE：阻塞当前线程进行持久化。
-    - BGSAVE：fork 子进程进行持久化。
-- 增量持久化：AOF 则以协议文本的方式，将所有对数据库进行过写入的命令（及其参数）记录到 AOF 文件，以此达到记录数据库状态的目的。
+    - SAVE：阻塞当前线程进行持久化
+    - BGSAVE：fork 子进程进行持久化
+- **AOF 增量持久化**：AOF 则以协议文本的方式，将所有对数据库进行过写入的命令（及其参数）记录到 AOF 文件，以此达到记录数据库状态的目的。
 
 ## 5. Refer Links
 
 [深入学习 Redis（2）：持久化](https://www.cnblogs.com/kismetv/p/9137897.html)
 
-[redis 持久化——RDB、AOF](https://lanjingling.github.io/2015/11/16/redis-chijiuhua/)
+[redis 持久化 —— RDB、AOF](https://lanjingling.github.io/2015/11/16/redis-chijiuhua/)
 
 [Redis 设计与实现：AOF](https://redisbook.readthedocs.io/en/latest/internal/aof.html)
 

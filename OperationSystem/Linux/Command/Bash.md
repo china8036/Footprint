@@ -1,12 +1,12 @@
 - [Bash](#bash)
-  - [1. Hotkey](#1-hotkey)
-  - [2. Refer Links](#2-refer-links)
+  - [1. 快捷键](#1-快捷键)
+  - [3. Refer Links](#3-refer-links)
 
 # Bash
 
-## 1. Hotkey
+## 1. 快捷键
 
-Bash 默认为 emacs 编辑模式，因此默认使用的是emacs风格的hotkey。可通过 `set -o vi/emacs` 切换为 vi 风格的hotkey。
+Bash 默认为 emacs 编辑模式，因此默认使用的是 emacs 风格的 hotkey。可通过 `set -o vi/emacs` 切换为 vi 风格的 hotkey。
 
 - 光标移动
   - Ctrl + a	移动光标到行首
@@ -37,7 +37,7 @@ Bash 默认为 emacs 编辑模式，因此默认使用的是emacs风格的hotkey
   - Ctrl + z	挂起当前命令
   - Ctrl + d	结束输入（产生一个 EOF）
 
-## 2. Refer Links
+## 3. Refer Links
 
 [Wikipedia: Shell Keyboard shortcuts](https://en.wikipedia.org/wiki/GNU_Readline#Emacs_keyboard_shortcuts)
 
