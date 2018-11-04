@@ -255,7 +255,7 @@ apt update
 apt install bettercap
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/31/21121f5cb57812a3e430d792f944b8f5.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/31/21121f5cb57812a3e430d792f944b8f5.jpg)
 
 ### OPTIONS
 

@@ -114,7 +114,7 @@ O(1) < O(logn) < O(n) < O(nlogn) < O(n^2) < O(n^3) < ... < O(2^n)
 
   例 1：下面是一个 n×n 阶矩阵 A 自乘得到 B=A×A 的算法，分析其时间复杂度。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/20/d06ba3b6ade519ca699f91928879bdd1.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/20/d06ba3b6ade519ca699f91928879bdd1.jpg)
 
   分析：`T(n) = n + 1 + n(n + 1) + n × n + n^2 x (n + 1) + n × n × n = 2n^3 + 3n^2 + 2n + 1`。当 n → ∞ 时，T(n) ∝ n3，故算法时间复杂度的数量级为 O(n^3)。
 
@@ -128,11 +128,11 @@ O(1) < O(logn) < O(n) < O(nlogn) < O(n^2) < O(n^3) < ... < O(2^n)
 
   NOTE: **对于有 k 层循环的程序，不可直接判断程序的时间复杂度为 O(n^k)。因为可能不是每层循环需要执行的次数都与 n 相关，也可能循环的增量步长不是 1，需要进行具体分析**。例：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/18/8c45c10504f652cc669eea23a35ef567.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/18/8c45c10504f652cc669eea23a35ef567.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/18/a0cd3191a654227006eaee27049d8cd7.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/18/a0cd3191a654227006eaee27049d8cd7.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/18/25ce0b2ef2b4d07893a4f96cac681ff8.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/18/25ce0b2ef2b4d07893a4f96cac681ff8.jpg)
 
 ##### 3.1.3.2. 递归程序
 
@@ -144,17 +144,17 @@ O(1) < O(logn) < O(n) < O(nlogn) < O(n^2) < O(n^3) < ... < O(2^n)
 
   例 1：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/18/7ab01af4a7719f9b9eb52d9896717021.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/18/7ab01af4a7719f9b9eb52d9896717021.jpg)
 
   每次递归中最多再进行一次递归调用，且每次递归执行的时间效率为 O(1)，总共的递归深度为 logn，因此整个程序的时间复杂度为 O(logn)。
 
   例 2：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/18/87c4db24593c1e1dfb4d4c444284f57e.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/18/87c4db24593c1e1dfb4d4c444284f57e.jpg)
 
   例 3：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/18/c7332d3bb62cc06121df4abc96921a1f.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/18/c7332d3bb62cc06121df4abc96921a1f.jpg)
 
 - 递归中进行多次递归调用
 
@@ -164,13 +164,13 @@ O(1) < O(logn) < O(n) < O(nlogn) < O(n^2) < O(n^3) < ... < O(2^n)
 
   例 1：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/18/ff3b72649822c16ec3234643e2c33744.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/18/ff3b72649822c16ec3234643e2c33744.jpg)
 
   当调用 f(3) 时，递归树如上图所示，递归树的节点个数为 15。因此可知，若传入参数为 n，则递归树的深度为 n，递归调用的次数是 2^(n+1)-1，每次递归的时间复杂度为 O(1)，故整个程序的时间复杂度为指数级的 O(2^n)。
 
   例 2：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/18/a2c1384afe8a84d593e789ddee8ad0b9.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/18/a2c1384afe8a84d593e789ddee8ad0b9.jpg)
 
   若传入序列的长度 n，则递归树的深度为 logn，那么递归树的节点数也就是递归调用的总次数是 2^(logn+1)-1，但是由于递归树每个节点上的运算时间是不等的，因此还需要分析递归树每一层需要处理的节点数：
   - 归并排序第 0 层只有一个递归调用，这个递归调用的 merge 操作要处理 n 个节点；

@@ -31,7 +31,7 @@ TCP 拥塞控制的各个阶段主要使用了以下四个算法：
 
 1. 当 cwnd >= ssthresh (slow start threshold，慢启动阈值) 时，就会进入“拥塞避免算法”。**一般来说 ssthresh 的值是 65535 bytes**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/15/c13c8eec98d68c48aab0c6acfc0824c5.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/15/c13c8eec98d68c48aab0c6acfc0824c5.jpg)
 
 因此，如果实际网速很快的话，ACK 也会返回得快，RTT 也会短，那么这个慢启动就一点也不慢。
 
@@ -70,7 +70,7 @@ Fast Recovery 算法如下：
 1. 如果再收到 duplicated Acks，那么 cwnd = cwnd +1。
 1. 如果收到了新的 ACK，那么 cwnd = sshthresh，就进入了拥塞避免的算法。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/15/7c7ed038edf247fd39029d51b1041f16.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/15/7c7ed038edf247fd39029d51b1041f16.jpg)
 
 ## 5. Refer Links
 

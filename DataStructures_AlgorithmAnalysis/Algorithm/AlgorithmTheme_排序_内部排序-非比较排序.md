@@ -20,11 +20,11 @@
 
 	数组 A[] 保存原始数据｛1,5,4,6,2,3,2,1,4｝，数据范围从 0~6。C[] 数组是辅助数组，B[] 数组用来保存输出结果。
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/14/e65ee4b8b5d473e8a4cbbf0011b3eeb6.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/4/14/e65ee4b8b5d473e8a4cbbf0011b3eeb6.jpg)
 
 	然后根据反向地 C[] 数组数据判断 B[] 对应位置应该保存哪个数字：
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/14/db9a03c5deea5302a30084e0a150475d.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/4/14/db9a03c5deea5302a30084e0a150475d.jpg)
 
 - 时间效率
 

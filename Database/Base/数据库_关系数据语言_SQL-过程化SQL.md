@@ -163,11 +163,11 @@ P.S. [MySQL 中 = 和 := 的区别](http://blog.csdn.net/wangjun5159/article/det
 
   例：`@num:=@num+1`, `:=` 是赋值的作用，所以，先执行 @num+1, 然后再赋值给 @num，所以能正确实现行号的作用。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/13/b54455810665ad20e1349f553fa4d5bd.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/13/b54455810665ad20e1349f553fa4d5bd.jpg)
 
   @num=@num+1, 此时 = 是等于的作用，@num 不等于 @num+1，所以始终返回 0，如果改为 @num=@num, 始终返回 1 了。MySQL 数据库中，用 1 表示真，0 表示假。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/13/6009a6d57873e08a18f86fcd8dd703bd.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/13/6009a6d57873e08a18f86fcd8dd703bd.jpg)
 
 #### 2.3.4. 集合运算符
 

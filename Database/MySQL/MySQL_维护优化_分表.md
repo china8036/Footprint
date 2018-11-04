@@ -9,7 +9,7 @@
 
 垂直拆分是指数据表列的拆分，把一张列比较多的表拆分为多张表：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/c3c4f40b11896abc54e4f7329fa949b8.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/30/c3c4f40b11896abc54e4f7329fa949b8.jpg)
 
 通常我们按以下原则进行垂直拆分：
 - 把不常用的字段单独放在一张表。
@@ -22,7 +22,7 @@ NOTE: 垂直拆分更多时候应该是在数据表设计之初就执行的步�
 
 水平拆分是指数据表行的拆分，表的行数超过 200 万行时，就会变慢，这时可以把一张的表的数据拆成多张表来存放。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/34b106eadf1e626e20ed4f9755f3f1c0.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/30/34b106eadf1e626e20ed4f9755f3f1c0.jpg)
 
 **通常情况下，我们使用取模的方式来进行表的拆分**。
 

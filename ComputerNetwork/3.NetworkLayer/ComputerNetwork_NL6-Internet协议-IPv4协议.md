@@ -62,7 +62,7 @@ eg:
 以太网的 MTU 值是 1500 bytes，假设发送者的协议高层向 IP 层发送了长度为 3008 bytes 的数据段，则该数据段在添加 20 bytes 的 IP 包头后 IP 包的总长度是 3028 bytes，因为 3028 > 1500，所以该数据报文将被分片。
 
 分片过程如下：
-1. 首先计算最大的 IP 包中 IP 净荷的长度 =MTU-IP 包头长度 =1500-20= 1480 bytes。
+1. 首先计算最大的 IP 包中 IP 净荷的长度 = MTU - IP 包头长度 = 1500 - 20 = 1480 bytes。
 1. 然后把 3008 bytes 按照 1480 bytes 的长度分片，将要分为 3 片，3008= 1480+1480+48。
 1. 最后发送者将为 3 个分片分别添加 IP 包头，组成 3 个 IP 包后再发送，3 个 IP 包的长度分别为 1500 bytes、1500 bytes 和 68 bytes。
 
@@ -106,9 +106,9 @@ NOTE
 
 [IPv4 Packet structure](https://en.wikipedia.org/wiki/IPv4#Packet_structure):
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/d3dcbc77a411134af34e705d1182f06d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/d3dcbc77a411134af34e705d1182f06d.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/57c1cf64503423bc61f626a806041696.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/57c1cf64503423bc61f626a806041696.jpg)
 
 每个 IP 数据报包含 2 个部分：
 - 报文头部：报文头部由一个 20 bytes 的定长部分和一个可选的变长部分组成。
@@ -116,7 +116,7 @@ NOTE
 
 ### 2.1. IP 报文头部
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/ce378be45aa6f97c16b93e2aee25562f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/ce378be45aa6f97c16b93e2aee25562f.jpg)
 
 IP 数据报头的传输从左到右，再从上到下。**Version 字段的高序字节最先被传送出去，因此 little-endian 字节序的机器（如 Intel x86）在传输和接收 IP 报文时需要进行字节序转换**。
 
@@ -128,11 +128,11 @@ IP 数据报头的传输从左到右，再从上到下。**Version 字段的高�
 - Internet Header Length (IHL) 报头长度（4 bits）
 
 - Differentiated Services Code Point (DSCP) 服务类型，表明该分组的重要程度
-  - Precedence 
+  - Precedence
   - Reliability
   - ECN
 
-- Explicit Congestion Notification (ECN) 
+- Explicit Congestion Notification (ECN)
 
 - Total Length 数据报总长度
 
@@ -199,7 +199,7 @@ IPv4 协议提供了 32 位比特位作为 IP 地址。
 
 Internet 委员会定义了 5 种 IP 地址类型以适合不同容量的网络，即 A 类~E 类。其中 A、B、C 是基本类，D、E 类作为多播和保留使用。除此之外，Internet 委员会在 A、B、C 类地址中预留了 3 个 IP 私有地址段，供组织机构内部使用。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/f1c0052c03183ad2dadf7c939efa8401.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/f1c0052c03183ad2dadf7c939efa8401.jpg)
 
 - A 类 IP 地址：
   - 一个 A 类 IP 地址由 1 字节的网络地址和 3 字节主机地址组成，网络地址的最高位必须是“0”。
@@ -339,7 +339,7 @@ ARP 缓存表采用老化机制，在一段时间内如果表中的某一行没�
 
 #### 3.6.4. ARP Package
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/46f9377ec989ae220132b976aebce526.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/46f9377ec989ae220132b976aebce526.jpg)
 
 - 硬件类型：指明了发送方想知道的硬件接口类型，以太网的值为 1。
 - 协议类型：指明了发送方提供的高层协议类型，IP 为 0800（16 进制）。
@@ -355,7 +355,7 @@ ARP 缓存表采用老化机制，在一段时间内如果表中的某一行没�
 
 eg:
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/9cf9942497b29e4aab3f828ae0abdfb0.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/9cf9942497b29e4aab3f828ae0abdfb0.jpg)
 
 #### 3.6.5. Gratuitous ARP
 
@@ -384,7 +384,7 @@ eg:
 
   - A、B、路由器三者采用二层交换机互联
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/6b205ebfce9fdc2caaf09abd297def61.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/6/11/6b205ebfce9fdc2caaf09abd297def61.jpg)
 
     - A 不广播，直接向交换机 switch 发送 ARP 请求。
     - switch 收到来自 A 的 ARP 请求后，将 A 的 MAC 与其直连的端口映射并存储在 switch 的 MAC TABLE 中；然后 switch 在自己的 MAC TABLE 中查询 B 的 ip，发现没有 B 的 MAC 记录，于是向上层网关转发 ARP 请求。
@@ -393,19 +393,19 @@ eg:
 
   - A、B、路由器三者采用 HUB 互联
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/199d713c97f1a2a2803a9803d8f0063b.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/6/11/199d713c97f1a2a2803a9803d8f0063b.jpg)
 
     A 与 B 之间的所有通信，包括 ARP、A 与 B 之间 Frame 都被 HUB 以广播方式，发给广播域里每一个主机或路由器，所以路由器可以看到 A 与 B 的通信，路由器所要做的工作很简单，默默地丢 ( silently discard)。
 
   - A、B、路由器三者采用具有三层功能的 switch 互联
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/ec41c0cea4b4b2d6e60e3f3887ba1910.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/6/11/ec41c0cea4b4b2d6e60e3f3887ba1910.jpg)
 
     switch 采用 SVI (Software Virtual Interface) 10.1.1.1 做 A、B 的缺省网关。这种和图一类似，三层 switch 的 SVI 接口不能接收到 A 与 B 之间的用户数据流量。
 
 #### 3.6.7. 实例分析二
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/562686a98232540aec6c7bf375a7b540.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/562686a98232540aec6c7bf375a7b540.jpg)
 
 ### 3.7. 地址获取
 
@@ -439,9 +439,9 @@ IPv4 中的 ICMP 被称作 ICMPv4，IPv6 中的 ICMP 则被称作 ICMPv6。
 
 ICMP 报头从 IP 报头的第 160 位开始（IP 首部 20 字节）（除非使用了 IP 报头的可选部分），ICMP 包有一个 8 字节长的报头，其中前 4 个字节是固定的格式（包含 8 位类型字段，8 位代码字段和 16 位的校验和），后 4 个字节根据 ICMP 包的类型而取不同的值。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/16/a70ea2c9da40b68b80ddfcc933f89b1f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/16/a70ea2c9da40b68b80ddfcc933f89b1f.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/ee70d44a03aeac47ca145e81def9c439.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/ee70d44a03aeac47ca145e81def9c439.jpg)
 
 - Type
   
@@ -465,7 +465,7 @@ ICMP 报头从 IP 报头的第 160 位开始（IP 首部 20 字节）（除非�
 
   - Notable control messages
     
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/eb201cd4aa2c7cadd9d49fc61b5a8e70.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/6/11/eb201cd4aa2c7cadd9d49fc61b5a8e70.jpg)
 
 #### 4.2.2. Data Area
 
@@ -477,9 +477,9 @@ ICMP 报头从 IP 报头的第 160 位开始（IP 首部 20 字节）（除非�
 
 eg:
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/824b335b73d9359b725f18c3034222d0.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/824b335b73d9359b725f18c3034222d0.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/50417e3be6bb1cacdcf9034222dc4f5a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/50417e3be6bb1cacdcf9034222dc4f5a.jpg)
 
 ## 5. Refer Links
 

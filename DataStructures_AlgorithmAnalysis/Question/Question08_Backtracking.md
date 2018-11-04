@@ -37,7 +37,7 @@
 
 排列公式：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/9/9/4e8ca7748548f4ec8404f6ba4bd8ac27.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/9/9/4e8ca7748548f4ec8404f6ba4bd8ac27.jpg)
 
 指从给定 n 个数的元素中取出指定 r 个数的元素，进行排序。如 `A(9, 3) = 9 * 8 * 7 = 504`。
 
@@ -120,7 +120,7 @@ public class Main {
 
   根据题意可得递归树：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/21/df28e92dc98f948eb2dda9c4498dcf71.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/21/df28e92dc98f948eb2dda9c4498dcf71.jpg)
 
   递归表达式：
   ```
@@ -256,7 +256,7 @@ public class Main {
 
 组合公式：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/9/9/597845501ac1a24c4eeef7d4961aea87.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/9/9/597845501ac1a24c4eeef7d4961aea87.jpg)
 
 指从给定 n 个数的元素中仅仅取出指定 r 个数的元素，不考虑排序。如：`C(9, 3) = (9 * 8 * 7) / (3 * 2 * 1) = 84`。
 
@@ -290,7 +290,7 @@ TODO:
 
   根据题意可得递归树：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/21/ddf9fac10dc98c3bd7dd18617eca44de.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/21/ddf9fac10dc98c3bd7dd18617eca44de.jpg)
 
   ```cpp
   // 时间复杂度：O(n^k)，空间复杂度：O(k)
@@ -622,11 +622,11 @@ TODO:
 
 - Solution
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/21/91ca283f09b814ece6acab4f76818c87.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/10/21/91ca283f09b814ece6acab4f76818c87.jpg)
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/21/1882cec5bda5a5af1ebea1353c01cd88.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/10/21/1882cec5bda5a5af1ebea1353c01cd88.jpg)
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/21/70d74cde74bea5893ce6816bb03dbbe6.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/10/21/70d74cde74bea5893ce6816bb03dbbe6.jpg)
 
   ```java
 	public int solve(int n) {
@@ -665,7 +665,7 @@ TODO:
   
   某物流派送员 p，需要给 a、b、c、d 共 4 个快递点派送包裹，请问派送员需要选择什么的路线，才能完成最短路程的派送。假设如图派送员的起点坐标 (0,0)，派送路线只能沿着图中的方格边行驶，每个小格都是正方形，且边长为 1，如 p 到 d 的距离就是 4。随机输入 n 个派送点坐标，求输出最短派送路线值（从起点开始完成 n 个点派送并回到起始点的距离）。
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/22/d63ab524c1a5e6d852e4f250a6b71fae.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/8/22/d63ab524c1a5e6d852e4f250a6b71fae.jpg)
 
 - Solution
 
@@ -764,7 +764,7 @@ TODO:
   
   根据题意可得递归树：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/21/77a27a2cf80975d0bd98cbd9d4c953f4.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/21/77a27a2cf80975d0bd98cbd9d4c953f4.jpg)
 
   代码实现：
   ```cpp
@@ -1007,15 +1007,15 @@ TODO:
 
   根据题意可得到如下形式的递归树：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/22/612b03b64145c0f2bec580fe7753f82c.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/22/612b03b64145c0f2bec580fe7753f82c.jpg)
 
   使用 dia1 数组表示右上 - 左下的 2n-1 条对角线，每条对角线用 i+j 表示：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/22/d3fa474be5deb7db5ffad136b25c3591.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/22/d3fa474be5deb7db5ffad136b25c3591.jpg)
   
   使用 dia2 数组表示左上 - 右下的 2n-1 条对角线，每条对角线用 i-j 表示：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/22/8790cda6b0c5d7ca965588e0b1722051.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/22/8790cda6b0c5d7ca965588e0b1722051.jpg)
 
   ```cpp
   /// 时间复杂度：O(n^n), 空间复杂度：O(n)
@@ -1099,7 +1099,7 @@ TODO:
   > 
   > A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/21/5912841f0ce99eaad34e42abb2e39409.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/21/5912841f0ce99eaad34e42abb2e39409.jpg)
 
   Example:
   ```
@@ -1111,7 +1111,7 @@ TODO:
 
   根据题意进行分析，当输入 23 时，可得到以下解空间树：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/21/b151f66aba167a367497d05078cbc429.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/21/b151f66aba167a367497d05078cbc429.jpg)
 
   进一步分析可得到递归表达式：
   ```

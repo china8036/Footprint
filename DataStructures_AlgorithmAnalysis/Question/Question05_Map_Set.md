@@ -25,7 +25,7 @@
 
 Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用平衡 BST 实现的版本具有数据的顺序性，而使用 HashTable 实现的版本操作时间效率更高。**
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/85fed795cf64a2532bc134d85b5abbde.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/25/85fed795cf64a2532bc134d85b5abbde.jpg)
 
 - **在 Java 中，使用 HashTable 实现的为 HashMap 和 HashSet，使用平衡 BST 实现的为 TreeMap 和 TreeSet。**
 - **在 C++ 中，使用 HashTable 实现的为 unordered_map 和 unordered_set，使用平衡 BST 实现的为 map 和 set。**
@@ -181,9 +181,9 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
 
   可使用滑动窗口结合查找表进行求解：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/923e6fd70e9599480321848923152fc7.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/923e6fd70e9599480321848923152fc7.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/0ef81a1edd7694491e4360706f84d711.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/0ef81a1edd7694491e4360706f84d711.jpg)
 
   ```java
   // 时间复杂度：O(n)
@@ -213,11 +213,11 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
 
   同样可以使用滑动窗口来求解此问题，则需要在窗口中寻找以下元素：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/d2863163adb9f45ad2b129a67a7dfdd8.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/d2863163adb9f45ad2b129a67a7dfdd8.jpg)
 
   若将这些元素放入**具有顺序性的查找表**中，使用 ceil 和 floor 操作将非常方便：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/9fffd463423b84122e750046043c3d8d.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/9fffd463423b84122e750046043c3d8d.jpg)
 
   因此，这里**使用基于红黑树实现的 set 结构 TreeSet 作为查找表**：
   ```java
@@ -438,7 +438,7 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
   ```
 - Solution
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/48cfbe0fea117af91a26303e7f4c063e.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/48cfbe0fea117af91a26303e7f4c063e.jpg)
 
   ```java
   // 时间复杂度：O(n^2)

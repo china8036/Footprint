@@ -77,7 +77,7 @@
 - j	下
 - k	上
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/26/7aa3667c17db58c9150ffa3713859276.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/26/7aa3667c17db58c9150ffa3713859276.jpg)
 
 - `w`	移动到下一个单词开头
 - `W`	移动到下一个单词开头，忽略非字母字符
@@ -110,7 +110,7 @@ P.S.
 
 - 为什么 vim 会使用这么奇葩的方向键 h,j,k,l 及那么别扭反人类的 Esc 作为退出插入模式的键？Vim 作者 Bill Joy 最初使用的机器是 [ADM-3A](https://en.wikipedia.org/wiki/ADM-3A) 终端机，其键盘布局如下：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/25/a431bfbace91896c69c6b0feed3b2999.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/10/25/a431bfbace91896c69c6b0feed3b2999.jpg)
 
 ## 5. 屏幕移动
 
@@ -244,7 +244,7 @@ Vim 有 48 个寄存器，其中 % 只读寄存器中保存着当前文件路径
 
 Vim 中有 12 个粘贴板（寄存器），使用 `:h reg` 可以查看相关文档，使用 `:reg` 可以看到当前所有粘贴板（寄存器）内的内容：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/2/0e40c91b4939caff03430c67320c0049.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/2/0e40c91b4939caff03430c67320c0049.jpg)
 
 其中：
 - `"` 粘贴板：默认粘贴板，直接按 y 就复制到这个粘贴板中，直接按 p 就粘贴这个粘贴板中的内容。

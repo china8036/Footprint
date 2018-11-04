@@ -25,7 +25,7 @@ https://www.cnblogs.com/charlesblc/p/6271472.html
 
 两军问题 / 两军对垒问题 (two-army problem)(two Generals' Problem)，是计算机领域的一个思想实验，用来阐述**在一个不可靠的通信链路上试图通过通信以达成一致是存在缺陷的和困难的，是在计算机通信领域首个被证明无解的问题，由此也可推论出，随机通信失败条件下的“拜占庭将军问题”也同样无解**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/4b151e199e3ca4121a5ba119660253cc.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/4b151e199e3ca4121a5ba119660253cc.jpg)
 
 - 问题描述：
 

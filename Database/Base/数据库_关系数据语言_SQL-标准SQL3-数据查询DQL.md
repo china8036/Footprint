@@ -236,7 +236,7 @@ NOTE
 
 内连接是一种最常用的连接类型。内连接查询实际上是一种任意条件的查询。使用内连接时，如果两个表的相关字段满足连接条件，就从这两个表中提取数据并组合成新的记录，也就是**在内连接查询中，只有满足条件的元组才能出现在结果关系中**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/11/ffb88f60dd64ae7523a2f6795d4b4141.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/11/ffb88f60dd64ae7523a2f6795d4b4141.jpg)
 
 内连接查询可分为：等值连接查询、非等值连接查询、自然连接查询和自身连接查询。
 
@@ -321,7 +321,7 @@ NOTE: **在 MySQL 中，关键字 RIGHT OUTER JOIN 等同于 RIGHT JOIN，LEFT O
 
 `tb1 LEFT OUTER JOIN tb2` 表示左连接查询，tb1 为左表， tb2 为右表。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/11/b3891cbb63ce64ba7d47a37189369064.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/11/b3891cbb63ce64ba7d47a37189369064.jpg)
 
 例：
 ```sql
@@ -336,7 +336,7 @@ ON s.teacher > t.teacher_id;
 
 `tb1 RIGHT OUTER JOIN tb2` 表示右连接查询，tb1 为左表，tb2 为右表。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/11/2efc8e908de35c1c894c8ad41bc2920d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/11/2efc8e908de35c1c894c8ad41bc2920d.jpg)
 
 例：
 ```sql
@@ -349,7 +349,7 @@ ON s.teacher > t.teacher_id;
 
 全外连接会把两个表中所有不满足连接条件的记录取出。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/11/6ee885f7025010b2b6065d724e2a7c11.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/11/6ee885f7025010b2b6065d724e2a7c11.jpg)
 
 例：
 ```sql

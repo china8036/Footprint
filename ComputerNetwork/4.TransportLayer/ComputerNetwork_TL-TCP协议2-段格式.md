@@ -8,7 +8,7 @@
 
 # 计算机网络 - 传输层：Transport control protocol 段格式
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/13/b95e2c758894d9ff79f145930435be7d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/13/b95e2c758894d9ff79f145930435be7d.jpg)
 
 ## 1. TCP 载荷
 
@@ -20,7 +20,7 @@
 
 ## 2. TCP 头部
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/13/f3d9ab773180d961376364a8c32fbd33.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/13/f3d9ab773180d961376364a8c32fbd33.jpg)
 
 - Source port (16 bits)
 
@@ -32,6 +32,7 @@
 
 - Acknowledgment number (32 bits): 确认号，用于解决丢包问题。
   > If the ACK flag is set then the value of this field is the next sequence number that the sender of the ACK is expecting. This acknowledges receipt of all prior bytes (if any). The first ACK sent by each end acknowledges the other end's initial sequence number itself, but no data.
+  
   **每收到一个 SYN/FIN flag 为 1 的 TCP 段 A，都需要响应一个 ACK flag 为 1 的 TCP 段 B，并将 B 中的 Acknowledgment number 设置为 A 的 Sequence number + 1.**
 
 - Data offset / TCP header length (4 bits)

@@ -21,7 +21,7 @@
 
 **SONET 和 ADSL 链路都使用了 PPP 协议，但在使用方式上有所不同**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/5fbd47a7ed3599d28604a9d39265a138.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/5fbd47a7ed3599d28604a9d39265a138.jpg)
 
 ## 2. PPP 协议功能
 
@@ -40,11 +40,11 @@
 
 HDLC 是一个早期被广泛使用的家庭协议实例，PPP 帧格式的选择酷似 HDLC 帧格式；但 PPP 和 HDLC 的主要区别在于，PPP 是面向字节 / 字符而不是面向比特的，且 PPP 使用字节填充技术，所有帧的长度是字节的整数倍。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/95d0a612cb7c1894f0797e7a1d0811c9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/95d0a612cb7c1894f0797e7a1d0811c9.jpg)
 
 ## 5. PPP 组成
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/493af0b3b20cdeb3c179f9ec2fa84b2c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/493af0b3b20cdeb3c179f9ec2fa84b2c.jpg)
 
 LCP （Link Control Protocol）提供了建立、配置、维护和终止点对点链接的方法。
 

@@ -47,7 +47,7 @@ SHR 是 share（共享）的缩写，它表示的是进程占用的共享内存�
 
 **根据 Linux 内核相关文档描述，Linux 64 位操作系统中实际用到的地址空间为 0x0000000000000000 ~ 0x00007FFFFFFFFFFF 和 0xFFFF800000000000 ~ 0xFFFFFFFFFFFFFFFF，其中前面为用户空间（User Space），后者为内核空间（Kernel Space）。**
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/29/87790219e8780320da56b2e47b879af2.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/29/87790219e8780320da56b2e47b879af2.jpg)
 
 User Space 主要分为如下几段：
 - **Code**：这是整个用户空间的最低地址部分，存放的是指令（也就是程序所编译成的可执行机器码）。
@@ -96,7 +96,7 @@ TODO: [系统默认的栈大小限制](https://blog.csdn.net/woshiyuanlei/articl
 
 由于进程所面对的虚拟内存地址空间，只有按页映射到物理内存地址，才能真正使用。受物理存储容量限制，整个堆虚拟内存空间不可能全部映射到实际的物理内存。因此，Linux 中通过以下方式管理堆内存：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/29/1be42a562002c6192a08fe356a32df99.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/29/1be42a562002c6192a08fe356a32df99.jpg)
 
 Linux 维护一个 break 指针，这个指针指向堆空间的某个地址。从堆起始地址到 break 之间的地址空间为映射好的，可以供进程访问；而从 break 往上，是未映射的地址空间，如果访问这段空间则程序会报错。Linux 通过 brk 和 sbrk 系统调用操作 break 指针。两个系统调用的原型如下：
 ```c

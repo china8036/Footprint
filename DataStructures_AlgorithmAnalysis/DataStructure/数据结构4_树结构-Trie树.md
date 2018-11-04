@@ -30,7 +30,7 @@ Tire 树的三个基本性质：
 
 例：以下 Trie 树表示了关键字集合{“a”, “to”, “tea”, “ted”, “ten”, “i”, “in”, “inn”}
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/5/df303a9210a1b5533a15794ceb1c523a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/5/5/df303a9210a1b5533a15794ceb1c523a.jpg)
 
 ## 3. 优缺点
 

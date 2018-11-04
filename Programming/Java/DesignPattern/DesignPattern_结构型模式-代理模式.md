@@ -345,14 +345,14 @@ public class ProxyTest {
 
 Proxy 类是所有动态代理类的父类，它提供了用于创建动态代理类和动态代理对象的静态方法：
 - `static Class<?> getProxyClass​(ClassLoader loader, Class<?>... interfaces)`
-	
-	创建一个动态代理类，返回类所对应的 Class 对象，但该方法官方文档不推荐使用。
-	
-	> Constructor.newInstance will throw IllegalAccessException when it is called on an inaccessible proxy class. Use newProxyInstance(ClassLoader, Class[], InvocationHandler) to create a proxy instance instead.
+    
+    创建一个动态代理类，返回类所对应的 Class 对象，但该方法官方文档不推荐使用。
+    
+    > Constructor.newInstance will throw IllegalAccessException when it is called on an inaccessible proxy class. Use newProxyInstance(ClassLoader, Class[], InvocationHandler) to create a proxy instance instead.
 
 - `static Object newProxyInstance​(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)`
 
-	直接创建一个动态代理对象，官方推荐使用此方法。
+    直接创建一个动态代理对象，官方推荐使用此方法。
   
   参数说明：
   - 第一个参数指定该代理对象的类加载器。
@@ -361,9 +361,9 @@ Proxy 类是所有动态代理类的父类，它提供了用于创建动态代�
   
 InvocationHandler 接口是由代理实例的调用处理程序实现的接口，调用代理对象的所有方法时都会被替换成调用该接口的 invoke 方法并返回结果：
 - `Object invoke​(Object proxy, Method method, Object[] args) throws Throwable`
-	- proxy：动态代理的对象实例。
-	- method：正在调用的方法。
-	- args：正在调用的方法所传入的实参数组。
+    - proxy：动态代理的对象实例。
+    - method：正在调用的方法。
+    - args：正在调用的方法所传入的实参数组。
 
 #### 4.1.2. 使用示例
 
@@ -446,7 +446,7 @@ public class Test {
 缺点：
 - 代理类和委托类需要都实现同一个接口，也就是说**只有实现了某个接口的类可以使用 JDK 提供的动态代理机制**。但是，事实上使用中并不是遇到的所有类都会给你实现一个接口。因此，对于没有实现接口的类，就不能使用该机制。
 
-	如果想代理没有实现接口的继承的类该怎么办？可以使用 Cglib。
+    如果想代理没有实现接口的继承的类该怎么办？可以使用 Cglib。
 
 ### 4.2. Cglib 动态代理
 
@@ -486,29 +486,29 @@ Cglib 库的代码量不多，但是由于缺乏文档导致学习起来比较�
  - `create()`: 动态创建代理对象，返回一个 Object 对象，需要进行强制类型转换。
 
 - `Callback`接口：所有回调拦截器都会继承该接口。
-	- `MethodInterceptor`接口：扩展自 Callback 接口，用于实现一个回调拦截器，需要实现其中的 intercept() 方法，调用被代理类的任意方法时，会触发该方法的执行。
-		- `Object intercept(Object obj, Method method, Object[] params,  MethodProxy proxy) throws Throwable`
-			- Object obj: 由 Cglib 动态生成的代理类实例对象。
-			- Method method: 被调用的被代理方法引用对象。
-			- Object[] params: 被调用方法的参数值列表。
-			- MethodProxy proxy: 代理类对方法的代理引用对象，原始类里每一个方法都会在动态的子类里有一个对应的 MethodProxy。
-				
-				我们一般使用 `proxy.invokeSuper(obj,args)` 方法，这个很好理解，就是执行原始类的方法。还有一个方法 `proxy.invoke(obj,args)`，这是执行生成子类的方法，但如果传入的 obj 就是子类的话，会发生内存溢出，因为子类的方法不停地进入 intercept 方法，而这个方法又去调用子类的方法，两个方法直接循环调用了。
+    - `MethodInterceptor`接口：扩展自 Callback 接口，用于实现一个回调拦截器，需要实现其中的 intercept() 方法，调用被代理类的任意方法时，会触发该方法的执行。
+        - `Object intercept(Object obj, Method method, Object[] params,  MethodProxy proxy) throws Throwable`
+            - Object obj: 由 Cglib 动态生成的代理类实例对象。
+            - Method method: 被调用的被代理方法引用对象。
+            - Object[] params: 被调用方法的参数值列表。
+            - MethodProxy proxy: 代理类对方法的代理引用对象，原始类里每一个方法都会在动态的子类里有一个对应的 MethodProxy。
+                
+                我们一般使用 `proxy.invokeSuper(obj,args)` 方法，这个很好理解，就是执行原始类的方法。还有一个方法 `proxy.invoke(obj,args)`，这是执行生成子类的方法，但如果传入的 obj 就是子类的话，会发生内存溢出，因为子类的方法不停地进入 intercept 方法，而这个方法又去调用子类的方法，两个方法直接循环调用了。
 
-				一个 MethodProxy 又对应了两个动态生成的 FastClass 类，一个是对应原始方法，一个对应新生成的子类，MethodProxy.invokeSuper 就是交给对应原始方法那个 FastClass，MethodProxy.invoke 交给另一个。
-	
-	- `FixedValue`接口：扩展自 Callback 接口，用于实现一个锁定方法返回值的回调过滤器，即无论被代理类的方法返回什么值，回调方法都返回固定值。实现该接口需要实现 loadObject() 方法：
-		- `Object loadObject() throws Exception`
+                一个 MethodProxy 又对应了两个动态生成的 FastClass 类，一个是对应原始方法，一个对应新生成的子类，MethodProxy.invokeSuper 就是交给对应原始方法那个 FastClass，MethodProxy.invoke 交给另一个。
+    
+    - `FixedValue`接口：扩展自 Callback 接口，用于实现一个锁定方法返回值的回调过滤器，即无论被代理类的方法返回什么值，回调方法都返回固定值。实现该接口需要实现 loadObject() 方法：
+        - `Object loadObject() throws Exception`
 
-	- [`NoOp.INSTANCE`对象](http://cglib.sourceforge.net/apidocs/net/sf/cglib/proxy/NoOp.html)：扩展自 Callback 接口，NoOp.INSTANCE 对象表示一个没有任何操作的拦截器。NoOp 表示 no operator，即什么操作也不做。 
-	  > Methods using this Enhancer callback will delegate directly to the default (super) implementation in the base class.
+    - [`NoOp.INSTANCE`对象](http://cglib.sourceforge.net/apidocs/net/sf/cglib/proxy/NoOp.html)：扩展自 Callback 接口，NoOp.INSTANCE 对象表示一个没有任何操作的拦截器。NoOp 表示 no operator，即什么操作也不做。 
+      > Methods using this Enhancer callback will delegate directly to the default (super) implementation in the base class.
 
 - `CallbackFilter` 接口：用于实现一个回调过滤器，可以在回调时指定对不同方法使用不同的回调拦截器，或者根本不执行回调。
 
-	P.S. 在 JDK 动态代理中并没有类似的功能，对 InvocationHandler 接口方法的调用对代理类内的所以方法都有效。
+    P.S. 在 JDK 动态代理中并没有类似的功能，对 InvocationHandler 接口方法的调用对代理类内的所以方法都有效。
 
-	实现一个回调过滤器，需要实现该接口的`accept()`方法：
-	- `int accept(Method method)`: 参数 Method 对象为被调用的被代理对象方法，返回一个 int 数值，表示调用回调拦截器对象的数组中的位置索引。
+    实现一个回调过滤器，需要实现该接口的`accept()`方法：
+    - `int accept(Method method)`: 参数 Method 对象为被调用的被代理对象方法，返回一个 int 数值，表示调用回调拦截器对象的数组中的位置索引。
 
 #### 4.2.4. 使用示例
 
@@ -581,20 +581,20 @@ public class TargetMethodCallbackFilter implements CallbackFilter {
 
 // 测试代码
 public static void main(String args[]) {  
-		Enhancer enhancer = new Enhancer();  
-		enhancer.setSuperclass(TargetObject.class);  
-		enhancer.setCallbacks(new Callback[] {
-				new TargetInterceptor(), 
-				NoOp.INSTANCE, 
-				new TargetResultFixed()
-		});  
-		enhancer.setCallbackFilter(new TargetMethodCallbackFilter());  
+        Enhancer enhancer = new Enhancer();  
+        enhancer.setSuperclass(TargetObject.class);  
+        enhancer.setCallbacks(new Callback[] {
+                new TargetInterceptor(), 
+                NoOp.INSTANCE, 
+                new TargetResultFixed()
+        });  
+        enhancer.setCallbackFilter(new TargetMethodCallbackFilter());  
 
-		TargetObject targetProxy = (TargetObject)enhancer.create();  
-		System.out.println(targetObject2.method1("mmm1"));  
-		System.out.println(targetObject2.method2(100));  
-		System.out.println(targetObject2.method3(100));  
-		System.out.println(targetObject2.method3(200));  
+        TargetObject targetProxy = (TargetObject)enhancer.create();  
+        System.out.println(targetObject2.method1("mmm1"));  
+        System.out.println(targetObject2.method2(100));  
+        System.out.println(targetObject2.method3(100));  
+        System.out.println(targetObject2.method3(200));  
 } 
 ```
 
@@ -602,21 +602,21 @@ public static void main(String args[]) {
 
 在动态生成代理对象这一 feature 上，cglib 与 JDK 动态代理的区别在于：
 - 实现方式
-	- JDK 动态代理是由 Java 内部的反射机制生成一个实现代理接口的匿名类来实现的。
-	- Cglib 动态代理是借助 ASM 生成字节码文件创建一个被代理类的子类并覆盖其中的方法来实现的。
+    - JDK 动态代理是由 Java 内部的反射机制生成一个实现代理接口的匿名类来实现的。
+    - Cglib 动态代理是借助 ASM 生成字节码文件创建一个被代理类的子类并覆盖其中的方法来实现的。
 
 - 执行效率
-	- 反射机制在生成类的过程中更加高效。
-	- ASM 在生成类之后的相关执行过程中比较高效（但可以通过将 ASM 生成的类进行缓存，这样解决 ASM 生成类过程低效问题）。
+    - 反射机制在生成类的过程中更加高效。
+    - ASM 在生成类之后的相关执行过程中比较高效（但可以通过将 ASM 生成的类进行缓存，这样解决 ASM 生成类过程低效问题）。
 
-	参考这里的 [性能测试](https://www.jianshu.com/p/1aaacf92e2cd) 可知：
-	- 相同情况下，Cglib 两种实现方式，`invokeSuper` 和 `setSuperClass` 组合实现方式永远比 `invoke` 和 `setInterfaces` 组合实现方式**慢**。
-	- Cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在代理方法数量较少、函数平均调用的情况下，执行速度比 JDK Proxy 快。但随着代理方法的数量增多，优势越来越不明显，到达某个数量级速度比 JDK Proxy 慢。
-	- Cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在调用特定函数（在 switch 中靠后的 case) 会比 JDK Proxy 慢。
-	
+    参考这里的 [性能测试](https://www.jianshu.com/p/1aaacf92e2cd) 可知：
+    - 相同情况下，Cglib 两种实现方式，`invokeSuper` 和 `setSuperClass` 组合实现方式永远比 `invoke` 和 `setInterfaces` 组合实现方式**慢**。
+    - Cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在代理方法数量较少、函数平均调用的情况下，执行速度比 JDK Proxy 快。但随着代理方法的数量增多，优势越来越不明显，到达某个数量级速度比 JDK Proxy 慢。
+    - Cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在调用特定函数（在 switch 中靠后的 case) 会比 JDK Proxy 慢。
+    
 - 使用限制
-	- JDK 动态代理的使用前提，必须是目标类基于统一的接口。如果没有上述前提，JDK 动态代理不能应用。由此可以看出，JDK 动态代理有一定的局限性。
-	- 相比之下 Cglib 由于采用字节码生成代理对象，实现的动态代理没有多余限制，应用更加广泛。
+    - JDK 动态代理的使用前提，必须是目标类基于统一的接口。如果没有上述前提，JDK 动态代理不能应用。由此可以看出，JDK 动态代理有一定的局限性。
+    - 相比之下 Cglib 由于采用字节码生成代理对象，实现的动态代理没有多余限制，应用更加广泛。
 
 #### 4.2.6. 应用
 

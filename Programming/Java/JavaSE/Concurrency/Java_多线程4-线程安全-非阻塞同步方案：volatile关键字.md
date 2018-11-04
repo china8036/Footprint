@@ -1,12 +1,12 @@
 
-- [Java 多线程 - 线程安全 - volatile 关键字](#java-%E5%A4%9A%E7%BA%BF%E7%A8%8B---%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8---volatile-%E5%85%B3%E9%94%AE%E5%AD%97)
-  - [1. 功能特性](#1-%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7)
-    - [1.1. 保证内存可见性](#11-%E4%BF%9D%E8%AF%81%E5%86%85%E5%AD%98%E5%8F%AF%E8%A7%81%E6%80%A7)
-    - [1.2. 禁止指令重排序](#12-%E7%A6%81%E6%AD%A2%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92%E5%BA%8F)
-      - [1.2.1. 使用方法](#121-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)
-      - [1.2.2. 实现原理](#122-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
-  - [2. 适用场景](#2-%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF)
-  - [3. Refer Links](#3-refer-links)
+- [Java 多线程 - 线程安全 - volatile 关键字](#java-多线程---线程安全---volatile-关键字)
+    - [1. 功能特性](#1-功能特性)
+        - [1.1. 保证内存可见性](#11-保证内存可见性)
+        - [1.2. 禁止指令重排序](#12-禁止指令重排序)
+            - [1.2.1. 使用方法](#121-使用方法)
+            - [1.2.2. 实现原理](#122-实现原理)
+    - [2. 适用场景](#2-适用场景)
+    - [3. Refer Links](#3-refer-links)
 
 # Java 多线程 - 线程安全 - volatile 关键字
 
@@ -84,7 +84,7 @@ private volatile static DoubleCheckLock instance;
 
 若查看使用 volatile 修饰的变量编译后的指令代码，可以发现，**对 volatile 修饰的变量赋值后会增加一个 `lock addl $0x0, (%esp)` 操作，这个操作称为内存屏障 (Memory Barrier)，又称内存栅栏**。
 
-内存屏障是一个 CPU 指令，它会告诉编译器和 CPU，在执行重排序优化时不能把 Memory Barrier 后边的指令重排序到 Memory Barrier 之前的位置。
+内存屏障是一个 CPU 指令，它会告诉编译器和 CPU，**在执行重排序优化时不能把 Memory Barrier 后边的指令重排序到 Memory Barrier 之前的位置**。
 
 ## 2. 适用场景
 

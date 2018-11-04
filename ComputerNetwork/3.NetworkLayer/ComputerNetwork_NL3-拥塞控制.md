@@ -22,7 +22,7 @@
 
 这些解决方案通常应用在不同的时间尺度上，要么预先避免拥塞，要么一旦发生拥塞随之做出应对措施。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/d0bb05f9285c61258f76a79f05c93e6f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/d0bb05f9285c61258f76a79f05c93e6f.jpg)
 
 ## 1. 网络供给 (Network provisioning)
 

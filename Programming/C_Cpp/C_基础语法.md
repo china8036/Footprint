@@ -15,7 +15,7 @@ C 语言作为一门应用途广泛、功能强大、使用灵活的面向过程
 
 常用的基本数据类型 char、int 等在不同编译环境下就会占用不同大小的空间：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/3f940c68f3b0ab91173e18626d0bb2f5.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/8/3f940c68f3b0ab91173e18626d0bb2f5.jpg)
 
 ## 2. sizeof 运算符
 

@@ -63,9 +63,9 @@
 
   前 2 种方案种，CPU 每次从设备控制器种读取一个字节的数据，但事实上这样浪费了 CPU 的时间，因此又出现了 DMA，只有硬件具有 DMA 控制器时操作系统才可以使用 DMA。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/28/2009d9c94e86b610159e599908a825cc.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/7/28/2009d9c94e86b610159e599908a825cc.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/28/42048ef6dbba40c87dbf94aa097635b6.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/7/28/42048ef6dbba40c87dbf94aa097635b6.jpg)
 
 ## 2. IO 软件基本原理
 
@@ -114,7 +114,7 @@ DMA IO 将中断的次数从打印每个字符一次减少到打印每个缓冲�
 
 IO 软件通常组织成 4 个层次：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/28/bd08602a05a2e82fbe704139652c37e2.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/28/bd08602a05a2e82fbe704139652c37e2.jpg)
 
 其中，每一层都具有明确的功能和接口。
 

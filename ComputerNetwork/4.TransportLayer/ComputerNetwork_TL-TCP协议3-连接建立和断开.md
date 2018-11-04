@@ -21,7 +21,7 @@
 
 从本质上讲，网络传输是没有连接的，包括 TCP 也是一样。**TCP 所谓的“面向连接”，实际上只不过是在通讯的双方共同维护一个 TCP 有限状态机，从而使得双方好像保持了“连接”**。  
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/14/cfe08663096766a102cc20bce4b35c65.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/14/cfe08663096766a102cc20bce4b35c65.jpg)
 
 **TCP 有限状态机包含了 11 种状态**：
 - CLOSED: 
@@ -38,17 +38,15 @@
 
 统计当前各种状态的连接的数量：
 ```shell
-netstat -pantu | awk '/^tcp/{++S[$(NF-1)]} END{for(a in S) print a, S[a]}'
-```
-运行结果：
-```
-LAST_ACK 14
-SYN_RECV 348
-ESTABLISHED 70
-FIN_WAIT1 229
-FIN_WAIT2 30
-CLOSING 33
-TIME_WAIT 18122
+$ netstat -pantu | awk '/^tcp/{++S[$(NF-1)]} END{for(a in S) print a, S[a]}'
+
+  LAST_ACK 14
+  SYN_RECV 348
+  ESTABLISHED 70
+  FIN_WAIT1 229
+  FIN_WAIT2 30
+  CLOSING 33
+  TIME_WAIT 18122
 ```
 
 ## 2. 建立连接：三次握手
@@ -59,7 +57,7 @@ TIME_WAIT 18122
 
 ### 2.1. 过程
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/14/fd3130ffeb4e2d19650a461c6a531107.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/14/fd3130ffeb4e2d19650a461c6a531107.jpg)
 
 - 第一次握手 (SYN=1, seq=x):
 
@@ -71,7 +69,7 @@ TIME_WAIT 18122
 
   eg: 此时 Flags 为 0x002，二进制是 0000 0010，即表示 SYN 有效
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/14/b1cc07bf1d11a4c10762c79021dd50ec.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/14/b1cc07bf1d11a4c10762c79021dd50ec.jpg)
 
 - 第二次握手 (SYN=1, ACK=1, seq=y, ACKnum=x+1):
 
@@ -83,7 +81,7 @@ TIME_WAIT 18122
 
   eg: 此时 Flags 为 0x012，二进制是 0001 0010，即表示有 SYN 和 ACK 有效
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/14/ee5f160bacb26ceea749f7316d5a7418.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/14/ee5f160bacb26ceea749f7316d5a7418.jpg)
 
 - 第三次握手 (ACK=1，ACKnum=y+1):
 
@@ -95,7 +93,7 @@ TIME_WAIT 18122
 
   eg: 此时 Flags 为 0x010，二进制是 0001 0000，即表示 ACK 有效
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/14/f4bf935e29020f47e7a13cfd8dddbc6f.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/14/f4bf935e29020f47e7a13cfd8dddbc6f.jpg)
 
 至此 TCP 三次握手结束，连接建立，客户端与服务器可以开始传送数据。
 
@@ -123,7 +121,7 @@ TIME_WAIT 18122
 
 - Sequence Number
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/14/883579859015d43c2dd2c54a1cd30d5e.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/14/883579859015d43c2dd2c54a1cd30d5e.jpg)
 
   可以看到，三次握手建立 TCP 连接后，SeqNum 的增加是和传输的字节数相关的。三次握手后，来了两个 Len:1440 的包，而第二个包的 SeqNum 就成了 1441。然后第一个 ACK 回的是 1441，表示第一个 1440 收到了。
 
@@ -188,7 +186,7 @@ TCP 的连接的终止过程总共需要发送四个包，因此称为四次挥�
 
 在 socket 编程中，任何一方执行 close() 操作即可触发挥手操作。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/14/a7b9d01d939f512eae557bd6040e2b8a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/14/a7b9d01d939f512eae557bd6040e2b8a.jpg)
 
 - 第一次挥手 (FIN=1，seq=x)
 

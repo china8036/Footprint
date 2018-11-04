@@ -22,7 +22,9 @@
       - [2.3.2. Word Ladder](#232-word-ladder)
       - [2.3.3. Word Ladder II](#233-word-ladder-ii)
   - [3. Heap](#3-heap)
-    - [3.1. Top K Frequent Elements](#31-top-k-frequent-elements)
+    - [3.1. Top K 问题](#31-top-k-问题)
+      - [3.1.1. Top K Frequent Words](#311-top-k-frequent-words)
+      - [3.1.2. Top K Frequent Elements](#312-top-k-frequent-elements)
     - [3.2. Merge k Sorted Lists](#32-merge-k-sorted-lists)
   - [4. Refer Links](#4-refer-links)
 
@@ -32,36 +34,76 @@
 
 ### 1.1. 实现一个栈
 
-```java
-// based on linked list
-public class MyStack<T> {
-  private Node<T> top; // 保存栈顶元素
+- 链表实现
 
-  public T peek() {
-    return top == null ? null : top.data;
-  }
+  ```java
+  // based on linked list
+  public class MyStack<T> {
+    private Node<T> top; // 保存栈顶元素
 
-  public T pop() {
-    if (top == null) 
-      return null;
-    T data = top.data;
-    top = top.next;
-    return data;
-  }
+    public T peek() {
+      return top == null ? null : top.data;
+    }
 
-  public void push(T data) {
-    Node<T> node = new Node<>(data);
-    node.next = top;
-    top = node;
+    public T pop() {
+      if (top == null) 
+        return null;
+      T data = top.data;
+      top = top.next;
+      return data;
+    }
+
+    public void push(T data) {
+      Node<T> node = new Node<>(data);
+      node.next = top;
+      top = node;
+    }
   }
-}
-```
+  ```
+
+- 数组实现
+  
+  由于数组不能动态管理内存，因此在添加、移除元素时都需要对数据数量进行管理。
+  ```java
+  // based on array
+  public class MyStack<T> {
+    private int top; // 保存栈顶索引位置
+    
+    private T [] stack; // 栈数据
+
+    private int capacity; // 栈最大容量
+
+    public MyStack(int capacity) {
+      this.capacity = capacity;
+      this.stack = new T[capacity];
+      this.top = -1;
+    }
+
+    public T peek() {
+      if (top == -1)
+        return null;
+      return stack[top];
+    }
+
+    public T pop() {
+      if (top == -1)
+        return null;
+      return stack[top--];
+    }
+
+    public void push(T data) {
+      if (top + 1 >= capacity)
+        throw OutOfBoundException();
+      stack[++top] = data;
+    }
+  }
+  ```  
 
 ### 1.2. Tower of Hanoi
 
 - Question
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/3b7381aed22b5bbd915208c219d7e586.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/10/17/3b7381aed22b5bbd915208c219d7e586.jpg)
 
   编写程序，将所有盘子从第 1 个塔移动到第 3 个塔。
 
@@ -78,7 +120,7 @@ public class MyStack<T> {
     if (n <= 0)
       return;
     hanoi(n - 1, origin, buffer, destination); 	// 把前 n-1 个盘子从 origin 移到 buffer
-    moveTop(origin, destination);								// 把最大的盘子从 origin 移到 destination
+    moveTop(origin, destination);				// 把最大的盘子从 origin 移到 destination
     hanoi(n - 1, buffer, destination, origin);	// 把前 n-1 个盘子从 buffer 移到 destination
   }
   ```
@@ -532,9 +574,9 @@ public class MyStack<T> {
 
     例如：
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/ff32d738146875ce65fb5ddf18c4c3d6.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/10/17/ff32d738146875ce65fb5ddf18c4c3d6.jpg)
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/53bc29f9c9a531b999e4ea95371c15b7.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/10/17/53bc29f9c9a531b999e4ea95371c15b7.jpg)
 
     ```java
     public void Stack<Integer> sort(Stack<Integer> s) {
@@ -557,31 +599,52 @@ public class MyStack<T> {
 
 ### 2.1. 实现一个队列
 
-```java
-// based on linked list
-public class MyQueue<T> {
-  private Node<T> head, tail; // head -> ... -> ... -> tail
+- 链表实现
 
-  public enqueue(T data) {
-    if (head == null) {
-      tail = new Node<>(data);
-      head = tail;
-    } else {
-      tail.next = new Node<>(data);
-      tail = tail.next;
+  ```java
+  // based on linked list
+  public class MyQueue<T> {
+    private Node<T> head, tail; // head -> ... -> ... -> tail
+
+    public enqueue(T data) {
+      if (head == null) {
+        tail = new Node<>(data);
+        head = tail;
+      } else {
+        tail.next = new Node<>(data);
+        tail = tail.next;
+      }
+    }
+
+    public dequeue() {
+      if (head == null)
+        return null;
+      T data = head.data;
+      head = head.next;
+      return data;
     }
   }
+  ```
 
-  public dequeue() {
-    if (head == null)
-      return null;
-    T data = head.data;
-    head = head.next;
-    return data;
+- 数组实现
+
+  使用数组实现的队列，需要使用 front 和 rear 来记录队列头部和尾部的索引位置。由于一般的数组实现的队列结构在频繁出队的情况下，会产生**假溢出现象**，导致数组使用效率降低，因此若要实现顺序队列结构，**最好使用循环数组来实现**，从而能重复利用数组空间。具体实现可参考 JDK 中 ArrayDeque 的实现。
+  ```java
+  public class MyQueue<T> {
+    private T [] data;
+    private int front;
+    private int rear;
+    private int capacity;
+
+    public enqueue(T data) {
+      // TODO
+    }
+
+    public dequeue() {
+      // TODO
+    }
   }
-
-}
-```
+  ```
 
 ### 2.2. 二叉树的层序遍历
 
@@ -660,7 +723,7 @@ public class MyQueue<T> {
 
   对问题进行建模，可将整个问题转化为图论问题：**从 n 到 0 的每个数字表示一个节点，若任意两个数字 x 和 y 相差一个完全平方数，则由大的数向小的数连接一条边，从而可以得到一个有向无权图**。原问题便转化为：求这个图中从 n 到 0 的最短路径。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/26/3d1d1e5cc41f585032561c6a5612f417.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/26/3d1d1e5cc41f585032561c6a5612f417.jpg)
 
   ```java
   // 时间复杂度：O(n)
@@ -786,7 +849,17 @@ public class MyQueue<T> {
 
 ## 3. Heap
 
-### 3.1. Top K Frequent Elements
+### 3.1. Top K 问题
+
+#### 3.1.1. Top K Frequent Words
+
+[692. Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/)
+
+- Question
+
+- Solution
+
+#### 3.1.2. Top K Frequent Elements
 
 [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/description/)
 

@@ -16,8 +16,11 @@
     - [5.2. Valid Palindrome](#52-valid-palindrome)
     - [5.3. Reverse String](#53-reverse-string)
     - [5.4. Reverse Vowels of a String](#54-reverse-vowels-of-a-string)
-    - [5.5. Container With Most Water](#55-container-with-most-water)
-    - [5.6. Trapping Rain Water](#56-trapping-rain-water)
+    - [5.5. 雨水收集问题](#55-雨水收集问题)
+      - [5.5.1. Container With Most Water](#551-container-with-most-water)
+      - [5.5.2. Trapping Rain Water](#552-trapping-rain-water)
+      - [5.5.3. Trapping Rain Water Ⅱ](#553-trapping-rain-water-Ⅱ)
+      - [5.5.4. Product of Array Except Self](#554-product-of-array-except-self)
   - [6. 滑动窗口](#6-滑动窗口)
     - [6.1. Minimum Size Subarray Sum](#61-minimum-size-subarray-sum)
     - [6.2. Longest Substring Without Repeating Characters](#62-longest-substring-without-repeating-characters)
@@ -218,7 +221,7 @@
   ```
 - 三路快排思想
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/fb16f22b4c88d05adda76b156c934058.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/24/fb16f22b4c88d05adda76b156c934058.jpg)
 
   ```java
   // 时间复杂度：O(n)
@@ -327,7 +330,7 @@
   - 暴力解法：双层遍历，O(n^2)。
   - 二分查找：O(nlogn)
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/1236ec524e9180c8a1a0947ee94f7826.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/4/24/1236ec524e9180c8a1a0947ee94f7826.jpg)
 
     ```java
     // 时间复杂度：O(nlogn)
@@ -376,7 +379,7 @@
 
   - 对撞指针：O(n)
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/72b5e6b4f06f34d5ab1a407433fac3fc.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/4/24/72b5e6b4f06f34d5ab1a407433fac3fc.jpg)
 
     ```java
     // 时间复杂度：O(n)
@@ -420,7 +423,9 @@
 
 [345. Reverse Vowels of a String](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
 
-### 5.5. Container With Most Water
+### 5.5. 雨水收集问题
+
+#### 5.5.1. Container With Most Water
 
 [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
 
@@ -428,7 +433,7 @@
 
   > Given n non-negative integers a1, a2, ..., an , where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/ad145121d2296bc0e4d0fe0b51c7ad24.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/24/ad145121d2296bc0e4d0fe0b51c7ad24.jpg)
 
   Example:
   ```
@@ -459,9 +464,119 @@
     }
     ```
 
-### 5.6. Trapping Rain Water
+#### 5.5.2. Trapping Rain Water
 
 [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
+
+- Question
+
+- Solution
+  - DP
+
+    维护一个一维的 dp 数组，这个 DP 算法需要遍历两遍数组，第一遍遍历 dp[i] 中存入 i 位置左边的最大值，然后开始第二遍遍历数组，第二次遍历时找右边最大值，然后和左边最大值比较取其中的较小值，然后跟当前值 A[i] 相比，如果大于当前值，则将差值存入结果。
+    ```java
+    public int trap(int[] height) {
+        int res = 0, mx = 0, n = height.length;
+        int[] dp = new int[n];
+        for (int i = 0; i < n; ++i) {
+            dp[i] = mx;
+            mx = Math.max(mx, height[i]);
+        }
+        mx = 0;
+        for (int i = n - 1; i >= 0; --i) {
+            dp[i] = Math.min(dp[i], mx);
+            mx = Math.max(mx, height[i]);
+            if (dp[i] - height[i] > 0) res += dp[i] - height[i];
+        }
+        return res;
+    }
+    ```
+
+  - 双指针
+
+    使用 left 和 right 两个指针分别指向数组的首尾位置，从两边向中间扫描，在当前两指针确定的范围内，先比较两头找出较小值，如果较小值是 left 指向的值，则从左向右扫描，如果较小值是 right 指向的值，则从右向左扫描，若遇到的值比当较小值小，则将差值存入结果，如遇到的值大，则重新确定新的窗口范围，以此类推直至 left 和 right 指针重合。
+    ```java
+    public int trap(int[] height) {
+        int res = 0, l = 0, r = height.length - 1;
+        
+        while (l < r) {
+            int cur = Math.min(height[l], height[r]);
+            if (height[l] == cur) {
+                ++l;
+                while (l < r && height[l] < cur) 
+                    res += cur - height[l++];
+            } else {
+                --r;
+                while (l < r && height[r] < cur) 
+                    res += cur - height[r--];
+            }
+        }
+        return res;
+    }
+    ```
+
+  - 辅助栈
+
+    遍历高度，如果此时栈为空，或者当前高度小于等于栈顶高度，则把当前高度的坐标压入栈，注意我们不直接把高度压入栈，而是把坐标压入栈，这样方便我们在后来算水平距离。当我们遇到比栈顶高度大的时候，就说明有可能会有坑存在，可以装雨水。此时我们栈里至少有一个高度，如果只有一个的话，那么不能形成坑，我们直接跳过，如果多余一个的话，那么此时把栈顶元素取出来当作坑，新的栈顶元素就是左边界，当前高度是右边界，只要取二者较小的，减去坑的高度，长度就是右边界坐标减去左边界坐标再减 1，二者相乘就是盛水量。
+    ```java
+    public int trap(int[] height) {
+        Stack<Integer> s = new Stack<Integer>();
+        int i = 0, n = height.length, res = 0;
+        while (i < n) {
+            if (s.isEmpty() || height[i] <= height[s.peek()]) {
+                s.push(i++);
+            } else {
+                int t = s.pop();
+                if (s.isEmpty()) continue;
+                res += (Math.min(height[i], height[s.peek()]) - height[t]) * (i - s.peek() - 1);
+            }
+        }
+        return res;
+    }
+    ```
+
+#### 5.5.3. Trapping Rain Water Ⅱ
+
+[407. Trapping Rain Water Ⅱ](https://leetcode.com/problems/trapping-rain-water-ii/)
+
+#### 5.5.4. Product of Array Except Self
+
+[238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)
+
+- Question
+  > Given an array nums of n integers where n > 1, return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+
+  Example:
+  ```
+  Input:  [1,2,3,4]
+  Output: [24,12,8,6]
+  ```
+  Note: Please solve it without division and in O(n).
+
+- Solution
+
+  由于题目规定不能使用除法，且时间复杂度为 O(n)，因此可以申请两个大小为 n 的数组，第一个数组的第 i 个元素存储第 0 个到第 i-1 个元素的乘积，第二个数组的第 i 个元素存储第 i+1 到最后一个元素的乘积，然后将两个数组的第 i 个元素和第 i 个元素相乘就能得到结果。
+
+  更进一步，可以使用一个辅助变量来代替一个辅助数组，也就是说只申请一个结果数组就可以达到目的，不使用任何额外的辅助空间。
+  ```java
+  public int[] productExceptSelf(int[] nums) {
+      int n = nums.length;
+      int [] res = new int[n];
+
+      // 从左往右
+      res[0] = 1;
+      for (int i = 1; i < n; i++)
+          res[i] = res[i - 1] * nums[i - 1];
+      
+      // 从右往左
+      int right = 1; // 辅助变量
+      for (int i = n - 1; i >= 0; i--) {
+          res[i] *= right;
+          right *= nums[i];
+      }
+      return res; 
+  }
+  ```
 
 ## 6. 滑动窗口
 
@@ -480,7 +595,7 @@
   - 暴力解法：遍历所有连续子数组再逐一验证，O(n^3)。
   - 滑动窗口
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/4de6893405d014a7533ad5a47dfc54f9.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/4/24/4de6893405d014a7533ad5a47dfc54f9.jpg)
 
     ```java
     // 时间复杂度：O(n)
@@ -526,7 +641,7 @@
   ```
 - Solution
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/24/5838a5f1d656c82e3d898d50559d1e2b.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/24/5838a5f1d656c82e3d898d50559d1e2b.jpg)
 
   ```java
   // 时间复杂度：O(len(s))
@@ -592,7 +707,7 @@
   
   给定一个 n*n 的二维矩阵，编写程序将矩阵旋转 90°，要求空间效率为 O(1)。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/17/726c2bdd26fcae49f9efa8407fdea6c0.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/10/17/726c2bdd26fcae49f9efa8407fdea6c0.jpg)
 
 - Solution
 

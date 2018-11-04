@@ -17,15 +17,15 @@ UDP (User Datagram Protocol) 用户数据报协议是一个简单的无连接的
 
 UDP 没有流量控制、拥塞控制或接收到损坏的数据段后的重传机制，因此这些工作都需要在应用层中完成。**UDP 只是提供了一个与 IP 协议的接口，并在此接口上增加通过端口号复用多个进程的功能，以及可选的端到端错误检测的功能**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/13/78ba8bb522bf024702b338fbc04bcf6c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/13/78ba8bb522bf024702b338fbc04bcf6c.jpg)
 
 ## 2. UDP 段结构
 
 UDP 数据段 (segment) 包括 8 字节（8-Byte）的 UDP 头部和有效载荷数据两个部分。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/13/da0908b68b5313377cc54e9ab3336f5b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/13/da0908b68b5313377cc54e9ab3336f5b.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/13/f62196532c01889f9c5afab2274ff03f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/13/f62196532c01889f9c5afab2274ff03f.jpg)
 
 ### 2.1. UDP 载荷
 
@@ -59,7 +59,7 @@ UDP Header 中为来源端口和目的端口提供了各 16 bit 的空间，用�
   - `> 49152` : 动态端口，私人端口。
   - 常见缺省端口
     
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/13/a777d47edcbe77bcae080fd9675770ac.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/6/13/a777d47edcbe77bcae080fd9675770ac.jpg)
 
 #### 2.2.2. 报文长度
 
@@ -72,7 +72,7 @@ UDP Header 中为来源端口和目的端口提供了各 16 bit 的空间，用�
 
 #### 2.2.3. 校验和
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/13/51e7cedd315c98c2ee416082bf0e2b4b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/13/51e7cedd315c98c2ee416082bf0e2b4b.jpg)
 
 校验和字段可以用于发现头部信息和数据中的传输错误，提供额外的可靠性。
 

@@ -30,7 +30,7 @@ TCP 使用多个计时器来辅助其它工作的完成，其中**重传计时�
 - 设短了，会导致可能实际上没有丢包就重发，且会增加网络拥塞，导致更多的超时，更多的超时导致更多的重发。
 - 不同的网络环境传输质量差异很大，因此不能将 Timeout 设置为固定的值。
 
-因此，**RTO (Retransmission TimeOut) 的设置需要一个动态算法，它可以根据网络性能的连续测量情况，不断地调整超时间隔**。为此，TCP 引入了 RTT (Round Trip Time)，即一个数据包从发出去到回来的时间，在发送端发包时记下 t0，然后接收端再在这个 ack 回来时记下 t1，于是 RTT = t1 – t0。
+因此，**RTO (Retransmission TimeOut) 的设置需要一个动态算法，它可以根据网络性能的连续测量情况，不断地调整超时间隔**。为此，TCP 引入了 **RTT (Round Trip Time)，即一个数据包从发出去到回来的时间，在发送端发包时记下 t0，然后接收端再在这个 ack 回来时记下 t1，于是 `RTT = t1 – t0`**。
 
 #### 1.1.1. RFC 经典算法
 
@@ -53,11 +53,11 @@ TCP 使用多个计时器来辅助其它工作的完成，其中**重传计时�
 这个算法在重传的时候会出现一个严重的问题：你是用第一次发数据的时间和 ACk 回来的时间做 RTT 样本值，还是用重传的时间和 ACK 回来的时间做 RTT 样本值？
 - 情况（a）是 ack 没回来，所以重传。如果你计算第一次发送和 ACK 的时间，那么，明显算大了。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/15/77afb57b33741ab30554e1626e270066.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/15/77afb57b33741ab30554e1626e270066.jpg)
 
 - 情况（b）是 ack 回来慢了，但是导致了重传，但刚重传不一会儿，之前 ACK 就回来了。如果你是算重传的时间和 ACK 回来的时间的差，就会算短了。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/15/5f9fda5c3546abed428558f5a8ae2f2a.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/15/5f9fda5c3546abed428558f5a8ae2f2a.jpg)
 
 #### 1.1.2. Karn / Partridge 算法
 
@@ -116,7 +116,7 @@ RTO = µ * SRTT + ∂ *DevRTT
 
 - 例：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/15/c9bcc65d5532ed212e7a832960b4dca2.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/15/c9bcc65d5532ed212e7a832960b4dca2.jpg)
 
   发送方发出了 1，2，3，4，5 份数据，第一份先到送了，于是接收方 ACK 2，结果 2 因为某些原因没收到，3 到达了，于是还是 ACK 2，后面的 4 和 5 都到了，但是还是 ACK 2，因为 2 还是没有收到。于是发送端连续收到了三个 ACKnum = 2 的 ACK 包，知道了 2 已丢失，就马上重传 2。然后，接收端收到了 2，此时因为 3，4，5 都收到了，于是 直接 ACK 6。
 
@@ -128,7 +128,7 @@ RTO = µ * SRTT + ∂ *DevRTT
 
 - 例：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/15/38841d17cf1c5afced8395078b90b1a4.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/15/38841d17cf1c5afced8395078b90b1a4.jpg)
 
 由于接收端永远不能把 SACK 的包标记为 ACK，在发送端就可以根据回传的 SACK 来知道哪些数据到了，哪些没有到。于是就优化了 Fast Retransmit 的算法。当然，这个协议需要两边都支持。在 Linux 下，可以通过 tcp_sack 参数打开这个功能（Linux 2.4 后默认打开）。
 

@@ -10,7 +10,7 @@
 
 MySQL 中常用的排序 / 校对规则有：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/91d6c737d0da0fab467f08ac9ec30e9a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/30/91d6c737d0da0fab467f08ac9ec30e9a.jpg)
 
 即：
 - utf8_general_ci

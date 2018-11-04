@@ -37,7 +37,7 @@ NOTE: 使用 Bit-map 前要获取这个序列的最大值来作为空间分配�
 
   要表示 8 个数，我们就只需要 8 个 Bit（1Bytes），首先我们开辟 1Byte 的空间，将这些空间的所有 Bit 位都置为 0：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/2/526c4ad96b074b1cee644a5fe00b4a59.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/3/2/526c4ad96b074b1cee644a5fe00b4a59.jpg)
 
   然后遍历这 5 个元素：
   - 首先第一个元素是 4，那么就把 4 对应的位置为 1（可以这样操作 p+(i/8)|(0x01<<(i%8)) ，因为是从零开始的，所以要把第五位置为一；
@@ -45,7 +45,7 @@ NOTE: 使用 Bit-map 前要获取这个序列的最大值来作为空间分配�
   - 一直到最后处理完所有的元素，将相应的位置为 1。
   这时候的内存的 Bit 位的状态如下： 
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/2/b18722cbdd02b869a689a97a2316f1a7.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/3/2/b18722cbdd02b869a689a97a2316f1a7.jpg)
 
   然后我们现在遍历一遍 Bit 区域，将该位是一的位的编号输出（2，3，4，5，7），这样就达到了排序的目的，时间复杂度 O(n)。实际上，这也就是桶排序的基本思想。
 
@@ -100,13 +100,13 @@ Bloom Fliter 是 Bit-map 思想的一种扩展，它利用**位数组**很简洁
 
 - 初始状态时，Bloom Filter 包含 m 位的位数组（其中每一位都置为 0）和 k 个相互独立的哈希函数。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/29/a6361d552c0a05960dfeea714f0e9e60.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/29/a6361d552c0a05960dfeea714f0e9e60.jpg)
 
 - 将元素加入集合。
 
   将一个元素加入集合时，首先将要加入集合的元素用 k 个 hash 函数进行 hash，得到 k 个 hash index，然后在集合的位数组中将这 k 个 hash index 的位置置 1。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/29/e7a773b893102f88c139e64dfb02c69d.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/29/e7a773b893102f88c139e64dfb02c69d.jpg)
 
   NOTE：**如果一个位置多次被置为 1，那么只有第一次会起作用，后面几次将没有任何效果**。
 
@@ -114,7 +114,7 @@ Bloom Fliter 是 Bit-map 思想的一种扩展，它利用**位数组**很简洁
 
   首先同样用定义的 hash 函数对该元素进行 hash 得到 hash index，然后查位数组中对应的 hash index 是否都是 1，如果是，则表明该元素属于该集合，反之不属于。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/29/9cf0f5b3ad1bad503e1aa2b912c969cc.jpg)  
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/29/9cf0f5b3ad1bad503e1aa2b912c969cc.jpg)  
 
   如上图，由于 y1 的三个 hash index 有一个不为 1，因此不属于该集合，而 y2 所有的 hash index 的位置上都为 1，因此属于该集合。
 

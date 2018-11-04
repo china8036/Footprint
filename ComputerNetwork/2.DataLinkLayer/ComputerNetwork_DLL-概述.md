@@ -29,9 +29,9 @@
 
 数据链路层从网络层获取数据包，然后将这些数据包封装成帧以便传输。**每个帧包含了一个帧头（存放控制信息），一个有效载荷（存放数据包），一个帧尾（存放一个校验和）。帧的管理构成了数据链路层的工作核心**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/57ee682e8ce7b04c0088bf9c85dbb38a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/57ee682e8ce7b04c0088bf9c85dbb38a.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/d5024fa4b04c64d1b3f8ff5aaece49fe.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/d5024fa4b04c64d1b3f8ff5aaece49fe.jpg)
 
 ```c
 typedef struct {
@@ -63,7 +63,7 @@ IEEE 802 系列标准把数据链路层分成：
 - 逻辑链路控制子层 (LLC)
 - 介质访问控制子层 (MAC)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/1caed008c2cb715a3b17824695090646.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/1caed008c2cb715a3b17824695090646.jpg)
 
 ### 3.1. LLC 子层
 

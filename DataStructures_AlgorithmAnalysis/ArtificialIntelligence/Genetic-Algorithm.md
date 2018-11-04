@@ -68,21 +68,21 @@
 
 - 编码的过程要能够使编码后的染色体能充分反映个体的特征并且能够方便计算。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/3f349bff40d651f38289f904a87ca72f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/20/3f349bff40d651f38289f904a87ca72f.jpg)
 
 根据上面的流程图，遗传算法包含三个基本操作：选择、交叉和变异：
 
 1.	选择，也就是流程图中"根据适应度进行串赋值"。如下图所示，当一个种群三个个体进行自然选择时，适应度越大则被选择的概率就越大。
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/88223cfface972700ddd38101ae0c60a.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/20/88223cfface972700ddd38101ae0c60a.jpg)
 
 2.	交叉，两条染色体相互交换基因片段。遗传算法交叉比人体内染色体交叉要简单许多。遗传算法的染色体是单倍体，而人体内的真正的染色体是双倍体。下图是遗传算法中两条染色体在中间进行交叉的示意图。
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/bc5b4e4e5daa92b4c5a602e4fa204b1c.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/20/bc5b4e4e5daa92b4c5a602e4fa204b1c.jpg)
 
 3.	变异，某个基因位发生变化。下图是遗传算法中一条染色体在第二位发生基因变异的示意图。
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/72c1a82f615b13478b253bfe2a9c554c.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/20/72c1a82f615b13478b253bfe2a9c554c.jpg)
 
 上述的选择、交叉和变异是最简单的类型，而且并不是所有问题的解决方案都可以编码成 0-1 向量的形式。实际上，应用遗传算法的主要工作是设计编码方案、交叉过程、变异过程和选择过程。
 
@@ -93,7 +93,7 @@
 [遗传算法有哪些有趣的应用](https://www.zhihu.com/question/20085479 )
 
 遗传算法的应用领域：
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/7172664c5e693e1d28431cbdcc15b0bb.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/20/7172664c5e693e1d28431cbdcc15b0bb.jpg)
 
 
 [句子配对](https://morvanzhou.github.io/tutorials/machine-learning/evolutionary-algorithm/2-02-genetic-algorithm-match-phrase/)
@@ -115,21 +115,21 @@ http://blog.csdn.net/localhost01/article/details/52141554
 
 ### 对编码方式的改进
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/a8a7064a37b205dc56b71f4e1fb24d45.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/20/a8a7064a37b205dc56b71f4e1fb24d45.jpg)
 
 ### 对遗传算子的改进
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/3d0881cda75d7c9ea28a2953fa7b9664.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/20/3d0881cda75d7c9ea28a2953fa7b9664.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/82695dba0a5c2d46e47e89310642af3b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/20/82695dba0a5c2d46e47e89310642af3b.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/d5ed992072d0e80a7124b3a70a8045fa.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/20/d5ed992072d0e80a7124b3a70a8045fa.jpg)
 
 ### 对控制参数的改进
 
 ### 对执行策略的改进
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/20/a0ddfd0ba2e4907eff58f1e8c1863934.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/20/a0ddfd0ba2e4907eff58f1e8c1863934.jpg)
 
 ## Refer Links
 

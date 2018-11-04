@@ -217,6 +217,7 @@ Consumer 消费者和 Producer 生产者，通过 ArrayBlockingQueue 队列获�
 ### 2.2. 实现原理
 
 **ArrayBlockingQueue 的内部通过一个可重入锁 ReentrantLock 和两个 Condition 条件对象来实现阻塞**。
+
 [TODO:](https://blog.csdn.net/javazejian/article/details/77410889#arrayblockingqueue%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90)
 
 ## 3. LinkedBlockingQueue 实现类

@@ -48,7 +48,7 @@
 
 https://en.wikipedia.org/wiki/Ethernet_frame
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/fc48827a2545af91da4bf0a1e399fc3d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/fc48827a2545af91da4bf0a1e399fc3d.jpg)
 
 因此，**以太网帧的最小长度为 64 Byte，最大长度为 1518 Byte**。
 
@@ -78,7 +78,7 @@ https://en.wikipedia.org/wiki/Ethernet_frame
   
   以 16 进制数表示 MAC 地址，通用表示方法有三种格式，即破折号连接 01-23-45-67-89-ab、冒号连接 01:23:45:67:89:ab、句点连接 0123.4567.89ab。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/9401205f566d9510e175bb3b61d93965.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/10/9401205f566d9510e175bb3b61d93965.jpg)
   - MAC-48 地址的前 3 字节表示 OUI（Organizationally Unique Identifier），由 IEEE 的注册管理机构给不同厂家分配的代码，区分不同的厂家。
   - 后 3 字节由厂家自行分配。
   - MAC 地址最高字节（MSB）的低第二位（LSb）表示这个 MAC 地址是全局的还是本地的，即 U/L（Universal/Local）位，如果为 0，表示是全局地址。所有的 OUI 这一位都是 0。

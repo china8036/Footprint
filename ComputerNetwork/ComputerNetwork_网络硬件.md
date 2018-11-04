@@ -56,13 +56,13 @@
 
 例 1：广播域个数计算
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/d194abf50cfc034f63ba34ff9571d3df.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/d194abf50cfc034f63ba34ff9571d3df.jpg)
 
 如图，**路由器的每个端口就是一个广播域**，因此这里有 2 个广播域。
 
 例 2：冲突域个数计算
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/1bdfd72dc5c27bd2fcca7ca8b0de4d2e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/1bdfd72dc5c27bd2fcca7ca8b0de4d2e.jpg)
 
 如图，路由器和交换机都能隔离冲突域；Hub 是物理层设备，不能隔离冲突域；需要注意的是，路由器与交换机直连的线也属于一个冲突域；因此，这里共有 5 个冲突域。
 
@@ -94,7 +94,7 @@ MAC 地址被烧录在网卡的 ROM 中。
 
 **网桥只会检查数据链路层，不会检查网络层**，所以，IPv4、IPv6、AppleTalk、ATM、IPX、OSI 分组均可穿越网桥。到达路由器时，才会检查逻辑地址（如 IP 地址）并作出分组转发的决策。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/fd57b8a0f93908d7da8076b04eb9a952.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/fd57b8a0f93908d7da8076b04eb9a952.jpg)
 
 - 作用
   - **将广播域划分为一个一个小的冲突域，增大可用的带宽，在共享环境中的介质争用（冲突）**。
@@ -162,7 +162,7 @@ MAC 地址被烧录在网卡的 ROM 中。
 
 #### 2.4.1. 基本结构
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/7224529da22c2b5389f29797a56d3695.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/7224529da22c2b5389f29797a56d3695.jpg)
 
 - 电源接口（POWER）：接口连接电源。
 - 复位键（RESET）：此按键可以还原路由器的出厂设置。

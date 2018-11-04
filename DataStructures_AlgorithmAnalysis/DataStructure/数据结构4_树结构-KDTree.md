@@ -7,7 +7,7 @@ K-D Tree(K-Dimension Tree) 即 k 维树，是一种分割 k 维数据空间的�
 
 例：KDTree(K=3)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/27/f9ae10a0ca919e2ba02e5bf76ac6d520.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/27/f9ae10a0ca919e2ba02e5bf76ac6d520.jpg)
 
 ## 1. Refer Links
 

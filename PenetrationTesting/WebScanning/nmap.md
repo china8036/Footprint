@@ -319,7 +319,7 @@ Nmap 使用 Lua 语言来作为 NSE 脚本语言，目前的 Nmap 脚本库已�
 
 nmap 的脚本默认目录为：/usr/share/nmap/scripts/
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/22/291c071fe78b648f1ff1aea5c24f0878.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/22/291c071fe78b648f1ff1aea5c24f0878.jpg)
 
 nmap 脚本根据前缀可分为以下类型，可根据需要设置 `--script= 类别` 这种方式进行比较笼统的扫描
 

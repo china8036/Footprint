@@ -102,7 +102,7 @@ TCP SYN Dos 向目标主机发送大量 SYN 报文，但对服务器响应的 SY
 - 使用 scapy 实现 SYN Flood   
 来源：乾颐堂 python 教学
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/22/37aa5640afbc7b602a4da0ac0493d519.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/22/37aa5640afbc7b602a4da0ac0493d519.jpg)
 
 #### TCP Handshake Dos
 
@@ -117,18 +117,18 @@ TCP Handshake Dos 与 SYN Flood 的区别在于 SYN Flood 需要不断地发送 
 	- 建立 TCP 三次握手：
 	发送 SYN：
 	SN 值为本地系统根据发送时间点使用特定算法得到的值，代表从本地到目标主机的传输序列号
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/22/08c64483ecb49299d45b427ee8fbb590.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2017/9/22/08c64483ecb49299d45b427ee8fbb590.jpg)
 	收到 SYN/ACK：
 	SN 值为目标主机根据其发送时间点使用特定算法得到的值，代表从目标主机到本地的传输序列号；ACK Number 即第一步的 SN 值加一（ACK 标志位占 1Byte）
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/22/8c296f9c7a3c278e87764284de85c887.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2017/9/22/8c296f9c7a3c278e87764284de85c887.jpg)
 	发送 ACK：
 	SN 值为第二步中的 ACK Number，ACK Number 为第二步中的 SN 值加一
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/22/dbd96500e4d56b57a2e8c8f3745a7e83.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2017/9/22/dbd96500e4d56b57a2e8c8f3745a7e83.jpg)
 	- 注意：实际使用 scapy 建立 TCP 三次握手连接时，当本地 Linux 系统收到 SYN/ACK 后，由于第一步的 SYN 是由用户脚本（scapy）发出，导致系统不认得该 SYN/ACK，因此系统会自动回应 RST 关闭连接，导致三次握手失败；
 	因此，在运行脚本前，需要在 Linux 防火墙中，drop 掉从本地发出的 RST 标志的 TCP 包以及 ICMP 响应包：
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/22/be09de34505eecd69b4d592a5d6b56d2.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2017/9/22/be09de34505eecd69b4d592a5d6b56d2.jpg)
 	- 实现：   
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/22/2f8cbc3c8447ff48f30da13892c37f20.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2017/9/22/2f8cbc3c8447ff48f30da13892c37f20.jpg)
 
 #### HTTP Flood 
 

@@ -162,11 +162,11 @@ https://github.com/ruansongsong/H5Skills/blob/master/resources/android_lineheigh
 
 移动端网页开发中，经常会涉及到一些小按钮或者小标签，比如这种：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/e8656025a650f948e7e182a8131fa1fd.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/e8656025a650f948e7e182a8131fa1fd.jpg)
 
 对于一般 PC 浏览器以及 iOS 设备的浏览器表现就是我们想要的居中效果，但是大部分 Android 设备的浏览器文字都会稍微向上偏离，如下图所示：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/3664a4fe64388fa5363cafc597c1d083.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/3664a4fe64388fa5363cafc597c1d083.jpg)
 
 测试表明，字体字号为奇数的两倍时（比如 10px、14px、18px、22px、26px），会出现严重偏移现象。
 
@@ -194,7 +194,7 @@ https://github.com/ruansongsong/H5Skills/blob/master/resources/android_lineheigh
 
 ## 6. 用伪元素实现文字两端均分对齐
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/168932f5dc1950a4566707ea2c4f1070.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/168932f5dc1950a4566707ea2c4f1070.jpg)
 
 要实现以上效果，可采用 flex 布局的 `justify-content: space-between;`属性实现两端对齐，还可以通过伪元素来实现：
 ```html
@@ -221,7 +221,7 @@ https://github.com/ruansongsong/H5Skills/blob/master/resources/empty.md
 
 例：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/0ee5bce6b104b6d2810f2c0b1e37775a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/0ee5bce6b104b6d2810f2c0b1e37775a.jpg)
 
 小红点有内容以及无内容的样式差异，按照常规的处理方式，我们一般是通过类名区分，但可以简单通过 `:empty` 选择器来区分：
 
@@ -245,7 +245,7 @@ Sticky Footer 效果：
 
 如果页面内容不足够长时，页脚固定在浏览器窗口的底部；如果内容足够长时，页脚固定在页面的最底部。 总而言之，就是页脚一直处于最底：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/60aa41facb864cb49be756a8363b6c3c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/60aa41facb864cb49be756a8363b6c3c.jpg)
 
 页面结构：
 ```html
@@ -635,7 +635,7 @@ https://www.w3cplus.com/css/aspect-ratio.html
 
 效果示意图：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/0444d75425397180d543c116217eb143.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/10/0444d75425397180d543c116217eb143.jpg)
 
 #### 17.1.1. 使用 max-height
 
@@ -689,7 +689,7 @@ padding-top 或 padding-bottom = （背景图片高度 / 背景图片宽度) * 1
 
 效果：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/e9ec48ae872e138f84f81e9edd9385fd.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/10/e9ec48ae872e138f84f81e9edd9385fd.jpg)
 
 ##### 17.1.2.2. padding & 伪元素
 
@@ -730,7 +730,7 @@ https://www.w3cplus.com/css/aspect-ratio.html
 
 效果示意图：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/e0830742a2f064f527fc5045f6f179e3.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/10/e0830742a2f064f527fc5045f6f179e3.jpg)
 
 在固定纵横比例的基础之上，做进一步的调整。假设我们在宽屏的 PC 上显示大的图片，而在移动设备上，我们不想使用相同的纵横比或图像变得太小。当然我们也不想使用完全相同的高度或让图像变得太高。我们更希望当宽度变小时，其高度也变得更小。而我们也把这种称为流体纵横比例。
 
@@ -768,7 +768,7 @@ http://www.alloyteam.com/2017/03/moves-the-input-box-fill-series-a/
 
 Html5 登录表单，但是登录表单下面有内容是固定在页面最底部。这种布局下，当键盘弹出输入时，ios 手机上是没问题的，但是在安卓手机上，键盘弹出后，页面底部的内容会挡住 form 表单。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/11/3a77793976020086f983f7d8296f937b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/11/3a77793976020086f983f7d8296f937b.jpg)
 
 - 解决方案 1：采用 css sticky footer 布局
 
@@ -881,7 +881,7 @@ $('#input').on('input', function(e) {
 
 示意图：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/12/2932ba02399fa7c6ca8956f861751f11.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/12/2932ba02399fa7c6ca8956f861751f11.jpg)
 
 解决方法：
 
@@ -936,7 +936,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
 
 每个 input 元素都包含了一个 validity 对象，该对象以布尔值 (true/false) 的形式提供了一系列关于表单域的信息：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/11/1a773b00fe60ad3f53dcf9ab1c0879be.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/11/1a773b00fe60ad3f53dcf9ab1c0879be.jpg)
 
 该对象包含以下属性：
 

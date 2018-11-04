@@ -68,9 +68,9 @@
     
     使用 pre、cur、next 三个指针：
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/abfdeffa6b2857f4e654591fb4625e70.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/4/25/abfdeffa6b2857f4e654591fb4625e70.jpg)
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/6e254b45c1db442f322ebf49630eb38d.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/4/25/6e254b45c1db442f322ebf49630eb38d.jpg)
 
     ```java
     // 时间复杂度：O(n)
@@ -129,7 +129,7 @@
 
   删除操作：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/93b94c7e4e55cc3165f8c11ccbec77cf.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/93b94c7e4e55cc3165f8c11ccbec77cf.jpg)
 
   由示意图可以看出，该操作逻辑不适用于要删除头节点的情况，需要对头节点进行单独处理：
   ```java
@@ -155,7 +155,7 @@
   ```
   因此，可以设置虚拟头节点来统一处理：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/fc9d52faf357c04fbb967a0fe4340cad.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/fc9d52faf357c04fbb967a0fe4340cad.jpg)
 
   ```java
   public ListNode removeElements(ListNode head, int val) {
@@ -185,9 +185,9 @@
 
   **常规的删除操作中，需要至少获取 pre、cur 两个指针才能进行，而此题中只给出了待删除节点的 cur 指针，因此可以将 cur 后继节点向前移动一位，再删除多余的后继节点即可**：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/06e71d5b135cb2100598b6818ea17d16.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/06e71d5b135cb2100598b6818ea17d16.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/11c73cde0d2a7c16b846e5671cf7c122.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/11c73cde0d2a7c16b846e5671cf7c122.jpg)
 
   **需要注意的是，该方法不适用于尾节点。若待删除节点刚好是尾结点，则此问题无解，但可通过将尾结点作特殊标记来达到“删除”的效果。**
 ·
@@ -228,9 +228,9 @@
   - You may not modify the values in the list's nodes, only nodes itself may be changed.
 - Solution
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/99c1776831188c81881ba2e8e5a1403f.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/99c1776831188c81881ba2e8e5a1403f.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/25/97f09ba2aa6b9c8429e02a5f7d30947e.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/25/97f09ba2aa6b9c8429e02a5f7d30947e.jpg)
 
   ```java
   // 时间复杂度：O(n)
@@ -392,7 +392,7 @@
 
 假设两个单链表**只存在 Y 型交叉，不会存在 X 型交叉**，即：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/19/ba560e8520787dcb3cbbc7227c1e478d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/19/ba560e8520787dcb3cbbc7227c1e478d.jpg)
 
 ### 7.1. 判断链表是否相交
 

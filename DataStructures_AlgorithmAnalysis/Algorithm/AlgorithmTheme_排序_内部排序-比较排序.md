@@ -51,7 +51,7 @@
   1. 将 a[i] 插入到当前的有序区 a[0, ... , i-1]。
   1. i++ 并重复第二步直到无序区为空，排序完成。
   
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/4763204802d27b45b1561c6ed2454e38.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/3/1/4763204802d27b45b1561c6ed2454e38.jpg)
 
 - 时间复杂度：O(n^2)。
 
@@ -120,7 +120,7 @@
   1. 按增量序列个数 k，对序列进行 k 趟排序。
   1. 每趟排序，根据对应的增量 ti，将待排序列分割成若干长度为 m 的子序列，分别对各子表进行直接插入排序。仅增量因子为 1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/fea7c8df26d30bfe7f67c5c705bf215a.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/3/1/fea7c8df26d30bfe7f67c5c705bf215a.jpg)
 
 - 时间复杂度：O(n^(1+e))（其中 0<e<1)，在元素基本有序的情况下，效率极高。
 
@@ -193,7 +193,7 @@
   1. 在无序区 a[i, ... , n-1] 中选取一个最小的元素与 a[i] 交换，交换之后 a[0, ... , i] 即为有序区；
   1. 重复 2），直到 i=n-1，排序完成。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/ee46da9fd5cb7e18eba74317a5c9530c.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/3/1/ee46da9fd5cb7e18eba74317a5c9530c.jpg)
 
 - 时间复杂度：O(n^2)。
 
@@ -417,7 +417,7 @@ void heapSort2(T arr[], int n){
 
 排序过程中将数组分成了二叉堆区域（主要操作区，待排序）和有序区域（已排好序）：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/d944e8d4a4d3816c5fb67aa0211fb58f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/1/d944e8d4a4d3816c5fb67aa0211fb58f.jpg)
 
 ```cpp
 template<typename T>
@@ -459,7 +459,7 @@ void heapSort3(T arr[], int n){
 
 冒泡排序的基本思想是，将含有 n 个元素的序列分为无序区和有序区，对无序区进行 n 次遍历，每次遍历都对相邻的两个数依次进行比较和调整，即每当两相邻的数比较后发现它们的排序与排序要求相反时，就将它们互换，从而**使得每次遍历都让无序区的最大值“下沉”到了最右端，相对较小的元素左移了一个位置 ( 冒泡 )**。直到 n 次遍历结束或在某次遍历时没有任何元素被交换位置，则排序完成。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/30c07c2319cbf6b96dde9f1dac09007d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/1/30c07c2319cbf6b96dde9f1dac09007d.jpg)
 
 **冒泡排序是一种稳定的排序算法**。
 
@@ -505,21 +505,21 @@ void heapSort3(T arr[], int n){
 
   - 第一步，选择中间的元素 45 作为"基准"。（基准值可以任意选择，但是选择中间的值比较容易理解）
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/6c1fc388fbba0324e28428a73ed6430b.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/3/1/6c1fc388fbba0324e28428a73ed6430b.jpg)
 
   - 第二步，按照顺序，将每个元素与"基准"进行比较，形成两个子集，一个"小于 45"，另一个"大于等于 45"。
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/71ecc929ab1eb240e994893a0fb3d3e1.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/3/1/71ecc929ab1eb240e994893a0fb3d3e1.jpg)
 
   - 第三步，对两个子集不断重复第一步和第二步，直到所有子集只剩下一个元素为止。
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/663e1107cd90a67042d6f5ca2a308e33.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/3/1/663e1107cd90a67042d6f5ca2a308e33.jpg)
     
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/3b3c7249a0304388b3c0d556179f5d27.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/3/1/3b3c7249a0304388b3c0d556179f5d27.jpg)
     
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/a4b047505b4b09452f45597554404648.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/3/1/a4b047505b4b09452f45597554404648.jpg)
     
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/8c7a0779fee100060f37fbef0e782723.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/3/1/8c7a0779fee100060f37fbef0e782723.jpg)
 
 - 时间复杂度
   - **平均时间复杂度：O(nlogn)。**
@@ -618,7 +618,7 @@ swap(arr[R], arr[rand()%(r-l+1)+l]);// 在 l~r 范围内随机选择一个元素
 
 二路快排使用 2 个索引，从序列的两端同时向中间进行排序，**将等于基准的元素均分到了 pivot 的两边，从而避免了算法退化成 O(n^2)**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/4e75b9f4a1f7b0a438d0f25bec65ba47.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/13/4e75b9f4a1f7b0a438d0f25bec65ba47.jpg)
 
 ```java
 // 返回 p, 使得 arr[l...p-1] < arr[p] ; arr[p+1...r] > arr[p]
@@ -667,7 +667,7 @@ void quickSort(T arr[], int n){
 
 三路快排指的是在每次选取基准后，将序列划分为小于基准、等于**基准**和大于基准的三个部分。在递归的过程中，中间部分不参与递归，分治的是两边。**三路快排比二路快排拥有更高的效率**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/f9ee21efd3f1fb90ee352bcc769a5c96.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/1/f9ee21efd3f1fb90ee352bcc769a5c96.jpg)
 
 - 将基准元素放在头部：
   ```cpp
@@ -851,35 +851,35 @@ int getmid(int L[], int low, int high)
 	1. 求解 -- 递归地对两个子区间 a[low...mid] 和 a[mid+1...high] 进行归并排序。递归的终结条件是子区间长度为 1。
 	1. 合并 -- 在每次递归中，将已排序的两个子区间 a[low...mid] 和 a[mid+1...high] 归并为一个有序的区间 a[low...high]。
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/be0fdc4760a7ee4f4eca12176ba0917f.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/4/13/be0fdc4760a7ee4f4eca12176ba0917f.jpg)
 
 	由于序列分解后，共有 logn 层，因此要实现 O(nlogn) 的归并排序，就变成：**如何使用 O(n) 的算法将各自有序的两个子序列，合并成一个完全有序的序列**？
 
 	这个问题的实现，无法通过原地交换位置来完全，因此需要借助一个 O(n) 的辅助空间。通过与辅助数组进行比较，在原数组上进行赋值。
 	
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/d9f9ba28306f3187f553b2dbfa889685.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/4/13/d9f9ba28306f3187f553b2dbfa889685.jpg)
 
 	使用 3 个索引来追踪操作的位置，其中蓝色指针表示在目标序列（原序列）中的索引，红色指针表示在两个各自有序的序列（辅助空间）中的索引：
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/d26ec3cb7c936054b678c7e7d9a3fdc8.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/4/13/d26ec3cb7c936054b678c7e7d9a3fdc8.jpg)
 
 	比较当前两个红色指针指向的值，选择较小 / 大值赋值给蓝色指针指向的位置，并将被选择的红色指针和蓝色指针都后移一位：
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/8c46fe155161f012291a65391f780ce3.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/4/13/8c46fe155161f012291a65391f780ce3.jpg)
 
 	以此类推：
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/c4ae39aef9eafa3547dee34ba77d41f1.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/4/13/c4ae39aef9eafa3547dee34ba77d41f1.jpg)
 
 	在实际实现中，需要定义清楚各个指针和位置的变量，从而完成完整的归并过程：
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/43318a9ef0aad21918b6a6b72007ec0d.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/4/13/43318a9ef0aad21918b6a6b72007ec0d.jpg)
 
 - **从下往上**
 
 	从下往上的归并排序与"从下往上"在排序上是反方向的。它将待排序的数列分成若干个长度为 1 的子数列，然后将这些数列两两合并；得到若干个长度为 2 的有序数列，再将这些数列两两合并；得到若干个长度为 4 的有序数列，再将它们两两合并；直接合并成一个数列为止。这样就得到了我们想要的排序结果。
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/13/120033d0bf3205135cc40dce145e1075.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/4/13/120033d0bf3205135cc40dce145e1075.jpg)
 	
 	这种方式的实现不需要递归，只须迭代就可以完成归并排序。
 
@@ -1090,7 +1090,7 @@ http://coding.imooc.com/learn/questiondetail/3208.html
 
 ## 5. 综合比较
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/1/c82ba1ca51b4da05d788119de27b2cdc.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/1/c82ba1ca51b4da05d788119de27b2cdc.jpg)
 
 （改错：上述快速排序算法的空间复杂度应改为 O(logn)）
 

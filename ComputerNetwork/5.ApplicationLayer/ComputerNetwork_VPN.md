@@ -82,19 +82,19 @@
     
       适用于企业内部人员流动频繁或远程办公的情况：出差员工或者在家办公的员工利用当地 ISP，通过拨号、ISDN、ADSL 等连接互联网，就可以和企业的 VPN 网关建立私有的隧道连接。
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/26/c2eaa91c31b84cf83c608e926126cdf7.jpg)
+      ![image](http://img.cdn.firejq.com/jpg/2017/11/26/c2eaa91c31b84cf83c608e926126cdf7.jpg)
 
     - 企业内部 VPN（Intranet VPN） 
     
       是一种网关对网关 VPN：应用于企业内部两个或多个异地网络的互联，实施一样的安全策略。Intranet 加密的 VPN 隧道，两个异地网络通过 VPN 安全隧道进行通信，在一个局域网中访问异地的另一个局域网时，如同在本地网络一样。
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/26/0de2a138d8c0bade203b34ba262c2c20.jpg)
+      ![image](http://img.cdn.firejq.com/jpg/2017/11/26/0de2a138d8c0bade203b34ba262c2c20.jpg)
 
     - 企业外部 VPN（Extranet VPN）
 
       应用于企业网与合作者、客户等网络的互连，也是一种网关对网关的 VPN。与 Intranet VPN 不同的是，它需要在不同企业的内部网络之间组建，需要应用不同的协议，对不同的网络要有不同的安全策略。
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/26/2eae95e2e3e391957c05d0aec58a70e3.jpg)
+      ![image](http://img.cdn.firejq.com/jpg/2017/11/26/2eae95e2e3e391957c05d0aec58a70e3.jpg)
 
 2. 按 VPN 网络结构划分 
 
@@ -147,7 +147,7 @@
 2. 新的包头提供了路由信息，从而使封装的负载数据能够通过公共网络（如 Internet）传递。
 3. 被封装的数据包一旦达到网络终点，数据将被解包并送达主机。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/27/9eb553802874997101779fe2cc0943a9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/27/9eb553802874997101779fe2cc0943a9.jpg)
 
 ### 3.1. 隧道协议
 
@@ -177,7 +177,7 @@
 
 ##### 3.1.1.3. 常见隧道协议
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/27/9aee19cf6918510d7e9e62ad744582ca.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/27/9aee19cf6918510d7e9e62ad744582ca.jpg)
 
 （来自 [wikipedia](https://zh.wikipedia.org/wiki/%E9%9A%A7%E9%81%93%E5%8D%8F%E8%AE%AE#.E5.B8.B8.E8.A6.8B.E7.A9.BF.E9.9A.A7.E5.8D.94.E8.AD.B0))
 
@@ -213,7 +213,7 @@
   - 控制报文：用于 PPTP 隧道的建立、维护和断开，采用 TCP 控制。 
 
     PPTP 客户端“拨号”到 PPTP 服务器，创建 PPTP 隧道，即连接 PPTP 服务器的 TCP1723 端口建立控制连接。PPTP 控制连接数据包包括一个 IP 报头、一个 TCP 报头和 PPTP 控制信息：
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/27/6a6f5740ba85223b6e0580e64c963a4b.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/27/6a6f5740ba85223b6e0580e64c963a4b.jpg)
 
   - 数据报文：先封装在 PPP 协议中，然后再用 GRE 协议（通用路由封装协议）封装成标准 IP 包，通过 IP 网络进行发送。
 
@@ -221,7 +221,7 @@
 
     PPTP 服务器收到该 IP 后层层解包，得到真正的用户数据，并将用户数据转发到内部网络上。 
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/27/9e880343d10fcf51c72a67c14db952d1.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/27/9e880343d10fcf51c72a67c14db952d1.jpg)
 
 ##### 3.1.2.2. LTP(Layer Two Tunneling Protocol)
 
@@ -254,7 +254,7 @@
 - 工作原理
   - 数据发送端处理过程：
   
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/27/4f465d7b2f95fb0cb8e501a7e6469b0b.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/27/4f465d7b2f95fb0cb8e501a7e6469b0b.jpg)
 
     - L2TP 封装。初始 PPP 有效载荷如 IP 数据报、IPX 数据报或 NetBEUI 帧等首先经过 PPP 报头和 L2TP 报头的封装。 
     
@@ -286,7 +286,7 @@
   - PPTP 通过 TCP 协议进行隧道的维护，L2TP 则是采用 UDP 协议。
   - PPTP 的控制报文没有经过加密，而 L2TP 的控制报文应用 IPSec ESP 进行了加密：
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/27/98a136b12af46e953b63a3aee53ed0fd.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/27/98a136b12af46e953b63a3aee53ed0fd.jpg)
 
   
 
@@ -323,7 +323,7 @@
 
 - 报文
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/27/c13b7c733bdcccc4d18d1f3ec8a8de85.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/27/c13b7c733bdcccc4d18d1f3ec8a8de85.jpg)
 
 - 三个协议
   - 鉴别报头 Authentication Header, AH 协议： 只涉及到认证，不涉及到加密。 

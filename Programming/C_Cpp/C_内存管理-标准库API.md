@@ -102,7 +102,7 @@ t_block extend_heap(t_block last, size_t s) {
 
 First fit 有一个比较致命的缺点，就是可能会让很小的 size 占据很大的一块 block，此时，为了提高 payload，应该在剩余数据区足够大的情况下，将其分裂为一个新的 block，示意如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/29/4673aecf688d23257f428ea195e8fa11.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/29/4673aecf688d23257f428ea195e8fa11.jpg)
 
 ```c
 void split_block(t_block b, size_t s) {
@@ -252,7 +252,7 @@ void * memcpy(void * dest ,const void *src, size_t n);
 
 需要注意的是，由于 memcpy 实现中地址复制为正向复制，因此 memcpy 不能处理 src 和 dest 有重叠的情况：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/15/c1f319b4b554797617701ec2c08ffbcb.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/15/c1f319b4b554797617701ec2c08ffbcb.jpg)
 
 模拟实现一个 memcpy 函数：
 ```c

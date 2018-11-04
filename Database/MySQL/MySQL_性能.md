@@ -283,7 +283,7 @@ mysqlslap 运行分三个阶段：
   //–query 用这个表做测试，这里一般是 insert , 或 select 或 update 语句
   //–create 可以是几条 sql 语句 ，也可以是一个文件名，里面写满 sql 语句
   ```
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/b4c7d2f3dbd5ebbcf293e520134b3f7c.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/30/b4c7d2f3dbd5ebbcf293e520134b3f7c.jpg)
 
   ```
   mysqlslap -a --concurrency=50,100 --number-of-queries 1000 --debug-info -uroot -proot
@@ -294,7 +294,7 @@ mysqlslap 运行分三个阶段：
   ```
 - 以自动生成测试表和数据的形式，分别模拟 50 和 100 个客户端并发连接处理 1000 个 query 的情况：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/1ea49b2814d245cb904d1b559860cd1d.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/30/1ea49b2814d245cb904d1b559860cd1d.jpg)
 
 ## 5. Refer Links
 

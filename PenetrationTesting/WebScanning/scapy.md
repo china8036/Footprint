@@ -90,7 +90,7 @@ Scapy 是一个强大的操纵报文的交互程序。它可以伪造或者解�
 
 ### 1.2. 主要功能
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/59714703e5ed2008e27f2be1012c3d8b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/59714703e5ed2008e27f2be1012c3d8b.jpg)
 
 **限制：Scapy 提供的协议层只到 TCP 层，没有实现 HTTP 层 -- “在传输层以下的所有网络操作都可以用 Scapy 解决“。**
 
@@ -141,35 +141,35 @@ scapy 支持两种使用方式：
 
 ls() 函数显示 scapy 支持的所有协议；     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/9cf9dead7895dcc563cb2a4e27c35229.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/9cf9dead7895dcc563cb2a4e27c35229.jpg)
 
 ls() 函数的参数还可以是上面支持的协议中的任意一个的类型属性，也可以是任何一个具体的数据包，如 ls(TCP),ls(newpacket) 等；     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/521839b3d93efdd63d47f27ce4ff8b3d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/521839b3d93efdd63d47f27ce4ff8b3d.jpg)
 
 ### 2.2. lsc()
 
 lsc() 列出 scapy 支持的所有的命令；     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/f03037083219b2144844cd19ff2d17cb.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/f03037083219b2144844cd19ff2d17cb.jpg)
 
 ### 2.3. conf
 
 conf 变量保存了 scapy 的配置信息，可显示所有的配置信息；     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/57c2f20652d1f6c3a12e639cc417db07.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/57c2f20652d1f6c3a12e639cc417db07.jpg)
 
 ### 2.4. help()
 
 help() 显示某一命令的使用帮助，如 help(sniff)：     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/dcf82802685db07ff4adc32d131b8d71.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/dcf82802685db07ff4adc32d131b8d71.jpg)
 
 ### 2.5. show()
 
 show() 显示指定数据包的详细信息；     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/1d4311cd12ebeecf4adf2de77bb0016f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/1d4311cd12ebeecf4adf2de77bb0016f.jpg)
 
 注意：
 
@@ -188,7 +188,7 @@ sprintf() 输出某一层某个参数的取值，如果不存在就输出”??�
 - nb: 当有两个协议层有相同的参数名时，nb 用于到达你想要的协议层；
 - r: 是一个标志；当使用 r 标志时，意味着显示的是参数的原始值。例如，TCP 标志中使用人类可阅读的字符串’SA’表示 SYN 和 ACK 标志，而其原始值是 18；     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/23ce616bf3ddd858c8feb3e4ee2b4256.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/23ce616bf3ddd858c8feb3e4ee2b4256.jpg)
 
 ## 3. 创建、发送、接收数据包
 
@@ -248,7 +248,7 @@ Scapy 的数据包创建是按照 TCP/IP 四层参考模型， Scapy 为每一�
 
 修改对象属性 / 数据包字段（没有修改的字段 / 属性则使用默认值）     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/a80e14abbe2679316ac52478b4501a96.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/a80e14abbe2679316ac52478b4501a96.jpg)
 
 查看数据包某一层的字段
 ```python
@@ -442,7 +442,7 @@ send() 发送三层数据包，没有接收响应的功能。
 
 例：     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/d8d25ec5be11e0e26a911cdfe96b6b45.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/d8d25ec5be11e0e26a911cdfe96b6b45.jpg)
 
 ##### 3.2.1.2. sr()
 
@@ -450,7 +450,7 @@ sr() 即 send and receive，用于发送三层数据包，并等待接收一个�
 
 sr() 返回结果的数据结构：     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/500154f307d65dbde0d438f66a70c3aa.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/500154f307d65dbde0d438f66a70c3aa.jpg)
 
 sr() 返回一个 tuple：
 ```python
@@ -468,9 +468,9 @@ sr() 返回一个 tuple：
 
 例：向 www.baidu.org 发送 ttl 分别由 5 到 10 的 6 个 ICMP 数据包     
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/fed39859c616ca34e6058c2dabb0f8e4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/fed39859c616ca34e6058c2dabb0f8e4.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/f7feda395a2de2dee0dda4d8b9b5a075.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/f7feda395a2de2dee0dda4d8b9b5a075.jpg)
 
 例：向多个端口发送数据包
 ```python
@@ -605,7 +605,7 @@ Sent 2 packets, received 2 packets. 100.0% hits.
 sendp() 发送二层数据包，没有响应接收功能。
 
 例：     
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/94cbed730665b36703245cf42f731910.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/94cbed730665b36703245cf42f731910.jpg)
 
 ##### 3.2.2.2. srp()
 
@@ -616,14 +616,14 @@ srp() 用于发送二层数据包（如 Ethernet、802.3），并等待接收一
 srp1() 用于发送二层数据包（如 Ethernet、802.3），并等待接收一个响应数据包。
 
 例：     
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/90e60f3fbba41ff1e02e16b26106355a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/90e60f3fbba41ff1e02e16b26106355a.jpg)
 
 ##### 3.2.2.4. srploop()
 
 srploop() 用于循环发送二层数据包，并等待接收响应数据包。
 
 例：     
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/f8620aeb8bc5e50d8819b7b628132d4f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/f8620aeb8bc5e50d8819b7b628132d4f.jpg)
 
 ## 4. 数据嗅探与过滤
 
@@ -813,9 +813,9 @@ sniff(filter='tcp and port 80',prn=pktTCP)
 
 例：(ttl 应该改为 64 )
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/0217d8d487c0f448530608855fd98d35.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/0217d8d487c0f448530608855fd98d35.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/07b103d78b0b46eceaca1daae3de6ee8.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/07b103d78b0b46eceaca1daae3de6ee8.jpg)
 
 #### 5.1.2. ARP Ping
 
@@ -833,14 +833,14 @@ sniff(filter='tcp and port 80',prn=pktTCP)
 >>> ans.summary(lambda (s,r): r.sprintf("%Ether.src% %ARP.psrc%"))
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/d7207a5ca8641d3fe834d29760927c34.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/d7207a5ca8641d3fe834d29760927c34.jpg)
 
 Scapy 包含内建函数 arping()，该函数实现的功能和以上的两个命令类似：
 ```
 >>> arping("192.168.1.*")
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/9e42252d2c00f42a1516ee6fbcf36e2a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/9e42252d2c00f42a1516ee6fbcf36e2a.jpg)
 
 #### 5.1.3. TCP SYN Ping
 

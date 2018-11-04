@@ -112,7 +112,7 @@
 
 ### 发展过程
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/26/d537a0fc5d04cfe2313c3e774d6d3e0d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/26/d537a0fc5d04cfe2313c3e774d6d3e0d.jpg)
 
 静态包过滤防火墙 -> 应用型 / 代理防火墙 -> 动态包过滤防火墙 -> 自适应代理防火墙
 
@@ -254,7 +254,7 @@
 
 ### 过滤路由器 / 屏蔽路由器结构结构 (Packetfiltering Router or Screening Router) 
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/26/00964f41b671614a04324f208fac765b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/26/00964f41b671614a04324f208fac765b.jpg)
 
 屏蔽路由器结构是最简单的防火墙结构。
 
@@ -266,7 +266,7 @@
 
 ### 双穴主机 / 双宿主机结构 (Dual Homed Gateway) 
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/26/c6bc993aace67f9629c0391a9840a761.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/26/c6bc993aace67f9629c0391a9840a761.jpg)
 
 该结构的防火墙是放在内网与外网接口上的一台堡垒主机。这台主机上最少有两个网络接口：一个与内网相连，另外一个与外网相连。内、外网之间禁止直接通信。堡垒主机上运行着防火墙软件（应用层网关)，可以转发应用程序，也可提供服务等功能。
 
@@ -275,7 +275,7 @@
 
 ### 屏蔽主机 / 主机过滤结构 (Screened Host Gateway) 
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/26/a92f49e5cf17a29d4f17a7aaeba342dd.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/26/a92f49e5cf17a29d4f17a7aaeba342dd.jpg)
 
 屏蔽主机体系结构包括：一个分组（包）过滤路由器（或称为屏蔽路由器) 连接外部网络，再通过一个堡垒主机与内部网络相连。
 
@@ -291,9 +291,9 @@
 
 ### 过滤子网 / 屏蔽子网结构 (Screened Subnet)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/26/c95e907bd0009138e67d806ecb8ba230.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/26/c95e907bd0009138e67d806ecb8ba230.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/26/861c3e74efbec7c370aea2ff8c9b28a3.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/26/861c3e74efbec7c370aea2ff8c9b28a3.jpg)
 
 在外界网络和内部网络之间建立一个双方都可以访问的独立网络（屏蔽子网），用两台分组过滤路由器将这一子网分别与内部网络和外部网络分开。
 

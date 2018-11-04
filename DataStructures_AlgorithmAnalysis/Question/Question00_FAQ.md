@@ -369,17 +369,39 @@ int getmid(int L[], int low, int high)
 
 LRU (Least Recently Used) 即最近最少使用，通常用于缓存的淘汰策略实现。
 
-> Q: 保证基本的 get 和 set 的功能的同时，还要保证最近访问 (get 或 put) 的节点保持在限定容量的 Cache 中，如果超过容量则应该把 LRU（近期最少使用）的节点删除掉。
+[LeetCode 146. LRU Cache](https://leetcode.com/problems/lru-cache/)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/25/e27256840117242e5b0b9dc2c02f325f.jpg)
+[Design and Implement LRU Cache in O(1) - LeetCode 146 - 花花酱 刷题找工作 EP50](https://www.youtube.com/watch?v=q1Njd3NWvlY)
+
+> Q: 实现一个包含 get 和 put 方法的 LRUCache 类，且 get 和 put 方法的时间效率都是 O(1)。保证基本的 get 和 set 的功能的同时，还要保证最近访问 (get 或 put) 的节点保持在限定容量的 Cache 中，如果超过容量则应该把 LRU（近期最少使用）的节点删除掉。
+
+Example:
+```java
+LRUCache cache = new LRUCache( 2 /* capacity */ );
+
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // returns 1
+cache.put(3, 3);    // evicts key 2
+cache.get(2);       // returns -1 (not found)
+cache.put(4, 4);    // evicts key 1
+cache.get(1);       // returns -1 (not found)
+cache.get(3);       // returns 3
+cache.get(4);       // returns 4
+```
+
+![image](http://img.cdn.firejq.com/jpg/2018/10/31/ffece79970ddcc84b9ae6c7d272e663e.jpg)
 
 NOTE: **在面试中解决该问题时，由于代码量相对较多，应该尽量将代码分离开来，写成独立的方法，从而使得代码更加清晰并在最短时间内铺设好代码骨架**。
 
 ### 5.1. 只使用 HashMap
 
-同时维护 1 个 Double Linked List 和 1 个 `HashMap<keyType, Node>`，其中 Node 为链表节点类型（包含 prev，next，key 和 value），以及元素数量 size。
+思路：
+- 同时维护 1 个 DoubleLinkedList 和 1 个 `HashMap<keyType, Node>`，其中 Node 为双向链表的节点类型（包含 prev，next，key 和 value），以及元素数量 size。
+- **存储数据的主体是 DoubleLinkedList，但由于 DoubleLinkedList 无法支持 O(1) 的随机存取，因此使用 HashMap 进行辅助**（键作为 key，DoubleLinkedList 节点作为 value），从而能够支持在 O(1) 时间内 get 指定节点。
 
-- `add(key, value)`, O(1)
+操作实现：
+- `put(key, value)`, O(1)
   1. 在 HashMap 中 get(key) 检查该 key 是否已存在。如果是，则通过 get(key) 得到链表节点后，更新节点中的 value 即可；如果不是，进入下一步。
   1. 检查 size+1 是否达到 limit。如果是，删除链表头部节点，同时在 HashMap 中删除头部节点的 key 对应的节点；如果不是，进入下一步。
   1. 在链表尾部添加一个新节点 Node(key, value)，同时在 HashMap 中 put(key, Node)。
@@ -392,8 +414,112 @@ NOTE: **在面试中解决该问题时，由于代码量相对较多，应该尽
   1. 在 HashMap 中 get(key) 得到该 key 对应的链表节点，然后指向 remove(key)。
   1. 在链表中将该节点删除。
 
-```java
+- 4 个辅助方法：
+  - 在 head 添加 Node
+  - 删除指定 Node
+  - 删除 tail 并返回 tail
+  - 将指定 Node 移动到 head
 
+链表结构：
+```
+head(null) <-> node1(newest) <-> node2 <-> node3 <-> ... <-> noden(oldest) <-> tail(null)
+```
+
+```java
+class LRUCache {
+  class DLinkedNode {
+    int key;
+    int value;
+    DLinkedNode pre;
+    DLinkedNode next;
+    DLinkedNode() {}
+    DLinkedNode(int key, int value) {
+      this.key = key;
+      this.value = value;
+    }
+  }
+
+  private HashMap<Integer, DLinkedNode> cache = new HashMap<>();
+  private int count;
+  private int capacity;
+  private DLinkedNode head, tail;
+
+  public LRUCache(int capacity) {
+    this.count = 0;
+    this.capacity = capacity;
+
+    head = new DLinkedNode();
+    head.pre = null;
+
+    tail = new DLinkedNode();
+    tail.next = null;
+
+    head.next = tail;
+    tail.pre = head;
+  }
+
+  public int get(int key) {
+    DLinkedNode node = cache.get(key);
+    if (node == null) {
+      return -1;
+    }
+    // move the accessed node to the head;
+    this.moveToHead(node);
+    return node.value;
+  }
+
+  public void put(int key, int value) {
+    DLinkedNode node = cache.get(key);
+    if (node != null) {
+      // update the value.
+      node.value = value;
+      this.moveToHead(node);
+      return;
+    }
+    DLinkedNode newNode = new DLinkedNode(key, value);
+    this.cache.put(key, newNode);
+    this.addNode(newNode);
+    ++count;
+
+    if (count > capacity) {
+      // pop the tail
+      DLinkedNode tail = this.popTail();
+      this.cache.remove(tail.key);
+      --count;
+    }
+  }
+  
+  // Move certain node in between to the head.
+  private void moveToHead(DLinkedNode node) {
+    this.removeNode(node);
+    this.addNode(node);
+  }
+
+  // Always add the new node right after head.
+  private void addNode(DLinkedNode node) {
+    node.pre = head;
+    node.next = head.next;
+
+    head.next.pre = node;
+    head.next = node;
+  }
+
+  // Remove an existing node from the linked list.
+  private void removeNode(DLinkedNode node) {
+    DLinkedNode pre = node.pre;
+    DLinkedNode post = node.next;
+
+    pre.next = post;
+    post.pre = pre;
+  }
+
+  // pop the current tail.
+  private DLinkedNode popTail() {
+    DLinkedNode res = tail.pre;
+    this.removeNode(res);
+    return res;
+  }
+}
 ```
 
 ### 5.2. 可使用 LinkedHashMap
@@ -952,23 +1078,50 @@ int generateRandom(int i, int j)
 
 ## 11. 实现随机数
 
-《CC 150 17.11》
+《CC 150》 17.11
+
+[2018 今日头条春招面试题 五、随机数生成](https://www.cnblogs.com/weiyinfu/p/8546080.html)
 
 - Question
-  > 给定一个可以产生 0~4 随机数的函数 rand5()，编写 rand7() 方法，来产生 0~6 的随机数。
+  > 给定一个可以产生 0~4 随机数的函数 `rand5()`，编写 `rand7()` 方法，来产生 0~6 的随机数。
 
 - Solution
   
-  我们只需要产生出一个范围的数值，且每个数值出现的概率相同（这个范围至少有 7 个元素），然后舍弃后边大于 7 的倍数的部分，将余下元素除以 7 取余数即可。
+  最直观的思路就是均匀产生很多个数字，从这么多个数字里面选取 7 个数字分别表示 `[0,6]` 之间的整数。
   ```java
   public int rand7() {
     while (true) {
-      int num = 5 * rand5() + rand5(); // 产生 0~24 的一个数 TODO: 直接 6 * rand5() ?
+      int num = 5 * rand5() + rand5();
+      if (num < 7)
+        return num;
+    }
+  }
+  ```
+  对以上方法随机数概率的正确性进行证明：
+  ```
+  rand5() 可以以 1/5 的概率产生  0 1 2 3 4 这 5 种数；rand5()*5 可以以 1/5 的概率产生 0 5 10 15 20 这 5 种数；因此，rand5()*5+rand5() 可以以 1/5 * 1/5 = 1/25 的概率产生 0~24 这 25 种数。
+  ```
+
+  按照这种做法，平均需要循环多少次才能产生一个 `[0,6]` 之间的随机数呢？
+  ```
+  调用 2 次就跳出循环的概率为 7/25；
+  调用 4 次才跳出循环的概率为 (18/25)*7/25;
+  调用 6 次才跳出循环的概率为 (18/25)*(18/25)*7/25
+  ......
+  把次数乘以概率累加起来就得到了跳出循环时已经执行了多少次循环，这个问题是一个等比数列乘以等差数列求和问题，求解方法是错位相减法，结果是 50/7。其实是没有必要算的，因为这是典型的几何分布：每次成功的概率为 p，那么它的期望执行次数就是 1/p。经过以上计算，大约需要 7 次才能跳出循环。
+  ```
+  
+  在这种方法中，对于产生的 25 种结果，我们只利用了 7/25，造成了平均循环次数过多的问题。因此，我们可以对 25 种结构舍弃大于 7 的倍数的部分，将余下元素除以 7 取余数即可。
+  ```java
+  public int rand7() {
+    while (true) {
+      int num = 5 * rand5() + rand5(); 
       if (num < 21) // 舍弃 21~24 之间的数值，否则 rand7() 返回 0~3 的值就会偏多
         return num % 7;
     }
   }
   ```
+  这样一来利用率达到了 p=21/25，平均循环次数为 1/p * 2 = 50/21 = 2，充分起到了优化效率的效果。
 
 ## 12. 洗牌算法实现
 

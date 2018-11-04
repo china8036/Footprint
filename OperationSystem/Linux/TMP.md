@@ -1,9 +1,7 @@
 - [Linux 各种限制](#linux-各种限制)
-- [ulimit -a](#ulimit--a)
   - [1. Linux 理论最大进程数](#1-linux-理论最大进程数)
   - [2. Linux 理论最大线程数](#2-linux-理论最大线程数)
   - [3. Linux 最大打开文件数](#3-linux-最大打开文件数)
-- [cat /proc/sys/fs/file-max](#cat-procsysfsfile-max)
   - [4. Refer Links](#4-refer-links)
 - [字节序](#字节序)
 - [文件指针 / 句柄 & 文件描述符 & 文件路径](#文件指针--句柄--文件描述符--文件路径)
@@ -12,7 +10,7 @@ TODO: [计算机底层知识拾遗](https://blog.csdn.net/column/details/compute
 
 # Linux 各种限制
 
-可以使用 `ulimit -a` 查看我们系统的大部分限制：
+可以使用 `ulimit -a` 查看系统的大部分限制：
 ```bash
 # ulimit -a
 core file size          (blocks, -c) 0
@@ -37,7 +35,7 @@ file locks                      (-x) unlimited
 
 - PID 限制
 
-  Linux 内核通过进程标识值 PID(process identification value) 来标示进程，PID 是一个 pid_t 类型的数，实际上就是 int 类型。通过查看 /proc/sys/kernel/pid_max 可得到当前系统中的 pid 上限：
+  Linux 内核通过进程标识值 PID(process identification value) 来标示进程，PID 是一个 pid_t 类型的数，实际上就是 int 类型。通过查看 `/proc/sys/kernel/pid_max` 可得到当前系统中的 pid 上限：
   ```bash
   # cat /proc/sys/kernel/pid_max 
   32768
@@ -107,12 +105,13 @@ https://blog.csdn.net/K346K346/article/details/79053136
 
 - 主机字节序
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/19/5ce1dbc0feb12be92794be63d1ed956e.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/10/19/5ce1dbc0feb12be92794be63d1ed956e.jpg)
 
   CPU 存储数据时采用的字节顺序。不同的 CPU 设计时采用的字节序是不同的，谈到字节序的问题，必然牵涉到两大 CPU 派系。那就是 Motorola 的 PowerPC 系列 CPU 和 Intel 的 x86 与 x86_64（该指令集由 AMD 率先设计推出）系列 CPU：
   - PowerPC 系列采用 big endian 方式存储数据。
   - x86 与 x86_64 系列则采用 little endian 方式存储数据。
-  平常大多数 PC 与服务器如果使用的是 Intel 与 AMD CPU，因此一般都是 little endian。
+
+  **平常大多数 PC / Server 使用的都是 Intel / AMD CPU，因此一般都是 little endian**。
 
   如何具体判断本机的主机字节序呢？
   ```c

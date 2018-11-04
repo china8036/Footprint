@@ -18,11 +18,11 @@
 
 传输层与网络层一起构成了网络协议层次的核心，传输层架构在网络层提供的服务之上，是端到端传输服务的最底层，在应用层和网络层之间提供了无缝接口。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/3d264c0b1993f78a135c503f74033ffa.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/3d264c0b1993f78a135c503f74033ffa.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/c8dcb6e169ce33ddb124f44d0b50ec16.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/c8dcb6e169ce33ddb124f44d0b50ec16.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/23e3fe36a0865ac10a75a605bb5818d5.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/23e3fe36a0865ac10a75a605bb5818d5.jpg)
 
 ### 1.1. 传输层任务
 
@@ -55,7 +55,7 @@
 
 简单的传输服务原语如：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/ae497563485d1f964890db36169dceed.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/ae497563485d1f964890db36169dceed.jpg)
 
 ### 2.2. 套接字
 
@@ -67,7 +67,7 @@
 
 网络层次位置：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/c89ff99a98cd2a481a91339652181341.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/c89ff99a98cd2a481a91339652181341.jpg)
 
 功能理解：可认为一个 IP 与一端口（port）联合在一起形成一个套接字，它是网络上的一个传输接口。在网络的另外一端可有一个对应的套接字与通信。
 

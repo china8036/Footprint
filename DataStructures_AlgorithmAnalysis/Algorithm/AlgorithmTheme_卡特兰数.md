@@ -17,11 +17,11 @@
 
 卡塔兰数的一般项公式为：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/22/4ef9577e015d1e57f3fb9c51804f40ff.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/22/4ef9577e015d1e57f3fb9c51804f40ff.jpg)
 
 另一个通项式为（由此式易知卡特兰数都是自然数）：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/22/ee08febc6bc88a8604d6e6369bb80d5f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/22/ee08febc6bc88a8604d6e6369bb80d5f.jpg)
 
 - 前 20 项
   ```  
@@ -30,7 +30,7 @@
 
 - 递推公式
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/22/4e8d5eceaaaf8108198eff11076deb3d.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/22/4e8d5eceaaaf8108198eff11076deb3d.jpg)
 
 - 递归公式
   ```
@@ -45,7 +45,7 @@
   F(3) = F(0)*F(3-1) + F(1)*F(3-2) + F(2)*F(3-3) = 2 + 1 + 2 = 5； 
   F(4) = F(0)*F(4-1) + F(1)*F(4-2) + F(2)*F(4-3) + F(3)*F(4-4)= 5 + 4 + 4 + 5 = 14； 
   ```
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/22/cedb78c00729da3a80b02c55576c7fa7.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/22/cedb78c00729da3a80b02c55576c7fa7.jpg)
 
 - 性质
   - 所有的奇卡塔兰数 Cn 都满足 n=2^k-1。

@@ -9,7 +9,7 @@
 
 比特与代表他们的信号之间的转换过程称为数字调制。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/8eae766465aa78e05d27743f1c1be8cc.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/8eae766465aa78e05d27743f1c1be8cc.jpg)
 
 ## 1. 基带传输 (Baseband Transmission)
 
@@ -23,7 +23,7 @@
 
 曼彻斯特编码：每个比特时间跳变一次。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/435ae6834d7a291d2b5c2467eeb8376a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/435ae6834d7a291d2b5c2467eeb8376a.jpg)
 
 ### 1.2. 带宽效率
 
@@ -37,7 +37,7 @@
 
 - 星座图：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/da18cbaea56f8b57e4c8fb2bc10c79ba.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/10/da18cbaea56f8b57e4c8fb2bc10c79ba.jpg)
 
 - 格雷码
 

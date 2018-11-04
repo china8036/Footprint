@@ -1,40 +1,40 @@
 - [IO 模型](#io-模型)
-	- [1. 基本概念](#1-基本概念)
-		- [1.1. 阻塞和非阻塞](#11-阻塞和非阻塞)
-		- [1.2. 同步和异步](#12-同步和异步)
-	- [2. IO 模式](#2-io-模式)
-		- [2.1. Reactor 模式](#21-reactor-模式)
-		- [2.2. Proactor 模式](#22-proactor-模式)
-		- [2.3. Actor 模式](#23-actor-模式)
-	- [3. IO 模型](#3-io-模型)
-		- [3.1. 同步阻塞式 IO](#31-同步阻塞式-io)
-		- [3.2. 同步非阻塞式 IO](#32-同步非阻塞式-io)
-		- [3.3. 同步非阻塞式 IO / 事件驱动 IO / IO 多路复用](#33-同步非阻塞式-io--事件驱动-io--io-多路复用)
-			- [3.3.1. select](#331-select)
-				- [3.3.1.1. API](#3311-api)
-				- [3.3.1.2. 实现原理](#3312-实现原理)
-				- [3.3.1.3. 缺陷](#3313-缺陷)
-			- [3.3.2. poll](#332-poll)
-				- [3.3.2.1. API](#3321-api)
-				- [3.3.2.2. 使用示例](#3322-使用示例)
-			- [3.3.3. epoll](#333-epoll)
-				- [3.3.3.1. API](#3331-api)
-				- [3.3.3.2. 实现原理](#3332-实现原理)
-					- [3.3.3.2.1. 存储结构](#33321-存储结构)
-					- [3.3.3.2.2. 解决拷贝问题](#33322-解决拷贝问题)
-					- [3.3.3.2.3. 解决遍历问题](#33323-解决遍历问题)
-					- [3.3.3.2.4. 实现流程](#33324-实现流程)
-				- [3.3.3.3. 工作模式](#3333-工作模式)
-					- [3.3.3.3.1. Level Triggered 模式](#33331-level-triggered-模式)
-					- [3.3.3.3.2. Edge Triggered 模式](#33332-edge-triggered-模式)
-					- [3.3.3.3.3. 实现原理](#33333-实现原理)
-				- [3.3.3.4. 使用示例](#3334-使用示例)
-			- [3.3.4. /dev/pool](#334-devpool)
-			- [3.3.5. kqueue](#335-kqueue)
-		- [3.4. 异步非阻塞式 IO / 异步 IO](#34-异步非阻塞式-io--异步-io)
-		- [3.5. 信号驱动式 IO](#35-信号驱动式-io)
-		- [3.6. 比较](#36-比较)
-	- [4. Refer Links](#4-refer-links)
+  - [1. 基本概念](#1-基本概念)
+    - [1.1. 阻塞和非阻塞](#11-阻塞和非阻塞)
+    - [1.2. 同步和异步](#12-同步和异步)
+  - [2. IO 模式](#2-io-模式)
+    - [2.1. Reactor 模式](#21-reactor-模式)
+    - [2.2. Proactor 模式](#22-proactor-模式)
+    - [2.3. Actor 模式](#23-actor-模式)
+  - [3. IO 模型](#3-io-模型)
+    - [3.1. 同步阻塞式 IO](#31-同步阻塞式-io)
+    - [3.2. 同步非阻塞式 IO](#32-同步非阻塞式-io)
+    - [3.3. 同步非阻塞式 IO / 事件驱动 IO / IO 多路复用](#33-同步非阻塞式-io--事件驱动-io--io-多路复用)
+      - [3.3.1. select](#331-select)
+        - [3.3.1.1. API](#3311-api)
+        - [3.3.1.2. 实现原理](#3312-实现原理)
+        - [3.3.1.3. 缺陷](#3313-缺陷)
+      - [3.3.2. poll](#332-poll)
+        - [3.3.2.1. API](#3321-api)
+        - [3.3.2.2. 使用示例](#3322-使用示例)
+      - [3.3.3. epoll](#333-epoll)
+        - [3.3.3.1. API](#3331-api)
+        - [3.3.3.2. 实现原理](#3332-实现原理)
+          - [3.3.3.2.1. 存储结构](#33321-存储结构)
+          - [3.3.3.2.2. 解决拷贝问题](#33322-解决拷贝问题)
+          - [3.3.3.2.3. 解决遍历问题](#33323-解决遍历问题)
+          - [3.3.3.2.4. 实现流程](#33324-实现流程)
+        - [3.3.3.3. 工作模式](#3333-工作模式)
+          - [3.3.3.3.1. Level Triggered 模式](#33331-level-triggered-模式)
+          - [3.3.3.3.2. Edge Triggered 模式](#33332-edge-triggered-模式)
+          - [3.3.3.3.3. 实现原理](#33333-实现原理)
+        - [3.3.3.4. 使用示例](#3334-使用示例)
+      - [3.3.4. /dev/pool](#334-devpool)
+      - [3.3.5. kqueue](#335-kqueue)
+    - [3.4. 异步非阻塞式 IO / 异步 IO](#34-异步非阻塞式-io--异步-io)
+    - [3.5. 信号驱动式 IO](#35-信号驱动式-io)
+    - [3.6. 比较](#36-比较)
+  - [4. Refer Links](#4-refer-links)
 
 # IO 模型
 
@@ -167,7 +167,7 @@ NOTE: [不存在 “异步阻塞式 IO” 的说法](https://www.zhihu.com/quest
 ```
 {
   while(read(socket, buffer) != SUCCESS);
-	process(buffer);
+    process(buffer);
 }
 ```
 
@@ -224,15 +224,15 @@ int select(int nfds, fd_set *readfds, fd_set *writefds,
 ```
 调用后 select 函数会阻塞，直到有描述符就绪（有数据 可读、可写、或者有 except），或者超时（timeout 指定等待时间，如果立即返回设为 null 即可），函数返回。当 select 函数返回后，可以 通过遍历 fdset，来找到就绪的描述符。
 - Parameter Description:
-	- `nfds`: sets 的文件描述符的最大值。
-	- `readfds`: fd_set type 类型，只读的描述符集。
-	- `writefds`: fd_set type 类型，只写的描述符集。
-	- `exceptfds`: fd_set type 类型，错误的描述符集。
-	- `timeout`: 超时等待时间。
+    - `nfds`: sets 的文件描述符的最大值。
+    - `readfds`: fd_set type 类型，只读的描述符集。
+    - `writefds`: fd_set type 类型，只写的描述符集。
+    - `exceptfds`: fd_set type 类型，错误的描述符集。
+    - `timeout`: 超时等待时间。
 
 - Return Value:
-	
-	返回描述符集的个数，如果超时返回为 0，错误则返回 -1。
+    
+    返回描述符集的个数，如果超时返回为 0，错误则返回 -1。
 
 ##### 3.3.1.2. 实现原理
 
@@ -489,67 +489,67 @@ epoll 从 **Linux 2.5.44** 开始引入，是 select/poll 的升级版本，其*
 epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](https://linux.die.net/man/2/epoll_create)、[epoll_ctl](https://linux.die.net/man/2/epoll_ctl) 和 [epoll_wait](https://linux.die.net/man/2/epoll_wait)。
 
 - epoll_create
-	```c
-	#include <sys/epoll.h>
-	int epoll_create(int size); 
-	```
-	创建一个 epoll 的句柄，size 用来告诉内核这个监听的数目一共有多大，它并不是限制了 epoll 所能监听的描述符最大个数，只是对内核初始分配内部数据结构的一个建议。
-	
-	需要注意的是，当创建好 epoll 句柄后，它就是会占用一个 fd 值，在 Linux 下如果查看 /proc/ 进程 id/fd/，是能够看到这个 fd 的，所以在使用完 epoll 后，必须调用 close() 关闭，否则可能导致 fd 被耗尽。
+    ```c
+    #include <sys/epoll.h>
+    int epoll_create(int size); 
+    ```
+    创建一个 epoll 的句柄，size 用来告诉内核这个监听的数目一共有多大，它并不是限制了 epoll 所能监听的描述符最大个数，只是对内核初始分配内部数据结构的一个建议。
+    
+    需要注意的是，当创建好 epoll 句柄后，它就是会占用一个 fd 值，在 Linux 下如果查看 /proc/ 进程 id/fd/，是能够看到这个 fd 的，所以在使用完 epoll 后，必须调用 close() 关闭，否则可能导致 fd 被耗尽。
 
 - epoll_ctl
-	```c
-	#include <sys/epoll.h>
-	int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event); 
-	```
-	epoll_ctl 是 epoll 的事件注册函数。
-	- Parameter Description:
-		- 第一个参数是 epoll_create() 的返回值。
-		- 第二个参数表示动作，用三个宏来表示：
-			- `EPOLL_CTL_ADD`: 注册新的 fd 到 epfd 中。
-			- `EPOLL_CTL_MOD`: 修改已经注册的 fd 的监听事件。
-			- `EPOLL_CTL_DEL`: 从 epfd 中删除一个 fd。
-		- 第三个参数是需要监听的 fd，就是我们的 socket。
-		- 第四个参数是告诉内核需要监听什么事，struct epoll_event 结构如下：
-			```c
-			typedef union epoll_data {
-					void *ptr;
-					int fd;
-					__uint32_t u32;
-					__uint64_t u64;
-			} epoll_data_t;
+    ```c
+    #include <sys/epoll.h>
+    int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event); 
+    ```
+    epoll_ctl 是 epoll 的事件注册函数。
+    - Parameter Description:
+        - 第一个参数是 epoll_create() 的返回值。
+        - 第二个参数表示动作，用三个宏来表示：
+            - `EPOLL_CTL_ADD`: 注册新的 fd 到 epfd 中。
+            - `EPOLL_CTL_MOD`: 修改已经注册的 fd 的监听事件。
+            - `EPOLL_CTL_DEL`: 从 epfd 中删除一个 fd。
+        - 第三个参数是需要监听的 fd，就是我们的 socket。
+        - 第四个参数是告诉内核需要监听什么事，struct epoll_event 结构如下：
+            ```c
+            typedef union epoll_data {
+                    void *ptr;
+                    int fd;
+                    __uint32_t u32;
+                    __uint64_t u64;
+            } epoll_data_t;
 
-			struct epoll_event {
-					__uint32_t events; /* Epoll events */
-					epoll_data_t data; /* User data variable */
-			};
-			```
-			events 可以是以下几个宏的集合：（前三种是最常见的)
-			- `EPOLLIN`: 表示对应的文件描述符可以读（包括对端 SOCKET 正常关闭）。
-			- `EPOLLOUT`: 表示对应的文件描述符可以写。
-			- `EPOLLERR`: 表示对应的文件描述符发生错误。
-			- `EPOLLPRI`: 表示对应的文件描述符有紧急的数据可读（这里应该表示有带外数据到来）。
-			- `EPOLLHUP`: 表示对应的文件描述符被挂断。
-			- `EPOLLET`: 将 EPOLL 设为边缘触发 (Edge Triggered) 模式，这是相对于水平触发 (Level Triggered) 来说的。
-			- `EPOLLONESHOT`: 只监听一次事件，当监听完这次事件之后，如果还需要继续监听这个 socket 的话，需要再次把这个 socket 加入到 EPOLL 队列里。
+            struct epoll_event {
+                    __uint32_t events; /* Epoll events */
+                    epoll_data_t data; /* User data variable */
+            };
+            ```
+            events 可以是以下几个宏的集合：（前三种是最常见的)
+            - `EPOLLIN`: 表示对应的文件描述符可以读（包括对端 SOCKET 正常关闭）。
+            - `EPOLLOUT`: 表示对应的文件描述符可以写。
+            - `EPOLLERR`: 表示对应的文件描述符发生错误。
+            - `EPOLLPRI`: 表示对应的文件描述符有紧急的数据可读（这里应该表示有带外数据到来）。
+            - `EPOLLHUP`: 表示对应的文件描述符被挂断。
+            - `EPOLLET`: 将 EPOLL 设为边缘触发 (Edge Triggered) 模式，这是相对于水平触发 (Level Triggered) 来说的。
+            - `EPOLLONESHOT`: 只监听一次事件，当监听完这次事件之后，如果还需要继续监听这个 socket 的话，需要再次把这个 socket 加入到 EPOLL 队列里。
 
-	- Return Value
-		
-		When successful, epoll_ctl() returns zero. When an error occurs, epoll_ctl() returns -1 and errno is set appropriately.
+    - Return Value
+        
+        When successful, epoll_ctl() returns zero. When an error occurs, epoll_ctl() returns -1 and errno is set appropriately.
 
 - epoll_wait
-	```c
-	#include <sys/epoll.h>
-	int epoll_wait(int epfd, struct epoll_event *events,
-								int maxevents, int timeout);
-	```
-	等待事件的产生。参数 events 用来从内核得到事件的集合，maxevents 告之内核这个 events 有多大，这个 maxevents 的值不能大于创建 epoll_create() 时的 size，参数 timeout 是超时时间（毫秒，0 会立即返回，-1 是永久阻塞）。
-	
-	该函数返回需要处理的事件数目，如返回 0 表示已超时。
+    ```c
+    #include <sys/epoll.h>
+    int epoll_wait(int epfd, struct epoll_event *events,
+                                int maxevents, int timeout);
+    ```
+    等待事件的产生。参数 events 用来从内核得到事件的集合，maxevents 告之内核这个 events 有多大，这个 maxevents 的值不能大于创建 epoll_create() 时的 size，参数 timeout 是超时时间（毫秒，0 会立即返回，-1 是永久阻塞）。
+    
+    该函数返回需要处理的事件数目，如返回 0 表示已超时。
 
-	- Return 
-		
-		When successful, epoll_wait() returns the number of file descriptors ready for the requested I/O, or zero if no file descriptor became ready during the requested timeout milliseconds. When an error occurs, epoll_wait() returns -1 and errno is set appropriately.
+    - Return 
+        
+        When successful, epoll_wait() returns the number of file descriptors ready for the requested I/O, or zero if no file descriptor became ready during the requested timeout milliseconds. When an error occurs, epoll_wait() returns -1 and errno is set appropriately.
 
 ##### 3.3.3.2. 实现原理
 
@@ -771,8 +771,8 @@ void UserCompletionHandler::handle_event(buffer) {
 
 TODO:
 - POSIX AIO
-	
-	[使用异步 I/O 大大提高应用程序的性能](https://www.ibm.com/developerworks/cn/linux/l-async/index.html)
+    
+    [使用异步 I/O 大大提高应用程序的性能](https://www.ibm.com/developerworks/cn/linux/l-async/index.html)
 
 - libevent
 

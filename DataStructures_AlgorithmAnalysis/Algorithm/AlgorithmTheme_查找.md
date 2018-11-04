@@ -34,7 +34,7 @@
 
   平均查找长度 ASL（average search length）定义为：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/26/17738d12af641d438536b3dc3b9ae1fd.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/26/17738d12af641d438536b3dc3b9ae1fd.jpg)
 
   其中：
   - n 是记录的个数。
@@ -90,7 +90,7 @@
 
       例如，下图所示为一个表及其索引表，表中含有 18 条记录，可分成 3 块，每块包括 6 条记录，对每一个块建立一个索引项。索引表中的元素是一个结构体，包含关键字和块的起始位置，其中关键字按升序排列，即索引表为有序，各个块中的元素为有序或者分块有序。分块有序是指后一个块中的所有记录的关键字均大于前一个块中的最大关键字。
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/27/38243821f067005b278ea5e2562ecaf5.jpg)
+      ![image](http://img.cdn.firejq.com/jpg/2018/2/27/38243821f067005b278ea5e2562ecaf5.jpg)
 
   1. 查找分两个部分：
       - 先查找索引表。索引表是有序表，可进行折半查找或顺序查找，以确定待查的结点在哪一块。
@@ -302,7 +302,7 @@ eg: [69. Sqrt(x)](https://leetcode.com/problems/sqrtx/description/)
 
 - 算法流程
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/27/1d28688a887aca076e44b5d01cddfbd5.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/27/1d28688a887aca076e44b5d01cddfbd5.jpg)
 
   斐波那契查找与折半查找很相似，不同点在于它是根据斐波那契序列的特点对有序表进行分割的。
 
@@ -440,7 +440,7 @@ B/B+ 树常用于文件系统和数据库系统中，它通过对每个节点存
 
 ## 9. 效率比较
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/27/e67ef6a38ecc29d9143ad182e9dd67f9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/27/e67ef6a38ecc29d9143ad182e9dd67f9.jpg)
 
 ## 10. Refer Links
 

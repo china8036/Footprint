@@ -245,7 +245,7 @@ public int magicIndex(int [] arr, int start, int end) {
 
 	如下图显示了查找 13 的轨迹。首先与右上角 15 比较，13<15，所以去掉最右 1 列，然后与 11 比较，这是 13>11，去掉最上面 1 行…以此类推，最后找到 13。算法复杂度 O(n)，最坏情况需要 2n 步，即从右上角开始查找，而要查找的目标值在左下角的时候。
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/22/ff60d65ce6729b24a681305a4d5e01d6.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/10/22/ff60d65ce6729b24a681305a4d5e01d6.jpg)
 
 	```java
 	public int[] findElement(int[][] mat, int n, int m, int x) {

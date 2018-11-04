@@ -67,7 +67,7 @@ ICMP 报文：
 
 - ICMP 询问报文 
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/28/1c7625ea1f30806fc134e680e69eeae0.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/28/1c7625ea1f30806fc134e680e69eeae0.jpg)
 
 造成问题：
 - 利用目的站不可到达对目标发动拒绝服务攻击 
@@ -111,7 +111,7 @@ ICMP 报文：
 
 在网络设计之初，并没有考虑安全性的问题，因此，之后针对各种安全问题，添加了许多作为“补丁”的安全协议，保证网络传输的信息安全。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/19/cd4212fc305d4951baa7075f873ba116.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/12/19/cd4212fc305d4951baa7075f873ba116.jpg)
 
 - 网络层：针对 IP 协议添加了 IPSEC 协议
 - 传输层：针对 TCP 协议添加了 SSL/TLS 协议

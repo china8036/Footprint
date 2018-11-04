@@ -12,11 +12,11 @@
 
 ## 1. 磁盘基本结构
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/28/05e424baeb2eed3b40c4922661d1547b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/28/05e424baeb2eed3b40c4922661d1547b.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/28/0565696d8931d5af260f8b292fee05c2.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/28/0565696d8931d5af260f8b292fee05c2.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/28/0d827a234b394e963c4c5978f77eb0a7.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/28/0d827a234b394e963c4c5978f77eb0a7.jpg)
 
 ## 2. 磁盘格式化
 

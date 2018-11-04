@@ -19,15 +19,15 @@ OAuth 是 OpenID 的一个补充，但是完全不同的服务。
 
 ## 2. 基本原理
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/5/3ff445a9cccc2b264ed903a1bd92925e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/5/3ff445a9cccc2b264ed903a1bd92925e.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/5/da546f80e73b99b9c7c5685ecbf06fa9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/5/da546f80e73b99b9c7c5685ecbf06fa9.jpg)
 
 （redirect_uri 为登录成功后跳转到的页面）
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/5/f08f4172d5f5a1d634f3389b48d2414a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/5/f08f4172d5f5a1d634f3389b48d2414a.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/5/19092155d31cca4af3c654a33e81cb6b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/5/19092155d31cca4af3c654a33e81cb6b.jpg)
 
 AccessToken：用户通过第三方应用访问 OAuth 接口的请求令牌；
 

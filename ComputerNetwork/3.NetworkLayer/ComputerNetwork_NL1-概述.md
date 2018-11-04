@@ -25,7 +25,7 @@
 
 重要范例：**基于 IP 协议的 IP  网络**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/3088bf208370f97ba405e96153290b54.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/3088bf208370f97ba405e96153290b54.jpg)
 
 ### 2.2. 面向连接服务的实现
 
@@ -33,7 +33,7 @@
 
 例子：多协议标签交换 (MPLS)，主要用于 **Internet 的 ISP 网络**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/e22c287cedef4a58b295f46451b72230.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/e22c287cedef4a58b295f46451b72230.jpg)
 
 ### 2.3. 比较
 

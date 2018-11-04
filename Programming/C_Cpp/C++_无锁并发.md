@@ -30,11 +30,11 @@
 
 基于 CAS 操作的无锁算法利用 CAS 循环的模式来进行同步：一个核心读取共享状态，计算出新值，然后利用 CAS 来将共享内存更新至新值。若 CAS 指令成功了，那么这次的读取 - 计算 - 更新操作序列看上去就是成功了，若指令失败则该核心需要重试。许多基本数据结构的无锁式实现，例如队列、堆栈以及优先队列，都有着类似的思想，它们都利用某种原子指令来实现整个数据结构的更新操作。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/9/0e4f5d4739752aa33393d86448e7ba91.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/9/0e4f5d4739752aa33393d86448e7ba91.jpg)
 
 当没有（或很少）竞争之时，原子指令（有时是多条）的使用会造成无意义的 CAS 消耗，可能使无锁式同步比基于锁的解决方案还要慢。而在高竞争之时，无锁式同步有效率更高的潜质，因为其消除了临界路径上锁获取以及锁释放的操作，仅留下了对数据结构的操作。但需要注意的是，若在 CAS 循环中包含了大量的回滚操作，可能会导致其效率要比基于锁的同步更低。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/9/da5a79bc6a0278f3be4c10fb4499abfe.jpg)  
+![image](http://img.cdn.firejq.com/jpg/2018/8/9/da5a79bc6a0278f3be4c10fb4499abfe.jpg)  
 
 另外，无锁式算法保证了某一操作总是能够完成，故而在高负荷下仍能表现优异，而基于锁的算法却可能由于操作系统优先抢占持锁的线程而停止。
 
@@ -150,7 +150,7 @@ https://program-think.blogspot.com/2009/04/producer-consumer-pattern-4-double.ht
 
 ### 3.1. 基本概念
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/17/7e9dcdab0608057b944fb4bbd24a39ce.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/17/7e9dcdab0608057b944fb4bbd24a39ce.jpg)
 
 网络编程中有这样一种场景：需要应用程序代码一边从 TCP/IP 协议栈接收数据（reading data from socket），一边解析接收的数据。具体场景例如：用户点击 Youtube 或优酷网站上的视频内容，这时用户 PC 上的播放软件就是一边接收数据一边对数据进行解码并播放的。这样的场景的存在如下约束：
 - 必须边接收数据，边对数据进行解析，不能等待到数据全部接收完整后才解析（用户等待的时间与体验成反比）。

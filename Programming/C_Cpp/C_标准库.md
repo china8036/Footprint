@@ -19,7 +19,7 @@
 
 - C 标准库是在操作系统 API 上加入独特的算法封装成标准接口的库，使用 C 标准库可以屏蔽底层实现细节，比如 fopen 这样的函数，在 Windows 上通过调用 CreateFileEx 实现，在 linux 上通过调用 open 系统调用实现。不仅是包装，还在上层使用独特的算法提供了用户态缓冲区的功能。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/15/93c9bcf552eebbcbfd9cddc468d772ce.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/7/15/93c9bcf552eebbcbfd9cddc468d772ce.jpg)
 
 - glibc && c standard library (cstdlib) && c++ standard library
 

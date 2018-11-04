@@ -24,7 +24,7 @@
 
 在网络层上，可将整个 Internet 看作一种相互关联的网络或自治域（自治系统）的集合。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/212ab6ba7079f90e4fc14509fb241c70.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/212ab6ba7079f90e4fc14509fb241c70.jpg)
 
 - Internet 没有真正的结构，但存在几个主要骨干网，都是由高带宽线路和快速路由器组成。这些骨干网中最大的一个称为一级网络，没个骨干网都与它连接，进而到达其它骨干网。
 - 连接到骨干网上的是 Internet 服务提供商 (ISP)，它为家庭和企业、数据中心和服务器托管设施，以及区域（中级）网络提供 Internet 接入服务。
@@ -34,7 +34,7 @@
 
 将整个 Internet 整合在一起的正是网络层协议，即 Internet Protocol。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/998cd85fa2d23e888b107af706a6bd4b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/998cd85fa2d23e888b107af706a6bd4b.jpg)
 
 >  IP is to provide a Best-Efforts (i.e., not guaranteed) way to transport datagrams (packet) from source to destination.
 

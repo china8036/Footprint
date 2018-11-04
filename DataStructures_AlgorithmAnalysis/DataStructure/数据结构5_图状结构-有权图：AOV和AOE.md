@@ -10,7 +10,7 @@
 
 **有向无环图** (directed acyclic graph，简称 DAG) 是指一个无环的有向图，它是一种类似于有向树的特殊有向图。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/25/85101484af413f92682e9575ac989c32.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/25/85101484af413f92682e9575ac989c32.jpg)
 
 除了描述多项式以外，有向无环图也是描述一项工程或系统进行过程的有效工具。在一般情况下，工程由若干个称为“活动”（activity）的子工程组成，而这些子工程之间存在一定的约束条件（比如执行的先后次序）。**对整个工程而言，工程的顺利执行以及对整个工程完成所需要的最短时间的估算是人们最为关心的两个问题，而这两个问题的解决可通过对有向图进行拓扑排序和关键路径操作来实现**。
 
@@ -49,7 +49,7 @@
 
   算法实现：**通常拓扑排序可通过贪心策略或 DFS （栈）来实现**。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/25/ac62e80d69a373f4be5ced588e9bdb8d.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/25/ac62e80d69a373f4be5ced588e9bdb8d.jpg)
 
   分析以上程序，对有 n 个顶点和 e 条弧的有向图而言，建立求各顶点的入度的时间复杂度为 O(e)，建零入度顶点栈的时间复杂度为 O(n)。在拓扑排序过程中，若有向图无环，则每个顶点进一次栈，出一次栈，入度减 1 的操作在 while 语句中总共执行 e 次，所以总的**时间复杂度为 O(n+e)**。
 
@@ -67,7 +67,7 @@
 
   例：下图给出了一个有 15 项活动（a0, a1, a2, …, a14）的 AOE 网，包含 10 个事件（v0, v1, v2, v3, …, v9），其中，v0 为源点，表示工程的开始，v9 为汇点，表示整个工程结束。每个事件表示在它之前的活动已经完成，在它之后的活动可开始，与每个活动相联系的数是执行该活动所需的时间。在正常情况下，网中只有一个入度为零的点（源点）和一个出度为零的点（汇点）。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/25/76c0fdc66b394eafc377cf976c145db7.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/25/76c0fdc66b394eafc377cf976c145db7.jpg)
 
 - 关键路径 & 关键活动
 
@@ -93,7 +93,7 @@
 
   - 例：求出以下 AOE 网所示工程的关键路径。
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/25/57a6e87422b87d63410be717d9def760.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/2/25/57a6e87422b87d63410be717d9def760.jpg)
 
     求出 AOE 网的 4 个特征属性：
     - Ve(j)：即从始点开始到顶点 Vk 的最大路径长度，表示事件发生的最早时间（etv: earliest time of vertex）。
@@ -102,7 +102,7 @@
         - 首结点 Ve(j) 已知，为 0。
       - 计算过程：如上图各顶点（事件）的 Ve(j)： （从 V1 开始）
 
-        ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/25/27af392475cf310f0500cbb9341f091e.jpg)
+        ![image](http://img.cdn.firejq.com/jpg/2018/2/25/27af392475cf310f0500cbb9341f091e.jpg)
 
     - Vl(j)：在不推迟整个工期的前提下，事件 vk 允许的最晚发生时间 (ltv: lastest time of vertex)。
       - 计算方法：
@@ -110,7 +110,7 @@
         - 终结点 Vl(j) 已知，等于它的 Ve(j)）。
       - 计算过程：如上图各顶点（事件）的 Vl(j)： （从 V7 开始，它的最早、最晚发生时间相同，都为 10）
 
-        ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/25/99931dfa967623ad201546f3ae27d5b5.jpg)
+        ![image](http://img.cdn.firejq.com/jpg/2018/2/25/99931dfa967623ad201546f3ae27d5b5.jpg)
 
     - e(i): 若活动 ai 由弧<vk,vj>表示，则活动 ai 的最早开始时间应该等于事件 vk 的最早发生时间。（ete: earliest time of edge）。
 
@@ -118,7 +118,7 @@
 
       如上图各边（活动）的 e(i)：
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/25/cb1455050c13ca13baa6db60b5b027e9.jpg)  
+      ![image](http://img.cdn.firejq.com/jpg/2018/2/25/cb1455050c13ca13baa6db60b5b027e9.jpg)  
 
     - l(i): 若活动 ai 由弧<vk,vj>表示，则 ai 的最晚开始时间要保证事件 vj 的最迟发生时间不拖后。（lte: lastest time of edge）。
 
@@ -126,7 +126,7 @@
 
       如上图各边（活动）的 l(i)：
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/25/3177649c4224e22de57a35d8a02c6e50.jpg)
+      ![image](http://img.cdn.firejq.com/jpg/2018/2/25/3177649c4224e22de57a35d8a02c6e50.jpg)
 
       NOTE: 求 l(i) 时，不可认为与该边出发点的 Vl(i) 相等，因为边头事件最晚发生的时候边上的活动不一定马上开始，求得的不一定是最终事实的结果；同理，求 e(i) 时不可用边尾的 Ve(i) - 边的权值。
 

@@ -52,9 +52,9 @@
 
 #### 2.1.1. 内容
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/16/951d80ecfc09b9e6c00f2b7aa0b56e39.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/16/951d80ecfc09b9e6c00f2b7aa0b56e39.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/49971354a6408e2f739d3d50efc4042c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/49971354a6408e2f739d3d50efc4042c.jpg)
 
 根据建议 X.200，OSI 将计算机网络体系结构划分为以下七层：
 - 应用层（Application Layer）
@@ -123,9 +123,9 @@ TCP/IP 参考模型最初由 Vinton Cerf（互联网之父） 和 Robert E. Kahn
 
 #### 2.2.1. 内容
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/10/5d10a21befe0b9df0e3deff1c0af7ed3.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/10/5d10a21befe0b9df0e3deff1c0af7ed3.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/241bbd606415baeacaf8463234259927.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/241bbd606415baeacaf8463234259927.jpg)
 
 TCP/IP 模型将计算机通信过程抽象为 4 个层次，采取协定堆叠的方式，分别实作出不同通信协定：
 - 应用层（Application Layer），如 HTTP、FTP、DNS 等。 
@@ -141,7 +141,7 @@ TCP/IP 模型将计算机通信过程抽象为 4 个层次，采取协定堆叠�
 
 ### 2.3. 比较
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/26/af86b13a2995d8ace66981d17431d9f0.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/5/26/af86b13a2995d8ace66981d17431d9f0.jpg)
 
 ## 3. 相关概念
 
@@ -228,7 +228,7 @@ TCP/IP 模型将计算机通信过程抽象为 4 个层次，采取协定堆叠�
 
 当一个子网或子网的一部分中出现太多分组时，会导致数据包被延迟甚至丢失，网络性能急剧下降，这种情况称为拥塞 (Congestion)。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/31191336cf135d55df75f7c3b6df9134.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/31191336cf135d55df75f7c3b6df9134.jpg)
 
 导致拥塞的因素：
 - 输入流量速度大于输出线路的容量。

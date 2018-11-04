@@ -41,12 +41,12 @@ INTO OUTFILE "D:/test_file.csv"
 ```
 效果：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/22cd2d35b6428a5ca4d9fbb59f8bc4f7.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/30/22cd2d35b6428a5ca4d9fbb59f8bc4f7.jpg)
 
 NOTE:
 - 指定的 OUTFILE 路径需要与 my.ini 中配置的 secure-file-priv 一致，使用 SHOW VARIABLES LIKE "secure_file_priv"; 查看该配置项，如：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/600c045403ed30898ec202bf7ad4f221.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/30/600c045403ed30898ec202bf7ad4f221.jpg)
 
 - 即使在 Windows 下，路径中的“\”都要换成“/”。
 
@@ -93,11 +93,11 @@ mysqldump -u<username> -p --all-databases > <file_path>
 
 例：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/aa5560f4908a523f2cef47367a4e37e6.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/30/aa5560f4908a523f2cef47367a4e37e6.jpg)
 
 效果：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/fc08f845c3e09bab7409c83b17d1ad3f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/30/fc08f845c3e09bab7409c83b17d1ad3f.jpg)
 
 注意：
 - null 值会被处理成 `\N`。
@@ -201,7 +201,7 @@ DELIMITER ;
 
     打开“任务计划程序”，新建任务：
     
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/30/14e7ef97ea49bfdb7b13cb53d43f6914.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/4/30/14e7ef97ea49bfdb7b13cb53d43f6914.jpg)
 
     在操作板块新建操作，程序或脚本选择本机 PowerShell.exe 的绝对路径；添加参数填写 ps1 脚本的绝对路径 + 参数，如：“C:\Users\firej\Desktop\backup_and_delete.ps1 1000”；在触发器板块新建触发器，设定好时间即可。
 

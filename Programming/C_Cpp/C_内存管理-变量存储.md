@@ -12,7 +12,7 @@
 
 变量在内存中以二进制形式存储，一个变量占用的存储空间，不仅和变量类型有关，还和编译环境有关，同一种类型的变量在不同编译环境下占用的存储空间不一样。比如开发中常用的基本数据类型 char、int 等在不同编译环境下就会占用不同大小的空间。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/3f940c68f3b0ab91173e18626d0bb2f5.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/8/3f940c68f3b0ab91173e18626d0bb2f5.jpg)
 
 C 的存储类别包括 4 种：auto（自动的）、static（静态的）、register（寄存器的）、extern（外部的）。根据变量的存储类别可以得知其作用域和生命周期。
 
@@ -28,7 +28,7 @@ int main(int argc, const char * argv[]) {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/d2c8cbbde8b3ee30984395125f883c13.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/8/d2c8cbbde8b3ee30984395125f883c13.jpg)
 
 由于是 a、b 是临时变量，因此他们的内存空间分配在栈上，栈中内存寻址由高到低，所以 a 变量的地址比 b 变量的地址要大，其次由于是在 64 位编译环境中，int 型变量占据 4 个字节的空间，每一个字节由低到高依次对应着 8 位二进制数，四个 8 位二进制数就是十进制中的 1 或 2，而变量 a、b 的地址就是四个字节中最小值的内存地址。
 
@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/9e1074382e6dbb6b24ab9925e7dca0da.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/8/9e1074382e6dbb6b24ab9925e7dca0da.jpg)
 
 ```cpp
 int main(int argc, const char * argv[]) {
@@ -60,7 +60,7 @@ int main(int argc, const char * argv[]) {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/66c80fcdc5966bbb5e24bb2e6f983dd4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/8/66c80fcdc5966bbb5e24bb2e6f983dd4.jpg)
 
 **数组中的元素按照存放顺序依次从低地址到高地址存放，但是每个元素中的内容又是按高地址向低地址方向存储**。
 
@@ -85,7 +85,7 @@ int main(int argc, const char * argv[]) {
 			return 0;
 	}
 	```
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/98d604e6f1c9e6385f07330845a06b58.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/8/8/98d604e6f1c9e6385f07330845a06b58.jpg)
 
 	在 p1 变量中，由于其成员都是 int 类型，在 64 位编译器中占用 4 个字节空间，所以系统为 p1 变量分配的内存空间大小应该是：4 X 3 = 12 个字节。另外：结构体成员内存地址分配是从低地址到高地址的，结构体变量的地址是其首成员的地址，这点和数组是一致的。
 
@@ -106,7 +106,7 @@ int main(int argc, const char * argv[]) {
 				return 0;
 	}
 	```
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/fb1e518d45725cbba8956f89fad051e1.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/8/8/fb1e518d45725cbba8956f89fad051e1.jpg)
 
 	系统为 s1 分配内存时以 sizeof(double)8 个字节为单位，所以为 s1.id 分配了 8 个字节的空间，但是由于 id 定义为 char 类型，所以只占了 8 个字节中数值最小的一个内存空间；由于前面剩下的 8 - 1 = 7 个字节不足以存放 double 类型的值，所以接着为 s1.score 分配 8 个字节并占满 8 个字节空间；最后为 s1.age 分配 8 个字节并占用了前 4 个字节空间。故 s1 变量在内存中占用的内存大小为 8 X 3 = 24 个字节。
 
@@ -127,7 +127,7 @@ int main(int argc, const char * argv[]) {
 				return 0;
 	}
 	```
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/0aa5cd382d3bb037586e79acddd87eab.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/8/8/0aa5cd382d3bb037586e79acddd87eab.jpg)
 
 	这是由于第二次为 s1.id 分配内存时没有完全占满 8 个字节的空间，而且第三次为 s1.age 分配时其需要的 4 个字节空间也没有超出剩余的 8-1 = 7 个字节空间，所以 s1.age 的值按照内存对齐的原则就存放在了第二次分配的 8 个字节的后 4 位空间中。
 
@@ -182,7 +182,7 @@ int main(int argc, const char * argv[]) {
 ```
 上面的 main()、add() 函数之间调用的过程及参数传递在内存的示意图如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/ee22807cc1f012cd0a236aa30e178918.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/8/ee22807cc1f012cd0a236aa30e178918.jpg)
 
 1. 首先执行 main() 函数，系统为 main() 函数在栈顶分配一定大小的空间，其次为 a、b 局部变量分配空间；
 1. 调用 add() 函数，main() 函数压入栈底，栈顶指针上移，系统为 add() 函数在栈顶分配一定大小的空间，其次为 num1、num2 局部变量分配空间；
@@ -215,7 +215,7 @@ int main(int argc, const char * argv[]) {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/8/eb24c7028dbf2ae50cdfe62f1dab9361.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/8/eb24c7028dbf2ae50cdfe62f1dab9361.jpg)
 
 一个递归问题可以分为“递推”和“回溯”两个阶段，要经历若干步才能求出最后的结果。但是其原理和一般函数的调用没有本质区别。递归函数调用次数越多，在栈上为其分配的空间就越大，所以我们应该避免调用次数过多的递归函数，因为该操作很可能会使栈的容量“溢出”。
 

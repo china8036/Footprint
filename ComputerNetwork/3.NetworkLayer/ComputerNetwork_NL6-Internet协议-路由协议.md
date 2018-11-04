@@ -36,7 +36,7 @@ OSPF 分为 OSPFv2 和 OSPFv3 两个版本，其中 OSPFv2 用在 IPv4 网络，
 
 与 RIP 和 BGP 不同的是，OSPF 协议不使用 TCP 或者 UDP 协议而是承载在 IP 协议之上，IP 协议号为 89，工作在 OSI 模型的传输层，如下图：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/f372341370ee2af9ad4ff1725a74234d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/f372341370ee2af9ad4ff1725a74234d.jpg)
 
 **OSPF 协议是大中型网络上使用最为广泛、性能最优的 IGP（Interior Gateway Protocol）协议**。
 
@@ -67,7 +67,7 @@ OSPF 定义了以下 5 种协议数据包类型：
 
   链路状态确认包（Link State Acknowledgement）的 OSPF 包类型为 5。为了确保 LSA 的洪泛是可靠的，LSA 信息必须被显式的确认。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/6c2347a98e8d78d2fa8077a421bf2fb0.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/11/6c2347a98e8d78d2fa8077a421bf2fb0.jpg)
 
 #### 1.2.2. OSPF 运行步骤
 
@@ -77,11 +77,11 @@ OSPF 定义了以下 5 种协议数据包类型：
 1. 选择最佳路由
 1. 维护路由信息
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/574ecf8209702b69fc2012db81f590cd.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/574ecf8209702b69fc2012db81f590cd.jpg)
 
 #### 1.2.3. OSPF 状态
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/520535e06a19964a58c083b2efb1a5e8.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/11/520535e06a19964a58c083b2efb1a5e8.jpg)
 
 - Down
 - Init（初始）
@@ -97,13 +97,13 @@ OSPF 定义了以下 5 种协议数据包类型：
   
   DR 和 BDR 作为网络的中心负责路由器之间的信息交换从而降低了网络中的信息流量。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/b3e6e5968e41300321bd33ba93a81b4c.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/11/b3e6e5968e41300321bd33ba93a81b4c.jpg)
 
 - 选举过程
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/eb2e70590c84de3c8f7df8930d6f4f55.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/11/eb2e70590c84de3c8f7df8930d6f4f55.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/11/e67fea749119d3de61bd5b52c3e6ee6a.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/6/11/e67fea749119d3de61bd5b52c3e6ee6a.jpg)
 
 - 变化
   - 同步的次数减少了（O（n）），减少了带宽的利用。
