@@ -10,8 +10,8 @@
 ## 1. Redis 与 Memcached 的区别？
 
 - Redis 采用的是基于内存的采用的是单进程单线程模型的 KV 数据库，由 C 语言编写；Memcached 采用的是基于内存的单进程多线程模型的 KV 数据库。
-- Redis 支持2种持久化方式（RDB和AOF），重启的时候可以自动加载进行使用；Memcached 不支持持久化。
-- Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，zset，hash等数据结构的存储；Memcached仅支持简单的数据类型 String。
+- Redis 支持 2 种持久化方式（RDB 和 AOF），重启的时候可以自动加载进行使用；Memcached 不支持持久化。
+- Redis 不仅仅支持简单的 k/v 类型的数据，同时还提供 list，set，zset，hash 等数据结构的存储；Memcached 仅支持简单的数据类型 String。
 
 ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/12/ed838eae55678c60681b805a56f49a77.jpg)
 

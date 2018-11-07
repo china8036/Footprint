@@ -6,9 +6,9 @@
     - [1.4. Evaluate Reverse Polish Notation](#14-evaluate-reverse-polish-notation)
     - [1.5. Simplify Path](#15-simplify-path)
     - [1.6. 二叉树的 DFS](#16-二叉树的-dfs)
-      - [1.6.1. Binary Tree Preorder Traversal](#161-binary-tree-preorder-traversal)
-      - [1.6.2. Binary Tree Inorder Traversal](#162-binary-tree-inorder-traversal)
-      - [1.6.3. Binary Tree Postorder Traversal](#163-binary-tree-postorder-traversal)
+      - [1.6.1. 前序遍历 Binary Tree Preorder Traversal](#161-前序遍历-binary-tree-preorder-traversal)
+      - [1.6.2. 中序遍历 Binary Tree Inorder Traversal](#162-中序遍历-binary-tree-inorder-traversal)
+      - [1.6.3. 后序遍历 Binary Tree Postorder Traversal](#163-后序遍历-binary-tree-postorder-traversal)
     - [1.7. 双栈排序](#17-双栈排序)
   - [2. Queue](#2-queue)
     - [2.1. 实现一个队列](#21-实现一个队列)
@@ -46,7 +46,7 @@
     }
 
     public T pop() {
-      if (top == null) 
+      if (top == null)
         return null;
       T data = top.data;
       top = top.next;
@@ -62,13 +62,13 @@
   ```
 
 - 数组实现
-  
+
   由于数组不能动态管理内存，因此在添加、移除元素时都需要对数据数量进行管理。
   ```java
   // based on array
   public class MyStack<T> {
     private int top; // 保存栈顶索引位置
-    
+
     private T [] stack; // 栈数据
 
     private int capacity; // 栈最大容量
@@ -97,7 +97,7 @@
       stack[++top] = data;
     }
   }
-  ```  
+  ```
 
 ### 1.2. Tower of Hanoi
 
@@ -113,7 +113,7 @@
   1. 当 n=1 时，显然可以将盘子从 origin 移动到 destination。
   1. 当 n=2 时，显然可以将盘子从 origin 移动到 destination。
   1. 当 n=3 时，先将前 2 个盘子从 origin 移动到 buffer，再把第 3 个盘子从 origin 移动到 destination，最后把前 2 个盘子移动到 destination 即可。
-  
+
   因此，可以采用递归的思想：
   ```java
   public void hanoi(int n, Tower origin, Tower destination, Tower buffer) {
@@ -164,7 +164,7 @@
   Output: true
   ```
 - Solution
-  
+
   该问题是典型的可以使用 stack 进行解决的问题，栈顶元素反映了在嵌套的层次关系中，最近的需要匹配的元素。
   ```java
   // 时间复杂度：O(n)
@@ -191,7 +191,7 @@
 
 [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/description/)
 
-- Question: 
+- Question:
   > Evaluate the value of an arithmetic expression in Reverse Polish Notation.
   >
   > Valid operators are +, -, *, /. Each operand may be an integer or another expression.
@@ -215,7 +215,7 @@
       for (String s : tokens) {
           if(s.equals("+"))
               S.push(S.pop()+S.pop());
-          else if(s.equals("*")) 
+          else if(s.equals("*"))
               S.push(S.pop() * S.pop());
           else if(s.equals("/")) {
               b = S.pop(); // 栈顶为被除数
@@ -227,7 +227,7 @@
               a = S.pop();
               S.push(a - b);
           }
-          else 
+          else
               S.push(Integer.parseInt(s));
       }
       return S.pop();
@@ -239,7 +239,7 @@
 [71. Simplify Path](https://leetcode.com/problems/simplify-path/description/)
 
 - Question
-  > Given an absolute path for a file (Unix-style), simplify it.	
+  > Given an absolute path for a file (Unix-style), simplify it.
   For example,
   ```
   path = "/home/", => "/home"
@@ -251,12 +251,12 @@
   public String simplifyPath(String path) {
       Deque<String> stack = new LinkedList<>();
       Set<String> skip = new HashSet<>(Arrays.asList("..", ".", ""));
-      
+
       String [] paths = path.split("/");
       for (String dir : paths) {
-          if (dir.equals("..") && !stack.isEmpty()) 
+          if (dir.equals("..") && !stack.isEmpty())
               stack.pop();
-          else if (!skip.contains(dir)) 
+          else if (!skip.contains(dir))
               stack.push(dir);
       }
       String res = "";
@@ -268,7 +268,7 @@
 
 ### 1.6. 二叉树的 DFS
 
-#### 1.6.1. Binary Tree Preorder Traversal
+#### 1.6.1. 前序遍历 Binary Tree Preorder Traversal
 
 [144. Binary Tree Preorder Traversal](https://leetcode.com/problems/binary-tree-preorder-traversal/description/)
 
@@ -356,14 +356,14 @@
                 res.add(cur.val);  // Add before going to children
                 cur = cur.left;
             } else {
-                cur = stack.pop().right;   
+                cur = stack.pop().right;
             }
         }
         return res;
     }
     ```
 
-#### 1.6.2. Binary Tree Inorder Traversal
+#### 1.6.2. 中序遍历 Binary Tree Inorder Traversal
 
 [94. Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/description/)
 
@@ -453,14 +453,14 @@
             } else {
                 cur = stack.pop();
                 res.add(cur.val);  // Add after all left children
-                cur = cur.right;   
+                cur = cur.right;
             }
         }
         return res;
     }
     ```
-    
-#### 1.6.3. Binary Tree Postorder Traversal
+
+#### 1.6.3. 后序遍历 Binary Tree Postorder Traversal
 
 [145. Binary Tree Postorder Traversal](https://leetcode.com/problems/binary-tree-postorder-traversal/description/)
 
@@ -549,7 +549,7 @@
                 res.addFirst(cur.val);  // 利用链表结构倒序添加
                 cur = cur.right;
             } else {
-                cur = stack.pop().left;   
+                cur = stack.pop().left;
             }
         }
         return res;
@@ -677,16 +677,16 @@
   public List<List<Integer>> levelOrder(TreeNode root) {
       Queue<TreeNode> queue = new LinkedList<>();
       List<List<Integer>> wrapList = new LinkedList<>();
-      if(root == null) 
+      if(root == null)
           return wrapList;
       queue.offer(root);
       while(!queue.isEmpty()) {
           int levelNum = queue.size();
           List<Integer> subList = new LinkedList<>();
           for(int i=0; i<levelNum; i++) {
-              if(queue.peek().left != null) 
+              if(queue.peek().left != null)
                   queue.offer(queue.peek().left);
-              if(queue.peek().right != null) 
+              if(queue.peek().right != null)
                   queue.offer(queue.peek().right);
               subList.add(queue.poll().val);
           }
@@ -716,7 +716,7 @@
 
 - Question
   > Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, ...) which sum to n.
-  > 
+  >
   > For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.
 
 - Solution
@@ -752,7 +752,7 @@
                   int a = front.num - i*i;
                   if (a < 0)
                       break;
-                  if(a == 0) 
+                  if(a == 0)
                       return front.step + 1;
                   if(!visited[a]) {
                       queue.add(new Node(front.num - i * i, front.step + 1));
@@ -842,7 +842,7 @@
 [126. Word Ladder II](https://leetcode.com/problems/word-ladder-ii/description/)
 
 - Question
-  
+
   在 Word Ladder 的基础上，返回整个变化的过程。
 
 - Solution
@@ -868,47 +868,97 @@
 
   For example, Given [1,1,1,2,2,3] and k = 2, return [1,2].
 
-  Note: 
+  Note:
   - You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
   - Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
+
 - Solution
+  - 解法 1：维护一个含有 k 个元素的最小堆。
 
-  维护一个含有 k 个元素的最小堆。先遍历给定数组，使用 map 存储各个元素及其 frequency。然后再遍历 map，若 map 中遍历到的元素的 frequency 比最小堆中堆顶元素的 frequency 大，则移除最小堆中堆顶元素，并将新的元素加入最小堆。最终最小堆中的元素就是前 k 个出现频率最高的元素。
+    先遍历给定数组，使用 map 存储各个元素及其 frequency。然后再遍历 map，若 map 中遍历到的元素的 frequency 比最小堆中堆顶元素的 frequency 大，则移除最小堆中堆顶元素，并将新的元素加入最小堆。最终最小堆中的元素就是前 k 个出现频率最高的元素。
 
-  ```java
-  // 时间复杂度：O(nlogk)
-  // 空间复杂度：O(n + k)
-  import javafx.util.Pair;
-  class Solution {
+    ```java
+    // 时间复杂度：O(nlogk)
+    // 空间复杂度：O(n + k)
+    class Solution {
+        public List<Integer> topKFrequent(int[] nums, int k) {
+            HashMap<Integer, Integer> freq = new HashMap<>();
+            for (int n : nums)
+                freq.put(n, freq.getOrDefault(n, 0) + 1);
+
+            PriorityQueue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>( // 最小堆
+                (Map.Entry<Integer, Integer> p1, Map.Entry<Integer, Integer> p2) -> {
+                        if (p1.getKey() != p2.getKey())
+                            return p1.getKey() - p2.getKey();
+                        return p1.getValue() - p2.getValue();
+            });
+            for (Integer num : freq.keySet()) {
+                int numFreq = freq.get(num);
+                if (pq.size() == k) {
+                    if (numFreq > pq.peek().getKey()) {
+                        pq.poll();
+                        pq.add(new Map.Entry(numFreq, num));
+                    }
+                } else
+                    pq.add(new Map.Entry(numFreq, num));
+            }
+
+            ArrayList<Integer> res = new ArrayList<>();
+            while(!pq.isEmpty())
+                res.add(pq.poll().getValue());
+            return res;
+        }
+    }
+    ```
+
+  - 解法 2：直接排序
+    ```java
+    class Solution {
+        public List<Integer> topKFrequent(int[] nums, int k) {
+            HashMap<Integer,Integer> Freq=new HashMap<>();// 构建频率表
+            for (int n : nums)
+                freq.put(n, freq.getOrDefault(n, 0) + 1);
+
+            List<Map.Entry<Integer,Integer>> list = new ArrayList<Map.Entry<Integer,Integer>>(freq.entrySet());
+            Collections.sort(list, (Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) -> {
+                return o2.getValue().compareTo(o1.getValue());
+            });
+
+            List<Integer> topk = new ArrayList<>(k);
+            for (int i = 0; i < k; i++) // 输出频率最高的 k 个数
+                topk.add(list.get(i).getKey());
+            return topk;
+        }
+    }
+    ```
+
+  - 解法 3：使用桶排序
+    ```java
+    public class Solution {
       public List<Integer> topKFrequent(int[] nums, int k) {
-          assert k > 0;
-          HashMap<Integer, Integer> freq = new HashMap<>();
-          for (int n : nums) 
-              freq.put(n, freq.getOrDefault(n, 0) + 1);
-          assert k <= freq.size();
-          PriorityQueue<Pair<Integer, Integer>> pq = new PriorityQueue<>(
-              (Pair<Integer, Integer> p1, Pair<Integer, Integer> p2) -> {
-                      if(p1.getKey() != p2.getKey())
-                          return p1.getKey() - p2.getKey();
-                      return p1.getValue() - p2.getValue();
-              });
-          for (Integer num : freq.keySet()) {
-              int numFreq = freq.get(num);
-              if (pq.size() == k) {
-                  if (numFreq > pq.peek().getKey()) {
-                      pq.poll();
-                      pq.add(new Pair(numFreq, num));
-                  }
-              } else
-                  pq.add(new Pair(numFreq, num));
-          }
-          ArrayList<Integer> res = new ArrayList<>();
-          while(!pq.isEmpty())
-              res.add(pq.poll().getValue());
-          return res;
+        //step1—用哈希表统计数组中各元素出现的频次，表中“键”为元素数值，“值”为对应元素出现的频次
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int num : nums)// 遍历数组
+          map.put(num, map.getOrDefault(num, 0) + 1);
+
+        //step2—桶排序
+        List<Integer>[] bucket = new List[nums.length+1];// 定义足够数量的桶
+        for (int key : map.keySet()) {// 按“键”遍历
+          int count = map.get(key);// 获取数值为 key 的元素出现的频次
+          if (bucket[count] == null)
+            bucket[count] = new ArrayList<>();
+          bucket[count].add(key);
+        }
+
+        //step3—“逆序”取数据
+        List<Integer> result=new ArrayList<>();
+        for (int i = nums.length; i > 0; i--)// 注意 i 的起始值，当数组只有一个数据时
+          if (bucket[i] != null && result.size() < k)
+            result.addAll(bucket[i]);
+        return result;
       }
-  }
-  ```
+    }
+    ```
 
 ### 3.2. Merge k Sorted Lists
 
@@ -928,11 +978,11 @@
   Output: 1->1->2->3->4->4->5->6
   ```
 - Solution
-  
+
   Compare every \text{k}k nodes (head of every linked list) and get the node with the smallest value. Extend the final sorted linked list with the selected nodes.
   ```java
   public ListNode mergeKLists(ListNode[] lists) {
-      if (lists == null || lists.length == 0) 
+      if (lists == null || lists.length == 0)
           return null;
       PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(lists.length, (o1,o2) -> o1.val-o2.val);
       ListNode dummy = new ListNode(0);

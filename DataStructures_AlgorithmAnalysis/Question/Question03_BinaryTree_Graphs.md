@@ -1,19 +1,24 @@
 - [Binary Tree & Graphs](#binary-tree--graphs)
   - [1. Binary Tree](#1-binary-tree)
-    - [1.1. Maximum Depth of Binary Tree](#11-maximum-depth-of-binary-tree)
-    - [1.2. Minimum Depth of Binary Tree](#12-minimum-depth-of-binary-tree)
-    - [1.3. Invert Binary Tree](#13-invert-binary-tree)
-    - [1.4. Same Tree](#14-same-tree)
-    - [1.5. Symmetric Tree](#15-symmetric-tree)
-    - [1.6. Children Tree](#16-children-tree)
-    - [1.7. Count Complete Tree Nodes](#17-count-complete-tree-nodes)
-    - [1.8. Sum of Left Leaves](#18-sum-of-left-leaves)
-    - [1.9. Binary Tree Paths](#19-binary-tree-paths)
-    - [1.10. Sum Root to Leaf Numbers](#110-sum-root-to-leaf-numbers)
-    - [1.11. Path Sum](#111-path-sum)
-    - [1.12. Path Sum II](#112-path-sum-ii)
-    - [1.13. Path Sum III](#113-path-sum-iii)
-    - [1.14. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)](#114-lowest-common-ancestor-of-a-binary-tree-bt---lca-问题)
+    - [1.1. Unique Binary Search Trees](#11-unique-binary-search-trees)
+    - [1.2. 层序遍历](#12-层序遍历)
+      - [1.2.1. Binary Tree Level Order Traversal](#121-binary-tree-level-order-traversal)
+      - [1.2.2. Populating Next Right Pointers in Each Node](#122-populating-next-right-pointers-in-each-node)
+      - [1.2.3. Populating Next Right Pointers in Each Node Ⅱ](#123-populating-next-right-pointers-in-each-node-Ⅱ)
+    - [1.3. Maximum Depth of Binary Tree](#13-maximum-depth-of-binary-tree)
+    - [1.4. Minimum Depth of Binary Tree](#14-minimum-depth-of-binary-tree)
+    - [1.5. Invert Binary Tree](#15-invert-binary-tree)
+    - [1.6. Same Tree](#16-same-tree)
+    - [1.7. Symmetric Tree](#17-symmetric-tree)
+    - [1.8. Children Tree](#18-children-tree)
+    - [1.9. Count Complete Tree Nodes](#19-count-complete-tree-nodes)
+    - [1.10. Sum of Left Leaves](#110-sum-of-left-leaves)
+    - [1.11. Binary Tree Paths](#111-binary-tree-paths)
+    - [1.12. Sum Root to Leaf Numbers](#112-sum-root-to-leaf-numbers)
+    - [1.13. Path Sum](#113-path-sum)
+    - [1.14. Path Sum II](#114-path-sum-ii)
+    - [1.15. Path Sum III](#115-path-sum-iii)
+    - [1.16. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)](#116-lowest-common-ancestor-of-a-binary-tree-bt---lca-问题)
   - [2. Binary Search Tree](#2-binary-search-tree)
     - [2.1. Lowest Common Ancestor of a Binary Search Tree (BST - LCA 问题)](#21-lowest-common-ancestor-of-a-binary-search-tree-bst---lca-问题)
     - [2.2. 判断一棵二叉树是否是 BST](#22-判断一棵二叉树是否是-bst)
@@ -36,13 +41,234 @@
 
 ## 1. Binary Tree
 
-### 1.1. Maximum Depth of Binary Tree
+### 1.1. Unique Binary Search Trees
+
+[96. Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees/)
+
+- Question
+  > Given n, how many structurally unique BST's (binary search trees) that store values 1 ... n?
+
+  Example:
+  ```
+  Input: 3
+  Output: 5
+  Explanation:
+  Given n = 3, there are a total of 5 unique BST's:
+
+    1         3     3      2      1
+      \       /     /      / \      \
+      3     2     1      1   3      2
+      /     /       \                 \
+    2     1         2                 3
+  ```
+
+- Solution
+
+  该问题属于卡特兰数数列，使用 DP 解决：
+  ```java
+  public int numTrees(int n) {
+      int [] dp = new int[n+1];
+      dp[0] = 1;
+      for (int i = 1; i <= n; i++)
+          for (int j = 0; j < i; j++)
+              dp[i] += dp[j] * dp[i - 1 - j];
+      return dp[n];
+  }
+  ```
+
+### 1.2. 层序遍历
+
+#### 1.2.1. Binary Tree Level Order Traversal
+
+[102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+
+- Question
+  > Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+
+  For example:
+  ```
+  Given binary tree [3,9,20,null,null,15,7],
+      3
+    / \
+    9  20
+      /  \
+    15   7
+  return its level order traversal as:
+  [
+    [3],
+    [9,20],
+    [15,7]
+  ]
+  ```
+
+- Solution
+  ```java
+  class Solution {
+      public List<List<Integer>> levelOrder(TreeNode root) {
+          Queue<TreeNode> queue = new LinkedList<>();
+          List<List<Integer>> wrapList = new LinkedList<>();
+          if(root == null)
+              return wrapList;
+          queue.offer(root);
+          while(!queue.isEmpty()){
+              int levelNum = queue.size();
+              List<Integer> subList = new LinkedList<>();
+              for(int i=0; i<levelNum; i++) {
+                  if(queue.peek().left != null)
+                      queue.offer(queue.peek().left);
+                  if(queue.peek().right != null)
+                      queue.offer(queue.peek().right);
+                  subList.add(queue.poll().val);
+              }
+              wrapList.add(subList);
+          }
+          return wrapList;
+      }
+  }
+  ```
+
+#### 1.2.2. Populating Next Right Pointers in Each Node
+
+[116. Populating Next Right Pointers in Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
+
+- Question
+
+  Given a binary tree
+  ```
+  struct TreeLinkNode {
+    TreeLinkNode *left;
+    TreeLinkNode *right;
+    TreeLinkNode *next;
+  }
+  ```
+  Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+
+  Initially, all next pointers are set to NULL.
+
+  Example:
+  ```
+  Given the following perfect binary tree,
+
+      1
+    /  \
+    2    3
+  / \  / \
+  4  5  6  7
+  After calling your function, the tree should look like:
+
+      1 -> NULL
+    /  \
+    2 -> 3 -> NULL
+  / \  / \
+  4->5->6->7 -> NULL
+  ```
+
+- Solution
+  ```java
+  public void connect(TreeLinkNode root) {
+      TreeLinkNode level_start = root;
+      while (level_start != null) {
+          TreeLinkNode cur = level_start;
+          while (cur != null) {
+              if (cur.left != null)
+                  cur.left.next = cur.right;
+              if (cur.right != null && cur.next != null)
+                  cur.right.next = cur.next.left;
+              cur = cur.next;
+          }
+          level_start = level_start.left;
+      }
+  }
+  ```
+
+#### 1.2.3. Populating Next Right Pointers in Each Node Ⅱ
+
+[117. Populating Next Right Pointers in Each Node Ⅱ](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/)
+
+- Question
+
+  Given a binary tree
+  ```
+  struct TreeLinkNode {
+    TreeLinkNode *left;
+    TreeLinkNode *right;
+    TreeLinkNode *next;
+  }
+  ```
+  Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+
+  Initially, all next pointers are set to NULL.
+
+  Example:
+  ```
+  Given the following binary tree,
+
+      1
+    /  \
+    2    3
+  / \    \
+  4   5    7
+  After calling your function, the tree should look like:
+
+      1 -> NULL
+    /  \
+    2 -> 3 -> NULL
+  / \    \
+  4-> 5 -> 7 -> NULL
+  ```
+
+- Solution
+
+  ```java
+  // based on level order traversal
+  // O(1) space and O(n) Time complexity
+  public void connect(TreeLinkNode root) {
+
+      TreeLinkNode head = null; //head of the next level
+      TreeLinkNode prev = null; //the leading node on the next level
+      TreeLinkNode cur = root;  //current node of current level
+
+      while (cur != null) {
+
+          while (cur != null) { //iterate on the current level
+              //left child
+              if (cur.left != null) {
+                  if (prev != null) {
+                      prev.next = cur.left;
+                  } else {
+                      head = cur.left;
+                  }
+                  prev = cur.left;
+              }
+              //right child
+              if (cur.right != null) {
+                  if (prev != null) {
+                      prev.next = cur.right;
+                  } else {
+                      head = cur.right;
+                  }
+                  prev = cur.right;
+              }
+              //move to next node
+              cur = cur.next;
+          }
+
+          //move to next level
+          cur = head;
+          head = null;
+          prev = null;
+      }
+
+  }
+  ```
+
+### 1.3. Maximum Depth of Binary Tree
 
 [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/)
 
 - Question
   > Given a binary tree, find its maximum depth.
-  > 
+  >
   > The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
   NOTE: A leaf is a node with no children.
@@ -65,7 +291,7 @@
   }
   ```
 
-### 1.2. Minimum Depth of Binary Tree
+### 1.4. Minimum Depth of Binary Tree
 
 [111. Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/description/)
 
@@ -88,7 +314,7 @@
   ```
   return its minimum depth = 2.
 - Solution
-  
+
   **需要特别注意递归终止条件：当左子树 / 右子树为空时，最小高度取决于非空的另一边**。
   ```java
   public int minDepth(TreeNode root) {
@@ -102,7 +328,7 @@
   }
   ```
 
-### 1.3. Invert Binary Tree
+### 1.5. Invert Binary Tree
 
 [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/description/)
 
@@ -137,13 +363,13 @@
   }
   ```
 
-### 1.4. Same Tree
+### 1.6. Same Tree
 
 [100. Same Tree](https://leetcode.com/problems/same-tree/description/)
 
 - Question
   > Given two binary trees, write a function to check if they are the same or not.
-  > 
+  >
   > Two binary trees are considered the same if they are structurally identical and the nodes have the same value.
 
   Example 1:
@@ -179,15 +405,15 @@
 - Solution
   ```java
   public boolean isSameTree(TreeNode p, TreeNode q) {
-      if(p == null || q == null) 
+      if(p == null || q == null)
           return p == q;
-      if(p.val == q.val) 
+      if(p.val == q.val)
           return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
       return false;
   }
   ```
 
-### 1.5. Symmetric Tree
+### 1.7. Symmetric Tree
 
 [101. Symmetric Tree](https://leetcode.com/problems/symmetric-tree/description/)
 
@@ -215,19 +441,18 @@
       public boolean isSymmetric(TreeNode root) {
           return root == null || _isSymmetric(root.left, root.right);
       }
-      
+
       private boolean _isSymmetric(TreeNode left, TreeNode right) {
           if (left == null || right == null)
               return left == right;
           if (left.val == right.val)
-              return _isSymmetric(left.left, right.right) 
-                    && _isSymmetric(left.right, right.left);
+              return _isSymmetric(left.left, right.right) && _isSymmetric(left.right, right.left);
           return false;
       }
   }
   ```
 
-### 1.6. Children Tree
+### 1.8. Children Tree
 
 - Question
 
@@ -242,20 +467,19 @@
 
   - 解法 2
 
-    遍历 T1，每当 T1 的某个节点与 T2 的根结点相同时，则调用 `treeMatch()` 进行匹配，即比较两颗子树是否完全相同。时间效率为 O(n+km)，n 为 T1 的节点数，m 为 T2 的节点数，k 为 T2 根结点在 T1 中出现的次数。而事实上，在进行匹配时，一旦发现有节点不同就可以提前结束 `treeMatch()`，因此实际的时间效率会更高，空间复杂度为 O(logn+logm)。
+    **遍历 T1，每当 T1 的某个节点与 T2 的根结点相同时，则调用 `treeMatch()` 进行匹配，即比较两颗子树是否完全相同**。时间效率为 O(n+km)，n 为 T1 的节点数，m 为 T2 的节点数，k 为 T2 根结点在 T1 中出现的次数。而事实上，在进行匹配时，一旦发现有节点不同就可以提前结束 `treeMatch()`，因此实际的时间效率会更高，空间复杂度为 O(logn+logm)。
 
-### 1.7. Count Complete Tree Nodes
+### 1.9. Count Complete Tree Nodes
 
 [222. Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/description/)
 
 - Question
-
   > Given a complete binary tree, count the number of nodes.
 - Solution
   ```java
   public int countNodes(TreeNode root) {
       int lh = 0, rh = 0;
-      TreeNode left = root, right = root; 
+      TreeNode left = root, right = root;
       while (left != null) {
           lh++;
           left = left.left;
@@ -269,8 +493,8 @@
       return 1 + countNodes(root.left) + countNodes(root.right);
   }
   ```
-  
-### 1.8. Sum of Left Leaves
+
+### 1.10. Sum of Left Leaves
 
 [404. Sum of Left Leaves](https://leetcode.com/problems/sum-of-left-leaves/description/)
 
@@ -290,13 +514,13 @@
 - Solution
   ```java
   public int sumOfLeftLeaves(TreeNode root) {
-      if (root == null) 
+      if (root == null)
           return 0;
       int res = 0;
       if (root.left != null) {
-          if(root.left.left == null && root.left.right == null) 
+          if(root.left.left == null && root.left.right == null)
               res += root.left.val;
-          else 
+          else
               res += sumOfLeftLeaves(root.left);
       }
       res += sumOfLeftLeaves(root.right);
@@ -304,7 +528,7 @@
   }
   ```
 
-### 1.9. Binary Tree Paths
+### 1.11. Binary Tree Paths
 
 [257. Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/description/)
 
@@ -331,26 +555,26 @@
   // 空间复杂度：O(h), h 为树的高度
   public List<String> binaryTreePaths(TreeNode root) {
       List<String> paths = new LinkedList<>();
-      if (root == null) 
+      if (root == null)
           return paths;
       if (root.left == null && root.right == null){
           paths.add(root.val + "");
           return paths;
       }
-      for (String path : binaryTreePaths(root.left)) 
+      for (String path : binaryTreePaths(root.left))
           paths.add(root.val + "->" + path);
-      for (String path : binaryTreePaths(root.right)) 
+      for (String path : binaryTreePaths(root.right))
           paths.add(root.val + "->" + path);
 
       return paths;
   }
   ```
 
-### 1.10. Sum Root to Leaf Numbers
+### 1.12. Sum Root to Leaf Numbers
 
 [129. Sum Root to Leaf Numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/description/)
 
-### 1.11. Path Sum
+### 1.13. Path Sum
 
 [112. Path Sum](https://leetcode.com/problems/path-sum/description/)
 
@@ -370,7 +594,7 @@
     11  13  4
   /  \      \
   7    2      1
-  return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.  
+  return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
   ```
 
 - Solution
@@ -384,21 +608,21 @@
   }
   ```
 
-### 1.12. Path Sum II
+### 1.14. Path Sum II
 
 [113. Path Sum II](https://leetcode.com/problems/path-sum-ii/description/)
 
-### 1.13. Path Sum III
+### 1.15. Path Sum III
 
 [437. Path Sum III](https://leetcode.com/problems/path-sum-iii/description/)
 
 - Question
   > You are given a binary tree in which each node contains an integer value.
-  > 
+  >
   > Find the number of paths that sum to a given value.
-  > 
+  >
   > The path does not need to start or end at the root or a leaf, but it must go downwards (traveling only from parent nodes to child nodes).
-  > 
+  >
   > The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.
 
   Example:
@@ -438,7 +662,7 @@
           if (node == null)
               return 0;
           int res = 0;
-          if (node.val == num) 
+          if (node.val == num)
               res += 1;
           res += findPath(node.left , num - node.val);
           res += findPath(node.right , num - node.val);
@@ -447,13 +671,13 @@
   }
   ```
 
-### 1.14. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)
+### 1.16. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)
 
 [236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree)
 
 - Question
   > Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
-  > 
+  >
   > According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”
 
   Given the following binary tree:  root = [3,5,1,6,2,0,8,null,null,7,4]
@@ -476,9 +700,9 @@
 - Solution
   ```java
   public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-      if (root == null || root == p || root == q) 
+      if (root == null || root == p || root == q)
           return root;
-      
+
       TreeNode left = lowestCommonAncestor(root.left, p, q);
       TreeNode right = lowestCommonAncestor(root.right, p, q);
       return left == null ? right : (right == null ? left : root);
@@ -493,7 +717,7 @@
 
 - Question
   > Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
-  > 
+  >
   > According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”
   ```
           _______6______
@@ -520,24 +744,25 @@
 
 ### 2.2. 判断一棵二叉树是否是 BST
 
-[98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/description/)
+[98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
 
 - Question
   > Given a binary tree, determine if it is a valid binary search tree (BST).
 
 - Solution
   - 解法 1：中序遍历判断，比较每一个元素与下一个元素是否有序。
+
   - 解法 2：最大最小值递归判断。
     ```java
     class Solution {
         public boolean isValidBST(TreeNode root) {
             return _isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
         }
-        
+
         public boolean _isValidBST(TreeNode root, long minVal, long maxVal) {
-            if (root == null) 
+            if (root == null)
                 return true;
-            if (root.val >= maxVal || root.val <= minVal) 
+            if (root.val >= maxVal || root.val <= minVal)
                 return false;
             return _isValidBST(root.left, minVal, root.val) && _isValidBST(root.right, root.val, maxVal);
         }
@@ -591,6 +816,8 @@
   > Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
 
 - Solution
+
+  使用二分的思想：
   ```java
   class Solution {
       public TreeNode sortedArrayToBST(int[] num) {
@@ -600,7 +827,7 @@
       public TreeNode helper(int[] num, int low, int high) {
           if (low > high) // Done
               return null;
-  
+
           int mid = (low + high) / 2;
           TreeNode node = new TreeNode(num[mid]);
           node.left = helper(num, low, mid - 1);
@@ -619,14 +846,13 @@
 
 - Solution
 
-  <!-- TODO: 可使用快排 partition 的思想 -->
-
+  使用一个辅助栈：
   ```java
   public int kthSmallest(TreeNode root, int k) {
     Stack<TreeNode> st = new Stack<>();
 
     while (root != null) {
-        st.push(root);	
+        st.push(root);
         root = root.left;
     }
 
@@ -645,6 +871,8 @@
     return -1; // never hit if k is valid
   }
   ```
+
+  <!-- TODO: 可使用快排 partition 的思想 -->
 
 ## 3. Balanced Binary Tree
 

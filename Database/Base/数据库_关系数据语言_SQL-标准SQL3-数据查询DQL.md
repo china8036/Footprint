@@ -110,6 +110,7 @@ NOTE
 [ LIMIT 起始行，行数 ]
 [ LIMIT 行数 OFFSET 起始行 ]
 ```
+
 NOTE
 - **LIMIT 关键字从第 0 行开始计数，而不是第 1 行**。
 - **LIMIT 后边不能接表达式，不能接用户自定义变量 (@xxx)，但可以接本地 / 局部变量 (xxx)**。
@@ -242,7 +243,7 @@ NOTE
 
 #### 2.1.1. 等值 / 非等值连接查询
 
-连接查询中的 WHERE 子句用来连接两个表的条件称为连接条件，**连接条件中的各个连接字段必须是可比的，但名字不必相同**。当连接条件中的连接运算符为`=`时，称为等值连接，否则称为非等值连接。
+连接查询中的 WHERE 子句用来连接两个表的条件称为连接条件，**连接条件中的各个连接字段必须是可比的，但名字不必相同**。当连接条件中的连接运算符为 `=` 时，称为等值连接，否则称为非等值连接。
 
 例：
 
@@ -297,15 +298,15 @@ WHERE c1.cust_name = c2.cust_name AND c2.cust_contact = ‘Jim’
 NOTE: **若两个要关联表的字段名是一样的，可以使用 USING 语句减少 SQL 语句的长度**。
 ```sql
 SELECT c1.cust_id, c1.cust_name
-FROM Customers AS c1 INNER JOIN CUstomers AS c2
+FROM Customers AS c1 INNER JOIN Customers AS c2
 USING(cust_name)
-WHERE c2.cust_contact = ‘Jim’
+WHERE c2.cust_contact = 'Jim'
 ```
 **USING 语句现已被 MySQL，Oracle，PostgreSQL，SQLite，和 DB2/400 等 DBMS 支持**。
 
 自身连接查询经典题目：
-- [leetcode human-traffic-of-stadium](https://leetcode.com/problems/human-traffic-of-stadium)
-- [leetcode consecutive-numbers](https://leetcode.com/problems/consecutive-numbers/description/)
+- [Leetcode human-traffic-of-stadium](https://leetcode.com/problems/human-traffic-of-stadium)
+- [Leetcode consecutive-numbers](https://leetcode.com/problems/consecutive-numbers/description/)
 
 ### 2.2. 外连接查询
 

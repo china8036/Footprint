@@ -24,7 +24,7 @@
 ![image](http://img.cdn.firejq.com/jpg/2018/2/22/ee08febc6bc88a8604d6e6369bb80d5f.jpg)
 
 - 前 20 项
-  ```  
+  ```
   1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, 208012, 742900, 2674440, 9694845, 35357670, 129644790, 477638700, 1767263190。
   ```
 
@@ -32,18 +32,23 @@
 
   ![image](http://img.cdn.firejq.com/jpg/2018/2/22/4e8d5eceaaaf8108198eff11076deb3d.jpg)
 
+  ![image](http://img.cdn.firejq.com/jpg/2018/11/6/8202434a5b6a0cf2dfb2c043fa540145.jpg)
+
 - 递归公式
   ```
   h(n) = h(1)*h(n-1) + h(2)*h(n-2) + …… + h(n-1)*h(1)（其中 n>=2，h(1) = 1）
   ```
-  另类递归式：  h(n)=((4*n-2)/(n+1))*h(n-1);
+  另类递归式：
+  ```
+  h(n)=((4*n-2)/(n+1))*h(n-1);
+  ```
 
   即：
   ```
-  F(1) = F(0)*F(1-1) = 1； 
-  F(2) = F(0)*F(2-1) + F(1)*F(2-2) = 1 + 1 = 2； 
-  F(3) = F(0)*F(3-1) + F(1)*F(3-2) + F(2)*F(3-3) = 2 + 1 + 2 = 5； 
-  F(4) = F(0)*F(4-1) + F(1)*F(4-2) + F(2)*F(4-3) + F(3)*F(4-4)= 5 + 4 + 4 + 5 = 14； 
+  F(1) = F(0)*F(1-1) = 1；
+  F(2) = F(0)*F(2-1) + F(1)*F(2-2) = 1 + 1 = 2；
+  F(3) = F(0)*F(3-1) + F(1)*F(3-2) + F(2)*F(3-3) = 2 + 1 + 2 = 5；
+  F(4) = F(0)*F(4-1) + F(1)*F(4-2) + F(2)*F(4-3) + F(3)*F(4-4)= 5 + 4 + 4 + 5 = 14；
   ```
   ![image](http://img.cdn.firejq.com/jpg/2018/2/22/cedb78c00729da3a80b02c55576c7fa7.jpg)
 
@@ -54,6 +59,17 @@
 ## 2. C++ 实现
 
 TODO: 用 c++ 求出第 n 个卡特兰数
+
+```java
+private static int catalan(int n) {
+    int [] dp = new int[n+1];
+    dp[0] = 1;
+    for (int i = 1; i <= n; i++)
+        for (int j = 0; j < i; j++)
+            dp[i] += dp[j] * dp[i - 1 - j];
+    return dp[n];
+}
+```
 
 ## 3. 应用
 
@@ -114,7 +130,7 @@ void func(vector<char>kind, int count[], int n) {
     if(kind.size() == 2 * n) {
         for(vector<char>::iterator iter = kind.begin(); iter != kind.end(); iter++) cout<<(*iter)<<" ";
         cout<<endl;
-		sum++;
+        sum++;
     }
 }
 

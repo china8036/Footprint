@@ -1,5 +1,5 @@
 - [Leetcode Index](#leetcode-index)
-  - [1. Leetcode 前四百题分类顺序](#1-leetcode-前四百题分类顺序)
+  - [1. 前四百题分类索引](#1-前四百题分类索引)
     - [1.1. Array](#11-array)
     - [1.2. String](#12-string)
     - [1.3. Math](#13-math)
@@ -23,7 +23,7 @@
 
 # Leetcode Index
 
-## 1. Leetcode 前四百题分类顺序
+## 1. 前四百题分类索引
 
 ### 1.1. Array
 

@@ -160,9 +160,9 @@ NOTE:
 
 - 用位运算表示取模运算 （在不产生溢出的情况下)
   ```
-  a % (2^n) 
+  a % (2^n)
   ```
-  等价于 
+  等价于
   ```
   a & (2^n - 1)
   ```
@@ -172,7 +172,7 @@ NOTE:
   ```
   a * (2^n)
   ```
-  等价于 
+  等价于
   ```
   a << n
   ```
@@ -181,7 +181,7 @@ NOTE:
   ```
   a / (2^n)
   ```
-  等价于 
+  等价于
   ```
   a >> n
   ```
@@ -209,7 +209,7 @@ NOTE:
   ```
   if        n = abcde1000
   then  n - 1 = abcde0111
-  if        n = abcde0001 
+  if        n = abcde0001
   then  n - 1 = abcde0000
   ```
   因此，要使得 `n & (n - 1) == 0`，n 必须像 `00001000`，因此 n 必须是 2 的某次方或者 n 为 0。
@@ -228,7 +228,7 @@ public static void main(String[] args) {
         System.err.println("第" + day + "天的签到状态：" + flag);
     }
     System.err.println("============");
-    
+
     // 将 0 的二进制位从低位一直向高位填 1
     state |= 1 << days[0]; // 第 1 天签到，将第 1 个位置 1
     state |= 1 << days[1]; // 第 2 天签到，将第 2 个位置 1
@@ -253,19 +253,19 @@ public static void main(String[] args) {
 public class Permission {
     // 是否允许查询，二进制第 1 位，0 表示否，1 表示是
     public static final int ALLOW_SELECT = 1 << 0; // 0001
-    
+
     // 是否允许新增，二进制第 2 位，0 表示否，1 表示是
     public static final int ALLOW_INSERT = 1 << 1; // 0010
-    
+
     // 是否允许修改，二进制第 3 位，0 表示否，1 表示是
     public static final int ALLOW_UPDATE = 1 << 2; // 0100
-    
+
     // 是否允许删除，二进制第 4 位，0 表示否，1 表示是
     public static final int ALLOW_DELETE = 1 << 3; // 1000
-    
+
     // 存储目前的权限状态，可表示所有的 16 种权限的状态
     private int flag;
-    
+
     // 重新设置权限
     public void setPermission(int permission) {
         flag = permission;
@@ -275,22 +275,22 @@ public class Permission {
     public void enable(int permission) {
         flag |= permission;
     }
-    
+
     // 删除一项或多项权限
     public void disable(int permission) {
         flag &= ~permission;
     }
-    
+
     // 是否拥某些权限
     public boolean isAllow(int permission) {
         return (flag & permission) == permission;
     }
-    
+
     // 是否禁用了某些权限
     public boolean isNotAllow(int permission) {
         return (flag & permission) == 0;
     }
-    
+
     // 是否仅仅拥有某些权限
     public boolean isOnlyAllow(int permission) {
         return flag == permission;
@@ -303,7 +303,7 @@ Usage:
 // 添加一项 Update 权限：
 permission.enable(NewPermission.ALLOW_UPDATE);
 // 添加 Insert、Update、Delete 三项权限：
-permission.enable(NewPermission.ALLOW_INSERT 
+permission.enable(NewPermission.ALLOW_INSERT
   | NewPermission.ALLOW_UPDATE | NewPermission.ALLOW_DELETE);
 ```
 
@@ -361,7 +361,7 @@ permission.enable(NewPermission.ALLOW_INSERT
 
     根据异或运算的性质，由于 1000000000 % 4 = 0，因此 EXC1 = 1 XOR 2 ... XOR 1000000000 = 1000000000。
 
-    现对目标整数序列进行依次 XOR，即 EXC2 = 1 XOR 2 XOR ... XOR 0 XOR ... XOR 1000000000，其中缺失的数用 0 代替，由于 x XOR 0 = x，因此不影响整体结果。 
+    现对目标整数序列进行依次 XOR，即 EXC2 = 1 XOR 2 XOR ... XOR 0 XOR ... XOR 1000000000，其中缺失的数用 0 代替，由于 x XOR 0 = x，因此不影响整体结果。
 
     设缺失的数是 M，则有 EXC2 XOR M = EXC1，进而有 M = EXC2 XOR EXC1 = EXC2 XOR 1000000000。
 
@@ -370,7 +370,7 @@ permission.enable(NewPermission.ALLOW_INSERT
   ```cpp
   /* 查找 1-1000000 中缺失的数 -- 异或运算法 */
   int FindLostNumber(int *Data, int N) {
-    int Exc1, Exc2 = 0, M;	
+    int Exc1, Exc2 = 0, M;
     switch (N % 4) {
       case 0: Exc1 = N; break;
       case 1: Exc1 = 1; break;
@@ -417,7 +417,7 @@ public int bitSwapRequired(int a, int b) {
 
 ## 6. Refer Links
 
-[位运算有什么奇技淫巧？](https://www.zhihu.com/question/38206659) 
+[位运算有什么奇技淫巧？](https://www.zhihu.com/question/38206659)
 
 [在写代码的过程中使用位运算的好处？](https://www.zhihu.com/question/34021773)
 

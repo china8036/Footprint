@@ -32,6 +32,7 @@
     - [7.3. 矩阵旋转](#73-矩阵旋转)
     - [7.4. 矩阵清零](#74-矩阵清零)
     - [7.5. 连续序列最大和](#75-连续序列最大和)
+    - [7.6. 用数组排出最小的数](#76-用数组排出最小的数)
   - [8. Refer Links](#8-refer-links)
 
 # Array & String
@@ -71,20 +72,15 @@
   class Solution2 {
       public void moveZeroes(int[] nums) {
           // 使用 k 索引，使得在 nums 中，[0...k) 的元素均为非 0 元素
-          int k = 0; 
+          int k = 0;
           // 遍历到第 i 个元素后，保证 [0...i] 中所有非 0 元素都按照顺序排列在 [0...k) 中
           // 同时，[k...i] 为 0
-          for(int i = 0; i < nums.length; i ++)
+          for(int i = 0; i < nums.length; i++)
               if(nums[i] != 0) {
                   if(k != i)
-                      swap(nums, k, i);
-                  k ++;
+                      Arrays.swap(nums, k, i);
+                  k++;
               }
-      }
-      private void swap(int[] nums, int i, int j){
-          int t = nums[i];
-          nums[i] = nums[j];
-          nums[j] = t;
       }
   }
   ```
@@ -104,8 +100,8 @@
   public int removeElement(int[] nums, int val) {
       int i = 0;
       for (int j = 0; j < nums.length; j++)
-              if (nums[j] != val)
-                  nums[i++] = nums[j];
+          if (nums[j] != val)
+              nums[i++] = nums[j];
       return i;
   }
   ```
@@ -123,8 +119,8 @@
   public int removeDuplicates(int[] nums) {
       int i = 0;
       for (int j = 1; j < nums.length; j++)
-              if (nums[j - 1] != nums[j])
-                  nums[++i] = nums[j];
+          if (nums[j - 1] != nums[j])
+              nums[++i] = nums[j];
       return i + 1;
   }
   ```
@@ -173,7 +169,7 @@
     for (int i = 0; i < str.length; i++)
       if (str[i] == ' ')
         spaceCnt++;
-    
+
     int newLength = str.length + spaceCnt * 2;
     str[newLength] = '\0';
     for (int i = str.length - 1, j = newLength - 1; i >= 0 && j >= 0; i--, j--) {
@@ -181,11 +177,9 @@
         str[j] = '0';
         str[--j] = '2';
         str[--j] = '%';
-      } else {
+      } else
         str[j] == str[i];
-      }
     }
-
   }
   ```
 
@@ -219,6 +213,7 @@
       }
   }
   ```
+
 - 三路快排思想
 
   ![image](http://img.cdn.firejq.com/jpg/2018/4/24/fb16f22b4c88d05adda76b156c934058.jpg)
@@ -230,22 +225,14 @@
       public void sortColors(int[] nums) {
           int zero = -1;          // [0...zero] == 0
           int two = nums.length;  // [two...n-1] == 2
-          for(int i = 0 ; i < two ; ){
-              if(nums[i] == 1)
-                  i ++;
+          for (int i = 0; i < two; ) {
+              if (nums[i] == 1)
+                  i++;
               else if (nums[i] == 2)
-                  swap(nums, i, --two);
-              else{ // nums[i] == 0
-                  assert nums[i] == 0;
-                  swap(nums, ++zero, i++);
-              }
+                  Arrays.swap(nums, i, --two);
+              else // nums[i] == 0
+                  Arrays.swap(nums, ++zero, i++);
           }
-      }
-
-      private void swap(int[] nums, int i, int j){
-          int t = nums[i];
-          nums[i]= nums[j];
-          nums[j] = t;
       }
   }
   ```
@@ -286,24 +273,18 @@
           }
           return -1;
       }
-      
+
       private int partition(int[] nums, int L, int R) {
           if (L <= R) {
               int pivot = L;
-              swap(nums, new Random().nextInt(R-L+1)+L, R);
-              for (int i = L; i < R; i++) 
-                  if (nums[i] > nums[R]) 
-                      swap(nums, i, pivot++);
-              swap(nums, pivot, R);
-              return pivot;   
+              Arrays.swap(nums, new Random().nextInt(R-L+1)+L, R);
+              for (int i = L; i < R; i++)
+                  if (nums[i] > nums[R])
+                      Arrays.swap(nums, i, pivot++);
+              Arrays.swap(nums, pivot, R);
+              return pivot;
           }
           return -1;
-      }
-      
-      private void swap(int[] a, int i, int j) {
-          int tmp = a[i];
-          a[i] = a[j];
-          a[j] = tmp;
       }
   }
   ```
@@ -316,7 +297,7 @@
 
 - Question
   > Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
-  > 
+  >
   > The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
 
   You may assume that each input would have exactly one solution and you may not use the same element twice.
@@ -325,7 +306,7 @@
   Output: [1,2]
   Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
   ```
-  
+
 - Solution
   - 暴力解法：双层遍历，O(n^2)。
   - 二分查找：O(nlogn)
@@ -340,7 +321,7 @@
             if(numbers.length < 2 /*|| !isSorted(numbers)*/)
                 throw new IllegalArgumentException("Illegal argument numbers");
             for(int i = 0 ; i < numbers.length - 1 ; i ++) {
-                int j = binarySearch(numbers, i+1, numbers.length-1, target - numbers[i]);
+                int j = Arrays.binarySearch(numbers, i+1, numbers.length-1, target - numbers[i]);
                 if(j != -1){
                     int[] res = {i+1, j+1};
                     return res;
@@ -348,26 +329,6 @@
             }
             throw new IllegalStateException("The input has no solution");
         }
-
-        private int binarySearch(int[] nums, int l, int r, int target) {
-            if(l < 0 || l > nums.length)
-                throw new IllegalArgumentException("l is out of bound");
-
-            if(r < 0 || r > nums.length)
-                throw new IllegalArgumentException("r is out of bound");
-
-            while(l <= r){
-                int mid = l + (r - l)/2;
-                if(nums[mid] == target)
-                    return mid;
-                if(target > nums[mid])
-                    l = mid + 1;
-                else
-                    r = mid - 1;
-            }
-            return -1;
-        }
-
         private boolean isSorted(int[] numbers){
             for(int i = 1 ; i < numbers.length ; i ++)
                 if(numbers[i] < numbers[i-1])
@@ -388,7 +349,7 @@
         public int[] twoSum(int[] numbers, int target) {
             if (numbers.length < 2 /*|| !isSorted(numbers)*/)
                 throw new IllegalArgumentException("Illegal argument numbers");
-          
+
             int l = 0, r = numbers.length - 1;
             while (l < r) {
                 if (numbers[l] + numbers[r] == target) {
@@ -469,6 +430,15 @@
 [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
 
 - Question
+  > Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+
+  ![image](http://img.cdn.firejq.com/jpg/2018/11/6/7be0393243c7d03e96f83bb1c1d6ed24.jpg)
+
+  Example:
+  ```
+  Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+  Output: 6
+  ```
 
 - Solution
   - DP
@@ -498,16 +468,16 @@
     ```java
     public int trap(int[] height) {
         int res = 0, l = 0, r = height.length - 1;
-        
+
         while (l < r) {
             int cur = Math.min(height[l], height[r]);
             if (height[l] == cur) {
                 ++l;
-                while (l < r && height[l] < cur) 
+                while (l < r && height[l] < cur)
                     res += cur - height[l++];
             } else {
                 --r;
-                while (l < r && height[r] < cur) 
+                while (l < r && height[r] < cur)
                     res += cur - height[r--];
             }
         }
@@ -520,7 +490,7 @@
     遍历高度，如果此时栈为空，或者当前高度小于等于栈顶高度，则把当前高度的坐标压入栈，注意我们不直接把高度压入栈，而是把坐标压入栈，这样方便我们在后来算水平距离。当我们遇到比栈顶高度大的时候，就说明有可能会有坑存在，可以装雨水。此时我们栈里至少有一个高度，如果只有一个的话，那么不能形成坑，我们直接跳过，如果多余一个的话，那么此时把栈顶元素取出来当作坑，新的栈顶元素就是左边界，当前高度是右边界，只要取二者较小的，减去坑的高度，长度就是右边界坐标减去左边界坐标再减 1，二者相乘就是盛水量。
     ```java
     public int trap(int[] height) {
-        Stack<Integer> s = new Stack<Integer>();
+        ArrayDeque<Integer> s = new ArrayDeque<>();
         int i = 0, n = height.length, res = 0;
         while (i < n) {
             if (s.isEmpty() || height[i] <= height[s.peek()]) {
@@ -567,20 +537,20 @@
       res[0] = 1;
       for (int i = 1; i < n; i++)
           res[i] = res[i - 1] * nums[i - 1];
-      
+
       // 从右往左
       int right = 1; // 辅助变量
       for (int i = n - 1; i >= 0; i--) {
           res[i] *= right;
           right *= nums[i];
       }
-      return res; 
+      return res;
   }
   ```
 
 ## 6. 滑动窗口
 
-在 ACM 中一般将滑动窗口技巧称为“尺取法”。
+在 ACM 中一般将滑动窗口技巧称为“**尺取法**”。
 
 ### 6.1. Minimum Size Subarray Sum
 
@@ -588,7 +558,7 @@
 
 - Question
   > Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
-  > 
+  >
   > For example, given the array [2,3,1,2,4,3] and s = 7, the subarray [4,3] has the minimal length under the problem constraint.
 
 - Solution
@@ -604,7 +574,7 @@
         public int minSubArrayLen(int s, int[] nums) {
             if(s <= 0 || nums == null)
                 throw new IllegalArgumentException("Illigal Arguments");
-          
+
             int l = 0 , r = -1; // nums[l...r] 为我们的滑动窗口
             int sum = 0;
             int res = nums.length + 1;
@@ -613,7 +583,7 @@
                     sum += nums[++r];
                 else // r 已经到头 或者 sum >= s
                     sum -= nums[l++];
-    
+
                 if(sum >= s)
                     res = Math.min(res, r - l + 1);
             }
@@ -648,14 +618,14 @@
   // 空间复杂度：O(len(charset))
   public class Solution2 {
       public int lengthOfLongestSubstring(String s) {
-          int[] freq = new int[256];
+          int [] freq = new int[256];
           int l = 0, r = -1; // 滑动窗口为 s[l...r]
           int res = 0;
           while(r + 1 < s.length()) {
               if(freq[s.charAt(r+1)] == 0)
-                  freq[s.charAt(++r)] ++;
+                  freq[s.charAt(++r)]++;
               else    //freq[s[r+1]] == 1
-                  freq[s.charAt(l++)] --;
+                  freq[s.charAt(l++)]--;
               res = Math.max(res, r-l+1);
           }
           return res;
@@ -695,7 +665,7 @@
   假定 s2 可以由 s1 旋转而来，此时令 `x = wat`, `y = erbottle`，则 `s1 = xy = waterbottle`，`s2 = yx = erbottlewat`。由于 `yx` 是 `xyxy` 的子串，因此 `s2` 是 `s1s1` 的子串。也就是说，解决这个问题只需要判断 `s2` 是不是 `s1s1` 的子串即可。
   ```java
   public boolean isRotation(String s1, String s2) {
-    if (s1.length() > 0 && s1.length() == s2.length()) 
+    if (s1.length() > 0 && s1.length() == s2.length())
       return isSubstring(s1+s1, s2);
     return false;
   }
@@ -704,7 +674,7 @@
 ### 7.3. 矩阵旋转
 
 - Question
-  
+
   给定一个 n*n 的二维矩阵，编写程序将矩阵旋转 90°，要求空间效率为 O(1)。
 
   ![image](http://img.cdn.firejq.com/jpg/2018/10/17/726c2bdd26fcae49f9efa8407fdea6c0.jpg)
@@ -719,11 +689,11 @@
       int last = n - layer - 1;
       for (int i = first; i < largest; i++) {
         int offset = i - first;
-        int top  = matrix[first](i);
-        matrix[first](i) = matrix[last - offset](first); // left to top
-        matrix[last - offset](first) = matrix[last](last - offset); // bottom to left
-        matrix[last](last - offset) = matrix[i](last); // right to bottom
-        matrix[i](last) = top; // top to right
+        int top  = matrix[first][i];
+        matrix[first][i] = matrix[last - offset][first]; // left to top
+        matrix[last - offset][first] = matrix[last][last - offset]; // bottom to left
+        matrix[last][last - offset] = matrix[i][last]; // right to bottom
+        matrix[i][last] = top; // top to right
       }
     }
   }
@@ -738,12 +708,12 @@
 
 - Solution
 
-  注意陷阱：如果直接遍历矩阵进行操作，清零操作会导致下一步判断出错，在读取被清零的行或列时，读到的尽是零，很可能很快会就将整个矩阵清零。
+  **注意陷阱：如果直接遍历矩阵进行操作，清零操作会导致下一步判断出错，在读取被清零的行或列时，读到的尽是零，很可能很快会就将整个矩阵清零**。
 
   因此，可以使用额外的矩阵来标记 0 元素的位置，然后在第二次遍历时将 0 元素所在的行和列清零，空间效率为 O(mn)。
 
   进一步优化，实际上题目并不需要记录 0 元素的确切位置，因此可以只用 2 个数组来记录包含 0 元素的所有行和列，然后再第二次遍历时将这些行和列清零，空间效率为 O(m+n)。
-  
+
   ```java
   public void setZeros(int [][] m) {
     boolean [] row = new boolean[m.length];
@@ -751,15 +721,15 @@
 
     for (int i = 0; i < m.length; i++)
       for (int j = 0; j < m[0].length; j++)
-        if (m[i](j) == 0) {
+        if (m[i][j] == 0) {
           row[i] = true;
           col[j] = true;
         }
-    
+
     for (int i = 0; i < m.length; i++)
       for (int j = 0; j < m[0].length; j++)
         if (row[i] || col[j])
-          m[i](j) = 0;
+          m[i][j] = 0;
   }
   ```
 
@@ -767,7 +737,9 @@
 
 ### 7.5. 连续序列最大和
 
-《CC 150 17.8》
+《CC 150》 17.8
+
+《剑指 offer》 31 题
 
 - Question
 
@@ -786,6 +758,36 @@
     }
     return maxSum;
   }
+  ```
+
+### 7.6. 用数组排出最小的数
+
+《剑指 offer》 33 题
+
+- Question
+
+  TODO:
+
+- Solution
+  ```cpp
+  bool cmp(int a, int b)
+  {
+      string ab = to_string(a) + to_string(b);
+      string ba = to_string(b) + to_string(a);
+      return ab < ba;
+  }
+  class Solution
+  {
+  public:
+      string PrintMinNumber(vector<int> n)
+      {
+          sort(n.begin(), n.end(), cmp);
+          string res = "";
+          for (int i : n)
+              res += to_string(i);
+          return res;
+      }
+  };
   ```
 
 ## 8. Refer Links

@@ -14,9 +14,9 @@
 
 ### 1.1. 对于 DDL
 
-- 标准 SQL(ANSI SQL) 为模式 (SCHAME) 和视图 (VIEW) 提供了 CREATE 和 DROP 支持，但没有 ALTER 支持。
-- 标准 SQL(ANSI SQL) 为数据表 (TABLE) 提供了 CREATE、DROP 和 ALTER 支持。
-- 标准 SQL(ANSI SQL) 没有为索引 (INDEX) 提供任何支持，但在几乎所有 DBMS 中都为索引 (INDEX) 提供了 CREATE、DROP 和 ALTER 支持。
+- 标准 SQL (ANSI SQL) 为模式 (SCHAME) 和视图 (VIEW) 提供了 `CREATE` 和 `DROP` 支持，但没有 `ALTER` 支持。
+- 标准 SQL (ANSI SQL) 为数据表 (TABLE) 提供了 `CREATE`、`DROP` 和 `ALTER` 支持。
+- 标准 SQL (ANSI SQL) 没有为索引 (INDEX) 提供任何支持，但在几乎所有 DBMS 中都为索引 (INDEX) 提供了 `CREATE`、`DROP` 和 `ALTER` 支持。
 
 ### 1.2. 对于 DQL
 

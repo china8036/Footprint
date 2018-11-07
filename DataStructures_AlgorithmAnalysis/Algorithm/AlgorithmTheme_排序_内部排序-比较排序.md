@@ -1,36 +1,36 @@
 - [内部排序 - 比较排序](#%E5%86%85%E9%83%A8%E6%8E%92%E5%BA%8F---%E6%AF%94%E8%BE%83%E6%8E%92%E5%BA%8F)
-	- [1. 插入排序](#1-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
-		- [1.1. 直接插入排序 (Straight insertion Sort)](#11-%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F-straight-insertion-sort)
-		- [1.2. 希尔排序 (Shell Sort)](#12-%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F-shell-sort)
-	- [2. 选择排序](#2-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F)
-		- [2.1. 直接选择排序 （Straight Selection Sort）](#21-%E7%9B%B4%E6%8E%A5%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F-%EF%BC%88straight-selection-sort%EF%BC%89)
-		- [2.2. 堆排序 (Heap Sort)](#22-%E5%A0%86%E6%8E%92%E5%BA%8F-heap-sort)
-			- [2.2.1. 建堆优化](#221-%E5%BB%BA%E5%A0%86%E4%BC%98%E5%8C%96)
-			- [2.2.2. 空间优化：原地堆排序](#222-%E7%A9%BA%E9%97%B4%E4%BC%98%E5%8C%96%EF%BC%9A%E5%8E%9F%E5%9C%B0%E5%A0%86%E6%8E%92%E5%BA%8F)
-	- [3. 交换排序](#3-%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F)
-		- [3.1. 冒泡排序 (Bubble Sort)](#31-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F-bubble-sort)
-		- [3.2. 快速排序 (Quick Sort)](#32-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-quick-sort)
-			- [3.2.1. 针对短序列的优化：直接使用插入排序](#321-%E9%92%88%E5%AF%B9%E7%9F%AD%E5%BA%8F%E5%88%97%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
-			- [3.2.2. 针对基本有序序列的优化：随机化基准](#322-%E9%92%88%E5%AF%B9%E5%9F%BA%E6%9C%AC%E6%9C%89%E5%BA%8F%E5%BA%8F%E5%88%97%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E9%9A%8F%E6%9C%BA%E5%8C%96%E5%9F%BA%E5%87%86)
-			- [3.2.3. 针对重复元素的优化：二路快排和三路快排](#323-%E9%92%88%E5%AF%B9%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E4%BA%8C%E8%B7%AF%E5%BF%AB%E6%8E%92%E5%92%8C%E4%B8%89%E8%B7%AF%E5%BF%AB%E6%8E%92)
-				- [3.2.3.1. 二路快排](#3231-%E4%BA%8C%E8%B7%AF%E5%BF%AB%E6%8E%92)
-				- [3.2.3.2. 三路快排](#3232-%E4%B8%89%E8%B7%AF%E5%BF%AB%E6%8E%92)
-			- [3.2.4. 算法思想扩展](#324-%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3%E6%89%A9%E5%B1%95)
-				- [3.2.4.1. 求无序数组的中位数](#3241-%E6%B1%82%E6%97%A0%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0)
-				- [3.2.4.2. 求第 n 大](#3242-%E6%B1%82%E7%AC%AC-n-%E5%A4%A7)
-	- [4. （两路）归并排序 (Merge Sort)](#4-%EF%BC%88%E4%B8%A4%E8%B7%AF%EF%BC%89%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F-merge-sort)
-		- [4.1. 针对短序列优化：直接使用插入排序](#41-%E9%92%88%E5%AF%B9%E7%9F%AD%E5%BA%8F%E5%88%97%E4%BC%98%E5%8C%96%EF%BC%9A%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
-		- [4.2. 针对基本有序序列优化：提前终止](#42-%E9%92%88%E5%AF%B9%E5%9F%BA%E6%9C%AC%E6%9C%89%E5%BA%8F%E5%BA%8F%E5%88%97%E4%BC%98%E5%8C%96%EF%BC%9A%E6%8F%90%E5%89%8D%E7%BB%88%E6%AD%A2)
-		- [4.3. 自顶向下与自底向上的比较](#43-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E4%B8%8E%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%E7%9A%84%E6%AF%94%E8%BE%83)
-		- [4.4. 算法思想扩展](#44-%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3%E6%89%A9%E5%B1%95)
-	- [5. 综合比较](#5-%E7%BB%BC%E5%90%88%E6%AF%94%E8%BE%83)
-		- [5.1. 性能测试](#51-%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95)
-		- [5.2. 空间复杂度](#52-%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6)
-		- [5.3. 时间复杂度](#53-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6)
-		- [5.4. 稳定性](#54-%E7%A8%B3%E5%AE%9A%E6%80%A7)
-		- [5.5. 算法选择](#55-%E7%AE%97%E6%B3%95%E9%80%89%E6%8B%A9)
-		- [5.6. 其它](#56-%E5%85%B6%E5%AE%83)
-	- [6. Refer Links](#6-refer-links)
+  - [1. 插入排序](#1-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
+    - [1.1. 直接插入排序 (Straight insertion Sort)](#11-%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F-straight-insertion-sort)
+    - [1.2. 希尔排序 (Shell Sort)](#12-%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F-shell-sort)
+  - [2. 选择排序](#2-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F)
+    - [2.1. 直接选择排序 （Straight Selection Sort）](#21-%E7%9B%B4%E6%8E%A5%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F-%EF%BC%88straight-selection-sort%EF%BC%89)
+    - [2.2. 堆排序 (Heap Sort)](#22-%E5%A0%86%E6%8E%92%E5%BA%8F-heap-sort)
+      - [2.2.1. 建堆优化](#221-%E5%BB%BA%E5%A0%86%E4%BC%98%E5%8C%96)
+      - [2.2.2. 空间优化：原地堆排序](#222-%E7%A9%BA%E9%97%B4%E4%BC%98%E5%8C%96%EF%BC%9A%E5%8E%9F%E5%9C%B0%E5%A0%86%E6%8E%92%E5%BA%8F)
+  - [3. 交换排序](#3-%E4%BA%A4%E6%8D%A2%E6%8E%92%E5%BA%8F)
+    - [3.1. 冒泡排序 (Bubble Sort)](#31-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F-bubble-sort)
+    - [3.2. 快速排序 (Quick Sort)](#32-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-quick-sort)
+      - [3.2.1. 针对短序列的优化：直接使用插入排序](#321-%E9%92%88%E5%AF%B9%E7%9F%AD%E5%BA%8F%E5%88%97%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
+      - [3.2.2. 针对基本有序序列的优化：随机化基准](#322-%E9%92%88%E5%AF%B9%E5%9F%BA%E6%9C%AC%E6%9C%89%E5%BA%8F%E5%BA%8F%E5%88%97%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E9%9A%8F%E6%9C%BA%E5%8C%96%E5%9F%BA%E5%87%86)
+      - [3.2.3. 针对重复元素的优化：二路快排和三路快排](#323-%E9%92%88%E5%AF%B9%E9%87%8D%E5%A4%8D%E5%85%83%E7%B4%A0%E7%9A%84%E4%BC%98%E5%8C%96%EF%BC%9A%E4%BA%8C%E8%B7%AF%E5%BF%AB%E6%8E%92%E5%92%8C%E4%B8%89%E8%B7%AF%E5%BF%AB%E6%8E%92)
+        - [3.2.3.1. 二路快排](#3231-%E4%BA%8C%E8%B7%AF%E5%BF%AB%E6%8E%92)
+        - [3.2.3.2. 三路快排](#3232-%E4%B8%89%E8%B7%AF%E5%BF%AB%E6%8E%92)
+      - [3.2.4. 算法思想扩展](#324-%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3%E6%89%A9%E5%B1%95)
+        - [3.2.4.1. 求无序数组的中位数](#3241-%E6%B1%82%E6%97%A0%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0)
+        - [3.2.4.2. 求第 n 大](#3242-%E6%B1%82%E7%AC%AC-n-%E5%A4%A7)
+  - [4. （两路）归并排序 (Merge Sort)](#4-%EF%BC%88%E4%B8%A4%E8%B7%AF%EF%BC%89%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F-merge-sort)
+    - [4.1. 针对短序列优化：直接使用插入排序](#41-%E9%92%88%E5%AF%B9%E7%9F%AD%E5%BA%8F%E5%88%97%E4%BC%98%E5%8C%96%EF%BC%9A%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F)
+    - [4.2. 针对基本有序序列优化：提前终止](#42-%E9%92%88%E5%AF%B9%E5%9F%BA%E6%9C%AC%E6%9C%89%E5%BA%8F%E5%BA%8F%E5%88%97%E4%BC%98%E5%8C%96%EF%BC%9A%E6%8F%90%E5%89%8D%E7%BB%88%E6%AD%A2)
+    - [4.3. 自顶向下与自底向上的比较](#43-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E4%B8%8E%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%E7%9A%84%E6%AF%94%E8%BE%83)
+    - [4.4. 算法思想扩展](#44-%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3%E6%89%A9%E5%B1%95)
+  - [5. 综合比较](#5-%E7%BB%BC%E5%90%88%E6%AF%94%E8%BE%83)
+    - [5.1. 性能测试](#51-%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95)
+    - [5.2. 空间复杂度](#52-%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6)
+    - [5.3. 时间复杂度](#53-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6)
+    - [5.4. 稳定性](#54-%E7%A8%B3%E5%AE%9A%E6%80%A7)
+    - [5.5. 算法选择](#55-%E7%AE%97%E6%B3%95%E9%80%89%E6%8B%A9)
+    - [5.6. 其它](#56-%E5%85%B6%E5%AE%83)
+  - [6. Refer Links](#6-refer-links)
 
 # 内部排序 - 比较排序
 
@@ -50,31 +50,31 @@
   1. 初始时，a[0] 自成一个有序区， 无序区为 a[1, ... , n-1], 令 i=1。
   1. 将 a[i] 插入到当前的有序区 a[0, ... , i-1]。
   1. i++ 并重复第二步直到无序区为空，排序完成。
-  
+
   ![image](http://img.cdn.firejq.com/jpg/2018/3/1/4763204802d27b45b1561c6ed2454e38.jpg)
 
 - 时间复杂度：O(n^2)。
 
-	> Although it is one of the elementary sorting algorithms with O(n2) worst-case time, insertion sort is the algorithm of choice either when the data is nearly sorted (because it is adaptive) or when the problem size is small (because it has low overhead).
-	> 
-	> For these reasons, and because it is also stable, insertion sort is often used as the recursive base case (when the problem size is small) for higher overhead divide-and-conquer sorting algorithms, such as merge sort or quick sort.
+  > Although it is one of the elementary sorting algorithms with O(n2) worst-case time, insertion sort is the algorithm of choice either when the data is nearly sorted (because it is adaptive) or when the problem size is small (because it has low overhead).
+  >
+  > For these reasons, and because it is also stable, insertion sort is often used as the recursive base case (when the problem size is small) for higher overhead divide-and-conquer sorting algorithms, such as merge sort or quick sort.
 
-	在以下情况时 StraightInsertionSort 能有极好的时间效率：
-	- 有大量重复元素
-	- 待排序序列基本有序 (nearly sorted)
-	- 元素个数较少 (small problem size)
-	在这些情况下，StraightInsertionSort 甚至比 O(nlogn) 的排序算法还要快。
-	
-	原因是：
-	- StraightInsertionSort 虽然渐近时间复杂度为 O(n^2)，但当我们使用大 O 来描述算法的复杂度的时候，是忽略常数项的，而事实上 StraightInsertionSort 就是一个常数项非常小的排序算法（小于大多数排序）。因此，当 n 较小时，StraightInsertionSort 的耗时是可能会更少的。
-	- 小数据量的数组，拥有更高的概率是近乎有序的。对于有序（或者近乎有序）的序列，StraightInsertionSort 的时间复杂度进化到 O(n) 级别（因为第二层循环可以提前终止）。
-	- 相比快排，n 较小时，O(nlogn) 的时间效率优势不足以弥补其额外内存的申请和释放开销以及递归栈的开销。因此，当 n 较小时，快排是比 StraightInsertionSort 要慢的。
+  在以下情况时 StraightInsertionSort 能有极好的时间效率：
+  - 有大量重复元素
+  - 待排序序列基本有序 (nearly sorted)
+  - 元素个数较少 (small problem size)
+  在这些情况下，StraightInsertionSort 甚至比 O(nlogn) 的排序算法还要快。
+
+  原因是：
+  - StraightInsertionSort 虽然渐近时间复杂度为 O(n^2)，但当我们使用大 O 来描述算法的复杂度的时候，是忽略常数项的，而事实上 StraightInsertionSort 就是一个常数项非常小的排序算法（小于大多数排序）。因此，当 n 较小时，StraightInsertionSort 的耗时是可能会更少的。
+  - 小数据量的数组，拥有更高的概率是近乎有序的。对于有序（或者近乎有序）的序列，StraightInsertionSort 的时间复杂度进化到 O(n) 级别（因为第二层循环可以提前终止）。
+  - 相比快排，n 较小时，O(nlogn) 的时间效率优势不足以弥补其额外内存的申请和释放开销以及递归栈的开销。因此，当 n 较小时，快排是比 StraightInsertionSort 要慢的。
 
 - 空间复杂度：O(1)。
 
 - 代码实现（按升序排序）
-	
-	精简版本（三行代码实现）：
+
+  精简版本（三行代码实现）：
   ```cpp
   // 用元素交换代替元素后移（比较对象只考虑两个元素)
   void StraightInsertionSort(int a[], int n)
@@ -84,9 +84,9 @@
               Swap(a[j], a[j+1]);
   }
   ```
-	此版本的 StraightInsertionSort 每次比较都需要进行元素交换，而每次交换实际上都包含了 3 次赋值操作，因此效率稍低。
-  
-	优化版本（**每次循环都在找到合适的位置后再进行赋值，将多次赋值操作操作简化为 1 次，优化了效率**）：
+  此版本的 StraightInsertionSort 每次比较都需要进行元素交换，而每次交换实际上都包含了 3 次赋值操作，因此效率稍低。
+
+  优化版本（**每次循环都在找到合适的位置后再进行赋值，将多次赋值操作操作简化为 1 次，优化了效率**）：
   ```cpp
   // 搜索和后移同时进行
   void StraightInsertionSort(int a[], int n)
@@ -96,7 +96,7 @@
           if(a[i] < a[i-1])
           {
               int temp = a[i];
-	            int j;
+              int j;
               for(j=i; j>=0 && a[j-1]>temp; j--)
                   a[j] = a[j-1]; // 边移动元素边搜索合适的插入位置
               a[j] = temp;
@@ -122,61 +122,61 @@
 
   ![image](http://img.cdn.firejq.com/jpg/2018/3/1/fea7c8df26d30bfe7f67c5c705bf215a.jpg)
 
-- 时间复杂度：O(n^(1+e))（其中 0<e<1)，在元素基本有序的情况下，效率极高。
+- 时间复杂度：O(n^(1+e))（其中 `0<e<1`)，在元素基本有序的情况下，效率极高。
 
 - 空间复杂度：O(1)。
 
 - [步长序列](https://en.wikipedia.org/wiki/Shellsort#Gap_sequences)
-	
-	Shell Sort 中 gap sequence 有多种不同的取法，其选择影响着排序的最终时间效率。**一般认为，步长都取成奇数且步长之间互素比较好**。但如何选取步长最好，至今在理论上仍没有得到论证：
-	- 1959 年 Shell 提出的 n/(2^k) 序列时间复杂度为 O(n^2)。
-	- 1971 年 Pratt 提出的 3n+1 序列时间复杂度为 O(n^(3/2))，权衡实现难度与时间效率，这种序列使用最为广泛。
-	- 1986 年 Sedgewick 提出了 O(n^(4/3)) 的序列，但实现较为复杂。
-	需要注意，步长因子中除 1 外没有公因子，且**最后一个步长因子必须是 1**。当步长为 1 时，算法变为插入排序，这也保证了数据一定会被排序。
+
+  Shell Sort 中 gap sequence 有多种不同的取法，其选择影响着排序的最终时间效率。**一般认为，步长都取成奇数且步长之间互素比较好**。但如何选取步长最好，至今在理论上仍没有得到论证：
+  - 1959 年 Shell 提出的 n/(2^k) 序列时间复杂度为 O(n^2)。
+  - 1971 年 Pratt 提出的 3n+1 序列时间复杂度为 O(n^(3/2))，权衡实现难度与时间效率，这种序列使用最为广泛。
+  - 1986 年 Sedgewick 提出了 O(n^(4/3)) 的序列，但实现较为复杂。
+  需要注意，步长因子中除 1 外没有公因子，且**最后一个步长因子必须是 1**。当步长为 1 时，算法变为插入排序，这也保证了数据一定会被排序。
 
 - 代码实现
-	
-	- 使用 Shell 步长序列：
-		```cpp
-		// 希尔排序
-		void ShellSort(int a[], int n)
-		{
-		    // 分组，初始步长为 n/2，且每次循环缩小一半
-		    for(int gap=n/2; gap>0; gap/=2)
-		        // 直接插入排序
-		        for(int i=gap; i<n; i++) {
-		            int temp = a[i];
-		            int j;
-		            for(j=i; j>=0 && a[j-gap]>temp; j-=gap)
-		                    a[j] = a[j-1];
-		            a[j] = temp;
-		        }
-		} 
-		```
-	- 使用 Pratt 步长序列：
-		```cpp
-		// 希尔排序
-		void ShellSort(int a[], int n)
-		{
-		    // 计算 increment sequence: 1, 4, 13, 40, 121, 364, 1093...
-		    int gap = 1;
-		    while( gap < n/3 )
-		        gap = 3 * gap + 1;
 
-		    for(; gap>=1; gap/=3) {
-		        // 直接插入排序
-		        for(int i=gap; i<n; i++) {
-		            if (a[i] < a[i-gap]) {
-		                int temp = a[i];
-		                int j;
-		                for(j=i; j>=0 && a[j-1]>temp; j-=gap)
-		                        a[j] = a[j-1];
-		                a[j] = temp;
-		            }
-		        }
-		    }
-		} 
-		```
+  - 使用 Shell 步长序列：
+    ```cpp
+    // 希尔排序
+    void ShellSort(int a[], int n)
+    {
+        // 分组，初始步长为 n/2，且每次循环缩小一半
+        for(int gap=n/2; gap>0; gap/=2)
+            // 直接插入排序
+            for(int i=gap; i<n; i++) {
+                int temp = a[i];
+                int j;
+                for(j=i; j>=0 && a[j-gap]>temp; j-=gap) // TODO:
+                    a[j] = a[j-1];
+                a[j] = temp;
+            }
+    }
+    ```
+  - 使用 Pratt 步长序列：
+    ```cpp
+    // 希尔排序
+    void ShellSort(int a[], int n)
+    {
+        // 计算 increment sequence: 1, 4, 13, 40, 121, 364, 1093...
+        int gap = 1;
+        while( gap < n/3 )
+            gap = 3 * gap + 1;
+
+        for(; gap>=1; gap/=3) {
+            // 直接插入排序
+            for(int i=gap; i<n; i++) {
+                if (a[i] < a[i-gap]) {
+                    int temp = a[i];
+                    int j;
+                    for(j=i; j>=0 && a[j-1]>temp; j-=gap)
+                        a[j] = a[j-1];
+                    a[j] = temp;
+                }
+            }
+        }
+    }
+    ```
 
 ## 2. 选择排序
 
@@ -197,7 +197,7 @@
 
 - 时间复杂度：O(n^2)。
 
-	直接选择排序每次循环都必须遍历相应的所有元素，而直接插入排序有提前终止的机制，因此**理论上直接插入排序应稍快于直接选择排序**。
+  直接选择排序每次循环都必须遍历相应的所有元素，而直接插入排序有提前终止的机制，因此**理论上直接插入排序应稍快于直接选择排序**。
 
 - 空间复杂度：O(1)。
 
@@ -217,7 +217,6 @@
       }
   }
   ```
-  
 
 ### 2.2. 堆排序 (Heap Sort)
 
@@ -229,112 +228,112 @@
 
 - 时间复杂度
 
-	由于每次取出堆顶元素的时间效率为 O(logn)，因此对一个序列进行堆排序的时间复杂度为 O(nlogn)。
+  由于每次取出堆顶元素的时间效率为 O(logn)，因此对一个序列进行堆排序的时间复杂度为 O(nlogn)。
 
   当记录数比较少时，堆排序的效率并不理想，但**当记录数很大时，堆排序是非常有效的。同时堆排序的时间效率与待排序记录的初始次序无关，这是堆排序优于简单选择排序的地方**。
 
-	由于堆排序相比其它排序算法，没有明显的优势，但拥有独特的特性，**更多地被应用在系统的动态数据结构中**。
+  由于堆排序相比其它排序算法，没有明显的优势，但拥有独特的特性，**更多地被应用在系统的动态数据结构中**。
 
 - 空间复杂度：O(1)。
 
 - 代码实现
-	```cpp
-	template<typename Item>
-	class MaxHeap {
-	private:
-			Item *data; // 节点元素值
-			int count; // 堆的节点数量
-			int capacity; // 堆的最大容量
-			
-			// 对索引为 k 的节点进行向上调整
-			void shiftUp(int k) { 
-					for( ; k > 1 && data[k/2] < data[k]; k /= 2 ) {
-							swap( data[k/2], data[k] );
-					}
-			}
+  ```cpp
+  template<typename Item>
+  class MaxHeap {
+  private:
+      Item *data; // 节点元素值
+      int count; // 堆的节点数量
+      int capacity; // 堆的最大容量
 
-			// 对索引为 k 的元素进行向下调整
-			void shiftDown(int k){
-					// 完全二叉树中若有孩子，则必定先有左孩子。因此这里通过判断是否有左孩子来判断是否有孩子
-					while( 2*k <= count ) { 
-							// j 表示将与 k 节点交换的节点，预设为左孩子
-							int j = 2*k;
-							// 若有右孩子，且右孩子大于左孩子，则交换右孩子
-							if( j+1 <= count && data[j+1] > data[j] ) j ++;
-							// 若较大的孩子节点小于 k 节点，说明已满足最大堆性质，结束调整
-							if( data[k] >= data[j] ) break;
-							// 否则，交接元素值
-							swap( data[k] , data[j] );
-							// 继续向下调整
-							k = j;
-					}
-			}
+      // 对索引为 k 的节点进行向上调整
+      void shiftUp(int k) {
+          for( ; k > 1 && data[k/2] < data[k]; k /= 2 ) {
+              swap( data[k/2], data[k] );
+          }
+      }
 
-			// 堆化
-			void heapify() {
-					for (int i = count / 2; i >= 1; i --) {
-							shiftDown(i);
-					}
-			}
-	public:
-			// 构造函数，构造一个空堆，可容纳 capacity 个元素
-			MaxHeap(int capacity) {
-					data = new Item[capacity+1];
-					count = 0;
-					this->capacity = capacity;
-			}
+      // 对索引为 k 的元素进行向下调整
+      void shiftDown(int k){
+          // 完全二叉树中若有孩子，则必定先有左孩子。因此这里通过判断是否有左孩子来判断是否有孩子
+          while( 2*k <= count ) {
+              // j 表示将与 k 节点交换的节点，预设为左孩子
+              int j = 2*k;
+              // 若有右孩子，且右孩子大于左孩子，则交换右孩子
+              if( j+1 <= count && data[j+1] > data[j] ) j ++;
+              // 若较大的孩子节点小于 k 节点，说明已满足最大堆性质，结束调整
+              if( data[k] >= data[j] ) break;
+              // 否则，交接元素值
+              swap( data[k] , data[j] );
+              // 继续向下调整
+              k = j;
+          }
+      }
 
-			// 构造函数，通过一个给定数组创建一个最大堆
-			MaxHeap(Item arr[], int n){
-					data = new Item[n+1];
-					capacity = n;
+      // 堆化
+      void heapify() {
+          for (int i = count / 2; i >= 1; i --) {
+              shiftDown(i);
+          }
+      }
+  public:
+      // 构造函数，构造一个空堆，可容纳 capacity 个元素
+      MaxHeap(int capacity) {
+          data = new Item[capacity+1];
+          count = 0;
+          this->capacity = capacity;
+      }
 
-					for( int i = 0 ; i < n ; i ++ )
-							data[i+1] = arr[i];
-					count = n;
+      // 构造函数，通过一个给定数组创建一个最大堆
+      MaxHeap(Item arr[], int n){
+          data = new Item[n+1];
+          capacity = n;
 
-					heapify();
-			}
+          for( int i = 0 ; i < n ; i ++ )
+              data[i+1] = arr[i];
+          count = n;
 
-			// 析构函数
-			~MaxHeap() {
-					delete[] data;
-			}
+          heapify();
+      }
 
-			// 向最大堆中插入一个新的元素 item
-			void insert(Item item) {
-					assert( count + 1 <= capacity );
+      // 析构函数
+      ~MaxHeap() {
+          delete[] data;
+      }
 
-					data[++count] = item;
-					shiftUp(count);
-			}
+      // 向最大堆中插入一个新的元素 item
+      void insert(Item item) {
+          assert( count + 1 <= capacity );
 
-			// 从最大堆中删除堆顶元素并返回该元素的值
-			Item extractMax() {
-					assert( count > 0 ); // 判空
+          data[++count] = item;
+          shiftUp(count);
+      }
 
-					Item ret = data[1];
-					swap( data[1] , data[count--] );
-					shiftDown(1);
-					return ret;
-			}
-	}
+      // 从最大堆中删除堆顶元素并返回该元素的值
+      Item extractMax() {
+          assert( count > 0 ); // 判空
 
-	// 堆排序
-	template<typename T>
-	void heapSort(T arr[], int n){
-			MaxHeap<T> maxHeap = new MaxHeap<T>(n);
-			// 构造最大堆，时间复杂度为 O(nlogn)
-			for (int i = 0; i < n; i ++) { 
-					maxHeap.insert(arr[i]);
-			}
+          Item ret = data[1];
+          swap( data[1] , data[count--] );
+          shiftDown(1);
+          return ret;
+      }
+  }
 
-			// 倒序赋值，实现使用最大堆进行从小到大的排序
-			for (int i = n - 1; i >= 0; i --) {
-					arr[i] = maxHeap.extractMax();
-			}
-	}
-	```
+  // 堆排序
+  template<typename T>
+  void heapSort(T arr[], int n){
+      MaxHeap<T> maxHeap = new MaxHeap<T>(n);
+      // 构造最大堆，时间复杂度为 O(nlogn)
+      for (int i = 0; i < n; i ++) {
+          maxHeap.insert(arr[i]);
+      }
+
+      // 倒序赋值，实现使用最大堆进行从小到大的排序
+      for (int i = n - 1; i >= 0; i --) {
+          arr[i] = maxHeap.extractMax();
+      }
+  }
+  ```
 
 #### 2.2.1. 建堆优化
 
@@ -346,60 +345,60 @@
 template<typename Item>
 class MaxHeap {
 private:
-		Item *data; // 节点元素值
-		int count; // 堆的节点数量
-		int capacity; // 堆的最大容量
-		
-		// 对索引为 k 的元素进行向下调整
-		void shiftDown(int k){
-				// 完全二叉树中若有孩子，则必定先有左孩子。因此这里通过判断是否有左孩子来判断是否有孩子
-				while( 2*k <= count ) { 
-						// j 表示将与 k 节点交换的节点，预设为左孩子
-						int j = 2*k;
-						// 若有右孩子，且右孩子大于左孩子，则交换右孩子
-						if( j+1 <= count && data[j+1] > data[j] ) j ++;
-						// 若较大的孩子节点小于 k 节点，说明已满足最大堆性质，结束调整
-						if( data[k] >= data[j] ) break;
-						// 否则，交接元素值
-						swap( data[k] , data[j] );
-						// 继续向下调整
-						k = j;
-				}
-		}
+    Item *data; // 节点元素值
+    int count; // 堆的节点数量
+    int capacity; // 堆的最大容量
 
-		// 堆化
-		void heapify() {
-				for (int i = count / 2; i >= 1; i --) {
-						shiftDown(i);
-				}
-		}
+    // 对索引为 k 的元素进行向下调整
+    void shiftDown(int k){
+        // 完全二叉树中若有孩子，则必定先有左孩子。因此这里通过判断是否有左孩子来判断是否有孩子
+        while( 2*k <= count ) {
+            // j 表示将与 k 节点交换的节点，预设为左孩子
+            int j = 2*k;
+            // 若有右孩子，且右孩子大于左孩子，则交换右孩子
+            if( j+1 <= count && data[j+1] > data[j] ) j ++;
+            // 若较大的孩子节点小于 k 节点，说明已满足最大堆性质，结束调整
+            if( data[k] >= data[j] ) break;
+            // 否则，交接元素值
+            swap( data[k] , data[j] );
+            // 继续向下调整
+            k = j;
+        }
+    }
+
+    // 堆化
+    void heapify() {
+        for (int i = count / 2; i >= 1; i --) {
+            shiftDown(i);
+        }
+    }
 public:
-		// 构造函数，通过一个给定数组创建一个最大堆
-		MaxHeap(Item arr[], int n){
-				data = new Item[n+1];
-				capacity = n;
-				// 直接构造一个无序的完全二叉树
-				for( int i = 0 ; i < n ; i ++ )
-						data[i+1] = arr[i];
-				count = n;
-				// 将该完全二叉树转换为最大堆
-				heapify();
-		}
+    // 构造函数，通过一个给定数组创建一个最大堆
+    MaxHeap(Item arr[], int n){
+        data = new Item[n+1];
+        capacity = n;
+        // 直接构造一个无序的完全二叉树
+        for( int i = 0 ; i < n ; i ++ )
+            data[i+1] = arr[i];
+        count = n;
+        // 将该完全二叉树转换为最大堆
+        heapify();
+    }
 
-		// 析构函数
-		~MaxHeap() {
-				delete[] data;
-		}
+    // 析构函数
+    ~MaxHeap() {
+        delete[] data;
+    }
 
-		// 从最大堆中删除堆顶元素并返回该元素的值
-		Item extractMax() {
-				assert( count > 0 ); // 判空
+    // 从最大堆中删除堆顶元素并返回该元素的值
+    Item extractMax() {
+        assert( count > 0 ); // 判空
 
-				Item ret = data[1];
-				swap( data[1] , data[count--] );
-				shiftDown(1);
-				return ret;
-		}
+        Item ret = data[1];
+        swap( data[1] , data[count--] );
+        shiftDown(1);
+        return ret;
+    }
 }
 
 template<typename T>
@@ -421,7 +420,7 @@ void heapSort2(T arr[], int n){
 
 ```cpp
 template<typename T>
-void __shiftDown(T arr[], int n, int k){
+void __shiftDown(T arr[], int n, int k) {
     T e = arr[k];
     while( 2*k+1 < n ){
         int j = 2*k+1;
@@ -440,8 +439,8 @@ void heapSort3(T arr[], int n){
     // 在原数组上进行堆化操作，初始化一个最大堆
     for( int i = (n-1-1)/2 ; i >= 0 ; i -- )
         __shiftDown(arr, n, i);
-		// 每次将数组最后一个元素与最大堆的堆顶元素交换，并对新的堆顶元素进行向下调整
-		// 相当于不断的把“最大”的元素排到队尾，从而实现从小到大排序
+    // 每次将数组最后一个元素与最大堆的堆顶元素交换，并对新的堆顶元素进行向下调整
+    // 相当于不断的把“最大”的元素排到队尾，从而实现从小到大排序
     for( int i = n-1; i > 0 ; i-- ){
         swap( arr[0] , arr[i] );
         __shiftDown(arr, i, 0);
@@ -465,7 +464,7 @@ void heapSort3(T arr[], int n){
 
 - 时间复杂度：O(n^2)。
 
-	由于冒泡排序每次循环都必须遍历所有相应的元素，且有大量的交换操作，因此**在时间效率上，冒泡排序 < 直接选择排序 < 直接插入排序**。
+  由于冒泡排序每次循环都必须遍历所有相应的元素，且有大量的交换操作，因此**在时间效率上，冒泡排序 < 直接选择排序 < 直接插入排序**。
 
 - 空间复杂度：O(1)。
 
@@ -480,9 +479,9 @@ void heapSort3(T arr[], int n){
           int flag =  0;
           // 每次遍历的起始位置为 0，终止位置为 n-i
           for(int j=0; j<n-i; j++)
-              if(a[j]<a[j-1])
+              if(a[j]>a[j+1])
               {
-                  Swap(a[j-1], a[j]);
+                  Swap(a[j], a[j+1]);
                   flag = 1;
               }
           if(flag==0) break;
@@ -492,7 +491,7 @@ void heapSort3(T arr[], int n){
 
 ### 3.2. 快速排序 (Quick Sort)
 
-快速排序（quick sort）是 Hoare 于 1962 年提出的一种**基于分治思想**的分区交换排序，它采用了**分而治之**的策略，是对冒泡排序的一种改进，在所有排序算法中使用得最广泛，速度也较快。
+快速排序（Quick Sort）是 Hoare 于 1962 年提出的一种**基于分治思想**的分区交换排序，它采用了**分而治之**的策略，是对冒泡排序的一种改进，在所有排序算法中使用得最广泛，速度也较快。
 
 **在对随机分布的无序序列进行排序时，快速排序是速度最快的排序算法**。
 
@@ -514,11 +513,11 @@ void heapSort3(T arr[], int n){
   - 第三步，对两个子集不断重复第一步和第二步，直到所有子集只剩下一个元素为止。
 
     ![image](http://img.cdn.firejq.com/jpg/2018/3/1/663e1107cd90a67042d6f5ca2a308e33.jpg)
-    
+
     ![image](http://img.cdn.firejq.com/jpg/2018/3/1/3b3c7249a0304388b3c0d556179f5d27.jpg)
-    
+
     ![image](http://img.cdn.firejq.com/jpg/2018/3/1/a4b047505b4b09452f45597554404648.jpg)
-    
+
     ![image](http://img.cdn.firejq.com/jpg/2018/3/1/8c7a0779fee100060f37fbef0e782723.jpg)
 
 - 时间复杂度
@@ -526,7 +525,7 @@ void heapSort3(T arr[], int n){
 
     **对于乱序的序列，没有任何优化的快速排序的速度要比优化后的归并排序还要快**。
 
-    其中，**每次 partition 过程的时间效率为 O(n)，递归深度为 O(log n)，因此总的时间效率为 O(n log n)**。
+    其中，**每次 partition 过程的时间效率为 O(n)，递归深度为 O(log n)，因此总的时间效率为 O(nlogn)**。
 
   - **最坏时间复杂度：O(n^2)。**
 
@@ -551,10 +550,24 @@ void heapSort3(T arr[], int n){
               if (a[i] <= a[R])  // 以末尾元素为基准元素
                   Swap(a[i], a[pivot++]);// 将比基准元素小的元素移动到基准位置左边，并将基准位置右移一位
           Swap(a[R], a[pivot]); // 最后将基准元素放到基准位置
-  
+
           Quicksort(a, L, pivot - 1); // 递归调用，对基准位置左边的子序列进行快排
           Quicksort(a, pivot + 1, R); // 递归调用，对基准位置右边的子序列进行快排
       }
+  }
+  ```
+  ```java
+  public void qSort(int [] a, int l, int r) {
+      if (l >= r)
+          return;
+      int pivot = l;
+      for (int i = l; i <= r; i++)
+          if (a[i] <= a[r])
+              Arrays.swap(a, i, pivot++);
+      Arrays.swap(a, pivot, r);
+
+      qSort(a, l, pivot - 1);
+      qSort(a, pivot + 1, r);
   }
   ```
   NOTE: **每次 partition 求得的 pivot 位置都不会再发生改变，即若 pivot 索引位置为 k，则 pivot 就是整个序列中第 k 大的元素**。
@@ -579,7 +592,7 @@ void heapSort3(T arr[], int n){
   　　}
       // 使用递归不断重复这个过程，就可以得到排序后的数组
   　　return quickSort(left).concat([pivot], quickSort(right));
-  
+
   };
   ```
   这个版本存在的问题：TODO:
@@ -671,7 +684,7 @@ void quickSort(T arr[], int n){
 
 - 将基准元素放在头部：
   ```cpp
-  void Quicksort(int a[], int L, int R) 
+  void Quicksort(int a[], int L, int R)
   {
       if (R > L) {
           if (R - L <= 15) {
@@ -686,15 +699,15 @@ void quickSort(T arr[], int n){
           int i = L + 1;      // 循环过程中保持 a[lt+1...i) == v
           while(i < gt) {
               if(a[i] < v) {
-                  swap( a[i++], a[++lt]); 
+                  swap( a[i++], a[++lt]);
               } else if(a[i] > v) {
-                  swap(a[i], a[--gt]); 
+                  swap(a[i], a[--gt]);
               } else {  // a[i] == v
                   i++;
               }
           }
           swap(a[L], a[lt]);
-					
+
           Quicksort(a, L, lt - 1); // 对 a[L...lt-1] 进行三路快排
           Quicksort(a, gt, R); // 对 a[gt...R] 进行三路快排
       }
@@ -704,22 +717,23 @@ void quickSort(T arr[], int n){
 - 将基准元素放在末尾：
   ```cpp
   void Quicksort(int a[], int L, int R) {
+      if (L >= R)
+        return;
       if (R - L <= 15) {
         StraightInsertionSort(a, L, R);
         return;
       }
       swap(a[R], a[rand() % (R - L + 1) + L]);
-      int lt = L - 1;       
-      int gt = R;    
-      int i = L;       
+      int lt = L - 1;
+      int gt = R;
+      int i = L;
       while (i < gt) {
-          if (a[i] < a[R]) {
-              swap(a[i++], arr[++lt]); 
-          } else if (a[i] > a[R]) {
-              swap(a[i], arr[--gt]); 
-          } else { // arr[i] == v
-              i ++;
-          }
+        if (a[i] < a[R])
+          swap(a[i++], arr[++lt]);
+        else if (a[i] > a[R])
+          swap(a[i], arr[--gt]);
+        else // arr[i] == v
+          i ++;
       }
       swap(arr[R], arr[lt]);
       Quicksort(a, L, lt - 1); // 对 a[L...lt-1] 进行三路快排
@@ -730,7 +744,9 @@ void quickSort(T arr[], int n){
 三路快排很好的解决了近乎有序的数组和有大量重复数组的元素排序问题，对于随机序列也有很好的性能，因此**在很多语言的标准库中，排序接口使用的就是三路快排的思路，比如 Java 语言中的 Array.sort()。**
 
 - 经典例题：[Sort Color](https://leetcode.com/problems/sort-colors/)
+
   > 有一个数组，其中的元素取值只有可能是 0，1，2。为这样一个数组排序。
+
   - 解法一：计数排序，时间效率为 O(n)，空间效率为 O(n)。
 
     只需要两次遍历：第一次统计元素个数，第二次放回原数组，就解决了问题。
@@ -797,33 +813,33 @@ void quickSort(T arr[], int n){
 ```cpp
 int partition(int L[], int low, int high)
 {
-	int i, num=low;
-	for(i=low+1;i<=high;i++)
-	{
-		if(L[i]<L[low])
-		{
-			swap(&L[i], &L[num+1]);
-			num++;
-		}
-	}
-	swap(&L[low],&L[num]);
-	return num;
+  int i, num=low;
+  for(i=low+1;i<=high;i++)
+  {
+    if(L[i]<L[low])
+    {
+      swap(&L[i], &L[num+1]);
+      num++;
+    }
+  }
+  swap(&L[low],&L[num]);
+  return num;
 }
 
 int getmid(int L[], int low, int high)
 {
-	int mid = (low + high) / 2;
-	while (1)
-	{
-		int pos = partition(L, low, high);
-		if(pos == mid)
-			break;
-		else if(pos > mid)
-			high = pos - 1;
-		else 
-            low = pos + 1;
-	}
-    return L[mid];
+  int mid = (low + high) / 2;
+  while (1)
+  {
+    int pos = partition(L, low, high);
+    if(pos == mid)
+      break;
+    else if(pos > mid)
+      high = pos - 1;
+    else
+      low = pos + 1;
+  }
+  return L[mid];
 }
 ```
 
@@ -833,7 +849,7 @@ int getmid(int L[], int low, int high)
 
 ##### 3.2.4.2. 求第 n 大
 
-求一个序列中第 n 大的元素值。 
+求一个序列中第 n 大的元素值。
 
 仿照求中位数的 partition 思想实现即可。
 
@@ -846,231 +862,231 @@ int getmid(int L[], int low, int high)
 根据具体的实现，归并排序包括"从上往下"和"从下往上"2 种方式：
 - **从上往下**
 
-	从上往下的归并排序指的是先从上往下进行分解，再从下往上进行合并。基本包括 3 步：
-	1. 分解 -- 将当前区间一分为二，即求分裂点 mid = (low + high)/2; 
-	1. 求解 -- 递归地对两个子区间 a[low...mid] 和 a[mid+1...high] 进行归并排序。递归的终结条件是子区间长度为 1。
-	1. 合并 -- 在每次递归中，将已排序的两个子区间 a[low...mid] 和 a[mid+1...high] 归并为一个有序的区间 a[low...high]。
+  从上往下的归并排序指的是先从上往下进行分解，再从下往上进行合并。基本包括 3 步：
+  1. 分解 -- 将当前区间一分为二，即求分裂点 mid = (low + high)/2;
+  1. 求解 -- 递归地对两个子区间 a[low...mid] 和 a[mid+1...high] 进行归并排序。递归的终结条件是子区间长度为 1。
+  1. 合并 -- 在每次递归中，将已排序的两个子区间 a[low...mid] 和 a[mid+1...high] 归并为一个有序的区间 a[low...high]。
 
-	![image](http://img.cdn.firejq.com/jpg/2018/4/13/be0fdc4760a7ee4f4eca12176ba0917f.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/13/be0fdc4760a7ee4f4eca12176ba0917f.jpg)
 
-	由于序列分解后，共有 logn 层，因此要实现 O(nlogn) 的归并排序，就变成：**如何使用 O(n) 的算法将各自有序的两个子序列，合并成一个完全有序的序列**？
+  由于序列分解后，共有 logn 层，因此要实现 O(nlogn) 的归并排序，就变成：**如何使用 O(n) 的算法将各自有序的两个子序列，合并成一个完全有序的序列**？
 
-	这个问题的实现，无法通过原地交换位置来完全，因此需要借助一个 O(n) 的辅助空间。通过与辅助数组进行比较，在原数组上进行赋值。
-	
-	![image](http://img.cdn.firejq.com/jpg/2018/4/13/d9f9ba28306f3187f553b2dbfa889685.jpg)
+  这个问题的实现，无法通过原地交换位置来完全，因此需要借助一个 O(n) 的辅助空间。通过与辅助数组进行比较，在原数组上进行赋值。
 
-	使用 3 个索引来追踪操作的位置，其中蓝色指针表示在目标序列（原序列）中的索引，红色指针表示在两个各自有序的序列（辅助空间）中的索引：
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/13/d9f9ba28306f3187f553b2dbfa889685.jpg)
 
-	![image](http://img.cdn.firejq.com/jpg/2018/4/13/d26ec3cb7c936054b678c7e7d9a3fdc8.jpg)
+  使用 3 个索引来追踪操作的位置，其中蓝色指针表示在目标序列（原序列）中的索引，红色指针表示在两个各自有序的序列（辅助空间）中的索引：
 
-	比较当前两个红色指针指向的值，选择较小 / 大值赋值给蓝色指针指向的位置，并将被选择的红色指针和蓝色指针都后移一位：
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/13/d26ec3cb7c936054b678c7e7d9a3fdc8.jpg)
 
-	![image](http://img.cdn.firejq.com/jpg/2018/4/13/8c46fe155161f012291a65391f780ce3.jpg)
+  比较当前两个红色指针指向的值，选择较小 / 大值赋值给蓝色指针指向的位置，并将被选择的红色指针和蓝色指针都后移一位：
 
-	以此类推：
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/13/8c46fe155161f012291a65391f780ce3.jpg)
 
-	![image](http://img.cdn.firejq.com/jpg/2018/4/13/c4ae39aef9eafa3547dee34ba77d41f1.jpg)
+  以此类推：
 
-	在实际实现中，需要定义清楚各个指针和位置的变量，从而完成完整的归并过程：
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/13/c4ae39aef9eafa3547dee34ba77d41f1.jpg)
 
-	![image](http://img.cdn.firejq.com/jpg/2018/4/13/43318a9ef0aad21918b6a6b72007ec0d.jpg)
+  在实际实现中，需要定义清楚各个指针和位置的变量，从而完成完整的归并过程：
+
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/13/43318a9ef0aad21918b6a6b72007ec0d.jpg)
 
 - **从下往上**
 
-	从下往上的归并排序与"从下往上"在排序上是反方向的。它将待排序的数列分成若干个长度为 1 的子数列，然后将这些数列两两合并；得到若干个长度为 2 的有序数列，再将这些数列两两合并；得到若干个长度为 4 的有序数列，再将它们两两合并；直接合并成一个数列为止。这样就得到了我们想要的排序结果。
+  从下往上的归并排序与"从下往上"在排序上是反方向的。它将待排序的数列分成若干个长度为 1 的子数列，然后将这些数列两两合并；得到若干个长度为 2 的有序数列，再将这些数列两两合并；得到若干个长度为 4 的有序数列，再将它们两两合并；直接合并成一个数列为止。这样就得到了我们想要的排序结果。
 
-	![image](http://img.cdn.firejq.com/jpg/2018/4/13/120033d0bf3205135cc40dce145e1075.jpg)
-	
-	这种方式的实现不需要递归，只须迭代就可以完成归并排序。
+  ![image](http://img.cdn.firejq.com/jpg/2018/4/13/120033d0bf3205135cc40dce145e1075.jpg)
+
+  这种方式的实现不需要递归，只须迭代就可以完成归并排序。
 
 **归并排序是一种稳定的排序算法**。
 
 - 时间复杂度
-	
-	归并排序将待排序序列分为了 logn 个级别，每个级别包含了多个待排序子序列，其排序耗时为 O(N)，因此，归并排序的**时间复杂度为 O(nlogn)**。
+
+  归并排序将待排序序列分为了 logn 个级别，每个级别包含了多个待排序子序列，其排序耗时为 O(N)，因此，归并排序的**时间复杂度为 O(nlogn)**。
 
 - 空间复杂度
 
-	在归并排序的归并实现中，需要将各自有序的子序列整合为完全有序的序列，实现这一点**需要 O(n) 的辅助空间**；若不使用辅助空间，则实现起来非常困难。
+  在归并排序的归并实现中，需要将各自有序的子序列整合为完全有序的序列，实现这一点**需要 O(n) 的辅助空间**；若不使用辅助空间，则实现起来非常困难。
 
-	**归并排序是唯一一种无法实现原地排序的排序算法，这也是归并排序的一个缺点**。
+  **归并排序是唯一一种无法实现原地排序的排序算法，这也是归并排序的一个缺点**。
 
 - 代码实现
-	- 从上往下（递归实现）
-		```cpp
-		// 将 arr[l...mid] 和 arr[mid+1...r] 两部分进行归并
-		template<typename T>
-		void __merge(T arr[], int l, int mid, int r){
-				// 申请辅助空间
-				T *aux = new T[r-l+1];
-				// 将 arr[l...r] 复制到辅助空间
-				for( int i = l ; i <= r; i ++ )
-						aux[i-l] = arr[i];// 注意 aux 与 arr 有位移差 l
+  - 从上往下（递归实现）
+    ```cpp
+    // 将 arr[l...mid] 和 arr[mid+1...r] 两部分进行归并
+    template<typename T>
+    void __merge(T arr[], int l, int mid, int r){
+        // 申请辅助空间
+        T *aux = new T[r-l+1];
+        // 将 arr[l...r] 复制到辅助空间
+        for( int i = l ; i <= r; i ++ )
+            aux[i-l] = arr[i];// 注意 aux 与 arr 有位移差 l
 
-				// 初始化，i 指向辅助数组左半部分的起始索引位置 l；j 指向辅助数组右半部分起始索引位置 mid+1
-				for( int i = l, j = mid+1, k = l; k <= r; k ++ ) { // k 指向原数组（目标数组）的当前索引位置
-						if( i > mid ){  // 如果左半部分元素已经全部处理完毕
-								arr[k] = aux[j-l];
-								j ++;
-						}
-						else if( j > r ){  // 如果右半部分元素已经全部处理完毕
-								arr[k] = aux[i-l]; 
-								i ++;
-						}
-						else if( aux[i-l] < aux[j-l] ) {  // 左半部分所指元素 < 右半部分所指元素
-								arr[k] = aux[i-l]; 
-								i ++;
-						}
-						else{  // 左半部分所指元素 >= 右半部分所指元素
-								arr[k] = aux[j-l]; 
-								j ++;
-						}
-				}
-				delete[] aux;
-		}
+        // 初始化，i 指向辅助数组左半部分的起始索引位置 l；j 指向辅助数组右半部分起始索引位置 mid+1
+        for( int i = l, j = mid+1, k = l; k <= r; k ++ ) { // k 指向原数组（目标数组）的当前索引位置
+            if( i > mid ){  // 如果左半部分元素已经全部处理完毕
+                arr[k] = aux[j-l];
+                j ++;
+            }
+            else if( j > r ){  // 如果右半部分元素已经全部处理完毕
+                arr[k] = aux[i-l];
+                i ++;
+            }
+            else if( aux[i-l] < aux[j-l] ) {  // 左半部分所指元素 < 右半部分所指元素
+                arr[k] = aux[i-l];
+                i ++;
+            }
+            else{  // 左半部分所指元素 >= 右半部分所指元素
+                arr[k] = aux[j-l];
+                j ++;
+            }
+        }
+        delete[] aux;
+    }
 
-		// 递归使用归并排序，对 arr[l...r] 的范围进行排序
-		template<typename T>
-		void mergeSort(T arr[], int l, int r){
-				if( l >= r )
-		            // 递归到达终点，子序列元素为 1
-		            return;
-				int mid = (l+r)/2;
-				mergeSort(arr, l, mid); // 对左边的子序列进行归并排序
-				mergeSort(arr, mid+1, r); // 对右边的子序列进行归并排序
-				__merge(arr, l, mid, r); // 将 arr[l...mid] 和 arr[mid+1...r] 两部分进行合并
-		}
-		```
+    // 递归使用归并排序，对 arr[l...r] 的范围进行排序
+    template<typename T>
+    void mergeSort(T arr[], int l, int r){
+        if( l >= r )
+                // 递归到达终点，子序列元素为 1
+                return;
+        int mid = (l+r)/2;
+        mergeSort(arr, l, mid); // 对左边的子序列进行归并排序
+        mergeSort(arr, mid+1, r); // 对右边的子序列进行归并排序
+        __merge(arr, l, mid, r); // 将 arr[l...mid] 和 arr[mid+1...r] 两部分进行合并
+    }
+    ```
 
-	- 从下往上（迭代实现）
-		```cpp
-		// 将 arr[l...mid] 和 arr[mid+1...r] 两部分进行归并
-		template<typename  T>
-		void __merge(T arr[], int l, int mid, int r){
-				// 申请辅助空间
-				T *aux = new T[r-l+1];
-				// 将 arr[l...r] 复制到辅助空间
-				for( int i = l ; i <= r; i ++ )
-						aux[i-l] = arr[i];// 注意 aux 与 arr 有位移差 l
+  - 从下往上（迭代实现）
+    ```cpp
+    // 将 arr[l...mid] 和 arr[mid+1...r] 两部分进行归并
+    template<typename  T>
+    void __merge(T arr[], int l, int mid, int r){
+        // 申请辅助空间
+        T *aux = new T[r-l+1];
+        // 将 arr[l...r] 复制到辅助空间
+        for( int i = l ; i <= r; i ++ )
+            aux[i-l] = arr[i];// 注意 aux 与 arr 有位移差 l
 
-				// 初始化，i 指向辅助数组左半部分的起始索引位置 l；j 指向辅助数组右半部分起始索引位置 mid+1
-				int i = l, j = mid+1;
-				for( int k = l ; k <= r; k ++ ){ k 指向原数组（目标数组）的当前索引位置
+        // 初始化，i 指向辅助数组左半部分的起始索引位置 l；j 指向辅助数组右半部分起始索引位置 mid+1
+        int i = l, j = mid+1;
+        for( int k = l ; k <= r; k ++ ){ k 指向原数组（目标数组）的当前索引位置
 
-						if( i > mid ){  // 如果左半部分元素已经全部处理完毕
-								arr[k] = aux[j-l];
-								j ++;
-						}
-						else if( j > r ){  // 如果右半部分元素已经全部处理完毕
-								arr[k] = aux[i-l]; 
-								i ++;
-						}
-						else if( aux[i-l] < aux[j-l] ) {  // 左半部分所指元素 < 右半部分所指元素
-								arr[k] = aux[i-l]; 
-								i ++;
-						}
-						else{  // 左半部分所指元素 >= 右半部分所指元素
-								arr[k] = aux[j-l]; 
-								j ++;
-						}
-				}
-				delete[] aux;
-		}
+            if( i > mid ){  // 如果左半部分元素已经全部处理完毕
+                arr[k] = aux[j-l];
+                j ++;
+            }
+            else if( j > r ){  // 如果右半部分元素已经全部处理完毕
+                arr[k] = aux[i-l];
+                i ++;
+            }
+            else if( aux[i-l] < aux[j-l] ) {  // 左半部分所指元素 < 右半部分所指元素
+                arr[k] = aux[i-l];
+                i ++;
+            }
+            else{  // 左半部分所指元素 >= 右半部分所指元素
+                arr[k] = aux[j-l];
+                j ++;
+            }
+        }
+        delete[] aux;
+    }
 
-		// 使用自底向上的归并排序算法
-		template <typename T>
-		void mergeSortBU(T arr[], int n){
-		    // sz 表示每次循环的各个子序列的长度
-		    for( int sz = 1; sz < n ; sz *= 2 )
-		        // 两两进行合并
-		        for( int i = 0 ; i < n - sz ; i += sz*2 ) 
-		            // 对 arr[i...i+sz-1] 和 arr[i+sz...i+2*sz-1] 进行归并
-		            __merge(arr, i, i+sz-1, min(i+sz*2-1, n-1) ); // min(i+sz*2-1, n-1) 防止越界
-		}
-		```
+    // 使用自底向上的归并排序算法
+    template <typename T>
+    void mergeSortBU(T arr[], int n){
+        // sz 表示每次循环的各个子序列的长度
+        for( int sz = 1; sz < n ; sz *= 2 )
+            // 两两进行合并
+            for( int i = 0 ; i < n - sz ; i += sz*2 )
+                // 对 arr[i...i+sz-1] 和 arr[i+sz...i+2*sz-1] 进行归并
+                __merge(arr, i, i+sz-1, min(i+sz*2-1, n-1) ); // min(i+sz*2-1, n-1) 防止越界
+    }
+    ```
 
 ### 4.1. 针对短序列优化：直接使用插入排序
 
 在归并排序中，当序列被拆分成为一定程序的短序列时，此时直接使用 Straight insertion Sort，要比对子序列继续进行归并排序效率更高。
 
 - 自上向下
-	```cpp
-	// 使用优化的归并排序算法，对 arr[l...r] 的范围进行排序
-	template<typename T>
-	void __mergeSort2(T arr[], int l, int r){
+  ```cpp
+  // 使用优化的归并排序算法，对 arr[l...r] 的范围进行排序
+  template<typename T>
+  void __mergeSort2(T arr[], int l, int r){
 
-			// 优化：对于小规模数组，使用插入排序
-			if( r - l <= 15 ){
-	            insertionSort(arr, l, r);
-	            return;
-			}
+      // 优化：对于小规模数组，使用插入排序
+      if( r - l <= 15 ){
+              insertionSort(arr, l, r);
+              return;
+      }
 
-			int mid = (l+r)/2;
-			__mergeSort2(arr, l, mid);
-			__mergeSort2(arr, mid+1, r);
-			__merge(arr, l, mid, r);
-	}
-	```
+      int mid = (l+r)/2;
+      __mergeSort2(arr, l, mid);
+      __mergeSort2(arr, mid+1, r);
+      __merge(arr, l, mid, r);
+  }
+  ```
 - 自下向上
-	```cpp
-	// 使用自底向上的归并排序算法
-	template <typename T>
-	void mergeSortBU(T arr[], int n){
-		// 对于小数组，使用插入排序优化
+  ```cpp
+  // 使用自底向上的归并排序算法
+  template <typename T>
+  void mergeSortBU(T arr[], int n){
+    // 对于小数组，使用插入排序优化
     for( int i = 0 ; i < n ; i += 16 )
         insertionSort(arr,i,min(i+15, n-1));
 
-		// sz 表示每次循环的各个子序列的长度
-		for( int sz = 16; sz < n ; sz *= 2 )
-	        for( int i = 0 ; i < n - sz ; i += sz+sz )
-	            // 对 arr[i...i+sz-1] 和 arr[i+sz...i+2*sz-1] 进行归并
-	            __merge(arr, i, i+sz-1, min(i+sz+sz-1,n-1) );
-	}
-	```
+    // sz 表示每次循环的各个子序列的长度
+    for( int sz = 16; sz < n ; sz *= 2 )
+          for( int i = 0 ; i < n - sz ; i += sz+sz )
+              // 对 arr[i...i+sz-1] 和 arr[i+sz...i+2*sz-1] 进行归并
+              __merge(arr, i, i+sz-1, min(i+sz+sz-1,n-1) );
+  }
+  ```
 
 ### 4.2. 针对基本有序序列优化：提前终止
 
 若在合并子序列的时候，若两个子序列各自有序且已经完全有序，则可直接返回结果不再进行合并操作。在对基本有序的序列进行归并排序时，这种情况经常发生，因此此时这种优化特别有效。
 
 - 自上向下
-	```cpp
-	// 使用优化的归并排序算法，对 arr[l...r] 的范围进行排序
-	template<typename T>
-	void __mergeSort2(T arr[], int l, int r){
+  ```cpp
+  // 使用优化的归并排序算法，对 arr[l...r] 的范围进行排序
+  template<typename T>
+  void __mergeSort2(T arr[], int l, int r){
 
-			// 优化：对于小规模数组，使用插入排序
-			if( r - l <= 15 ){
-					insertionSort(arr, l, r);
-					return;
-			}
+      // 优化：对于小规模数组，使用插入排序
+      if( r - l <= 15 ){
+          insertionSort(arr, l, r);
+          return;
+      }
 
-			int mid = (l+r)/2;
-			__mergeSort2(arr, l, mid);
-			__mergeSort2(arr, mid+1, r);
+      int mid = (l+r)/2;
+      __mergeSort2(arr, l, mid);
+      __mergeSort2(arr, mid+1, r);
 
-			// 优化：对于 arr[mid] <= arr[mid+1] 的情况，不进行 merge
-			// 对于近乎有序的数组非常有效，但是对于一般情况，有一定的性能损失
-			if( arr[mid] > arr[mid+1] )
-					__merge(arr, l, mid, r);
-	}
-	```
+      // 优化：对于 arr[mid] <= arr[mid+1] 的情况，不进行 merge
+      // 对于近乎有序的数组非常有效，但是对于一般情况，有一定的性能损失
+      if( arr[mid] > arr[mid+1] )
+          __merge(arr, l, mid, r);
+  }
+  ```
 - 自下向上
 
-	```cpp
-	// 使用自底向上的归并排序算法
-	template <typename T>
-	void mergeSortBU(T arr[], int n){
-			// 对于小数组，使用插入排序优化
-			for( int i = 0 ; i < n ; i += 16 )
-					insertionSort(arr,i,min(i+15,n-1));
+  ```cpp
+  // 使用自底向上的归并排序算法
+  template <typename T>
+  void mergeSortBU(T arr[], int n){
+      // 对于小数组，使用插入排序优化
+      for( int i = 0 ; i < n ; i += 16 )
+          insertionSort(arr,i,min(i+15,n-1));
 
-			for( int sz = 16; sz < n ; sz += sz )
-					for( int i = 0 ; i < n - sz ; i += sz+sz )
-							// 对于 arr[mid] <= arr[mid+1] 的情况，不进行 merge
-							if( arr[i+sz-1] > arr[i+sz] )
-									__merge(arr, i, i+sz-1, min(i+sz+sz-1,n-1) );
-	}
-	```
+      for( int sz = 16; sz < n ; sz += sz )
+          for( int i = 0 ; i < n - sz ; i += sz+sz )
+              // 对于 arr[mid] <= arr[mid+1] 的情况，不进行 merge
+              if( arr[i+sz-1] > arr[i+sz] )
+                  __merge(arr, i, i+sz-1, min(i+sz+sz-1,n-1) );
+  }
+  ```
 
 NOTE:
 - 在自顶向下的归并排序中。这个优化可以发生在非常高的层次，也就是面对两个很大的数组，也可以通过这步优化，使得我们不需要进一步处理两个大数组。
@@ -1086,7 +1102,118 @@ http://coding.imooc.com/learn/questiondetail/3208.html
 
 ### 4.4. 算法思想扩展
 
-计算一个序列中逆序对的数量。TODO:
+#### 4.4.1. 逆序对数量
+
+[Leetcode 493. Reverse Pairs](https://leetcode.com/problems/reverse-pairs/)
+
+《剑指 offer》 36 题
+
+https://blog.csdn.net/DERRANTCM/article/details/46761051
+
+- Question
+  > Given an array nums, we call (i, j) an important reverse pair if i < j and nums[i] > 2*nums[j].
+
+  Example1:
+  ```
+  Input: [1,3,2,3,1]
+  Output: 2
+  ```
+  Example2:
+  ```
+  Input: [2,4,3,5,1]
+  Output: 3
+  ```
+- Solution
+  - 暴力：每扫描到一个数字的时候，逐个比较该数字和它后面的数字的大小。如果后面的数字比它小，则这两个数字就组成了一个逆序对。假设数组中含有 n 个数字。由于每个数字都要和 O(n）个数字作比较， 因此这个算法的时间复杂度是 O(n^2)。
+
+  - 归并思想：在归并排序合并的过程中，统计逆序对的数量即可。
+
+    ![image](http://img.cdn.firejq.com/jpg/2018/11/5/678640e25cd22b1e1e8d0e8bc2fb0025.jpg)
+
+    ```java
+    public class Solution {
+        public static int inversePairs(int[] data) {
+            if (data == null || data.length < 1) {
+                throw new IllegalArgumentException("Array arg should contain at least a value");
+            }
+
+            int[] copy = new int[data.length];
+            System.arraycopy(data, 0, copy, 0, data.length);
+
+            return inversePairsCore(data, copy, 0, data.length - 1);
+        }
+
+        private static int inversePairsCore(int[] data, int[] copy, int start, int end) {
+
+            if (start == end) {
+                copy[start] = data[start];
+                return 0;
+            }
+
+            int length = (end - start) / 2;
+            int left = inversePairsCore(copy, data, start, start + length);
+            int right = inversePairsCore(copy, data, start + length + 1, end);
+
+            // 前半段的最后一个数字的下标
+            int i = start + length;
+            // 后半段最后一个数字的下标
+            int j = end;
+            // 开始拷贝的位置
+            int indexCopy = end;
+            // 逆序数
+            int count = 0;
+
+            while (i >= start && j >= start + length + 1) {
+                if (data[i] > data[j]) {
+                    copy[indexCopy] = data[i];
+                    indexCopy--;
+                    i--;
+                    count += j - (start + length); // 对应的逆序数
+                } else {
+                    copy[indexCopy] = data[j];
+                    indexCopy--;
+                    j--;
+                }
+            }
+
+            for (; i >= start;) {
+                copy[indexCopy] = data[i];
+                indexCopy--;
+                i--;
+            }
+
+            for (; j >= start + length + 1;) {
+                copy[indexCopy] = data[j];
+                indexCopy--;
+                j--;
+            }
+            return count + left + right;
+        }
+
+        public static void main(String[] args) {
+            int[] data = {1, 2, 3, 4, 7, 6, 5};
+            System.out.println(inversePairs(data)); // 3
+            int[] data2 = {6, 5, 4, 3, 2, 1};
+            System.out.println(inversePairs(data2)); //  15
+            int[] data3 = {1, 2, 3, 4, 5, 6};
+            System.out.println(inversePairs(data3)); // 0
+            int[] data4 = {1};
+            System.out.println(inversePairs(data4)); // 0
+            int[] data5 = {1, 2};
+            System.out.println(inversePairs(data5)); // 0
+            int[] data6 = {2, 1};
+            System.out.println(inversePairs(data6)); // 1
+            int[] data7 = {1, 2, 1, 2, 1};
+            System.out.println(inversePairs(data7)); // 3
+        }
+    }
+    ```
+
+#### 4.4.2. Count of Range Sum
+
+[Leetcode 327. Count of Range Sum](https://leetcode.com/problems/count-of-range-sum/)
+
+TODO:
 
 ## 5. 综合比较
 
@@ -1155,27 +1282,27 @@ Test for nearly ordered array, size = 100000, swap time = 100
 在 Java 的 java.util.DualPivotQuicksort 类中，定义了以下排序算法转换的阈值：
 ```java
 /**
-	* If the length of an array to be sorted is less than this
-	* constant, Quicksort is used in preference to merge sort.
-	*/
+  * If the length of an array to be sorted is less than this
+  * constant, Quicksort is used in preference to merge sort.
+  */
 private static final int QUICKSORT_THRESHOLD = 286;
 
 /**
-	* If the length of an array to be sorted is less than this
-	* constant, insertion sort is used in preference to Quicksort.
-	*/
+  * If the length of an array to be sorted is less than this
+  * constant, insertion sort is used in preference to Quicksort.
+  */
 private static final int INSERTION_SORT_THRESHOLD = 47;
 
 /**
-	* If the length of a byte array to be sorted is greater than this
-	* constant, counting sort is used in preference to insertion sort.
-	*/
+  * If the length of a byte array to be sorted is greater than this
+  * constant, counting sort is used in preference to insertion sort.
+  */
 private static final int COUNTING_SORT_THRESHOLD_FOR_BYTE = 29;
 
 /**
-	* If the length of a short or char array to be sorted is greater
-	* than this constant, counting sort is used in preference to Quicksort.
-	*/
+  * If the length of a short or char array to be sorted is greater
+  * than this constant, counting sort is used in preference to Quicksort.
+  */
 private static final int COUNTING_SORT_THRESHOLD_FOR_SHORT_OR_CHAR = 3200;
 ```
 - 当待排序元素的个数小于 47 时，插入排序比快速排序更加高效。
@@ -1199,7 +1326,7 @@ private static final int COUNTING_SORT_THRESHOLD_FOR_SHORT_OR_CHAR = 3200;
 
 [『快速排序算法 C++ 实现『评注版』](https://www.cnblogs.com/pugang/archive/2012/06/27/2565093.html)
 
-[面试官，您要的快排](https://segmentfault.com/a/1190000002651247) 
+[面试官，您要的快排](https://segmentfault.com/a/1190000002651247)
 
 [【算法杂谈 1】 从一道面试题再看三路快排 partition](http://www.imooc.com/article/16141)
 

@@ -53,7 +53,7 @@ public boolean isPrime(int n) {
         return true;
     if (n % 6 != 1 && n % 6 != 5)
         return false;
-    for (int i = 5; i * i <= n; i += 6) 
+    for (int i = 5; i * i <= n; i += 6)
         if (n % i == 0 || n % (i + 2) == 0)
             return false;
     return true;
@@ -82,191 +82,192 @@ int f(int n)
 ### 2.2. 十进制转二进制
 
 ```cpp
-// 十进制转二进制   
-void printbinary(const unsigned int val)  
-{   
-    for(int i = 16; i >= 0; i--)  
-    {  
-        if(val & (1 << i))  
-            cout << "1";  
-        else  
-            cout << "0";  
-    }  
-}  
+// 十进制转二进制
+void printbinary(const unsigned int val)
+{
+    for(int i = 16; i >= 0; i--)
+    {
+        if(val & (1 << i))
+            cout << "1";
+        else
+            cout << "0";
+    }
+}
 ```
 
 ### 2.3. 十进制转八进制
 
 ```cpp
-// 十进制转八进制   
-int main()  
-{  
-    cout<<"input a number:"<<endl;  
-    int d;  
-    vector<int> vec;  
-  
-    cin>>d;  
-    while (d)  
-    {  
-        vec.push_back(d%8);  
-        d=d/8;  
-    }  
-  
-    cout<<"the result is:"<<endl;  
-    for(vector<int>::iterator ip=vec.end()-1;ip>=vec.begin();)  
-    {  
-        cout<<*ip--;  
-    }  
-    cout<<endl;  
-      
-    return 0;  
-}  
+// 十进制转八进制
+int main()
+{
+    cout<<"input a number:"<<endl;
+    int d;
+    vector<int> vec;
+
+    cin>>d;
+    while (d)
+    {
+        vec.push_back(d%8);
+        d=d/8;
+    }
+
+    cout<<"the result is:"<<endl;
+    for(vector<int>::iterator ip=vec.end()-1;ip>=vec.begin();)
+    {
+        cout<<*ip--;
+    }
+    cout<<endl;
+
+    return 0;
+}
 ```
 
 ```cpp
 // 通过库函数实现八进制、十六进制输出
-int main()  
-{  
-    int test=64;  
-    cout<<"DEC:"<<test<<endl;  
-    cout<<"OCT:"<<oct<<test<<endl;// 八进制   
-    cout<<"HEX:"<<hex<<test<<endl;// 十六进制   
-  
-    return 0;  
-}  
+int main()
+{
+    int test=64;
+    cout<<"DEC:"<<test<<endl;
+    cout<<"OCT:"<<oct<<test<<endl;// 八进制
+    cout<<"HEX:"<<hex<<test<<endl;// 十六进制
+
+    return 0;
+}
 ```
 
 ### 2.4. 十进制转换为任意进制
 
 ```cpp
-// 十进制转换为任意进制 
-int main()  
-{  
-    long n;  
-    int p,c,m=0,s[100];  
-    cout<<"输入要转换的数字："<<endl;  
-    cin>>n;  
-    cout<<"输入要转换的进制："<<endl;  
-    cin>>p;  
-  
-    cout<<"("<<n<<")10="<<"(";  
-  
-    while (n!=0)// 数制转换，结果存入数组 s[m]   
-    {  
-        c=n%p;  
-        n=n/p;  
-        m++;s[m]=c;   // 将余数按顺序存入数组 s[m] 中   
-    }  
-  
-    for(int k=m;k>=1;k--)// 输出转换后的序列   
-    {  
-        if(s[k]>=10) // 若为十六进制等则输出相对应的字母   
-            cout<<(char)(s[k]+55);  
-        else         // 否则直接输出数字   
-            cout<<s[k];  
-    }  
-  
-    cout<<")"<<p<<endl;  
-  
-    return 0;  
-}  
+// 十进制转换为任意进制
+int main()
+{
+    long n;
+    int p,c,m=0,s[100];
+    cout<<"输入要转换的数字："<<endl;
+    cin>>n;
+    cout<<"输入要转换的进制："<<endl;
+    cin>>p;
+
+    cout<<"("<<n<<")10="<<"(";
+
+    while (n!=0)// 数制转换，结果存入数组 s[m]
+    {
+        c=n%p;
+        n=n/p;
+        m++;s[m]=c;   // 将余数按顺序存入数组 s[m] 中
+    }
+
+    for(int k=m;k>=1;k--)// 输出转换后的序列
+    {
+        if(s[k]>=10) // 若为十六进制等则输出相对应的字母
+            cout<<(char)(s[k]+55);
+        else         // 否则直接输出数字
+            cout<<s[k];
+    }
+
+    cout<<")"<<p<<endl;
+
+    return 0;
+}
 ```
 
 ### 2.5. 任意进制转换成任意进制
 
 Java
 ```java
-public class NumericConvertUtil {  
-    /** 
-     * 在进制表示中的字符集合 
-     */  
-  private final static char[] digits = {'0', '1', '2', '3', '4', '5', '6',
-                      '7', '8', '9', 'A', 'B', 'C', 'D',
-                      'E', 'F', 'G', 'H', 'I', 'J', 'K',
-                      'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-                      'S', 'T', 'U', 'V', 'W', 'X', 'Y',
-                      'Z'};
-  
-    /** 
-     * 将十进制的数字转换为指定进制的字符串 
-     *  
-     * @param n 十进制的数字 
-     * @param base 指定的进制 
-     * @return 
-     */  
-    public static String toOtherBaseString(long n, int base) {  
-        long num = 0;  
-        if (n < 0) {  
-            num = ((long) 2 * 0x7fffffff) + n + 2;  
-        } else {  
-            num = n;  
-        }  
-        char[] buf = new char[32];  
-        int charPos = 32;  
-        while ((num / base) > 0) {  
-            buf[--charPos] = digits[(int) (num % base)];  
-            num /= base;  
-        }  
-        buf[--charPos] = digits[(int) (num % base)];  
-        return new String(buf, charPos, (32 - charPos));  
-    }  
-  
-    /** 
-     * 将其它进制的数字（字符串形式）转换为十进制的数字 
-     *  
-     * @param str 其它进制的数字（字符串形式） 
-     * @param base 指定的进制 
-     * @return 
-     */  
-    public static long toDecimalism(String str, int base) {  
-        char[] buf = new char[str.length()];  
-        str.getChars(0, str.length(), buf, 0);  
-        long num = 0;  
-        for (int i = 0; i < buf.length; i++) {  
-            for (int j = 0; j < digits.length; j++) {  
-                if (digits[j] == buf[i]) {  
-                    num += j * Math.pow(base, buf.length - i - 1);  
-                    break;  
-                }  
-            }  
-        }  
-        return num;  
-    }  
-  
-    public static void main(String[] args) {  
-        System.out.println(toOtherBaseString(16857120L, 36));  
-        System.out.println(toDecimalism("A1B1AJASWDE", 36));  
-    }  
-}  
+public class NumericConvertUtil {
+    /**
+     * 在进制表示中的字符集合
+     */
+  private final static char[] digits = {
+    '0', '1', '2', '3', '4', '5', '6',
+    '7', '8', '9', 'A', 'B', 'C', 'D',
+    'E', 'F', 'G', 'H', 'I', 'J', 'K',
+    'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+    'S', 'T', 'U', 'V', 'W', 'X', 'Y',
+    'Z'};
+
+    /**
+     * 将十进制的数字转换为指定进制的字符串
+     *
+     * @param n 十进制的数字
+     * @param base 指定的进制
+     * @return
+     */
+    public static String toOtherBaseString(long n, int base) {
+        long num = 0;
+        if (n < 0) {
+            num = ((long) 2 * 0x7fffffff) + n + 2;
+        } else {
+            num = n;
+        }
+        char[] buf = new char[32];
+        int charPos = 32;
+        while ((num / base) > 0) {
+            buf[--charPos] = digits[(int) (num % base)];
+            num /= base;
+        }
+        buf[--charPos] = digits[(int) (num % base)];
+        return new String(buf, charPos, (32 - charPos));
+    }
+
+    /**
+     * 将其它进制的数字（字符串形式）转换为十进制的数字
+     *
+     * @param str 其它进制的数字（字符串形式）
+     * @param base 指定的进制
+     * @return
+     */
+    public static long toDecimalism(String str, int base) {
+        char[] buf = new char[str.length()];
+        str.getChars(0, str.length(), buf, 0);
+        long num = 0;
+        for (int i = 0; i < buf.length; i++) {
+            for (int j = 0; j < digits.length; j++) {
+                if (digits[j] == buf[i]) {
+                    num += j * Math.pow(base, buf.length - i - 1);
+                    break;
+                }
+            }
+        }
+        return num;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(toOtherBaseString(16857120L, 36));
+        System.out.println(toDecimalism("A1B1AJASWDE", 36));
+    }
+}
 ```
 
 C++
 ```cpp
-// 递归实现任意进制转换成任意进制 
-int conservation[100];  // 保存结果的数组 
+// 递归实现任意进制转换成任意进制
+int conservation[100];  // 保存结果的数组
 int number;             // 数组中保存结果实际的位数
-int change(int base,int jinzhi)  
-{  
-    //base 为基数，jinzhi 为想要转化的进制   
-    int a;  
-    int b;  
-    a=base%jinzhi;  
-    b=base/jinzhi;  
-    conservation[number++]=a;  
-    if(b!=0)   return change(b,jinzhi);  
-    else return 0;  
-}  
+int change(int base,int jinzhi)
+{
+    //base 为基数，jinzhi 为想要转化的进制
+    int a;
+    int b;
+    a=base%jinzhi;
+    b=base/jinzhi;
+    conservation[number++]=a;
+    if(b!=0)   return change(b,jinzhi);
+    else return 0;
+}
 
-int main()  
-{  
-    int base,jinzhi;  
-    cout<<"input base and jinzhi:";  
-    cin>>base>>jinzhi;  
-    change(base,jinzhi);  
-    for(int i=number-1;i>=0;i--)  
-      cout<<conservation[i];  
-    cout<<endl;  
-    return 0;  
+int main()
+{
+    int base,jinzhi;
+    cout<<"input base and jinzhi:";
+    cin>>base>>jinzhi;
+    change(base,jinzhi);
+    for(int i=number-1;i>=0;i--)
+      cout<<conservation[i];
+    cout<<endl;
+    return 0;
 }
 ```
 
@@ -279,7 +280,7 @@ public boolean isPalindrome(int a) {
     int s = 0;
     for (int m = a, i = m % 10; m != 0; m /= 10, i = m % 10)
         s = s * 10 + i;
-    return s == a ? true : false;
+    return s == a;
 }
 ```
 
@@ -335,14 +336,14 @@ int getmid(int L[], int low, int high)
       break;
     else if(pos > mid)
       high = pos-1;
-    else 
-            low = pos+1;
+    else
+      low = pos+1;
   }
     return L[mid];
 }
 ```
 
-这种方法实际上是对数组进行了局部的排序，每次只排序 partition 后的一半，因为将快速排序的平均时间 O(nlogn) 降到了 O(n)。严谨的数学证明请参见《算法导论》。
+这种方法实际上是对数组进行了局部的排序，**每次只排序 partition 后的一半，因为将快速排序的平均时间 O(nlogn) 降到了 O(n)**。严谨的数学证明请参见《算法导论》。
 
 <!-- TODO: 复杂度为什么是 O(n) ？尾递归优化？-->
 
@@ -357,9 +358,8 @@ int getmid(int L[], int low, int high)
 如果能够保证数据容器左边的数据都小于右边的数据，这样即使左、右两边内部的数据没有排序，也可以根据左边最大的数及右边最小的数得到中位数。因此可以用如下思路来解决这个问题：**用一个最大堆实现左边的数据容器，用一个最小堆实现右边的数据容器**。
 
 在实现中：
-- 首先要**保证数据平均分配到两个堆中**，即两个堆中数据的数目之差不能超过 1。
-
-- 还要**保证最大堆中里的所有数据都要小于最小堆中的数据**。
+1. 首先要**保证数据平均分配到两个堆中**，即两个堆中数据的数目之差不能超过 1。
+1. 还要**保证最大堆中里的所有数据都要小于最小堆中的数据**。
 
 因此，可以**先把新的数据插入到最大堆中，接着把最大堆中的最大的数字拿出来插入到最小堆中**。由于最终插入到最小堆的数字都是原最大堆中最大的数字，这样就保证了最小堆中的所有数字都大于最大堆中的数字。
 
@@ -392,7 +392,7 @@ cache.get(4);       // returns 4
 
 ![image](http://img.cdn.firejq.com/jpg/2018/10/31/ffece79970ddcc84b9ae6c7d272e663e.jpg)
 
-NOTE: **在面试中解决该问题时，由于代码量相对较多，应该尽量将代码分离开来，写成独立的方法，从而使得代码更加清晰并在最短时间内铺设好代码骨架**。
+NOTE: **在面试中解决该问题时，由于代码量相对较多，应该尽量将代码分离开来，写成独立的方法，从而使得代码更加清晰并在最短时间内铺设好代码骨架，让面试官了解你的实现思路**。
 
 ### 5.1. 只使用 HashMap
 
@@ -414,11 +414,10 @@ NOTE: **在面试中解决该问题时，由于代码量相对较多，应该尽
   1. 在 HashMap 中 get(key) 得到该 key 对应的链表节点，然后指向 remove(key)。
   1. 在链表中将该节点删除。
 
-- 4 个辅助方法：
+- 3 个辅助方法：
   - 在 head 添加 Node
-  - 删除指定 Node
-  - 删除 tail 并返回 tail
-  - 将指定 Node 移动到 head
+  - 删除指定 Node 并返回 Node
+  - 将指定 Node 移动到 head （先删除再添加）
 
 链表结构：
 ```
@@ -450,10 +449,8 @@ class LRUCache {
 
     head = new DLinkedNode();
     head.pre = null;
-
     tail = new DLinkedNode();
     tail.next = null;
-
     head.next = tail;
     tail.pre = head;
   }
@@ -478,17 +475,26 @@ class LRUCache {
     }
     DLinkedNode newNode = new DLinkedNode(key, value);
     this.cache.put(key, newNode);
-    this.addNode(newNode);
+    this.addToHead(newNode);
     ++count;
 
     if (count > capacity) {
       // pop the tail
-      DLinkedNode tail = this.popTail();
-      this.cache.remove(tail.key);
+      DLinkedNode oldest = this.removeNode(tail.pre);
+      this.cache.remove(oldest.key);
       --count;
     }
   }
-  
+
+  public void remove(int key) {
+    Node t = cache.get(key);
+    if (t == null)
+      return;
+    cache.remove(key);
+    this.removeNode(t);
+    count--;
+  }
+
   // Move certain node in between to the head.
   private void moveToHead(DLinkedNode node) {
     this.removeNode(node);
@@ -496,7 +502,7 @@ class LRUCache {
   }
 
   // Always add the new node right after head.
-  private void addNode(DLinkedNode node) {
+  private void addToHead(DLinkedNode node) {
     node.pre = head;
     node.next = head.next;
 
@@ -505,19 +511,13 @@ class LRUCache {
   }
 
   // Remove an existing node from the linked list.
-  private void removeNode(DLinkedNode node) {
+  private DLinkedNode removeNode(DLinkedNode node) {
     DLinkedNode pre = node.pre;
     DLinkedNode post = node.next;
 
     pre.next = post;
     post.pre = pre;
-  }
-
-  // pop the current tail.
-  private DLinkedNode popTail() {
-    DLinkedNode res = tail.pre;
-    this.removeNode(res);
-    return res;
+    return node;
   }
 }
 ```
@@ -526,7 +526,30 @@ class LRUCache {
 
 LinkedHashMap（基于 HashMap 和双向链表的实现）提供了键值对的储存功能，且可根据其支持访问排序的特性来模拟 LRU 算法。简单来说，LinkedHashMap 在访问已存在元素或插入新元素时，会将该元素放置在链表的尾部，所以在链表头部的元素是最近最少未使用的元素，而这正是 LRU 算法的描述。由于其底层基于链表实现，所以对于元素的移动和插入操作性能表现优异。
 
-如果在 LocalCache 中只使用一个 LRU Map，将产生性能问题：
+```java
+public class LRUCache<K,V> {
+    private int capacity; // 最大缓存大小
+    private LinkedHashMap<K,V> cache;
+
+    public LRUCache(int n) {
+        this.capacity = n;
+        this.cache = new LinkedHashMap(16, 0.75F, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry eldest) {
+                return this.capacity + 1 == cache.size() ? true : false;
+            }
+        };
+    }
+    public void put(K key,V value){
+        cache.put(key,value);
+    }
+    public V get(K key){
+        return cache.get(key);
+    }
+}
+```
+
+NOTE: 如果在 LocalCache 中只使用一个 LRU Map，将产生性能问题：
 - 单个 LinkedHashMap 中元素数量太多
 - 高并发下读写锁限制
 因此，可以在 LocalCache 中使用多个 LRU Map，并使用 key 来 hash 到某个 LRU Map 上，以此来提高在单个 LinkedHashMap 中检索的速度以及提高整体并发度。
@@ -545,14 +568,14 @@ LinkedHashMap（基于 HashMap 和双向链表的实现）提供了键值对的�
 ### 6.2. 分类
 
 - 0-1 背包问题
-  
+
   有 n 种物品，如果限定每种物品只能选择 0 个或 1 个，则问题称为 0-1 背包问题。0-1 背包问题是最基本的背包问题。各类复杂的背包问题总可以变换为简单的 0-1 背包问题进行求解。
 
   - 不考虑重量只考虑权值（可理解为：背包可背无限重的东西），要求选出若干个项，使他们的权值之和刚好等于 target。
   - 考虑重量和权值，物品 j 的重量为 wj，权值为 pj（假定所有物品的重量和价格都是非负的）背包所能承受的最大重量为 W，要求选出若干个项，再总重量不超过 W 的前提下，使他们的权值之和尽量大。
 
 - 无界背包问题（完全背包问题）
-  
+
   如果不限定每种物品的数量，则问题称为无界背包问题。
 
 - 有界背包问题（多重背包问题）
@@ -594,10 +617,10 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
   //weight[] 存放各个项的权值
   //knapsack（t, i）将回答是否能从权值 weight[i]~weight[n] 之间选出一些数，使得总和为 t，并在可能的情况下将所选定的权值打印出来
   bool knapsack(int t, int i) {
-    if (t == 0) 
+    if (t == 0)
       return true;
     else {
-      if (t < 0 || i > n) 
+      if (t < 0 || i > n)
         return false;
       else {
         if (knapsack(t - weight[i], i + 1)) {
@@ -632,7 +655,7 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
 
     temp.push_back(items[i]);
     SimpleKnapsack(items, capacity - items[i], i + 1);
-    
+
     temp.pop_back();
     SimpleKnapsack(items, capacity, i + 1);
   }
@@ -641,7 +664,7 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
     int n = items.size(), sum = 0, i = 0, start = 0;
     vector<int> stack;
     vector<int> visited(n, 0);
-    
+
     while (1)
     {
       for (i = start; i < n; ++i)
@@ -659,7 +682,7 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
           }
         }
       }
-      
+
       if (i == n)
       {
         if (stack.empty())
@@ -698,55 +721,55 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
   ```
 
   ```cpp
-  #include <stdio.h>  
-  #define MAX 100  
+  #include <stdio.h>
+  #define MAX 100
 
-  int weight[MAX];  
-  int price[MAX];  
-  int y[MAX]={0};  
-    
-  // 进行递归主要方法  
-  int f(int t,int c){  
-      if((t==0)||c<=0){  // 当物品个数为 0 或背包容积为 0 事退出  
-        return 0;  
-      }else{  
-          for(int i=t-1;i>=0;i--){    
-              if(weight[i]>c){   // 当物品重量大于背包容积  
-                  y[i]=0;        // 此时物品不被选中  
-                  return f(t-1,c);  // 在剩余物品中选取  
-              }else{  
-              int temp1=f(t-1,c); // 当第 t 个物品没被选中时  
-              int temp2=price[i]+f(t-1,c-weight[i]);// 被选中时  
-                  if(temp1>temp2){  
-                      y[i]=0;  
-                      return f(t-1,c);  
-                  }else{  
-                      y[i]=1;  
-                      return price[i]+f(t-1,c-weight[i]);  
-                  }  
-              }  
-          }  
-      }  
-  }  
-  int main(){  
-      int c,t,maxval,i;  
-      printf("请输入物品的的个数：");  
-      scanf("%d",&t);  
-      for(i=0;i<t;i++){  
-          y[i]=0;  
-          printf("\n 请输入第 %d 个物品的重量和价值",i+1);  
-          scanf("%d%d",&weight[i],&price[i]);  
-      }  
-      printf("\n 请输入背包的容积");  
-      scanf("%d",&c);  
-      maxval=f(t,c);  
-      printf("j 结果为：1 代表选中");  
-      for(i=0;i<t;i++){  
-          //if(y[i]==1)  
-              printf("\n%d %d %d\n",y[i],weight[i],price[i]);  
-      }  
-      printf("总价值为：%d",maxval);  
-      return 0;  
+  int weight[MAX];
+  int price[MAX];
+  int y[MAX]={0};
+
+  // 进行递归主要方法
+  int f(int t,int c){
+      if((t==0)||c<=0){  // 当物品个数为 0 或背包容积为 0 事退出
+        return 0;
+      }else{
+          for(int i=t-1;i>=0;i--){
+              if(weight[i]>c){   // 当物品重量大于背包容积
+                  y[i]=0;        // 此时物品不被选中
+                  return f(t-1,c);  // 在剩余物品中选取
+              }else{
+              int temp1=f(t-1,c); // 当第 t 个物品没被选中时
+              int temp2=price[i]+f(t-1,c-weight[i]);// 被选中时
+                  if(temp1>temp2){
+                      y[i]=0;
+                      return f(t-1,c);
+                  }else{
+                      y[i]=1;
+                      return price[i]+f(t-1,c-weight[i]);
+                  }
+              }
+          }
+      }
+  }
+  int main(){
+      int c,t,maxval,i;
+      printf("请输入物品的的个数：");
+      scanf("%d",&t);
+      for(i=0;i<t;i++){
+          y[i]=0;
+          printf("\n 请输入第 %d 个物品的重量和价值",i+1);
+          scanf("%d%d",&weight[i],&price[i]);
+      }
+      printf("\n 请输入背包的容积");
+      scanf("%d",&c);
+      maxval=f(t,c);
+      printf("j 结果为：1 代表选中");
+      for(i=0;i<t;i++){
+          //if(y[i]==1)
+              printf("\n%d %d %d\n",y[i],weight[i],price[i]);
+      }
+      printf("总价值为：%d",maxval);
+      return 0;
   }
   ```
 
@@ -797,10 +820,10 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
 
 - Solution:
 
-  使用一个变长数组和一个 HashMap 组合即可，其中，变长数组用于保存所有元素，HashMap 的 key 为元素值，value 为元素在 ArrayList 中的索引：
+  **使用一个变长数组和一个 HashMap 组合**即可，其中，变长数组用于保存所有元素，HashMap 的 key 为元素值，value 为元素在 ArrayList 中的索引：
   - Insert: 将元素添加到数组尾部，并以元素为 key、元素在 ArrayList 中的下标为 value 添加到 HashMap 中。
   - Get Randomly: 生成一个范围是 0~n-1 的随机索引，返回数组中该索引位置的元素。
-  - Delete: 
+  - Delete:
     1. 在 HashMap 中找到该元素 x 的 value，即在数组中的索引值 xi。
     1. 在 HashMap 中删除该元素 x。
     1. 将数组的最后一个元素 y 复制到索引 xi 的位置，覆盖被删除元素。
@@ -821,7 +844,7 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
       public E removeAt(int id) {
           if (id >= dta.size())
               return null;
-          
+
           E res = dta.get(id);
           idx.remove(res);
           E last = dta.remove(dta.size() - 1);
@@ -900,7 +923,7 @@ public class MyStack {
 ## 8. 最大公因数 && 最小公倍数
 
 ```java
-// 使用辗转相除法求最大公因数 (Greatest common divisor)(a < b) 
+// 使用辗转相除法求最大公因数 (Greatest common divisor)(a < b)
 public int gcd(int a, int b) {
     if (b == 0)
         return a;
@@ -909,7 +932,7 @@ public int gcd(int a, int b) {
 }
 
 // 求最小公倍数 (Least common multiple)
-public int lcm(int a, int b) { 
+public int lcm(int a, int b) {
     return a * b / gcd(a, b);
 }
 ```
@@ -925,20 +948,20 @@ public int lcm(int a, int b) {
 
 解决思路：
 - 计数数组（时间效率和空间效率都是 O(n)）
-  
+
   首先求出序列中的最大值 max，然后定义一个计数数组 int count[max+1]，用来对数组中数字出现的次数进行计数，最后遍历 count 数组中取出最大值元素，其对应的下标即为出现次数最多的那个数。
   ```java
   public static void candidate (int[] array) {
-      int[] count = new int[101];                // 计数数组，每个元素的默认值为 0
+      int[] count = new int[101];                 // 计数数组，每个元素的默认值为 0
       for(int i = 0; i < array.length; i++)
-          count[array[i]]++;                    // 对应的计数值加 1
+          count[array[i]]++;                      // 对应的计数值加 1
 
       int maxCount = count[0];
       int maxNumber = 0;
-      for(int i = 1; i < 100; i++)            // 找出最多出现的次数
+      for(int i = 1; i < 100; i++)                // 找出最多出现的次数
           if(count[i] > maxCount)
               maxCount = count[i];
-      for(int i = 0; i < 100; i++)            // 找出出现最多次的那个数字
+      for(int i = 0; i < 100; i++)                // 找出出现最多次的那个数字
           if(count[i] == maxCount)
               maxNumber = i;
 
@@ -951,12 +974,12 @@ public int lcm(int a, int b) {
 
   首先遍历数组元素构造 HashMap，每个 Entry 的 key 存放数组中的数字，value 存放该数字出现的次数。然后遍历每个 Entry，找出最大 value 对应的 key，即是出现次数最多的那个数。
   ```java
-  public static void candidate (int[] array) {
+  public static void candidate(int[] array) {
       HashMap<Integer, Integer> map = new HashMap<>();
-      for (int i = 0; i < array.length; i++) 
-          if (map.containsKey(array[i])) 
-              map.put(array[i], map.getOrDefault(array[i], 0) + 1);    
-      
+      for (int i = 0; i < array.length; i++)
+          if (map.containsKey(array[i]))
+              map.put(array[i], map.getOrDefault(array[i], 0) + 1);
+
       // 找出 map 的 value 中最大值，也就是数组中出现最多的数字所出现的次数
       int maxCount = Collections.max(map.values());
       int maxNumber = 0;
@@ -969,15 +992,14 @@ public int lcm(int a, int b) {
   ```
 
 - 若已知序列的众数是绝对众数：
-
   - 快排 partition
-    
-    可推得，该众数必定同时是该序列的中位数，因此，可通过快排 partition 的思路来求（时间效率是 O(n)，空间效率是 O(1)）。
+
+    由于确定是绝对众数，因此可推得该众数必定同时是该序列的中位数，因此，可通过快排 partition 的思路来求（时间效率是 O(n)，空间效率是 O(1)）。
     ```java
-    while(pivot_index != middle) { 
+    while(pivot_index != middle) {
         if (pivot_index < middle)
             left = pivot_index + 1;
-        else 
+        else
             right = pivot_index - 1;
         pivot_index = partition(A, left, right);
     }
@@ -990,7 +1012,7 @@ public int lcm(int a, int b) {
     - 若两个数中没有绝对众数，显然不影响绝对众数。
 
     因此，可采用摩尔投票的方法，即在每一轮投票过程中，从数组中找出一对不同的元素，将其从数组中删除：
-    1. 记 m 为候选绝对众数，初始化为数组第一个元素；记众数出现次数为 cnt，并初始化为 1。 
+    1. 记 m 为候选绝对众数，初始化为数组第一个元素；记众数出现次数为 cnt，并初始化为 1。
     1. 遍历数组 A：
       - 若 cnt==0，则 m=A[i]。
       - 若 cnt≠0 且 m≠A[i]，则 cnt--（即同时删掉 m 和 A[i]）。
@@ -1003,11 +1025,11 @@ public int lcm(int a, int b) {
         int count = 1;
         for (int i = 1; i < nums.length; i++) {
             if (count == 0) {
-                count++; 
+                count++;
                 major = nums[i];
             } else if (major == nums[i])
                 count++;
-            else 
+            else
                 count--;
         }
         return major;
@@ -1016,7 +1038,7 @@ public int lcm(int a, int b) {
 
 - 若已知序列是有序的：
 
-  直接遍历序列，使用临时变量存储出现次数的最大值以及对于的元素即可（时间效率是 O(n)，空间效率是 O(1)）。
+  直接遍历序列，使用临时变量存储出现次数的最大值以及对应的元素即可（时间效率是 O(n)，空间效率是 O(1)）。
 
 ## 10. 生成随机数
 
@@ -1024,7 +1046,7 @@ public int lcm(int a, int b) {
 
 - 通过 `System.currentTimeMillis()` 来获取一个当前时间毫秒数的 long 型数字。
 
-  eg: 
+  eg:
   ```java
   // 获取 [0, 100) 之间的 int 整数
   int rand = (int)(System.currentTimeMillis() % 100);
@@ -1032,7 +1054,7 @@ public int lcm(int a, int b) {
 
 - 通过 `Math.random()` 返回一个 0（包含）到 1（不包含）之间的 double 值。
 
-  eg: 
+  eg:
   ```java
   // 获取 [0, 100) 之间的 int 整数
   int rand = (int)(Math.random() * 100);
@@ -1042,33 +1064,33 @@ public int lcm(int a, int b) {
 
   API:
   ```java
-  Random() 															// 默认构造方法。
-  Random(long seed) 										// 指定种子数字构造一个新随机数生成器。
+  Random()                                      // 默认构造方法。
+  Random(long seed)                             // 指定种子数字构造一个新随机数生成器。
 
-  boolean nextBoolean()         				// 返回下一个“boolean 类型”伪随机数。 
-  void    nextBytes(byte[] buf) 				// 生成随机字节并将其置于字节数组 buf 中。 
-  double  nextDouble()          				// 返回一个“[0.0, 1.0) 之间的 double 类型”的随机数。 
-  float   nextFloat()           				// 返回一个“[0.0, 1.0) 之间的 float 类型”的随机数。 
-  int     nextInt()             				// 返回下一个“int 类型”随机数。 
-  int     nextInt(int n)        				// 返回一个“[0, n) 之间的 int 类型”的随机数。 
-  long    nextLong()            				// 返回下一个“long 类型”随机数。 
-  synchronized double nextGaussian()   	// 返回下一个“double 类型”的随机数，它是呈高斯分布的 double 值，其平均值是 0.0，标准偏差是 1.0。 
-  synchronized void setSeed(long seed) 	// 使用单个 long 种子设置此随机数生成器的种子。
+  boolean nextBoolean()         				        // 返回下一个“boolean 类型”伪随机数。
+  void    nextBytes(byte[] buf) 				        // 生成随机字节并将其置于字节数组 buf 中。
+  double  nextDouble()          			        	// 返回一个“[0.0, 1.0) 之间的 double 类型”的随机数。
+  float   nextFloat()           				        // 返回一个“[0.0, 1.0) 之间的 float 类型”的随机数。
+  int     nextInt()             				        // 返回下一个“int 类型”随机数。
+  int     nextInt(int n)        				        // 返回一个“[0, n) 之间的 int 类型”的随机数。
+  long    nextLong()            				        // 返回下一个“long 类型”随机数。
+  synchronized double nextGaussian()   	        // 返回下一个“double 类型”的随机数，它是呈高斯分布的 double 值，其平均值是 0.0，标准偏差是 1.0。
+  synchronized void setSeed(long seed) 	        // 使用单个 long 种子设置此随机数生成器的种子。
   ```
 
-  eg: 
+  eg:
   ```java
   // 创建 Random 对象
-  Random random = new Random(System.currentTimeMillis());	
+  Random random = new Random(System.currentTimeMillis());
 
   // 获取 [0, 100) 之间的 int 整数
   int rand = random.nextInt(100);
   ```
-  
+
 ### 10.2. C++
 
 ```cpp
-int generateRandom(int i, int j) 
+int generateRandom(int i, int j)
 {
   srand(time(null));
   int r = rand() % (j - i + 1) + i;
@@ -1086,7 +1108,7 @@ int generateRandom(int i, int j)
   > 给定一个可以产生 0~4 随机数的函数 `rand5()`，编写 `rand7()` 方法，来产生 0~6 的随机数。
 
 - Solution
-  
+
   最直观的思路就是均匀产生很多个数字，从这么多个数字里面选取 7 个数字分别表示 `[0,6]` 之间的整数。
   ```java
   public int rand7() {
@@ -1110,12 +1132,12 @@ int generateRandom(int i, int j)
   ......
   把次数乘以概率累加起来就得到了跳出循环时已经执行了多少次循环，这个问题是一个等比数列乘以等差数列求和问题，求解方法是错位相减法，结果是 50/7。其实是没有必要算的，因为这是典型的几何分布：每次成功的概率为 p，那么它的期望执行次数就是 1/p。经过以上计算，大约需要 7 次才能跳出循环。
   ```
-  
+
   在这种方法中，对于产生的 25 种结果，我们只利用了 7/25，造成了平均循环次数过多的问题。因此，我们可以对 25 种结构舍弃大于 7 的倍数的部分，将余下元素除以 7 取余数即可。
   ```java
   public int rand7() {
     while (true) {
-      int num = 5 * rand5() + rand5(); 
+      int num = 5 * rand5() + rand5();
       if (num < 21) // 舍弃 21~24 之间的数值，否则 rand7() 返回 0~3 的值就会偏多
         return num % 7;
     }

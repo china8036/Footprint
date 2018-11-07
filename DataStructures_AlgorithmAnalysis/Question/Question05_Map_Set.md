@@ -1,25 +1,25 @@
-- [Map 和 Set](#map-%E5%92%8C-set)
-	- [1. 使用 set 结构](#1-%E4%BD%BF%E7%94%A8-set-%E7%BB%93%E6%9E%84)
-		- [1.1. Intersection of Two Arrays](#11-intersection-of-two-arrays)
-		- [1.2. Happy Number](#12-happy-number)
-		- [1.3. Contains Duplicate](#13-contains-duplicate)
-		- [1.4. Contains Duplicate II](#14-contains-duplicate-ii)
-		- [1.5. Contains Duplicate III](#15-contains-duplicate-iii)
-	- [2. 使用 map 结构](#2-%E4%BD%BF%E7%94%A8-map-%E7%BB%93%E6%9E%84)
-		- [2.1. Intersection of Two Arrays II](#21-intersection-of-two-arrays-ii)
-		- [2.2. Valid Anagram](#22-valid-anagram)
-		- [2.3. Word Pattern](#23-word-pattern)
-		- [2.4. Isomorphic Strings](#24-isomorphic-strings)
-		- [2.5. Sort Characters By Frequency](#25-sort-characters-by-frequency)
-		- [2.6. Two Sum](#26-two-sum)
-		- [2.7. Tree-Sum](#27-tree-sum)
-		- [2.8. Four-Sum](#28-four-sum)
-		- [2.9. Three-Sum Closest](#29-three-sum-closest)
-		- [2.10. Four-Sum II](#210-four-sum-ii)
-		- [2.11. Group Anagrams](#211-group-anagrams)
-		- [2.12. Number of Boomerangs](#212-number-of-boomerangs)
-		- [2.13. Max Points on a Line](#213-max-points-on-a-line)
-	- [3. Refer Links](#3-refer-links)
+- [Map 和 Set](#map-和-set)
+  - [1. 使用 set 结构](#1-使用-set-结构)
+    - [1.1. Intersection of Two Arrays](#11-intersection-of-two-arrays)
+    - [1.2. Happy Number](#12-happy-number)
+    - [1.3. Contains Duplicate](#13-contains-duplicate)
+    - [1.4. Contains Duplicate II](#14-contains-duplicate-ii)
+    - [1.5. Contains Duplicate III](#15-contains-duplicate-iii)
+  - [2. 使用 map 结构](#2-使用-map-结构)
+    - [2.1. Intersection of Two Arrays II](#21-intersection-of-two-arrays-ii)
+    - [2.2. Valid Anagram](#22-valid-anagram)
+    - [2.3. Word Pattern](#23-word-pattern)
+    - [2.4. Isomorphic Strings](#24-isomorphic-strings)
+    - [2.5. Sort Characters By Frequency](#25-sort-characters-by-frequency)
+    - [2.6. Two Sum](#26-two-sum)
+    - [2.7. Tree-Sum](#27-tree-sum)
+    - [2.8. Four-Sum](#28-four-sum)
+    - [2.9. Three-Sum Closest](#29-three-sum-closest)
+    - [2.10. Four-Sum II](#210-four-sum-ii)
+    - [2.11. Group Anagrams](#211-group-anagrams)
+    - [2.12. Number of Boomerangs](#212-number-of-boomerangs)
+    - [2.13. Max Points on a Line](#213-max-points-on-a-line)
+  - [3. Refer Links](#3-refer-links)
 
 # Map 和 Set
 
@@ -52,7 +52,7 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
   - Each element in the result must be unique.
   - The result can be in any order.
 - Solution
-  
+
   使用 set 数据结构进行求解：
   ```java
   // 时间复杂度：O(len(nums1)+len(nums2))
@@ -84,55 +84,55 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
 
 - Question
   > Write an algorithm to determine if a number is "happy".
-  > 
-	> A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
+  >
+  > A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
 
-	Example: 
-	```
-	Input: 19
-	Output: true
-	Explanation: 
-	1^2 + 9^2 = 82
-	8^2 + 2^2 = 68
-	6^2 + 8^2 = 100
-	1^2 + 0^2 + 0^2 = 1
-	```
+  Example:
+  ```
+  Input: 19
+  Output: true
+  Explanation:
+  1^2 + 9^2 = 82
+  8^2 + 2^2 = 68
+  6^2 + 8^2 = 100
+  1^2 + 0^2 + 0^2 = 1
+  ```
 
 - Solution
   - 利用 Set
-		```java
-		public boolean isHappy(int n) {
-		    Set<Integer> inLoop = new HashSet<>();
-		    int squareSum, remain;
-		    while (inLoop.add(n)) {
-		        squareSum = 0;
-		        for (; n > 0; n /= 10) {
-		            remain = n % 10;
-		            squareSum += remain * remain;
-		        }
-		        if (squareSum == 1)
-		            return true;
-		        else
-		            n = squareSum;
-		    }
-		    return false;
-		}
-		```
-	- 递归实现
-		```java
-		public boolean isHappy(int n) {
-        if (n < 10) 
-						return (n == 1 || n == 7) ? true : false;
-        
-        int b, sum = 0;
-        while (n > 0) {
-            b = n % 10;
-            sum += b * b;
-            n = n / 10;
+    ```java
+    public boolean isHappy(int n) {
+        Set<Integer> inLoop = new HashSet<>();
+        int squareSum, remain;
+        while (inLoop.add(n)) {
+            squareSum = 0;
+            for (; n > 0; n /= 10) {
+                remain = n % 10;
+                squareSum += remain * remain;
+            }
+            if (squareSum == 1)
+                return true;
+            else
+                n = squareSum;
         }
-        return isHappy(sum);
+        return false;
     }
-		```
+    ```
+  - 递归实现
+    ```java
+    public boolean isHappy(int n) {
+      if (n < 10)
+          return (n == 1 || n == 7) ? true : false;
+
+      int b, sum = 0;
+      while (n > 0) {
+          b = n % 10;
+          sum += b * b;
+          n = n / 10;
+      }
+      return isHappy(sum);
+    }
+    ```
 ### 1.3. Contains Duplicate
 
 [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/description/)
@@ -164,18 +164,18 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
 
 - Question
   > Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k.
-	
-	Example 1:
-	```
-	Input: nums = [1,2,3,1], k = 3
-	Output: true
-	```
 
-	Example 2:
-	```
-	Input: nums = [1,2,3,1,2,3], k = 2
-	Output: false
-	```
+  Example 1:
+  ```
+  Input: nums = [1,2,3,1], k = 3
+  Output: true
+  ```
+
+  Example 2:
+  ```
+  Input: nums = [1,2,3,1,2,3], k = 2
+  Output: false
+  ```
 
 - Solution
 
@@ -188,18 +188,18 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
   ```java
   // 时间复杂度：O(n)
   // 空间复杂度：O(k)
-	public boolean containsNearbyDuplicate(int[] nums, int k) {
-			if (nums == null || nums.length <= 1 || k <= 0)
-					return false;
-			HashSet<Integer> record = new HashSet<>();
-			for (int i = 0 ; i < nums.length; i ++) {
-					if (!record.add(nums[i]))
-							return true;
-					if (record.size() == k + 1)
-							record.remove(nums[i-k]);
-			}
-			return false;
-	}
+  public boolean containsNearbyDuplicate(int[] nums, int k) {
+      if (nums == null || nums.length <= 1 || k <= 0)
+          return false;
+      HashSet<Integer> record = new HashSet<>();
+      for (int i = 0 ; i < nums.length; i ++) {
+          if (!record.add(nums[i]))
+              return true;
+          if (record.size() == k + 1)
+              record.remove(nums[i-k]);
+      }
+      return false;
+  }
   ```
 
 ### 1.5. Contains Duplicate III
@@ -207,8 +207,8 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
 [220. Contains Duplicate III](https://leetcode.com/problems/contains-duplicate-iii/description/)
 
 - Question
-
   > Given an array of integers, find out whether there are two distinct indices i and j in the array such that the absolute difference between nums[i] and nums[j] is at most t and the absolute difference between i and j is at most k.
+
 - Solution
 
   同样可以使用滑动窗口来求解此问题，则需要在窗口中寻找以下元素：
@@ -312,13 +312,13 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
 
 - Question
   > Given an array of integers, return indices of the two numbers such that they add up to a specific target.
-  > 
+  >
   > You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
   Example:
   ```
   Given nums = [2, 7, 11, 15], target = 9,
-  
+
   Because nums[0] + nums[1] = 2 + 7 = 9,
   return [0, 1].
   ```
@@ -334,7 +334,7 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
             HashMap<Integer, Integer> record = new HashMap<>();
             for (int i = 0; i < nums.length; i ++) {
                 int complement = target - nums[i];
-                if (record.containsKey(complement)) { 
+                if (record.containsKey(complement)) {
                     int[] res = {i, record.get(complement)};
                     return res;
                 }
@@ -373,10 +373,10 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
   B = [-2,-1]
   C = [-1, 2]
   D = [ 0, 2]
-  
+
   Output:
   2
-  
+
   Explanation:
   The two tuples are:
   1. (0, 0, 0, 1) -> A[0] + B[0] + C[0] + D[1] = 1 + (-2) + (-1) + 2 = 0
@@ -422,7 +422,7 @@ Map 和 Set 数据结构可以使用 HashTable 或平衡 BST 实现。**使用�
 
 - Question
   > Given n points in the plane that are all pairwise distinct, a "boomerang" is a tuple of points (i, j, k) such that the distance between i and j equals the distance between i and k (the order of the tuple matters).
-  > 
+  >
   > Find the number of boomerangs. You may assume that n will be at most 500 and coordinates of points are all in the range [-10000, 10000] (inclusive).
 
   Example:
