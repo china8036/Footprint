@@ -8,8 +8,9 @@
       - [2.1.2. 无重复元素的有序序列](#212-无重复元素的有序序列)
       - [2.1.3. 有重复元素的有序序列](#213-有重复元素的有序序列)
     - [2.2. 旋转过的数组中查找元素](#22-旋转过的数组中查找元素)
-    - [2.3. 含空串的数组中查找元素](#23-含空串的数组中查找元素)
-    - [2.4. 有序矩阵中查找元素](#24-有序矩阵中查找元素)
+    - [2.3. 旋转数组中查找最小元素](#23-旋转数组中查找最小元素)
+    - [2.4. 含空串的数组中查找元素](#24-含空串的数组中查找元素)
+    - [2.5. 有序矩阵中查找元素](#25-有序矩阵中查找元素)
   - [3. Refer Links](#3-refer-links)
 
 # Sort & Search
@@ -181,7 +182,50 @@ public int magicIndex(int [] arr, int start, int end) {
   ```
   算法的时间复杂度为 O(logn)，但若有很多重复元素，数组（子数组）的左右两边都得查找，因此时间复杂度退化为 O(n)。
 
-### 2.3. 含空串的数组中查找元素
+### 2.3. 旋转数组中查找最小元素
+
+https://www.nowcoder.com/questionTerminal/9f3231a991af4f55b95579b44b7a01ba
+
+- Question
+  > 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为 1。
+
+- Solution
+  - 解法 1：暴力查找，遍历整个数组，找出其中最小的数。
+  - 解法 2：
+    ```java
+   public int minNumberInRotateArray(int[] array) {
+        if (array.length == 0)
+            return 0;
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] > array[i + 1])
+                return array[i + 1];
+        }
+        return array[0];
+    }
+    ```
+  - 解法 3：二分思想
+    ```java
+    public int minNumberInRotateArray(int [] array) {
+        if (array.length == 0)
+            return 0;
+        int left = 0;
+        int right = array.length - 1;
+        int middle = -1;
+        while (array[left] >= array[right]) {
+            if (right - left == 1)
+                return array[right];
+
+            middle = left + (right - left) / 2;
+            if (array[middle] >= array[left])
+                left = middle;
+            if (array[middle] <= array[right])
+                right = middle;
+        }
+        return array[middle];
+    }
+    ```
+
+### 2.4. 含空串的数组中查找元素
 
 [《CC 150 11.5》](https://www.nowcoder.com/questionTerminal/06f532d3230042769b4d156e963a4f4a)
 
@@ -232,36 +276,65 @@ public int magicIndex(int [] arr, int start, int end) {
   }
   ```
 
-### 2.4. 有序矩阵中查找元素
+### 2.5. 有序矩阵中查找元素
 
 [《CC 150 11.6》](https://www.nowcoder.com/questionTerminal/3afe6fabdb2c46ed98f06cfd9a20f2ce)
+
+[《剑指 offer》 面试题 3](https://www.nowcoder.com/practice/abc3fe2ce8e146608e868a70efebf62e?tpId=13&tqId=11154&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 - Question
   > 有一个 NxM 的整数矩阵，矩阵的行和列都是从小到大有序的。请设计一个高效的查找算法，查找矩阵中元素 x 的位置。
 
 - Solution
 
-  由于矩阵从左到右升序，从上到下升序。因此，**从右上角开始，每次将搜索值与右上角的值比较**，如果 x 大于 `mat[][]`，则下移一行；如果 x 小于 `mat[][]`，则左移动一列。
+  - 解法 1：
 
-  如下图显示了查找 13 的轨迹。首先与右上角 15 比较，13<15，所以去掉最右 1 列，然后与 11 比较，这是 13>11，去掉最上面 1 行…以此类推，最后找到 13。算法复杂度 O(n)，最坏情况需要 2n 步，即从右上角开始查找，而要查找的目标值在左下角的时候。
+    把每一行看成有序递增的数组，利用二分查找，通过遍历每一行即可得到答案。**时间复杂度是 O(nlogn)**。
+    ```java
+    public boolean Find(int [][] array,int target) {
+        for (int i=0; i<array.length; i++) {
+            int low=0;
+            int high=array[i].length-1;
+            while(low<=high) {
+                int mid=(low+high)/2;
+                if(target>array[i][mid])
+                    low=mid+1;
+                else if(target<array[i][mid])
+                    high=mid-1;
+                else
+                    return true;
+            }
+        }
+        return false;
 
-  ![image](http://img.cdn.firejq.com/jpg/2018/10/22/ff60d65ce6729b24a681305a4d5e01d6.jpg)
+    }
+    ```
 
-  ```java
-  public int[] findElement(int[][] mat, int n, int m, int x) {
-      if (mat == null || mat.length != n || mat[0].length != m)
-          return null;
-      int row = 0, col = m - 1;
-      while (row < n && col >= 0) {
-          if (mat[row][col] == x)
-              return new int[]{row, col};
-          else if(mat[row][col] < x)
-              row++;
-          else
-              col--;
-      }
-      return null;
-  }
-  ```
+  - 解法 2：
+
+    由于矩阵从左到右升序，从上到下升序。因此，**右上角的点相当于整个矩阵的中位数。从右上角开始，每次将搜索值与右上角的值比较**，如果 x 大于 `mat[][]`，则下移一行；如果 x 小于 `mat[][]`，则左移动一列。
+
+    如下图显示了查找 13 的轨迹。首先与右上角 15 比较，13<15，所以去掉最右 1 列，然后与 11 比较，这是 13>11，去掉最上面 1 行…以此类推，最后找到 13。**时间复杂度 O(n)**，最坏情况需要 2n 步，即从右上角开始查找，而要查找的目标值在左下角的时候。
+
+    ![image](http://img.cdn.firejq.com/jpg/2018/10/22/ff60d65ce6729b24a681305a4d5e01d6.jpg)
+
+    ```java
+    public int[] findElement(int[][] mat, int n, int m, int x) {
+        if (mat == null || mat.length != n || mat[0].length != m)
+            return null;
+        int row = 0, col = m - 1;
+        while (row < n && col >= 0) {
+            if (mat[row][col] == x)
+                return new int[]{row, col};
+            else if(mat[row][col] < x)
+                row++;
+            else
+                col--;
+        }
+        return null;
+    }
+    ```
+
+    Follow up：若矩阵从左到右递增，从上到下递减，则右下角的点相当于整个矩阵的中位数，从右下角开始进行搜索即可。
 
 ## 3. Refer Links

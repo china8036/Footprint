@@ -1106,7 +1106,7 @@ http://coding.imooc.com/learn/questiondetail/3208.html
 
 [Leetcode 493. Reverse Pairs](https://leetcode.com/problems/reverse-pairs/)
 
-《剑指 offer》 36 题
+《剑指 offer》 面试题 36
 
 https://blog.csdn.net/DERRANTCM/article/details/46761051
 

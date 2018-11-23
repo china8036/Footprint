@@ -10,6 +10,7 @@
       - [1.6.2. 中序遍历 Binary Tree Inorder Traversal](#162-中序遍历-binary-tree-inorder-traversal)
       - [1.6.3. 后序遍历 Binary Tree Postorder Traversal](#163-后序遍历-binary-tree-postorder-traversal)
     - [1.7. 双栈排序](#17-双栈排序)
+    - [1.8. 出栈顺序判断](#18-出栈顺序判断)
   - [2. Queue](#2-queue)
     - [2.1. 实现一个队列](#21-实现一个队列)
     - [2.2. 二叉树的层序遍历](#22-二叉树的层序遍历)
@@ -21,6 +22,7 @@
       - [2.3.1. Perfect Squares](#231-perfect-squares)
       - [2.3.2. Word Ladder](#232-word-ladder)
       - [2.3.3. Word Ladder II](#233-word-ladder-ii)
+    - [2.4. 滑动窗口的最大值](#24-滑动窗口的最大值)
   - [3. Heap](#3-heap)
     - [3.1. Top K 问题](#31-top-k-问题)
       - [3.1.1. Top K Frequent Words](#311-top-k-frequent-words)
@@ -595,6 +597,30 @@
     - QuickSort：在每一层递归中，创建 2 个辅助栈，并根据 pivot element 将原栈的元素分到 2 个辅助栈中。进行递归排序后，将所有栈的元素归并放回原栈。
     - MergeSort：在每一层递归中，创建 2 个辅助栈，递归排序每个栈，然后再把它们归并到一起排好序，放回原来的栈。
 
+### 1.8. 出栈顺序判断
+
+[《剑指 offer》 面试题 22](https://www.nowcoder.com/practice/d77d11405cc7470d82554cb392585106?tpId=13&tqId=11174&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列 1,2,3,4,5 是某栈的压入顺序，序列 4,5,3,2,1 是该压栈序列对应的一个弹出序列，但 4,3,5,1,2 就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+
+- Solution
+  ```java
+  public boolean IsPopOrder(int [] pushA,int [] popA) {
+    if (pushA.length == 0)
+        return false;
+    ArrayDeque<Integer> stack = new ArrayDeque<>();
+    for (int i = 0, j = 0; i < pushA.length;) {
+        stack.push(pushA[i++]);
+        while (j < popA.length && stack.peek() == popA[j]) {
+            stack.pop();
+            j++;
+        }
+    }
+    return stack.isEmpty();
+  }
+  ```
+
 ## 2. Queue
 
 ### 2.1. 实现一个队列
@@ -846,6 +872,41 @@
   在 Word Ladder 的基础上，返回整个变化的过程。
 
 - Solution
+
+### 2.4. 滑动窗口的最大值
+
+[《剑指 offer》 面试题 65](https://www.nowcoder.com/practice/1624bc35a45c42c0bc17d17fa0cba788?tpId=13&tqId=11217&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+- Question
+  > 给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，如果输入数组 `{2,3,4,2,6,2,5,1}` 及滑动窗口的大小 3，那么一共存在 6 个滑动窗口，他们的最大值分别为 `{4,4,6,6,6,5}`； 针对数组 `{2,3,4,2,6,2,5,1}` 的滑动窗口有以下 6 个： `{[2,3,4],2,6,2,5,1}`， `{2,[3,4,2],6,2,5,1}`， `{2,3,[4,2,6],2,5,1}`， `{2,3,4,[2,6,2],5,1}`，`{2,3,4,2,[6,2,5],1}`， `{2,3,4,2,6,[2,5,1]}`。
+
+- Solution
+
+  用一个双端队列，队列第一个位置保存当前窗口的最大值，当窗口滑动一次：
+  1. 判断当前最大值是否过期。
+  1. 新增加的值从队尾开始比较，把所有比他小的值丢掉。
+  ```java
+  public ArrayList<Integer> maxInWindows(int [] num, int size) {
+      ArrayList<Integer> res = new ArrayList<>();
+      if(size == 0) return res;
+      int begin;
+      ArrayDeque<Integer> q = new ArrayDeque<>();
+      for(int i = 0; i < num.length; i++){
+          begin = i - size + 1;
+          if(q.isEmpty())
+              q.add(i);
+          else if(begin > q.peekFirst())
+              q.pollFirst();
+
+          while((!q.isEmpty()) && num[q.peekLast()] <= num[i])
+              q.pollLast();
+          q.add(i);
+          if(begin >= 0)
+              res.add(num[q.peekFirst()]);
+      }
+      return res;
+  }
+  ```
 
 ## 3. Heap
 

@@ -351,6 +351,8 @@ int getmid(int L[], int low, int high)
 
 《CC 150》 18.9
 
+[《剑指 offer》 面试题 64](https://www.nowcoder.com/practice/9be0172896bd43948f8a32fb954e1be1?tpId=13&tqId=11216&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
 所谓“动态”求中位数，指的是对一个元素动态改变的数据流，在每次元素更改时求出其中位数。
 
 由于数据是从一个数据流中读出来的，数据的数目随着时间的变化而增加。因此可以用一个数据容器来保存从流中读出来的数据，当有新的数据流中读出来时，这些数据就插入到数据容器中。那么这个数据容器用什么数据结构定义更合适呢？
@@ -364,6 +366,43 @@ int getmid(int L[], int low, int high)
 因此，可以**先把新的数据插入到最大堆中，接着把最大堆中的最大的数字拿出来插入到最小堆中**。由于最终插入到最小堆的数字都是原最大堆中最大的数字，这样就保证了最小堆中的所有数字都大于最大堆中的数字。
 
 往堆中插入一个数据的时间效率是 O(logn)。由于只需 O(1) 时间就可以得到位于堆顶的数据，因此得到中位数的时间效率是 O(1)。
+
+```java
+public class Solution {
+    private int count = 0;
+    private PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+    private PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(15, (Integer o1, Integer o2) -> {
+        return o2 - o1;
+    });
+
+    public void Insert(Integer num) {
+        if (count %2 == 0) {// 当数据总数为偶数时，新加入的元素，应当进入小根堆
+            //（注意不是直接进入小根堆，而是经大根堆筛选后取大根堆中最大元素进入小根堆）
+            //1. 新加入的元素先入到大根堆，由大根堆筛选出堆中最大的元素
+            maxHeap.offer(num);
+            int filteredMaxNum = maxHeap.poll();
+            //2. 筛选后的【大根堆中的最大元素】进入小根堆
+            minHeap.offer(filteredMaxNum);
+        } else {// 当数据总数为奇数时，新加入的元素，应当进入大根堆
+            //（注意不是直接进入大根堆，而是经小根堆筛选后取小根堆中最大元素进入大根堆）
+            //1. 新加入的元素先入到小根堆，由小根堆筛选出堆中最小的元素
+            minHeap.offer(num);
+            int filteredMinNum = minHeap.poll();
+            //2. 筛选后的【小根堆中的最小元素】进入大根堆
+            maxHeap.offer(filteredMinNum);
+        }
+        count++;
+    }
+
+    public Double GetMedian() {
+        if (count % 2 == 0) {
+            return new Double((minHeap.peek() + maxHeap.peek())) / 2;
+        } else {
+            return new Double(minHeap.peek());
+        }
+    }
+}
+```
 
 ## 5. 实现一个 LRU
 
@@ -793,13 +832,33 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
 
 ### 7.2. 用两个栈实现一个队列
 
+[《剑指 offer》 面试题 7](https://www.nowcoder.com/practice/54275ddae22f475981afa2244dd448c6?tpId=13&tqId=11158&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
 > 用两个栈，实现队列的从栈底插入元素 push() 和从栈顶抛出元素 pop()。
 
 入队时，将元素压入 s1。
 
 出队时，将 s1 的元素逐个“倒入”（弹出并压入）s2，在 s1 栈底的元素，不用“倒入”s2（即只“倒”s1.Count()-1 个），直接弹出作为出队元素返回。之后再将 s2 中的元素逐个“倒回”s1。
 
-优化：不用每次弹出后都将元素“倒回”，下次执行 pop 的时候再倒即可。
+优化：**不用每次弹出后都将元素“倒回”，下次执行 pop 的时候继续从 s2 中取栈顶元素即可**。
+
+```java
+public class Solution {
+    Stack<Integer> stack1 = new Stack<Integer>();
+    Stack<Integer> stack2 = new Stack<Integer>();
+
+    public void push(int node) {
+        stack1.push(node);
+    }
+
+    public int pop() {
+        if (stack2.isEmpty())
+            while (!stack1.isEmpty())
+                stack2.push(stack1.pop());
+        return stack2.pop();
+    }
+}
+```
 
 ### 7.3. 设计一个支持常数时间增加、删除和随机选择操作的数据结构
 
@@ -876,6 +935,8 @@ http://www.programgo.com/article/9139994208/;jsessionid=255510294E5DEB1A8463B767
   对于要求允许重复元素的设计，只需将上述结构中，HashMap 的 value 更改为一个 HashSet，并在 HashSet 中存储所有相同元素值的数组索引即可。
 
 ### 7.4. 设计一个带有 getMin 功能的栈
+
+[《剑指 offer》 面试题 21](https://www.nowcoder.com/practice/4c776177d2c04c2494f2555c9fcc1e49?tpId=13&tqId=11173&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 使用一个辅助栈，用于存储当前所有元素中的最小值。
 

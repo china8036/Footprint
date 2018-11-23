@@ -1,6 +1,7 @@
 - [Array & String](#array--string)
   - [1. 元素移动](#1-元素移动)
     - [1.1. Move Zeros](#11-move-zeros)
+    - [1.2. 奇偶分离](#12-奇偶分离)
   - [2. 元素删除](#2-元素删除)
     - [2.1. Remove Element](#21-remove-element)
     - [2.2. Remove Duplicates from Sorted Array](#22-remove-duplicates-from-sorted-array)
@@ -26,13 +27,18 @@
     - [6.2. Longest Substring Without Repeating Characters](#62-longest-substring-without-repeating-characters)
     - [6.3. Find All Anagrams in a String](#63-find-all-anagrams-in-a-string)
     - [6.4. Minimum Window Substring](#64-minimum-window-substring)
+    - [6.5. 和为 S 的连续序列](#65-和为-s-的连续序列)
   - [7. 其它问题](#7-其它问题)
     - [7.1. 变位词](#71-变位词)
     - [7.2. 字符串旋转](#72-字符串旋转)
     - [7.3. 矩阵旋转](#73-矩阵旋转)
-    - [7.4. 矩阵清零](#74-矩阵清零)
-    - [7.5. 连续序列最大和](#75-连续序列最大和)
-    - [7.6. 用数组排出最小的数](#76-用数组排出最小的数)
+    - [7.4. 矩阵顺时针打印](#74-矩阵顺时针打印)
+    - [7.5. 矩阵清零](#75-矩阵清零)
+    - [7.6. 连续序列最大和](#76-连续序列最大和)
+    - [7.7. 连续序列中数字一出现的次数](#77-连续序列中数字一出现的次数)
+    - [7.8. 用数组排出最小的数](#78-用数组排出最小的数)
+    - [7.9. 第 n 个丑数](#79-第-n-个丑数)
+    - [7.10. 正则表达式匹配](#710-正则表达式匹配)
   - [8. Refer Links](#8-refer-links)
 
 # Array & String
@@ -84,6 +90,37 @@
       }
   }
   ```
+
+### 1.2. 奇偶分离
+
+[《剑指 offer》 面试题 14](https://www.nowcoder.com/practice/beb5aa231adc45b2a5dcc5b62c93f593?tpId=13&tqId=11166&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+
+- Solution
+  - 解法 1：使用冒泡排序的思想，每次循环都将各个奇数整体往前移动了一个位置。时间复杂度为 O(n^2)。
+    ```java
+    public void reOrderArray(int [] array) {
+        for (int i = 0; i < array.length; i++) {
+            int flag = 0;
+            for (int j = array.length - 1; j > i; j--) {
+                if (array[j] % 2 == 1 && array[j - 1] % 2 == 0) { // 前偶后奇就交换
+                    swap(array, j, j - 1);
+                    flag = 1;
+                }
+            }
+            if (flag == 0)
+                break;
+        }
+    }
+    private void swap(int [] a, int i, int j) {
+        a[i] ^= a[j];
+        a[j] ^= a[i];
+        a[i] ^= a[j];
+    }
+    ```
+  - 解法 2：复制一个额外辅助空间，扫描辅助数组，直接赋值到原数组即可。空间复杂度和时间复杂度都为 O(n)。
 
 ## 2. 元素删除
 
@@ -156,9 +193,11 @@
 
 ### 3.1. 不等长度的替换
 
+[《剑指 offer》 面试题 4](https://www.nowcoder.com/practice/4060ac7e3e404ad1a894ef3e17650423?tpId=13&tqId=11155&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
 - Question
 
-  编写程序，将字符串中的空格全部替换成 `%20`（假定该字符串有足够的空间存放新字符），要求空间效率为 O(1)。
+  编写程序，将字符串中的空格全部替换成 `%20`（假定该字符串有足够的空间存放新字符），要求空间效率为 O(1)。例如，当字符串为 We Are Happy. 则经过替换之后的字符串为 We%20Are%20Happy。
 
 - Solution
 
@@ -513,6 +552,8 @@
 
 [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/)
 
+[《剑指 offer》 面试题 52](https://www.nowcoder.com/practice/94a4d381a68b47b7a8bed86f2975db46?tpId=13&tqId=11204&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
 - Question
   > Given an array nums of n integers where n > 1, return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
 
@@ -641,6 +682,36 @@
 
 [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/description/)
 
+### 6.5. 和为 S 的连续序列
+
+- Question
+  > 小明很喜欢数学，有一天他在做数学作业时，要求计算出 9~16 的和，他马上就写出了正确答案是 100。但是他并不满足于此，他在想究竟有多少种连续的正数序列的和为 100（至少包括两个数)。没多久，他就得到另一组连续正数和为 100 的序列：`18,19,20,21,22`。现在把问题交给你，你能不能也很快的找出所有和为 S 的连续正数序列？
+
+- Solution
+
+  使用滑动窗口。当总和小于 sum，大指针继续加，否则小指针加。
+  ```java
+  public ArrayList<ArrayList<Integer> > FindContinuousSequence(int sum) {
+      ArrayList<ArrayList<Integer>> allRes = new ArrayList<>();
+      int phigh = 2, plow = 1;
+      while (phigh > plow) {
+          int cur = (phigh + plow) * (phigh - plow + 1) / 2; // a~b 的连续序列求和公式
+          if (cur < sum)
+              phigh++;
+          if (cur == sum) {
+              ArrayList<Integer> res = new ArrayList<>();
+              for (int i = plow; i <= phigh; i++)
+                  res.add(i);
+              allRes.add(res);
+              plow++;
+          }
+          if (cur > sum)
+              plow++;
+      }
+      return allRes;
+  }
+  ```
+
 ## 7. 其它问题
 
 ### 7.1. 变位词
@@ -700,7 +771,38 @@
   ```
   时间效率为 O(n^2)，但已是最优解法，因为任何算法都至少需要访问 n^2 个元素。
 
-### 7.4. 矩阵清零
+### 7.4. 矩阵顺时针打印
+
+[《剑指 offer》 面试题 20](https://www.nowcoder.com/practice/9b4c81a02cd34f76be2659fa0d54342a?tpId=13&tqId=11172&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下 4 X 4 矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字 1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
+
+- Solution
+  ```java
+  public ArrayList<Integer> printMatrix(int [][] matrix) {
+      ArrayList<Integer> result = new ArrayList<>();
+      if (matrix.length == 0)
+          return result;
+      int n = matrix.length, m = matrix[0].length;
+      if (m == 0)
+          return result;
+      int layers = (Math.min(n, m) - 1) / 2 + 1;// 层数
+      for (int i = 0; i < layers; i++) {
+          for (int k = i; k < m - i; k++)
+              result.add(matrix[i][k]);// 左至右
+          for (int j = i + 1; j < n - i; j++)
+              result.add(matrix[j][m - i - 1]);// 右上至右下
+          for (int k = m - i - 2; (k >= i) && (n - i - 1 != i); k--)
+              result.add(matrix[n - i - 1][k]);// 右至左
+          for (int j = n - i - 2; (j > i) && (m - i - 1 != i); j--)
+              result.add(matrix[j][i]);// 左下至左上
+      }
+      return result;
+  }
+  ```
+
+### 7.5. 矩阵清零
 
 - Question
 
@@ -735,59 +837,185 @@
 
   再进一步优化，可以使用位向量来代替 2 个布尔数组，空间效率为 O(1)。
 
-### 7.5. 连续序列最大和
+### 7.6. 连续序列最大和
 
 《CC 150》 17.8
 
-《剑指 offer》 31 题
+[《剑指 offer》 面试题 31](https://www.nowcoder.com/practice/459bd355da1549fa8a49e350bf3df484?tpId=13&tqId=11183&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
 
 - Question
 
-  给定一个整数数组（有正数也有负数），找出总和最大的连续数列，返回最大和。
+  给定一个整数数组（有正数也有负数），找出总和最大的连续数列（长度可为 0），返回最大和。
 
 - Solution
-
-  ```java
-  public int getMaxSum(int [] a) {
-    int maxSum = 0;
-    int sum = 0;
-    for (int i = 0; i < a.length; i++) {
-      sum += a[i];
-      maxSum = Math.max(maxSum, sum);
-      sum = sum < 0 ? 0 : sum;
+  - 解法 1：
+    ```java
+    public int getMaxSum(int [] a) {
+      int maxSum = 0;
+      int sum = 0;
+      for (int i = 0; i < a.length; i++) {
+        sum += a[i];
+        maxSum = Math.max(maxSum, sum);
+        sum = sum < 0 ? 0 : sum;
+      }
+      return maxSum;
     }
-    return maxSum;
+    ```
+  - 解法 2：DP。用 f(i) 表示以第 i 个数字为结尾的子数列的最大和，那么
+    ```
+    f(i) = a[i]             (i == 0 或 f(i - 1) < 0)
+         = a[i] + f(i - 1)  (i != 0 且 f(i - 1) > 0)
+    ```
+
+- Follow Up：连续数列的长度至少为 1
+  ```java
+  public int getMaxSum(int[] array) {
+      if (array.length == 0 || array == null)
+          return 0;
+      int curSum = 0;
+      int maxSum = 0x80000000;
+      for (int i = 0; i < array.length; i++) {
+          if (curSum <= 0)
+              curSum = array[i]; // 记录当前最大值
+          else
+              curSum += array[i]; // 当 array[i] 为正数时，加上之前的最大值并更新最大值
+          maxSum = Math.max(maxSum, curSum); // 更新结果最大值
+      }
+      return maxSum;
   }
   ```
 
-### 7.6. 用数组排出最小的数
+### 7.7. 连续序列中数字一出现的次数
 
-《剑指 offer》 33 题
+[《剑指 offer》 面试题 32](https://www.nowcoder.com/practice/bd7f978302044eee894445e244c7eee6?tpId=13&tqId=11184&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 - Question
-
-  TODO:
+  > 求出任意非负整数区间中 1 出现的次数（从 1 到 n 中 1 出现的次数）。如 1~13 中包含 1 的数字有 1、10、11、12、13，因此共出现 6 次。
 
 - Solution
-  ```cpp
-  bool cmp(int a, int b)
-  {
-      string ab = to_string(a) + to_string(b);
-      string ba = to_string(b) + to_string(a);
-      return ab < ba;
-  }
-  class Solution
-  {
-  public:
-      string PrintMinNumber(vector<int> n)
-      {
-          sort(n.begin(), n.end(), cmp);
-          string res = "";
-          for (int i : n)
-              res += to_string(i);
-          return res;
+
+  设定整数点（如 1、10、100 等等）作为位置点 i（对应 n 的各位、十位、百位等等），分别对每个数位上有多少包含 1 的点进行分析。根据设定的整数位置，对 n 进行分割，分为两部分，高位 n/i，低位 n%i：
+  - 当 i 表示百位，且百位对应的数 >=2, 如 n=31456,i=100，则 a=314,b=56，此时百位为 1 的次数有 a/10+1=32（最高两位 0~31），每一次都包含 100 个连续的点，即共有 (a%10+1)*100 个点的百位为 1
+  - 当 i 表示百位，且百位对应的数为 1，如 n=31156,i=100，则 a=311,b=56，此时百位对应的就是 1，则共有 a%10（最高两位 0-30) 次是包含 100 个连续点，当最高两位为 31（即 a=311），本次只对应局部点 00~56，共 b+1 次，所有点加起来共有（a%10*100）+(b+1)，这些点百位对应为 1
+  - 当 i 表示百位，且百位对应的数为 0, 如 n=31056,i=100，则 a=310,b=56，此时百位为 1 的次数有 a/10=31（最高两位 0~30）
+  综合以上三种情况，当百位对应 0 或》=2 时，有 (a+8)/10 次包含所有 100 个点，还有当百位为 1(a%10==1)，需要增加局部点 b+1。之所以补 8，是因为当百位为 0，则 a/10==(a+8)/10，当百位》=2，补 8 会产生进位位，效果等同于 (a/10+1)。
+
+  ```java
+  public int NumberOf1Between1AndN_Solution(int n) {
+      int count = 0;
+      for (int i = 1; i <= n; i *= 10) {
+          //i 表示当前分析的是哪一个数位
+          int a = n / i, b = n % i;
+          count = count + (a + 8) / 10 * i + (a % 10 == 1 ? 1 : 0) * (b + 1);
       }
-  };
+      return count;
+  }
+  ```
+
+### 7.8. 用数组排出最小的数
+
+[《剑指 offer》 面试题 33](https://www.nowcoder.com/practice/8fecd3f8ba334add803bf2a06af1b993?tpId=13&tqId=11185&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为 321323。
+
+- Solution
+  ```java
+  public String PrintMinNumber(int [] numbers) {
+      ArrayList<Integer> list = new ArrayList<>();
+      int n = numbers.length;
+      for (int i = 0; i < n; i++)
+          list.add(numbers[i]);
+      Collections.sort(list, (Integer str1, Integer str2) -> {
+              String s1 = str1 + "" + str2;
+              String s2 = str2 + "" + str1;
+              return s1.compareTo(s2);
+      });
+      String s = "";
+      for (int j : list)
+          s += j;
+      return s;
+  }
+  ```
+
+### 7.9. 第 n 个丑数
+
+[《剑指 offer》 面试题 34](https://www.nowcoder.com/practice/6aa9e04fc3794f68acf8778237ba065b?tpId=13&tqId=11186&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 把只包含质因子 2、3 和 5 的数称作丑数（Ugly Number）。例如 6、8 都是丑数，但 14 不是，因为它包含质因子 7。习惯上我们把 1 当做是第一个丑数。求按从小到大的顺序的第 N 个丑数。
+
+- Solution
+  ```java
+  public int GetUglyNumber_Solution(int index) {
+      if (index < 7)
+          return index;
+      int [] res = new int[index];
+      res[0] = 1;
+      int t2 = 0, t3 = 0, t5 = 0;
+      for (int i = 1; i < index; i++) {
+          res[i] = Math.min(res[t2] * 2, Math.min(res[t3] * 3, res[t5] * 5));
+          if (res[i] == res[t2] * 2)
+              t2++;
+          if (res[i] == res[t3] * 3)
+              t3++;
+          if (res[i] == res[t5] * 5)
+              t5++;
+      }
+      return res[index - 1];
+  }
+  ```
+
+### 7.10. 正则表达式匹配
+
+[《剑指 offer》 面试题 53](https://www.nowcoder.com/practice/45327ae22b7b413ea21df13ee7d6429c?tpId=13&tqId=11205&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 请实现一个函数用来匹配包括'`.`'和'`*`'的正则表达式。模式中的字符'`.`'表示任意一个字符，而'`*`'表示它前面的字符可以出现任意次（包含 0 次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"`aaa`"与模式"`a.a`"和"`ab*ac*a`"匹配，但是与"`aa.a`"和"`ab*a`"均不匹配
+
+- Solution
+
+  当模式中的第二个字符不是“*”时：
+  1. 如果字符串第一个字符和模式中的第一个字符相匹配，那么字符串和模式都后移一个字符，然后匹配剩余的。
+  1. 如果 字符串第一个字符和模式中的第一个字符相不匹配，直接返回 false。
+
+  当模式中的第二个字符是“*”时：
+  - 如果字符串第一个字符跟模式第一个字符不匹配，则模式后移 2 个字符，继续匹配。
+  - 如果字符串第一个字符跟模式第一个字符匹配，可以有 3 种匹配方式：
+    1. 模式后移 2 字符，相当于 `x*` 被忽略。
+    1. 字符串后移 1 字符，模式后移 2 字符。
+    1. 字符串后移 1 字符，模式不变，即继续匹配字符下一位，因为*可以匹配多位。
+  ```java
+  public class Solution {
+      public boolean match(char[] str, char[] pattern) {
+          if (str == null || pattern == null)
+              return false;
+          int strIndex = 0;
+          int patternIndex = 0;
+          return matchCore(str, strIndex, pattern, patternIndex);
+      }
+      private boolean matchCore(char[] str, int strIndex, char[] pattern, int patternIndex) {
+          // 有效性检验：str 到尾，pattern 到尾，匹配成功
+          if (strIndex == str.length && patternIndex == pattern.length)
+              return true;
+          //pattern 先到尾，匹配失败
+          if (strIndex != str.length && patternIndex == pattern.length)
+              return false;
+          // 模式第 2 个是*，且字符串第 1 个跟模式第 1 个匹配，分 3 种匹配模式；如不匹配，模式后移 2 位
+          if (patternIndex + 1 < pattern.length && pattern[patternIndex + 1] == '*') {
+              if ((strIndex != str.length && pattern[patternIndex] == str[strIndex]) || (pattern[patternIndex] == '.' && strIndex != str.length)) {
+                  return matchCore(str, strIndex, pattern, patternIndex + 2)// 模式后移 2，视为 x*匹配 0 个字符
+                          || matchCore(str, strIndex + 1, pattern, patternIndex + 2)// 视为模式匹配 1 个字符
+                          || matchCore(str, strIndex + 1, pattern, patternIndex);//*匹配 1 个，再匹配 str 中的下一个
+              } else
+                  return matchCore(str, strIndex, pattern, patternIndex + 2);
+          }
+          // 模式第 2 个不是*，且字符串第 1 个跟模式第 1 个匹配，则都后移 1 位，否则直接返回 false
+          if ((strIndex != str.length && pattern[patternIndex] == str[strIndex]) || (pattern[patternIndex] == '.' && strIndex != str.length))
+              return matchCore(str, strIndex + 1, pattern, patternIndex + 1);
+          return false;
+      }
+  }
   ```
 
 ## 8. Refer Links

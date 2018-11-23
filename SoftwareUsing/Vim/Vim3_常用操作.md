@@ -73,7 +73,7 @@
 
 在普通模式下使用方向键或者 `h,j,k,l` 键可以移动游标。
 - h	左
-- l	右（小写 L）
+- l	右
 - j	下
 - k	上
 
@@ -96,8 +96,8 @@
 - `G` 跳转到文档末尾
 - 跳转到指定行`
   - `number + gg`
-  - `number + G` 
-  - `:number` 
+  - `number + G`
+  - `:number`
 - `g;` 跳转到最后一个发生修改的行
 - `t [char]` 移动到指定字符的前一个字符
 - `Ctrl` + `f`/`F` 光标向下移动一页
@@ -275,7 +275,7 @@ Vim 中有 12 个粘贴板（寄存器），使用 `:h reg` 可以查看相关�
 ### 14.1. 移动后替换
 
 - 替换单个字符
-  
+
   在普通模式下，将光标移动至要替换的字符处，使用 `r` 进入替换状态，再按下目标字符即可完成替换，完成替换后自动结束替换状态。
 
 - 替换多个字符
@@ -448,7 +448,7 @@ eg:
 Map 是 Vim 强大的一个重要原因，可以自定义各种快捷键，用起来自然得心应手。通过 `:h map-commands` 可以查看相关文档。
 
 - `:map [key] YOUR_COMMAND`
-  
+
   eg:
   - `:map <F2> a<C-R>=strftime("%c")<CR><Esc>`: 定义 F2 为快捷键，在光标之后追加当前的日期和时间。
   - `:map <S-F2> <Esc>i<ul><CR><Space><Space><li></li><CR></ul><Esc>kcit`: 定义 `Shift + F2` 为快捷键，在光标后追加 HTML 标签，并将光标移动到标签体的位置。
@@ -464,7 +464,7 @@ Map 是 Vim 强大的一个重要原因，可以自定义各种快捷键，用�
 - `i`: 表示在插入模式下生效。
 - `c`: 表示在命令行模式下生效。
 
-eg: 
+eg:
 - `imap <silent> <C-D><C-D> <C-R>=strftime("%e %b %Y")<CR>`: 在 Insert 模式下输入两次 CTRL-D 将促使 Vim 调用它的内置 strftime() 函数并插入当前的日期。**可以使用相同的通用模式，让插入模式或缩写词执行任何可编写脚本的操作**。只需要将相应的 Vimscript 表达式或函数调用放到第一个 `<C-R>=`（告诉 Vim 插入后面内容的计算结果）和最后一个 `<CR>`（告诉 Vim 实际地执行前面的表达式）之间。
 - `imap <silent> <C-D><C-D> <C-R>=getcwd()<CR>`: 插入当前路径。
 - `imap <silent> <C-C> <C-R>=string(eval(input("Calculate: ")))<CR>`: 嵌入一个简单的计算器，在文本插入期间输入 `CTRL-C` 便可调用该计算器。
@@ -484,8 +484,8 @@ eg:
 ### 26.1. autocmd 命令
 
 若 vim 编译时加入了 `+autocmd` 特性，则可通过 `:autocmd` / `:au` 命令可以在 vim 中定义自动命令操作：
-- 定义自动命令 
-  
+- 定义自动命令
+
   - `:au[tocmd] [group] {event} {pat} [nested] {cmd}`: 把 {cmd} 加到 Vim 在匹配 {pat} 模式的文件执行 {event} 事件时自动执行的命令列表。Vim 总把 {cmd} 加到已有的自动命令之后，这样保证自动命令的执行顺序与其定义的顺序相同。如果没有给定 {group} 参数，Vim 使用当前组 （由 `:augroup` 定义）。
 
     可以通过 `:set verbose=9` 使 Vim 在执行自动命令时回显，便于调试和测试。
@@ -595,7 +595,7 @@ eg:
   - `-nargs=+`: 至少提供一个参数
 - `:command -complete=custom,<fucn_name> <your_command> <exec_code>` 自定义命令，同时设置该命令的自动补全函数。
 
-eg: 
+eg:
 1. 定义 `:command TT pyx print("123")`
 1. 执行 `:TT`，显示 `123`
 

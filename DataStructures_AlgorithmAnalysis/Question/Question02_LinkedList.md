@@ -4,6 +4,7 @@
     - [1.2. Reverse Linked List II](#12-reverse-linked-list-ii)
     - [1.3. Swap Nodes in Pairs](#13-swap-nodes-in-pairs)
     - [1.4. Reverse Nodes in k-Group](#14-reverse-nodes-in-k-group)
+    - [1.5. 逆序打印链表](#15-逆序打印链表)
   - [2. 删除节点](#2-删除节点)
     - [2.1. Remove Linked List Elements](#21-remove-linked-list-elements)
     - [2.2. Remove Duplicates from Sorted List II](#22-remove-duplicates-from-sorted-list-ii)
@@ -12,14 +13,15 @@
     - [3.1. Insertion Sort List](#31-insertion-sort-list)
     - [3.2. Sort List](#32-sort-list)
   - [4. 快行指针](#4-快行指针)
-    - [4.1. Remove Nth Node From End of List](#41-remove-nth-node-from-end-of-list)
-    - [4.2. Rotate List](#42-rotate-list)
-    - [4.3. Reorder List](#43-reorder-list)
-    - [4.4. Palindrome Linked List](#44-palindrome-linked-list)
-    - [4.5. 有环链表问题](#45-有环链表问题)
-      - [4.5.1. 是否有环](#451-是否有环)
-      - [4.5.2. 环路长度](#452-环路长度)
-      - [4.5.3. 环路起点](#453-环路起点)
+    - [4.1. 找到链表倒数第 k 个节点](#41-找到链表倒数第-k-个节点)
+    - [4.2. 删除链表倒数第 k 个节点](#42-删除链表倒数第-k-个节点)
+    - [4.3. Rotate List](#43-rotate-list)
+    - [4.4. Reorder List](#44-reorder-list)
+    - [4.5. Palindrome Linked List](#45-palindrome-linked-list)
+    - [4.6. 有环链表问题](#46-有环链表问题)
+      - [4.6.1. 是否有环](#461-是否有环)
+      - [4.6.2. 环路长度](#462-环路长度)
+      - [4.6.3. 环路起点](#463-环路起点)
   - [5. 链表相交问题](#5-链表相交问题)
     - [5.1. 判断链表是否相交](#51-判断链表是否相交)
     - [5.2. 求相交链表的交点](#52-求相交链表的交点)
@@ -30,7 +32,8 @@
   - [7. 水池采样问题 (Reservoir Sampling Problem)](#7-水池采样问题-reservoir-sampling-problem)
     - [7.1. Linked List Random Node](#71-linked-list-random-node)
     - [7.2. Random Pick Index](#72-random-pick-index)
-  - [8. Refer Links](#8-refer-links)
+  - [8. 复杂链表复制](#8-复杂链表复制)
+  - [9. Refer Links](#9-refer-links)
 
 # LinkedList
 
@@ -56,6 +59,8 @@
 ### 1.1. Reverse Linked List
 
 [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/description/)
+
+《剑指 offer》 面试题 16
 
 - Question
   > Reverse a singly linked list.
@@ -83,7 +88,7 @@
         public ListNode reverseList(ListNode head) {
             ListNode pre = null;
             ListNode cur = head;
-            while (cur != null){
+            while (cur != null) {
                 ListNode next = cur.next;
                 cur.next = pre;
                 pre = cur;
@@ -194,6 +199,30 @@
   }
   ```
 
+### 1.5. 逆序打印链表
+
+[《剑指 offer》 面试题 5](https://www.nowcoder.com/practice/d0267f7f55b3412ba93bd35cfa8e8035?tpId=13&tqId=11156&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+- Question
+  > 输入一个链表，按链表值从尾到头的顺序返回一个 ArrayList。
+
+- Solution
+  - 解法 1：先将链表反转，然后再顺序输出。
+  - 解法 2：利用栈结构的特性，使用递归实现：
+    ```java
+    public class Solution {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+            if (listNode != null) {
+                this.printListFromTailToHead(listNode.next); // 递归调用，相当于入栈
+                arrayList.add(listNode.val);
+            }
+            return arrayList;
+        }
+    }
+    ```
+
 ## 2. 删除节点
 
 ### 2.1. Remove Linked List Elements
@@ -256,6 +285,29 @@
 
 [82. Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/description/)
 
+[《剑指 offer》 面试题 57](https://www.nowcoder.com/practice/fc533c45b73a41b0b44ccba763f866ef?tpId=13&tqId=11209&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+- Question
+  > 在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5。
+
+- Solution
+  ```java
+  public ListNode deleteDuplication(ListNode pHead) {
+      if (pHead == null || pHead.next == null) // 只有0个或1个结点，则返回
+          return pHead;
+      if (pHead.val == pHead.next.val) { // 当前结点是重复结点
+          ListNode pNode = pHead.next;
+          while (pNode != null && pNode.val == pHead.val)
+              // 跳过值与当前结点相同的全部结点,找到第一个与当前结点不同的结点
+              pNode = pNode.next;
+          return deleteDuplication(pNode); // 从第一个与当前结点不同的结点开始递归
+      } else { // 当前结点不是重复结点
+          pHead.next = deleteDuplication(pHead.next); // 保留当前结点，从下一个结点开始递归
+          return pHead;
+      }
+  }
+  ```
+
 ### 2.3. Delete Node in a Linked List
 
 [237. Delete Node in a Linked List](https://leetcode.com/problems/delete-node-in-a-linked-list/description/)
@@ -301,7 +353,37 @@
 
 ## 4. 快行指针
 
-### 4.1. Remove Nth Node From End of List
+### 4.1. 找到链表倒数第 k 个节点
+
+[《剑指 offer》 面试题 15](https://www.nowcoder.com/practice/529d3ae5a407492994ad2a246518148a?tpId=13&tqId=11167&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 输入一个链表，输出该链表中倒数第 k 个结点。
+
+- Solution
+
+  使用 p1 和 p2 两个指针，且 p2 先行于 p1 n - 1 步，则当 p2 到达链表末尾时，p1 刚好处于倒数第 n 个元素。
+  ```java
+  public ListNode FindKthToTail(ListNode head, int k) {
+      if (head == null || k <= 0)
+          return null;
+      ListNode pre = head;
+      ListNode last = head;
+      for (int i = 1; i < k; i++) { // 先走 k - 1 步
+          if (pre.next != null)
+              pre = pre.next;
+          else
+              return null;
+      }
+      while (pre.next != null) { // 同步走
+          pre = pre.next;
+          last = last.next;
+      }
+      return last;
+  }
+  ```
+
+### 4.2. 删除链表倒数第 k 个节点
 
 [19. Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/)
 
@@ -314,52 +396,43 @@
 
   After removing the second node from the end, the linked list becomes 1->2->3->5.
   ```
-  Note:
 
-  Given n will always be valid.
-
-  Follow up:
-
-  Could you do this in one pass?
 - Solution
 
-  使用 p1 和 p2 两个指针，且 p2 先行于 p1 n 步，则当 p2 到达链表末尾时，p1 刚好处于倒数第 n 个元素。
   ```java
   // 时间复杂度：O(n)
   // 空间复杂度：O(1)
   public ListNode removeNthFromEnd(ListNode head, int n) {
       ListNode dummyHead = new ListNode(0);
-      dummyHead.next = head;
+      dummyHead.next = head;  // 涉及删除操作，使用虚拟头节点便于编码
       ListNode p = dummyHead;
       ListNode q = dummyHead;
-      for( int i = 0 ; i < n + 1 ; i ++ ) {// 先行 n+1 步
-          assert q != null;
+      for (int i = 0; i < n + 1; i++) // 先行 n+1 步
           q = q.next;
-      }
-      while(q != null){
+      while (q != null) { // 同步走
           p = p.next;
           q = q.next;
       }
-      p.next = p.next.next;
+      p.next = p.next.next; // 删除倒数第 k 个节点
       return dummyHead.next;
   }
   ```
 
-### 4.2. Rotate List
+### 4.3. Rotate List
 
 [61. Rotate List](https://leetcode.com/problems/rotate-list/description/)
 
-### 4.3. Reorder List
+### 4.4. Reorder List
 
 [143. Reorder List](https://leetcode.com/problems/reorder-list/description/)
 
-### 4.4. Palindrome Linked List
+### 4.5. Palindrome Linked List
 
 [234. Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/description/)
 
-### 4.5. 有环链表问题
+### 4.6. 有环链表问题
 
-#### 4.5.1. 是否有环
+#### 4.6.1. 是否有环
 
 - Question
   > 给定一个单向链表，编写程序判断该链表是否有环。
@@ -374,7 +447,7 @@
   1. 在一个环形赛道上，方向相同而速度不相同的 2 辆车迟早会相遇。
   1. 速度快多少才能保证一定刚好“追上”而不是刚好“越过”？相差 1 步。因为如果 fast 真的刚好“越过”了 slow，假设 fast 位于 `i` 位置，slow 位于 `i-1` 位置，那么可知在上一个单位时间，fast 就位于 `i-2` 位置，而 slow 位于 `i-1-1 = i-2`，也就是说，在上一个单位时间 2 者就已经“追上”了。
 
-#### 4.5.2. 环路长度
+#### 4.6.2. 环路长度
 
 - Question
   > 给定一个有环链表，遍写程序返回环路的长度。
@@ -383,7 +456,9 @@
 
   定义 2 个指针 fast 和 slow，同时从链表的头节点出发，**slow 指针走 1 步 / 次，fast 指针走 2 步 / 次**，由于链表有环，fast 和 slow 会不断相遇，那么 fast 和 slow 第一次相遇和第二次相遇之间，slow 走过的节点处即为环的长度。
 
-#### 4.5.3. 环路起点
+#### 4.6.3. 环路起点
+
+[《剑指 offer》 面试题 56](https://www.nowcoder.com/practice/253d2c59ec3e4bc68da16833f79a38e4?tpId=13&tqId=11208&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
 
 - Question
   > 给定一个有环链表，编写程序返回环路的起点（开头节点）。
@@ -434,11 +509,26 @@
 
 [160. Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
 
+[《剑指 offer》 面试题 37](https://www.nowcoder.com/practice/6ab1d9a29e88450685099d45c9e31e46?tpId=13&tqId=11189&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
 - 解法 1：将其中一个链表的头尾相连，那么可以将问题转化为求另一个链表中环的开始节点，使用快行指针（fast 走 2 步 / 次，slow 走 1 步 / 次）即可。
 
 - 解法 2：用两个栈分别记录两个链表的节点，再弹出，找到最后一个相等的节点，即为这两个链表的交点。
 
 - 解法 3：将长的链表移动长度差的距离，然后同时移动两个链表，找到第一个相等的节点，即为这两个链表的交点。
+
+- 解法 4：用两个指针扫描”两个链表“，最终两个指针到达 null 或者到达公共结点。
+  ```java
+  public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+      ListNode p1 = pHead1;
+      ListNode p2 = pHead2;
+      while (p1 != p2) {
+          p1 = (p1 == null ? pHead2 : p1.next);
+          p2 = (p2 == null ? pHead1 : p2.next);
+      }
+      return p1;
+  }
+  ```
 
 ## 6. 链表拆分与合并
 
@@ -469,6 +559,8 @@ TODO:
 ### 6.2. 有序链表合并
 
 [21. Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists)
+
+《剑指 offer》 面试题 17
 
 - Question
   > Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
@@ -654,4 +746,92 @@ TODO:
 
 [398. Random Pick Index](https://leetcode.com/problems/random-pick-index/)
 
-## 8. Refer Links
+## 8. 复杂链表复制
+
+[《剑指 offer》 面试题 26](https://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba?tpId=13&tqId=11178&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），返回结果为复制后复杂链表的 head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+
+- Solution
+  - 解法 1：递归实现
+    ```java
+    public RandomListNode Clone(RandomListNode pHead) {
+        if (pHead == null)
+            return null;
+        // 开辟一个新节点
+        RandomListNode pClonedHead = new RandomListNode(pHead.label);
+        pClonedHead.next = pHead.next;
+        pClonedHead.random = pHead.random.
+        // 递归其他节点
+        pClonedHead.next = Clone(pHead.next);
+
+        return pClonedHead;
+    }
+    ```
+  - 解法 2：分为 3 步进行
+    1. 在旧链表中创建新链表，暂不处理新链表的兄弟节点
+    1. 根据旧链表的兄弟节点，初始化新链表的兄弟节点
+    1. 从旧链表中拆分出新链表
+
+    ![image](http://img.cdn.firejq.com/jpg/2018/11/12/7a69e95f52b23865f34de7fbd86bdbcc.jpg)
+
+    ```java
+    public class Solution {
+        public RandomListNode Clone(RandomListNode pHead) {
+            if (pHead == null)
+                return null;
+            RandomListNode currentNode = pHead;
+            //1、复制每个结点，如复制结点 A 得到 A1，将结点 A1 插到结点 A 后面
+            while (currentNode != null) {
+                RandomListNode cloneNode = new RandomListNode(currentNode.label);
+                RandomListNode nextNode = currentNode.next;
+                currentNode.next = cloneNode;
+                cloneNode.next = nextNode;
+                currentNode = nextNode;
+            }
+
+            currentNode = pHead;
+            //2、重新遍历链表，复制老结点的随机指针给新结点，如 A1.random = A.random.next
+            while (currentNode != null) {
+                currentNode.next.random = currentNode.random == null ? null : currentNode.random.next;
+                currentNode = currentNode.next.next;
+            }
+
+            //3、拆分链表，将链表拆分为原链表和复制后的链表
+            currentNode = pHead;
+            RandomListNode pCloneHead = pHead.next;
+            while (currentNode != null) {
+                RandomListNode cloneNode = currentNode.next;
+                currentNode.next = cloneNode.next;
+                cloneNode.next = cloneNode.next == null ? null : cloneNode.next.next;
+                currentNode = currentNode.next;
+            }
+            return pCloneHead;
+        }
+    }
+    ```
+
+  - 解法 3：利用辅助哈希表
+    ```java
+    public RandomListNode Clone(RandomListNode pHead) {
+        HashMap<RandomListNode, RandomListNode> map = new HashMap<>();
+        RandomListNode p = pHead;
+        RandomListNode q = new RandomListNode(-1);
+        while (p != null) {
+            RandomListNode t = new RandomListNode(p.label);
+            map.put(p, t);
+            p = p.next;
+            q.next = t;
+            q = t;
+        }
+        Iterator<Entry<RandomListNode,RandomListNode>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<RandomListNode, RandomListNode> next = it.next();
+            next.getValue().random = map.get(next.getKey().random);
+        }
+        return map.get(pHead);
+    }
+    ```
+
+## 9. Refer Links

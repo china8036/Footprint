@@ -4,11 +4,15 @@
   - [3. 常用技巧](#3-常用技巧)
   - [4. 常见运用](#4-常见运用)
   - [5. 实际问题](#5-实际问题)
-    - [5.1. 签到系统](#51-签到系统)
-    - [5.2. 权限控制](#52-权限控制)
-    - [5.3. 找出配对序列中缺少的数](#53-找出配对序列中缺少的数)
-    - [5.4. 找出连续序列中缺少的数](#54-找出连续序列中缺少的数)
-    - [5.5. 确定需要几位可以将整数 A 转成整数 B](#55-确定需要几位可以将整数-a-转成整数-b)
+    - [5.1. 二进制中一的个数](#51-二进制中一的个数)
+    - [5.2. 实现幂运算](#52-实现幂运算)
+    - [5.3. 签到系统](#53-签到系统)
+    - [5.4. 权限控制](#54-权限控制)
+    - [5.5. 找出配对序列中缺少的数](#55-找出配对序列中缺少的数)
+    - [5.6. 找出连续序列中缺少的数](#56-找出连续序列中缺少的数)
+    - [5.7. 找出序列中只出现一次的两个数](#57-找出序列中只出现一次的两个数)
+    - [5.8. 确定需要几位可以将整数 A 转成整数 B](#58-确定需要几位可以将整数-a-转成整数-b)
+    - [5.9. 不用加减乘除做加法](#59-不用加减乘除做加法)
   - [6. Refer Links](#6-refer-links)
 
 # 位运算
@@ -216,7 +220,68 @@ NOTE:
 
 ## 5. 实际问题
 
-### 5.1. 签到系统
+### 5.1. 二进制中一的个数
+
+《剑指 offer》 面试题 10
+
+《CC 150》 5.5
+
+- Question
+  > 输入一个整数，输出该数二进制表示中 1 的个数。其中负数用补码表示。
+
+- Solution
+  - 直接思路
+    ```java
+    public int NumberOf1(int n) {
+        int count = 0;
+        for (int i = n; i != 0; i >>= 1)
+            count += i & 1;
+        return count;
+    }
+    ```
+
+  - 优化思路：减少循环次数
+    ```java
+    public int NumberOf1(int n) {
+        int count = 0;
+        for (int i = n; i != 0; i &= i - 1) // 每次反转最低有效位的 1 为 0
+            count++;
+        return count;
+    }
+    ```
+
+### 5.2. 实现幂运算
+
+[《剑指 offer》 面试题 11](https://www.nowcoder.com/practice/1a834e5e3e1a4b7ba251417554e07c00?tpId=13&tqId=11165&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 给定一个 double 类型的浮点数 base 和 int 类型的整数 exponent。求 base 的 exponent 次方。
+
+- Solution
+  ```java
+  public double Power(double base, int n) {
+      double res = 1, curr = base;
+      int exponent;
+      if (n > 0)
+          exponent = n;
+      else if (n < 0) {
+          if (base == 0)
+              throw new RuntimeException("分母不能为 0");
+          exponent = -n;
+      } else // n==0
+          return 1;// 0 的 0 次方
+
+      while (exponent != 0) {
+          if ((exponent & 1) == 1)
+              res *= curr;
+          curr *= curr; // 翻倍
+          exponent >>= 1; // 右移一位
+      }
+      return n >= 0 ? res : (1 / res);
+  }
+  ```
+
+### 5.3. 签到系统
 
 ```java
 public static int[] days = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
@@ -242,7 +307,7 @@ public static void main(String[] args) {
 }
 ```
 
-### 5.2. 权限控制
+### 5.4. 权限控制
 
 在一个系统中，用户一般有查询 (Select)、新增 (Insert)、修改 (Update)、删除 (Delete) 四种权限，四种权限有多种组合方式，也就是有 16 中不同的权限状态（2 的 4 次方）。
 
@@ -307,7 +372,7 @@ permission.enable(NewPermission.ALLOW_INSERT
   | NewPermission.ALLOW_UPDATE | NewPermission.ALLOW_DELETE);
 ```
 
-### 5.3. 找出配对序列中缺少的数
+### 5.5. 找出配对序列中缺少的数
 
 一个数组里有 n 个数，其中每个数都出现了 2 次，只有一个数出现了 1 次，如 `1 2 1 4 3 4 2`。怎么使用 O(n) 的时间效率、O(1) 的空间效率找出这个只出现 1 次的数？
 
@@ -325,7 +390,7 @@ permission.enable(NewPermission.ALLOW_INSERT
 - 如果相同：说明左边的序列都是两两配对的，因此只需继续对序列右边的子序列递归即可。
 - 如果不同：说明左边的序列中无法两两配对，即缺少的数在左边的序列中，因此只需继续对序列左边的子序列递归即可。
 
-### 5.4. 找出连续序列中缺少的数
+### 5.6. 找出连续序列中缺少的数
 
 问题 1：有一个数组存有 **1-1000000000**的连续 n 个乱序的整数，其中缺失了一个整数（**缺失的用 0 代替**），怎样快速找出缺失的数？
 
@@ -390,7 +455,50 @@ permission.enable(NewPermission.ALLOW_INSERT
 
   该方法的时间复杂度也是 O(n)，不过空间复杂度为 O(n)。但是其适用面更广，可以找出不止一个缺失的数，并且也相当于将原数组排了序，所以有时候在对空间要求比较高的排序过程中也可以使用。
 
-### 5.5. 确定需要几位可以将整数 A 转成整数 B
+### 5.7. 找出序列中只出现一次的两个数
+
+[《剑指 offer》 面试题 40](https://www.nowcoder.com/practice/e02fdb54d7524710a7d664d082bb7811?tpId=13&tqId=11193&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 一个整型数组里除了两个数字只出现一次之外，其他的数字都出现了偶数次。请写程序找出这**两个**只出现一次的数字。
+
+- Solution
+
+  用位运算实现，如果将所有所有数字相异或，则**最后的结果肯定是那两个只出现一次的数字异或的结果**。所以根据异或的结果 1 所在的最低位，**把原数组分为两个子数组。在每个子数组中，包含一个只出现一次的数字，而其它数字都出现两次。如果能够这样拆分原数组，按照前面的办法就是分别求出这两个只出现一次的数字了**。
+  ```java
+  // 将 num1[0],num2[0] 设置为返回结果
+  public class Solution {
+    public void FindNumsAppearOnce(int [] array, int num1[], int num2[]) {
+      if (array.length < 2)
+        return;
+      int size = array.length;
+      int temp = array[0];
+      for (int i = 1; i < size; i++)
+        temp ^= array[i];
+      if (temp == 0)
+        return;
+
+      int index = 0;
+      while ((temp & 1) == 0) { // 找到最低位的 1 的位置
+        temp >>= 1;
+        index++;
+      }
+      for (int i = 0; i < size; i++) {
+        if (IsBit(array[i], index))
+          num1[0] ^= array[i];
+        else
+          num2[0] ^= array[i];
+      }
+    }
+
+    private boolean IsBit(int num, int index) {
+      num >>= index;
+      return (num & 1) == 1;
+    }
+  }
+  ```
+
+### 5.8. 确定需要几位可以将整数 A 转成整数 B
 
 问题：编写程序确定需要改变几个位，才能将整数 A 转成整数 B？
 
@@ -415,6 +523,38 @@ public int bitSwapRequired(int a, int b) {
 ```
 `n&=(n-1)` 可以用于翻转最低有效位，如 `n=01000100`，`n-1=01000011`，执行 1 次 `n&=(n-1)` 后 `n=01000000`，执行 2 次 `n&=(n-1)` 后 `n=00000000`。这也是一个常见的位操作技巧。
 
+### 5.9. 不用加减乘除做加法
+
+[《剑指 offer》 面试题 47](https://www.nowcoder.com/practice/59ac416b4b944300b617d4f7f111b215?tpId=13&tqId=11201&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 写一个函数，求两个整数之和，要求在函数体内不得使用 +、-、*、/ 四则运算符号。
+
+- Solution
+
+  首先看十进制是如何做的：`5+7=12`，三步走：
+  1. 相加各位的值，不算进位，得到 2。
+  1. 计算进位值，得到 10. 如果这一步的进位值为 0，那么第一步得到的值就是最终结果。
+  1. 重复上述两步，只是相加的值变成上述两步的得到的结果 2 和 10，得到 12。
+
+  同样我们可以用三步走的方式计算二进制值相加。5 的二进制表示为 101，7 的二进制表示为 111，因此：
+  1. 相加各位的值，不算进位，得到 010，**二进制每位相加就相当于各位做异或操作**，`101^111=010`。
+  1. 计算进位值，得到 1010，**相当于各位做与操作得到 101，再向左移一位**，`(101&111)<<1=1010`。
+  1. 重复上述两步， 各位相加 010^1010=1000，进位值为 100=(010&1010)<<1。
+  1. 继续重复上述两步：1000^100 = 1100，进位值为 0，跳出循环，1100 为最终结果。
+
+  使用位运算实现：
+  ```java
+  public int Add(int num1, int num2) {
+      while (num2 != 0) {
+          int temp = num1 ^ num2;
+          num2 = (num1 & num2) << 1;
+          num1 = temp;
+      }
+      return num1;
+  }
+  ```
+
 ## 6. Refer Links
 
 [位运算有什么奇技淫巧？](https://www.zhihu.com/question/38206659)
@@ -430,7 +570,5 @@ public int bitSwapRequired(int a, int b) {
 [九章算法：干货！史上最强位运算面试题大总结！](https://mp.weixin.qq.com/s?__biz=MzA5MzE4MjgyMw==&mid=2649456688&idx=1&sn=467f105e3306a47b5b4768d12d7f6fe7&chksm=887eee38bf09672ec7725ac7edac6f8e3801a1c1cfcb072c16dda99b36d21bcdc9cb08fef8c7&mpshare=1&scene=1&srcid=0317fQV1z43SxmGxHAuVKZWv&key=32ff7e6b073562f9d3e5c6a75b00a1e44ef11b1f30bb189e6e6cac5dbe218b1c0cbfff9d9766ee1fafb419fff7e5dfcc9cf3b892a88a76935043aa6861379c6d572ad08119cbcf3a19bc6da910f843a7&ascene=0&uin=MTUyMzg3NjAwMA%3D%3D&devicetype=iMac+MacBookAir7%2C1+OSX+OSX+10.12.3+build(16D32)&version=12020010&nettype=WIFI&fontScale=100&pass_ticket=0AiIToHJN8yqpuqRAsA5PaaQMJr8KtvlnZ2EqkX0zx%2BEZweRvHKyF%2ByjmycpUbVn)
 
 [快速求出 10 亿整数中缺失的数](https://blog.csdn.net/jxzh1023/article/details/53823001)
-
-TODO:
 
 [【腾讯】连续数打乱判断出少了哪些数？](http://hxraid.iteye.com/blog/618153)

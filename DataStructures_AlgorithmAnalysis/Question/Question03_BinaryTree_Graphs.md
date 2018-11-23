@@ -5,26 +5,33 @@
       - [1.2.1. Binary Tree Level Order Traversal](#121-binary-tree-level-order-traversal)
       - [1.2.2. Populating Next Right Pointers in Each Node](#122-populating-next-right-pointers-in-each-node)
       - [1.2.3. Populating Next Right Pointers in Each Node Ⅱ](#123-populating-next-right-pointers-in-each-node-Ⅱ)
-    - [1.3. Maximum Depth of Binary Tree](#13-maximum-depth-of-binary-tree)
-    - [1.4. Minimum Depth of Binary Tree](#14-minimum-depth-of-binary-tree)
-    - [1.5. Invert Binary Tree](#15-invert-binary-tree)
-    - [1.6. Same Tree](#16-same-tree)
-    - [1.7. Symmetric Tree](#17-symmetric-tree)
-    - [1.8. Children Tree](#18-children-tree)
-    - [1.9. Count Complete Tree Nodes](#19-count-complete-tree-nodes)
-    - [1.10. Sum of Left Leaves](#110-sum-of-left-leaves)
-    - [1.11. Binary Tree Paths](#111-binary-tree-paths)
-    - [1.12. Sum Root to Leaf Numbers](#112-sum-root-to-leaf-numbers)
-    - [1.13. Path Sum](#113-path-sum)
-    - [1.14. Path Sum II](#114-path-sum-ii)
-    - [1.15. Path Sum III](#115-path-sum-iii)
-    - [1.16. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)](#116-lowest-common-ancestor-of-a-binary-tree-bt---lca-问题)
+    - [1.3. 中序遍历](#13-中序遍历)
+      - [1.3.1. 下一个节点](#131-下一个节点)
+    - [1.4. 之字形遍历](#14-之字形遍历)
+    - [1.5. 重建二叉树](#15-重建二叉树)
+    - [1.6. 序列化和反序列化](#16-序列化和反序列化)
+    - [1.7. Maximum Depth of Binary Tree](#17-maximum-depth-of-binary-tree)
+    - [1.8. Minimum Depth of Binary Tree](#18-minimum-depth-of-binary-tree)
+    - [1.9. Invert Binary Tree](#19-invert-binary-tree)
+    - [1.10. Same Tree](#110-same-tree)
+    - [1.11. Symmetric Tree](#111-symmetric-tree)
+    - [1.12. Children Tree](#112-children-tree)
+    - [1.13. Count Complete Tree Nodes](#113-count-complete-tree-nodes)
+    - [1.14. Sum of Left Leaves](#114-sum-of-left-leaves)
+    - [1.15. Binary Tree Paths](#115-binary-tree-paths)
+    - [1.16. Sum Root to Leaf Numbers](#116-sum-root-to-leaf-numbers)
+    - [1.17. Path Sum](#117-path-sum)
+    - [1.18. Path Sum II](#118-path-sum-ii)
+    - [1.19. Path Sum III](#119-path-sum-iii)
+    - [1.20. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)](#120-lowest-common-ancestor-of-a-binary-tree-bt---lca-问题)
   - [2. Binary Search Tree](#2-binary-search-tree)
     - [2.1. Lowest Common Ancestor of a Binary Search Tree (BST - LCA 问题)](#21-lowest-common-ancestor-of-a-binary-search-tree-bst---lca-问题)
     - [2.2. 判断一棵二叉树是否是 BST](#22-判断一棵二叉树是否是-bst)
-    - [2.3. Delete Node in a BST](#23-delete-node-in-a-bst)
-    - [2.4. Convert Sorted Array to Binary Search Tree](#24-convert-sorted-array-to-binary-search-tree)
-    - [2.5. kth Smallest Element in a BST](#25-kth-smallest-element-in-a-bst)
+    - [2.3. 判断是否是 BST 后序遍历序列](#23-判断是否是-bst-后序遍历序列)
+    - [2.4. Delete Node in a BST](#24-delete-node-in-a-bst)
+    - [2.5. Convert Sorted Array to Binary Search Tree](#25-convert-sorted-array-to-binary-search-tree)
+    - [2.6. Convert Binary Search Tree to Doubled Linked List](#26-convert-binary-search-tree-to-doubled-linked-list)
+    - [2.7. kth Smallest Element in a BST](#27-kth-smallest-element-in-a-bst)
   - [3. Balanced Binary Tree](#3-balanced-binary-tree)
     - [3.1. 判断一棵二叉树是否平衡](#31-判断一棵二叉树是否平衡)
   - [4. Graphs](#4-graphs)
@@ -81,6 +88,8 @@
 #### 1.2.1. Binary Tree Level Order Traversal
 
 [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+
+[《剑指 offer》 面试题 60](https://www.nowcoder.com/practice/445c44d982d04483b04a54f298796288?tpId=13&tqId=11213&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
 
 - Question
   > Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
@@ -262,7 +271,197 @@
   }
   ```
 
-### 1.3. Maximum Depth of Binary Tree
+### 1.3. 中序遍历
+
+#### 1.3.1. 下一个节点
+
+[《剑指 offer》 面试题 58](https://www.nowcoder.com/practice/9023a0c988684a53960365b889ceaf5e?tpId=13&tqId=11210&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking&tPage=3)
+
+- Question
+  > 给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+
+- Solution
+
+  分析二叉树的下一个节点，一共有以下情况：
+  1. 二叉树为空，则返回空。
+  1. 节点右孩子存在，则设置一个指针从该节点的右孩子出发，一直沿着指向左子结点的指针找到的叶子节点即为下一个节点。
+  1. 节点不是根节点。如果该节点是其父节点的左孩子，则返回父节点；否则继续向上遍历其父节点的父节点，重复之前的判断，返回结果。
+  ```java
+  TreeLinkNode GetNext(TreeLinkNode node) {
+      if(node==null) return null;
+      if(node.right!=null){    // 如果有右子树，则找右子树的最左节点
+          node = node.right;
+          while(node.left!=null) node = node.left;
+          return node;
+      }
+      while(node.next!=null){ // 没右子树，则找第一个当前节点是父节点左孩子的节点
+          if(node.next.left==node) return node.next;
+          node = node.next;
+      }
+      return null;   // 退到了根节点仍没找到，则返回 null
+  }
+  ```
+
+### 1.4. 之字形遍历
+
+[《剑指 offer》 面试题 61]()
+
+- Question
+  > 请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
+
+- Solution
+
+  利用 Java 中的 LinkedList 的底层实现是双向链表的特点：
+  - 可用做队列，实现树的层次遍历。
+  - 可双向遍历，奇数层时从前向后遍历，偶数层时从后向前遍历。
+
+  ```java
+  public ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
+      ArrayList<ArrayList<Integer>> ret = new ArrayList<>();
+      if (pRoot == null) {
+          return ret;
+      }
+      ArrayList<Integer> list = new ArrayList<>();
+      LinkedList<TreeNode> queue = new LinkedList<>();
+      queue.addLast(null);// 层分隔符
+      queue.addLast(pRoot);
+      boolean leftToRight = true;
+
+      while (queue.size() != 1) {
+          TreeNode node = queue.removeFirst();
+          if (node == null) {// 到达层分隔符
+              Iterator<TreeNode> iter = null;
+              if (leftToRight) {
+                  iter = queue.iterator();// 从前往后遍历
+              } else {
+                  iter = queue.descendingIterator();// 从后往前遍历
+              }
+              leftToRight = !leftToRight;
+              while (iter.hasNext()) {
+                  TreeNode temp = (TreeNode)iter.next();
+                  list.add(temp.val);
+              }
+              ret.add(new ArrayList<Integer>(list));
+              list.clear();
+              queue.addLast(null);// 添加层分隔符
+              continue;// 一定要 continue
+          }
+          if (node.left != null) {
+              queue.addLast(node.left);
+          }
+          if (node.right != null) {
+              queue.addLast(node.right);
+          }
+      }
+
+      return ret;
+  }
+  ```
+
+### 1.5. 重建二叉树
+
+[《剑指 offer》 面试题 6](https://www.nowcoder.com/practice/8a19cbe657394eeaac2f6ea9b0f6fcf6?tpId=13&tqId=11157&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+- Question
+  > 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列 {1,2,4,7,3,5,6,8} 和中序遍历序列 {4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+
+- Solution
+
+  使用递归实现，每次将左右两颗子树当成新的子树进行处理，中序的左右子树索引很好找，前序的开始结束索引通过计算中序中左右子树的大小来计算，然后递归求解，直到 `startPre > endPre || startIn > endIn`。方法每次返回左子树活右子树的根节点。
+  ```java
+  public class Solution {
+      public TreeNode reConstructBinaryTree(int [] pre, int [] in) {
+          TreeNode root = _reConstructBinaryTree(pre, 0, pre.length - 1, in, 0, in.length - 1);
+          return root;
+      }
+      // 前序遍历 {1,2,4,7,3,5,6,8} 和中序遍历序列 {4,7,2,1,5,3,8,6}
+      private TreeNode _reConstructBinaryTree(int [] pre, int startPre, int endPre, int [] in, int startIn, int endIn) {
+          if (startPre > endPre || startIn > endIn)
+              return null;
+          TreeNode root = new TreeNode(pre[startPre]);
+
+          for (int i = startIn; i <= endIn; i++) {
+              if (in[i] == pre[startPre]) {
+                  root.left = _reConstructBinaryTree(pre, startPre + 1, startPre + i - startIn, in, startIn, i - 1);
+                  root.right = _reConstructBinaryTree(pre, i - startIn + startPre + 1, endPre, in, i + 1, endIn);
+                  break;
+              }
+          }
+          return root;
+      }
+  }
+  ```
+
+### 1.6. 序列化和反序列化
+
+[《剑指 offer》 面试题 62](https://www.nowcoder.com/practice/cf7e25aa97c04cc1a68c8f040e71fb84?tpId=13&tqId=11214&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 请实现两个函数，分别用来序列化和反序列化二叉树。
+
+- Solution
+
+  - 对于序列化：使用前序遍历，递归的将二叉树的值转化为字符，并且在每次二叉树的结点不为空时，在转化 val 所得的字符之后添加一个 `,` 作为分割。对于空节点则以 `#` 代替。
+  - 对于反序列化：按照前序顺序，递归的使用字符串中的字符创建一个二叉树（特别注意：在递归时，递归函数的参数一定要是 `char **`，这样才能保证每次递归后指向字符串的指针会随着递归的进行而移动）。
+
+  ```cpp
+  class Solution {
+  public:
+      char* Serialize(TreeNode *root) {
+        if(root == NULL)
+            return NULL;
+          string str;
+          Serialize(root, str);
+          char *ret = new char[str.length() + 1];
+          int i;
+          for(i = 0; i < str.length(); i++){
+              ret[i] = str[i];
+          }
+          ret[i] = '\0';
+          return ret;
+      }
+      void Serialize(TreeNode *root, string& str){
+          if(root == NULL){
+              str += '#';
+              return ;
+          }
+          string r = to_string(root->val);
+          str += r;
+          str += ',';
+          Serialize(root->left, str);
+          Serialize(root->right, str);
+      }
+
+      TreeNode* Deserialize(char *str) {
+          if(str == NULL)
+              return NULL;
+          TreeNode *ret = Deserialize(&str);
+
+          return ret;
+      }
+      TreeNode* Deserialize(char **str){// 由于递归时，会不断的向后读取字符串
+          if(**str == '#'){  // 所以一定要用**str,
+              ++(*str);         // 以保证得到递归后指针 str 指向未被读取的字符
+              return NULL;
+          }
+          int num = 0;
+          while(**str != '\0' && **str != ','){
+              num = num*10 + ((**str) - '0');
+              ++(*str);
+          }
+          TreeNode *root = new TreeNode(num);
+          if(**str == '\0')
+              return root;
+          else
+              (*str)++;
+          root->left = Deserialize(str);
+          root->right = Deserialize(str);
+          return root;
+      }
+  };
+  ```
+
+### 1.7. Maximum Depth of Binary Tree
 
 [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/)
 
@@ -291,7 +490,7 @@
   }
   ```
 
-### 1.4. Minimum Depth of Binary Tree
+### 1.8. Minimum Depth of Binary Tree
 
 [111. Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/description/)
 
@@ -328,9 +527,11 @@
   }
   ```
 
-### 1.5. Invert Binary Tree
+### 1.9. Invert Binary Tree
 
 [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/description/)
+
+[《剑指 offer》 面试题 19](https://www.nowcoder.com/practice/564f4c26aa584921bc75623e48ca3011?tpId=13&tqId=11171&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 - Question
   > Invert a binary tree.
@@ -363,7 +564,7 @@
   }
   ```
 
-### 1.6. Same Tree
+### 1.10. Same Tree
 
 [100. Same Tree](https://leetcode.com/problems/same-tree/description/)
 
@@ -413,9 +614,11 @@
   }
   ```
 
-### 1.7. Symmetric Tree
+### 1.11. Symmetric Tree
 
 [101. Symmetric Tree](https://leetcode.com/problems/symmetric-tree/description/)
+
+[《剑指 offer》 面试题 59](https://www.nowcoder.com/practice/ff05d44dfdb04e1d83bdbdab320efbcb?tpId=13&tqId=11211&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
 
 - Question
   > Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
@@ -452,11 +655,15 @@
   }
   ```
 
-### 1.8. Children Tree
+### 1.12. Children Tree
+
+[《剑指 offer》 面试题 18](https://www.nowcoder.com/practice/6e196c44c7004d15b1610b9afca8bd88?tpId=13&tqId=11170&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+《CC 150》 4.8
 
 - Question
 
-  有 2 棵二叉树 T1 和 T2，T1 的节点数远大于 T2，编写程序判断 T2 是否是 T1 的子树，即是否存在节点 n，使得从 n 把 T1 砍断后得到的树与 T2 完全相同。
+  > 有 2 棵二叉树 T1 和 T2，T1 的节点数远大于 T2，编写程序判断 T2 是否是 T1 的子树，即是否存在节点 n，使得从 n 把 T1 砍断后得到的树与 T2 完全相同。
 
 - Solution
   - 解法 1
@@ -467,9 +674,27 @@
 
   - 解法 2
 
-    **遍历 T1，每当 T1 的某个节点与 T2 的根结点相同时，则调用 `treeMatch()` 进行匹配，即比较两颗子树是否完全相同**。时间效率为 O(n+km)，n 为 T1 的节点数，m 为 T2 的节点数，k 为 T2 根结点在 T1 中出现的次数。而事实上，在进行匹配时，一旦发现有节点不同就可以提前结束 `treeMatch()`，因此实际的时间效率会更高，空间复杂度为 O(logn+logm)。
+    **遍历 T1，每当 T1 的某个节点与 T2 的根结点相同时，则调用 `isSameTree()` 进行匹配，即比较两颗子树是否完全相同**。时间效率为 O(n+km)，n 为 T1 的节点数，m 为 T2 的节点数，k 为 T2 根结点在 T1 中出现的次数。而事实上，在进行匹配时，一旦发现有节点不同就可以提前结束 `isSameTree()`，因此实际的时间效率会更高，空间复杂度为 O(logn+logm)。
+    ```java
+    public class Solution {
+        public boolean HasSubtree(TreeNode root1,TreeNode root2) {
+            if (root1 == null || root2 == null)
+                return false;
+            if (treeMatch(root1, root2))
+                return true;
+            return HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
+        }
+        private boolean isSameTree(TreeNode root1,TreeNode root2) {
+            if (root1 == null || root2 == null)
+                return root1 == root2;
+            if (root1.val == root2.val && isSameTree(root1.left, root2.left) && isSameTree(root1.right, root2.right))
+                return true;
+            return false;
+        }
+    }
+    ```
 
-### 1.9. Count Complete Tree Nodes
+### 1.13. Count Complete Tree Nodes
 
 [222. Count Complete Tree Nodes](https://leetcode.com/problems/count-complete-tree-nodes/description/)
 
@@ -494,7 +719,7 @@
   }
   ```
 
-### 1.10. Sum of Left Leaves
+### 1.14. Sum of Left Leaves
 
 [404. Sum of Left Leaves](https://leetcode.com/problems/sum-of-left-leaves/description/)
 
@@ -528,7 +753,7 @@
   }
   ```
 
-### 1.11. Binary Tree Paths
+### 1.15. Binary Tree Paths
 
 [257. Binary Tree Paths](https://leetcode.com/problems/binary-tree-paths/description/)
 
@@ -570,11 +795,11 @@
   }
   ```
 
-### 1.12. Sum Root to Leaf Numbers
+### 1.16. Sum Root to Leaf Numbers
 
 [129. Sum Root to Leaf Numbers](https://leetcode.com/problems/sum-root-to-leaf-numbers/description/)
 
-### 1.13. Path Sum
+### 1.17. Path Sum
 
 [112. Path Sum](https://leetcode.com/problems/path-sum/description/)
 
@@ -598,6 +823,8 @@
   ```
 
 - Solution
+
+  使用 DFS 进行求解：
   ```java
   public boolean hasPathSum(TreeNode root, int sum) {
       if (root == null)
@@ -608,11 +835,66 @@
   }
   ```
 
-### 1.14. Path Sum II
+### 1.18. Path Sum II
 
 [113. Path Sum II](https://leetcode.com/problems/path-sum-ii/description/)
 
-### 1.15. Path Sum III
+[《剑指 offer》 面试题 25](https://www.nowcoder.com/practice/f836b2c43afc4b35ad6adc41ec941dba?tpId=13&tqId=11178&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+
+  Note: A leaf is a node with no children.
+
+  Example:
+  ```
+  Given the below binary tree and sum = 22,
+
+        5
+      / \
+      4   8
+    /   / \
+    11  13  4
+  /  \    / \
+  7    2  5   1
+  Return:
+
+  [
+    [5,4,11,2],
+    [5,8,4,5]
+  ]
+  ```
+
+- Solution
+
+  使用带记忆的 DFS 进行求解：
+  ```java
+  class Solution {
+      public List<List<Integer>> pathSum(TreeNode root, int sum){
+          List<List<Integer>> result = new LinkedList<List<Integer>>();
+          List<Integer> currentResult = new LinkedList<>();
+          pathSum(root, sum, currentResult, result);
+          return result;
+      }
+
+      public void pathSum(TreeNode root, int sum, List<Integer> currentResult, List<List<Integer>> result) {
+          if (root == null)
+              return;
+          currentResult.add(new Integer(root.val));
+          if (root.left == null && root.right == null && sum == root.val) {
+              result.add(new LinkedList(currentResult));
+              currentResult.remove(currentResult.size() - 1); //don't forget to remove the last integer
+              return;
+          } else {
+              pathSum(root.left, sum - root.val, currentResult, result);
+              pathSum(root.right, sum - root.val, currentResult, result);
+          }
+          currentResult.remove(currentResult.size() - 1);
+      }
+  }
+  ```
+
+### 1.19. Path Sum III
 
 [437. Path Sum III](https://leetcode.com/problems/path-sum-iii/description/)
 
@@ -671,7 +953,7 @@
   }
   ```
 
-### 1.16. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)
+### 1.20. Lowest Common Ancestor of a Binary Tree (BT - LCA 问题)
 
 [236. Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree)
 
@@ -769,7 +1051,38 @@
     }
     ```
 
-### 2.3. Delete Node in a BST
+### 2.3. 判断是否是 BST 后序遍历序列
+
+[《剑指 offer》 面试题 24](https://www.nowcoder.com/practice/a861533d45854474ac791d90e447bafd?tpId=13&tqId=11176&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+- Question
+  > 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出 Yes, 否则输出 No。假设输入的数组的任意两个数字都互不相同。
+
+- Solution
+
+  BST 的后序序列的合法序列是，对于一个序列 S，最后一个元素是 x （也就是根），如果去掉最后一个元素的序列为 T，那么 T 满足：**T 可以分成两段，前一段（左子树）小于 x，后一段（右子树）大于 x，且这两段（子树）都是合法的后序序列**。这是一个**完美的递归定义**。
+  ```java
+  public class Solution {
+      public boolean VerifySquenceOfBST(int [] sequence) {
+          if (sequence.length == 0)
+              return false;
+          return judge(sequence, 0, sequence.length - 1);
+      }
+      private boolean judge(int [] a, int l, int r) {
+          if (l >= r)
+              return true;
+          int i = r;
+          while (i > l && a[i - 1] > a[r])
+              --i;
+          for (int j = i - 1; j >= l; --j)
+              if(a[j] > a[r])
+                  return false;
+          return judge(a, l, i - 1) && judge(a, i, r - 1);
+      }
+  }
+  ```
+
+### 2.4. Delete Node in a BST
 
 [450. Delete Node in a BST](https://leetcode.com/problems/delete-node-in-a-bst)
 
@@ -808,7 +1121,7 @@
   }
   ```
 
-### 2.4. Convert Sorted Array to Binary Search Tree
+### 2.5. Convert Sorted Array to Binary Search Tree
 
 [108. Convert Sorted Array to Binary Search Tree](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree)
 
@@ -837,9 +1150,40 @@
   }
   ```
 
-### 2.5. kth Smallest Element in a BST
+### 2.6. Convert Binary Search Tree to Doubled Linked List
+
+[《剑指 offer》 面试题 27](https://www.nowcoder.com/practice/947f6eb80d944a84850b0538bf0ec3a5?tpId=13&tqId=11179&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+- Question
+  > 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。**要求不能创建任何新的结点，只能调整树中结点指针的指向**。
+
+- Solution
+  ```java
+  // 中序遍历递归实现
+  public class Solution {
+      private TreeNode pre = null;
+      private TreeNode lastLeft = null;
+
+      public TreeNode Convert(TreeNode pRootOfTree) {
+          if (pRootOfTree == null)
+              return null;
+          Convert(pRootOfTree.left);
+          pRootOfTree.left = pre;
+          if (pre != null)
+              pre.right = pRootOfTree;
+          pre = pRootOfTree;
+          lastLeft = lastLeft == null ? pRootOfTree : lastLeft;
+          Convert(pRootOfTree.right);
+          return lastLeft;
+      }
+  }
+  ```
+
+### 2.7. kth Smallest Element in a BST
 
 [230. Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/)
+
+[《剑指 offer》 面试题 63](https://www.nowcoder.com/practice/6a296eb82cf844ca8539b57c23e6e9bf?tpId=13&tqId=11182&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 - Question
   > Given a binary search tree, write a function kth Smallest to find the kth smallest element in it.
