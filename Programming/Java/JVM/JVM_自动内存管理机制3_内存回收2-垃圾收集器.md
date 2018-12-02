@@ -7,14 +7,13 @@
     - [2.1. Serial Old 收集器](#21-serial-old-收集器)
     - [2.2. Parallel Old 收集器](#22-parallel-old-收集器)
     - [2.3. CMS(Concurrent Mark Sweep) 收集器](#23-cmsconcurrent-mark-sweep-收集器)
-  - [3. 均适用](#3-均适用)
-    - [3.1. Garbage-First 收集器](#31-garbage-first-收集器)
-      - [3.1.1. 运作过程](#311-运作过程)
-      - [3.1.2. 基本特点](#312-基本特点)
-      - [3.1.3. 实现难点](#313-实现难点)
-      - [3.1.4. 适用场景](#314-适用场景)
-    - [3.2. ZGC](#32-zgc)
-  - [4. Refer Links](#4-refer-links)
+  - [3. Garbage-First 收集器](#3-garbage-first-收集器)
+    - [3.1. 运作过程](#31-运作过程)
+    - [3.2. 基本特点](#32-基本特点)
+    - [3.3. 实现难点](#33-实现难点)
+    - [3.4. 适用场景](#34-适用场景)
+  - [4. Z 收集器](#4-z-收集器)
+  - [5. Refer Links](#5-refer-links)
 
 # HotSpot 垃圾收集器
 
@@ -128,15 +127,13 @@ CMS 收集器使用的是标记 - 清除算法 (Mark-Sweep GC)，其基本运作
   - `-XX:+UseCMSCompactFullCollection`: 开关参数（默认开启）用于当 CMS 要进行 Full GC 时开启内存碎片的合并整理过程，该过程不能并发，故停顿时间变长。
   - `-XX:CMSFullGCsBeforeCompaction`: 用于设置执行多少次不压缩的 Full GC 后跟着来一次带压缩的 Full GC。默认为 0，表示每次进入 Full GC 时都进行碎片整理。
 
-## 3. 均适用
-
-### 3.1. Garbage-First 收集器
+## 3. Garbage-First 收集器
 
 G1 (Garbage First) 收集器是当今收集器技术发展的最前沿成果之一，作为体验版随着 JDK 6u14 版本面世，在 JDK 7u4 版本发行时被正式推出，它被视为 JDK 1.7 中 HotSpot 虚拟机的一个重要进化特征。在 JDK 9 中，G1 被提议设置为默认垃圾收集器（JEP 248）。
 
 G1 收集器是一款面向服务端应用的垃圾收集器，被开发来替代掉 JDK1.5 发布的 CMS 收集器。G1 收集器都没有使用传统的 GC 收集器代码框架，而是另外独立实现。
 
-#### 3.1.1. 运作过程
+### 3.1. 运作过程
 
 如果不计算维护 Remembered Set 的操作，G1 收集器的运作过程与 CMS 相似：
 1. 初始标记：暂停用户线程，标记 GC Roots 能直接关联的对象。
@@ -146,7 +143,7 @@ G1 收集器是一款面向服务端应用的垃圾收集器，被开发来替�
 
 ![image](http://img.cdn.firejq.com/jpg/2018/11/21/bc689d33f4bb5477c1a5c6ecba09fe30.jpg)
 
-#### 3.1.2. 基本特点
+### 3.2. 基本特点
 
 与其它收集器相比，G1 收集器具有以下特点：
 - 并行 & 并发。
@@ -175,24 +172,32 @@ G1 收集器是一款面向服务端应用的垃圾收集器，被开发来替�
 
   **G1 之所以能建立可预测的停顿时间模型，是因为它极力地避免全区域的垃圾收集**。G1 将内存划分为多个独立的 Region，并跟踪各个 Region 里面的垃圾堆积的价值大小（回收所获得的空间大小以及回收所需时间的经验值），在后台维护一个优先列表，每次根据允许的收集时间，优先回收价值最大的 Region，从而保证了 G1 收集器再有限的时间内可以获取经可能高的收集效率。
 
-#### 3.1.3. 实现难点
+### 3.3. 实现难点
 
 虽然内存分为 Region，但垃圾收集不能真的以 Region 为单位进行，因为 Region 不可能是孤立的，存在某个对象被多个 Region 的引用，那在做可达性判断确定对象是否存活时，岂不是需要扫描整个堆空间才能保证准确性？
 
 **在 G1 收集器中，Region 之间的对象引用以及其他收集器中的新生代与老年代之间的对象引用，虚拟机都是使用 Remembered Set 来避免全堆扫描的**。G1 收集器中每个 Region 都有一个与之对应的 Remembered Set，虚拟机发现程序在对 Reference 类型的数据进行写操作时，会产生一个 Write Barrier 暂时中断操作，检查 Reference 类型引用的对象是否处于不同的 Region（在分代的例子中就是检查是否老年代的对象引用了新生代中的对象），如果是，便通过 CardTable 把相关引用信息记录到被引用对象所属的 Region 的 Remembered Set 中。当进行内存回收时，在 GC 根节点的枚举范围中加入 Remembered Set 即可保证不对全堆扫描也不会有遗漏。
 
-#### 3.1.4. 适用场景
+### 3.4. 适用场景
 
-- 如果原来的收集器没有出现任何问题，那么就没有任何理由去选择G1。
-- 如果引用追求低停顿，那么G1可以作为一个可尝试的选择。
-- 如果应用追求吞吐量，那么G1并不会带来什么特别的好处。
+- 如果原来的收集器没有出现任何问题，那么就没有任何理由去选择 G1。
+- 如果引用追求低停顿，那么 G1 可以作为一个可尝试的选择。
+- 如果应用追求吞吐量，那么 G1 并不会带来什么特别的好处。
 
-### 3.2. ZGC
+## 4. Z 收集器
+
+TODO:
+
+[JEP 333: ZGC: A Scalable Low-Latency Garbage Collector](http://openjdk.java.net/jeps/333)
 
 [Java 程序员的荣光，听 R 大论 JDK11 的 ZGC](https://mp.weixin.qq.com/s?__biz=MzIzODYyNjkzNw==&mid=2247483956&idx=1&sn=e9f8bbbb70c8919cf1efea2ed465f5d3&chksm=e9373322de40ba34f0e8ea645c556b62cc3829cafefb390537321693a13d31480bd6c768ea40&mpshare=1&scene=1&srcid=0831tknoOQCZ6tVCJyuQzszC#rd)
 
-## 4. Refer Links
+Z Garbage Collector (ZGC) 项目需要完成的目标是：控制 Java 的垃圾回收时长在 10ms 以内，绝对不超过 10ms，并且使用了该垃圾回收策略之后，吞吐对比当前 Java 缺省的垃圾回收策略 G1，下降不超过 15%。
+
+## 5. Refer Links
 
 [Java Hotspot G1 GC 的一些关键技术](https://tech.meituan.com/g1.html)
 
 [JVM 垃圾回收器工作原理及使用实例介绍](https://www.ibm.com/developerworks/cn/java/j-lo-JVMGarbageCollection/index.html)
+
+[深入理解 JVM(3)——7 种垃圾收集器](https://crowhawk.github.io/2017/08/15/jvm_3/)

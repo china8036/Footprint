@@ -34,11 +34,11 @@ JVM 在执行 Java 程序的过程中会把它所管理的内存（即运行时�
 
 根据 [Java SE 7 虚拟机规范](https://docs.oracle.com/javase/specs/jvms/se7/html/index.html) 规定，**JVM 所管理的内存将会包括以下几个运行时数据区域：程序计数器、Java 虚拟机栈、本地方法栈、Java 堆、方法区**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/29/79a6511cfbe2dd6fbf4ae7997f53bd9b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/29/79a6511cfbe2dd6fbf4ae7997f53bd9b.jpg)
 
 按照线程私有与否可将上图整理为：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/29/83ea6d9fbea1b0287fd49482c2ae5e0e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/29/83ea6d9fbea1b0287fd49482c2ae5e0e.jpg)
 
 NOTE: 在 JVM 规范中虽然规定了程序在执行期间运行时数据区应该包括这几部分，但是**至于具体如何实现并没有做出规定，因此，不同的虚拟机厂商可以有不同的实现方式**。
 
@@ -70,7 +70,7 @@ Java 虚拟机栈 (VM Stack) 描述的是 Java 方法执行的内存模型：
 
 **Java 栈中存放的是一个个的栈帧，每个栈帧对应一个被调用的方法**。在每个栈帧中，存储了局部变量表 (Local Variables)、操作数栈 (Operand Stack)、指向当前方法所属类的运行时常量池的引用 (Reference to runtime constant pool)、方法返回地址 (Return Address) 和一些额外的附加信息。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/29/541c8f65b4fede3a58478380b972fae9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/29/541c8f65b4fede3a58478380b972fae9.jpg)
 
 **Linux x64 上 HotSpot VM 给 Java 虚拟机栈定义的“系统默认”大小为 1MB**。
 
@@ -145,11 +145,27 @@ Java 虚拟机栈 (VM Stack) 描述的是 Java 方法执行的内存模型：
 
 根据 Java 虚拟机规范的规定，Java 堆可以处在物理上不连续的内存空间中，只要逻辑上是连续的即可（就像磁盘空间一样）。在具体的 Java 虚拟机实现中，可以实现成固定大小，也可以设计为可扩展的。但目前主流的虚拟机都是按照可扩展来实现的。
 
-### 5.2. 分类
+### 5.2. 区域划分
 
-从内存回收的角度上看，由于现在收集器基本都采用分代收集算法，因此 Java 堆中还可细分为：新生代和老生代。从内存分配的角度上看，线程共享的 Java 堆中可能划分出多个线程私有的分配缓冲区（Thread Local Allocation Buffer，TLAB）。
+首先**无论怎么划分，都与存放的内容无关，Java 堆中存放的始终是对象实例和数组，进一步的划分只是为了更高地回收内存和更快地分配内存**。
 
-但无论怎么划分，都与存放的内容无关，Java 堆中存放的始终是对象实例和数组，进一步的划分只是为了更高地回收内存和更快地分配内存。
+#### 5.2.1. 内存分配
+
+从内存分配的角度上看，线程共享的 Java 堆中可能划分出多个线程私有的**分配缓冲区 (Thread Local Allocation Buffer，TLAB)**。
+
+#### 5.2.2. 内存回收
+
+![image](http://img.cdn.firejq.com/jpg/2018/11/25/ff28f5fc4df5a24db8198789b5efd416.jpg)
+
+从内存回收的角度上看，由于现在收集器基本都采用**分代收集算法**，因此 Java 堆中还可细分为：
+- 新生代
+
+  在年轻代中，又分为：
+  - Eden 区
+  - Survivor1 (From Space) 
+  - Survivor2 (To Space) 区
+
+- 老年代 (Tenured 区)
 
 ### 5.3. 线程共享
 
@@ -179,7 +195,13 @@ JVM 对 class 文件的每一部分都有严格的规范，但对于运行时常
 
 运行时常量池相对于 CLass 文件常量池的另外一个重要特征是具备动态性，Java 语言并不要求常量一定只有编译期才能产生，也就是并非预置入 CLass 文件中常量池的内容才能进入方法区运行时常量池，运行期间也可能将新的常量放入池中，这种特性被开发人员利用比较多的就是 String 类的 intern() 方法。
 
-### 6.3. 异常情况
+### 6.3. 永生代
+
+**从内存回收的角度上看，方法区属于永生代 (Permanent Generation)**。
+
+但**从 Java 8 开始，永生代这个本来就比较别扭的说法被取消**，原永生代中大部分内容（如类的元信息）会被放入本地内存（元数据区 Metaspace），而类的静态变量和内部字符串被分离出放入到 Java 堆中。因此，**Java 8 的 Heap 中实际包含了类的静态变量和局部字符串池的**。
+
+### 6.4. 异常情况
 
 根据 Java 虚拟机规范的规定，当方法区无法满足内存分配需求时，将抛出 OutOfMemoryError 异常。
 
