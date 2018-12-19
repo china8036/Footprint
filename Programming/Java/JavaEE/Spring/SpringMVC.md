@@ -1,30 +1,31 @@
-- [Spring MVC Note](#spring-mvc-note)
-	- [1. 概述](#1-%E6%A6%82%E8%BF%B0)
-	- [2. Controller](#2-controller)
-		- [2.1. @RequestBody](#21-requestbody)
-		- [2.2. @ResponseBody](#22-responsebody)
-			- [2.2.1. 响应 JSON 数据](#221-%E5%93%8D%E5%BA%94-json-%E6%95%B0%E6%8D%AE)
-			- [2.2.2. 响应 XML 数据](#222-%E5%93%8D%E5%BA%94-xml-%E6%95%B0%E6%8D%AE)
-			- [2.2.3. Accpect 与 produces](#223-accpect-%E4%B8%8E-produces)
-			- [2.2.4. ContentType 与 consumes](#224-contenttype-%E4%B8%8E-consumes)
-			- [2.2.5. 响应媒体类型](#225-%E5%93%8D%E5%BA%94%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B)
-		- [2.3. HttpMessageConverter](#23-httpmessageconverter)
-			- [2.3.1. 自定义 HttpMessageConverter](#231-%E8%87%AA%E5%AE%9A%E4%B9%89-httpmessageconverter)
-		- [2.4. @RequestMapping](#24-requestmapping)
-			- [2.4.1. 支持的方法参数类型](#241-%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B)
-			- [2.4.2. 支持的返回类型](#242-%E6%94%AF%E6%8C%81%E7%9A%84%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B)
-		- [2.5. @SessionAttributes](#25-sessionattributes)
-		- [2.6. 处理 PUT/DELETE/PATCH 请求](#26-%E5%A4%84%E7%90%86-putdeletepatch-%E8%AF%B7%E6%B1%82)
-	- [3. 拦截器](#3-%E6%8B%A6%E6%88%AA%E5%99%A8)
-	- [4. 事务控制](#4-%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6)
-	- [5. Refer Links](#5-refer-links)
+- [Spring MVC](#spring-mvc)
+  - [1. 概述](#1-概述)
+  - [2. Controller](#2-controller)
+    - [2.1. @RequestBody](#21-requestbody)
+    - [2.2. @ResponseBody](#22-responsebody)
+      - [2.2.1. 响应 JSON 数据](#221-响应-json-数据)
+      - [2.2.2. 响应 XML 数据](#222-响应-xml-数据)
+      - [2.2.3. Accpect 与 produces](#223-accpect-与-produces)
+      - [2.2.4. ContentType 与 consumes](#224-contenttype-与-consumes)
+      - [2.2.5. 响应媒体类型](#225-响应媒体类型)
+    - [2.3. HttpMessageConverter](#23-httpmessageconverter)
+      - [2.3.1. 自定义 HttpMessageConverter](#231-自定义-httpmessageconverter)
+    - [2.4. @RequestMapping](#24-requestmapping)
+      - [2.4.1. 支持的方法参数类型](#241-支持的方法参数类型)
+      - [2.4.2. 支持的返回类型](#242-支持的返回类型)
+    - [2.5. @SessionAttributes](#25-sessionattributes)
+    - [2.6. 处理 PUT/DELETE/PATCH 请求](#26-处理-putdeletepatch-请求)
+  - [3. 拦截器](#3-拦截器)
+  - [4. 事务控制](#4-事务控制)
+  - [5. Refer Links](#5-refer-links)
 
-# Spring MVC Note 
+# Spring MVC
+
 ## 1. 概述
 
 Spring MVC 是一个模型 - 视图 - 控制器（MVC）的 Web 框架建立在中央前端控制器 servlet（DispatcherServlet），它负责发送每个请求到合适的处理程序，使用视图来最终返回响应结果的概念。Spring MVC 是 Spring 产品组合的一部分，它享有 Spring IoC 容器紧密结合 Spring 松耦合等特点，因此它有 Spring 的所有优点。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/7baf39de923c5f2b02010d5bd1b9e916.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/27/7baf39de923c5f2b02010d5bd1b9e916.jpg)
 
 ## 2. Controller
 
@@ -32,26 +33,24 @@ Spring MVC 是一个模型 - 视图 - 控制器（MVC）的 Web 框架建立在�
 
 @RequestBody 将 HTTP 请求正文转换为适合的 HttpMessageConverter 对象。
 
-- 作用： 
-
-	- 该注解用于读取 Request 请求的 body 部分数据，使用系统默认配置的 HttpMessageConverter 进行解析，然后把相应的数据绑定到要返回的对象上；
-
-	- 再把 HttpMessageConverter 返回的对象数据绑定到 controller 中方法的参数上。
+- 作用：
+  - 该注解用于读取 Request 请求的 body 部分数据，使用系统默认配置的 HttpMessageConverter 进行解析，然后把相应的数据绑定到要返回的对象上；
+  - 再把 HttpMessageConverter 返回的对象数据绑定到 controller 中方法的参数上。
 
 - 使用：
-	- GET、POST 方式提交时， 根据 request header Content-Type 的值来判断：
-		- application/x-www-form-urlencoded， 可选（即非必须，因为这种情况的数据 @RequestParam, @ModelAttribute 也可以处理，当然 @RequestBody 也能处理）；
-		- multipart/form-data, 不能处理（即使用 @RequestBody 不能处理这种格式的数据）；
-		- 其他格式，必须（其他格式包括 application/json, application/xml 等。这些格式的数据，必须使用 @RequestBody 来处理）(POST 模式下，使用 @RequestBody 绑定请求对象，Spring 会帮你进行协议转换，将 Json、Xml 协议转换成你需要的对象)
+  - GET、POST 方式提交时， 根据 request header Content-Type 的值来判断：
+    - application/x-www-form-urlencoded， 可选（即非必须，因为这种情况的数据 @RequestParam, @ModelAttribute 也可以处理，当然 @RequestBody 也能处理）；
+    - multipart/form-data, 不能处理（即使用 @RequestBody 不能处理这种格式的数据）；
+    - 其他格式，必须（其他格式包括 application/json, application/xml 等。这些格式的数据，必须使用 @RequestBody 来处理）(POST 模式下，使用 @RequestBody 绑定请求对象，Spring 会帮你进行协议转换，将 Json、Xml 协议转换成你需要的对象)
 
-	- PUT 方式提交时， 根据 request header Content-Type 的值来判断：
-		- application/x-www-form-urlencoded， 必须；
-		- multipart/form-data, 不能处理；
-		- 其他格式，必须；
+  - PUT 方式提交时， 根据 request header Content-Type 的值来判断：
+    - application/x-www-form-urlencoded， 必须；
+    - multipart/form-data, 不能处理；
+    - 其他格式，必须；
 
 - 说明：
-    
-	request 的 body 部分的数据编码格式由 header 部分的 Content-Type 指定；
+
+  request 的 body 部分的数据编码格式由 header 部分的 Content-Type 指定；
 
 ### 2.2. @ResponseBody
 
@@ -155,12 +154,12 @@ public class Book {
   - produces
 
     produces 是 Spring 为我们提供的注解参数，代表着服务端能够支持返回的媒体类型，我们注意到 produces 后跟随的是一个数组类型，也就意味着服务端支持多种媒体类型的响应。
-  
+
   实例：通过 produce 解决 @Response 返回 json 时出现中文乱码的问题：
-  
+
   在 RequestMapping 的注解参数中加上 produces = "text/html;charset=UTF-8"即可，此处 produces 的参数值就是 HTTP Response 的 Content-Type 字段值。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/c52b495ae5f8fc7e581f8369d3899208.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/10/30/c52b495ae5f8fc7e581f8369d3899208.jpg)
 
   <!-- TODO 那 HttpServletRequest 和 HttpServletResponse 的 setEncoding 方法是设置哪里的？-- 测试结果：设置了 UTF-8 之后 Content-Type 不随之改变。 -->
 
@@ -208,11 +207,11 @@ public interface HttpMessageConverter<T> {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/c92c4d1be49ca0d60b021006efbda623.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/c92c4d1be49ca0d60b021006efbda623.jpg)
 
 对于添加了 @RequestBody 和 @ResponseBody 注解的后端端点，都会经历由 HttpMessageConverter 进行的数据转换的过程。而在 Spring 启动之初，就已经有一些默认的转换器被注册了。通过在 RequestResponseBodyMethodProcessor 中打断点，我们可以获取到一个 converters 列表：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/37b8d8680f2e5bab95e513ca34d3c78e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/37b8d8680f2e5bab95e513ca34d3c78e.jpg)
 
 #### 2.3.1. 自定义 HttpMessageConverter
 
@@ -226,7 +225,7 @@ public interface HttpMessageConverter<T> {
 
 - HttpServlet
 
-	HttpServlet 对象，主要包括 HttpServletRequest 、HttpServletResponse 和 HttpSession 对象。 这些参数 Spring 在调用处理器方法的时候会自动给它们赋值，所以当在处理器方法中需要使用到这些对象的时候，可以直接在方法上给定一个方法参数的申明，然后在方法体里面直接用就可以了。但是有一点需要注意的是在使用 HttpSession 对象的时候，如果此时 HttpSession 对象还没有建立起来的话就会有问题。
+  HttpServlet 对象，主要包括 HttpServletRequest 、HttpServletResponse 和 HttpSession 对象。 这些参数 Spring 在调用处理器方法的时候会自动给它们赋值，所以当在处理器方法中需要使用到这些对象的时候，可以直接在方法上给定一个方法参数的申明，然后在方法体里面直接用就可以了。但是有一点需要注意的是在使用 HttpSession 对象的时候，如果此时 HttpSession 对象还没有建立起来的话就会有问题。
 
 - WebRequest
 
@@ -238,41 +237,41 @@ public interface HttpMessageConverter<T> {
 
 - @PathVariable、@RequestParam、@CookieValue、@RequestHeader
 
-	使用 @PathVariable 、@RequestParam 、@CookieValue 和 @RequestHeader 标记的参数。
+  使用 @PathVariable 、@RequestParam 、@CookieValue 和 @RequestHeader 标记的参数。
 
 - @ModelAttribute
 
-	使用 @ModelAttribute 标记的参数。
+  使用 @ModelAttribute 标记的参数。
 
-	例：Activity 是一个 Java Bean
-	```java
-		@PostMapping()
-		public ResponseEntity<?> activityCreate(@ModelAttribute Activity activity) {
-			try {
-				saveUploadedFiles(activity.getActivityPoster());
-			} catch (IOException e) {
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
+  例：Activity 是一个 Java Bean
+  ```java
+      @PostMapping()
+      public ResponseEntity<?> activityCreate(@ModelAttribute Activity activity) {
+          try {
+              saveUploadedFiles(activity.getActivityPoster());
+          } catch (IOException e) {
+              return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+          }
 
-			return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
-		}
-	```
+          return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+      }
+  ```
 
-- Model 和 ModelMap 
+- Model 和 ModelMap
 
-	java.util.Map 、Spring 封装的 Model 和 ModelMap 。 这些都可以用来封装模型数据，用来给视图做展示。
+  java.util.Map 、Spring 封装的 Model 和 ModelMap 。 这些都可以用来封装模型数据，用来给视图做展示。
 
 - 实体类
 
-	实体类。 可以用来接收上传的参数。
+  实体类。 可以用来接收上传的参数。
 
 - MultipartFile
 
-	Spring 封装的 MultipartFile 。 用来接收上传文件的。
+  Spring 封装的 MultipartFile 。 用来接收上传文件的。
 
 - Errors 和 BindingResult
 
-	Spring 封装的 Errors 和 BindingResult 对象。 这两个对象参数必须紧接在需要验证的实体对象参数之后，它里面包含了实体对象的验证结果。
+  Spring 封装的 Errors 和 BindingResult 对象。 这两个对象参数必须紧接在需要验证的实体对象参数之后，它里面包含了实体对象的验证结果。
 
 #### 2.4.2. 支持的返回类型
 
@@ -280,7 +279,7 @@ public interface HttpMessageConverter<T> {
 
 （SpringMVC 支持的返回值类型有：ModelAndView,Model,ModelMap,Map,View,void,Sting）
 
-- 一个包含模型和视图的 ModelAndView 对象。 
+- 一个包含模型和视图的 ModelAndView 对象。
 
 - 一个模型对象，这主要包括 Spring 封装好的 Model 和 ModelMap ，以及 java.util.Map ，当没有视图返回的时候视图名称将由 RequestToViewNameTranslator 来决定。
 
@@ -296,8 +295,9 @@ public interface HttpMessageConverter<T> {
 
 - [`ResponseEntity<T>`对象](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html)
 
-TODO：
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/e4466d1a68c785fd36106ce04b925392.jpg)
+TODO:
+
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/e4466d1a68c785fd36106ce04b925392.jpg)
 
 SpringMVC 未指定跳转页面时，有 @ResponseBody 注解则会根据请求的路径最后 / 后的字段去掉后缀作为跳转的文件名；
 
@@ -316,7 +316,7 @@ SpringMVC 未指定跳转页面时，有 @ResponseBody 注解则会根据请求�
     <input type="hidden" name="_method" value="put" >
     <input type="submit" value="更新">
 </form>
-    
+
 <!-- 发送 delete 请求 -->
 <form action="/blogs/1" method="post">
     <input type="hidden" name="_method" value="delete" >
@@ -330,7 +330,7 @@ SpringMVC 未指定跳转页面时，有 @ResponseBody 注解则会根据请求�
 
 ## 3. 拦截器
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/5fbda7c49c4a0995c1f8aea7925af43c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/27/5fbda7c49c4a0995c1f8aea7925af43c.jpg)
 
 拦截器和过滤器的区别：
 - 过滤器依赖于 Servlet 容器，基于回调函数，过滤范围大

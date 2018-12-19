@@ -1,8 +1,8 @@
 - [JSON Web Tokens](#json-web-tokens)
-  - [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-  - [2. JWT 构造](#2-jwt-%E6%9E%84%E9%80%A0)
-  - [3. 工作流程](#3-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B)
-  - [4. Java 实现](#4-java-%E5%AE%9E%E7%8E%B0)
+  - [1. 基本概念](#1-基本概念)
+  - [2. JWT 构造](#2-jwt-构造)
+  - [3. 工作流程](#3-工作流程)
+  - [4. Java 实现](#4-java-实现)
   - [5. Refer Links](#5-refer-links)
 
 # JSON Web Tokens
@@ -46,7 +46,7 @@ eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YW5nIiwiY3JlYXRlZCI6MTQ4OTA3OTk4MTM5MywiZXhwIjo
 ```
 header.payload.signature
 ```
-- header 
+- header
 
   头中的数据通常包含两部分：一个是我们刚刚看到的 alg，这个词是 algorithm 的缩写，就是指明算法。另一个可以添加的字段是 token 的类型（按 RFC 7519 实现的 token 机制不只 JWT 一种)，但如果我们采用的是 JWT 的话，指定这个就多余了。
   ```json
@@ -75,7 +75,7 @@ header.payload.signature
 
 ## 3. 工作流程
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/18/dfc6b4daecf619a55e7ae69cd24e2973.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/18/dfc6b4daecf619a55e7ae69cd24e2973.jpg)
 
 ## 4. Java 实现
 

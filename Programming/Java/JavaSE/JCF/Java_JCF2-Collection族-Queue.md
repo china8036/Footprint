@@ -32,7 +32,7 @@
 - Insert：将给定元素添加到队列末尾。
   - `boolean add​(E e)`：若队列已满，抛出一个异常。
   - `boolean offer​(E e)`：若队列已满，返回 false。
-  
+
 - Remove：删除并返回队列头部的元素。
   - `E remove​()`：若队列为空，抛出一个异常。
   - `E poll​()`：若队列为空，返回 false。
@@ -61,7 +61,7 @@ PriorityQueue 是非线程安全的，若对线程安全有要求，应该使用
 
 ### 3.2. 存储结构
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/20/2b732a7bbc959afc42d013cb40523a18.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/20/2b732a7bbc959afc42d013cb40523a18.jpg)
 
 PriorityQueue 内部实际上是一个**平衡二叉最小堆**，底层基于一个**数组**实现，因此：
 - 不需要在每次添加 / 删除元素时对所有的元素进行排序。每次调用 remove 方法，都会删除当前优先级队列中最小的元素；每次调用 add 方法，都会将最小的元素移动到根。
@@ -120,7 +120,7 @@ ArrayDeque 是非线程安全的。
 
 ArrayDeque 底层基于**循环数组**（circular array）实现，也就是说数组的任何一点都可能被看作起点或者终点，从而实现可以同时在数组两端插入或删除元素的需求。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/20/886d803d1df785ba660c0f5c39feb131.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/20/886d803d1df785ba660c0f5c39feb131.jpg)
 
 上图中我们看到，head 指向首端第一个有效元素，tail 指向尾端第一个可以插入元素的空位。因为是循环数组，所以 head 不一定总等于 0，tail 也不一定总是比 head 大。
 

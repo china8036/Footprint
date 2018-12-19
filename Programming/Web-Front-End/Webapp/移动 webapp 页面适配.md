@@ -57,11 +57,11 @@
 
 ### 1.1. meta 标签：viewport ###
 
-H5 移动端页面自适应普遍使用的方法，理论上讲使用这个标签是可以适应所有尺寸的屏幕的，但是各设备对该标签的解释方式及支持程度不同造成了不能兼容所有浏览器或系统。   
+H5 移动端页面自适应普遍使用的方法，理论上讲使用这个标签是可以适应所有尺寸的屏幕的，但是各设备对该标签的解释方式及支持程度不同造成了不能兼容所有浏览器或系统。
 
-viewport 是用户网页的可视区域，翻译为中文可以叫做"视区"。   
+viewport 是用户网页的可视区域，翻译为中文可以叫做"视区"。
 
-手机浏览器是把页面放在一个虚拟的"窗口"（viewport）中，通常这个虚拟的"窗口"（viewport）比屏幕宽，这样就不用把每个网页挤到很小的窗口中（这样会破坏没有针对手机浏览器优化的网页的布局），用户可以通过平移和缩放来看网页的不同部分。   
+手机浏览器是把页面放在一个虚拟的"窗口"（viewport）中，通常这个虚拟的"窗口"（viewport）比屏幕宽，这样就不用把每个网页挤到很小的窗口中（这样会破坏没有针对手机浏览器优化的网页的布局），用户可以通过平移和缩放来看网页的不同部分。
 
 viewport 标签极其属性：
 
@@ -141,7 +141,7 @@ rem 是相对于根元素 (<html>) 的字体大小，em 是相对于父元素的
 p {font-size:14px; font-size:.875rem;}
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/19/232af31012a0894ff3f12aabedfd441b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/19/232af31012a0894ff3f12aabedfd441b.jpg)
 
 默认 html 的 font-size 是 16px，即 1rem=16px，如果某 div 宽度为 32px 你可以设为 2rem。
 
@@ -174,9 +174,9 @@ Html{font-size:62.5%(10/16*100%)}
 </script>
 ```
 
-rem 也并不是万能的，有一些场景是不适于使用 rem 的：   
-PC 端浏览器对 rem 单位支持并不友好，因此 rem 单位最好不用在 PC 端；   
-一般 font-size 不应该使用 rem 等相对单位，因为字体大小趋向于阅读实用性，并不适合排版布局；   
+rem 也并不是万能的，有一些场景是不适于使用 rem 的：
+PC 端浏览器对 rem 单位支持并不友好，因此 rem 单位最好不用在 PC 端；
+一般 font-size 不应该使用 rem 等相对单位，因为字体大小趋向于阅读实用性，并不适合排版布局；
 类似的，当用作图片或者一些不能缩放的展示时，应使用固定的 px 值，因为缩放可能会导致图片压缩变形等；
 
 ## 2. 适配方法实现 ##
@@ -211,16 +211,16 @@ document.querySelector('meta[name="viewport"]').setAttribute('content','initial-
 
 这样设置之后，客户端的 css 像素将自动缩放成为与设计图完全等比例的大小，代码中的 css 像素可以直接按照设计图的标注尺寸写死，使用 px 单位，不需要什么 rem，也不需要 vm，在不同的屏幕下会自动缩放。
 
-缺点：     
+缺点：
 很多安卓机型和浏览器不支持 viewport 设置，并且内联文本元素是无法缩放的。
 
 ### 2.3. REM 做宽度，viewport 缩放 ###
 https://www.zhihu.com/question/35710806
 
 注意：
-- **绝不是每个地方都要用 rem，rem 只适用于固定尺寸，在很多布局情境中（比如底部导航元素平分屏幕宽，大尺寸元素），必须使用百分比或者 flex 才能完美布局，rem 适合用于随屏幕伸缩的尺寸，而正文文字大小、细边框等不宜随屏幕伸缩的尺寸应该使用固定尺寸 px；**  
+- **绝不是每个地方都要用 rem，rem 只适用于固定尺寸，在很多布局情境中（比如底部导航元素平分屏幕宽，大尺寸元素），必须使用百分比或者 flex 才能完美布局，rem 适合用于随屏幕伸缩的尺寸，而正文文字大小、细边框等不宜随屏幕伸缩的尺寸应该使用固定尺寸 px；**
   - 考虑到字体的点阵信息，一般文字尺寸多会采用 16px 20px 24px 等值，若以 rem 指定文字尺寸，会产生诸如 21px，19px 这样的值，会导致字形难看，毛刺，甚至黑块，故大部分文字应该以 px 设置。但一般标题类文字，可能也有要求随屏幕缩放，且考虑到这类文字一般都比较大，超过 30px 的话，也可以用 rem 设置字体。
-- **用于 REM 计算的 js 的加载最好放在 `<head>` 标签中，必须在其它 js 加载之前加载；**   
+- **用于 REM 计算的 js 的加载最好放在 `<head>` 标签中，必须在其它 js 加载之前加载；**
 
 #### 2.3.1. 阿里 REM 解决方案 ####
 
@@ -241,7 +241,7 @@ https://www.zhihu.com/question/35710806
 加载 js 后，无需再手动设置 viewport，该方案已帮你设置；
 
 #### 2.3.2. 淘宝 REM 解决方案 ####
-https://github.com/amfe/article/issues/17   
+https://github.com/amfe/article/issues/17
 
 此方案使用 JavaScript 根据设备 DPR 动态设置 scale 并且动态计算 font-size 的值；
 - 根据设备 DPR 动态设置 scale
@@ -258,16 +258,16 @@ document.documentElement.style.fontSize = document.documentElement.clientWidth /
 ```html
 <script src="http://g.tbcdn.cn/mtb/lib-flexible/{{version}}/??flexible_css.js,flexible.js"/>
 ```
-执行这个 JS 后，会在<html>元素上增加一个 data-dpr 属性，以及一个 font-size 样式。JS 会根据不同的设备添加不同的 data-dpr 值，比如说 2 或者 3，同时会给 html 加上对应的 font-size 的值，比如说 75px。     
+执行这个 JS 后，会在<html>元素上增加一个 data-dpr 属性，以及一个 font-size 样式。JS 会根据不同的设备添加不同的 data-dpr 值，比如说 2 或者 3，同时会给 html 加上对应的 font-size 的值，比如说 75px。
 如此一来，页面中的元素，都可以通过 rem 单位来设置。他们会根据 html 元素的 font-size 值做相应的计算，从而实现屏幕的适配效果。
 
-布局的时候，各元素的 css 尺寸 = 设计稿标注尺寸 / 设计稿横向分辨率 /10；     
+布局的时候，各元素的 css 尺寸 = 设计稿标注尺寸 / 设计稿横向分辨率 /10；
 例，**如果设计稿是 750 的（一般设计稿是 640px 或者 750px（现在最流行）），则 html 的 font-size 就是 750/10=75，若该设计稿上某个元素是 150px 的宽，换算成 rem 就是 150 / 75 = 2rem**。
 
-优点：  
+优点：
 能维持能整体的布局效果，移动端兼容性好，不用写多个 css 代码，而且还可以利用 @media 进行优化。
 
-缺点：   
+缺点：
 开头要引入一段 js 代码，单位都要改成 rem(font-size 可以用 px)，计算 rem 比较麻烦（可以引用预处理器，但是增加了编译过程，相对麻烦了点)。pc 和 mobile 要分开。
 
 ### 2.4. rem 做宽度，动态设置 font-size   viewport 不缩放
@@ -349,10 +349,10 @@ docEl.style.fontSize = clientWidth / 7.5 + 'px'
 
 解释：
 ```
-要实现：         
+要实现：
 客户端尺寸 / 客户端宽度 = 设计图尺寸 / 设计图宽度 = 设计图尺寸 /750 = 设计图尺寸 /(100*7.5)
-因此：      
-客户端尺寸 = （客户端宽度 /7.5) * （设计图尺寸 /100) = 1 rem * （设计图尺寸 /100) 
+因此：
+客户端尺寸 = （客户端宽度 /7.5) * （设计图尺寸 /100) = 1 rem * （设计图尺寸 /100)
 ```
 #### 2.4.3. 使用 vw 设置 font-size
 
@@ -369,9 +369,9 @@ html{
 
 于是
 
-在 iphone4/iphone5 1rem=16px      
-在 iphone6 1rem = 18.75px      
-在 iphone6 plus 1rem = 20.7px  
+在 iphone4/iphone5 1rem=16px
+在 iphone6 1rem = 18.75px
+在 iphone6 plus 1rem = 20.7px
 
 则**当要实现设计图上尺寸为 x px 的目标时，代码中的 css 像素为 x/37.5 rem**。
 
@@ -418,7 +418,7 @@ html{
 
 - 用 vh 布局的时候，手机浏览器顶部的搜索栏那一块有时候会消失，从而影响 viewport，这应该怎么办？元素的宽高会变？
   - 应该用 vh 还是 vw？还是结合使用？
-  
+
   - 影响 vh 的因素太多了 就比如现在越来越多的高度超过 16：9 的手机 使用 vh 并不靠谱。所以不管是宽度还是高度 都以 viewport 宽度作为参照 使用 vw 单位 就不会有这个问题。
 
   - 一般场景下不需要使用 vh。对于 Web 应用或者说 Web 页面，一般情况是**不建议给元素显式的指定高度**，以免宽度缩放后导致元素内容换行而 overflow。如果业务需要，才会去指定高度的，那么指定的高度是需要和容器的宽度成一定的比例，那么就应该考虑宽高比相关的方案。
@@ -431,7 +431,7 @@ html{
 
 CSS3 浏览器支持测试：http://css3test.com/
 
-https://www.cnblogs.com/wenzheshen/p/6589459.html   
+https://www.cnblogs.com/wenzheshen/p/6589459.html
 
 http://web.jobbole.com/90084/
 
@@ -443,7 +443,7 @@ https://zhuanlan.zhihu.com/p/26141351
 
 https://www.w3cplus.com/css/vw-for-layout.html
 
-http://www.alloyteam.com/2016/03/mobile-web-adaptation-tool-rem/ 
+http://www.alloyteam.com/2016/03/mobile-web-adaptation-tool-rem/
 
 Sass 基础——Rem 与 Px 的转换：https://www.w3cplus.com/preprocessor/sass-px-to-rem-with-mixin-and-function.html
 

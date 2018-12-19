@@ -18,7 +18,7 @@ tcpcopy 的优势在于其实时性及真实性，除了少量的丢包，完全
 
 ## 2. 基本原理
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/27/0014a92f86032b72e8e5f20b7a6c31df.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/27/0014a92f86032b72e8e5f20b7a6c31df.jpg)
 
 1. 一个访问请求到达线上后端机。
 1. socket 包在 IP 层被拷贝了一份传给 tcpcopy 进程。
@@ -51,7 +51,7 @@ tcpcopy 有两种工作模式：
 1. 测试机设置丢弃请求回包：`iptables -I OUTPUT -p tcp --sport 8080 -j NFQUEUE`
 1. 测试机启动 intercept 进程：`./intercept -x [online server ip] -b [testing server ip] -d`
 1. 线上机启动 tcpcopy 进程：`./tcpcopy -x [online server port]-[testing server ip:testing server port] -s [online server ip] -d`
-    
+
     tcpcopy 有几种可选的启动方式，如：
     ```bash
     ./tcpcopy -x 80-172.16.***.52:80 -s 172.16.***.53 -d       #全流量复制

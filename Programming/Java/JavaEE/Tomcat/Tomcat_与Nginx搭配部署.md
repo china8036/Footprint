@@ -27,7 +27,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 
 分别配置多个 tomcat：
 - 修改 HTTP/1.1 监听不同的端口，如 8081、8082 等；
-- 修改 AJP 监听不同的端口，如 8009、8010； 
+- 修改 AJP 监听不同的端口，如 8009、8010；
 
 同时启动多个 tomcat；
 
@@ -44,7 +44,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
     ```
 
 1. 修改 nginx 监听的端口号 80，改为 8080。
-    
+
     ```conf
     server {
         listen       8080;
@@ -53,19 +53,19 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
     ```
 
 1. 在 location\{}中，利用 proxy_pass 配置反向代理地址；此处“http://”不能少，**后面的地址要和第一步 upstream 定义的名称保持一致**。
-    
+
     ```conf
     location / {
             root   html; #根目录
             index  index.html index.htm; #默认首页，按顺序匹配
             proxy_pass http://nginxDemo; #配置反向代理地址
-            
+
             #以下配置不是必须，视情况添加
-            #proxy_redirect    off; 
+            #proxy_redirect    off;
               #以下三条使后端的 Web 服务器可以通过 X-Forwarded-For 获取用户真实 IP
-            #proxy_set_header   Host $host; 
-            #proxy_set_header   X-Real-IP $remote_addr; 
-            #proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for; 
+            #proxy_set_header   Host $host;
+            #proxy_set_header   X-Real-IP $remote_addr;
+            #proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
             #client_max_body_size   10m; #允许客户端请求的最大单文件字节数
             #client_body_buffer_size   128k; #缓冲区代理缓冲用户端请求的最大字节数
             #proxy_connect_timeout   90; # Nginx 跟后端服务器连接超时时间
@@ -80,7 +80,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 
     测试：访问 localhost:
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/85ab518347db0fb7e9cb1184cd2d6924.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/1/24/85ab518347db0fb7e9cb1184cd2d6924.jpg)
 
 1. 配置动静分离
 
@@ -92,10 +92,10 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
         index  index.jsp;
     proxy_pass http://127.0.0.1:8080; #配置反向代理地址
 
-      proxy_redirect    off; 
+      proxy_redirect    off;
       proxy_set_header   Host $host; #以下三条使后端的 Web 服务器可以通过 X-Forwarded-For 获取用户真实 IP
-      proxy_set_header   X-Real-IP $remote_addr; 
-      proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for; 
+      proxy_set_header   X-Real-IP $remote_addr;
+      proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
       client_max_body_size   10m; #允许客户端请求的最大单文件字节数
       client_body_buffer_size   128k; #缓冲区代理缓冲用户端请求的最大字节数
       proxy_connect_timeout   90; # Nginx 跟后端服务器连接超时时间
@@ -114,24 +114,24 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
     location ~ \.(html|js|css)$ {
       expires 1h;
       root D:\software\web\apache-tomcat-9.0.0.M21-windows-x64\webapps\ROOT;
-    }   
-    ``` 
+    }
+    ```
     测试：
 
     访问 localhost，显示 nginx 的 404 页面，因为没有对 / 的访问做匹配；
 
     访问 localhost/index.jsp，正常显示 tomcat/webapp/ROOT 项目：
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/264e3c3945bc1da50e44f436a15d2340.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/1/24/264e3c3945bc1da50e44f436a15d2340.jpg)
 
     当点击页面上的其他链接时，会显示 nginx 的 404 页面，因为当前只配置了 ROOT 项目的目录
 
     注意：
     - 权限问题：
-      
+
       如果配置完仍然发现无法读取静态文件，看看访问 http://localhost/tomcat.png 时是否显示 403 forbidden。如果是的话就是因为权限问题导致的，这里简单的解决办法是把 nginx.conf 首行的 user 设为 root:
-      
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/f15b68fb917aba9280011a9a42631a19.jpg)
+
+      ![image](http://img.cdn.firejq.com/jpg/2018/1/24/f15b68fb917aba9280011a9a42631a19.jpg)
 
       如果不想使用 root 用户运行，可以通过修改目录访问权限解决 403 问题，但不能把目录放在 root 用户宿主目录下，放在任意一个位置并给它 755，或者通过 chown 改变它的拥有者与 Nginx 运行身份一致也可以解决权限问题。
 
@@ -140,7 +140,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 - 轮询（默认）
 
   每个 web 请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器 down 掉，能自动剔除。
-  
+
   ```conf
   upstream nginxDemo {
       server 127.0.0.1:8081;
@@ -151,7 +151,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 - 最少链接
 
   web 请求会被转发到连接数最少的服务器上。
-  
+
   ```conf
   upstream nginxDemo {
       least_conn;
@@ -163,7 +163,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 - weight 权重
 
   指定轮询几率，weight 和访问比率成正比，用于后端服务器性能不均的情况，weight 默认是 1。
-  
+
   ```conf
   #服务器 A 和服务器 B 的访问比例为：2-1; 比如有 3 个请求，前两个会访问 A，三个访问 B，其它规则和轮询一样。
   upstream nginxDemo {
@@ -175,7 +175,7 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 - ip_hash
 
   每个请求按访问 ip 的 hash 值分配，这样同一客户端连续的 Web 请求都会被分发到同一服务器进行处理，可以解决 session 的问题。当后台服务器宕机时，会自动跳转到其它服务器。
-  
+
   ```conf
   upstream nginxDemo {
       ip_hash;
@@ -186,11 +186,11 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
   基于 weight 的负载均衡和基于 ip_hash 的负载均衡可以组合在一起使用。
 
 - url_hash（第三方）
-  
+
   url_hash 是 nginx 的第三方模块，nginx 本身不支持，需要打补丁。
-  
+
   nginx 按访问 url 的 hash 结果来分配请求，使每个 url 定向到同一个后端服务器，后端服务器为缓存服务器、文件服务器、静态服务器时比较有效。缺点是当后端服务器宕机的时候，url_hash 不会自动跳转的其他缓存服务器，而是返回给用户一个 503 错误。
-  
+
   ```conf
   upstream nginxDemo {
       server 127.0.0.1:8081; #服务器 A
@@ -200,9 +200,9 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
   ```
 
 - fair（第三方）
-  
+
   按后端服务器的响应时间来分配请求，响应时间短的优先分配。
-  
+
   ```conf
   upstream nginxDemo {
       server 127.0.0.1:8081; #服务器 A
@@ -217,6 +217,6 @@ nginx 主要是通过反向代理的方法将 jsp,jspx 后缀或者是 javaee �
 
 [nginx+tomcat 配置负载均衡集群](https://my.oschina.net/bgq365/blog/870569)
 
-[tomcat + MSM：Manager 标签属性说明](https://my.oschina.net/bgq365/blog/879833) 
+[tomcat + MSM：Manager 标签属性说明](https://my.oschina.net/bgq365/blog/879833)
 
-http://blog.csdn.net/cxm19881208/article/details/65441865 
+http://blog.csdn.net/cxm19881208/article/details/65441865

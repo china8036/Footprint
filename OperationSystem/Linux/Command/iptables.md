@@ -20,15 +20,15 @@
 
 - 查看本机关于 IPTABLES 的设置情况：
   ```shell
-  iptables -L -nv --line-numbers 
+  iptables -L -nv --line-numbers
   ```
-  如果你在安装 linux 时没有选择启动防火墙，什么规则都没有。是这样的   
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/9/7ec808e0873c52504ea634c75bf750b2.jpg)
+  如果你在安装 linux 时没有选择启动防火墙，什么规则都没有。是这样的
+  ![image](http://img.cdn.firejq.com/jpg/2017/10/9/7ec808e0873c52504ea634c75bf750b2.jpg)
 
 - 删除已添加的 iptables 规则：
-  将所有 iptables 规则按照 1.2.3.... 进行排序，执行： 
+  将所有 iptables 规则按照 1.2.3.... 进行排序，执行：
   ```shell
-  iptables -L -nv --line-numbers 
+  iptables -L -nv --line-numbers
   ```
   如果要删除 INPUT 里序号为 5 的规则，执行：
   ```shell
@@ -107,7 +107,7 @@
     iptables-A INPUT -m limit --limit 5/min -j LOG --log-prefix "iptables denied: " --log-level 7
     ```
 3. 本地 lo 流量
-  方法一：   
+  方法一：
   设置：本地进程 lo 的 INPUT 和 OUTPUT 链接 ； eth1 的 INPUT 链
   ```shell
   iptables -A INPUT -i lo -j ACCEPT
@@ -115,7 +115,7 @@
   iptables -A INPUT -i eth1 -m state --state NEW,INVALID -j LOG
   iptables -A OUTPUT -o lo -j ACCEPT
   ```
-  方法二：   
+  方法二：
   到目前为止我们设置过程中唯一的问题是回环端口 (loopbakc) 也被阻断了。我们本可以通过指定 -i eth0 来仅仅丢弃 eth0 上的数据包，但我们也可以为回环端口 (loopback) 添加一条规则。如果我们追加这条规则，这将太晚了 ---- 因为所有的流量已经被丢弃。我们必须插入这条规则到第 4 行（从 0 开始，此处第 4 行即为最后一行，即匹配不了其他规则时才进入此规则）。
   ```shell
   iptables -I INPUT 4 -i lo -j ACCEPT
@@ -123,13 +123,13 @@
   `-I INPUT 4`表示将该 rule 插入到 INPUT 链中，序号为 4；
 
 ## 设定默认规则阻断流量
-方法一：    
+方法一：
 一旦一条规则对一个包进行了匹配，其他规则不再对这个包有效。因为我们的规则首先允许 SSH 和 WEB 流量，所以只要我们阻断所有流量的规则紧跟其后，我们依然能接受我们感兴趣的流量。我们要做的仅仅是把阻断所有流量的规则放在最后，所以我们需要再次用到它。
 ```shell
 iptables -A INPUT -j DROP
 ```
 
-方法二：   
+方法二：
 设定预设（默认) 规则（policy），抛弃所有不符合三种链规则的数据包
 ```shell
 iptables -P INPUT DROP

@@ -3,13 +3,13 @@
   - [2. browser-sync](#2-browser-sync)
   - [3. http-server](#3-http-server)
 
-# 前端开发工具 
+# 前端开发工具
 
 ## 1. 目录结构
 
-一个完整的前端项目目录结构实例：   
+一个完整的前端项目目录结构实例：
 
-<img src="http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/c5870a89bb08a6a2900d39911aa67f50.jpg" style="height:400px"/>
+<img src="http://img.cdn.firejq.com/jpg/2017/9/25/c5870a89bb08a6a2900d39911aa67f50.jpg" style="height:400px"/>
 
 
 - .git：由 git 工具自动创建
@@ -38,7 +38,7 @@ npm install -g http-server
 ```
 
 - 使用
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/5ea6b2f888f496a96ef34eade7132dfd.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/25/5ea6b2f888f496a96ef34eade7132dfd.jpg)
 
 
 

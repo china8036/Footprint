@@ -34,33 +34,33 @@ java.uitl.concurrent.[ThreadPoolExecutor](https://docs.oracle.com/javase/9/docs/
 
 参数说明：
 - corePoolSize
-	
+
 	核心线程的数量，核心线程指的是即使空闲也不会马上被销毁的线程。
-	
+
 	在创建了线程池后，默认情况下，线程池中并没有任何线程，而是等待有任务到来才创建线程去执行任务，除非调用了 prestartAllCoreThreads() 或者 prestartCoreThread() 方法，这 2 个方法在没有任务到来之前就创建 corePoolSize 个线程或者一个线程。
 
 	当提交一个任务时，线程池就会创建一个新线程去执行任务，直到线程池中的线程数目达到 corePoolSize 后，就会把继续提交的任务放到缓存队列当中。
 
 - maximumPoolSize
-	
+
 	线程池中允许的最大线程数，表示在线程池中最多能创建多少个线程。如果当前阻塞队列已满，且还有新任务提交，则会创建新的线程执行任务，前提是当前线程池的线程数必须小于 maximumPoolSize。
 
 - keepAliveTime
-	
+
 	表示线程没有任务执行时最多保持多久时间会终止。
-	
+
 	默认情况下，只有当线程池中的线程数大于 corePoolSize 时，keepAliveTime 才会起作用，即当线程池中的线程数大于 corePoolSize 时，如果一个线程空闲的时间达到 keepAliveTime 就会被终止，直到线程池中的线程数不超过 corePoolSize。
-	
+
 	但是如果调用了 allowCoreThreadTimeOut(boolean) 方法，在线程池中的线程数不大于 corePoolSize 时，keepAliveTime 参数也会起作用，直到线程池中的线程数为 0。
 
 - unit
-	
+
 	参数 keepAliveTime 的时间单位，值为枚举类型 TimeUnit。
 
 - workQueue
-	
+
 	用来保存等待被执行的任务的阻塞队列，当任务提交时，若线程池中的线程数量大于等于 corePoolSize，会把该任务封装成一个 Worker 对象放入等待队列。
-	
+
 	这个参数的选择会对线程池的运行过程产生重大影响，在 JDK 中提供了如下阻塞队列：
 	- `ArrayBlockingQueue`: （有界队列）基于数组结构的有界阻塞队列，按 FIFO 排序任务。
 	- `LinkedBlockingQuene`: （无界队列）基于链表结构的阻塞队列，按 FIFO 排序任务，吞吐量通常要高于 ArrayBlockingQuene。
@@ -68,15 +68,15 @@ java.uitl.concurrent.[ThreadPoolExecutor](https://docs.oracle.com/javase/9/docs/
 	- `priorityBlockingQuene`: （优先级队列）具有优先级的无界阻塞队列。
 
 - threadFactory
-	
+
 	创建线程的工厂，通过自定义的线程工厂可以给每个新建的线程设置一个具有识别度的线程名。
 
 	默认使用 Executors.defaultThreadFactory() 来创建线程。使用默认的 ThreadFactory 来创建线程时，会使新创建的线程具有相同的 NORM_PRIORITY 优先级并且是非守护线程，同时也设置了线程的名称。
 
 - handler
-	
+
 	线程池的饱和策略，当阻塞队列已满且没有空闲的工作线程时，如果继续提交任务，必须采取一种策略处理该任务，有以下四种取值：
-	- `ThreadPoolExecutor.CallerRunsPolicy`：由调用线程处理该任务。 	
+	- `ThreadPoolExecutor.CallerRunsPolicy`：由调用线程处理该任务。
 	- `ThreadPoolExecutor.AbortPolicy`: 丢弃任务并抛出 RejectedExecutionException 异常，默认策略。
 	- `ThreadPoolExecutor.DiscardPolicy`：也是丢弃任务，但是不抛出异常。
 	- `ThreadPoolExecutor.DiscardOldestPolicy`：丢弃队列最前面的任务，然后重新尝试执行任务（重复此过程）。
@@ -273,7 +273,7 @@ private final class Worker
 
 ### 3.5. 任务提交实现
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/11/a7999d4504c80e5eb4331c37b23c1f61.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/11/a7999d4504c80e5eb4331c37b23c1f61.jpg)
 
 ```java
 public void execute(Runnable command) {
@@ -443,7 +443,7 @@ final void runWorker(Worker w) {
 - 如果线程池中的线程数量大于等于 corePoolSize 且小于 maximumPoolSize，并且 workQueue 缓冲队列已满，则会创建新的线程去处理任务。
 - 如果创建新线程后，运行的线程数量大于等于 maximumPoolSize，且此时 workQueue 已满，则通过 handler 所指定的策略来处理新提交的任务。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/11/1453b4f7a67ea5c40ad64c55d7440e2f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/11/1453b4f7a67ea5c40ad64c55d7440e2f.jpg)
 
 因此可见：
 - 如果设置的 corePoolSize 和 maximumPoolSize 相同，则创建的线程池的大小是固定的。当线程池中的线程数量达到 corePoolSize 且 workQueue 缓冲队列已满时，会直接通过 handler 所指定的策略来处理新提交的任务。
@@ -457,44 +457,44 @@ final void runWorker(Worker w) {
 
 例：
 ```java
-public class ThreadPoolTest{   
-    public static void main(String[] args){   
-        // 创建等待队列   
-        BlockingQueue<Runnable> bqueue = new ArrayBlockingQueue<Runnable>(20);   
-        // 创建线程池，池中保存的线程数为 3，允许的最大线程数为 5  
-        ThreadPoolExecutor pool = new ThreadPoolExecutor(3,5,50,TimeUnit.MILLISECONDS,bqueue);   
-        // 创建七个任务   
-        Runnable t1 = new MyThread();   
-        Runnable t2 = new MyThread();   
-        Runnable t3 = new MyThread();   
-        Runnable t4 = new MyThread();   
-        Runnable t5 = new MyThread();   
-        Runnable t6 = new MyThread();   
-        Runnable t7 = new MyThread();   
-        // 每个任务会在一个线程上执行  
-        pool.execute(t1);   
-        pool.execute(t2);   
-        pool.execute(t3);   
-        pool.execute(t4);   
-        pool.execute(t5);   
-        pool.execute(t6);   
-        pool.execute(t7);   
-        // 关闭线程池   
-        pool.shutdown();   
-    }   
-}   
-  
-class MyThread implements Runnable{   
-    @Override   
-    public void run(){   
-        System.out.println(Thread.currentThread().getName() + "正在执行。");   
-        try{   
-            Thread.sleep(100);   
-        }catch(InterruptedException e){   
-            e.printStackTrace();   
-        }   
-    }   
-}  
+public class ThreadPoolTest{
+    public static void main(String[] args){
+        // 创建等待队列
+        BlockingQueue<Runnable> bqueue = new ArrayBlockingQueue<Runnable>(20);
+        // 创建线程池，池中保存的线程数为 3，允许的最大线程数为 5
+        ThreadPoolExecutor pool = new ThreadPoolExecutor(3,5,50,TimeUnit.MILLISECONDS,bqueue);
+        // 创建七个任务
+        Runnable t1 = new MyThread();
+        Runnable t2 = new MyThread();
+        Runnable t3 = new MyThread();
+        Runnable t4 = new MyThread();
+        Runnable t5 = new MyThread();
+        Runnable t6 = new MyThread();
+        Runnable t7 = new MyThread();
+        // 每个任务会在一个线程上执行
+        pool.execute(t1);
+        pool.execute(t2);
+        pool.execute(t3);
+        pool.execute(t4);
+        pool.execute(t5);
+        pool.execute(t6);
+        pool.execute(t7);
+        // 关闭线程池
+        pool.shutdown();
+    }
+}
+
+class MyThread implements Runnable{
+    @Override
+    public void run(){
+        System.out.println(Thread.currentThread().getName() + "正在执行。");
+        try{
+            Thread.sleep(100);
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+}
 ```
 
 ## 5. Refer Links

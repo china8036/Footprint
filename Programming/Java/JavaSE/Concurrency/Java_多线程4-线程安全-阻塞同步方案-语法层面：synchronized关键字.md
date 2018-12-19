@@ -189,7 +189,7 @@ ObjectMonitor() {
 - 若线程调用 wait() 方法，将释放当前持有的 monitor， _owner 变量恢复为 null， _count 自减 1，同时该线程进入 _WaitSet 队列中等待被唤醒。
 - 若当前线程执行完毕也将释放 monitor（锁) 并复位变量的值，以便其他线程进入获取 monitor（锁）。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/31/a7cd1289359cd279095af6a87c35a497.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/31/a7cd1289359cd279095af6a87c35a497.jpg)
 
 **synchronized 就是通过这种方式来获取锁的，这也是为什么 Java 中任意对象可以作为锁的原因，以及为什么 notify/notifyAll/wait 等方法存在于顶级对象 Object 中的原因。**
 
@@ -254,7 +254,7 @@ public class SyncCodeBlock {
 }
 ```
 
-NOTE: 
+NOTE:
 
 编译器会确保无论方法通过何种方式完成，方法中调用过的每条 monitorenter 指令都有执行其对应 monitorexit 指令，而无论这个方法是正常结束还是异常结束。
 

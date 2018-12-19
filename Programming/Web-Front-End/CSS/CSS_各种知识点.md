@@ -33,7 +33,7 @@ https://zhuanlan.zhihu.com/p/25808995
     | %           | 使用 "line-height" 属性的百分比值来排列此元素。允许使用负值。 |
     | inherit     | 规定应该从父元素继承 vertical-align 属性的值。        |
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/d8f016b8b78de4de138b2179d6925e9e.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/10/d8f016b8b78de4de138b2179d6925e9e.jpg)
 
 - line-height 属性设置行间的距离（行高）。
 
@@ -43,7 +43,7 @@ https://zhuanlan.zhihu.com/p/25808995
 
   原始数字值指定了一个缩放因子，后代元素会继承这个缩放因子而不是计算值。
 
-  - 取值  
+  - 取值
 
     | 值        | 描述                           |
     | -------- | ---------------------------- |
@@ -53,9 +53,9 @@ https://zhuanlan.zhihu.com/p/25808995
     | *%*      | 基于当前字体尺寸的百分比行间距。             |
     | inherit  | 规定应该从父元素继承 line-height 属性的值。 |
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/7cb991bdfc4bbdc0eec71fa16177dffe.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/10/7cb991bdfc4bbdc0eec71fa16177dffe.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/4ad4ab8395f114b25ce83fe6ba9e8c6b.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/10/4ad4ab8395f114b25ce83fe6ba9e8c6b.jpg)
 
 对于所有 display 值以 inline- 开头的元素（如 img / input / svg），其高度是基于 height、margin 和 border 属性的和；如果你将其 height 设置为 auto 的话，那么其高度的取值就是 line-height。
 
@@ -67,7 +67,7 @@ padding 和 margin 属性使用`%`作为单位时，长度基准是父元素的*
 
 锚点定位的本质：**改变容器的滚动高度**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/30/149ea942f140e08ad92c63b73d3e14da.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/30/149ea942f140e08ad92c63b73d3e14da.jpg)
 
 锚点定位触发条件：
 - URL 地址中的锚链与锚点元素

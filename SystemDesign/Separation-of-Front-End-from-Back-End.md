@@ -10,7 +10,7 @@
 
 ## 1. Web
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/9891571a702c817b1e404010f77eca4d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/9891571a702c817b1e404010f77eca4d.jpg)
 
 不分前后端，非常适合创业型小项目，经常 3-5 人搞定所有开发。页面由 JSP、PHP 等工程师在服务端生成，浏览器负责展现。基本上是服务端给什么浏览器就展现什么，展现的控制在 Web Server 层。
 
@@ -24,15 +24,15 @@
 
 这个时期，为了提高可维护性，可以通过下面的方式实现前端的组件化：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/55e6a6173a65d82af724a6a747ca5585.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/55e6a6173a65d82af724a6a747ca5585.jpg)
 
 ## 2. 后端为主的 MVC 时代
 
 以 Structs、Spring MVC 为典型例子，为了降低复杂度，以后端为出发点，有了 Web Server 层的架构升级，这是后端的 MVC 时代。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/ea621018e4a6c55d13ac0477aef24a6a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/ea621018e4a6c55d13ac0477aef24a6a.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/d32c28a76d74cb476a095b63e727fd1b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/d32c28a76d74cb476a095b63e727fd1b.jpg)
 
 MVC 是个非常好的协作模式，从架构层面让开发者懂得什么代码应该写在什么地方。为了让 View 层更简单干脆，还可以选择 Velocity、Freemaker 等模板，使得模板里写不了 Java 代码。看起来是功能变弱了，但正是这种限制使得前后端分工更清晰。
 
@@ -50,7 +50,7 @@ MVC 是个非常好的协作模式，从架构层面让开发者懂得什么代�
 
 ## 3. CLIENT-SIDE （重前端) MV* 时代
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/93ad746bc0abce30cf8134032bc33ab1.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/93ad746bc0abce30cf8134032bc33ab1.jpg)
 
 这种架构的基本思路是：
 
@@ -68,14 +68,14 @@ MVC 是个非常好的协作模式，从架构层面让开发者懂得什么代�
 
 为了降低前端开发复杂度，涌现了大量前端框架，比如 Backbone、EmberJS、KnockoutJS、AngularJS、React, etc. 这些框架总的原则是先按类型分层，比如 Templates、Controllers、Models，然后再在层内做切分：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/7472bad5621215992d9c52ded86e0de4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/7472bad5621215992d9c52ded86e0de4.jpg)
 
 好处很明显：
-  
+
   1. 前后端分离，分工明确。前端工作在浏览器端，后端工作在服务端。清晰的分工，可以让开发并行，测试数据的模拟不难，前端可以本地开发。后端则可以专注于业务逻辑的处理，输出 RESTful 等接口。
-  
+
   2. 前端开发的复杂度可控。前端代码很重，但合理的分层，让前端代码能各司其职。这一块蛮有意思的，简单如模板特性的选择，就有很多很多讲究。并非越强大越好，限制什么，留下哪些自由，代码应该如何组织，所有这一切设计，得花一本的厚度去说明。
-  
+
   3. 部署相对独立，产品体验可以快速改进。
 
 但依旧有不足之处：
@@ -85,19 +85,19 @@ MVC 是个非常好的协作模式，从架构层面让开发者懂得什么代�
       - Client-side View 跟 Server-side 是 不同层次的东西
       - Client-side 的 Controller 跟 Sever-side 的 Controller 各搞各的
       - Client-side 的 Route 但是 Server-side 可能没有
-  
+
   1. 代码不能复用：
       - 模版无法重用，造成维护上的麻烦与不一致
       - 逻辑无法重用，前端的校验后端仍须在做一次
       - 路由无法重用，前端的路由在后端未必存在
-  
+
   2. 全异步，模版无法重用，对 SEO 不利。往往还需要服务端做同步渲染的降级方案。
-  
+
   3. 性能问题，特别是移动互联网环境下：
       - 渲染，取值都在客户端进行，有性能的问题
       - 需要等待资源到齐才能进行，会有短暂白屏与闪动
       - 在移动设备低速网路的体验奇差无比
-  
+
   4. SPA 不能满足所有需求，依旧存在大量多页面应用。URL Design 需要后端配合，前端无法完全掌控。
 
   5. 跨终端问题：
@@ -110,50 +110,50 @@ MVC 是个非常好的协作模式，从架构层面让开发者懂得什么代�
 
 SPA （Single Page Application 单页面应用）是重前端架构的一个典型例子。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/64e1e167ebc5689b5366b85dac146d62.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/64e1e167ebc5689b5366b85dac146d62.jpg)
 
 相较于传统网页应用，单页应用将 MVC 前置到了浏览器端：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/e4b5ae0a40c0f2b882e9afc8231bc3db.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/e4b5ae0a40c0f2b882e9afc8231bc3db.jpg)
 
 这种模式下，前后端的分工非常清晰，前后端的关键协作点是 Ajax 接口。看起来是如此美妙，但回过头来看看的话，这与 JSP 时代区别不大。复杂度从服务端的 JSP 里移到了浏览器的 JavaScript，浏览器端变得很复杂。
 
 因此，类似 Spring MVC，这个时代开始出现浏览器端的分层架构：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/19311cf5cc3aa9835995d063f25cad7d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/19311cf5cc3aa9835995d063f25cad7d.jpg)
 
 这种 SPA 应用模式有以下特点：
-  
+
   1. 控制器前置，单页应用将路由处理放在浏览器端，即在浏览器端直接响应浏览器地址的变化，分发到对应的路由，向用户呈现对应的界面。
-  
+
   2. 以小块组件为功能元件，类似于传统网页中的 Ajax 组件，单页应用以小的组件为功能元件，在路由变化时，不再刷新整个页面，而是组合这些小的组件，替换变化的部分。
-  
+
   3. 数据层前置，与 Ajax 组件一个明显的区别是，单页应用在浏览器端通常有一层实实在在的数据层，而服务端则退化成了完全的数据 API。浏览器端的数据层会封装服务端 API，供上层的视图层调用。
-  
+
   4. 类似于客户端（Android、iOS）开发，交互全都放在客户端，服务端仅仅提供 API。
 
 优点：
-  
+
   1. 无刷新体验，这个应该是最显著的有点，由于路由分发直接在浏览器端完成，页面是不刷新，对用户的响应非常及时，因此提升了用户体验；
-  
+
   2. 完全的前端组件化，前端开发不再以页面为单位，更多地采用组件化的思想，代码结构和组织方式更加规范化，便于修改和调整；
-  
+
   3. API 共享，如果你的服务是多端的（浏览器端、Android、iOS、微信等），单页应用的模式便于你在多个端共用 API，可以显著减少服务端的工作量。容易变化的 UI 部分都已经前置到了多端，只受到业务数据模型影响的 API，更容易稳定下来，便于提供鲁棒的服务；
-  
+
   4. 组件共享，在某些对性能体验要求不高的场景，或者产品处于快速试错阶段，借助于一些技术（Hybrid、React Native），可以在多端共享组件，便于产品的快速迭代，节约资源。
 
 AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但是只适合做 APP**，对于很多类型的系统，这种开发方式也并不合适。缺点：
-  
+
   1. 首次加载大量资源，要在一个页面上为用户提供产品的所有功能，在这个页面加载的时候，首先要加载大量的静态资源，这个加载时间相对比较长；
-  
+
   2. 较高的前端开发门槛，MVC 前置，对前端工程师的要求提高了，不再是『切切图，画画页面这么简单』；同时工作量也会增加数倍，开发这类应用前端工程师的数量往往多于后端；
-  
+
   3. 不利于 SEO，单页页面，数据在前端渲染，就意味着没有 SEO，或者需要使用变通的方案。
 
 存在几个重要的挑战：
-  
+
   1. 前后端接口的约定。如果后端的接口一塌糊涂，如果后端的业务模型不够稳定，那么前端开发会很痛苦。这一块在业界有 API Blueprint 等方案来约定和沉淀接口，在阿里，不少团队也有类似尝试，通过接口规则、接口平台等方式来做。有了和后端一起沉淀的接口规则，还可以用来模拟数据，使得前后端可以在约定接口后实现高效并行开发。相信这一块会越做越好。
-  
+
   2. 前端开发的复杂度控制。SPA 应用大多以功能交互型为主，JavaScript 代码过十万行很正常。大量 JS 代码的组织，与 View 层的绑定等，都不是容易的事情。典型的解决方案是业界的 Backbone，但 Backbone 做的事还很有限，依旧存在大量空白区域需要挑战。
 
 单页应用是对原来 Ajax 组件的一种延伸，相较于传统的网页应用，将 MVC 前置到了浏览器端，浏览器就相当于 iOS 系统，单页应用就像是应用，与服务端仅仅通过 API 来沟通。**每种技术方案都有利弊，是否要使用单页应用技术，需要通过对产品需求（跨平台、SEO、性能、用户群属性？）、资源（工程师配比，能力？）时间要求等的评估来做出选择。**
@@ -162,7 +162,7 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 
 <!-- ## 引入 NodeJS
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/d3f4902529e4d3612a42d7f381a6dfa3.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/d3f4902529e4d3612a42d7f381a6dfa3.jpg)
 
 ### 3.2. WHY NodeJS?
 - 前端熟悉的语言，學習成本低
@@ -173,7 +173,7 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 
 ### 3.3. [职责划分](http://jsconf.cn/slides/herman-taobaoweb/#/)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/22ee42367106cb7daa3ea23ac5202e39.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/22ee42367106cb7daa3ea23ac5202e39.jpg)
 
 ### 3.4. 实际案例
 
@@ -189,12 +189,12 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 
 前端为主的 MV* 模式解决了很多很多问题，但如上所述，依旧存在不少不足之处。随着 Node.js 的兴起，JavaScript 开始有能力运行在服务端。这意味着可以有一种新的研发模式：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/1/532a9f1bd087d4d0ab94d1c3f7403ddd.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/1/532a9f1bd087d4d0ab94d1c3f7403ddd.jpg)
 
 在这种研发模式下，前后端的职责很清晰。对前端来说，两个 UI 层各司其职：
 
   1. Front-end UI layer 处理浏览器层的展现逻辑。通过 CSS 渲染样式，通过 JavaScript 添加交互功能，HTML 的生成也可以放在这层，具体看应用场景。
-  
+
   2. Back-end UI layer 处理路由、模板、数据获取、cookie 等。通过路由，前端终于可以自主把控 URL Design，这样无论是单页面应用还是多页面应用，前端都可以自由调控。后端也终于可以摆脱对展现的强关注，转而可以专心于业务逻辑层的开发。
 
 通过 Node，Web Server 层也是 JavaScript 代码，这意味着部分代码可前后复用，需要 SEO 的场景可以在服务端同步渲染，由于异步请求太多导致的性能问题也可以通过服务端来缓解。前一种模式的不足，通过这种模式几乎都能完美解决掉。
@@ -204,11 +204,11 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 基于 Node 的全栈模式，依旧面临很多挑战：
 
   1. 需要前端对服务端编程有更进一步的认识。比如 network/tcp、PE 等知识的掌握。
-  
+
   2. Node 层与 Java 层的高效通信。Node 模式下，都在服务器端，RESTful HTTP 通信未必高效，通过 SOAP 等方式通信更高效。一切需要在验证中前行。
-  
+
   3. 对部署、运维层面的熟练了解，需要更多知识点和实操经验。
-  
+
   4. 大量历史遗留问题如何过渡。这可能是最大最大的阻力。 -->
 
 ## 5. SUMMARIZE
@@ -223,7 +223,7 @@ AJAX 为主 SPA 型开发模式，比较**适合开发 APP 类型的场景，但
 
 ## 6. Refer Links
 
-Web 研发模式演变：https://github.com/lifesinger/blog/issues/184 
+Web 研发模式演变：https://github.com/lifesinger/blog/issues/184
 
 淘宝前后端分离实践：http://2014.jsconf.cn/slides/herman-taobaoweb/#/
 <!-- TODO: 有具体的实现方案，包括模块化、组件化、使用 commonjs 打包等等 -->

@@ -52,7 +52,7 @@ https://www.zhihu.com/question/21914131
 
 > math.h 应该是声明，实现应该在 libm.so 中，然后你可以查找一下 libm.so 包的包名，发现它位于 libc6-dev 这个包，然后查找对应的源代码，如果是 Debian/Ubuntu 可以用 apt-get source libc6-dev 来下载源代码到当前目录，之后便可以查看源代码了。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/10/e34964015714a67c399a4dd11c303efd.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/10/e34964015714a67c399a4dd11c303efd.jpg)
 
 ## 4. libc & glibc & glib
 
@@ -105,7 +105,7 @@ https://linux.die.net/man/2/sched_setaffinity
 https://stackoverflow.com/questions/5578965/if-i-do-sched-setaffinity-in-a-process-do-the-threads-spawned-by-it-get-affecte
 
 > A call to sched_setaffinity() affects only a single thread. A thread created with pthread_create() inherits the CPU affinity mask of its parent.
-> 
+>
 > This means that if you change the affinity of the current thread after creating other threads, their affinity will remain the default; but if you do it in the reverse order, they will inherit the altered affinity set.
 
 #### 8.1.3. cpuset 命令
@@ -122,6 +122,6 @@ int pthread_getaffinity_np(pthread_t thread, size_t cpusetsize, cpu_set_t *cpuse
 
 ### 9.1. ldd
 
-https://www.nowcoder.com/questionTerminal/b9aa6f39ea3f47d0a0d409b6eceb2eee?source=relative 
+https://www.nowcoder.com/questionTerminal/b9aa6f39ea3f47d0a0d409b6eceb2eee?source=relative
 
 ## 10. Refer Links

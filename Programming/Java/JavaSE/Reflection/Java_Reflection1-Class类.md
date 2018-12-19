@@ -174,8 +174,8 @@ try {
   - 当 Class 对象是一个引用时，该方法返回的是一个二进制形式的字符串，比如“com.demo.test.Car”。
   - 当 Class 对象是一个基本数据类型时，该方法返回的是它们的关键字，比如 int.class 的名字是 int。
   - 当 Class 对象是一个基础数据类型的数组时，Java 本身对于这一块制定了相应规则，在元素的类型前面添加相应数量的 [ 符号，用 [ 的个数来提示数组的维度，并且值得注意的是，对于基本类型或者是类，都有相应的编码，所谓的编码大多数是用一个大写字母来指示某种类型，规则如下：
-    
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/9/662c3ae9e2e927ff69821495729562db.jpg)
+
+    ![image](http://img.cdn.firejq.com/jpg/2018/3/9/662c3ae9e2e927ff69821495729562db.jpg)
 
     （注意：类或者是接口的类型编码是 L 类名；的形式，后面有一个分号)
 
@@ -233,7 +233,7 @@ try {
     Inner Class name:com.frank.test.Outter$Inner
     Inner Class simple name:Inner
     ```
-  
+
   - 对于匿名内部类，getSimpleName() 返回的是一个空的字符串。
     ```java
     Runnable run = new Runnable() {
@@ -409,10 +409,10 @@ public final class Field
 NOTE：
 - `getField()` 方法和 `getDeclaredField()` 方法的能力范围：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/9/2a303b5e3a59d4fdc927e62983430242.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/3/9/2a303b5e3a59d4fdc927e62983430242.jpg)
 
 - 如何获取一个 Class 中继承下来的非 public 修饰的 Field？
-  
+
   通过获取这个 Class 的 superClass，然后调用这个 superClass 的 `getDeclaredField()` 方法。
 
 #### 4.3.2. 获取 Field 类型（使用 Field 类中的方法）
@@ -462,13 +462,13 @@ NOTE：
   ComponentType type is :class com.frank.test.Car
   ```
 
-- 在反射中创建数组可以通过 `Array.newInstance()` 方法。 
+- 在反射中创建数组可以通过 `Array.newInstance()` 方法。
   ```java
   public static Object newInstance(Class<?> componentType, int... dimensions)
           throws IllegalArgumentException, NegativeArraySizeException {}
   ```
   第一个参数指定的是数组内的元素类型，后面的是可变参数，表示的是相应维度的数组长度限制。
-  
+
 	eg:
   ```java
   Array.newInstance(int.class,2,3);
@@ -556,7 +556,7 @@ NOTE: 若在反射中访问了 private 修饰的成员，会抛出 IllegalAccess
 [Method](https://docs.oracle.com/javase/9/docs/api/java/lang/reflect/Method.html) 是反射机制最核心的内容，通常的反射都是为了调用某个 Method 的 invoke() 方法。
 
 ```java
-public final class Method 
+public final class Method
                       extends Executable
 ```
 
@@ -574,16 +574,16 @@ public final class Method
 
 NOTE：
 - getMethod() 和 getDeclaredMethod() 的能力范围差异：
-  
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/9/345ed02fcaa2a51690388bdcee1dedbb.jpg)
+
+  ![image](http://img.cdn.firejq.com/jpg/2018/3/9/345ed02fcaa2a51690388bdcee1dedbb.jpg)
 
 #### 4.4.2. 获取方法要素（使用 Method 类中的方法）
 
-一个方法签名由下面几个要素构成： 
-- 方法名 
-- 方法参数 
-- 方法返回值 
-- 方法的修饰符 
+一个方法签名由下面几个要素构成：
+- 方法名
+- 方法参数
+- 方法返回值
+- 方法的修饰符
 - 方法可能会抛出的异常
 
 - 获取方法名：`String	getName​()`
@@ -601,7 +601,7 @@ NOTE：
 
           for ( Method m : methods ) {
               System.out.println("method name:"+m.getName());
-          } 
+          }
       }
 
   }
@@ -666,10 +666,10 @@ Constructor 同 Method 差不多，但是它特别的地方在于，它能够创
 
 NOTE：
 - 由于 Constructor 不能从父类继承，因此无法通过 getConstructor() 获取到父类的 Constructor。
- 
+
 - getConstructor() 和 getDeclaredConstructor() 的能力范围差异：
-  
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/9/0ced8645a316f8be0cd243e43b727b7f.jpg)
+
+  ![image](http://img.cdn.firejq.com/jpg/2018/3/9/0ced8645a316f8be0cd243e43b727b7f.jpg)
 
 #### 4.5.2. 创建类的实例对象（使用 Constructor 类的方法）
 
@@ -682,7 +682,7 @@ NOTE：
 
 ## 5. 反射操作常见的异常
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/9/26f0948b5f3758d4bcbeffd726ef3c18.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/9/26f0948b5f3758d4bcbeffd726ef3c18.jpg)
 
 ## 6. Refer Links
 
@@ -694,4 +694,4 @@ NOTE：
 
 [轻松学，Java 中的代理模式及动态代理](http://blog.csdn.net/briblue/article/details/73928350)
 
-[深入理解 Java 类型信息 (Class 对象) 与反射机制](http://blog.csdn.net/javazejian/article/details/70768369) 
+[深入理解 Java 类型信息 (Class 对象) 与反射机制](http://blog.csdn.net/javazejian/article/details/70768369)

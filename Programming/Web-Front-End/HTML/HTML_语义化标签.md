@@ -19,17 +19,17 @@ HTML 标签语义化是 Web 网页标准化的重要一欢，也是标准制定�
 
   - 从页面外观上说，由于浏览器会对语义化的标签设计默认的样式，因此高语义化的页面中去除 CSS 样式后页面仍能保持良好的外观，并可正常阅读；
 
-  - 从代码角度上说，高语义化的页面中会尽量使用合适的语义化标签；    
+  - 从代码角度上说，高语义化的页面中会尽量使用合适的语义化标签；
 
   - 可使用在线工具 [HTML 5 Outline](https://gsnedders.html5.org/outliner/) 对页面进行抽象，若解析得到的 outline 基本符合设想，则说明页面标签的语义化已达到标准。
 
 ## 2. EXAMPLES
 
-段落使用 p，引用使用 q 和 blockquote，强调用 em 和 strong，术语定义用 dl，无序列表用 ul，有序列表用 ol，文章用 article，导航用 nav，分节用 section，按钮用 input[type=button]；  
+段落使用 p，引用使用 q 和 blockquote，强调用 em 和 strong，术语定义用 dl，无序列表用 ul，有序列表用 ol，文章用 article，导航用 nav，分节用 section，按钮用 input[type=button]；
 
-建议的布局模式：   
+建议的布局模式：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/15/2dceb671dc9003016703a694fb66162d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/15/2dceb671dc9003016703a694fb66162d.jpg)
 
 ### 2.1. 头部——header 和 nav 标签
 
@@ -67,7 +67,7 @@ NOTE：
     <hgroup>
         <h2>标题标签</h2>
         <p>为不同的章节定义标题</p>
-    </hgroup> 
+    </hgroup>
     <div>h1 h2 h3 h4 h5 h6 六个标题标签</div>
   </section>
 </main>
@@ -114,7 +114,7 @@ footer 和 header 一样，用在不同的章节里，可以显示该章节（�
     ```
     解析后：
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/c130c0061dbfca0eb3674d26d87d9f5e.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/5/c130c0061dbfca0eb3674d26d87d9f5e.jpg)
 
 - `<figure>`用作照片及其注释的容器
   ```html

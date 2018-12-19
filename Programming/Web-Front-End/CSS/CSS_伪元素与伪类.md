@@ -26,8 +26,8 @@
 语法：
 > selector:pseudo-element {property:value;}
 
-伪元素总结图：        
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/0051da13a17ca02b9aeab3bcb087d4d6.jpg)
+伪元素总结图：
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/0051da13a17ca02b9aeab3bcb087d4d6.jpg)
 
 NOTE：
 
@@ -35,7 +35,7 @@ NOTE：
 
 - 伪元素默认是行内元素
 
-- 伪元素不存在于 DOM 文档中，无法被鼠标选中，但可以通过 JavaScript 和 CSS 操作 
+- 伪元素不存在于 DOM 文档中，无法被鼠标选中，但可以通过 JavaScript 和 CSS 操作
 
 ### 1.1. :first-line
 
@@ -85,33 +85,33 @@ h1:before {
 取值：
 
 - [String] – 使用引号包括一段字符串，将会向元素内容中添加字符串。
-  
+
   例：
   ```css
   a:after { content: "↗"; }
   ```
 
 - attr() – 调用当前元素的属性，可以方便的比如将图片的 Alt 提示文字或者链接的 Href 地址显示出来。
-  
+
   例：
   ```css
   a:after { content:"(" attr(href) ")"; }
   ```
 
 - url() / uri() – 用于引用媒体文件。
-  
+
   例：
   ```css
   h1::before { content: url(logo.png); }
   ```
 
 - counter() –  调用计数器，可以不使用列表元素实现序号功能。具体请参见 counter-increment 和 counter-reset 属性的用法。
-  
+
   例：
   ```css
-  h2:before { 
-    counter-increment: chapter; 
-    content: "Chapter " counter(chapter) ". " 
+  h2:before {
+    counter-increment: chapter;
+    content: "Chapter " counter(chapter) ". "
   }
   ```
 
@@ -149,7 +149,7 @@ h1:before {
 
 - 画分割线
 
-  目标效果：![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/febecf951304aa6346700b8bcf99f7b5.jpg)
+  目标效果：![image](http://img.cdn.firejq.com/jpg/2017/11/5/febecf951304aa6346700b8bcf99f7b5.jpg)
 
   ```html
   <p class="or">or</p>
@@ -159,7 +159,7 @@ h1:before {
   .or{
       text-align: center;
   }
-  .or:after, 
+  .or:after,
   .or:before{
       content: "";
       position: absolute; /* 注意把一个元素 absolute 定位后会强制把它强制 display:block，即使你再 dislay:table-cell 之类的也不管用。 */
@@ -175,7 +175,7 @@ h1:before {
       left: 0;
   }
   ```
-  
+
   NOTE：**页面中的视觉辅助性元素都推荐使用伪元素画**。
 
 
@@ -189,8 +189,8 @@ h1:before {
 
 NOTE：伪类名称对大小写不敏感。
 
-伪类总结图：    
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/7c5020a1963abf8587b83e53821a9948.jpg)
+伪类总结图：
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/7c5020a1963abf8587b83e53821a9948.jpg)
 
 ### 2.1. 锚伪类
 
@@ -263,25 +263,25 @@ NOTE:
   可以轻松地作为一个渐进的增强工作，但目前[浏览器支持情况较差](https://caniuse.com/#feat=css-placeholder-shown)
 
   例：
-  
+
   ![image](https://www.w3cplus.com/sites/default/files/blogs/2017/1711/placeholder-shown.gif)
 
   ```css
-  .form-group { 
-    position: relative; 
-    padding-top: 1.5rem; 
-  } 
-  label { 
-    position: absolute; 
-    top: 0; 
-    font-size: var(--font-size-small); 
-    opacity: 1; 
-    transform: translateY(0); 
-    transition: all 0.2s ease-out; 
-  } 
-  input:placeholder-shown + label { 
-    opacity: 0; 
-    transform: translateY(1rem); 
+  .form-group {
+    position: relative;
+    padding-top: 1.5rem;
+  }
+  label {
+    position: absolute;
+    top: 0;
+    font-size: var(--font-size-small);
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.2s ease-out;
+  }
+  input:placeholder-shown + label {
+    opacity: 0;
+    transform: translateY(1rem);
   }
   ```
 
@@ -305,7 +305,7 @@ NOTE:
 ## 3. 伪类与伪元素的比较
 
 > CSS 伪元素用于将特殊的效果添加到某些选择器。
-> 
+>
 > CSS 伪类用于向某些选择器添加特殊的效果。
 
 **伪类的效果可以通过添加一个实际的类来达到，而伪元素的效果则需要通过添加一个实际的元素才能达到**，这也是为什么他们一个称为伪类，一个称为伪元素的原因。

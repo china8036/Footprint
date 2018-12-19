@@ -69,16 +69,16 @@ headers = {'content-type': 'application/json'}
 r = requests.get("http://httpbin.org/get", params=payload, headers=headers)
 ```
 
-NOTE: 
+NOTE:
 
 - 定制 header 的优先级低于某些特定的信息源，例如：
-  
+
   - 如果在 .netrc 中设置了用户认证信息，使用 headers= 设置的授权就不会生效。而如果设置了 auth= 参数，``.netrc`` 的设置就无效了。
-  
+
   - 如果被重定向到别的主机，授权 header 就会被删除。
-  
+
   - 代理授权 header 会被 URL 中提供的代理身份覆盖掉。
-  
+
   - 在我们能判断内容长度的情况下，header 的 Content-Length 会被改写。
 
 - 所有的 header 值必须是 string、bytestring 或者 unicode。尽管传递 unicode header 也是允许的，但不建议这样做。
@@ -130,7 +130,7 @@ requests.get('http://github.com', timeout=(3, 7))
 
 ##### 2.1.1.6. session 对象
 
-http://docs.python-requests.org/zh_CN/latest/user/advanced.html 
+http://docs.python-requests.org/zh_CN/latest/user/advanced.html
 
 使用 requests 的请求方法每次请求其实都相当于发起了一个新的请求。也就是相当于我们每个请求都用了不同的浏览器单独打开的效果，它并不在一个会话当中。
 
@@ -224,12 +224,12 @@ r = requests.get('https://kyfw.12306.cn/otn/', verify=True)
 proxies = {
   "http": "http://41.118.132.69:4433"
 }
-r = requests.post("http://httpbin.org/post", proxies=proxies) 
+r = requests.post("http://httpbin.org/post", proxies=proxies)
 ```
 也可以通过环境变量 `HTTP_PROXY` 和 `HTTPS_PROXY` 来配置代理
 ```python
 export HTTP_PROXY="http://10.10.1.10:3128"
-export HTTPS_PROXY="http://10.10.1.10:1080"	
+export HTTPS_PROXY="http://10.10.1.10:1080"
 ```
 使用本地 socks5 代理：
 ```python
@@ -244,18 +244,18 @@ NOTE：若使用 http 代理，则发起请求时也要使用 http，否则不�
 
 ##### 2.1.1.9. 使用事件钩子
 
-http://www.imooc.com/video/13091 
+http://www.imooc.com/video/13091
 
 #### 2.1.2. GET 请求
 
 ##### 2.1.2.1. 传递 URL 参数
 
 - 方式一：
-  
+
   手工构建 URL；
 
 - 方式二：
-  
+
   使用 get() 方法的 params 关键字参数传递 URL 参数，例如：
   ```python
   # 使用 params 关键字参数，以一个字典来提供所有 URL 参数
@@ -272,9 +272,9 @@ http://www.imooc.com/video/13091
   # http://httpbin.org/get?key1=value1&key2=value2&key2=value3
   ```
   NOTE：
-  
+
   - 若通过方式二传参，会自动对参数进行 URL 编码，作用相当于 urllib.urlencode；
-  
+
   - get 方法的参数是 params，post 方法的参数是 data，注意区别；
 
 #### 2.1.3. POST 请求
@@ -344,11 +344,11 @@ requests 库的 get()、post() 等方法发送请求后，将收到的响应 res
   ```
 
 - .encoding 属性返回响应报文的编码格式；
-  
+
   requests 会基于请求的 HTTP 头部对响应的编码作出有根据的推测，使用其推测的编码格式自动为 encoding 属性复制，但也可通过设置该属性从而手动指定编码格式；
 
 - .status_code 属性返回响应状态码；
-  
+
   为方便引用，Requests 还附带了一个内置的状态码查询对象：
   ```python
   r.status_code == requests.codes.ok
@@ -445,7 +445,7 @@ print(r.cookies.get(‘example_cookie_name’)) # 若 cookie 不存在，输出 
 
 在 requests.exceptions 中定义了 HTTP 请求过程中可能出现的大部分异常：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/e76e4a1ef9470ee3cefec780e6431f2b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/6/e76e4a1ef9470ee3cefec780e6431f2b.jpg)
 
 使用示例：
 ```python
@@ -466,22 +466,22 @@ else:
 
 ### 2.4. 获取源代码
 
-http://www.imooc.com/article/17119?block_id=tuijian_wz 	
+http://www.imooc.com/article/17119?block_id=tuijian_wz
 
-1. 正常情况下， 网站服务器给我们直接返回 html 源码。 
+1. 正常情况下， 网站服务器给我们直接返回 html 源码。
 
-2. html 源码里面会指明我们还需要去请求的其他文件如 css， js 和 image 等 
+2. html 源码里面会指明我们还需要去请求的其他文件如 css， js 和 image 等
 
-3. 这些请求在浏览器获取到 html 之后浏览器会主动分析这些请求然后依次去请求， 
+3. 这些请求在浏览器获取到 html 之后浏览器会主动分析这些请求然后依次去请求，
 
-4. 然后浏览器会去执行 js 和 css 等文件， 这时候 js 文件实际上是可以直接操作 html 内容的， js 可以修改我们的 html 源码。 
+4. 然后浏览器会去执行 js 和 css 等文件， 这时候 js 文件实际上是可以直接操作 html 内容的， js 可以修改我们的 html 源码。
 
 5. 我们直接通过 requests.get 方法或者 urllib 获取到的 html 源码实际上是浏览器处理之前的原始 html
 
 ## 3. Refer Links
 
-Requests2.10.0 中文文档：http://docs.python-requests.org/zh_CN/latest/user/quickstart.html 
+Requests2.10.0 中文文档：http://docs.python-requests.org/zh_CN/latest/user/quickstart.html
 
-Requests2.10.0 API：http://docs.python-requests.org/zh_CN/latest/api.html 
+Requests2.10.0 API：http://docs.python-requests.org/zh_CN/latest/api.html
 
-静觅 » Python 爬虫利器一之 Requests 库的用法：http://cuiqingcai.com/2556.html 
+静觅 » Python 爬虫利器一之 Requests 库的用法：http://cuiqingcai.com/2556.html

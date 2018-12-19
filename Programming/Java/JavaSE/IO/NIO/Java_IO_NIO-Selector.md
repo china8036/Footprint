@@ -51,14 +51,14 @@ public abstract class SelectableChannel extends AbstractInterruptibleChannel imp
     public final SelectionKey register(Selector sel, int ops) throws ClosedChannelException {
         return register(sel, ops, null);
     }
-    
+
     public abstract SelectionKey register(Selector sel, int ops, Object att) throws ClosedChannelException;
 }
 ```
 ```java
 public abstract class AbstractSelectableChannel extends SelectableChannel {
     private SelectionKey[] keys = null;
-    
+
     public final SelectionKey register(Selector sel, int ops, Object att) throws ClosedChannelException {
         synchronized (regLock) {
             // ...
@@ -141,7 +141,7 @@ implRegister() 方法的实现根据系统不同而不同
           int fd = Integer.valueOf(ch.getFDVal());
           // 存储 fd 和 SelectionKeyImpl 的映射关系
           fdToKey.put(fd, ski);
-          
+
           pollWrapper.add(fd);
           // 将 SelectionKeyImpl 实例存储到 keys 中（这里的 keys 声明在 SelectorImpl 类中），keys 集合可由 selector.keys() 方法获取
           keys.add(ski);
@@ -160,8 +160,8 @@ implRegister() 方法的实现根据系统不同而不同
 ## 2. SelectionKey
 
 > A token representing the registration of a SelectableChannel with a Selector.
-> 
-> A selection key is created each time a channel is registered with a selector. A key remains valid until it is cancelled by invoking its cancel method, by closing its channel, or by closing its selector. Cancelling a key does not immediately remove it from its selector; it is instead added to the selector's cancelled-key set for removal during the next selection operation. The validity of a key may be tested by invoking its isValid method. 
+>
+> A selection key is created each time a channel is registered with a selector. A key remains valid until it is cancelled by invoking its cancel method, by closing its channel, or by closing its selector. Cancelling a key does not immediately remove it from its selector; it is instead added to the selector's cancelled-key set for removal during the next selection operation. The validity of a key may be tested by invoking its isValid method.
 
 [SelectionKey](https://docs.oracle.com/javase/9/docs/api/java/nio/channels/SelectionKey.html) 代表了每一个 SelectableChannel 对象在 Selector 中的注册关系。
 
@@ -186,7 +186,7 @@ public static final int OP_ACCEPT = 1 << 4;
 ### 2.2. 事件集合
 
 - interest 事件集合
-  
+
   感兴趣的事件集合，Channel 调用 register 方法注册到 Selector 中时会为绑定的 SelectionKey 设置此值，interestOps 可通过 interestOps(int ops) 方法设置，通过 interestOps​() 方法获取：
   - `int	interestOps​()`: Retrieves this key's interest set.
   - `SelectionKey	interestOps​(int ops)`: Sets this key's interest set to the given value.
@@ -229,7 +229,7 @@ public abstract class Selector implements Closeable {
     public static Selector open() throws IOException {
         return SelectorProvider.provider().openSelector();
     }
-    // ... 
+    // ...
 }
 ```
 ```java
@@ -258,7 +258,7 @@ public abstract class SelectorProvider {
 sun/nio/ch/DefaultSelectorProvider.java
 ```java
 public class DefaultSelectorProvider {
-    // ...    
+    // ...
     public static SelectorProvider create() {
         // 根据系统名称创建相应的 SelectorProvider
         String osname = AccessController
@@ -272,7 +272,7 @@ public class DefaultSelectorProvider {
         // 默认使用 PollSelectorProvider
         return new sun.nio.ch.PollSelectorProvider();
     }
-    // ...    
+    // ...
 }
 ```
 从 DefaultSelectorProvider 的 create() 方法中可以看到，Java Selector 并非凭空创造，而是在底层操作系统提供的系统调用 devpoll/poll/epoll 上封装而来。Java Selector 会根据系统平台的不同而自动选择不同的底层 IO 多路复用的系统调用实现，包括了 devpoll、epoll 和 poll 共 3 种类型。
@@ -293,7 +293,7 @@ class PollSelectorImpl extends SelectorImpl {
         // 调用父类构造方法
         super(sp);
         // ...
-        // 其他代码略，这里最重要的是初始化 PollArrayWrapper 
+        // 其他代码略，这里最重要的是初始化 PollArrayWrapper
         pollWrapper = new PollArrayWrapper();
         // ...
     }
@@ -318,7 +318,7 @@ class EPollSelectorImpl extends SelectorImpl {
     EPollSelectorImpl(SelectorProvider sp) throws IOException {
         // 调用父类构造方法
         super(sp);
-        // 其他代码略，这里最重要的是初始化 EPollArrayWrapper 
+        // 其他代码略，这里最重要的是初始化 EPollArrayWrapper
         pollWrapper = new EPollArrayWrapper();
         // ...
     }
@@ -329,18 +329,18 @@ class EPollArrayWrapper {
     EPollArrayWrapper() throws IOException {
         // 调用 epollCreate 方法创建 epoll 文件描述符
         epfd = epollCreate();
-    
+
         // the epoll_event array passed to epoll_wait
         // 初始化 pollArray，该对象用于存储就绪文件描述符和事件
         int allocationSize = NUM_EPOLLEVENTS * SIZE_EPOLLEVENT;
         pollArray = new AllocatedNativeObject(allocationSize, true);
         pollArrayAddress = pollArray.address();
-    
+
         // eventHigh needed when using file descriptors > 64k
         if (OPEN_MAX > MAX_UPDATE_ARRAY_SIZE)
             eventsHigh = new HashMap<>();
     }
-    
+
     // epollCreate 方法是 native 类型的
     private native int epollCreate();
 }
@@ -359,7 +359,7 @@ Java_sun_nio_ch_EPollArrayWrapper_epollCreate(JNIEnv *env, jobject this)
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/8/3d9cc34e2ef924ec4ba7a0928d142520.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/8/3d9cc34e2ef924ec4ba7a0928d142520.jpg)
 
 #### 3.1.3. devpoll 实现
 
@@ -403,7 +403,7 @@ sun/nio/ch/PollSelectorImpl.java
 ```java
 protected int doSelect(long timeout)
     throws IOException
-{   
+{
     if (channelArray == null)
         throw new ClosedSelectorException();
     processDeregisterQueue();
@@ -412,17 +412,17 @@ protected int doSelect(long timeout)
         pollWrapper.poll(totalChannels, 0, timeout);
     } finally {
         end();
-    }   
+    }
     processDeregisterQueue();
     int numKeysUpdated = updateSelectedKeys();
     if (pollWrapper.getReventOps(0) != 0) {
         // Clear the wakeup pipe
-        pollWrapper.putReventOps(0, 0); 
+        pollWrapper.putReventOps(0, 0);
         synchronized (interruptLock) {
             IOUtil.drain(fd0);
             interruptTriggered = false;
-        }   
-    }   
+        }
+    }
     return numKeysUpdated;
 }
 ```
@@ -431,7 +431,7 @@ sun/nio/ch/pollWrapper.java
 int poll(int numfds, int offset, long timeout) {
     return poll0(pollArrayAddress + (offset * SIZE_POLLFD),
                   numfds, timeout);
-}   
+}
 
 private native int poll0(long pollAddress, int numfds, long timeout);
 ```
@@ -467,7 +467,7 @@ sun/nio/ch/EPollSelectorImpl.java
 ```java
 protected int doSelect(long timeout)
     throws IOException
-{   
+{
     if (closed)
         throw new ClosedSelectorException();
     // 处理已取消键集合，对应步骤 1
@@ -481,7 +481,7 @@ protected int doSelect(long timeout)
     }
     // 处理已取消键集合，对应步骤 3
     processDeregisterQueue();
-    
+
     // 更新 selectedKeys 集合，并返回就绪通道数量，对应步骤 4
     int numKeysUpdated = updateSelectedKeys();
     if (pollWrapper.interrupted()) {
@@ -526,14 +526,14 @@ protected void implDereg(SelectionKeyImpl ski) throws IOException {
     // 从 epoll 实例中删除事件
     pollWrapper.remove(fd);
     ski.setIndex(-1);
-    
+
     // 从 keys 和 selectedKeys 中移除选择键
     keys.remove(ski);
     selectedKeys.remove(ski);
-    
+
     // 注销选择键
     deregister((AbstractSelectionKey)ski);
-    
+
     // 注销通道
     SelectableChannel selch = ski.channel();
     if (!selch.isOpen() && !selch.isRegistered())
@@ -661,11 +661,11 @@ while(true) {
     int readyNum = selector.select();
     Set<SelectionKey> selectedKeys = selector.selectedKeys();
     Iterator<SelectionKey> it = selectedKeys.iterator();
-    
+
     while(it.hasNext()) {
         SelectionKey key = it.next();
         it.remove();
-        
+
         if(key.isAcceptable()) {
             // 接受连接并将连接 socket 注册到 selector 中
             SocketChannel socketChannel = ssc.accept();

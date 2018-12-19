@@ -28,9 +28,9 @@
 
 ## 3. 面试准备
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/16/f045221e3ceb143cd299a9fd6993c858.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/16/f045221e3ceb143cd299a9fd6993c858.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/16/eff8a0f496b46e737c81a2a2959961ff.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/16/eff8a0f496b46e737c81a2a2959961ff.jpg)
 
 ## 4. Refer Links
 

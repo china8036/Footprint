@@ -20,12 +20,12 @@
 
 ### 1.1. 物理 CPU
 
-物理 CPU 是相对于虚拟 CPU 而言的概念，指实际存在的处理器，即实际主板插槽上的 CPU。  
+物理 CPU 是相对于虚拟 CPU 而言的概念，指实际存在的处理器，即实际主板插槽上的 CPU。
 
 在 /proc/cpuinfo 中，有多少个不同的 physical id 就有多少个物理 CPU：
 ```bash
-$ cat /proc/cpuinfo |grep "physical id"|sort |uniq|wc -l  
-2 
+$ cat /proc/cpuinfo |grep "physical id"|sort |uniq|wc -l
+2
 ```
 
 ### 1.2. CPU 物理核 (cpu cores)
@@ -42,8 +42,8 @@ P.S.  为什么非得把 CPU 核心封装到一块芯片中呢？不能通过简
 
 在 /proc/cpuinfo 中，cpu cores 记录了对应的物理 CPU（以该条目中的 physical id 标识）有多少个物理核：
 ```bash
-$ cat /proc/cpuinfo |grep "cores"|uniq  
-6   
+$ cat /proc/cpuinfo |grep "cores"|uniq
+6
 ```
 
 ### 1.3. CPU 逻辑核 (processor)
@@ -54,7 +54,7 @@ CPU 逻辑核主要用在 Intel 超线程的环境下，将原本的一个物理
 
 eg: Intel i5 4200H CPU
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/21/497195ab2d2c12bf24c24b26c06bfb64.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/21/497195ab2d2c12bf24c24b26c06bfb64.jpg)
 
 即表示有 2 个物理核心，使用 HT 超线程数为 2，使线程数为 2 x 2 = 4。
 
@@ -62,7 +62,7 @@ eg: Intel i5 4200H CPU
 
 在 /proc/cpuinfo 中，processor 指的就是 CPU 逻辑核数。
 ```bash
-$ cat /proc/cpuinfo |grep "processor"|wc -l  
+$ cat /proc/cpuinfo |grep "processor"|wc -l
 24 # 2 个物理 CPU，每个 CPU 有 6 个 core，同时支持超线程，因此共 24 个逻辑 CPU
 ```
 使用 top 查看负载时，按 1，看到的 CPU0~CPUn 也是 processor number。在 Windows 系统下看到的 CPU 数量实际上也是逻辑 CPU 数量。
@@ -87,13 +87,13 @@ VM 虚拟机中的 CPU 选择的核心数实际上指的是 CPU 逻辑核。
 
   以 Intel CPU 为例，CPU 分为高中低端，最低端的是 G 系列，其次是低端 i3 系列，然后是中端 i5 系列，高端 i7 系列和至尊 i9 系列。这个命名就和汽车一样，比如宝马 3 系，宝马 5 系，宝马 7 系。但要注意的是，Intel 的命名可不止就是 i3、i5、i7，如常见的 i7 8700K、i5 8400、i7 7700HQ、i3 8100，i3、i5、i7 只是代表 CPU 中高低端产品线而不是代表具体产品型号。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/29/bc537d5ebd0d0ee0ec7b21507a122b0b.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/10/29/bc537d5ebd0d0ee0ec7b21507a122b0b.jpg)
 
   其中，i7 代表了他属于高端系列产品，7700，第一个数字 7 代表了他是第 7 代产品，后面的 700 基本就代表了他处于什么样的性能等级，后缀 K 代表着他的功率水平和特殊功能。
 
   Intel 更新 CPU 型号的时候是 i3 6100、i3 7100、i3 8100，也就是不断更新“代”，而不是不断更新 i3、i5、i7、i9、i11。什么意思？就是 intel 每次发布新的 CPU 就会 i3、i5、i7，全部发布一套，下一次升级就再发布一套新的 i3、i5、i7。
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/29/702497e333f9758cb7f1c6dfe7031612.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/10/29/702497e333f9758cb7f1c6dfe7031612.jpg)
 
 - 架构
 
@@ -111,9 +111,9 @@ VM 虚拟机中的 CPU 选择的核心数实际上指的是 CPU 逻辑核。
 
   `CPU 的主频 = 外频 x 倍频`
   - 外频
-    
+
     外频是 CPU 乃至整个计算机系统的基准频率，因为外频是 CPU 与主板之间同步运行的速度，而且绝大部分电脑系统中外频也是内存与主板之间的同步运行的速度。在这种方式下，可以理解为 CPU 的外频直接与内存相连通，实现两者间的同步运行状态。
-  
+
   - 倍频
 
     倍频即主频与外频之比的倍数。早期的 CPU 并没有“倍频”这个概念，那时主频和系统总线的速度是一样的。随着技术的发展，CPU 速度越来越快，内存、硬盘等配件逐渐跟不上 CPU 的速度了，而倍频的出现解决了这个问题，它可使内存等部件仍然工作在相对较低的系统总线频率下，而 CPU 的主频可以通过倍频来无限提升（理论上）。
@@ -151,13 +151,13 @@ VM 虚拟机中的 CPU 选择的核心数实际上指的是 CPU 逻辑核。
 - 指令集
 
   CPU 所支持的指令集，其实就是一个任务表，比如任务表里有 ABCDE 这 5 个选项，指令集发送 A，那么 A 所对应的 1、2、3、4、5 步操作就由 CPU 来完成。
-  
+
   指令集越新效率越高，越多性能越强，与软件契合度越高。如 G4600 主频核心缓存都和 i3 6100 接近，但是它缺少部分指令集，性能就稍微弱一点。
 
 - 其它
   - CPU 的性能还和主板支持的技术有关例如 amd 的 Precision Boost 2，AMD 的 400 系主板的 bios 会采用更激进的电压和温控策略对 cpu 在多核使用情况下进行睿频，甚至在某些情况下全核都能达到单核心最大的频率，目前也只有 X470 支持。
 
-eg: 
+eg:
 
 i3-8100 参数说明：
 - CPU 系列	  酷睿 i3 8 代系列
@@ -188,24 +188,24 @@ stepping        : 9
 microcode       : 0xffffffff
 cpu MHz         : 3408.000
 cache size      : 256 KB
-physical id     : 0 
-siblings        : 4 
-core id         : 0 
-cpu cores       : 4  
+physical id     : 0
+siblings        : 4
+core id         : 0
+cpu cores       : 4
 apicid          : 0
-initial apicid  : 0   
+initial apicid  : 0
 fpu             : yes
 fpu_exception   : yes
 cpuid level     : 6
 wp              : yes
-flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss 
-ht tm pbe syscall nx pdpe1gb rdtscp lm pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 
-sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave osxsave avx f16c rdrand 
-bogomips        : 6816.00 
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss
+ht tm pbe syscall nx pdpe1gb rdtscp lm pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1
+sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave osxsave avx f16c rdrand
+bogomips        : 6816.00
 clflush size    : 64
 cache_alignment : 64
 address sizes   : 36 bits physical, 48 bits virtual
-power management: 
+power management:
 
 .....
 ```
@@ -217,7 +217,7 @@ power management:
 - `cpu get NumberOfCores`: 查看 CPU 核心数
 - `cpu get NumberOfLogicalProcessors`: 查看线程数
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/8/21/6fa069a6de19417f5a6cb09cee1a8a80.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/8/21/6fa069a6de19417f5a6cb09cee1a8a80.jpg)
 
 ## 3. CPU 架构
 
@@ -232,13 +232,13 @@ power management:
 
 对 SMP 服务器进行扩展的方式包括增加内存、使用更快的 CPU、增加 CPU、扩充 I/O（槽口数与总线数) 以及添加更多的外部设备（通常是磁盘存储)。
 
-**SMP 服务器的主要特征是共享，系统中所有资源 (CPU、内存、I/O 等) 都是共享的**。也正是由于这种特征，导致了 SMP 服务器的主要问题，那就是**它的扩展能力非常有限**。对于 SMP 服务器而言，每一个共享的环节都可能造成 SMP 服务器扩展时的瓶颈，而最受限制的则是内存。由于每个 CPU 必须通过相同的内存总线访问相同的内存资源，因此随着 CPU 数量的增加，内存访问冲突将迅速增加，最终会造成 CPU 资源的浪费，使 CPU 性能的有效性大大降低。实验证明，**SMP 服务器 CPU 利用率最好的情况是 2 至 4 个 CPU**。           
+**SMP 服务器的主要特征是共享，系统中所有资源 (CPU、内存、I/O 等) 都是共享的**。也正是由于这种特征，导致了 SMP 服务器的主要问题，那就是**它的扩展能力非常有限**。对于 SMP 服务器而言，每一个共享的环节都可能造成 SMP 服务器扩展时的瓶颈，而最受限制的则是内存。由于每个 CPU 必须通过相同的内存总线访问相同的内存资源，因此随着 CPU 数量的增加，内存访问冲突将迅速增加，最终会造成 CPU 资源的浪费，使 CPU 性能的有效性大大降低。实验证明，**SMP 服务器 CPU 利用率最好的情况是 2 至 4 个 CPU**。
 
 ### 3.2. NUMA(Non-Uniform Memory Access)
 
 由于 SMP 在扩展能力上的限制，人们开始探究如何进行有效地扩展从而构建大型系统的技术，NUMA 就是这种努力下的结果之一。**利用 NUMA 技术，可以把几十个 CPU（甚至上百个 CPU) 组合在一个服务器内**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/9/18/383a9aaa37e28ff202d5fd7b5d5f9ce2.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/9/18/383a9aaa37e28ff202d5fd7b5d5f9ce2.jpg)
 
 **NUMA 服务器的基本特征是具有多个 CPU 模块，每个 CPU 模块由多个 CPU（如 4 个）组成，并且具有独立的本地内存、I/O 槽口等。由于其节点之间可以通过互联模块（如称为 Crossbar Switch）进行连接和信息交互，因此每个 CPU 可以访问整个系统的内存（这是 NUMA 系统与 MPP 系统的重要差别）**。显然，访问本地内存的速度将远远高于访问远地内存（系统内其它节点的内存）的速度，这也是非一致存储访问 NUMA 的由来。由于这个特点，为了更好地发挥系统性能，开发应用程序时需要尽量减少不同 CPU 模块之间的信息交互。利用 NUMA 技术，可以较好地解决原来 SMP 系统的扩展问题，在一个物理服务器内可以支持上百个 CPU。比较典型的 NUMA 服务器的例子包括 HP 的 Superdome、SUN15K、IBMp690 等。
 
@@ -246,7 +246,7 @@ power management:
 
 ### 3.3. MPP(Massive Parallel Processing)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/9/18/eb96144523d1e2dbe021fd9fe3127264.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/9/18/eb96144523d1e2dbe021fd9fe3127264.jpg)
 
 **和 NUMA 不同，MPP 提供了另外一种进行系统扩展的方式，它由多个 SMP 服务器通过一定的节点互联网络进行连接，协同工作，完成相同的任务，从用户的角度来看是一个服务器系统。其基本特征是由多个 SMP 服务器（每个 SMP 服务器称节点) 通过节点互联网络连接而成，每个节点只访问自己的本地资源（内存、存储等)，是一种完全无共享 (Share Nothing) 结构，因而扩展能力最好，理论上其扩展无限制，目前的技术可实现 512 个节点互联，数千个 CPU**。目前业界对节点互联网络暂无标准，如 NCR 的 Bynet，IBM 的 SPSwitch，它们都采用了不同的内部实现机制。但节点互联网仅供 MPP 服务器内部使用，对用户而言是透明的。
 

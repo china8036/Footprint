@@ -50,7 +50,7 @@ Spring 从 4.0 开始加入了 spring-websocket 这个模块，并能够全面�
 
 - 配置类 WebSocketConfig（注册 websocket 接口）
 - 拦截器 WebSocketInterceptor（进行握手连接）
-- 处理类 SocketHandler（处理通信业务）	
+- 处理类 SocketHandler（处理通信业务）
 
 ### 2.1. 处理器
 
@@ -62,9 +62,9 @@ public class MyWebSocketHandler implements WebSocketHandler {
 
 @Override
 // JSR365:@OnOpen
-/** 
-* webscoket 建立好链接之后的处理函数 
-* @param session 当前 websocket 的会话 id，打开一个 websocket 通过都会生成唯一的一个会话，可以通过该 id 进行发送消息到浏览器客户端 
+/**
+* webscoket 建立好链接之后的处理函数
+* @param session 当前 websocket 的会话 id，打开一个 websocket 通过都会生成唯一的一个会话，可以通过该 id 进行发送消息到浏览器客户端
 */
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         System.out.println("ConnectionEstablished");
@@ -73,8 +73,8 @@ public class MyWebSocketHandler implements WebSocketHandler {
 
 @Override
 // JSR365:@OnMessage
-/** 
-* 客户端发送服务器的消息时，的处理函数，在这里收到消息之后可以分发消息 
+/**
+* 客户端发送服务器的消息时，的处理函数，在这里收到消息之后可以分发消息
 */
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
         //TODO
@@ -82,7 +82,7 @@ public class MyWebSocketHandler implements WebSocketHandler {
 
 @Override
 // JSR365:@OnError
-/** 
+/**
 * 消息传输过程中出现的异常处理函数
 */
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
@@ -91,9 +91,9 @@ public class MyWebSocketHandler implements WebSocketHandler {
 
 @Override
 // JSR365:@OnClosed
-/** 
-* websocket 链接关闭的回调 
-* http://docs.oracle.com/javaee/7/api/javax/websocket/CloseReason.CloseCodes.html 
+/**
+* websocket 链接关闭的回调
+* http://docs.oracle.com/javaee/7/api/javax/websocket/CloseReason.CloseCodes.html
 */
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         System.out.println("ConnectionClosed");
@@ -101,8 +101,8 @@ public class MyWebSocketHandler implements WebSocketHandler {
     }
 
 @Override
-/** 
-* 是否支持处理拆分消息，返回 true 返回拆分消息 
+/**
+* 是否支持处理拆分消息，返回 true 返回拆分消息
 */
     public boolean supportsPartialMessages() {
         return false;
@@ -119,8 +119,8 @@ public class MyWebSocketHandler implements WebSocketHandler {
  * WebSocket 拦截器，用于建立连接（握手）和断开
 */
 public class MyHandShake implements HandshakeInterceptor {
-    /** 
-     * 初次握手前，若返回 false，则不建立链接 
+    /**
+     * 初次握手前，若返回 false，则不建立链接
      * 可在此处将 HttpSession 中对象放入 WebSocketSession 中，便于之后 Handler 使用 HttpSession
      * 也可直接使用内建拦截器 HttpSessionHandshakeInterceptor，它可以传递 HTTP session attributes 到 WebSocket session 中
      */
@@ -128,11 +128,11 @@ public class MyHandShake implements HandshakeInterceptor {
         // ...
         return true;
     }
- 
+
     /** 初次握手访问后 */
     public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
     }
- 
+
 }
 
 ```
@@ -148,7 +148,7 @@ public class MyHandShake implements HandshakeInterceptor {
 @EnableWebMvc
 @EnableWebSocket
 public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocketConfigurer {
- 
+
     @Bean
     public MyWebSocketHandler myHandler() {
         return new MyWebSocketHandler();
@@ -204,9 +204,9 @@ public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocke
 
 ### 3.1. WebSocketSession
 
-http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/socket/WebSocketSession.html 
+http://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/socket/WebSocketSession.html
 
-http://www.jianshu.com/p/8355df989b81 
+http://www.jianshu.com/p/8355df989b81
 
 WebSocketSession 对象表示与一个客户端的一个会话，每个客户端与服务器的连接都会生成一个 WebSocketSession 对象，可通过该对象获取客户端的信息以及向客户端发送信息；
 
@@ -240,7 +240,7 @@ Interface WebSocketMessage<T>
 
 ## 4. origins 配置
 
-https://docs.spring.io/spring/docs/current/spring-framework-reference/html/websocket.html#websocket-server-allowed-origins 
+https://docs.spring.io/spring/docs/current/spring-framework-reference/html/websocket.html#websocket-server-allowed-origins
 
 三种可能的设置：
 
@@ -268,15 +268,15 @@ SockJS 是一个浏览器上运行的 JavaScript 库，如果浏览器不支持 
 
 由于 WebSocket 并不是所有浏览器都支持，因此 spring 推荐使用 sockjs 来适配各种浏览器；SockJS 的会让应用优先使用 WebSocket API，但会在必要的时候回滚到 non-WebSocket，自动选择 HTTP Streaming、HTTP Long Polling 中的最优方案替代；
 
-https://github.com/sockjs/sockjs-client#supported-transports-by-browser-html-served-from-http-or-https 
+https://github.com/sockjs/sockjs-client#supported-transports-by-browser-html-served-from-http-or-https
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/23/807aea0b83e51dd2b7c218448a96cf49.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/23/807aea0b83e51dd2b7c218448a96cf49.jpg)
 
 SockJS client 以发送 "GET /info" 从服务器获取基本的信息开始。之后，它必须决定使用什么样的传输。如果可以，会使用 WebSocket。如果不可用，在多数浏览器中至少有一个 HTTP Streaming 选项，如果还不行，那就将使用 HTTP (long) polling 了；
 
 所有传输请求都有下面的 URL 结构：
 ```
-http://host:port/myApp/myEndpoint/{server-id}/{session-id}/{transport} 
+http://host:port/myApp/myEndpoint/{server-id}/{session-id}/{transport}
 ```
 1)	{server-id} - useful for routing requests in a cluster but not used otherwise.
 2)	{session-id} - correlates HTTP requests belonging to a SockJS session.
@@ -362,9 +362,9 @@ websocket.onclose = function(event) {
 
 使用方法教程：
 
-http://blog.csdn.net/daniel7443/article/details/54377326 
+http://blog.csdn.net/daniel7443/article/details/54377326
 
-https://my.oschina.net/feinik/blog/853875 
+https://my.oschina.net/feinik/blog/853875
 
 https://my.oschina.net/u/1590027/blog/879629
 
@@ -382,7 +382,7 @@ https://my.oschina.net/feinik/blog/853875
 
 STOMP 1.2 协议说明
 
-http://blog.csdn.net/zsomsom/article/details/27076249?utm_source=tuicool 
+http://blog.csdn.net/zsomsom/article/details/27076249?utm_source=tuicool
 
 ### 6.1. 介绍
 
@@ -399,7 +399,7 @@ WebSocket 是一个消息架构，不强制使用任何特定的消息协议，�
 
 STOMP 帧由命令，一个或多个头信息、一个空行及负载（文本或字节）所组成；
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/23/d7bfa9cdbd329d7e8867a00765945b17.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/23/d7bfa9cdbd329d7e8867a00765945b17.jpg)
 
 其中可用的 COMMAND 包括：
 ```
@@ -434,7 +434,7 @@ CONNECT、SEND、SUBSCRIBE、UNSUBSCRIBE、BEGIN、COMMIT、ABORT、ACK、NACK�
 
 ### 6.3. 客户端 API
 
-官方教程：http://jmesnil.net/stomp-websocket/doc/ 
+官方教程：http://jmesnil.net/stomp-websocket/doc/
 
 引入 stomp.js
 ```html
@@ -804,7 +804,7 @@ The nack() method can also be used to inform STOMP 1.1 brokers that the client d
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
       registry.enableSimpleBroker("/topic", "/user");// “/topic“ 用于给客户端订阅广播信息，”/user“用于给客户端订阅点对点消息
-      
+
       //registry.setApplicationDestinationPrefixes("/app");// 客户端向服务器发送消息时 URL 为：【/app + controller 中 @MessageMapping 的地址】，此处暂时不使用该配置
       //registry.setUserDestinationPrefix("/user/");// 客户端向指定用户发送（一对一）信息时 URL 前缀是“/user/”，即使不配置默认也是“/user/“
     }
@@ -827,16 +827,16 @@ The nack() method can also be used to inform STOMP 1.1 brokers that the client d
       - @Header(“xxx”)：使用客户端 STOMP 帧的 headers 中的 xxx 赋值；
 
   - SimpMessagingTemplate
-    
+
     SimpMessagingTemplate 是 Spring-WebSocket 内置的一个消息发送工具，可以将消息发送到指定的客户端。
     ```java
     this.simpMessagingTemplate.convertAndSend("/topic/notice", value)
     ```
     将给定的对象进行序列化，使用‘MessageConverter’进行包装转化成一条消息，发送到指定的目标”，通俗点讲就是我们使用这个方法进行消息的转发发送；
     ```java
-    @MessageMapping("/change-notice")    
+    @MessageMapping("/change-notice")
     public void greeting(String value){
-        this.simpMessagingTemplate.convertAndSend("/topic/notice", value);    
+        this.simpMessagingTemplate.convertAndSend("/topic/notice", value);
     }
     ```
     等同于
@@ -950,7 +950,7 @@ stompClient.send("/chat", headers, JSON.stringify(body));
     ```
 
 - 与第一种方法基本相同，但用 websocket 连接产生的 sessionId 代替自己生成的 userId
-    
+
     Controller
     ```java
     @Autowired
@@ -993,7 +993,7 @@ stompClient.send("/chat", headers, JSON.stringify(body));
         return text;
     }
     ```
-        
+
     client
     ```javascript
     // 获取 socket 连接的 sessionId，即从 socket._transport.url 中使用正则截取
@@ -1065,6 +1065,6 @@ var subscription_errors = stompClient.subscribe('/user/' + sessionId + '/errors'
 
 https://my.oschina.net/u/1590027/blog/879629
 
-http://www.voidcn.com/blog/yingxiake/article/p-5783312.html 
+http://www.voidcn.com/blog/yingxiake/article/p-5783312.html
 
 [多人聊天实例](http://www.xdemo.org/spring-websocket-comet/)

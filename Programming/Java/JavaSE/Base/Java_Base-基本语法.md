@@ -158,7 +158,7 @@ javac 9.0.1
 
 -	APT 安装
 
-  https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04 
+  https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04
 
   ```bash
   sudo add-apt-repository ppa:webupd8team/java
@@ -167,11 +167,11 @@ javac 9.0.1
   sudo update-alternatives --config java
   vim /etc/environment
   ```
-  
+
   add:
   - JAVA_HOME="/usr/java/jdk1.8.0_121"
   - JRE_HOME=”/usr/java/jdk1.8.0_121/jre”
-  
+
   ```bash
   source /etc/environment
   echo $JAVA_HOME
@@ -218,7 +218,7 @@ Java 的用户程序分为两类：Java Application 和 Java Applet。这两类�
 
 - Java Applet 程序不能单独运行，它必须嵌入到用 HTML 语言编写的 Web 页面中，通过与 Java 兼容的浏览器来控制执行。
 
-- Java Applet 必须通过网络浏览器或者 Applet 观察器才能执行。 
+- Java Applet 必须通过网络浏览器或者 Applet 观察器才能执行。
 
 - Applet 程序则没有含 main 方法的主类，这也正是  Applet 程序不能独立运行的原因。
 
@@ -319,9 +319,9 @@ NOTE: `const`是 Java 的保留字，但目前（JDK 9）并未使用该关键�
 
 - `<`：检查左操作数的值是否小于右操作数的值，如果是那么条件为真。
 
-- `>=`：检查左操作数的值是否大于或等于右操作数的值，如果是那么条件为真。	
+- `>=`：检查左操作数的值是否大于或等于右操作数的值，如果是那么条件为真。
 
-- `<=`：检查左操作数的值是否小于或等于右操作数的值，如果是那么条件为真。	
+- `<=`：检查左操作数的值是否小于或等于右操作数的值，如果是那么条件为真。
 
 NOTE: **在 Java 中，关系运算符可用于 char 类型变量，但不可用于 String/boolean 类型变量**。
 
@@ -461,16 +461,16 @@ case 标签可以是：
   - System.out.println()
 
   - System.out.printf("《格式化字符串》", 《参数表》)
-    
+
     <!-- TODO: http://www.itzhai.com/java-notes-java-in-the-formatted-output-formatter-class-presentation.html#read-more -->
 
     格式化字符串：
-    - int/long/short/byte : 	
+    - int/long/short/byte :
       - %d 按无符号十进制整数输出
       - %u 按有符号十进制整数输出
       - %o 按无符号八进制整数输出（不输出前缀 0）
       - %x/%X 按无符号十六进制整数输出（不输出前缀 0x）
-    - double/float :		
+    - double/float :
       - %f 按定点浮点数输出
       - %e/%E 按指数浮点数（科学计数法）输出
       - %g/%G	按通常浮点数输出（有效位数，如：%8g 表示单精度浮点数保留 8 位有效数字。双精度用 lg）
@@ -498,7 +498,7 @@ case 标签可以是：
 
     - 时间日期格式化输出：
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/dffd80ab50fd9caf4b6ff16da74ec16f.jpg)
+      ![image](http://img.cdn.firejq.com/jpg/2018/1/26/dffd80ab50fd9caf4b6ff16da74ec16f.jpg)
 
       ```java
       public static void main(String[] args) {

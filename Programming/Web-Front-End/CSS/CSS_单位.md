@@ -92,7 +92,7 @@ em 和 rem 都是灵活可扩展的单位，由浏览器转换为像素值，使
 - em 如何转换为像素值
 
   当使用 em 单位时，像素值将是 em 值乘以使用 em 单位的元素的字体大小。
-  
+
   例如，如果一个 div 有 18px 字体大小，10em 将等同于 180px，即 10 × 18 = 180。
 
   有一个比较普遍的误解，认为 em 单位是相对于父元素的字体大小。 事实上，根据 W3 标准 ，它们是相对于使用 em 单位的元素的字体大小。父元素的字体大小可以影响 em 值，但这种情况的发生，纯粹是因为继承。
@@ -122,13 +122,13 @@ em 和 rem 都是灵活可扩展的单位，由浏览器转换为像素值，使
   为此，em 单位的主要目的应该是**保持在一个特定的设计元素范围内的可伸缩性**。
 
   - 在设计一些组件（如按钮、菜单、标题）时，一般会对组件设置明确的字体大小，并且我们希望，当字体大小发生改变时，整个组件能保持原样式进行整体缩放。
-  
+
     因此，对于这种情况，一般建议采用rem设置组件的font-size（保留可扩展性的同时避免继承的混淆），然后使用em来设置组件的padding、 margin、 width、 height和line-height等值，从而保证如果更改组件的字体大小，组件周围的间距将在剩余的空间按比例缩放。
     <!-- TODO: 实际尝试，全用rem&采用rem和em混合，哪种效果更优？ -->
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/480bb1d3e501ab0320c40e997c5fd577.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/10/480bb1d3e501ab0320c40e997c5fd577.jpg)
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/9f74df459e9372c4052f9debd5aae4f4.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/10/9f74df459e9372c4052f9debd5aae4f4.jpg)
 
   - 设置h1, h2, h3, h4, h5, h6 的下间距与他们当前的字体大小一致:
     ```css
@@ -173,9 +173,9 @@ vmin: Equal to the smaller of vw and vh.
 vmax: Equal to the larger of vw and vh.
 
 #### 2.2.3. vi & vb
- 
+
 vi: Equal to 1% of the size of the initial containing block, in the direction of the root element’s inline axis.
- 
+
 vb: Equal to 1% of the size of the initial containing block, in the direction of the root element’s block axis.
 
 例如，如果浏览器设置为1100px宽、700px高，1vmin会是7px,1vmax为11px。然而，如果宽度设置为800px，高度设置为1080px，1vmin将会等于8px而1vmax将会是10.8px。
@@ -194,7 +194,7 @@ vb: Equal to 1% of the size of the initial containing block, in the direction of
 
 ## 3. 浏览器兼容情况
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/9/d4ec2124c21c2d088cd3b279ce0da3b4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/9/d4ec2124c21c2d088cd3b279ce0da3b4.jpg)
 
 ## 4. Refer Links
 

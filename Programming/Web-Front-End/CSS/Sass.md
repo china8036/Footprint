@@ -68,7 +68,7 @@ Sass 有两种语法：Sass 和 Scss。SCSS 是 Sass 3 引入新的语法，其�
 - 相互转换
 
   安装 sass 后，可使用 sass-convert 对 scss 和 sass 进行相互转换：
-  
+
   将 scss 转换为 sass：
   ```
   sass-convert main.scss main.sass
@@ -84,17 +84,17 @@ Sass 有两种语法：Sass 和 Scss。SCSS 是 Sass 3 引入新的语法，其�
 
 1. Sass 引擎采用 ruby 编写，因此需要先[安装 ruby](https://www.ruby-lang.org/en/documentation/installation/) 环境：
     - Windows 下安装：
-        
+
       下载 [RubyInstallers](https://rubyinstaller.org/downloads/)，安装后验证：
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/6/6f9ac61fcaf30f6f50da9cf97fc26e01.jpg)
+      ![image](http://img.cdn.firejq.com/jpg/2017/12/6/6f9ac61fcaf30f6f50da9cf97fc26e01.jpg)
 
 2. 安装 sass
 
     ```shell
     gem install sass
     ```
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/6/9d96d26f7144ae52fc2e736721cc10a8.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/12/6/9d96d26f7144ae52fc2e736721cc10a8.jpg)
 
 3. 更新 sass
 
@@ -132,7 +132,7 @@ sass 中支持使用 // 和 /* */ 进行注释，但 // 注释不会编译到 cs
   * SETTINGS
   * variables……………………变量集中存储文件
   * mixin………………………………mixin 集中存储文件
-  * 
+  *
   * TOOLS
   *
   * COMPONENTS
@@ -220,11 +220,11 @@ SassScript 还支持所有其他 CSS 属性值类型， 例如 Unicode 范围和
   注意，如果有引号的字符串被添加了一个没有引号的字符串 （也就是，带引号的字符串在 + 符号左侧）， 结果会是一个有引号的字符串。 同样的，如果一个没有引号的字符串被添加了一个有引号的字符串 （没有引号的字符串在 + 符号左侧）， 结果将是一个没有引号的字符串。
 
 - 布尔运算
-  
+
   SassScript 支持布尔值做 and、or 和 not 运算。
 
 - 圆括号
-  
+
   圆括号可以用来改变运算顺序。
 
 #### 4.2.4. 函数
@@ -310,7 +310,7 @@ css3 中支持使用 @import 来引入外部文件，但其存在以下缺点：
 
 因此，sass 中提供了改进的 @import（即 control directives），在编译阶段完成文件的引入且可在文件的任意位置使用，解决了原生 @import 存在的问题，默认情况下，在 sass/scss 文件中会使用改进的 @import，当满足以下条件时才使用原生 @import：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/6/106e874436b65f0336abf77f19c3054f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/12/6/106e874436b65f0336abf77f19c3054f.jpg)
 
 基于 sass 的 @import 有以下既定规则：
 - 默认寻路路径根目录是当前文件所在目录，但可通过 load_paths 选项配置其它寻路路径，如缺省的`@import "compass/reset"`就是使用了该选项。
@@ -351,8 +351,8 @@ css3 中支持使用 @import 来引入外部文件，但其存在以下缺点：
 
 @media screen and (orientation: landscape) {
   .sidebar {
-    width: 500px; 
-  } 
+    width: 500px;
+  }
 }
 ```
 
@@ -379,7 +379,7 @@ Sass 本身只是一个编译器，Compass 在它的基础上，封装了一系�
 ```shell
 gem install compass
 ```
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/6/14c0265d74bdc3e133a05cfe4b51e7b9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/12/6/14c0265d74bdc3e133a05cfe4b51e7b9.jpg)
 
 ### 5.3. 使用 compass cli
 
@@ -390,7 +390,7 @@ http://compass-style.org/help/tutorials/production-css/
 ```shell
 mkdir compass-demo
 compass create compass-demo
-``` 
+```
 项目目录中的 config.rb 文件为项目的配置文件，子目录 sass 存放 Sass 源文件，子目录 stylesheets 存放编译后的 css 文件。
 
 #### 5.3.2. 编译
@@ -480,7 +480,7 @@ Compass 采用模块结构，不同模块提供不同的功能。内置核心模
   ```scss
   @import "compass/css3";
   .opacity {
-    @include opacity(0.5); 
+    @include opacity(0.5);
   }
   ```
   编译后：

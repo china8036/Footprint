@@ -73,7 +73,7 @@ Window 和 WorkerGlobalScope 都实现了 WorkerOrGlobalScope。 ——这意味
 - url 或 Request 对象
 
 - 配置信息对象（可选）
-  
+
   配置项对象可以包含以下字段：
   - method: 请求的方法，例如：GET, POST。
   - headers: 请求头部信息，可以是一个简单的对象，也可以是 Headers 类实例化的一个对象。
@@ -217,7 +217,7 @@ Response 实例是在 fentch() 处理完 promises 之后返回的。它的实例
 
 ## 4. 兼容性
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/3/879bfbb6b50db99e3173b243820ce6a6.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/3/879bfbb6b50db99e3173b243820ce6a6.jpg)
 
 可以通过检查 Headers、Request、Response 或 fetch 在 window 或 worker 作用域中是否存在，来检查是否支持 Fetch API。
 

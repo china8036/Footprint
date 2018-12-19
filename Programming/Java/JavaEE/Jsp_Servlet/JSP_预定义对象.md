@@ -1,8 +1,8 @@
-- [JSP 预定义对象](#jsp-%E9%A2%84%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1)
+- [JSP 预定义对象](#jsp-预定义对象)
   - [1. application](#1-application)
   - [2. config](#2-config)
-  - [3. exception：](#3-exception%EF%BC%9A)
-  - [4. out：](#4-out%EF%BC%9A)
+  - [3. exception：](#3-exception)
+  - [4. out：](#4-out)
   - [5. page](#5-page)
   - [6. pageContext](#6-pagecontext)
   - [7. request](#7-request)
@@ -15,7 +15,7 @@
 
 在 x.jsp 转换成的 x_jsp.java 的_jspService 方法中，可以看到九大预定义对象的定义：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/82996b4a0364aec34e8c0feaf348aa23.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/24/82996b4a0364aec34e8c0feaf348aa23.jpg)
 
 即：
 ```java
@@ -35,7 +35,7 @@ java.lang.Throwable Exception；
 
 - 定义：
   ```java
-  final javax.servlet.ServletContext application = pageContext.getServletContext(); 
+  final javax.servlet.ServletContext application = pageContext.getServletContext();
   ```
   另：“interface ServletContext”，因此不能直接 new；
 
@@ -47,17 +47,17 @@ java.lang.Throwable Exception；
 	直到服务器关闭，该类实例才被销毁；可类比于 javase 中的静态类。
 
 - 常用方法：
-  
+
   - void setAttribute(String attrName, Object value)：创建全局属性并赋值（可将任意对象绑定为全局属性)；
-    
+
     注：
-    
+
     在 application 作用域中设置的属性如果不手动调用 removeAttribute 函数进行删除的话，那么 application 中的属性将永远不会删除，如果 Web 容器发生重启，此时 application 范围内的所有属性都将丢失；
-  
+
   - Object getAttribute(String attrName)：获取指定的全局属性值；
-    
+
     例：
-    
+
     在 1.jsp 中：
     ```jsp
     <% application.setAttribute(“webinfo”, “I am test.”); %>
@@ -73,10 +73,10 @@ java.lang.Throwable Exception；
     out.println(sc.getAttribute("Webinfo")); // 获得参数值
     ```
     注意：若在访问 1.jsp 之前访问 2.jsp 或者在其它 jsp 或 Servlet 中访问 webinfo 的值，其值都为 null，因为 1.jsp 还未被访问过，全局属性“webinfo“还未设置；
-  
+
   - Enumeration getAttributeNames()：返回所有可用的属性名的枚举；
 
-  
+
   - Object getParameter(String attrName)：获取 Web 应用的配置参数（即 web.xml 中的 param 值）；
 
     例：在 web.xml 中配置全局参数：
@@ -89,7 +89,7 @@ java.lang.Throwable Exception；
     在 JSP 中可以通过如下代码获取全局配置参数：
     ```xml
     <%= application.getInitParameter("Webinfo") %>
-    ```  
+    ```
     在 Servlet 中：
     ```java
     ServletContext sc = getServletConfig().getServletContext();// 获取上下文
@@ -97,7 +97,7 @@ java.lang.Throwable Exception；
     ```
 
   - Object getInitParameter(String name);
-  
+
   - String getServletInfo()：返回 JSP/Servlet 引擎名和版本号；
 
 - 应用：
@@ -115,7 +115,7 @@ java.lang.Throwable Exception；
 - ServletConfig 类封装了当前类在 web.xml 中配置的初始化参数（在一个 Servlet 初始化时，JSP 引擎向它传递参数会被调用），包括了 Servlet 类初始化所需要的参数和服务器的有关信息；
 
 - 在 JSP 中可以通过预定义的 config 对象来获取这些参数值；
-  
+
   在 java 文件中没有预定义对象 config，但可以通过调用 getServletConfig 函数获得 ServletConfig 类的实例化对象：
   ```
   ServletConfig conf = getServletConfig();
@@ -190,7 +190,7 @@ java.lang.Throwable Exception；
 - 在 Java 文件中开发者需要处理可能出现的异常，但在 JSP 脚本中无须处理异常，JSP 脚本包含的所有可能出现的异常都可以交给专门处理错误的页面进行处理；
 
 - JSP 页面中出现异常的处理方式：
-  
+
   在 JSP 编译生成的 Servlet 源文件中的_jspService 方法中：
   ```java
   try {
@@ -208,25 +208,25 @@ java.lang.Throwable Exception；
 
 - 常用方法：
   - String toString()：返回描述异常的信息；
-    
+
     例：在 errorPage 中：
     ```
     <%=exception.toString() %>
     ```
   - String getMessage()：返回关于异常的简短描述信息；
   - void printStackTrace()：显示异常及其栈轨迹；
-  - Throwable FillInStackTrace()：重写异常的执行栈轨迹； 
+  - Throwable FillInStackTrace()：重写异常的执行栈轨迹；
 
 - 应用：在开发过程中，可以定义一个统一的异常处理页面，所有的 JSP 页面中将 errorPage 属性指定为统一的异常处理页面，这样方便页面风格的统一，也方便页面调试；
 
 ## 4. out：
 
 - 定义：`javax.servlet.jsp.JspWriter out = pageContext.getOut();`
-  
+
   另，“abstract class JspWriter extends java.io.Writer”，因此不能直接 new；
 
 - 使用 out 对象向客户端输出字符类内容；
-  
+
   PrintWriter 与 JspWriter 的区别；
 
 - 常用方法：
@@ -251,7 +251,7 @@ java.lang.Throwable Exception；
 
 - 常用方法：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/592b7b2f2ec681d9b1e2d1bc4e0e0e66.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/1/24/592b7b2f2ec681d9b1e2d1bc4e0e0e66.jpg)
 
   （page 对象的方法都是 Object 类的方法）
 
@@ -266,7 +266,7 @@ java.lang.Throwable Exception；
 - javax.servlet.jsp.PageContext 的对象代表着页面上下文，也就是当前页面所在的环境，这个环境中包含了变量等数信息，该对象提供了对 jsp 页面内所有对象及名字空间的访问，相当于页面中所有功能的集大成者；
 
 - 常用方法：
-  
+
   1)	Object getAttribute(String name, int scope)：取得指定范围内的 name 属性；
   2)	void setAttribute(String name, Object value, int scope)：设置指定范围内的 name 属性；
 
@@ -290,7 +290,7 @@ java.lang.Throwable Exception；
 
 - 其他方法
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/86f662565fe72997b234b7e694471053.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/1/24/86f662565fe72997b234b7e694471053.jpg)
 
 - 应用：可以通过 pageContext 对象来访问 page、request、session 和 application 作用域下的变量。
 
@@ -307,7 +307,7 @@ java.lang.Throwable Exception；
 - 常用方法：
   1)	Enumeration<String> getHeaderNames()：获取本次请求的所有首部字段的枚举；
   2)	String getHeader(headerName)：获取本次请求中指定首部字段的值；
-  
+
       例：
       ```
       <%
@@ -358,72 +358,72 @@ java.lang.Throwable Exception；
   26)	String getRequestURI()：等于 getContextPath() + getServletPath() + getPathInfo()；返回的字符串没有被 Servlet 服务器 decoded 过；
   27)	String getRequestURL()：等于 getScheme() + "://" + getServerName() + ":" + getServerPort() + getRequestURI()；
   28)	String getPathTranslated()：等于 getServletContext().getRealPath("/") + getPathInfo()；
-  
+
   例 1：
   ```xml
-  <servlet>  
-    <servlet-name>test</servlet-name>  
-    <servlet-class>coresun.TestServlet</servlet-class>  
-  </servlet>  
-  <servlet-mapping>  
-    <servlet-name>test</servlet-name>  
-    <url-pattern>*.do</url-pattern>  
-  </servlet-mapping>  
+  <servlet>
+    <servlet-name>test</servlet-name>
+    <servlet-class>coresun.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>test</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
   ```
   *.do 表示只要是以。do 结尾的地址，都可以访问此 Servlet；
-  
-  访问 http://localhost:8080/FilterWeb/update.do?userName=zhangsan&age=20  
-  
-  页面返回的结果如下：  
+
+  访问 http://localhost:8080/FilterWeb/update.do?userName=zhangsan&age=20
+
+  页面返回的结果如下：
   ```
-  request.getRequestURL() = http://localhost:8080/FilterWeb/update.do  
-  request.getRequestURI() = /FilterWeb/update.do  
-  request.getContextPath() = /FilterWeb  
-  request.getServletPath() = /update.do  
-  request.getQueryString() = userName=zhangsan&age=20  
-  request.getPathInfo() = null 
-  request.getPathTranslated() = null  
-  request.getProtocol() = HTTP/1.1  
-  request.getMethod() = GET  
-  request.getScheme() = http  
-  request.getRequestedSessionId() = 0D5219B7FF11D47EBE95B2E6A31076B5  
-  request.isRequestedSessionIdFromCookie() = true  
-  request.isRequestedSessionIdFromURL() = false  
-  request.isRequestedSessionIdValid() = true  
+  request.getRequestURL() = http://localhost:8080/FilterWeb/update.do
+  request.getRequestURI() = /FilterWeb/update.do
+  request.getContextPath() = /FilterWeb
+  request.getServletPath() = /update.do
+  request.getQueryString() = userName=zhangsan&age=20
+  request.getPathInfo() = null
+  request.getPathTranslated() = null
+  request.getProtocol() = HTTP/1.1
+  request.getMethod() = GET
+  request.getScheme() = http
+  request.getRequestedSessionId() = 0D5219B7FF11D47EBE95B2E6A31076B5
+  request.isRequestedSessionIdFromCookie() = true
+  request.isRequestedSessionIdFromURL() = false
+  request.isRequestedSessionIdValid() = true
   request.getAuthType() = null
   ```
   例 2：
   ```xml
-  <servlet>  
-    <servlet-name>test</servlet-name>  
-    <servlet-class>coresun.TestServlet</servlet-class>  
-  </servlet>  
-  <servlet-mapping>  
-    <servlet-name>test</servlet-name>  
-    <url-pattern>/faces/*</url-pattern>  
-  </servlet-mapping>  
+  <servlet>
+    <servlet-name>test</servlet-name>
+    <servlet-class>coresun.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>test</servlet-name>
+    <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
   ```
   以上表示只要是以 /faces/ 开头的地址，此 Servlet 都可以访问；
-  
-  访问 http://localhost:8080/FilterWeb/faces/update?userName=zhangsan&age=20  
-  
-  页面返回的结果如下：  
+
+  访问 http://localhost:8080/FilterWeb/faces/update?userName=zhangsan&age=20
+
+  页面返回的结果如下：
   ```
-  request.getRequestURL() = http://localhost:8080/FilterWeb/faces/update  
-  request.getRequestURI() = /FilterWeb/faces/update  
-  request.getContextPath() = /FilterWeb  
-  request.getServletPath() = /faces  
-  request.getQueryString() = userName=zhangsan&age=20  
-  request.getPathInfo() = /update  
-  request.getPathTranslated() = D:\FilterProject\FilterWeb\update  
-  request.getProtocol() = HTTP/1.1  
-  request.getMethod() = GET  
-  request.getScheme() = http  
-  request.getRequestedSessionId() = 0D5219B7FF11D47EBE95B2E6A31076B5  
-  request.isRequestedSessionIdFromCookie() = true  
-  request.isRequestedSessionIdFromURL() = false  
-  request.isRequestedSessionIdValid() = true  
-  request.getAuthType() = null  
+  request.getRequestURL() = http://localhost:8080/FilterWeb/faces/update
+  request.getRequestURI() = /FilterWeb/faces/update
+  request.getContextPath() = /FilterWeb
+  request.getServletPath() = /faces
+  request.getQueryString() = userName=zhangsan&age=20
+  request.getPathInfo() = /update
+  request.getPathTranslated() = D:\FilterProject\FilterWeb\update
+  request.getProtocol() = HTTP/1.1
+  request.getMethod() = GET
+  request.getScheme() = http
+  request.getRequestedSessionId() = 0D5219B7FF11D47EBE95B2E6A31076B5
+  request.isRequestedSessionIdFromCookie() = true
+  request.isRequestedSessionIdFromURL() = false
+  request.isRequestedSessionIdValid() = true
+  request.getAuthType() = null
   ```
 
 - 应用：
@@ -439,7 +439,7 @@ java.lang.Throwable Exception；
 - response 对象定义了处理创建 HTTP 信息头的接口。通过使用这个对象，开发者们可以添加新的 cookie 或时间戳，还有 HTTP 状态码等；
 
 -	常用方法：
-  
+
   1)	void addCookie(Cookie cookie)：添加指定的 cookie 至响应中；
   2)	void addDateHeader(String name, long date)：添加指定名称的响应头和日期值；
   3)	void addHeader(String name, String value)：添加指定名称的响应头和 string 值；
@@ -479,7 +479,7 @@ java.lang.Throwable Exception；
     <body>
         <%!
         // 随机字典，去掉了 O,0,I,1 这些难分辨的字符
-        public static final char[] CHARS = {'2', '3', '4', '5', '6', '7', '8', '9', 
+        public static final char[] CHARS = {'2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'V', 'U', 'W', 'X', 'Y', 'Z'};
 
         public static Random random = new Random();
@@ -604,20 +604,20 @@ java.lang.Throwable Exception；
 - 默认情况下，JSP 允许会话跟踪（禁止会话跟踪需要显式地关掉它，通过将 page 指令中 session 属性值设为 false 来实现），在客户端访问服务器第一个 jsp 页面时，一个新的 HttpSession 对象会自动为新的客户端实例化，实现会话管理，直到会话结束该对象才被销毁；
 
 - 常用方法：
-  
+
   1)	void setAttribute(String name, Object value)：使用指定的名称和值来产生一个对象并绑定到 session 中；
   2)	Object getAttribute(String name)：返回 session 对象中与指定名称绑定的对象，如果不存在则返回 null；
   3)	Enumeration<String> getAttributeNames()：返回 session 对象中所有绑定对象的枚举；
   4)	void removeAttribute(String name)：移除 session 中指定名称的对象；
-  5)	String getId()：返回服务器创建 session 对象时设置的唯一 ID； 
+  5)	String getId()：返回服务器创建 session 对象时设置的唯一 ID；
 
   6)	long getCreationTime()：返回 session 对象被创建的时间， 以毫秒为单位，从 1970 年 1 月 1 号凌晨开始算起；
   7)	long getLastAccessedTime()：返回客户端最后访问的时间，以毫秒为单位，从 1970 年 1 月 1 号凌晨开始算起；
   8)	int getMaxInactiveInterval()：返回 session 超时时间，以秒为单位，servlet 容器将会在这段时间内保持会话打开；
   9)	void setMaxInactiveInterval(int interval)：用来指定 session 超时时间，以秒为单位，servlet 容器将会在这段时间内保持会话有效；
-      
+
       注：tomcat 服务器的 MaxInactiveInterval 即默认超时时间为 30 分钟，可在 web.xml 中修改默认超时时间，以分钟为单位：
-      ```xml  
+      ```xml
       <session-config>
         <session-timeout>15</session-timeout>
       </session-config>

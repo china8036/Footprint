@@ -47,7 +47,7 @@ urls.txt 文件：是很多行待测试 URL 的列表以换行符断开，格式
 siege -c10 -r10 -f url.txt
 ```
 说明：-c 是并发量，-r 是每个线程的重复次数。url.txt 就是一个文本文件，每行都是一个 url，它会从里面的 URL 中随机选择访问。
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/94ff33a39c1ea8ba4ed02ead98a6f9e7.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/94ff33a39c1ea8ba4ed02ead98a6f9e7.jpg)
 
 Transactions: 100 hits // 完成 100 次处理
 

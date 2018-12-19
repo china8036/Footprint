@@ -63,13 +63,13 @@ Redis 支持的键值数据类型：
 
 Redis 官方没有提供 Windows 版本的发行版，但 Microsoft 维护了 Windows 版本的 Redis。
 
-下载：https://github.com/MicrosoftArchive/redis/releases 
+下载：https://github.com/MicrosoftArchive/redis/releases
 
 安装后会自动将路径添加至环境变量。
 
 验证安装成功：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/15/c63121f7fbc91c31a1ac1ead9e4c5e61.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/12/15/c63121f7fbc91c31a1ac1ead9e4c5e61.jpg)
 
 ### 2.2. Linux
 
@@ -110,7 +110,7 @@ logfile 配置 log 文件地址
 
 databases 设置数据库的个数，默认使用的数据库为 0
 
-save   设置 redis 进行数据库镜像的频率，保存快照的频率。  
+save   设置 redis 进行数据库镜像的频率，保存快照的频率。
     第一个参数表示多长时间，第二个表示执行多少次写操作。
     在一定时间内执行一定数量的写操作时，自动保存快照。可设置多个条件。
 
@@ -120,7 +120,7 @@ Dbfilename 镜像备份文件的文件名
 
 Dir 数据库镜像备份的文件放置路径
 
-Slaveof 设置数据库为其他数据库的从数据库 
+Slaveof 设置数据库为其他数据库的从数据库
 
 Masterauth 主数据库连接需要的密码验证
 
@@ -158,7 +158,7 @@ activerehashing 重新 hash
 ## 4. 客户端
 
 - python：[redis-py](https://github.com/andymccurdy/redis-py)，[文档](https://redis-py.readthedocs.io/en/latest/)
-  
+
   教程：
   - http://lawtech0902.com/2017/03/27/Redis-2/
   - http://python.jobbole.com/87305/

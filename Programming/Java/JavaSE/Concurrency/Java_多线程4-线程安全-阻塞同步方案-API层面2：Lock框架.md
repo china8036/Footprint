@@ -41,18 +41,18 @@ synchronized 关键字是一种基于 JVM 层面实现的原生语法层面的�
 
 	公平锁指的是多个线程在等待同一个锁时，必须按照申请锁的时间先后顺序来依次获得锁，而非公平锁不能保证这一点。**synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但可通过参数设置使用公平锁**。
 
-NOTE: 
+NOTE:
 - 采用 synchronized 方式不需要程序员去手动释放锁，当 synchronized 方法或 synchronized 代码块执行完之后，JVM 会自动让线程释放对锁的占用。而 Lock 则必须要程序员去手动释放锁 （即使发生异常也不会自动释放锁)，如果没有主动释放锁，就有可能导致死锁现象。
 
 - 在 JDK1.5 中，也就是 Lock 框架刚刚发布时，多线程环境下的 ReentrantLock 可以表现出比 synchronized 关键字更加稳定和优秀的性能。但**随着 JDK1.6 中针对 synchronized 关键字的重量级锁加入了一系列优化措施，使得 synchronized 与 ReentrantLock 的性能基本完全持平了**。
-	
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/1/c2ac6ace6273d1ddfab32dbc31183a66.jpg)
+
+	![image](http://img.cdn.firejq.com/jpg/2018/4/1/c2ac6ace6273d1ddfab32dbc31183a66.jpg)
 
 	由于 JVM 在未来的性能改进中也更偏向于原生语法层面的 synchronized，因此**提倡在 synchronized 能满足并发需求的情况下，优先使用 synchronized 来实现并发同步；而当确实需要 Lock 对象所提供的功能方法时，才使用 API 层面的 Lock 锁。**
 
 ### 1.2. 类谱图
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/1/945544f8307ebb1fe25de6b777f9ec7a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/1/945544f8307ebb1fe25de6b777f9ec7a.jpg)
 
 **JDK1.5 在 [java.util.Concurrent.locks](https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/locks/package-summary.html) 包中提供了两个根接口：Lock 和 ReadWriteLock，并为 Lock 接口提供了 ReentrantLock 实现类，为 ReadWriteLock 接口提供了 ReentrantReadWriteLock 实现类**。
 
@@ -67,11 +67,11 @@ JDK1.8 新增了 StampedLock 类，在大多数场景中它可以替代传统的
 public interface Lock {
     void lock();
 	// 相当于一个超时时间设置为无限的 tryLock 方法。可以响应中断，若线程在阻塞期间被中断，会抛出 InterruptException
-    void lockInterruptibly() throws InterruptedException;  
+    void lockInterruptibly() throws InterruptedException;
 	// 尝试获得锁。若成功获取锁，返回 true；否则，立即返回 false 而不会阻塞
     boolean tryLock();
 	// 尝试获得锁，阻塞时间不会超过给定的值。可以响应中断，若线程在阻塞期间被中断，会抛出 InterruptException
-    boolean tryLock(long time, TimeUnit unit) throws InterruptedException;  
+    boolean tryLock(long time, TimeUnit unit) throws InterruptedException;
     void unlock();
     Condition newCondition();
 }
@@ -109,7 +109,7 @@ public interface Lock {
 
 		    } finally {
 		        lock.unlock();   // 释放锁
-		    } 
+		    }
 		} else {
 		    // 如果不能获取锁，则直接做其他事情
 		}
@@ -122,12 +122,12 @@ public interface Lock {
 		// 推荐在调用 lockInterruptibly() 的方法外声明抛出 InterruptedException
 		public void method() throws InterruptedException {
 		    lock.lockInterruptibly();
-		    try {  
+		    try {
 		        //.....
 		    }
 		    finally {
 		        lock.unlock();
-		    }  
+		    }
 		}
 		```
 
@@ -149,17 +149,17 @@ public interface Lock {
 
 常用 API：
 - `int getHoldCount()`: 查询当前线程保持此锁的次数。
-- `protected Thread getOwner()`: 返回目前拥有此锁的线程，如果此锁不被任何线程拥有，则返回 null。      
-- `protected Collection<Thread> getQueuedThreads()`: 返回一个 collection，它包含可能正等待获取此锁的线程，其内部维持一个队列，这点稍后会分析。 
-- `int getQueueLength();`: 返回正等待获取此锁的线程估计数。 
+- `protected Thread getOwner()`: 返回目前拥有此锁的线程，如果此锁不被任何线程拥有，则返回 null。
+- `protected Collection<Thread> getQueuedThreads()`: 返回一个 collection，它包含可能正等待获取此锁的线程，其内部维持一个队列，这点稍后会分析。
+- `int getQueueLength();`: 返回正等待获取此锁的线程估计数。
 - `protected Collection<Thread> getWaitingThreads(Condition condition); `: 返回一个 collection，它包含可能正在等待与此锁相关给定条件的那些线程。
-- `int getWaitQueueLength(Condition condition);`: 返回等待与此锁相关的给定条件的线程估计数。  
-- `boolean hasQueuedThread(Thread thread); `: 查询给定线程是否正在等待获取此锁。    
-- `boolean hasQueuedThreads();`: 查询是否有些线程正在等待获取此锁。 
-- `boolean hasWaiters(Condition condition); `: 查询是否有些线程正在等待与此锁有关的给定条件。    
-- `boolean isFair() `: 如果此锁的公平设置为 true，则返回 true。 
+- `int getWaitQueueLength(Condition condition);`: 返回等待与此锁相关的给定条件的线程估计数。
+- `boolean hasQueuedThread(Thread thread); `: 查询给定线程是否正在等待获取此锁。
+- `boolean hasQueuedThreads();`: 查询是否有些线程正在等待获取此锁。
+- `boolean hasWaiters(Condition condition); `: 查询是否有些线程正在等待与此锁有关的给定条件。
+- `boolean isFair() `: 如果此锁的公平设置为 true，则返回 true。
 - `boolean isHeldByCurrentThread() `: 查询当前线程是否保持此锁。
-- `boolean isLocked()`: 查询此锁是否由任意线程保持。    
+- `boolean isLocked()`: 查询此锁是否由任意线程保持。
 
 例：
 ```java
@@ -177,7 +177,7 @@ try {
 
 ReentrantLock 内部基于 AQS 实现：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/1/1febf446dbc79ceb7a0be69a9a3aacb4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/1/1febf446dbc79ceb7a0be69a9a3aacb4.jpg)
 
 #### 3.2.1. 内部类
 
@@ -279,7 +279,7 @@ static final class NonfairSync extends Sync {
 				// 执行封装在 AQS 中的 CAS 操作，获取同步状态
 				// 可能同时存在多个线程设置 state 变量，因此使用 CAS 操作保证 state 变量操作的原子性
 				if (compareAndSetState(0, 1))
-						// 成功则将独占锁线程设置为当前线程  
+						// 成功则将独占锁线程设置为当前线程
 						setExclusiveOwnerThread(Thread.currentThread());
 				else
 						// 失败则再次请求同步状态，即执行封装在 AQS 中的 acquire 方法
@@ -483,34 +483,34 @@ JVM 中没有任何可以检测死锁、避免死锁或打破死锁的机制，�
 
 例：一个会导致死锁的 Java 程序
 ```java
-public class DeadLockDemo {  
-    /*  
-     * This method request two locks, first String and then Integer  
-     **/  
-    public void method1() {  
-        synchronized (String.class) {  
-            System.out.println("Aquired lock on String.class object");  
-            synchronized (Integer.class) {  
-                System.out.println("Aquired lock on Integer.class object");  
-            }  
-        }  
-    }  
-  
-    /* 
-     * * This method also requests same two lock but in exactly * Opposite order 
-     * i.e. first Integer and then String. * This creates potential deadlock, if 
-     * one thread holds String lock * and other holds Integer lock and they wait 
-     * for each other, forever. 
-     */  
-    public void method2() {  
-        synchronized (Integer.class) {  
-            System.out.println("Aquired lock on Integer.class object");  
-            synchronized (String.class) {  
-                System.out.println("Aquired lock on String.class object");  
-            }  
-        }  
-    }  
-}  
+public class DeadLockDemo {
+    /*
+     * This method request two locks, first String and then Integer
+     **/
+    public void method1() {
+        synchronized (String.class) {
+            System.out.println("Aquired lock on String.class object");
+            synchronized (Integer.class) {
+                System.out.println("Aquired lock on Integer.class object");
+            }
+        }
+    }
+
+    /*
+     * * This method also requests same two lock but in exactly * Opposite order
+     * i.e. first Integer and then String. * This creates potential deadlock, if
+     * one thread holds String lock * and other holds Integer lock and they wait
+     * for each other, forever.
+     */
+    public void method2() {
+        synchronized (Integer.class) {
+            System.out.println("Aquired lock on Integer.class object");
+            synchronized (String.class) {
+                System.out.println("Aquired lock on String.class object");
+            }
+        }
+    }
+}
 ```
 如果 method1() 和 method2() 都被两个或多个线程调用，死锁就很有可能发生。因为如果线程 1 在执行 method1() 时获取对 Sting 对象的锁，并且线程 2 在执行 method2() 时获取对 Integer 对象的锁，那么这两个线程都将在等待对方释放 Integer 和 String 锁，这将永远不会有结果。
 
@@ -518,31 +518,31 @@ public class DeadLockDemo {
 
 以上代码**导致死锁的真正原因并不是多线程，而是它们请求锁定的方式，如果你提供了一个有序的访问，那么问题就会解决，可以通过在没有抢占的情况下避免循环等待从而解决死锁问题**。
 ```java
-public class DeadLockFixed {  
-    /** 
-     * * Both method are now requesting lock in same order, first Integer and 
-     * then String. * You could have also done reverse e.g. first String and 
-     * then Integer, * both will solve the problem, as long as both method are 
-     * requesting lock * in consistent order. 
-     */  
-    public void method1() {  
-        synchronized (Integer.class) {  
-            System.out.println("Aquired lock on Integer.class object");  
-            synchronized (String.class) {  
-                System.out.println("Aquired lock on String.class object");  
-            }  
-        }  
-    }  
-  
-    public void method2() {  
-        synchronized (Integer.class) {  
-            System.out.println("Aquired lock on Integer.class object");  
-            synchronized (String.class) {  
-                System.out.println("Aquired lock on String.class object");  
-            }  
-        }  
-    }  
-}  
+public class DeadLockFixed {
+    /**
+     * * Both method are now requesting lock in same order, first Integer and
+     * then String. * You could have also done reverse e.g. first String and
+     * then Integer, * both will solve the problem, as long as both method are
+     * requesting lock * in consistent order.
+     */
+    public void method1() {
+        synchronized (Integer.class) {
+            System.out.println("Aquired lock on Integer.class object");
+            synchronized (String.class) {
+                System.out.println("Aquired lock on String.class object");
+            }
+        }
+    }
+
+    public void method2() {
+        synchronized (Integer.class) {
+            System.out.println("Aquired lock on Integer.class object");
+            synchronized (String.class) {
+                System.out.println("Aquired lock on String.class object");
+            }
+        }
+    }
+}
 ```
 **现在不会有任何死锁，因为两个方法都以相同的顺序访问 Integer 和 String 类的锁**。因此，如果线程 A 获得了 Integer 对象上的锁，则线程 B 将不会继续，直到线程 A 释放 Integer 锁定为止，即使线程 B 持有 String 锁，线程 A 也不会被阻塞，因为现在线程 B 不会期望线程 A 释放 Integer 锁继续前进。
 

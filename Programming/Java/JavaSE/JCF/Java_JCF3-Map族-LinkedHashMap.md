@@ -12,7 +12,7 @@
 		- [3.8. 获取元素](#38-获取元素)
 		- [3.9. containsValue() 方法](#39-containsvalue-方法)
 	- [4. Refer Links](#4-refer-links)
-    
+
 # Java 集合：Map 族 - LinkedHashMap 实现类
 
 ## 1. 基本概念
@@ -90,7 +90,7 @@ public class LinkedHashMap<K,V>
 
 LinkedHashMap 继承自 HashMap，在其基础上，内部还额外维护了一个双向链表，在每次插入数据，或者访问、修改数据时，会增加节点、或调整链表的节点顺序，使得在迭代时可以按照插入元素的顺序进行输出。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/12/44d6de572f1898afae01c9859ca65e8e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/12/44d6de572f1898afae01c9859ca65e8e.jpg)
 
 上图中，淡蓝色的箭头表示前驱引用，红色箭头表示后继引用。
 
@@ -124,7 +124,7 @@ final boolean accessOrder;
 
 	继承体系：
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/12/a0e290531e37cfd27c4709b28c9da5e2.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/3/12/a0e290531e37cfd27c4709b28c9da5e2.jpg)
 
 ### 3.5. 初始化
 
@@ -169,12 +169,12 @@ public LinkedHashMap(Map<? extends K, ? extends V> m) {
 LinkedHashMap 并没有重写 HashMap 的 put() 方法、 putVal() 方法或 putMapEntries() 方法，但它重写了 HashMap 内部构建新节点的 newNode() 方法和 HashMap 专门预留给 LinkedHashMap 的 afterNodeInsertion() 方法。
 
 - newNode()
-	
+
 	newNode() 方法会在 putVal() 方法中被调用，而 putVal() 方法会在 put() 方法和 putMapEntries() 方法中被调用。在 LinkedHashMap 重写后的 newNode() 方法中，每次构建新节点时，都会通过 `linkNodeLast(p)` 将新节点链接在内部双向链表的尾部。
 
 	```java
 	Node<K,V> newNode(int hash, K key, V value, Node<K,V> e) {
-			// 在构建新节点时，构建的是`LinkedHashMap.Entry` 不再是`Node`	
+			// 在构建新节点时，构建的是`LinkedHashMap.Entry` 不再是`Node`
 			LinkedHashMap.Entry<K,V> p =
 					new LinkedHashMap.Entry<K,V>(hash, key, value, e);
 			// 将新增的节点，连接在链表的尾部
@@ -201,7 +201,7 @@ LinkedHashMap 并没有重写 HashMap 的 put() 方法、 putVal() 方法或 put
 	// 回调函数，新节点插入之后回调，根据条件判断是否移除最近最少被访问的节点
 	void afterNodeInsertion(boolean evict) { // possibly remove eldest
 			LinkedHashMap.Entry<K,V> first;
-			// 
+			//
 			// LinkedHashMap 默认返回 false 则不删除节点
 			if (evict && (first = head) != null && removeEldestEntry(first)) {
 					K key = first.key;
@@ -237,7 +237,7 @@ LinkedHashMap 并没有重写 HashMap 的 put() 方法、 putVal() 方法或 put
 			public boolean exists(K key) {
 					return containsKey(key);
 			}
-			
+
 			/**
 			* 判断节点数是否超限，若超限，则开始删除最近最少被访问的节点
 			* @param eldest

@@ -38,15 +38,15 @@ Java 标准库中提供了一系列可供使用的工具类，便利了开发工
 
 例：
 ```java
-public class Test {  
-  public static void main (String []args) {  
-    System.out.println("90 度的正弦值：" + Math.sin(Math.PI/2));  
-    System.out.println("0 度的余弦值：" + Math.cos(0));  
-    System.out.println("60 度的正切值：" + Math.tan(Math.PI/3));  
-    System.out.println("1 的反正切值： " + Math.atan(1));  
-    System.out.println("π/2 的角度值：" + Math.toDegrees(Math.PI/2));  
-    System.out.println(Math.PI);  
-  }  
+public class Test {
+  public static void main (String []args) {
+    System.out.println("90 度的正弦值：" + Math.sin(Math.PI/2));
+    System.out.println("0 度的余弦值：" + Math.cos(0));
+    System.out.println("60 度的正切值：" + Math.tan(Math.PI/3));
+    System.out.println("1 的反正切值： " + Math.atan(1));
+    System.out.println("π/2 的角度值：" + Math.toDegrees(Math.PI/2));
+    System.out.println(Math.PI);
+  }
 }
 ```
 
@@ -58,7 +58,7 @@ public class Test {
 
 在 Java 中，所有的基本类型都有一个与之对应的包装器：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/26/9794f9e803ad3ca6231096ee89d16443.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/26/9794f9e803ad3ca6231096ee89d16443.jpg)
 
 其中，除了 Character 和 Boolean 类，其它 6 个类都派生与公共超类 Number。
 
@@ -110,13 +110,13 @@ public class Test {
 
   除了 Character，所有包装器类型的构造器都接收 2 种参数：要包装的基本数据类型、表示数值的 String 类型。
   ```java
-  Integer i1 = new Integer(42); 
+  Integer i1 = new Integer(42);
   Integer i2 = new Integer("123");
   Character c1 = new Character('a');//Character 只有一个构造函数
   ```
 
 - parseXxx()：将表示数值的 String 类型值转化为基本数据类型值，可指定转换使用的进制（默认十进制）。
-  
+
   源码：
   ```java
    // 直接转换，获得 int 值
@@ -132,7 +132,7 @@ public class Test {
   ```
 
 - valueOf()：将表示数值的 String 类型值转化为基本数据类型的包装器，可指定转换使用的进制（默认十进制）。
-  
+
   源码：
   ```java
   // 先调用 parseInt 获得 int 值，然后封装成 Integer 对象，注意封装的逻辑，有缓存

@@ -15,7 +15,7 @@
 
 下图给出数值类型之间的合法转换规则：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/25/c22c9e291a897e9967753c3caaca04f4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/25/c22c9e291a897e9967753c3caaca04f4.jpg)
 
 （**转换原则：往表数范围更大的方向转换**）
 
@@ -58,15 +58,15 @@
 
 - 转换方式
   - `(type)variable；`
-    
+
     NOTE：
     - 使用（type）操作的基本数据类型强制转换只能在数值（整型，浮点型，char 型）之间转换，不可在数值型和布尔型之间转换。
     - 强制转换又称“缩小转换”，若没有明确数据范围，很容易造成数据的溢出。
-    
+
     适用于：无法发生自动类型转换的时候，如从表数范围大的类型转换为表数范围小的类型。
 
   - 使用函数等其他特殊方法。
-    
+
     适用于：第一种方式无法满足需求时。
 
 - 整型和浮点型的转换
@@ -112,7 +112,7 @@
   int index=buf.indexOf("2");
   System.out.println("字符串、"2\"在串中的位置"+index);
   int index1=str.indexOf("123");
-  System.out.println("字符串、"123\"在串中的位置"+index1); 
+  System.out.println("字符串、"123\"在串中的位置"+index1);
   ```
   输出：
   ```
@@ -154,7 +154,7 @@ System.out.println(Integer.parseInt(“32”));// 输出 32
 
 方式：
 - 将子类对象转换为其父类类型——自动完成
-  
+
   又称为“向上转型”，由系统自动完成，（实际上没有发生任何类型转换，因为子类是一种特殊的父类）
   ```java
   base a = new sub();// 合法！Java 允许将子类对象直接赋给父类类型的引用变量，因为系统会自动完成向上转型
@@ -164,9 +164,9 @@ System.out.println(Integer.parseInt(“32”));// 输出 32
   NOTE：向上转型由系统自动完成，若 base a = (base) new sub();，依旧合法，但完全多此一举。
 
 - 将父类对象转换为其子类类型——需要强制转换
-  
+
   前提：该对象编译时为父类类型，运行时为子类类型，否则会在运行时引发异常 ClassCastException；
-  
+
   应用：使得编译类型为父类，运行类型为子类的对象能调用子类的特有方法；
   ```java
   base a = new sub();
@@ -205,7 +205,7 @@ short s=1024;
 int i=50;
 float f=2.0f;
 double d=.123;
-double result = (f * b) + (i / c) - (d * s); 
+double result = (f * b) + (i / c) - (d * s);
 //  f*b 中，b 被自动提升为 float 类型，该表达式结果是 float 类型；
 //  i/c 中，c 被自动提升为 int 类型，该表达式结果是 int 类型；
 //  d*s 中，s 被自动提升为 doubl 类型，该表达式结果是 double 类型；
@@ -218,7 +218,7 @@ double result = (f * b) + (i / c) - (d * s);
 
 - eg1
   ```java
-  short a = 5; 
+  short a = 5;
   a = a + 1;
   ```
   报错：`“incompatible types: possible lossy conversion from int to short”.`
@@ -238,7 +238,7 @@ double result = (f * b) + (i / c) - (d * s);
   a += 1;
   ```
   不会出错。因为表达式中使用了 += 复合赋值运算符，复合赋值运算符包含了一个隐式的类型转换，即：复合赋值运算符会自动将他计算的结果值强制类型转换为其左边变量的类型。
-  
+
   `a = a + 1`和`a += 1`实际上并不等价。`a += 1`实际上等于`a = (a 的类型）(s1+1);`。
 
 - eg3

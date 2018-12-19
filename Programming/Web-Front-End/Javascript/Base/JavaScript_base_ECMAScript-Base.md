@@ -50,7 +50,7 @@
 		- [7.5. 立即调用的函数表达式 (IIFE)](#75-%E7%AB%8B%E5%8D%B3%E8%B0%83%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F-iife)
 	- [8. Refer](#8-refer)
 
-# JavaScript Note - ECMAScript 
+# JavaScript Note - ECMAScript
 
 ## 1. 概述
 https://zh.wikipedia.org/wiki/JavaScript
@@ -62,7 +62,7 @@ https://zh.wikipedia.org/wiki/JavaScript
 - ECMAScript 是一种语言标准（常见的 Web 环境实际上只是 ECMAScript 实现可能的宿主环境之一），而 JavaScript 是网景公司对 ECMAScript 标准的一种实现（除此之外还有 ActionScript、ScriptEase 等），所谓的 JavaScript 的版本，实际上即是指它实现了 ECMAScript 标准的哪个版本；
 为什么不直接把 JavaScript 定为 标准呢？因为 JavaScript 是网景的注册商标。
 
-- 一般来说，完整的 JavaScript 包括以下几个部分：   
+- 一般来说，完整的 JavaScript 包括以下几个部分：
 	- ECMAScript（语言核心），描述了该语言的语法和基本对象
 	- DOM（文档对象模型），描述处理网页内容的方法和接口
 	- BOM（浏览器对象模型），描述与浏览器进行交互的方法和接口
@@ -146,7 +146,7 @@ switch (fruit) {
 
 ECMAScript 和 Java 中的 switch 语句有两点不同：
 - 在 ECMAScript 中，能用不是常量的值说明 case：
-	
+
 	例：
 	```javascript
 	var BLUE = "blue", RED = "red", GREEN  = "green";
@@ -182,7 +182,7 @@ for (initialize; test; increment) {
 ### 4.1. 变量定义
 
 - ECMAScript 中，使用** var 操作符**定义的变量将成为定义该变量的作用域中的**局部变量**，若不使用 var 操作符，将创建一个**全局变量**；
-例：   
+例：
 使用 var 操作符定义局部变量：
 ```javascript
 function test() {
@@ -213,9 +213,9 @@ a = "hello";
 ```javascript
 	var x = 1;
 	var x = 2;
-	
+
 	// 等同于
-	
+
 	var x = 1;
 	var x;
 	x = 2;
@@ -235,9 +235,9 @@ Javascript 只有两种作用域：
 ```javascript
 	console.log(a);
 	var a = 1;
-	
+
 	// 等同于
-	
+
 	var a;
 	console.log(a);
 	a = 1;
@@ -247,7 +247,7 @@ Javascript 只有两种作用域：
 
 ## 5. 数据类型
 ECMAScript 中有 5 种基本数据类型，以及 1 种复杂数据类型 --Object；
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/23/86950679098abc59eb5f63113def8929.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/23/86950679098abc59eb5f63113def8929.jpg)
 
 ### 5.1. 类型检测
 http://www.imooc.com/video/5677
@@ -261,7 +261,7 @@ alert(typeof message);// string
 alert(typeof(messgae));// string
 ```
 
-注意：   
+注意：
 - 由于 JavaScript 的历史原因，typeof null 会返回 object，但本质上 null 是一个类似于 undefined 的特殊值；
 - typeof 对数组（array）和对象（object）的显示结果都是 object，需要使用 instanceof 运算符区分；
 ```javascript
@@ -303,15 +303,15 @@ instanceof 是基于原型链的类型判断运算符，一般用于 Object 类�
 ```javascript
 	var i;
 	i // undefined
-	
+
 	function f(x) {
 		console.log(x)
 	}
 	f() // undefined
-	
+
 	var  o = new Object();
 	o.p // undefined
-	
+
 	var x = f();
 	x // undefined
 ```
@@ -321,7 +321,7 @@ instanceof 是基于原型链的类型判断运算符，一般用于 Object 类�
 	var a;
 	alert(a);// undefined
 	alert(typeof a);// undefined
-	
+
 	alert(b);// 产生异常：Uncaught ReferenceError: a is not defined
 	alert(typeof b);// undefined，对未声明的变量，只能执行 typeof 操作，且返回的是 undefined；
 ```
@@ -381,7 +381,7 @@ NaN
 - 字符串可以由双引号或单引号表示（在 ECMAScript 中双引号和单引号的解析方式基本完全相同）；
 - 任何字符串的长度可以通过其 length 属性获得；
 - String 类型的字面值是不可变的，也就是说要改变某个变量保存的字符串，必须先销毁原来的字符串，然后再用另一个包含心智的字符串填充该变量；
-例：   
+例：
 ```
 var lang = "java";
 lang = lang + "script"
@@ -448,7 +448,7 @@ lang = lang + "script"
 		var o = {
 			p: 'Hello World'
 		};
-		
+
 		o.p // "Hello World"
 		o['p'] // "Hello World"
 		```
@@ -459,7 +459,7 @@ lang = lang + "script"
 			key1: 1,
 			key2: 2
 		};
-	
+
 	Object.keys(o);
 	// ['key1', 'key2']
 	```
@@ -486,7 +486,7 @@ lang = lang + "script"
 		- 一般情况下，都是只想遍历对象自身的属性，所以不推荐直接使用 for...in 循环；
 
 	JavaScript 中遍历对象的多种方法：https://huixisheng.github.io/object-loop/
-	
+
 
 #### 5.3.2. 数组 Array
 
@@ -517,19 +517,19 @@ lang = lang + "script"
 - 数组的遍历：
 ```javascript
 	var a = [1, 2, 3];
-	
+
 	// for 循环
 	for(var i = 0; i < a.length; i++) {
 	  console.log(a[i]);
 	}
-	
+
 	// while 循环
 	var i = 0;
 	while (i < a.length) {
 	  console.log(a[i]);
 	  i++;
 	}
-	
+
 	var l = a.length;
 	while (l--) {
 	  console.log(a[l]);
@@ -569,9 +569,9 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 	  'y',
 	  'return x + y'
 	);
-	
+
 	// 等同于
-	
+
 	function add(x, y) {
 	  return x + y;
 	}
@@ -588,7 +588,7 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 			if (num === 1) return 1;
 			return fib(num - 2) + fib(num - 1);
 		}
-		
+
 		fib(6) // 8
 	```
 
@@ -597,10 +597,10 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 		function add(x, y) {
 			return x + y;
 		}
-		
+
 		// 将函数赋值给一个变量
 		var operator = add;
-		
+
 		// 将函数作为参数和返回值
 		function a(op){
 			return op;
@@ -610,7 +610,7 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 	```
 
 - **函数名提升**
-	
+
 	由于 JavaScript 引擎将函数名视同变量名，因此采用 function 命令声明函数时，整个函数会像变量声明的提升一样，被提升到代码头部；
 	```javascript
 		// 下面的代码不会报错
@@ -637,18 +637,18 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 		var f = function() {
 			console.log('1');
 		}
-		
+
 		function f() {
 			console.log('2');
 		}
-		
+
 		f() // 1
 	```
 
 - 根据 ECMAScript 的规范，不得在非函数的代码块中声明函数，最常见的非函数的代码块就是 if 和 try 语句；
 
 - 函数内部的变量提升
-	
+
 	与全局作用域一样，函数作用域内部也会产生 “变量提升” 现象，var 命令声明的变量，不管在什么位置，变量声明都会被提升到函数体的头部；
 	```javascript
 		function foo(x) {
@@ -674,24 +674,24 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 		function f(a, b) {
 			return a;
 		}
-		
+
 		f(1, 2, 3) // 1，运行时无论提供多少个参数（或者不提供参数），JavaScript 都不会报错
 		f(1) // 1
 		f() // undefined
 		f(undefined, 2) // 没有办法只省略靠前的参数，而保留靠后的参数。如果一定要省略靠前的参数，只有显式传入 undefined
-		
+
 		f.length // 2
 	```
 
 - 函数参数默认值
-	
+
 	通过下面的方法，可以为函数的参数设置默认值：
 	```javascript
 		function f(a) {
 			(a !== undefined && a !== null) ? a = a : a = 1;
 			return a;
 		}
-		
+
 		f() // 1
 		f('') // ""
 		f(0) // 0
@@ -701,34 +701,34 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 	- 函数参数如果是原始类型的值（数值、字符串、布尔值），传递方式是传值传递（passes by value）。这意味着，在函数体内修改参数值，不会影响到函数外部；
 	```javascript
 	var p = 2;
-	
+
 	function f(p) {
 	  p = 3;
 	}
 	f(p);
-	
+
 	p // 2
 	```
 	- 函数参数如果是复合类型的值（数组、对象、其他函数），传递方式是传址传递（pass by reference）。这意味着，传入函数的原始值的地址，因此在函数内部修改参数，将会影响到原始值；
 	```javascript
 	var obj = {p: 1};
-	
+
 	function f(o) {
 	  o.p = 2;
 	}
 	f(obj);
-	
+
 	obj.p // 2
 	```
 	注意：若在函数内将参数对象整个赋值成另外一个对象，相当于切断了形式参数与实际参数的联系，对形式参数的修改不再影响到实际参数
 	```javascript
 	var obj = [1, 2, 3];
-	
+
 	function f(o){
 	  o = [2, 3, 4];
 	}
 	f(obj);
-	
+
 	obj // [1, 2, 3]
 	```
 
@@ -737,19 +737,19 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 - 属性
 
 	- Function.arguments
-		
+
 		arguments 对象以数组形式包含了函数运行时的所有参数，这个对象只有在函数体内部，才可以使用；
 			- arguments[0] 就是第一个参数，arguments[1] 就是第二个参数，以此类推；
 			- arguments.length：函数调用时实际传递的参数；
 
 	- Function.prototype.constructor
-		
+
 		声明函数的原型构造方法
 
 - 方法
 
 	- Function.prototype.toString()
-		
+
 		获取函数的实现源码的字符串。覆盖了 Object.prototype.toString 方法。
 
 
@@ -795,7 +795,7 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 	- Function.prototype.bind()
 
 		https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
-	
+
 		bind() 方法会创建一个新函数，称为绑定函数。当调用这个绑定函数时，绑定函数会以创建它时传入 bind() 方法的第一个参数作为 this, 传入 bind() 方法的第二个以及以后的参数加上绑定函数运行时本身的参数按照顺序作为原函数的参数来调用原函数。
 
 		apply 、 call 、bind 三者都是用来改变函数的 this 对象的指向的；区别在于 bind 是返回对应函数，便于稍后调用；apply 、call 则是立即调用 。
@@ -813,7 +813,7 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 		}
 		var func = bar.bind(foo).bind(sed);
 		func(); //?
-		
+
 		var fiv = {
 				x:5
 		}
@@ -823,17 +823,17 @@ https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 		答案是，两次都仍将输出 3 ，而非期待中的 4 和 5 。原因是，在 Javascript 中，多次 bind() 是无效的。更深层次的原因， bind() 的实现，相当于使用函数在内部包了一个 call / apply ，第二次 bind() 相当于再包住第一次 bind() , 故第二次以后的 bind 是无法生效的。
 
 
-		
+
 #### 5.3.4. 包装类型
 
 ECMAScript 中每个原始数据类型都存在对应的包装类型：String、Number、Boolean；
 
 例：
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/262f2e3b65b49ed14f28e707115801e0.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/24/262f2e3b65b49ed14f28e707115801e0.jpg)
 
-- 为什么原始类型可以有 length 属性？为什么动态赋值一个属性 t 后又变成了 undefined？   
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/de3e87429742ba0aab805b2a4cc8b311.jpg)   
-当对一个原始数据类型的变量执行 “对象” 的操作时，ECMAScript 会自动创建一个对应的临时包装类型的对象并赋以相同的值，完成用户所需的 “对象” 操作后，又将该临时包装对象销毁。   
+- 为什么原始类型可以有 length 属性？为什么动态赋值一个属性 t 后又变成了 undefined？
+![image](http://img.cdn.firejq.com/jpg/2017/9/24/de3e87429742ba0aab805b2a4cc8b311.jpg)
+当对一个原始数据类型的变量执行 “对象” 的操作时，ECMAScript 会自动创建一个对应的临时包装类型的对象并赋以相同的值，完成用户所需的 “对象” 操作后，又将该临时包装对象销毁。
 因此，原始类型的字符串可以成功输出 length 属性并动态赋一个新的属性值，但赋值后该包装类即被销毁故为 undefined。
 
 ##### 5.3.4.1. Number
@@ -856,9 +856,9 @@ ECMAScript 中每个原始数据类型都存在对应的包装类型：String、
 
 ### 5.4. 数据类型转换
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/636660656ff60630d6afaa4e0b37fe8a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/24/636660656ff60630d6afaa4e0b37fe8a.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/5bcb6e749ea0564b0a70c68778cc8500.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/24/5bcb6e749ea0564b0a70c68778cc8500.jpg)
 
 ## 6. 异常处理
 
@@ -893,7 +893,7 @@ http://javascript.ruanyifeng.com/grammar/function.html
 
 ### 7.5. 立即调用的函数表达式 (IIFE)
 
-https://www.cnblogs.com/TomXu/archive/2011/12/31/2289423.html 
+https://www.cnblogs.com/TomXu/archive/2011/12/31/2289423.html
 
 通常情况下，只对匿名函数使用这种“立即执行的函数表达式”。它的目的有两个：一是不必为函数命名，避免了污染全局变量；二是 IIFE 内部形成了一个单独的作用域，可以封装一些外部无法读取的私有变量。
 
@@ -915,23 +915,23 @@ storeData(tmp);
 
 ## 8. Refer
 
-阮一峰的 JavaScript 教程：   
-http://javascript.ruanyifeng.com/    
-http://www.ruanyifeng.com/blog/javascript/    
-http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html         
-http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html          
-http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html          
-http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html            
+阮一峰的 JavaScript 教程：
+http://javascript.ruanyifeng.com/
+http://www.ruanyifeng.com/blog/javascript/
+http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html
+http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html
+http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html
+http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance_continued.html
 
-廖雪峰的 JavaScript 教程：   
-https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000   
+廖雪峰的 JavaScript 教程：
+https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000
 
-W3School JavaScript 教程：   
-http://www.w3school.com.cn/js/    
+W3School JavaScript 教程：
+http://www.w3school.com.cn/js/
 
-imooc JavaScript 深入浅出：    
-http://www.imooc.com/learn/277    
+imooc JavaScript 深入浅出：
+http://www.imooc.com/learn/277
 
-COOLSHELL JavaScript 面向对象编程：         
-https://coolshell.cn/articles/6441.html         
-https://coolshell.cn/articles/6668.html            
+COOLSHELL JavaScript 面向对象编程：
+https://coolshell.cn/articles/6441.html
+https://coolshell.cn/articles/6668.html

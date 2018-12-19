@@ -12,7 +12,7 @@ JDK 在 java.util 包下为开发者提供了 Java 集合框架，极大提高�
 
 ## 2. 类谱图
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/2/ba7d19c24edd41b29a86d81f4ce81e2b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/2/ba7d19c24edd41b29a86d81f4ce81e2b.jpg)
 
 java.util.concurrent 包中提供了映射、有序集、队列的线程安全的高效实现，它们使用复杂的算法，通过允许并发访问数据结构的不同部分来使竞争最小化。
 
@@ -20,13 +20,13 @@ java.util.concurrent 包中提供了映射、有序集、队列的线程安全�
 
 **非阻塞集合包括添加和移除数据的方法。当集合已满或为空时，在调用添加或者移除方法时会返回 null 或者抛出异常，但线程不会被阻塞**。
 
-在 JDK 的并发包中，常见的非阻塞集合有以下几个： 
-- `ConcurrentHashMap` 
-- `ConcurrentSkipListMap` 
-- `ConcurrentSkipListSet` 
-- `ConcurrentLinkedQueue` 
-- `ConcurrentLinkedDeque` 
-- `CopyOnWriteArrayList` 
+在 JDK 的并发包中，常见的非阻塞集合有以下几个：
+- `ConcurrentHashMap`
+- `ConcurrentSkipListMap`
+- `ConcurrentSkipListSet`
+- `ConcurrentLinkedQueue`
+- `ConcurrentLinkedDeque`
+- `CopyOnWriteArrayList`
 - `CopyOnWriteArraySet`
 
 ## 4. 阻塞集合 (Blocking Collection)

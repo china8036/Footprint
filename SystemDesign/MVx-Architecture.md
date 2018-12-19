@@ -4,7 +4,7 @@
   - [3. MVP(Model+View+Presenter)](#3-mvpmodelviewpresenter)
   - [4. MVVM(Model+View+ViewModel)](#4-mvvmmodelviewviewmodel)
   - [5. Refer Links](#5-refer-links)
-  
+
 # MV* 架构模式
 
 ## 1. 概述
@@ -13,13 +13,13 @@
 >
 > 数据传递的流程不同来源于运行环境技术栈能够做到的事情不同。所以无论是复杂化 简单化 还是修改流程，基本都是因为技术栈变化了 对应做的调整。
 >
-> 在相同技术栈下，能够实现的各种 X 都可以是大同小异的。  
-> 
+> 在相同技术栈下，能够实现的各种 X 都可以是大同小异的。
+>
 > 在不同技术栈下，相同的 X 可能实现都大相径庭，仅有非常抽象的流程类似。
 
 ## 2. MVC(Model+View+Controller)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/5cc1af29dfd007c81fb8391c5457a946.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/5cc1af29dfd007c81fb8391c5457a946.jpg)
 
 视图被用户看到；
 用户使用控制器；
@@ -29,7 +29,7 @@
 
 ## 3. MVP(Model+View+Presenter)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/86dea35f532b275ea53319d778c78ca3.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/86dea35f532b275ea53319d778c78ca3.jpg)
 
 对 MVC 的改进的思想：切断的 View 和 Model 的联系，让 View 只和 Presenter（原 Controller）交互，减少在需求变化中需要维护的对象的数量。
 
@@ -39,7 +39,7 @@ View 非常薄，不部署任何业务逻辑，称为"被动视图"（Passive Vi
 
 ## 4. MVVM(Model+View+ViewModel)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/d6929975db518d443290d87582287a79.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/d6929975db518d443290d87582287a79.jpg)
 
 > 个人不认为 MVVM 是从 MVP 进化而来，我只觉得这是在 MVP 之后出现的一种“更好的”UI 模式解决方案，但是用 MVP 来与之对比比较容易说明问题。
 

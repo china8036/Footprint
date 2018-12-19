@@ -35,7 +35,7 @@
 
 由于计算机的存储设备与处理器的运算速度有几个数量级的差距，因此现代计算机系统都不得不加入一层读写速度尽可能接近处理器运算速度的高速 CPU 缓存 (CPU Cache) 来作为内存与处理器之间的缓冲：将运算需要的数据复制到缓存中，让运算能快速进行，当运算结束后再从缓存同步回内存之中，这样处理器就无须等待缓慢的内存读写了。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/30/092d6d064361f55fe7e967bf0122717e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/30/092d6d064361f55fe7e967bf0122717e.jpg)
 
 基于高速缓存的存储交互很好地解决了处理器与内存的速度矛盾，但也引入了一个新的问题：**缓存一致性 (Cache Coherence)。在多处理器系统中，每个处理器都有自己的 Cache，但它们共享同一主内存。当多个处理器的运算任务都涉及同一块主内存区域时，将可能导致各自的数据不一致。为解决 Cache Coherence 问题，需要各个处理器在访问缓存时都遵循一些协议，按照这些协议来进行缓存的读写操作。**
 
@@ -65,11 +65,11 @@ Java 内存模型规定了所有的变量都存储在主内存 (Main Memory) 中
 
 线程、主内存、工作内存三者的交互关系如下图：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/30/a0d0a99e86bc68e93b7b39e07f2d64f1.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/30/a0d0a99e86bc68e93b7b39e07f2d64f1.jpg)
 
 其中，主内存和工作内存实际上与 JVM 内存区域没有实质上的关系，但若一定要勉强对应起来，则主内存对应于 Java 堆中的对象实例部分，而工作内存对应于 Java 虚拟机栈中的部分区域。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/30/8aa3835b09eb368ac8412e39021a57b7.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/30/8aa3835b09eb368ac8412e39021a57b7.jpg)
 
 ## 3. JMM 交互操作
 

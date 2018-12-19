@@ -1,19 +1,17 @@
-<!-- <style>img {box-shadow: 0 0 15px #111;}</style> -->
-
 - [Spring Note](#spring-note)
-    - [1. Spring 概述](#1-spring-%E6%A6%82%E8%BF%B0)
-    - [2. Maven 依赖](#2-maven-%E4%BE%9D%E8%B5%96)
-    - [3. Spring 容器](#3-spring-%E5%AE%B9%E5%99%A8)
-    - [4. 依赖注入](#4-%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5)
-        - [4.1. 注入方式](#41-%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F)
-        - [4.2. IoC Service Provider](#42-ioc-service-provider)
-        - [4.3. 资源访问](#43-%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE)
-        - [4.4. IoC 容器 BeanFactory](#44-ioc-%E5%AE%B9%E5%99%A8-beanfactory)
-        - [4.5. 应用上下文 ApplicationContext](#45-%E5%BA%94%E7%94%A8%E4%B8%8A%E4%B8%8B%E6%96%87-applicationcontext)
-    - [5. AOP](#5-aop)
-    - [6. SpEL](#6-spel)
-    - [7. 配置文件](#7-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
-        - [7.1. web.xml](#71-webxml)
+  - [1. Spring 概述](#1-spring-概述)
+  - [2. Maven 依赖](#2-maven-依赖)
+  - [3. Spring 容器](#3-spring-容器)
+  - [4. 依赖注入](#4-依赖注入)
+    - [4.1. 注入方式](#41-注入方式)
+    - [4.2. IoC Service Provider](#42-ioc-service-provider)
+    - [4.3. 资源访问](#43-资源访问)
+    - [4.4. IoC 容器 BeanFactory](#44-ioc-容器-beanfactory)
+    - [4.5. 应用上下文 ApplicationContext](#45-应用上下文-applicationcontext)
+  - [5. AOP](#5-aop)
+  - [6. SpEL](#6-spel)
+  - [7. 配置文件](#7-配置文件)
+    - [7.1. web.xml](#71-webxml)
 
 # Spring Note
 
@@ -413,7 +411,7 @@ org.springframework.context.ApplicationContext 接口用于完成容器的配置
     - classpath*:resources/services.xml：这种方式除了会到 classes/resources 文件夹查找，还会到 lib 下面的 jar 包中查找，查找路径是 jar 包内 /resources/services.xml；
     - classpath:resouces/**/*services.xml：这种方式表示到 classpath 的 resources 文件夹下所有文件夹（不限层级，可以在第 N 层子文件夹中）中查找文件名以 services.xml 结尾的文件；
     - 多个路径配置可以用空格分开；
-    
+
     classpath 知识补充：
     - web 工程部署后，对应 war 包下的 WEB-INF 下会有一个 classes 文件夹和一个 lib 文件。其中 classes 文件夹中的内容是从工程中的源码文件夹（对应右键工程，Properties - Java Build Path - Source 页签中看到的文件夹）中编译过来，lib 文件夹即工程中引用的 jar 包。这个 classes 文件夹和 lib 中的 jar 都属于 classpath。
 
@@ -434,15 +432,15 @@ org.springframework.context.ApplicationContext 接口用于完成容器的配置
 
 ### 4.3. 资源访问
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/fd7e2fd6a27db2a4b44a5c2fcc1d9e0d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/27/fd7e2fd6a27db2a4b44a5c2fcc1d9e0d.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/55b25012f6f1b165b3cada047e5bcf19.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/27/55b25012f6f1b165b3cada047e5bcf19.jpg)
 
 ### 4.4. IoC 容器 BeanFactory
 
 ### 4.5. 应用上下文 ApplicationContext
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/27/941a9f063460dc39653ff52d58bf3e24.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/27/941a9f063460dc39653ff52d58bf3e24.jpg)
 
 ## 5. AOP
 
@@ -459,7 +457,7 @@ SpEL 的目的是通过计算来获取某个值，#{}标记会提示 Spring 这�
 
 ## 7. 配置文件
 
-按照官方文档，spring web 项目的配置文件应有：http://jiage17.iteye.com/blog/2312456 
+按照官方文档，spring web 项目的配置文件应有：http://jiage17.iteye.com/blog/2312456
 - WEB-INF/web.xml
 - WEB-INF/<dispatcherServlet_name>-servlet.xml（配置 spring mvc）
 - WEB-INF/applicationContext.xml（配置 spring framework）
@@ -467,7 +465,7 @@ SpEL 的目的是通过计算来获取某个值，#{}标记会提示 Spring 这�
 ### 7.1. web.xml
 
 - 加载 spring 配置文件
-  
+
   Web 容器上下文通过指定 spring 配置文件的地址来加载 spring 配置文件。多个配置文件用逗号或空格分隔（建议采用逗号）；
   若使用日志管理，需要将 loh4j.properties 配置文件放在类路径下，以便日志引擎自动生效；
   ```xml
@@ -501,13 +499,13 @@ SpEL 的目的是通过计算来获取某个值，#{}标记会提示 Spring 这�
 
 - 关于<url-pattern>的规则问题：
 
-  https://www.cnblogs.com/fangjian0423/p/servletContainer-tomcat-urlPattern.html 
+  https://www.cnblogs.com/fangjian0423/p/servletContainer-tomcat-urlPattern.html
 
-  http://www.voidcn.com/blog/javaloveiphone/article/p-6190045.html 
+  http://www.voidcn.com/blog/javaloveiphone/article/p-6190045.html
 
   - 可以看到路径分成 4 类：
     - 以 /* 结尾的
-      
+
       会匹配所有 url：路径型的和后缀型的 url（包括 /login,.jsp,.js 和*.html 等)
 
     - 以 *. 开头的
@@ -518,9 +516,9 @@ SpEL 的目的是通过计算来获取某个值，#{}标记会提示 Spring 这�
 
     - 以上 3 种之外的
 
-  - `/`：访问的地址为 localhost:8088/login , /login 返回 login.jsp ，访问去 Controller 下的 /login 跳转到相应的视图 login.jsp 
+  - `/`：访问的地址为 localhost:8088/login , /login 返回 login.jsp ，访问去 Controller 下的 /login 跳转到相应的视图 login.jsp
   - `/*`：访问的地址为 localhost:8088/login/ ，/login 返回 login.jsp ，访问去 Controller 下的 /login, 跳转到 login.jsp ，然后进过 dispatchservlet 的时候，由于是 /* ，又会以 localhost:8088/login/login.jsp 去请求 Controller , 那么如果 Controller 没有 /login/login.jsp 的 Mapping 映射，则会报 404 错误！
-  
+
   <!-- TODO: 使用 /*是错的？-- 官网很多例子都是用 /*？ -->
 
 当有客户端向服务器发起请求，服务器进行 url 匹配的时候是有优先级的。 以下从上到下以优先级的高低进行说明：

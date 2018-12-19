@@ -48,18 +48,18 @@
 关键代码：
 - 构造函数是私有的。
 
-应用实例： 
-- Windows 是多进程多线程的，在操作一个文件的时候，就不可避免地出现多个进程或线程同时操作一个文件的现象，所以所有文件的处理必须通过唯一的实例来进行。 
+应用实例：
+- Windows 是多进程多线程的，在操作一个文件的时候，就不可避免地出现多个进程或线程同时操作一个文件的现象，所以所有文件的处理必须通过唯一的实例来进行。
 - 一些设备管理器常常设计为单例模式，比如一个电脑有两台打印机，在输出的时候就要处理不能两台打印机打印同一个文件。
 
 优点：
-- 在内存里只有一个实例，减少了内存的开销，尤其是频繁的创建和销毁实例（比如管理学院首页页面缓存）。 
+- 在内存里只有一个实例，减少了内存的开销，尤其是频繁的创建和销毁实例（比如管理学院首页页面缓存）。
 - 避免对资源的多重占用（比如写文件操作）。
 
 缺点：
 - 没有接口，不能继承，与单一职责原则冲突，一个类应该只关心内部逻辑，而不关心外面怎么样来实例化。
 
-使用场景： 
+使用场景：
 - 要求生产唯一序列号。
 - WEB 中的计数器，不用每次刷新都在数据库里加一次，用单例先缓存起来。
 - 创建的一个对象需要消耗的资源过多，比如 I/O 与数据库的连接等。
@@ -79,17 +79,17 @@
 #### 1.2.1. 线程不安全的懒汉式
 
 ```java
-public class Singleton {  
-    private static Singleton instance;  
+public class Singleton {
+    private static Singleton instance;
     private Singleton (){} // 私有构造函数
-  
-    public static Singleton getInstance() {  
-        if (instance == null) {  
-            instance = new Singleton();  
-        }  
-        return instance;  
-    }  
-}  
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
 ```
 该单例类在 `getInstance()` 方法被调用时才执行类的初始化，避免内存的浪费，因此称为“懒汉式”。
 
@@ -98,16 +98,16 @@ public class Singleton {
 #### 1.2.2. 重量级锁的懒汉式
 
 ```java
-public class Singleton {  
-    private static Singleton instance;  
-    private Singleton (){}  
-    public static synchronized Singleton getInstance() {  
-        if (instance == null) {  
-            instance = new Singleton();  
-        }  
-        return instance;  
-    }  
-} 
+public class Singleton {
+    private static Singleton instance;
+    private Singleton (){}
+    public static synchronized Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
 ```
 
 在线程不安全的懒汉式实现的基础上，通过重量级锁 synchronized 保证了能够在多线程环境下正常工作，但也影响了执行效率，而且实际上 99% 情况下不需要线程同步。因此，一般情况下不建议使用。
@@ -115,20 +115,20 @@ public class Singleton {
 #### 1.2.3. 双重校验锁的懒汉式
 
 ```java
-public class Singleton {  
-    private volatile static Singleton singleton;  
-    private Singleton (){}  
-    public static Singleton getSingleton() {  
-        if (singleton == null) {  
-            synchronized (Singleton.class) {  
-                if (singleton == null) {  
-                    singleton = new Singleton();  
-                }  
-            }  
-        }  
-        return singleton;  
+public class Singleton {
+    private volatile static Singleton singleton;
+    private Singleton (){}
+    public static Singleton getSingleton() {
+        if (singleton == null) {
+            synchronized (Singleton.class) {
+                if (singleton == null) {
+                    singleton = new Singleton();
+                }
+            }
+        }
+        return singleton;
     }
-}  
+}
 ```
 
 这种实现方式要求 JDK 版本在 1.5 以上，采用双锁机制，保证线程安全，同时在多线程情况下也能够保持高性能。缺点是实现较为复杂。
@@ -152,15 +152,15 @@ public class Singleton {
 #### 1.2.5. 静态内部类的改进饿汉式
 
 ```java
-public class Singleton {  
-    private static class SingletonHolder {  
-        private static final Singleton INSTANCE = new Singleton();  
+public class Singleton {
+    private static class SingletonHolder {
+        private static final Singleton INSTANCE = new Singleton();
     }
-    private Singleton (){}  
-    public static final Singleton getInstance() {  
-        return SingletonHolder.INSTANCE;  
-    }  
-}   
+    private Singleton (){}
+    public static final Singleton getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+}
 ```
 
 这种方式能达到双检锁方式一样的功效，但实现更简单。对静态域使用延迟初始化，应使用这种方式而不是双检锁方式。这种方式只适用于静态域的情况，双检锁方式可在实例域需要延迟初始化时使用。
@@ -170,12 +170,12 @@ public class Singleton {
 #### 1.2.6. 枚举
 
 ```java
-public enum Singleton {  
-    INSTANCE;  
+public enum Singleton {
+    INSTANCE;
 
-    public void whateverMethod() {  
-    }  
-}  
+    public void whateverMethod() {
+    }
+}
 ```
 
 这种实现方式更简洁，自动支持序列化机制，绝对防止多次实例化。
@@ -206,51 +206,51 @@ public enum Singleton {
 
 首先需要对产品类进行重构，不能设计一个包罗万象的产品类，而需根据实际情况设计一个产品层次结构，将所有产品类公共的代码移至抽象产品类，并在抽象产品类中声明一些抽象方法，以供不同的具体产品类来实现，典型的抽象产品类代码如下所示：
 ```java
-abstract class Product {  
-    // 所有产品类的公共业务方法  
-    public void methodSame() {  
-        // 公共方法的实现  
+abstract class Product {
+    // 所有产品类的公共业务方法
+    public void methodSame() {
+        // 公共方法的实现
     }
-  
-    // 声明抽象业务方法  
-    public abstract void methodDiff();  
-} 
+
+    // 声明抽象业务方法
+    public abstract void methodDiff();
+}
 ```
 在具体产品类中实现了抽象产品类中声明的抽象业务方法，不同的具体产品类可以提供不同的实现，典型的具体产品类代码如下所示：
 ```java
-class ConcreteProductA extends Product {  
-    // 实现业务方法  
-    public void methodDiff() {  
-        // 业务方法的实现  
-    }  
-}  
+class ConcreteProductA extends Product {
+    // 实现业务方法
+    public void methodDiff() {
+        // 业务方法的实现
+    }
+}
 ```
 在简单工厂模式中，工厂类提供了一个静态工厂方法供客户端使用，根据所传入的参数不同可以创建不同的产品对象，典型的工厂类代码如下所示：
 ```java
-class Factory {  
-    // 静态工厂方法，用于创建产品实例  
-    public static Product getProduct(String arg) {  
-        Product product = null;  
-        if (arg.equalsIgnoreCase("A")) {  
-            product = new ConcreteProductA();  
-            // 初始化设置 product  
-        } else if (arg.equalsIgnoreCase("B")) {  
-            product = new ConcreteProductB();  
-            // 初始化设置 product  
-        }  
-        return product;  
-    }  
-}  
+class Factory {
+    // 静态工厂方法，用于创建产品实例
+    public static Product getProduct(String arg) {
+        Product product = null;
+        if (arg.equalsIgnoreCase("A")) {
+            product = new ConcreteProductA();
+            // 初始化设置 product
+        } else if (arg.equalsIgnoreCase("B")) {
+            product = new ConcreteProductB();
+            // 初始化设置 product
+        }
+        return product;
+    }
+}
 ```
 在客户端代码中，我们通过调用工厂类的工厂方法即可得到产品对象，典型代码如下所示：
 ```java
-class Client {  
-    public static void main(String args[]) {  
-        Product product;   
-        product = Factory.getProduct("A"); // 通过工厂类创建产品对象  
-        product.methodSame();  
-        product.methodDiff();  
-    }  
+class Client {
+    public static void main(String args[]) {
+        Product product;
+        product = Factory.getProduct("A"); // 通过工厂类创建产品对象
+        product.methodSame();
+        product.methodDiff();
+    }
 }
 ```
 
@@ -275,27 +275,27 @@ class Client {
 
 在抽象工厂中声明了多个工厂方法，用于创建不同类型的产品，抽象工厂可以是接口，也可以是抽象类或者具体类，其典型代码如下所示：
 ```java
-abstract class AbstractFactory {  
-  public abstract AbstractProductA createProductA(); // 工厂方法一  
-  public abstract AbstractProductB createProductB(); // 工厂方法二  
-  // ……  
-}  
+abstract class AbstractFactory {
+  public abstract AbstractProductA createProductA(); // 工厂方法一
+  public abstract AbstractProductB createProductB(); // 工厂方法二
+  // ……
+}
 ```
 具体工厂实现了抽象工厂，**每一个具体的工厂方法可以返回一个特定的产品对象**，而同一个具体工厂所创建的产品对象构成了一个产品族。对于每一个具体工厂类，其典型代码如下所示：
 ```java
-class ConcreteFactory1 extends AbstractFactory {  
-    // 工厂方法一  
-    public AbstractProductA createProductA() {  
-        return new ConcreteProductA1();  
-    }  
-      
-    // 工厂方法二  
-    public AbstractProductB createProductB() {  
-        return new ConcreteProductB1();  
-    }  
-  
-    // ……  
-}  
+class ConcreteFactory1 extends AbstractFactory {
+    // 工厂方法一
+    public AbstractProductA createProductA() {
+        return new ConcreteProductA1();
+    }
+
+    // 工厂方法二
+    public AbstractProductB createProductB() {
+        return new ConcreteProductB1();
+    }
+
+    // ……
+}
 ```
 与工厂方法模式一样，**抽象工厂模式也可为每一种产品提供一组重载的工厂方法，以不同的方式对产品对象进行创建**。
 
@@ -309,54 +309,54 @@ class ConcreteFactory1 extends AbstractFactory {
 
 与简单工厂模式相比，工厂方法模式最重要的区别是引入了抽象工厂角色，抽象工厂可以是接口，也可以是抽象类或者具体类，其典型代码如下所示：
 ```java
-interface Factory {  
-    public Product factoryMethod();  
-}  
+interface Factory {
+    public Product factoryMethod();
+}
 ```
 在抽象工厂中声明了工厂方法但并未实现工厂方法，具体产品对象的创建由其子类负责，客户端针对抽象工厂编程，可在运行时再指定具体工厂类，具体工厂类实现了工厂方法，不同的具体工厂可以创建不同的具体产品，其典型代码如下所示：
 ```java
-class ConcreteFactoryA implements Factory {  
-    public Product factoryMethod() {  
-        return new ConcreteProductA();  
-    }  
-}  
+class ConcreteFactoryA implements Factory {
+    public Product factoryMethod() {
+        return new ConcreteProductA();
+    }
+}
 ```
 在实际使用时，具体工厂类在实现工厂方法时除了创建具体产品对象之外，还可以负责产品对象的初始化工作以及一些资源和环境配置工作，例如连接数据库、创建文件等。
 
 在客户端代码中，只需关心工厂类即可，不同的具体工厂可以创建不同的产品，典型的客户端类代码片段如下所示：
 ```java
-Factory factory = new ConcreteFactoryA(); // 可通过配置文件和反射实现  
-Product product = factory.factoryMethod();  
+Factory factory = new ConcreteFactoryA(); // 可通过配置文件和反射实现
+Product product = factory.factoryMethod();
 ```
 
 - 改造 1：为使得使得更换新的具体工厂时无须修改源代码，我们可以将具体工厂类的类名存储在配置文件（如 XML 文件）中，通过读取配置文件获取具体工厂类 ConcreteFactory 的类名字符串，再使用 Java 的反射机制，根据类名字符串生成对象：
   ```java
-  // 通过类名生成实例对象并将其返回  
-  Class c = Class.forName("String");  
-  Object obj = c.newInstance();  
-  return obj;  
+  // 通过类名生成实例对象并将其返回
+  Class c = Class.forName("String");
+  Object obj = c.newInstance();
+  return obj;
   ```
 
 - 改造 2：有时候，为了进一步简化客户端的使用，还可以对客户端隐藏工厂方法，此时，在工厂类中将直接调用产品类的业务方法，客户端无须调用工厂方法创建产品，直接通过工厂即可使用所创建的对象中的业务方法。
   ```java
-  // 改为抽象类  
-  abstract class LoggerFactory {  
-      // 在工厂类中直接调用日志记录器类的业务方法 writeLog()  
-      public void writeLog() {  
-          Logger logger = this.createLogger();  
-          logger.writeLog();  
-      }  
-        
-      public abstract Logger createLogger();    
-  }  
+  // 改为抽象类
+  abstract class LoggerFactory {
+      // 在工厂类中直接调用日志记录器类的业务方法 writeLog()
+      public void writeLog() {
+          Logger logger = this.createLogger();
+          logger.writeLog();
+      }
 
-  class Client {  
-      public static void main(String args[]) {  
-          LoggerFactory factory;  
-          factory = (LoggerFactory)XMLUtil.getBean();  
-          factory.writeLog(); // 直接使用工厂对象来调用产品对象的业务方法  
-      }  
-  }  
+      public abstract Logger createLogger();
+  }
+
+  class Client {
+      public static void main(String args[]) {
+          LoggerFactory factory;
+          factory = (LoggerFactory)XMLUtil.getBean();
+          factory.writeLog(); // 直接使用工厂对象来调用产品对象的业务方法
+      }
+  }
   ```
   通过将业务方法的调用移入工厂类，可以直接使用工厂对象来调用产品对象的业务方法，客户端无须直接使用工厂方法，在某些情况下我们也可以使用这种设计方案。
 
@@ -385,7 +385,7 @@ Product product = factory.factoryMethod();
 
 为了更好地理解抽象工厂模式，我们先引入两个概念：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/24/30880ff4e39c1e5b3786ffc87a06a100.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/24/30880ff4e39c1e5b3786ffc87a06a100.jpg)
 
 - 产品等级结构：产品等级结构即产品的继承结构，如一个抽象类是电视机，其子类有海尔电视机、海信电视机、TCL 电视机，则抽象电视机与具体品牌的电视机之间构成了一个产品等级结构，抽象电视机是父类，而具体品牌的电视机是其子类。
 - 产品族：在抽象工厂模式中，产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品，如海尔电器工厂生产的海尔电视机、海尔电冰箱，海尔电视机位于电视机产品等级结构中，海尔电冰箱位于电冰箱产品等级结构中，海尔电视机、海尔电冰箱构成了一个产品族。
@@ -394,7 +394,7 @@ Product product = factory.factoryMethod();
 
 抽象工厂模式与工厂方法模式最大的区别在于，工厂方法模式针对的是一个产品等级结构，而抽象工厂模式需要面对多个产品等级结构，一个工厂等级结构可以负责多个不同产品等级结构中的产品对象的创建。当一个工厂等级结构可以创建出分属于不同产品等级结构的一个产品族中的所有对象时，抽象工厂模式比工厂方法模式更为简单、更有效率。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/24/dd59d27de3843be33287e5c23586bd76.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/24/dd59d27de3843be33287e5c23586bd76.jpg)
 
 上图中，每一个具体工厂可以生产属于一个产品族的所有产品，例如生产颜色相同的正方形、圆形和椭圆形，所生产的产品又位于不同的产品等级结构中。如果使用工厂方法模式，图中所示结构需要提供 15 个具体工厂，而使用抽象工厂模式只需要提供 5 个具体工厂，极大减少了系统中类的个数。
 

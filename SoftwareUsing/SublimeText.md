@@ -18,7 +18,7 @@ import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe0
 
 安装完成后，使用 ctrl+shfit+p，输入`install`，选择包管理工具，即可开始管理安装插件：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/a46a273a72d3cd88ca192804ba01357a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/a46a273a72d3cd88ca192804ba01357a.jpg)
 
 ## 安装插件
 
@@ -68,13 +68,13 @@ import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe0
     }
     ```
     经过实测，0.15 是一个比较能接受的值，不会对磁盘造成频繁读写的影响，延迟也不大。 最后就是打开本文档的自动
-    保存功能了： 按下 ctrl+shift+P 打开快速菜单，键入`auto` ，选择到 all file 按下回车，看到左下角状态栏显示 auto 
+    保存功能了： 按下 ctrl+shift+P 打开快速菜单，键入`auto` ，选择到 all file 按下回车，看到左下角状态栏显示 auto
     saved on 即可。
   - chrome 浏览器安装插件 MarkDown Preview Plus：使得 chrome 打开的所有 md 文件都支持实时预览
-chrome 中扩展程序设置：         
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/73295d6f389fa01103433142428148d0.jpg)     
-    设置选项：        
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/fc471eaeadbcbf67fd95beac8ee25265.jpg)
+chrome 中扩展程序设置：
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/28/73295d6f389fa01103433142428148d0.jpg)
+    设置选项：
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/28/fc471eaeadbcbf67fd95beac8ee25265.jpg)
 
 ## 配置文件
 
@@ -119,7 +119,7 @@ chrome 中扩展程序设置：
 Ctrl+Shift+P：打开命令面板
 Ctrl+P：搜索项目中的文件
 Ctrl+W：关闭当前打开文件
-Ctrl+Shift+W：关闭所有打开文件 
+Ctrl+Shift+W：关闭所有打开文件
 Ctrl+D：选择单词，重复可增加选择下一个相同的单词
 Ctrl+L：选择行，重复可依次增加选择下一行
 Ctrl+Shift+L：选择多行

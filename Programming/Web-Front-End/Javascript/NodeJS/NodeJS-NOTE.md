@@ -21,7 +21,7 @@ NodeJS 自身实现了 require 方法作为其引入模块的方法。同时 NPM
 
 ### 1.2. require的模块查找策略
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/10/76c3c8b20780215de16802483558d0ef.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/12/10/76c3c8b20780215de16802483558d0ef.jpg)
 
 对于原生模块：优先级仅次于文件模块缓存的优先级。
 
@@ -97,7 +97,7 @@ exports = {
 
       this.setName=function(n){
           name=n;
-      }; 
+      };
 
       this.printName=function(){
           console.log(name)    ;
@@ -120,7 +120,7 @@ exports = {
 
     this.setName=function(n){
         name=n;
-    }; 
+    };
 
     this.printName=function(){
         console.log(name);

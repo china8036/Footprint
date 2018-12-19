@@ -27,7 +27,7 @@ Java IO 字节流是指在输入输出的过程中，操作以 1 个字节作为
 
 ### 2.1. 字节输入流
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/25/18a349bab0b81330ce3e4ad842008e39.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/5/25/18a349bab0b81330ce3e4ad842008e39.jpg)
 
 `InputStream`: Java IO 中的顶级的字节输入流的抽象基类，定义了最基础的输入、读取的相关方法。实现了 Closeable 接口。
 
@@ -39,79 +39,79 @@ Java IO 字节流是指在输入输出的过程中，操作以 1 个字节作为
 
 #### 2.1.2. 字节输入处理流
 
-- `ObjectInputStream`: 
-	
+- `ObjectInputStream`:
+
 	继承自 InputStream 的对象输入流类，实现了 ObjectInput 和 ObjectStreamConstants 接口。作用是从输入流中读取 Java 对象和基本数据。只有支持 Serializable 或 Externalizable 接口的对象才能被 ObjectInputStream/ObjectOutputStream 所操作！
 
-- `SequenceInputStream`: 
+- `SequenceInputStream`:
 
 	继承自 InputStream 的输入合并流类。SequenceInputStream 会将与之相连接的流集组合成一个输入流并从第一个输入流开始读取，直到到达文件末尾，接着从第二个输入流读取，依次类推，直到到达包含的最后一个输入流的文件末 尾为止。合并流的作用是将多个源合并合一个源。
 
-- `AudioInputStream`: 
+- `AudioInputStream`:
 
 	继承自 InputStream 的音频输入流类。音频输入流是具有指定音频格式和长度的输入流。长度用示例帧表示，不用字节表示。提供几种方法，用于从流读取一定数量的字节，或未指定数量的字节。音频输入流跟踪所读取的最后一个字节。可以跳过任意数量的字节以到达稍后的读取位置。音频输入流可支持标记。设置标记时，会记住当前位置，以便可以稍后返回到该位置。
 
-- `FilterInputStream`: 
+- `FilterInputStream`:
 
 	继承自 InputStream 的过滤输入流类（装饰器超类），用来“封装其它的输入流，并为它们提供额外的功能”。
 
-	- `BufferedInputStream`: 
-		
+	- `BufferedInputStream`:
+
 		继承自 FilterInputStream 的带缓冲区功能的输入流类（装饰器子类），默认缓冲区大小是 8K，能够减少访问磁盘的次数，提高文件读取性能。
-	
-	- `DataInputStream`: 
-		
+
+	- `DataInputStream`:
+
 		继承自 FilterInputStream 的数据输入流类，实现了 DataInput 接口。它允许应用程序以与机器无关方式从底层输入流中读取基本 Java 数据类型。
-	
-	- `PushbackInputStream`: 
-		
+
+	- `PushbackInputStream`:
+
 		继承自 FilterInputStream 的回退输入流类。允许试探性的读取数据流，如果不是我们想要的则返还回去。
-	
-	- `CheckedInputStream`: 
-		
+
+	- `CheckedInputStream`:
+
 		继承自 FilterInputStream 的校验输入流类。
-	
-	- `CipherInputStream`: 
-		
+
+	- `CipherInputStream`:
+
 		继承自 FilterInputStream 的密钥输入流类。
-	
-	- `DigestInputStream`: 
-		
+
+	- `DigestInputStream`:
+
 		继承自 FilterInputStream 的摘要处理输入流类。
-	
-	- `InflaterInputStream`: 
-		
+
+	- `InflaterInputStream`:
+
 		继承自 FilterInputStream 的解压缩处理输入流类。
 		- `GZIPInputStream`: 继承自 InflaterInputStream 的 gzip 文件处理输入流类。
 		- `ZipInputStream`: 继承自 InflaterInputStream 的解压缩处理输入流类。
 		- `JarInputStream`: 继承自 ZipInputStream 的解压缩处理输入流类。
-	
-	- `DeflaterInputStream`: 
-		
+
+	- `DeflaterInputStream`:
+
 		继承自 FilterInputStream 的压缩数据输入流类。
-	
-	- `ProgressMonitorInputStream`: 
-		
+
+	- `ProgressMonitorInputStream`:
+
 		继承自 FilterInputStream 的进度监控输入流类。
 
 ### 2.2. 字节输出流
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/22/95c53279caebb171256e10f32f0eff4e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/22/95c53279caebb171256e10f32f0eff4e.jpg)
 
 `OutputStream`: JavaIO 中的顶级的字节输出流的抽象基类，定义了最基础的输出、写入的相关方法。实现了 Closeable 和 Flushable 接口。
 
 #### 2.2.1. 字节输出节点流
 
-- `FileOutputStream`: 
+- `FileOutputStream`:
 
 	继承自 OutputStream 的文件输出流类，用于向本地文件中写入字节数据。
 
-- `ByteArrayOutputStream`: 
-	
+- `ByteArrayOutputStream`:
+
 	继承自 OutputStream 的字节数组输出流类，ByteArrayOutputStream 中的数据会被写入一个 byte 数组。缓冲区会随着数据的不断写入而自动增长。可使用 toByteArray() 和 toString() 获取数据。
 
-- `PipedOutputStream`: 
-	
+- `PipedOutputStream`:
+
 	继承自 OutputStream 的管道输出流类，在使用管道通信时，必须与 PipedInputStream 配合使用。让多线程可以通过管道进行线程间的通讯。
 
 #### 2.2.2. 字节输出处理流

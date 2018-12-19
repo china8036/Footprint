@@ -34,7 +34,7 @@ Object 是所有类的超类，因此，所有的类都拥有 Object 类的方�
 - `notify()`
 
   该方法用来通知那些可能等待该对象的对象锁的其他线程。如果有多个线程等待，则 JVM 的线程规划器**任意**挑选出其中一个 wait() 状态的线程来发出通知，并使它等待获取该对象的对象锁。
-  
+
   NOTE: notify 后，当前线程不会马上释放该对象锁，wait 所在的线程同样不能马上获取该对象锁，要等到程序退出 synchronized 代码块后，当前线程才会释放锁，wait 所在的线程也才可以获取该对象锁）。
 
 - `notifyAll()`
@@ -45,104 +45,104 @@ Object 是所有类的超类，因此，所有的类都拥有 Object 类的方�
 
 例：使用 wait/notify 机制来实现生产者 - 消费者模型
 ```java
-class Info{ // 定义信息类  
-    private String name = "name";// 定义 name 属性，为了与下面 set 的 name 属性区别开  
-    private String content = "content" ;// 定义 content 属性，为了与下面 set 的 content 属性区别开  
-    private boolean flag = true ;   // 设置标志位，初始时先生产  
-    public synchronized void set(String name,String content){  
-        while(!flag){  
-            try{  
-                super.wait();  
-            }catch(InterruptedException e){  
-                e.printStackTrace();  
-            }  
-        }  
-        this.setName(name) ;    // 设置名称  
-        try{  
-            Thread.sleep(300) ;  
-        }catch(InterruptedException e){  
-            e.printStackTrace() ;  
-        }  
-        this.setContent(content) ;  // 设置内容  
-        flag  = false ; // 改变标志位，表示可以取走  
-        super.notify();  
-    }  
-    public synchronized void get(){  
-        while(flag){  
-            try{  
-                super.wait() ;  
-            }catch(InterruptedException e){  
-                e.printStackTrace() ;  
-            }  
-        }  
-        try{  
-            Thread.sleep(300) ;  
-        }catch(InterruptedException e){  
-            e.printStackTrace() ;  
-        }  
-        System.out.println(this.getName() +   
-            " --> " + this.getContent()) ;  
-        flag  = true ;  // 改变标志位，表示可以生产  
-        super.notify();  
-    }  
-    public void setName(String name){  
-        this.name = name ;  
-    }  
-    public void setContent(String content){  
-        this.content = content ;  
-    }  
-    public String getName(){  
-        return this.name ;  
-    }  
-    public String getContent(){  
-        return this.content ;  
-    }  
-}  
-class Producer implements Runnable{ // 通过 Runnable 实现多线程  
-    private Info info = null ;      // 保存 Info 引用  
-    public Producer(Info info){  
-        this.info = info ;  
-    }  
-    public void run(){  
-        boolean flag = true ;   // 定义标记位  
-        for(int i=0;i<10;i++){  
-            if(flag){  
-                this.info.set("姓名 --1","内容 --1") ;    // 设置名称  
-                flag = false ;  
-            }else{  
-                this.info.set("姓名 --2","内容 --2") ;    // 设置名称  
-                flag = true ;  
-            }  
-        }  
-    }  
-}  
-class Consumer implements Runnable{  
-    private Info info = null ;  
-    public Consumer(Info info){  
-        this.info = info ;  
-    }  
-    public void run(){  
-        for(int i=0;i<10;i++){  
-            this.info.get() ;  
-        }  
-    }  
-}  
-public class ThreadCaseDemo03{  
-    public static void main(String args[]){  
-        Info info = new Info(); // 实例化 Info 对象  
-        Producer pro = new Producer(info) ; // 生产者  
-        Consumer con = new Consumer(info) ; // 消费者  
-        new Thread(pro).start() ;  
-        // 启动了生产者线程后，再启动消费者线程  
-        try{  
-            Thread.sleep(500) ;  
-        }catch(InterruptedException e){  
-            e.printStackTrace() ;  
-        }  
+class Info{ // 定义信息类
+    private String name = "name";// 定义 name 属性，为了与下面 set 的 name 属性区别开
+    private String content = "content" ;// 定义 content 属性，为了与下面 set 的 content 属性区别开
+    private boolean flag = true ;   // 设置标志位，初始时先生产
+    public synchronized void set(String name,String content){
+        while(!flag){
+            try{
+                super.wait();
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        this.setName(name) ;    // 设置名称
+        try{
+            Thread.sleep(300) ;
+        }catch(InterruptedException e){
+            e.printStackTrace() ;
+        }
+        this.setContent(content) ;  // 设置内容
+        flag  = false ; // 改变标志位，表示可以取走
+        super.notify();
+    }
+    public synchronized void get(){
+        while(flag){
+            try{
+                super.wait() ;
+            }catch(InterruptedException e){
+                e.printStackTrace() ;
+            }
+        }
+        try{
+            Thread.sleep(300) ;
+        }catch(InterruptedException e){
+            e.printStackTrace() ;
+        }
+        System.out.println(this.getName() +
+            " --> " + this.getContent()) ;
+        flag  = true ;  // 改变标志位，表示可以生产
+        super.notify();
+    }
+    public void setName(String name){
+        this.name = name ;
+    }
+    public void setContent(String content){
+        this.content = content ;
+    }
+    public String getName(){
+        return this.name ;
+    }
+    public String getContent(){
+        return this.content ;
+    }
+}
+class Producer implements Runnable{ // 通过 Runnable 实现多线程
+    private Info info = null ;      // 保存 Info 引用
+    public Producer(Info info){
+        this.info = info ;
+    }
+    public void run(){
+        boolean flag = true ;   // 定义标记位
+        for(int i=0;i<10;i++){
+            if(flag){
+                this.info.set("姓名 --1","内容 --1") ;    // 设置名称
+                flag = false ;
+            }else{
+                this.info.set("姓名 --2","内容 --2") ;    // 设置名称
+                flag = true ;
+            }
+        }
+    }
+}
+class Consumer implements Runnable{
+    private Info info = null ;
+    public Consumer(Info info){
+        this.info = info ;
+    }
+    public void run(){
+        for(int i=0;i<10;i++){
+            this.info.get() ;
+        }
+    }
+}
+public class ThreadCaseDemo03{
+    public static void main(String args[]){
+        Info info = new Info(); // 实例化 Info 对象
+        Producer pro = new Producer(info) ; // 生产者
+        Consumer con = new Consumer(info) ; // 消费者
+        new Thread(pro).start() ;
+        // 启动了生产者线程后，再启动消费者线程
+        try{
+            Thread.sleep(500) ;
+        }catch(InterruptedException e){
+            e.printStackTrace() ;
+        }
 
-        new Thread(con).start() ;  
-    }  
-}  
+        new Thread(con).start() ;
+    }
+}
 ```
 
 ## 2. 使用 Condition 接口的方法
@@ -185,7 +185,7 @@ public class ConditionObject implements Condition, java.io.Serializable {
 ```java
 abstract static class Sync extends AbstractQueuedSynchronizer {
     private final Sync sync;
-    
+
     final ConditionObject newCondition() {
         return new ConditionObject();
     }
@@ -353,7 +353,7 @@ public class ConditionObject implements Condition, java.io.Serializable {
 ```
 每个 Condition 都对应着一个等待队列，也就是说如果一个锁上创建了多个 Condition 对象，那么也就存在多个等待队列。等待队列是一个 FIFO 的队列，在队列中每一个节点都包含了一个线程的引用，而该线程就是 Condition 对象上等待的线程。当一个线程调用了 await() 相关的方法，那么该线程将会释放锁，并构建一个 Node 节点封装当前线程的相关信息加入到等待队列中进行等待，直到被唤醒、中断、超时才从队列中移出。Condition 中的等待队列模型如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/3/d3e7be31993b0e96c7cfc5af9f58930c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/3/d3e7be31993b0e96c7cfc5af9f58930c.jpg)
 
 ## 3. 生产者消费者模型
 

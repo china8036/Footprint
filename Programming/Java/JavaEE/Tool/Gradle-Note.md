@@ -1,21 +1,21 @@
 - [Gradle Note](#gradle-note)
-    - [1. 介绍](#1-%E4%BB%8B%E7%BB%8D)
-    - [2. 安装](#2-%E5%AE%89%E8%A3%85)
-    - [3. 使用](#3-%E4%BD%BF%E7%94%A8)
-        - [3.1. 基础](#31-%E5%9F%BA%E7%A1%80)
-        - [3.2. 配置](#32-%E9%85%8D%E7%BD%AE)
-        - [3.3. build.gradle](#33-buildgradle)
-            - [3.3.1. 依赖管理](#331-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86)
-            - [3.3.2. 配置依赖仓库](#332-%E9%85%8D%E7%BD%AE%E4%BE%9D%E8%B5%96%E4%BB%93%E5%BA%93)
-        - [3.4. 使用 Gradle Wrapper 构建项目](#34-%E4%BD%BF%E7%94%A8-gradle-wrapper-%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE)
-        - [3.5. 使用镜像 maven 库](#35-%E4%BD%BF%E7%94%A8%E9%95%9C%E5%83%8F-maven-%E5%BA%93)
-        - [3.6. 修改本地仓库位置](#36-%E4%BF%AE%E6%94%B9%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93%E4%BD%8D%E7%BD%AE)
-        - [3.7. IDEA 中使用 Gradle](#37-idea-%E4%B8%AD%E4%BD%BF%E7%94%A8-gradle)
-            - [3.7.1. IDEA 中三种 gradle 模式的区别](#371-idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB)
-            - [3.7.2. Unindexed remote maven repositories](#372-unindexed-remote-maven-repositories)
-        - [3.8. 优化 Gradle](#38-%E4%BC%98%E5%8C%96-gradle)
-        - [3.9. 将 pom.xml 转化为 build.gradle](#39-%E5%B0%86-pomxml-%E8%BD%AC%E5%8C%96%E4%B8%BA-buildgradle)
-    - [4. Refer Links](#4-refer-links)
+  - [1. 介绍](#1-介绍)
+  - [2. 安装](#2-安装)
+  - [3. 使用](#3-使用)
+    - [3.1. 基础](#31-基础)
+    - [3.2. 配置](#32-配置)
+    - [3.3. build.gradle](#33-buildgradle)
+      - [3.3.1. 依赖管理](#331-依赖管理)
+      - [3.3.2. 配置依赖仓库](#332-配置依赖仓库)
+    - [3.4. 使用 Gradle Wrapper 构建项目](#34-使用-gradle-wrapper-构建项目)
+    - [3.5. 使用镜像 maven 库](#35-使用镜像-maven-库)
+    - [3.6. 修改本地仓库位置](#36-修改本地仓库位置)
+    - [3.7. IDEA 中使用 Gradle](#37-idea-中使用-gradle)
+      - [3.7.1. IDEA 中三种 gradle 模式的区别](#371-idea-中三种-gradle-模式的区别)
+      - [3.7.2. Unindexed remote maven repositories](#372-unindexed-remote-maven-repositories)
+    - [3.8. 优化 Gradle](#38-优化-gradle)
+    - [3.9. 将 pom.xml 转化为 build.gradle](#39-将-pomxml-转化为-buildgradle)
+  - [4. Refer Links](#4-refer-links)
 
 # Gradle Note
 
@@ -31,26 +31,26 @@ Gradle 基于 Groovy 语言开发，在安装包中集成了 Groovy 库；
 
 ## 2. 安装
 
-最新版下载地址 https://gradle.org/releases/ 
+最新版下载地址 https://gradle.org/releases/
 
 安装 Gradle 前必须先安装 JDK；
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/603f5dc8f1bd46545cde18dec092a523.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/603f5dc8f1bd46545cde18dec092a523.jpg)
 
 下载后解压，将 bin/ 目录添加至环境变量；
 
 验证安装成功：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/6fa72c1fd3503910c60684780886a502.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/6fa72c1fd3503910c60684780886a502.jpg)
 
 
 将 `GRADLE_HOME` 和 `GRADLE_USER_HOME` 添加到环境变量中：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/c5dde8f563f1082aea0ed0442997dd64.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/14/c5dde8f563f1082aea0ed0442997dd64.jpg)
 
 将 /bin 目录添加到环境变量的路径中：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/4f9148298ddc210a3d8e10202a30e107.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/14/4f9148298ddc210a3d8e10202a30e107.jpg)
 
 
 ## 3. 使用
@@ -178,7 +178,7 @@ task wrapper(type: Wrapper) {
 
 ### 3.5. 使用镜像 maven 库
 
-https://yrom.net/blog/2015/02/07/change-gradle-maven-repo-url/ 
+https://yrom.net/blog/2015/02/07/change-gradle-maven-repo-url/
 
 切换到国内的 Maven 镜像仓库，如：
 
@@ -231,11 +231,11 @@ allprojects{
 
 ### 3.6. 修改本地仓库位置
 
-http://blog.csdn.net/kl28978113/article/details/53018225 
+http://blog.csdn.net/kl28978113/article/details/53018225
 
-将 C:Users/owner/.gradle 的默认目录复制到 xxxx/gradle_repo/.gradle，删除 C:Users/ower/.gradle，然后设置系统环境变量： 
+将 C:Users/owner/.gradle 的默认目录复制到 xxxx/gradle_repo/.gradle，删除 C:Users/ower/.gradle，然后设置系统环境变量：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/aae83817483868a4571b774d9eeccdd9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/aae83817483868a4571b774d9eeccdd9.jpg)
 
 重启计算机后生效；
 
@@ -243,15 +243,15 @@ http://blog.csdn.net/kl28978113/article/details/53018225
 
 #### 3.7.1. IDEA 中三种 gradle 模式的区别
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/7d7e7dcb30d109bd397a6b8ae03ce597.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/7d7e7dcb30d109bd397a6b8ae03ce597.jpg)
 
-- [Using the default gradle wrapper（官方推荐）](https://github.com/RichardNi/mynote/blob/master/note/java/gradle/%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8idea%E5%AF%BC%E5%85%A5gradle%E5%B7%A5%E7%A8%8B%E5%BE%88%E6%85%A2.md)       
+- [Using the default gradle wrapper（官方推荐）](https://github.com/RichardNi/mynote/blob/master/note/java/gradle/%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8idea%E5%AF%BC%E5%85%A5gradle%E5%B7%A5%E7%A8%8B%E5%BE%88%E6%85%A2.md)
 
   由 Gradle 控制自身版本，使用的版本号可在 gradle/wrapper/gradle-wrapper.properties 中查看；
 
   会将 Gradle 及其版本文件存储在项目自身中（即项目目录下的 gradle 文件夹中），便于项目的迁移；
 
-  - 修改默认 Gradle 版本：          
+  - 修改默认 Gradle 版本：
     在 build.gradle 文件最后加入：
     ```
     task wrapper(type: Wrapper) {
@@ -266,17 +266,17 @@ http://blog.csdn.net/kl28978113/article/details/53018225
 
   - 首次使用此选项创建项目时非常慢，这是因为 IDEA 需要下载默认版本的 Gradle，由于网络问题因此会卡很久，使用网络代理下载即可；
 
-- Using the customizable gradle wrapper          
+- Using the customizable gradle wrapper
   由 IDEA 控制 Gradle 版本
 
-- Use local gradle distribution          
-  使用本地 Gradle；         
+- Use local gradle distribution
+  使用本地 Gradle；
   不利于项目的迁移，若在别的环境中打开项目，很可能会发生 Gradle 的版本冲突等问题；
 
 #### 3.7.2. Unindexed remote maven repositories
 
-创建项目后出现下边的错误：        
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/644c6ee249567850e69050df3d090547.jpg)
+创建项目后出现下边的错误：
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/644c6ee249567850e69050df3d090547.jpg)
 
 解决方式一：
 
@@ -316,19 +316,19 @@ gradle init --type pom
 ```
 即可生成 gradle 项目所需的一系列文件
 
-参考：https://www.cnblogs.com/yjmyzz/p/gradle-to-maven.html 
+参考：https://www.cnblogs.com/yjmyzz/p/gradle-to-maven.html
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/29d67799e3787372ec34d6411447bc3a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/29d67799e3787372ec34d6411447bc3a.jpg)
 
 ## 4. Refer Links
 
-官网文档 https://gradle.org/docs/ 
+官网文档 https://gradle.org/docs/
 
-官网教程 https://gradle.org/guides/#getting-started 
+官网教程 https://gradle.org/guides/#getting-started
 
 其它教程
-https://waynell.github.io/2015/04/03/gradle-use-01/ 
+https://waynell.github.io/2015/04/03/gradle-use-01/
 
-https://tech.meituan.com/gradle-practice.html 
+https://tech.meituan.com/gradle-practice.html
 
-http://www.importnew.com/15881.html 
+http://www.importnew.com/15881.html

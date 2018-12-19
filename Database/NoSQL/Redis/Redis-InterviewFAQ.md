@@ -13,11 +13,11 @@
 - Redis 支持 2 种持久化方式（RDB 和 AOF），重启的时候可以自动加载进行使用；Memcached 不支持持久化。
 - Redis 不仅仅支持简单的 k/v 类型的数据，同时还提供 list，set，zset，hash 等数据结构的存储；Memcached 仅支持简单的数据类型 String。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/12/ed838eae55678c60681b805a56f49a77.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/12/ed838eae55678c60681b805a56f49a77.jpg)
 
 ## 2. Redis 为什么这么快？
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/10/12/a956b81c077f187f3e0a63a8f53fb8ea.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/10/12/a956b81c077f187f3e0a63a8f53fb8ea.jpg)
 
 [官方提供的数据](https://redis.io/topics/benchmarks) 是可以达到 100000+ 的 QPS（每秒内查询次数）。
 
@@ -36,9 +36,9 @@ Redis is single threaded. How can I exploit multiple CPU / cores?
 > It's not very frequent that CPU becomes your bottleneck with Redis, as usually Redis is either memory or network bound. For instance, using pipelining Redis running on an average Linux system can deliver even 1 million requests per second, so if your application mainly uses O(N) or O(log(N)) commands, it is hardly going to use too much CPU.
 >
 > However, to maximize CPU usage you can start multiple instances of Redis in the same box and treat them as different servers. At some point a single box may not be enough anyway, so if you want to use multiple CPUs you can start thinking of some way to shard earlier.
-> 
+>
 > You can find more information about using multiple Redis instances in the Partitioning page.
-> 
+>
 > However with Redis 4.0 we started to make Redis more threaded. For now this is limited to deleting objects in the background, and to blocking commands implemented via Redis modules. For the next releases, the plan is to make Redis more and more threaded.
 
 单进程单线程的 Redis 已经非常快了，并且其瓶颈主要在于内存大小和网络带宽，而不是 CPU。如果为利用多核 CPU 而将 Redis 改造为多线程，反而会带来 CPU 上下文切换、并发 race condition 等问题。

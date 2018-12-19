@@ -20,13 +20,13 @@
 
 Webpack 的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack 将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 处理它们，最后打包为一个（或多个）浏览器可识别的 JavaScript 文件。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/9/3cb68f2ed60b66aa68fae54f2381b648.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/12/9/3cb68f2ed60b66aa68fae54f2381b648.jpg)
 
 ### 1.2. webpack 与 gulp、Browserify 的关系
 
 参见 [Webpack、Browserify 和 Gulp 三者之间到底是怎样的关系？](https://www.zhihu.com/question/37020798)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/5/cbb566cf50f5513b6433fa28d6f70935.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/12/5/cbb566cf50f5513b6433fa28d6f70935.jpg)
 
 - Gulp / Grunt 是一种工具，能够优化前端工作流程。比如自动刷新页面、combo、压缩 css、js、编译 less 等等。简单来说，就是使用 Gulp/Grunt，然后配置你需要的插件，就可以把以前需要手工做的事情让它帮你做了。
 

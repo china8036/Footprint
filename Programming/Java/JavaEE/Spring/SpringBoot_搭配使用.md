@@ -1,56 +1,56 @@
 - [SpringBoot 搭配使用](#springboot-搭配使用)
-    - [1. 使用 spring boot data JPA](#1-使用-spring-boot-data-jpa)
-        - [1.1. 引入依赖 spring-boot-starter-data-jpa](#11-引入依赖-spring-boot-starter-data-jpa)
-        - [1.2. 配置【application.yml】](#12-配置applicationyml)
-        - [1.3. 编写实体类：](#13-编写实体类)
-        - [1.4. 编写数据访问接口：](#14-编写数据访问接口)
-            - [1.4.1. 接口自动实现的方法](#141-接口自动实现的方法)
-            - [1.4.2. 复杂查询方法](#142-复杂查询方法)
-                - [1.4.2.1. 分页查询](#1421-分页查询)
-                - [1.4.2.2. 排序查询](#1422-排序查询)
-                - [1.4.2.3. 限制查询](#1423-限制查询)
-                - [1.4.2.4. 自定义 SQL 查询](#1424-自定义-sql-查询)
-                - [1.4.2.5. 多表查询](#1425-多表查询)
-    - [2. 使用 spring boot data rest](#2-使用-spring-boot-data-rest)
-    - [3. 使用事务](#3-使用事务)
-        - [3.1. 高级使用](#31-高级使用)
-            - [3.1.1. 指定不同的事务管理器](#311-指定不同的事务管理器)
-            - [3.1.2. 隔离级别控制](#312-隔离级别控制)
-            - [3.1.3. 传播行为](#313-传播行为)
-    - [4. 结合 Mybatis](#4-结合-mybatis)
-        - [4.1. 基本操作](#41-基本操作)
-        - [4.2. mapper 的注解支持](#42-mapper-的注解支持)
-            - [4.2.1. @Insert](#421-insert)
-            - [4.2.2. @Update](#422-update)
-            - [4.2.3. @Delete](#423-delete)
-            - [4.2.4. @Select](#424-select)
-                - [4.2.4.1. 结果映射](#4241-结果映射)
-                    - [4.2.4.1.1. 普通映射](#42411-普通映射)
-                    - [4.2.4.1.2. 一对一映射](#42412-一对一映射)
-                    - [4.2.4.1.3. 一对多映射](#42413-一对多映射)
-        - [4.3. 使用 mybatis-generator](#43-使用-mybatis-generator)
-        - [4.4. 多数据源配置](#44-多数据源配置)
-        - [4.5. 使用 HikariCP 连接池](#45-使用-hikaricp-连接池)
-        - [4.6. 使用 mybatis-plus](#46-使用-mybatis-plus)
-    - [5. 使用数据库版本工具](#5-使用数据库版本工具)
-        - [5.1. flyway](#51-flyway)
-        - [5.2. liquibase](#52-liquibase)
-    - [6. 使用 Redis](#6-使用-redis)
-    - [7. 使用 Actuator](#7-使用-actuator)
-    - [8. 使用 Lombok](#8-使用-lombok)
-    - [9. 使用 Swagger](#9-使用-swagger)
-    - [10. 使用 JHipster](#10-使用-jhipster)
-    - [11. 测试](#11-测试)
-        - [11.1. 单元测试](#111-单元测试)
-        - [11.2. 集成测试](#112-集成测试)
-    - [12. 定时任务](#12-定时任务)
-        - [12.1. 使用 Schedule](#121-使用-schedule)
-        - [12.2. 使用 Quartz](#122-使用-quartz)
-    - [13. 使用 Shiro](#13-使用-shiro)
-    - [14. 使用 Spring Security](#14-使用-spring-security)
-    - [15. 使用 Spring AOP](#15-使用-spring-aop)
-    - [16. Spring RestTemplate](#16-spring-resttemplate)
-    - [17. Refer Links](#17-refer-links)
+  - [1. 使用 spring boot data JPA](#1-使用-spring-boot-data-jpa)
+    - [1.1. 引入依赖 spring-boot-starter-data-jpa](#11-引入依赖-spring-boot-starter-data-jpa)
+    - [1.2. 配置【application.yml】](#12-配置applicationyml)
+    - [1.3. 编写实体类：](#13-编写实体类)
+    - [1.4. 编写数据访问接口：](#14-编写数据访问接口)
+      - [1.4.1. 接口自动实现的方法](#141-接口自动实现的方法)
+      - [1.4.2. 复杂查询方法](#142-复杂查询方法)
+        - [1.4.2.1. 分页查询](#1421-分页查询)
+        - [1.4.2.2. 排序查询](#1422-排序查询)
+        - [1.4.2.3. 限制查询](#1423-限制查询)
+        - [1.4.2.4. 自定义 SQL 查询](#1424-自定义-sql-查询)
+        - [1.4.2.5. 多表查询](#1425-多表查询)
+  - [2. 使用 spring boot data rest](#2-使用-spring-boot-data-rest)
+  - [3. 使用事务](#3-使用事务)
+    - [3.1. 高级使用](#31-高级使用)
+      - [3.1.1. 指定不同的事务管理器](#311-指定不同的事务管理器)
+      - [3.1.2. 隔离级别控制](#312-隔离级别控制)
+      - [3.1.3. 传播行为](#313-传播行为)
+  - [4. 结合 Mybatis](#4-结合-mybatis)
+    - [4.1. 基本操作](#41-基本操作)
+    - [4.2. mapper 的注解支持](#42-mapper-的注解支持)
+      - [4.2.1. @Insert](#421-insert)
+      - [4.2.2. @Update](#422-update)
+      - [4.2.3. @Delete](#423-delete)
+      - [4.2.4. @Select](#424-select)
+        - [4.2.4.1. 结果映射](#4241-结果映射)
+          - [4.2.4.1.1. 普通映射](#42411-普通映射)
+          - [4.2.4.1.2. 一对一映射](#42412-一对一映射)
+          - [4.2.4.1.3. 一对多映射](#42413-一对多映射)
+    - [4.3. 使用 mybatis-generator](#43-使用-mybatis-generator)
+    - [4.4. 多数据源配置](#44-多数据源配置)
+    - [4.5. 使用 HikariCP 连接池](#45-使用-hikaricp-连接池)
+    - [4.6. 使用 mybatis-plus](#46-使用-mybatis-plus)
+  - [5. 使用数据库版本工具](#5-使用数据库版本工具)
+    - [5.1. flyway](#51-flyway)
+    - [5.2. liquibase](#52-liquibase)
+  - [6. 使用 Redis](#6-使用-redis)
+  - [7. 使用 Actuator](#7-使用-actuator)
+  - [8. 使用 Lombok](#8-使用-lombok)
+  - [9. 使用 Swagger](#9-使用-swagger)
+  - [10. 使用 JHipster](#10-使用-jhipster)
+  - [11. 测试](#11-测试)
+    - [11.1. 单元测试](#111-单元测试)
+    - [11.2. 集成测试](#112-集成测试)
+  - [12. 定时任务](#12-定时任务)
+    - [12.1. 使用 Schedule](#121-使用-schedule)
+    - [12.2. 使用 Quartz](#122-使用-quartz)
+  - [13. 使用 Shiro](#13-使用-shiro)
+  - [14. 使用 Spring Security](#14-使用-spring-security)
+  - [15. 使用 Spring AOP](#15-使用-spring-aop)
+  - [16. Spring RestTemplate](#16-spring-resttemplate)
+  - [17. Refer Links](#17-refer-links)
 
 # SpringBoot 搭配使用
 
@@ -88,7 +88,7 @@ compile('org.springframework.boot:spring-boot-starter-data-jpa')
     - create-drop：启动时生成表，sessionFactory 关闭时表会被删除；
     - update：最常用的属性，第一次加载 hibernate 时根据 model 类会自动建立起表的结构（前提是先建立好数据库），以后加载 hibernate 时根据 model 类自动更新表结构，即使表结构改变了但表中的行仍然存在不会删除以前的行。要注意的是当部署到服务器后，表结构是不会被马上建立起来的，是要等应用第一次运行起来后才会。在开发初期使用此项；
     - validate：每次加载 hibernate 时，验证创建数据库表结构，只会和数据库中的表进行比较，不会创建新表，但是会插入新值，在开发稳定后使用此项；
-    - none：启动时不做任何措施； 
+    - none：启动时不做任何措施；
 
 ### 1.3. 编写实体类：
 ```java
@@ -107,7 +107,7 @@ public class User {
     private String name;
 }
 ```
-可用注解：http://itindex.net/detail/53173-jpa-hibernate 
+可用注解：http://itindex.net/detail/53173-jpa-hibernate
 - @Entity：注解表明 User 是一个 JPA 实体，程序启动时，jpa 会自动在连接的数据库中校验并创建相应的数据表；
 - @Column：映射数据表字段名和实体类属性名，若不设置则默认使用驼峰映射，如属性 phoneNumber 映射字段 phone_number；
 - @id：定义了映射到数据库表的主键的属性，一个实体只能有一个属性被映射为主键；
@@ -115,16 +115,16 @@ public class User {
 - @GeneratedValue(strategy=GenerationType,generator="")：strategy: 表示主键生成策略，有 AUTO,INDENTITY,SEQUENCE 和 TABLE 4 种，分别表示让 ORM 框架自动选择，根据数据库的 Identity 字段生成，根据数据库表的 Sequence 字段生成，以有根据一个额外的表生成主键，默认为 AUTO；generator: 表示主键生成器的名称，这个属性通常和 ORM 框架相关，例如，Hibernate 可以指定 uuid 等主键生成方式；
 - @Transient：表示该属性并非一个到数据库表的字段的映射，ORM 框架将忽略该属性，如果一个属性并非数据库表的字段映射，就务必将其标示 - @Transient, 否则，ORM 框架默认其注解为 @Basic；
 - @JoinColumn：描述一个关联字段，
-- @ManyToOne(fetch=FetchType,cascade=CascadeType)：表示多对一的映射，该注解标注的属性通常是数据库表的外键；optional: 是否允许该字段为 null, 该属性应该根据数据库表的外键约束来确定，默认为 true；fetch: 表示抓取策略，默认为 FetchType.EAGER；cascade: 表示默认的级联操作策略，可以指定为 ALL,PERSIST,MERGE,REFRESH 和 REMOVE 中的若干组合，默认为无级联操；targetEntity: 表示该属性关联的实体类型。该属性通常不必指定，ORM 框架根据属性类型自动判断 targetEntity；             
+- @ManyToOne(fetch=FetchType,cascade=CascadeType)：表示多对一的映射，该注解标注的属性通常是数据库表的外键；optional: 是否允许该字段为 null, 该属性应该根据数据库表的外键约束来确定，默认为 true；fetch: 表示抓取策略，默认为 FetchType.EAGER；cascade: 表示默认的级联操作策略，可以指定为 ALL,PERSIST,MERGE,REFRESH 和 REMOVE 中的若干组合，默认为无级联操；targetEntity: 表示该属性关联的实体类型。该属性通常不必指定，ORM 框架根据属性类型自动判断 targetEntity；
   例：
   ```java
-  // 订单 Order 和用户 User 是一个 ManyToOne 的关系  
-  // 在 Order 类中定义  
+  // 订单 Order 和用户 User 是一个 ManyToOne 的关系
+  // 在 Order 类中定义
   @ManyToOne()
-  @JoinColumn(name="USER")  
-  public User getUser() {  
-  return user;  
-  }  
+  @JoinColumn(name="USER")
+  public User getUser() {
+  return user;
+  }
   ```
 - @OneToMany(fetch=FetchType,cascade=CascadeType)：描述一个一对多的关联，该属性应该为集体类型，在数据库中并没有实际字段；fetch: 表示抓取策略，默认为 FetchType.LAZY, 因为关联的多个对象通常不必从数据库预先读取到内存；cascade: 表示级联操作策略，对于 OneToMany 类型的关联非常重要，通常该实体更新或删除时，其关联的实体也应当被更新或删除；
 - @OneToOne(fetch=FetchType,cascade=CascadeType)：描述一个一对一的关联；fetch: 表示抓取策略，默认为 FetchType.LAZY；cascade: 表示级联操作策略；
@@ -132,12 +132,12 @@ public class User {
 - @Enumerated(EnumType.STRING)：使用枚举的时候，我们希望数据库中存储的是枚举对应的 String 类型，而不是枚举的索引值；
   例：
   ```java
-  @Enumerated(EnumType.STRING) 
+  @Enumerated(EnumType.STRING)
   @Column(nullable = true)
   private UserType type;
   ```
 
-- 验证注解：           
+- 验证注解：
 
   | 注解       | 使用类型   | 说明               | 示例                         |
   | -------- | ------ | ---------------- | -------------------------- |
@@ -158,13 +158,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 ```
 说明：
 
-http://www.ityouknow.com/springboot/2016/08/20/springboot(%E4%BA%94)-spring-data-jpa%E7%9A%84%E4%BD%BF%E7%94%A8.html 
+http://www.ityouknow.com/springboot/2016/08/20/springboot(%E4%BA%94)-spring-data-jpa%E7%9A%84%E4%BD%BF%E7%94%A8.html
 
 这个接口中我们没有定义任何操作方法，而是直接继承于 PagingAndSortingRepository 接口，该接口本身已经实现了创建（save）、更新（save）、删除（delete）、查询（findAll、findOne）等基本操作的函数，因此对于这些基础操作的数据访问就不需要开发者再自己定义。
 
 #### 1.4.1. 接口自动实现的方法
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/d958459a5671411daa55a05c0a69aee4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/d958459a5671411daa55a05c0a69aee4.jpg)
 
 在我们实际开发中，JpaRepository 接口定义的接口往往还不够或者性能不够优化，我们需要进一步实现更复杂一些的查询或操作，如：
 ```java
@@ -223,7 +223,7 @@ List<User> findByUserNameOrderByEmailDesc(String email);
 | FALSE             | findByActiveFalse()                     | … where x.active = false                 |
 | IgnoreCase        | findByFirstnameIgnoreCase               | … where UPPER(x.firstame) = UPPER(?1)    |
 
- 
+
 
 #### 1.4.2. 复杂查询方法
 
@@ -270,12 +270,12 @@ List<User> findTop10ByLastname(String lastname, Pageable pageable);
 @Modifying
 @Query("update User u set u.userName = ?1 where c.id = ?2")// 使用序号参数，“?1“ 表示 userName，”?2“ 表示 id
 int modifyByIdAndUserId(String  userName, Long id);
-	
+
 @Transactional
 @Modifying
 @Query("delete from User where id = :id")// 使用命名参数，“:id“ 表示 id
 void deleteByUserId(Long id);
-  
+
 @Transactional(timeout = 10)
 @Query("select u from User u where u.emailAddress = ?1")
     User findByEmailAddress(String emailAddress);
@@ -286,33 +286,33 @@ void deleteByUserId(Long id);
 ```java
 public interface HotelSummary {
 
-	City getCity();
+    City getCity();
 
-	String getName();
+    String getName();
 
-	Double getAverageRating();
+    Double getAverageRating();
 
-	default Integer getAverageRatingRounded() {
-		return getAverageRating() == null ? null : (int) Math.round(getAverageRating());
-	}
+    default Integer getAverageRatingRounded() {
+        return getAverageRating() == null ? null : (int) Math.round(getAverageRating());
+    }
 
 }
 ```
 查询的方法返回类型设置为新创建的接口
 ```java
 @Query("select h.city as city, h.name as name, avg(r.rating) as averageRating "
-		- "from Hotel h left outer join h.reviews r where h.city = ?1 group by h")
+        - "from Hotel h left outer join h.reviews r where h.city = ?1 group by h")
 Page<HotelSummary> findByCity(City city, Pageable pageable);
 
 @Query("select h.name as name, avg(r.rating) as averageRating "
-		- "from Hotel h left outer join h.reviews r  group by h")
+        - "from Hotel h left outer join h.reviews r  group by h")
 Page<HotelSummary> findByCity(Pageable pageable);
 使用
 
 Page<HotelSummary> hotels = this.hotelRepository.findByCity(new PageRequest(0, 10, Direction.ASC, "name"));
 for(HotelSummary summay:hotels){
-		System.out.println("Name" +summay.getName());
-	}
+        System.out.println("Name" +summay.getName());
+    }
 ```
 在运行中 Spring 会给接口（HotelSummary）自动生产一个代理类来接收返回的结果，代码汇总使用 getXX 的形式来获取
 
@@ -320,7 +320,7 @@ for(HotelSummary summay:hotels){
 
 ## 2. 使用 spring boot data rest
 
-中文文档 https://springcloud.cc/spring-data-rest-zhcn.html#dependencies.spring-boot 
+中文文档 https://springcloud.cc/spring-data-rest-zhcn.html#dependencies.spring-boot
 
 Spring Data REST 构建在 Spring Data repositories 之上，并自动将其导出为 REST 资源。它利用超媒体来允许客户端查找存储库暴露的功能，并将这些资源自动集成到相关的超媒体功能中。
 
@@ -331,7 +331,7 @@ Spring Data REST 构建在 Spring Data repositories 之上，并自动将其导�
     ```
 
 2)	配置
-    
+
     在【application.properties】中可通过以 spring.data.rest 为前缀的配置项对 Spring Data REST 进行配置；
     - 更改根 URI
       默认情况下，Spring Data REST 以根 URI“/”提供 REST 资源，可在【application.properties】中修改：
@@ -367,7 +367,7 @@ Spring Data REST 构建在 Spring Data repositories 之上，并自动将其导�
       ```
 
 3)	使用
-  在编写完 Jpa 的实体类和数据访问接口后，Spring Data Rest 会检测数据表暴露的接口，自动在 Spring MVC 中绑定响应的 HTTP 路由方法，并创建 User 对象的 RESTful 访问端点 /users：         
+  在编写完 Jpa 的实体类和数据访问接口后，Spring Data Rest 会检测数据表暴露的接口，自动在 Spring MVC 中绑定响应的 HTTP 路由方法，并创建 User 对象的 RESTful 访问端点 /users：
   如：
   ```
   GET /users User 列表信息（数据来源于 UserRepository 对应的关系型数据库，下同）
@@ -387,15 +387,15 @@ Spring Data JPA 默认对所有的方法开启了事务支持，且查询类事�
 例：
 ```java
 public interface {
-    
+
     @Transactional
     User login(String name, String password);
-    
+
 }
 ```
 
 ### 3.1. 高级使用
-http://blog.didispace.com/springboottransactional/ 
+http://blog.didispace.com/springboottransactional/
 
 #### 3.1.1. 指定不同的事务管理器
 一般我们直接使用默认的事务配置，就可以满足一些基本的事务需求，但是当我们项目较大较复杂时（比如，有多个数据源等），这时候需要在声明事务时，指定不同的事务管理器。在声明事务时，只需要通过 value 属性指定配置的事务管理器名即可，例如：@Transactional(value="transactionManagerPrimary")。
@@ -484,12 +484,12 @@ public enum Propagation {
     spring.datasource.password=root
     ```
 
-3)  配置 mybatis【appication.properties】             
+3)  配置 mybatis【appication.properties】
 
     可用配置项见[这里](http://www.mybatis.org/mybatis-3/zh/configuration.html#settings)
 
-    使用前缀为 mybatis 进行配置，可用配置如下：          
-    
+    使用前缀为 mybatis 进行配置，可用配置如下：
+
     | **Property**               | **Description**                          |
     | -------------------------- | ---------------------------------------- |
     | `config-location`          | Location of MyBatis xml config file.     |
@@ -503,7 +503,7 @@ public enum Propagation {
     | `autoMappingBehavior`      |	指定 MyBatis 应如何自动映射列到字段或属性。 NONE 表示取消自动映射；PARTIAL 只会自动映射没有定义嵌套结果集映射的结果集。 FULL 会自动映射任意复杂的结果集（无论是否嵌套）。默认值为 PARTIAL。|
     | `autoMappingUnknownColumnBehavior`| 指定发现自动映射目标未知列（或者未知属性类型）的行为。NONE: 不做任何反应；WARNING: 输出提醒日志 ('org.apache.ibatis.session.AutoMappingUnknownColumnBehavior' 的日志等级必须设置为 WARN)；FAILING: 映射失败 （抛出 SqlSessionException）。默认值为 NONE。|
 
-    
+
     常用的配置：
     ```
     # 使用《驼峰命名法》进行数据库表列与实体类属性的映射
@@ -514,7 +514,7 @@ public enum Propagation {
     ```
 
 4)	编写实体类
-    
+
     注意：**实体类必须有无参构造函数，否则 mybatis 无法完成映射**；
 
 5)	编写 mapper 接口【使用注解的方式】
@@ -525,7 +525,7 @@ public enum Propagation {
       Record findById(@Param("id") Long id);
     }
     ```
-    编写完 mapper 接口即完成了 DAO 层的开发工作；         
+    编写完 mapper 接口即完成了 DAO 层的开发工作；
     注意：
     - 要使得 mapper 接口被 spring 扫描到，可采取两种方式：
       - 一是在每个 mapper 接口类上都注解 @Mapper；
@@ -546,13 +546,13 @@ public enum Propagation {
         List<UserEntity> users = UserMapper.getAll();
         System.out.println(users.toString());
       }
-      
+
     }
     ```
 
 ### 4.2. mapper 的注解支持
 
-官方文档：http://www.mybatis.org/mybatis-3/zh/java-api.html 
+官方文档：http://www.mybatis.org/mybatis-3/zh/java-api.html
 
 #### 4.2.1. @Insert
 基本使用：
@@ -560,7 +560,7 @@ public enum Propagation {
 public interface StudentMapper {
     @Insert("INSERT INTO STUDENTS(STUD_ID,NAME,EMAIL,ADDR_ID, PHONE)
         VALUES(#{studId},#{name},#{email},#{address.addrId},#{phone})")
-	// 使用了 @Insert 注解的 insertMethod() 方法将返回 insert 语句执行后影响的行数
+    // 使用了 @Insert 注解的 insertMethod() 方法将返回 insert 语句执行后影响的行数
     int insertStudent(Student student);
 }
 ```
@@ -619,7 +619,7 @@ Student findStudentById(Integer studId);
 
 ##### 4.2.4.1. 结果映射
 
-数据库表列与实体类属性映射的四种方法： http://blog.csdn.net/lmy86263/article/details/53150091 
+数据库表列与实体类属性映射的四种方法： http://blog.csdn.net/lmy86263/article/details/53150091
 
 a)	通过 XML 映射文件中的 resultMap；
 
@@ -631,7 +631,7 @@ d)	通过使用在 SQL 语句中定义别名完成映射；
 
 以下使用的都是注解映射：
 ###### 4.2.4.1.1. 普通映射
-将查询结果通过别名或者是 @Results 注解与 JavaBean 属性映射起来，一个 @Result 对应 Java bean 的一个属性赋值，映射失败的属性保持默认值： 
+将查询结果通过别名或者是 @Results 注解与 JavaBean 属性映射起来，一个 @Result 对应 Java bean 的一个属性赋值，映射失败的属性保持默认值：
 
 例：
 ```java
@@ -660,7 +660,7 @@ Address findAddressById(int id);
 @Result(id = true, column = "stud_id", property = "studId"),
 @Result(column = "name", property = "name"),
 @Result(column = "email", property = "email"),
-@Result(column = "addr_id", 
+@Result(column = "addr_id",
 one = @One(select = "com.xxx.mappers.StudentMapper.findAddressById")),
 property = "address"
 })
@@ -704,11 +704,11 @@ Tutor findTutorById(int tutorId);
 ```
 
 ### 4.3. 使用 mybatis-generator
-http://www.jianshu.com/p/188622950cc6 
+http://www.jianshu.com/p/188622950cc6
 
 由于 mybatis-generator 官方使用的是 maven plugin，因此针对 gradle，使用[第三方解决方案](https://plugins.gradle.org/plugin/com.arenagod.gradle.MybatisGenerator) ，即使用[第三方插件](https://github.com/kimichen13/mybatis-generator-plugin) ；
 
-1)	配置【build.gradle】        
+1)	配置【build.gradle】
     添加以下内容：
     ```groovy
     //mybatis generator plugin ------ start
@@ -823,7 +823,7 @@ http://www.jianshu.com/p/188622950cc6
 
 4)	启动 mybatis-generator
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/ab1e524655371de9b5bd2746800533a9.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/30/ab1e524655371de9b5bd2746800533a9.jpg)
 
 5)	针对实际需要进行修改
 
@@ -832,7 +832,7 @@ http://www.jianshu.com/p/188622950cc6
     b)	删除 mapper/ 中的 provider 类，以及 mapper 接口中的 provider 方法，只留下基本的增删改查；
 
 ### 4.4. 多数据源配置
-spring boot mybatis 多数据库源（主从）配置 http://www.ityouknow.com/springboot/2016/11/25/springboot(%E4%B8%83)-springboot+mybatis%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E6%9C%80%E7%AE%80%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html 
+spring boot mybatis 多数据库源（主从）配置 http://www.ityouknow.com/springboot/2016/11/25/springboot(%E4%B8%83)-springboot+mybatis%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90%E6%9C%80%E7%AE%80%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html
 
 ### 4.5. 使用 HikariCP 连接池
 SpringBoot 默认使用 org.apache.tomcat.jdbc.pool.DataSource 连接池，通过更改配置可使用其它第三方连接池；
@@ -860,7 +860,7 @@ SpringBoot 默认使用 org.apache.tomcat.jdbc.pool.DataSource 连接池，通�
 
 ### 4.6. 使用 mybatis-plus
 
-官方文档：http://mp.baomidou.com/#/quick-start 
+官方文档：http://mp.baomidou.com/#/quick-start
 
 ## 5. 使用数据库版本工具
 
@@ -868,9 +868,9 @@ SpringBoot 支持了两种数据库迁移工具，一个是 flyway，一个是 l
 
 ### 5.1. flyway
 
-flyway 官方教程 / 工作原理说明 https://flywaydb.org/getstarted/how  
+flyway 官方教程 / 工作原理说明 https://flywaydb.org/getstarted/how
 
-中文工作原理说明：https://blog.waterstrong.me/flyway-in-practice/ 
+中文工作原理说明：https://blog.waterstrong.me/flyway-in-practice/
 
 Flyway 是一个用 Java 编写的开源数据库版本管理工具，或者说是数据库结构变更工具，旨在帮助开发和运维更容易地管理数据库演进过程中的各个版本。
 
@@ -894,7 +894,7 @@ flyway.baseline-on-migrate=true
 ```
 这种情况下，初次启动要用于 flyway 的初始化，导致第一个版本的 Migrations 脚本中的 SQL 语句不会被执行，因此这种情况下直接建立一个空的`V1__Initialize.sql`，再把要执行的内容放到`V1.1__Migrations.sql`中即可；
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/4fbd5d0090538643cf22e9445d3ed383.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/4fbd5d0090538643cf22e9445d3ed383.jpg)
 
 3)	创建 Migrations 脚本
 
@@ -912,7 +912,7 @@ flyway.baseline-on-migrate=true
 
     Migrations 命名规则：
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/360a244c369d71c54e7668e7ef99de64.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/30/360a244c369d71c54e7668e7ef99de64.jpg)
 
 ### 5.2. liquibase
 可用配置：
@@ -974,7 +974,7 @@ Actuator 是 spring boot 提供的对应用系统的自省和监控的集成功�
     ```
 
 3)	访问监控端点
-    
+
     Actuator 提供了以下监控端点供开发者使用：
 
     | HTTP 方法 | 路径              | 描述            | 需要鉴权  |
@@ -1003,11 +1003,11 @@ lombok 是一套代码模板解决方案，将极大提升开发的效率；
     ```
 2)	IDEA 中设置
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/edb3d0efcea761a2f742ad9bd388debe.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/30/edb3d0efcea761a2f742ad9bd388debe.jpg)
 
 3)	使用
-    
-    官网说明：https://projectlombok.org/features/all 
+
+    官网说明：https://projectlombok.org/features/all
 
     | 注解                                       | 说明                                       |
     | ---------------------------------------- | ---------------------------------------- |
@@ -1024,7 +1024,7 @@ lombok 是一套代码模板解决方案，将极大提升开发的效率；
     | @Builder                                 | 产生复杂的构建器 api 类                             |
     | @Synchronized                            | 同步方法安全的转化                                |
 
-    例：         
+    例：
     ```java
     import lombok.Data;
     import lombok.extern.slf4j.Slf4j;
@@ -1048,7 +1048,7 @@ Swagger 是一个规范和完整的框架，用于生成、描述、调用和可
     ```
 2)	编写配置类
 
-    完整配置说明：https://springfox.github.io/springfox/docs/current/#configuration-explained 
+    完整配置说明：https://springfox.github.io/springfox/docs/current/#configuration-explained
 
     ```java
     @Configuration
@@ -1060,7 +1060,7 @@ Swagger 是一个规范和完整的框架，用于生成、描述、调用和可
                     .apiInfo(apiInfo())
                     .select()
     // 指定 Swagger 扫描的包名，假如不指定此项， 在 Spring Boot 项目中， 会生成 base-err-controller 的 api 接口
-                    .apis(RequestHandlerSelectors.basePackage("com.didispace.web")) 
+                    .apis(RequestHandlerSelectors.basePackage("com.didispace.web"))
                     .paths(PathSelectors.any())
                     .build();
     }
@@ -1079,7 +1079,7 @@ Swagger 是一个规范和完整的框架，用于生成、描述、调用和可
     ```
     此时，启动项目，访问 http://localhost:8080/v2/api-docs，可以看到生成的文档的 json 数据结构；访问 http://localhost:8080/swagger-ui.html，可以看到生成的 API 文档的基本页面，但还没有 API 的具体描述；
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/e88dcf9de6a2feaf7b91a60e38c173f3.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/30/e88dcf9de6a2feaf7b91a60e38c173f3.jpg)
 
 3)	在 controller 中添加注解
 
@@ -1105,7 +1105,7 @@ Swagger 是一个规范和完整的框架，用于生成、描述、调用和可
     ```
 
     例：
-  
+
     ```java
     @Api(description = "《对整个 Controller 的定义做解释》文章操作相关接口")
     @RestController
@@ -1160,40 +1160,40 @@ Swagger 是一个规范和完整的框架，用于生成、描述、调用和可
     ```
 
     注：@ApiOperation(value="获取用户详细信息", notes="根据 url 的 id 来获取用户详细信息", response = User.class)
-    
+
     其中，response = User.class 表示返回值使用 JsonResult 的子类 User 来展示更详细的内容，可以使用 @ApiModel 和 @ApiModelProperty 注解该 Model 类；如果不指定，则使用返回值 JsonResult 来生成文档；
 
     JsonResult.java
-  
+
     ```java
-    @ApiModel  
-    public class JsonResult {  
-        @ApiModelProperty(value = "状态码", example="40001", required = true, position=-2)  
-        private String code;  
-        @ApiModelProperty(value = "返回消息", example="恭喜，成功！", required = true, position=-1)  
-        private String message;  
-        @ApiModelProperty(value = "具体数据")  
-        private Object data;  
-      
-        //constructors, getters, setters 略。..  
+    @ApiModel
+    public class JsonResult {
+        @ApiModelProperty(value = "状态码", example="40001", required = true, position=-2)
+        private String code;
+        @ApiModelProperty(value = "返回消息", example="恭喜，成功！", required = true, position=-1)
+        private String message;
+        @ApiModelProperty(value = "具体数据")
+        private Object data;
+
+        //constructors, getters, setters 略。..
     }
     ```
 
     User.java
 
     ```java
-    @ApiModel 
-    public class User extends JsonResult {  
-        @ApiModelProperty(value = "专题详情", required = true)  
-        private Topic data;  
-      
-        //constructors, getters, setters 略。..  
-    }  
+    @ApiModel
+    public class User extends JsonResult {
+        @ApiModelProperty(value = "专题详情", required = true)
+        private Topic data;
+
+        //constructors, getters, setters 略。..
+    }
     ```
 
 4)	访问 /swagger-ui.html，即可阅读完整文档
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/486cad5ff3fdb4abbcaf21c2590b3d05.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/30/486cad5ff3fdb4abbcaf21c2590b3d05.jpg)
 
 5)	设定访问 API doc 的路由
 
@@ -1242,7 +1242,7 @@ Swagger 是一个规范和完整的框架，用于生成、描述、调用和可
 
 ### 11.1. 单元测试
 
-http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html 
+http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
 
 1)	引入依赖
 
@@ -1264,19 +1264,19 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
     ```
 
     spring-boot-starter-test 还增加了对 Controller 层测试的支持：
-  
+
     ```java
     // 简单验证结果集是否正确
     Assert.assertEquals(3, userMapper.getAll().size());
 
     // 验证结果集，提示
 
-    Assert.assertTrue("错误，正确的返回值为 200", status == 200); 
-    Assert.assertFalse("错误，正确的返回值为 200", status != 200);  
+    Assert.assertTrue("错误，正确的返回值为 200", status == 200);
+    Assert.assertFalse("错误，正确的返回值为 200", status != 200);
     ```
 
     引入了 MockMvc 支持了对 Controller 层的测试，简单示例如下：
-  
+
     ```java
     public class HelloControlerTests {
 
@@ -1296,7 +1296,7 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
                     .andDo(MockMvcResultHandlers.print())
                     .andReturn();
         }
-        
+
         // 验证 controller 是否正常响应并判断返回结果是否正确
         @Test
         public void testHello() throws Exception {
@@ -1318,7 +1318,7 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
 
 1)	引入依赖
 
-	spring boot 的定时任务依赖于 springboot starter，但若使用了 springboot starter web 则无须再添加（已包含）；
+    spring boot 的定时任务依赖于 springboot starter，但若使用了 springboot starter web 则无须再添加（已包含）；
 
 2)	启动类启用定时任务
 
@@ -1327,7 +1327,7 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
 3)	创建定时任务
 
     在能被 spring 扫描后注入的类（如 @Service、@Component）中创建定时任务，并用 @Scheduled 注解标记，项目启动会自动执行使用了该注解的方法；
-    
+
     例：
 
     ```java
@@ -1370,12 +1370,12 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
       0 5 3 * * ?     每天 3 点 5 分执行
       0 5 3 ? * *     每天 3 点 5 分执行，与上面作用相同
       0 5/10 3 * * ?  每天 3 点的 5 分，15 分，25 分，35 分，45 分，55 分这几个时间点执行
-      0 10 3 ? * 1    每周星期天，3 点 10 分 执行，注：1 表示星期天    
+      0 10 3 ? * 1    每周星期天，3 点 10 分 执行，注：1 表示星期天
       0 10 3 ? * 1#3  每个月的第三个星期，星期天 执行，#号只能出现在星期的位置
       ```
 
-    - fixedRate 风格，单位是毫秒：    
-    
+    - fixedRate 风格，单位是毫秒：
+
       例：
       ```
       @Scheduled(fixedRate = 6000) ：上一次开始执行时间点之后 6 秒再执行，即每隔多久执行一次，不论你业务执行花费了多少时间
@@ -1384,62 +1384,62 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
       ```
 
 4) 更改执行任务的时间
-	
-	http://blog.csdn.net/qq_34125349/article/details/77430956
+
+    http://blog.csdn.net/qq_34125349/article/details/77430956
 
 5) 停止、启动任务
 
-	http://blog.csdn.net/qq_34125349/article/details/77430956
+    http://blog.csdn.net/qq_34125349/article/details/77430956
 
 NOTE：
 - 集群环境中定时任务存在的问题
 
-	http://412887952-qq-com.iteye.com/blog/2369020 
+    http://412887952-qq-com.iteye.com/blog/2369020
 
-	若是在应用服务器集群中，spring Schedule 会出现任务多次被调度执行的情况，因为集群的节点之间是不会共享任务信息的，每个节点上的任务都会按时执行。比如我们部署了 3 个实例，三个实例一启动，就会把定时任务都启动，那么在同一个时间点，定时任务会一起执行，也就是会执行 3 次，这样很可能会导致我们的业务出现错误。
-	
-	解决方案：     
-	
-	逻辑分离，就是我们将真正要定时任务处理的逻辑，写成 rest 服务，或者 rpc 服务，然后我们可以新建一个单独的定时任务项目，这个项目应该是没有任何的业务代码的，他纯粹只有定时任务功能，几点启动，或者每隔多少时间启动，启动后，通过 rest 或者 rpc 的方式，调用真正处理逻辑的服务。同时，我们甚至可以不用新建一个项目，我们通过 linux 的 cron 就可以进行。同时，这种方式还有一个好处，比如有些时候，我们的定时任务也会因为某些原因出现问题，没有执行，那么我们就可以通过 curl 或者 wget 等等很多方式，再次定时任务的执行。
+    若是在应用服务器集群中，spring Schedule 会出现任务多次被调度执行的情况，因为集群的节点之间是不会共享任务信息的，每个节点上的任务都会按时执行。比如我们部署了 3 个实例，三个实例一启动，就会把定时任务都启动，那么在同一个时间点，定时任务会一起执行，也就是会执行 3 次，这样很可能会导致我们的业务出现错误。
+
+    解决方案：
+
+    逻辑分离，就是我们将真正要定时任务处理的逻辑，写成 rest 服务，或者 rpc 服务，然后我们可以新建一个单独的定时任务项目，这个项目应该是没有任何的业务代码的，他纯粹只有定时任务功能，几点启动，或者每隔多少时间启动，启动后，通过 rest 或者 rpc 的方式，调用真正处理逻辑的服务。同时，我们甚至可以不用新建一个项目，我们通过 linux 的 cron 就可以进行。同时，这种方式还有一个好处，比如有些时候，我们的定时任务也会因为某些原因出现问题，没有执行，那么我们就可以通过 curl 或者 wget 等等很多方式，再次定时任务的执行。
 
 - 多个定时任务默认运行在同一个线程池的同一个线程中
 
-	https://www.jianshu.com/p/0db083bf4d39
+    https://www.jianshu.com/p/0db083bf4d39
 
-	Spring Boot 中默认所有的定时任务都是在同一个线程池中的同一个线程来完成的。在实际开发过程中，我们当然不希望所有的任务都运行在一个线程中。
+    Spring Boot 中默认所有的定时任务都是在同一个线程池中的同一个线程来完成的。在实际开发过程中，我们当然不希望所有的任务都运行在一个线程中。
 
-	解决方案：
+    解决方案：
 
-	通过 ScheduleConfig 配置文件实现 SchedulingConfigurer 接口，并重写 setSchedulerfang 方法：
-	```java
-	@Configuration
-	public class ScheduleConfig implements SchedulingConfigurer {
-		@Override
-		public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-			
-			taskRegistrar.setScheduler(Executors.newScheduledThreadPool(5));
-		}
-	}
-	```
+    通过 ScheduleConfig 配置文件实现 SchedulingConfigurer 接口，并重写 setSchedulerfang 方法：
+    ```java
+    @Configuration
+    public class ScheduleConfig implements SchedulingConfigurer {
+        @Override
+        public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+
+            taskRegistrar.setScheduler(Executors.newScheduledThreadPool(5));
+        }
+    }
+    ```
 
 ### 12.2. 使用 Quartz
 
-https://www.cnblogs.com/javanoob/p/springboot_schedule.html 
+https://www.cnblogs.com/javanoob/p/springboot_schedule.html
 
-https://www.cnblogs.com/lic309/p/4089633.html 
+https://www.cnblogs.com/lic309/p/4089633.html
 
 Quartz 是一个功能完善的任务调度框架，特别牛叉的是它支持集群环境下的任务调度，当然代价也很大，需要将任务调度状态序列化到数据库。Quartz 框架需要 10 多张表协同，配置繁多。
 
 ## 13. 使用 Shiro
 
-官方网站：http://shiro.apache.org/ 
+官方网站：http://shiro.apache.org/
 
-中文文档：https://waylau.gitbooks.io/apache-shiro-1-2-x-reference/content/ 
+中文文档：https://waylau.gitbooks.io/apache-shiro-1-2-x-reference/content/
 
 Shiro 是 Apache 下的一个开源项目，我们称之为 Apache Shiro。它是一个很易用与 Java 项目的的安全框架，提供了认证、授权、加密、会话管理，与 Spring Security 一样都是做一个权限的安全框架，但是与 Spring Security 相比，在于 Shiro 使用了比较简单易懂易于使用的授权方式。
 
 Apache Shiro 的三大核心组件：
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/1f1f5f6d266496add107c8532ab1cac7.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/1f1f5f6d266496add107c8532ab1cac7.jpg)
 
 Apache Shiro 核心通过 Filter 来实现，通过 URL 规则来进行过滤和权限校验，所以我们需要定义一系列关于 URL 的规则和访问权限。
 
@@ -1452,7 +1452,7 @@ Apache Shiro 核心通过 Filter 来实现，通过 URL 规则来进行过滤和
 
 ## 14. 使用 Spring Security
 
-官方教程 https://docs.spring.io/spring-security/site/docs/current/guides/html5/helloworld-boot.html 
+官方教程 https://docs.spring.io/spring-security/site/docs/current/guides/html5/helloworld-boot.html
 
 ## 15. 使用 Spring AOP
 
@@ -1484,24 +1484,24 @@ https://my.oschina.net/itblog/blog/211693
 
 具体执行顺序：
 - 在 @Around 方法中调用了`proceedingJoinPoint.proceed()`：
-	- 进入 @Around 方法
-	- 执行 @Around 方法中的`proceedingJoinPoint.proceed()`
-	- 进入 @Before 方法
-	- 退出 @Before 方法
-	- 执行目标方法
-	- 退出 @Around 方法
-	- 进入 @After 方法
-	- 退出 @After 方法
-	- 进入 @AfterReturning 方法
-	- 退出 @AfterReturning 方法
+    - 进入 @Around 方法
+    - 执行 @Around 方法中的`proceedingJoinPoint.proceed()`
+    - 进入 @Before 方法
+    - 退出 @Before 方法
+    - 执行目标方法
+    - 退出 @Around 方法
+    - 进入 @After 方法
+    - 退出 @After 方法
+    - 进入 @AfterReturning 方法
+    - 退出 @AfterReturning 方法
 
 - 在 @Around 方法中没有调用`proceedingJoinPoint.proceed()`：
-	- 进入 @Around 方法
-	- 退出 @Around 方法
-	- 进入 @After 方法
-	- 退出 @After 方法
-	- 进入 @AfterReturning 方法
-	- 退出 @AfterReturning 方法
+    - 进入 @Around 方法
+    - 退出 @Around 方法
+    - 进入 @After 方法
+    - 退出 @After 方法
+    - 进入 @AfterReturning 方法
+    - 退出 @AfterReturning 方法
 
 例：拦截指定包下所有类的所有方法
 ```java
@@ -1510,80 +1510,80 @@ https://my.oschina.net/itblog/blog/211693
 @Component
 public class WebLogAspect {
 
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	private ThreadLocal<Long> startTime = new ThreadLocal<>();
+    private ThreadLocal<Long> startTime = new ThreadLocal<>();
 
-	/**
-	 * 定义拦截规则
-	 */
-	@Pointcut("execution(public * com.demo.demo.controller..*.*(..))")
-	public void webLog(){}
+    /**
+     * 定义拦截规则
+     */
+    @Pointcut("execution(public * com.demo.demo.controller..*.*(..))")
+    public void webLog(){}
 
-	@Around("webLog()")
-	public Object Interceptor(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-		logger.info("enter Around");
+    @Around("webLog()")
+    public Object Interceptor(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        logger.info("enter Around");
 
-		Object result = null;
-		//		result = new String("firejq test");
+        Object result = null;
+        //		result = new String("firejq test");
 
-		if (result == null) {
-			// 一切正常的情况下，继续执行被拦截的方法
-			result = proceedingJoinPoint.proceed();
-		}
+        if (result == null) {
+            // 一切正常的情况下，继续执行被拦截的方法
+            result = proceedingJoinPoint.proceed();
+        }
 
-		logger.info("exit Around");
+        logger.info("exit Around");
 
-		return result;
-	}
+        return result;
+    }
 
-	@Before("webLog()")
-	public void doBefore(JoinPoint joinPoint) throws Throwable {
-		logger.info("enter before");
+    @Before("webLog()")
+    public void doBefore(JoinPoint joinPoint) throws Throwable {
+        logger.info("enter before");
 
-		// 接收到请求，记录请求内容
-		startTime.set(System.currentTimeMillis());
+        // 接收到请求，记录请求内容
+        startTime.set(System.currentTimeMillis());
 
-		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
-				.getRequestAttributes();
-		HttpServletRequest request = attributes.getRequest();
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
 
-		// 记录请求内容
-		logger.info("URL : " + request.getRequestURL().toString());
-		logger.info("HTTP_METHOD : " + request.getMethod());
-		logger.info("IP : " + request.getRemoteAddr());
-		logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-		logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        // 记录请求内容
+        logger.info("URL : " + request.getRequestURL().toString());
+        logger.info("HTTP_METHOD : " + request.getMethod());
+        logger.info("IP : " + request.getRemoteAddr());
+        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+        logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
 
-		logger.info("exit before");
-	}
+        logger.info("exit before");
+    }
 
-	// 声明例外通知
-	@AfterThrowing(pointcut = "webLog()", throwing = "e")
-	public void doAfterThrowing(Exception e){
-		logger.info("enter afterThrowing");
-		logger.info("exit afterThrowing");
-	}
+    // 声明例外通知
+    @AfterThrowing(pointcut = "webLog()", throwing = "e")
+    public void doAfterThrowing(Exception e){
+        logger.info("enter afterThrowing");
+        logger.info("exit afterThrowing");
+    }
 
-	@After("webLog()")
-	public void doAfter(JoinPoint joinPoint) throws Throwable {
-		logger.info("enter after");
-		logger.info("exit after");
-	}
+    @After("webLog()")
+    public void doAfter(JoinPoint joinPoint) throws Throwable {
+        logger.info("enter after");
+        logger.info("exit after");
+    }
 
-	@AfterReturning(pointcut = "webLog()", returning = "returnValue")
-	public void doAfterReturning(JoinPoint joinPoint, Object returnValue) throws Throwable {
-		logger.info("enter afterReturn");
+    @AfterReturning(pointcut = "webLog()", returning = "returnValue")
+    public void doAfterReturning(JoinPoint joinPoint, Object returnValue) throws Throwable {
+        logger.info("enter afterReturn");
 
-		// 处理完请求，返回内容
-		if (returnValue != null) {
-			logger.info("RESPONSE : " + returnValue);
-			logger.info("SPEND TIME : " +
-								(System.currentTimeMillis() - startTime.get()));
-		}
+        // 处理完请求，返回内容
+        if (returnValue != null) {
+            logger.info("RESPONSE : " + returnValue);
+            logger.info("SPEND TIME : " +
+                                (System.currentTimeMillis() - startTime.get()));
+        }
 
-		logger.info("exit afterReturn");
-	}
+        logger.info("exit afterReturn");
+    }
 
 }
 ```
@@ -1591,20 +1591,20 @@ public class WebLogAspect {
 @RestController
 public class UserController {
 
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@GetMapping(value = "/test")
-	public String test() {
-		logger.info("enter controller");
-		return "test123";
-	}
+    @GetMapping(value = "/test")
+    public String test() {
+        logger.info("enter controller");
+        return "test123";
+    }
 }
 ```
 
 例：拦截指定注解标注的方法
 ```java
 @Target(ElementType.METHOD)// 字段注解 , 用于描述方法
-@Retention(RetentionPolicy.RUNTIME)// 在运行期保留注解信息  
+@Retention(RetentionPolicy.RUNTIME)// 在运行期保留注解信息
 public @interface LogAop {
     String name() default "Log";
 }
@@ -1635,13 +1635,13 @@ public class AopController {
 
     @LogAop(name="/aop/aop.action") // 添加了注解之后才会被拦截
     @RequestMapping("/aop")
-    public String aop(){  
-        return "hello world!";  
+    public String aop(){
+        return "hello world!";
     }
 
     @RequestMapping("/noAop")    // 这个方法是不会被拦截的
     public String noAop(){
-        return "hello world!";  
+        return "hello world!";
     }
 }
 ```

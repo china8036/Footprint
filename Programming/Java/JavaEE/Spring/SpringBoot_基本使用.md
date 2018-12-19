@@ -1,59 +1,59 @@
 - [Spring Boot](#spring-boot)
-    - [1. 概述](#1-概述)
-    - [2. Spring Boot CLI 安装](#2-spring-boot-cli-安装)
-    - [3. 在 IDEA 中创建使用 gradle 的 spring boot 项目](#3-在-idea-中创建使用-gradle-的-spring-boot-项目)
-    - [4. 运行 spring boot 项目](#4-运行-spring-boot-项目)
-    - [5. 配置风格](#5-配置风格)
-    - [6. application.yml / application.propertities](#6-applicationyml--applicationpropertities)
-        - [6.1. 常用配置](#61-常用配置)
-            - [6.1.1. .properties](#611-properties)
-            - [6.1.2. .yml](#612-yml)
-    - [7. Spring EL](#7-spring-el)
-    - [8. 配置 CORS](#8-配置-cors)
-    - [9. 文件上传](#9-文件上传)
-        - [9.1. 上传为空导致异常](#91-上传为空导致异常)
-    - [10. 日志管理](#10-日志管理)
-        - [10.1. 配置](#101-配置)
-            - [10.1.1. 配置日志级别【格式：logging.level. 包名 = 级别】](#1011-配置日志级别格式logginglevel-包名--级别)
-            - [10.1.2. 配置日志输出文件：](#1012-配置日志输出文件)
-            - [10.1.3. 格式化日志](#1013-格式化日志)
-            - [10.1.4. 自定义日志框架配置](#1014-自定义日志框架配置)
-            - [10.1.5. 代码中使用](#1015-代码中使用)
-    - [11. 异常处理](#11-异常处理)
-        - [11.1. 使用 `@ControllerAdvice` 进行统一异常处理](#111-使用-controlleradvice-进行统一异常处理)
-            - [11.1.1. 实例](#1111-实例)
-            - [11.1.2. 实例：处理数据校验异常](#1112-实例处理数据校验异常)
-    - [12. 使用 validation 进行数据校验](#12-使用-validation-进行数据校验)
-        - [12.1. 捕获异常处理校验失败](#121-捕获异常处理校验失败)
-        - [12.2. 使用 BindingResult 处理校验错误](#122-使用-bindingresult-处理校验错误)
-        - [12.3. 使用 groups 属性进行分组校验](#123-使用-groups-属性进行分组校验)
-        - [12.4. 使用 `@ScriptAssert` 自定义校验逻辑](#124-使用-scriptassert-自定义校验逻辑)
-        - [12.5. 自定义校验注解](#125-自定义校验注解)
-        - [12.6. 手动校验](#126-手动校验)
-    - [13. 静态资源目录](#13-静态资源目录)
-    - [14. 模板页面目录](#14-模板页面目录)
-    - [15. 部署](#15-部署)
-        - [15.1. IDEA 中开启 spring boot 热部署](#151-idea-中开启-spring-boot-热部署)
-            - [15.1.1. 使用 spring boot devtools](#1511-使用-spring-boot-devtools)
-            - [15.1.2. 使用 JRebel](#1512-使用-jrebel)
-        - [15.2. 打包与部署](#152-打包与部署)
-            - [15.2.1. 打包为 jar 包](#1521-打包为-jar-包)
-                - [15.2.1.1. maven 版本](#15211-maven-版本)
-                - [15.2.1.2. gradle 版本](#15212-gradle-版本)
-                - [15.2.1.3. 打包为可执行的 jar 包](#15213-打包为可执行的-jar-包)
-            - [15.2.2. 打包为 war 包](#1522-打包为-war-包)
-            - [15.2.3. 打包为 docker 镜像](#1523-打包为-docker-镜像)
-    - [16. 启动时执行](#16-启动时执行)
-    - [17. Refer Links](#17-refer-links)
+  - [1. 概述](#1-概述)
+  - [2. Spring Boot CLI 安装](#2-spring-boot-cli-安装)
+  - [3. 在 IDEA 中创建使用 gradle 的 spring boot 项目](#3-在-idea-中创建使用-gradle-的-spring-boot-项目)
+  - [4. 运行 spring boot 项目](#4-运行-spring-boot-项目)
+  - [5. 配置风格](#5-配置风格)
+  - [6. application.yml / application.propertities](#6-applicationyml--applicationpropertities)
+    - [6.1. 常用配置](#61-常用配置)
+      - [6.1.1. .properties](#611-properties)
+      - [6.1.2. .yml](#612-yml)
+  - [7. Spring EL](#7-spring-el)
+  - [8. 配置 CORS](#8-配置-cors)
+  - [9. 文件上传](#9-文件上传)
+    - [9.1. 上传为空导致异常](#91-上传为空导致异常)
+  - [10. 日志管理](#10-日志管理)
+    - [10.1. 配置](#101-配置)
+      - [10.1.1. 配置日志级别【格式：logging.level. 包名 = 级别】](#1011-配置日志级别格式logginglevel-包名--级别)
+      - [10.1.2. 配置日志输出文件：](#1012-配置日志输出文件)
+      - [10.1.3. 格式化日志](#1013-格式化日志)
+      - [10.1.4. 自定义日志框架配置](#1014-自定义日志框架配置)
+      - [10.1.5. 代码中使用](#1015-代码中使用)
+  - [11. 异常处理](#11-异常处理)
+    - [11.1. 使用 `@ControllerAdvice` 进行统一异常处理](#111-使用-controlleradvice-进行统一异常处理)
+      - [11.1.1. 实例](#1111-实例)
+      - [11.1.2. 实例：处理数据校验异常](#1112-实例处理数据校验异常)
+  - [12. 使用 validation 进行数据校验](#12-使用-validation-进行数据校验)
+    - [12.1. 捕获异常处理校验失败](#121-捕获异常处理校验失败)
+    - [12.2. 使用 BindingResult 处理校验错误](#122-使用-bindingresult-处理校验错误)
+    - [12.3. 使用 groups 属性进行分组校验](#123-使用-groups-属性进行分组校验)
+    - [12.4. 使用 `@ScriptAssert` 自定义校验逻辑](#124-使用-scriptassert-自定义校验逻辑)
+    - [12.5. 自定义校验注解](#125-自定义校验注解)
+    - [12.6. 手动校验](#126-手动校验)
+  - [13. 静态资源目录](#13-静态资源目录)
+  - [14. 模板页面目录](#14-模板页面目录)
+  - [15. 部署](#15-部署)
+    - [15.1. IDEA 中开启 spring boot 热部署](#151-idea-中开启-spring-boot-热部署)
+      - [15.1.1. 使用 spring boot devtools](#1511-使用-spring-boot-devtools)
+      - [15.1.2. 使用 JRebel](#1512-使用-jrebel)
+    - [15.2. 打包与部署](#152-打包与部署)
+      - [15.2.1. 打包为 jar 包](#1521-打包为-jar-包)
+        - [15.2.1.1. maven 版本](#15211-maven-版本)
+        - [15.2.1.2. gradle 版本](#15212-gradle-版本)
+        - [15.2.1.3. 打包为可执行的 jar 包](#15213-打包为可执行的-jar-包)
+      - [15.2.2. 打包为 war 包](#1522-打包为-war-包)
+      - [15.2.3. 打包为 docker 镜像](#1523-打包为-docker-镜像)
+  - [16. 启动时执行](#16-启动时执行)
+  - [17. Refer Links](#17-refer-links)
 
-# Spring Boot 
+# Spring Boot
 
 ## 1. 概述
 
-> spring boot 代替了什么，Spring、SpringMVC/Struts2、hibernate/Mybatis？<br/>     
-> 个人理解：代替了 spring。用代替 / 取代来解释貌似都不好，更准确的可能是封装了 spring，使搭建 SSH/SSM 更快捷。     
+> spring boot 代替了什么，Spring、SpringMVC/Struts2、hibernate/Mybatis？<br/>
+> 个人理解：代替了 spring。用代替 / 取代来解释貌似都不好，更准确的可能是封装了 spring，使搭建 SSH/SSM 更快捷。
 
-传统的 spring 有很多 xml 配置，例如：dataSource、transactionManager、AOP、bean 等等 xml 的配置。即便用注解，也要在 xml 中配置 component-scan 等。         
+传统的 spring 有很多 xml 配置，例如：dataSource、transactionManager、AOP、bean 等等 xml 的配置。即便用注解，也要在 xml 中配置 component-scan 等。
 
 但在 spring boot，遵循“约定大于配置”，所以尽可能的避免了 xml 配置。
 
@@ -67,25 +67,25 @@
 
 ## 2. Spring Boot CLI 安装
 
-https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-started-gradle-installation 
+https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-started-gradle-installation
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/6018abea201baec92ce68897f55a7de3.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/6018abea201baec92ce68897f55a7de3.jpg)
 
 下载后解压，将 xxx\spring-boot-cli-xxxx.RELEASE-bin\bin 添加到环境变量即可
 
 验证安装成功：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/a7b5433aa57776d7f28c698ef7407435.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/a7b5433aa57776d7f28c698ef7407435.jpg)
 
 ## 3. 在 IDEA 中创建使用 gradle 的 spring boot 项目
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/e31d28feff47bbdf73b514febb75a56e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/14/e31d28feff47bbdf73b514febb75a56e.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/d3c41c341a0df3530ee6373575e3d01e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/14/d3c41c341a0df3530ee6373575e3d01e.jpg)
 
 勾选所需依赖，finish；
 
-参见 [IDEA 中三种 gradle 模式的区别](https://github.com/firejq/StudyNote/blob/master/Programming/Java/JavaEE/Tool/Gradle-Note.md#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB) 
+参见 [IDEA 中三种 gradle 模式的区别](https://github.com/firejq/StudyNote/blob/master/Programming/Java/JavaEE/Tool/Gradle-Note.md#idea-%E4%B8%AD%E4%B8%89%E7%A7%8D-gradle-%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB)
 
 创建项目后，一般需要做如下修改：
 
@@ -97,10 +97,10 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
         }
         ```
     - 修改 gradle-wrapper.properties
-        
-        ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/512094e33bac92160172037e9d046c94.jpg)
 
-        ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/9febe52aa058b2832eb8db6d401f409f.jpg)
+        ![image](http://img.cdn.firejq.com/jpg/2017/11/14/512094e33bac92160172037e9d046c94.jpg)
+
+        ![image](http://img.cdn.firejq.com/jpg/2017/11/14/9febe52aa058b2832eb8db6d401f409f.jpg)
 
 - 修改仓库地址：
     - 修改 build.gradle
@@ -133,7 +133,7 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
     version = '0.0.1-SNAPSHOT'
     sourceCompatibility = 1.8
 
-    repositories {	
+    repositories {
         jcenter()
     }
 
@@ -157,7 +157,7 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#getting-st
 
 ## 4. 运行 spring boot 项目
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/3606cffe1d51ec0a0f19fb5e4489f8df.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/3606cffe1d51ec0a0f19fb5e4489f8df.jpg)
 
 出现 Started TestdemoApplication in 2.916 seconds (JVM running for 3.43) 字样，表明 spring boot 启动成功；
 
@@ -482,14 +482,14 @@ http://younian.net.cn/article/117
     - 设置表单的文件字段名与实体类的 MultipartFile 属性名不一致，在 controller 中利用 HttpServlet 先判空后再手动赋值
 
     - 在客户端上传之前判断有没有选择文件，没有的话就不添加文件字段；同时在服务端执行文件保存时先判空
-        
+
         客户端
         ```javscript
-		if (typeof activityPoster !== 'undefined') {// 若没上传图片，则不添加此字段
-			formData.append('activityPoster', activityPoster);
-		}
+        if (typeof activityPoster !== 'undefined') {// 若没上传图片，则不添加此字段
+            formData.append('activityPoster', activityPoster);
+        }
         ```
-        
+
         服务端
         ```java
         if (activity.getActivityPoster() != null) {
@@ -512,7 +512,7 @@ http://younian.net.cn/article/117
             MultipartHttpServletRequest multiRequest=(MultipartHttpServletRequest)request;
            // 获取 multiRequest 中所有的文件名
             Iterator iter=multiRequest.getFileNames();
-             
+
             while(iter.hasNext()) {
                 // 一次遍历所有文件
                 MultipartFile file=multiRequest.getFile(iter.next().toString());
@@ -520,12 +520,12 @@ http://younian.net.cn/article/117
                     String path="E:/springUpload"+file.getOriginalFilename();
                     // 上传
                     file.transferTo(new File(path));
-                }    
+                }
             }
         }
         long  endTime=System.currentTimeMillis();
         System.out.println("方法三的运行时间："+String.valueOf(endTime-startTime)+"ms");
-        return "/success"; 
+        return "/success";
     }
     ```
 
@@ -615,7 +615,7 @@ logging.config=classpath:logging-config.xml
 
 logback-spring.xml 例子：
 
-具体解释见 http://tengj.top/2017/04/05/springboot7/ 
+具体解释见 http://tengj.top/2017/04/05/springboot7/
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -686,7 +686,7 @@ public String hello() throws Exception {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/21/22b8a87d9ae20a9a2d5454aeda792da5.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/21/22b8a87d9ae20a9a2d5454aeda792da5.jpg)
 
 虽然 Spring Boot 中实现了默认的 error 映射，但是在实际应用中，我们一般需要根据实际需求实现自定义的异常提示界面或者返回 json 格式的异常信息。
 
@@ -762,7 +762,7 @@ public class MyException extends Exception {
     public MyException(String message) {
         super(message);
     }
-    
+
 }
 ```
 在 controller 中抛出 MyException 异常：
@@ -992,7 +992,7 @@ public class GlobalExceptionHandler {
 3. 自定义异常处理器，捕获错误信息
 
     当校验不通过时，[若 controller 参数中使用 @RequestBody 进行 Bean 的绑定，会抛出 MethodArgumentNotValidException 异常；若使用 @ModelAttribute 进行 Bean 的绑定，spring 会抛出 BindException 异常](https://jira.spring.io/browse/SPR-10157)；
-    
+
     需要捕获该异常并进行处理：
     ```java
     @RestControllerAdvice
@@ -1014,7 +1014,7 @@ public class GlobalExceptionHandler {
     }
     ```
     NOTE:
-    
+
     spring validation 不会在第一个错误发生后立即停止，而是继续试错，告诉我们所有的错误。
 
 ### 12.2. 使用 BindingResult 处理校验错误
@@ -1086,7 +1086,7 @@ public class ValidateController {
 
 ### 12.4. 使用 `@ScriptAssert` 自定义校验逻辑
 
- [@ScriptAssert 文档](https://docs.jboss.org/hibernate/validator/6.0/api/org/hibernate/validator/constraints/ScriptAssert.html) 
+ [@ScriptAssert 文档](https://docs.jboss.org/hibernate/validator/6.0/api/org/hibernate/validator/constraints/ScriptAssert.html)
 
 如果需要校验的业务逻辑比较复杂，简单的 @NotBlank，@Min 注解已经无法满足需求了，这时可以使用 @ScriptAssert 和 @ParameterScriptAssert  来指定进行校验的方法，通过方法来进行复杂业务逻辑的校验，然后返回 true 或 false 来表明是否校验成功。
 
@@ -1166,7 +1166,7 @@ public class ValidateController {
         @Override
         public void initialize(CannotHaveBlank constraintAnnotation) {
         }
-        
+
         @Override
         // 参数 ConstraintValidatorContext 这个上下文包含了认证中所有的信息，我们可以利用这个上下文实现获取默认错误提示信息，禁用错误提示信息，改写错误提示信息等操作
         public boolean isValid(String value, ConstraintValidatorContext context) {
@@ -1209,28 +1209,28 @@ public String validate() {
 
 ## 13. 静态资源目录
 
-https://juejin.im/post/58f768458d6d810064a00ad6 
+https://juejin.im/post/58f768458d6d810064a00ad6
 
 spring boot 默认配置的静态资源目录如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/b480667fc5a2f1c65991a7eed4dc1bd0.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/b480667fc5a2f1c65991a7eed4dc1bd0.jpg)
 
 优先级顺序为：`META-INF/resources > resources > static > public`
 
-即：         
+即：
 服务器启动后，这四个文件夹若同时存在，则他们目录下的所有文件都相当于放在了 web 服务器的 www 中，若存在同名文件，则只访问优先级最高的文件，其它同名文件会被覆盖；
 
-使用 webjar 管理静态资源：http://www.jianshu.com/p/d127c4f78bb8 
+使用 webjar 管理静态资源：http://www.jianshu.com/p/d127c4f78bb8
 
 ## 14. 模板页面目录
 
 templates 文件夹下的模板文件无法直接访问，要访问这些页面，有两种方法：
 
-- 不使用模板引擎，自己配置 spring mvc 的 viewResolve；         
-  
-  https://segmentfault.com/a/1190000007008637 
-  
-  https://stackoverflow.com/questions/29953245/configure-viewresolver-with-spring-boot-and-annotations-gives-no-mapping-found-f 
+- 不使用模板引擎，自己配置 spring mvc 的 viewResolve；
+
+  https://segmentfault.com/a/1190000007008637
+
+  https://stackoverflow.com/questions/29953245/configure-viewresolver-with-spring-boot-and-annotations-gives-no-mapping-found-f
 
   ```java
   @Configuration
@@ -1248,17 +1248,17 @@ templates 文件夹下的模板文件无法直接访问，要访问这些页面�
       public void configureDefaultServletHandling(
               DefaultServletHandlerConfigurer configurer) {
           configurer.enable();
-      }    
+      }
   }
 
   ```
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/ffc78353e40411b73721d04c808c5c08.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/10/30/ffc78353e40411b73721d04c808c5c08.jpg)
 
   **经过尝试，暂时找不到方法在不使用模板引擎的时候访问 templates 目录页面；** <!-- TODO -->
 
-- 使用各种 spring-boot-start 的模板引擎，会自动配置 viewResolve；      
-  http://www.jianshu.com/p/85cfe2e061fe 
+- 使用各种 spring-boot-start 的模板引擎，会自动配置 viewResolve；
+  http://www.jianshu.com/p/85cfe2e061fe
 
 ## 15. 部署
 
@@ -1300,11 +1300,11 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
     ```
 2)	IDEA 中配置
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/503526609a902fda6f7ac9a2c212640a.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/30/503526609a902fda6f7ac9a2c212640a.jpg)
 
     CTRL + SHIFT + A --> 查找 Registry --> 找到并勾选 compiler.automake.allow.when.app.running
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/f68eef2002759a230f4dca734d0dc63c.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/30/f68eef2002759a230f4dca734d0dc63c.jpg)
 
 #### 15.1.2. 使用 JRebel
 
@@ -1316,25 +1316,25 @@ http://www.ityouknow.com/springboot/2017/05/09/springboot-deploy.html
 
 在 IDEA 中，打开 project structure
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/2079e5202d9c112a760c3ea7bd32058b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/2079e5202d9c112a760c3ea7bd32058b.jpg)
 
 选择 spring boot 入口类
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/349da6a5dee54c7f801c64aaee60d2c9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/349da6a5dee54c7f801c64aaee60d2c9.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/2abfbe5609f4f86896437776e386e7b8.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/2abfbe5609f4f86896437776e386e7b8.jpg)
 
 双击 package
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/508b412389334268af2ff6fb6e00267d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/508b412389334268af2ff6fb6e00267d.jpg)
 
 看到下列信息表示打包完成：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/53dfc5e76494b2b6000f8c6f002e41cc.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/53dfc5e76494b2b6000f8c6f002e41cc.jpg)
 
 在 target 目录下的 jar 包即为打包后的项目文件
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/f03b2442d804300806bc4cfe29467bc0.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/f03b2442d804300806bc4cfe29467bc0.jpg)
 
 在 jar 包目录下，运行项目：
 ```powershell
@@ -1357,7 +1357,7 @@ gradle clean build
 
 执行完毕后，在 build/libs/ 目录下可看到打包后的 jar 文件
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/30/6fa283f99a1522d4e212621c00597f57.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/30/6fa283f99a1522d4e212621c00597f57.jpg)
 
 在 jar 包目录下，运行项目：
 ```powershell
@@ -1397,11 +1397,11 @@ Spring Boot 提供了一个 tools 工具，该工具可以方便的让我们将�
 
 #### 15.2.2. 打包为 war 包
 
-https://docs.spring.io/spring-boot/docs/current/reference/html/howto-traditional-deployment.html 
+https://docs.spring.io/spring-boot/docs/current/reference/html/howto-traditional-deployment.html
 
-https://my.oschina.net/alexnine/blog/540651 
+https://my.oschina.net/alexnine/blog/540651
 
-http://www.jianshu.com/p/b3be5e54d836 
+http://www.jianshu.com/p/b3be5e54d836
 
 打包为 jar 包时，包含了内置的 tomcat 服务器，若希望使用独立的 tomcat 服务器或者其它容器服务器，则需要将项目打包为 war 包后再部署到容器中；
 
@@ -1422,7 +1422,7 @@ http://www.jianshu.com/p/b3be5e54d836
     ```
     生成的 war 文件名为 gradle-simple.war
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/14/87588085a964930d463d1e5459a74b1f.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/11/14/87588085a964930d463d1e5459a74b1f.jpg)
 
     若要生成 zip 文件：
     ```
@@ -1441,7 +1441,7 @@ NOTE：
 
 #### 15.2.3. 打包为 docker 镜像
 
-https://waylau.com/docker-spring-boot-gradle/ 
+https://waylau.com/docker-spring-boot-gradle/
 
 ## 16. 启动时执行
 

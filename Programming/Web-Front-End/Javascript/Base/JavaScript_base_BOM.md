@@ -51,7 +51,7 @@ document.getElementById("header");
 
 原文：https://www.w3cplus.com/css/vw-for-layout.html
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/10/def5e9e3794e5dee214d9dd2dc968c68.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/10/def5e9e3794e5dee214d9dd2dc968c68.jpg)
 
 ## 2. history 对象
 
@@ -69,7 +69,7 @@ history 对象提供了一系列方法，允许在浏览历史之间移动。
 - back()：移动到上一个访问页面，等同于浏览器的后退键。
 - forward()：移动到下一个访问页面，等同于浏览器的前进键。
 - go()：接受一个整数作为参数，移动到该整数指定的页面。
-  
+
   `go(1)`相当于`forward()`，`go(-1)`相当于`back()`，`go(0)`相当于`location.reload()`。
 
 注意：
@@ -182,7 +182,7 @@ xhr = new XMLHttpRequest();
   |onload | XHR2 增加的事件监听接口，监听事件：请求成功完成|
   |ontimeout | XHR2 增加的事件监听接口，监听事件：用户指定的时限到期，请求还未完成|
   |onloadend | XHR2 增加的事件监听接口，监听事件：请求完成，不管成果或失败|
-  
+
 
 - XMLHttpRequest Object Methods
 
@@ -281,40 +281,40 @@ xmlhttp.send("fname=Bill&lname=Gates");
 
 ##### 6.1.1.3. header 设置限制
 
-参见：   
+参见：
 
-https://xhr.spec.whatwg.org/#the-setrequestheader()-method   
+https://xhr.spec.whatwg.org/#the-setrequestheader()-method
 
-https://fetch.spec.whatwg.org/#terminology-headers    
+https://fetch.spec.whatwg.org/#terminology-headers
 
-https://fetch.spec.whatwg.org/#forbidden-header-name     
+https://fetch.spec.whatwg.org/#forbidden-header-name
 
-使用 AJAX 发送 request 时，由于 JavaScript 最终依赖于浏览器运行，因此无法完全无限制的定制 request headers（受限于 W3C 标准）：   
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/12/e65bd2fa99c02a77e7836a21d661f88f.jpg)
+使用 AJAX 发送 request 时，由于 JavaScript 最终依赖于浏览器运行，因此无法完全无限制的定制 request headers（受限于 W3C 标准）：
+![image](http://img.cdn.firejq.com/jpg/2017/10/12/e65bd2fa99c02a77e7836a21d661f88f.jpg)
 
 > A forbidden header name is a header name that is a byte-case-insensitive match for one of:
 >
-> `Accept-Charset`   
-`Accept-Encoding`   
-`Access-Control-Request-Headers`   
-`Access-Control-Request-Method`   
-`Connection`   
-`Content-Length`   
-`Cookie`     
-`Cookie2`     
-`Date`     
-`DNT`     
-`Expect`     
-`Host`     
-`Keep-Alive`     
-`Origin`     
-`Referer`     
-`TE`     
-`Trailer`     
-`Transfer-Encoding`     
-`Upgrade`     
-`User-Agent`    
-`Via`     
+> `Accept-Charset`
+`Accept-Encoding`
+`Access-Control-Request-Headers`
+`Access-Control-Request-Method`
+`Connection`
+`Content-Length`
+`Cookie`
+`Cookie2`
+`Date`
+`DNT`
+`Expect`
+`Host`
+`Keep-Alive`
+`Origin`
+`Referer`
+`TE`
+`Trailer`
+`Transfer-Encoding`
+`Upgrade`
+`User-Agent`
+`Via`
 or a header name that starts with a byte-case-insensitive match for `Proxy-` or `Sec-` (including being a byte-case-insensitive match for just `Proxy-` or `Sec-`).
 
 注：大部分浏览器遵循了该 W3C 标准，但早期的 IE 不遵循，可以设置如 UA 等 header；
@@ -337,7 +337,7 @@ $.ajax({
 ```
 chrome 报错：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/12/8d89b40ec27526ee23573f5975ca6712.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/12/8d89b40ec27526ee23573f5975ca6712.jpg)
 
 ##### 6.1.1.4. timeout
 
@@ -492,7 +492,7 @@ responseType 属性用来指定服务器返回数据（xhr.response）的类型�
     ```
 
 - 请求失败回调函数：
-  
+
   - 方法一
     ```javascript
     var xhttp=new XMLHttpRequest();

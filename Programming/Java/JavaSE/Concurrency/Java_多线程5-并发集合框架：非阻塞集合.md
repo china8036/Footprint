@@ -18,14 +18,14 @@
 
 非阻塞集合 (Non-Blocking Collection) 包括添加和移除数据的方法。当集合已满或为空时，在调用添加或者移除方法时会返回 null 或者抛出异常，但线程不会被阻塞。
 
-在 JDK 的并发包中，常见的非阻塞集合有以下几个： 
-- `ConcurrentHashMap` 
-- `ConcurrentSkipListMap` 
-- `ConcurrentSkipListSet` 
-- `ConcurrentLinkedQueue` 
-- `ConcurrentLinkedDeque` 
-- `CopyOnWriteArrayList` 
-- `CopyOnWriteArraySet` 
+在 JDK 的并发包中，常见的非阻塞集合有以下几个：
+- `ConcurrentHashMap`
+- `ConcurrentSkipListMap`
+- `ConcurrentSkipListSet`
+- `ConcurrentLinkedQueue`
+- `ConcurrentLinkedDeque`
+- `CopyOnWriteArrayList`
+- `CopyOnWriteArraySet`
 
 ## 1. 非阻塞 Map: ConcurrentHashMap
 
@@ -45,7 +45,7 @@ Java 7 中 ConcurrentHashMap 的底层数据结构仍然是数组和链表。但
 
 整体数据结构如下图所示：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/25/8aa8315514d1f8a0c66f1588a6d7cf94.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/25/8aa8315514d1f8a0c66f1588a6d7cf94.jpg)
 
 ConcurrentHashMap 采用了非常精妙的**"分段锁"策略**，每一把锁锁一段数据，从而在多线程访问时不同段的数据时，就不会存在锁竞争了，有效地提高了并发效率。
 
@@ -87,14 +87,14 @@ Segment<K,V>[] ss = (Segment<K,V>[])new Segment[ssize];
 Segment 继承自 ReentrantLock，所以我们可以很方便的对每一个 Segment 上锁。
 
 - 对于读操作
-  
+
   获取 Key 所在的 Segment 时，需要保证可见性。具体实现上可以使用 volatile 关键字，也可使用锁。但使用锁开销太大，而使用 volatile 时每次写操作都会让所有 CPU 内缓存无效，也有一定开销。因此，ConcurrentHashMap 使用如下方法保证可见性，取得最新的 Segment。
   ```java
   Segment<K,V> s = (Segment<K,V>)UNSAFE.getObjectVolatile(segments, u)
   ```
 
 - 对于写操作
-  
+
   写操作不要求同时获取所有 Segment 的锁，因为那样相当于锁住了整个 Map。它会先获取该 Key-Value 对所在的 Segment 的锁，获取成功后就可以像操作一个普通的 HashMap 一样操作该 Segment，并保证该 Segment 的安全性。
 
   同时由于其它 Segment 的锁并未被获取，因此理论上可支持 concurrencyLevel（等于 Segment 的个数）个线程安全的并发读写。
@@ -105,7 +105,7 @@ Segment 继承自 ReentrantLock，所以我们可以很方便的对每一个 Seg
 
 Java 7 为实现并行访问，引入了 Segment 这一结构，实现了分段锁，理论上最大并发度与 Segment 个数相等。Java 8 为进一步提高并发性，摒弃了分段锁的方案，直接使用一个大的数组。并且与 Java 8 的 HashMap 一样，在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为 O(N)）转换为红黑树（寻址时间复杂度为 O(long(N))）。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/7/25/b89c34eda0b2d1308cf4f7cbb724c94e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/7/25/b89c34eda0b2d1308cf4f7cbb724c94e.jpg)
 
 ##### 1.2.2.1. 寻址方式
 
@@ -121,7 +121,7 @@ static final int spread(int h) {
 - 对于读操作
 
   由于数组被 volatile 关键字修饰，因此不用担心数组的可见性问题。
-  
+
   同时每个元素是一个 Node 实例（Java 7 中每个元素是一个 HashEntry），它的 Key 值和 hash 值都由 final 修饰，不可变更，无须关心它们被修改后的可见性问题，而其 Value 及对下一个元素的引用由 volatile 修饰，可见性也有保障。
   ```java
   static class Node<K,V> implements Map.Entry<K,V> {
@@ -171,7 +171,7 @@ CopyOnWriteArraySet 是对其所有操作使用 CopyOnWriteArrayList 的 Set。�
 - 它是线程安全的。
 - **因为通常需要复制整个基础数组，所以可变操作（添加、设置、移除，等等）的开销巨大**。
 - 迭代器不支持可变移除操作。
-- 使用迭代器进行遍历的速度很快，并且不会与其他线程发生冲突。在构造迭代器时，迭代器依赖于不变的数组快照。 
+- 使用迭代器进行遍历的速度很快，并且不会与其他线程发生冲突。在构造迭代器时，迭代器依赖于不变的数组快照。
 
 ## 5. Refer Links
 

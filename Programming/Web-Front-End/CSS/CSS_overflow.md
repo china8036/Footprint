@@ -29,7 +29,7 @@
 
 ## 3. overflow 与滚动条
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/30/d20c4229a8e1aada9c6cc8ccb314a4fe.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/30/d20c4229a8e1aada9c6cc8ccb314a4fe.jpg)
 
 - 滚动条出现的条件：
   - `overflow:auto/scroll;`
@@ -37,7 +37,7 @@
 
 - 任何浏览器中，默认滚动条都来自于`<html>`而不是`<body>`
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/30/a184f34b974d48b4418572aeb992d8bf.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/30/a184f34b974d48b4418572aeb992d8bf.jpg)
 
 - JavaScript 获取滚动高度
 
@@ -53,7 +53,7 @@
 
   获取滚动条宽度：
   ```html
-  <div class="box" style="width:400px;">  
+  <div class="box" style="width:400px;">
     <div id="in" class="in"></div>
   </div>
   ```
@@ -91,7 +91,7 @@
 
 ## 4. overflow 与 BFC
 
-https://www.imooc.com/video/6459 
+https://www.imooc.com/video/6459
 
 当 overflow 属性值为 auto/scroll/hidden 时，会在元素上创建一个 BFC。
 
@@ -102,7 +102,7 @@ https://www.imooc.com/video/6459
 
 ## 5. overflow 与 absolute 绝对定位
 
-https://www.imooc.com/video/6484 
+https://www.imooc.com/video/6484
 
 当元素正好在 absolute 绝对定位元素与包含块之间时，`overflow:hidden;`会失效：
 
@@ -114,9 +114,9 @@ https://www.imooc.com/video/6484
 </body>
 ```
 此时，body 即为包含块，overflow 的元素正好位于 absolute 元素与包含块元素之间，因此，图片从容器中溢出而不是 hidden：
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/30/ecf4ede31b1ae9c9e5f57988b3b7ac97.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/30/ecf4ede31b1ae9c9e5f57988b3b7ac97.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/30/0a5bb735749f240a0e4c9dd1d26b044c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/30/0a5bb735749f240a0e4c9dd1d26b044c.jpg)
 
 解决方法：
 - 将 overflow 元素自身设置为包含块

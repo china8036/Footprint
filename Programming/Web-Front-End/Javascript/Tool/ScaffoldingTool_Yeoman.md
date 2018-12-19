@@ -34,11 +34,11 @@ Yeoman 的使用依赖于模板项目(generators)，每一个 generators 都是�
 1. 搜索 generators
 搜索 generators 有两种方式：
 	- 前往 http://yeoman.io/generators/ 搜索；
-	“胡子” 标识表示该 generators 为官方出品：   
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/25/2e2ae23d9bc6d4f2c711261539113da1.jpg)
+	“胡子” 标识表示该 generators 为官方出品：
+	![image](http://img.cdn.firejq.com/jpg/2017/9/25/2e2ae23d9bc6d4f2c711261539113da1.jpg)
 	- 使用 yo 交互式界面搜索；
-	使用 `yo` 可进入交互式界面：   
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/26/c810568b795fdf1a1709db221347786d.jpg)
+	使用 `yo` 可进入交互式界面：
+	![image](http://img.cdn.firejq.com/jpg/2017/9/26/c810568b795fdf1a1709db221347786d.jpg)
 2. 安装 generators
 ```
 npm install -g generator-xxx
@@ -58,7 +58,7 @@ yo webapp
 即进入交互式命令行，按照提示输入信息后即创建了一个基本的项目结构；
 
 - 使用 generators 子项目
-某些复杂的 generators 项目会提供子项目（安装完后自动安装了所有子项目），此时可通过以下方法使用：   
+某些复杂的 generators 项目会提供子项目（安装完后自动安装了所有子项目），此时可通过以下方法使用：
 例：使用 generator-angular 的子项目 controller 快速创建一个控制器
 ```
 yo angular:controller MyNewController

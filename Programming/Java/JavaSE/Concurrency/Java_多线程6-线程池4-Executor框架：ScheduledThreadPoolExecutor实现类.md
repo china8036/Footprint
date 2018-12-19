@@ -81,7 +81,7 @@ class Task implements Runnable {
 
 ## 3. 源码分析
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/11/af8c0bc7704b0495bd0cd4ead26a73dc.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/11/af8c0bc7704b0495bd0cd4ead26a73dc.jpg)
 
 ### 3.1. 类定义
 
@@ -258,7 +258,7 @@ ScheduledThreadPoolExecutor 定义了一个 DelayedWorkQueue，它是一个**基
 	比如说现在队列中的第一个任务 1 分钟后执行，那么用户提交新的任务时会不断的加入 woker 线程，如果新提交的任务都排在队列后面，也就是说新的 woker 现在都会取出这第一个任务进行执行延迟时间的等待，当该任务到触发时间时，会唤醒很多 woker 线程，这显然是没有必要的。
 
 	所以，为了不让多个线程频繁的做无用的定时等待，队列使用了 [Leader-Follower 模式](http://blog.csdn.net/goldlevi/article/details/7705180)，用于**减少不必要的定时等待**。
-	
+
 	- 在该模型中，所有线程都处于以下 3 种状态之一：leader、follower 和 proccesser。其中，leader 线程在任何时刻永远只有一个，而所有 follower 都在等待成为 leader。
 	- 线程池启动时，会自动产生一个 Leader 线程负责等待网络 IO 事件，当有一个事件产生时，Leader 线程首先通知一个 Follower 线程将其提拔为新的 Leader，然后旧 Leader 便成为 Follower 并对该 IO 事件进行处理。处理完毕后加入 Follower 线程等待队列，等待下次被选中成为 Leader。
 	- 该模型可以增强 CPU 高速缓存的相似性，消除动态内存分配和线程间的数据交换。
@@ -266,7 +266,7 @@ ScheduledThreadPoolExecutor 定义了一个 DelayedWorkQueue，它是一个**基
 	如果 leader 不为空，则说明队列中第一个节点已经在等待出队，这时其它的线程会一直阻塞，减少了无用的阻塞（注意，在 finally 中调用了 signal() 来唤醒一个线程，而不是 signalAll()）。
 
 - 执行流程
-	
+
 	1. 向 ScheduledThreadPoolExecutor 中提交任务的时候，任务被包装成 ScheduledFutureTask 对象加入延迟队列并启动一个 woker 线程。
 	1. 用户提交的任务加入延迟队列时，会按照执行时间进行排列，也就是说队列头的任务是需要最早执行的。而 woker 线程会从延迟队列中获取任务，如果已经到了任务的执行时间，则开始执行，否则阻塞等待剩余延迟时间后再尝试获取任务。
 	1. 任务执行完成以后，如果该任务是一个需要周期性反复执行的任务，则计算好下次执行的时间后会重新加入到延迟队列中。
@@ -286,7 +286,7 @@ static class DelayedWorkQueue extends AbstractQueue<Runnable>
 		private Thread leader = null;
 		// 当较新的任务在队列的头部可用时，或者新线程可能需要成为 leader，则通过该条件发出信号
 		private final Condition available = lock.newCondition();
-		
+
 		// 入队的操作如 add 和 put 方法都调用了 offer 方法
 		public boolean offer(Runnable x) {
 				if (x == null)
@@ -457,7 +457,7 @@ static class DelayedWorkQueue extends AbstractQueue<Runnable>
 				}
 		}
 
-		
+
 		// ...
 
 }

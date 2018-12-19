@@ -143,7 +143,7 @@ TreeMap 支持两种排序方法：自然排序和定制排序。默认情况下
 - `Map.Entry<K,V> firstEntry​()`: 返回映射中
 
 - `Map.Entry<K,V> lastEntry​()`: 返回映射中
-  
+
 ### 3.4. 源码分析
 
 JDK 1.8 中的 TreeMap 源码有三千多行。
@@ -177,7 +177,7 @@ final Entry<K,V> getEntry(Object key) {
     @SuppressWarnings("unchecked")
         Comparable<? super K> k = (Comparable<? super K>) key;
     Entry<K,V> p = root;
-    
+
     // 查找操作的核心逻辑就在这个 while 循环里
     while (p != null) {
         int cmp = k.compareTo(p.key);
@@ -314,7 +314,7 @@ public V put(K key, V value) {
 
 插入后的平衡调整 fixAfterInsertion() 方法：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/18/0998db93ad58a364f46d49edaee22db0.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/18/0998db93ad58a364f46d49edaee22db0.jpg)
 
 #### 3.4.5. 删除元素
 
@@ -335,7 +335,7 @@ private void deleteEntry(Entry<K,V> p) {
     modCount++;
     size--;
 
-    /* 
+    /*
      * 1. 如果 p 有两个孩子节点，则找到后继节点，
      * 并把后继节点的值复制到节点 P 中，并让 p 指向其后继节点
      */
@@ -353,7 +353,7 @@ private void deleteEntry(Entry<K,V> p) {
         /*
          * 2. 将 replacement parent 引用指向新的父节点，
          * 同时让新的父节点指向 replacement。
-         */ 
+         */
         replacement.parent = p.parent;
         if (p.parent == null)
             root = replacement;
@@ -389,7 +389,7 @@ private void deleteEntry(Entry<K,V> p) {
 
 删除后的平衡调整 fixAfterDeletion () 方法：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/18/dea8f2e55cb857ed5b589931aff029ec.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/18/dea8f2e55cb857ed5b589931aff029ec.jpg)
 
 ## 5. Refer Links
 

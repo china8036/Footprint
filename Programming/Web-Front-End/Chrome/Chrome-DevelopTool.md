@@ -21,7 +21,7 @@
 
 子节点（内容、属性）修改通知.
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/8ae11932d7a84d3068816bff395b82c6.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/8ae11932d7a84d3068816bff395b82c6.jpg)
 
 ```javascript
 // 不会触发 Subtree Modifications
@@ -39,7 +39,7 @@ document.body.innerHTML = '<b></b>';
 
 （当前节点）属性修改通知.
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/e9f878cf9fdf5b476a6e0d41346e253b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/e9f878cf9fdf5b476a6e0d41346e253b.jpg)
 
 ```javascript
 // 会触发 Attributes Modifications
@@ -57,7 +57,7 @@ document.body.id2 = 456;
 
 （当前）节点移动（通知）.
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/c1c79ce9c6129017ce30f699a48e8262.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/c1c79ce9c6129017ce30f699a48e8262.jpg)
 
 ```javascript
 // 第1次：不会触发
@@ -80,14 +80,14 @@ document.body.insertBefore(document.body.children[1], document.body.children[0])
 
 打开 chrome 浏览器控制台：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/6330c035f1ee5499fae9b843b7def07f.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/6330c035f1ee5499fae9b843b7def07f.jpg)
 
 
 例：
 
 添加“baidu.com”:
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/569dcd67847268695c1f7e4bdccbdbd2.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/569dcd67847268695c1f7e4bdccbdbd2.jpg)
 
 在输入框输入搜索词之后，触发了 XHR 断点，美化代码之后，可以很明显的看到，xhr 断点直接暂停在xhr.send这一步，通过上下文分析，可以看到当前请求的一些参数，如a.uri。
 

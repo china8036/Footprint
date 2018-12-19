@@ -41,7 +41,7 @@
       - [3.5.6. 表单事件](#356-%E8%A1%A8%E5%8D%95%E4%BA%8B%E4%BB%B6)
       - [3.5.7. 文档事件](#357-%E6%96%87%E6%A1%A3%E4%BA%8B%E4%BB%B6)
 
-# JavaScript - DOM 
+# JavaScript - DOM
 
 [原生 JavaScript 的 DOM 操作汇总](http://harttle.land/2015/10/01/javascript-dom-api.html)
 
@@ -49,7 +49,7 @@ DOM 是 JavaScript 操作网页的接口（通过 window.documnet 提供），�
 
 DOM 有自己的国际标准：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/24/1ef8ea54173a36c50c66c2ef98179283.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/24/1ef8ea54173a36c50c66c2ef98179283.jpg)
 
 DOM 将整个页面映射为一个多层节点结构，即 DOM 模型。
 
@@ -84,7 +84,7 @@ DOM 节点创建最常用的是 document.createElement 和 document.createTextNo
 	var para=document.createElement("p");
 	var node=document.createTextNode("这是新段落。");
 	para.appendChild(node);
-	
+
 	var element=document.getElementById("div1");
 	element.appendChild(para);
 </script>
@@ -128,7 +128,7 @@ DOM 查询的 API 返回的的结果是 DOM 节点或 DOM 节点的列表。docu
   var parent = ele.parentNode;
 
   // 获取子节点，子节点可以是任何一种节点，可以通过 nodeType 来判断
-  var nodes = ele.children;    
+  var nodes = ele.children;
 
   // 通过迭代查询子元素
   var els = ele.getElementsByTagName('td');
@@ -183,7 +183,7 @@ DOM 查询的 API 返回的的结果是 DOM 节点或 DOM 节点的列表。docu
 
 - 是否有属性设置
   ```javascript
-  el.hasAttributes();     
+  el.hasAttributes();
   ```
 
 - 快速属性操作
@@ -276,7 +276,7 @@ input.value = 'test@example.com'; // 文本框的内容已更新
 <script>
 function doSubmitForm() {
 	var form = document.getElementById('test-form');
-	
+
 	form.submit();// 提交 form:
 }
 </script>
@@ -387,7 +387,7 @@ formData 对象是"只写"的，也就是说，你可以把数据添加到该对
       // The data send are the one the user provide in the form
       XHR.send(FD);
     }
-  
+
     // We need to access the form element
     var form = document.getElementById("myForm");
 
@@ -433,7 +433,7 @@ formData 对象是"只写"的，也就是说，你可以把数据添加到该对
           dom    : document.getElementById("i2"),
           binary : null,
         };
-  
+
     // 使用 FileReader API 来访问文件内容
     var reader = new FileReader();
 
@@ -452,7 +452,7 @@ formData 对象是"只写"的，也就是说，你可以把数据添加到该对
       if(reader.readyState === FileReader.LOADING) {
         reader.abort();
       }
-      
+
       reader.readAsBinaryString(file.dom.files[0]);
     });
 
@@ -491,7 +491,7 @@ formData 对象是"只写"的，也就是说，你可以把数据添加到该对
 
         // There is always a blank line between the meta-data and the data
         data += '\r\n';
-        
+
         // We happen the binary data to our body's request
         data += file.binary + '\r\n';
       }
@@ -550,7 +550,7 @@ formData 对象是"只写"的，也就是说，你可以把数据添加到该对
 ### 3.1. 事件流
 事件流指的是从页面中接受事件的顺序；
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/3/3126857653ac2adc305eac46d771b4ce.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/2/3/3126857653ac2adc305eac46d771b4ce.jpg)
 
 #### 3.1.1. 事件冒泡
 事件冒泡指的是事件开始时由最具体的元素接受，然后沿 DOM Tree 逐级向上传播，在每一级节点上都会发生，直至传播到 document 对象；
@@ -560,9 +560,9 @@ formData 对象是"只写"的，也就是说，你可以把数据添加到该对
 
 #### 3.1.3. DOM 事件流
 
-“DOM2 级事件” 规定的事件流包括三个阶段：   
-第一阶段：从 window 对象传导到目标节点，称为 “捕获阶段”（capture phase）；   
-第二阶段：在目标节点上触发，称为 “目标阶段”（target phase）；   
+“DOM2 级事件” 规定的事件流包括三个阶段：
+第一阶段：从 window 对象传导到目标节点，称为 “捕获阶段”（capture phase）；
+第二阶段：在目标节点上触发，称为 “目标阶段”（target phase）；
 第三阶段：从目标节点传导回 window 对象，称为 “冒泡阶段”（bubbling phase）；
 
 例：
@@ -598,7 +598,7 @@ EventTarget 接口包含三个方法：
     ```javascript
     window.addEventListener('load', function () {...}, false);
     request.addEventListener('readystatechange', function () {...}, false);
-    ``` 
+    ```
 - `removeEventListener`：移除事件的监听函数
   - 函数原型
     ```javascript
@@ -608,7 +608,7 @@ EventTarget 接口包含三个方法：
     - type：一个字符串，表示需要移除的事件类型，如 "click"。
     - listener：需要移除的 EventListener 函数（先前使用 addEventListener 方法定义的，这里必须是同一个函数才能正确移除）
     - useCapture：（可选) 指定需要移除的 EventListener 函数是否为事件捕获。如果无此参数，默认值为 false。如果同一个监听事件分别为“事件捕获”和“事件冒泡”注册了一次，一共两次，这两次事件需要分别移除。两者不会互相干扰。
-	
+
   - 实例
     ```javascript
     div.addEventListener('click', listener, false);
@@ -643,7 +643,7 @@ HTML 语言允许在元素标签的属性中，直接定义某些事件的监听
 ```html
 	<!-- 正确 -->
 	<body onload="doSomething()">
-	
+
 	<!-- 错误 -->
 	<body onload="doSomething">
 ```
@@ -658,7 +658,7 @@ div.onclick = function(event){
 };
 ```
 
-注意：   
+注意：
 - 使用这个方法指定的监听函数，只会在冒泡阶段触发；
 - 同一个事件只能定义一个监听函数，也就是说，如果定义两次 onclick 属性，后一次定义会覆盖前一次；
 
@@ -756,7 +756,7 @@ mousemove、mouseout 这样的事件，虽然有事件冒泡，但是只能不�
 
 ### 3.5. 事件种类
 
-http://javascript.ruanyifeng.com/dom/event-type.html 
+http://javascript.ruanyifeng.com/dom/event-type.html
 
 #### 3.5.1. customEvent
 
@@ -814,7 +814,7 @@ http://javascript.ruanyifeng.com/dom/event-type.html
   当子元素的高度超过父元素的高度时，会在父容器上形成滚动条，即会触发子元素的 scroll 事件。
 
   element 的 scroll 事件不冒泡，但是 document 的 defaultView 的 scroll 事件冒泡。
-  
+
   scroll 事件无法取消。
 
   由于该事件会连续高频度地大量触发，所以它的监听函数之中不应该有非常耗费计算的操作（如 DOM 操作就不该放于 scroll 的 handle 函数中）。推荐的做法是使用 requestAnimationFrame, setTimeout 或 customEvent 控制该事件的触发频率，然后可以结合 customEvent 抛出一个新事件：
@@ -842,10 +842,10 @@ http://javascript.ruanyifeng.com/dom/event-type.html
   - 滚动分为两种：body 滚动和局部滚动
     - body 滚动：
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/26/28eb591bae39802849091b15cbbe1508.jpg)
+      ![image](http://img.cdn.firejq.com/jpg/2017/12/26/28eb591bae39802849091b15cbbe1508.jpg)
     - 局部滚动：
 
-      ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/12/26/0c2a38277d430b3704caff6e5605b9bd.jpg)
+      ![image](http://img.cdn.firejq.com/jpg/2017/12/26/0c2a38277d430b3704caff6e5605b9bd.jpg)
 
       在移动端如果使用局部滚动，意思就是我们的滚动在一个固定宽高的 div 内触发，将该 div 设置成`overflow:scroll/auto`; 来形成 div 内部的滚动。
 

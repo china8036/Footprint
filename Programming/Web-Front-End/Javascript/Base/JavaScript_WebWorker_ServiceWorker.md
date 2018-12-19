@@ -103,8 +103,8 @@ worker 新线程中：
 ### 2.3. NOTE
 
 - worker 线程的执行流程：
-  
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/2/3/3f332e1c988cf99c4937743936721332.jpg)
+
+  ![image](http://img.cdn.firejq.com/jpg/2018/2/3/3f332e1c988cf99c4937743936721332.jpg)
 
 - 在主线程中使用时，onmessage 和 postMessage() 必须挂在 worker 对象上，而在 worker 中使用时不用这样做。原因是，在 worker 内部，worker 是有效的全局作用域。
 

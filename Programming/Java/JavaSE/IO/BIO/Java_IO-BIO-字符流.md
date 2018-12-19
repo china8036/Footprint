@@ -29,7 +29,7 @@ Java IO 字符流是指在输入输出的过程中，操作以 2 个字节即 1 
 
 ### 2.1. 字符输入流
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/22/b3ab2a51abc4f8a13e90289ae1951f2a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/22/b3ab2a51abc4f8a13e90289ae1951f2a.jpg)
 
 Reader: JavaIO 中的顶级的字符读取的抽象类，定义了最基础的读取方法。实现了 Readable 和 Closeable 接口。
 
@@ -53,11 +53,11 @@ Reader: JavaIO 中的顶级的字符读取的抽象类，定义了最基础的�
 
 - FilterReader: 继承自 Reader 的字符过滤输入流抽象类。
 
-  - PushbackReader: 继承自 FilterReader 的字符回退输入流类。 
+  - PushbackReader: 继承自 FilterReader 的字符回退输入流类。
 
 ### 2.2. 字符输出流
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/22/74bd27aa7cc105f9bc5a53cc16017f45.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/22/74bd27aa7cc105f9bc5a53cc16017f45.jpg)
 
 Writer: JavaIO 中的顶级的字符写入的抽象类，定义了最基础的写入方法。实现了 Appendable 、 Closeable 和 Flushable 接口。
 

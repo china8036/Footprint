@@ -40,9 +40,9 @@ Java 的 IO 流是实现输入 / 输出的基础，它可以方便地实现数�
 
 ## 2. 类谱图
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/6f4008b30f3cb326d939e005c613ee2d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/5/11/6f4008b30f3cb326d939e005c613ee2d.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/f7d1564780c2b981c09e1bc17f157e39.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/5/11/f7d1564780c2b981c09e1bc17f157e39.jpg)
 
 ## 3. 分类
 
@@ -50,7 +50,7 @@ Java 的 IO 流是实现输入 / 输出的基础，它可以方便地实现数�
 
 ### 3.1. 按操作方式分类
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/22/ffa8dec6b6343b7f94fc8228b3f50bcc.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/22/ffa8dec6b6343b7f94fc8228b3f50bcc.jpg)
 
 #### 3.1.1. 输入流 & 输出流
 
@@ -70,15 +70,15 @@ NOTE：这里的输入、输出都是从程序运行所在的内存的角度来�
 
 按照流的角色来看，IO 流可分为节点流和处理流：
 - 节点流
-  
+
   节点流可以从 / 向一个特定的 IO 设备（如磁盘、网络）读 / 写数据，也称为低级流。
-  
+
   当使用节点流进行输入输出时，程序直接连接到实际的数据源，和实际的输入输出节点连接。
 
 - 处理流
-  
+
   处理流是对一个已存在的流进行连接或封装，通过封装后的流来实现数据的读 / 写功能，也称为高级流。
-  
+
   当使用处理流进行输入输出时，程序不会直接连接到实际的数据源，没有和实际的输入输出节点连接，这样的好处是只要使用相同的处理流，程序就能够使用完全相同的代码来访问不同的数据源。也因此处理流需要跟节点流配合使用。
 
   实际上，Java 使用处理流来包装节点流是一种典型的装饰器设计模式，因此处理流也称为包装流。
@@ -95,7 +95,7 @@ NOTE：这里的输入、输出都是从程序运行所在的内存的角度来�
 
 ### 3.2. 按操作对象分类
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/22/f0732d58d00f90ac99d4abf929f541d9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/22/f0732d58d00f90ac99d4abf929f541d9.jpg)
 
 #### 3.2.1. 文件操作节点流
 

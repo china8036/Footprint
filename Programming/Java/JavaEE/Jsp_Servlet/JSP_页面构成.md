@@ -1,20 +1,20 @@
-- [JSP 页面构成](#jsp-%E9%A1%B5%E9%9D%A2%E6%9E%84%E6%88%90)
-  - [1. 静态部分](#1-%E9%9D%99%E6%80%81%E9%83%A8%E5%88%86)
-  - [2. 动态部分](#2-%E5%8A%A8%E6%80%81%E9%83%A8%E5%88%86)
-    - [2.1. JSP 注释](#21-jsp-%E6%B3%A8%E9%87%8A)
-    - [2.2. JSP 声明](#22-jsp-%E5%A3%B0%E6%98%8E)
-    - [2.3. JSP 输出表达式](#23-jsp-%E8%BE%93%E5%87%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F)
-    - [2.4. JSP 脚本](#24-jsp-%E8%84%9A%E6%9C%AC)
-    - [2.5. JSP 指令](#25-jsp-%E6%8C%87%E4%BB%A4)
+- [JSP 页面构成](#jsp-页面构成)
+  - [1. 静态部分](#1-静态部分)
+  - [2. 动态部分](#2-动态部分)
+    - [2.1. JSP 注释](#21-jsp-注释)
+    - [2.2. JSP 声明](#22-jsp-声明)
+    - [2.3. JSP 输出表达式](#23-jsp-输出表达式)
+    - [2.4. JSP 脚本](#24-jsp-脚本)
+    - [2.5. JSP 指令](#25-jsp-指令)
       - [2.5.1. page](#251-page)
       - [2.5.2. include](#252-include)
       - [2.5.3. taglib](#253-taglib)
-    - [2.6. JSP 动作（标签）](#26-jsp-%E5%8A%A8%E4%BD%9C%EF%BC%88%E6%A0%87%E7%AD%BE%EF%BC%89)
-    - [2.7. JSP 自定义标签](#27-jsp-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE)
+    - [2.6. JSP 动作（标签）](#26-jsp-动作标签)
+    - [2.7. JSP 自定义标签](#27-jsp-自定义标签)
     - [2.8. JSTL](#28-jstl)
-      - [2.8.1. 安装](#281-%E5%AE%89%E8%A3%85)
-      - [2.8.2. 使用](#282-%E4%BD%BF%E7%94%A8)
-    - [2.9. JSP 表达式语言（EL）](#29-jsp-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E8%A8%80%EF%BC%88el%EF%BC%89)
+      - [2.8.1. 安装](#281-安装)
+      - [2.8.2. 使用](#282-使用)
+    - [2.9. JSP 表达式语言（EL）](#29-jsp-表达式语言el)
 
 # JSP 页面构成
 
@@ -48,7 +48,7 @@
 
 - 语法：
   - JSP 形式：<%! 声明部分 %>
-    
+
     eg：
     ```jsp
     <%!
@@ -99,7 +99,7 @@
   ```jsp
   <%@ page language="java" contentType="text/html; charset=UTF-8"
       pageEncoding="UTF-8"%>
-  <%! int fontSize; %> 
+  <%! int fontSize; %>
   <!DOCTYPE html>
   <html>
   <head>
@@ -113,7 +113,7 @@
       测试
     </font><br />
   <%}%>
-  </body> 
+  </body>
   </html>
   ```
 
@@ -168,11 +168,11 @@ eg：
 
 #### 2.5.3. taglib
 
-用于引入一个自定义标签集合的定义，包括库路径、自定义标签，在 JSP 页面中启用定制行为； 
+用于引入一个自定义标签集合的定义，包括库路径、自定义标签，在 JSP 页面中启用定制行为；
 
 语法格式：
 - jsp 形式：`<%@ taglib uri="uri" prefix="prefixOfTag" %>`；
-  
+
   （uri 属性确定标签库的位置，prefix 属性指定标签库的前缀）
 
 - XML 形式：`<jsp:directive.taglib uri="uri" prefix="prefixOfTag" />`；
@@ -231,12 +231,12 @@ flush 属性用于指定输出缓存是否转移到被导入的文件中；如�
   - 若在 1.jsp 中`<jsp:include page=”2.jsp” %>`，运行该程序后，可以找到 1_jsp.java、1_jsp.class 和 2_jsp.java、2_jsp.class，说明 jsp:include 是在编译成 class 以后再进行 include 的；
   - 查看上述例子中的 1_jsp.java，可以看到：
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/a56c41d8651657064e4d20dd0924d64a.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2018/1/24/a56c41d8651657064e4d20dd0924d64a.jpg)
 
     说明 jsp:include 动作是通过调用 include 方法来包含新页面的；
 - cf：include 指令与 include 动作：
-    
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/12d947babbde953163f223ffb4c57a06.jpg)
+
+  ![image](http://img.cdn.firejq.com/jpg/2018/1/24/12d947babbde953163f223ffb4c57a06.jpg)
   - include 指令：
     - 在编译时期就执行导入操作；
     - 包含的是所有源代码；
@@ -267,7 +267,7 @@ flush 属性用于指定输出缓存是否转移到被导入的文件中；如�
     <jsp:useBean id="beanId" class="className" scope="Value" />
     ```
     （单标签）
-    
+
     | 属性名   | 取值范围                             | 说明                                       |
     | ----- | -------------------------------- | ---------------------------------------- |
     | id    | 合法的 Java 变量名称                      | 指定 Java Bean 对象的名称；  在 JSP 中可以使用该名称引用该 Java Bean 对象； |
@@ -282,7 +282,7 @@ flush 属性用于指定输出缓存是否转移到被导入的文件中；如�
     - `<jsp:setProperty name="Bean Name" property="*" />`：当使用 POST 提交表单时，自动将实例的属性与表单的属性对应，全部赋值；
     - `<jsp:setProperty name="Bean Name" property="propertyName“/>`：当使用 POST 提交表单时，自动将实例的属性与表单的属性对应，只为指定的属性赋值；
     - `<jsp:setProperty name="Bean Name" property="propertyName“ param=”URL 中的参数名“/>`：当是使用 GET 即 URL 传参提交请求时，将 URL 中的 param 参数值赋给实例的指定属性；
-  
+
   - 执行赋值操作时，若 value 值是字符串数据，会在目标类中通过标准的 valueOf 方法自动转换成数字、boolean、Boolean、 byte、Byte、char、Character；
 
 - jsp:getProperty：
@@ -325,9 +325,9 @@ flush 属性用于指定输出缓存是否转移到被导入的文件中；如�
     }
     ```
     在自定义标签处理类中：
-    - 输出到页面： 
+    - 输出到页面：
       `getJspContext().getOut().println(“xxx”)（不要 try{}catch{}）`
-    - 处理标签体内容： 
+    - 处理标签体内容：
       ```java
       getJspBody().invoke(null)// 使用 JspWriter 对象输出标签体内容到客户端页面
       getJspBody().invoke(Writer out)// 将标签体内容传给指定的 Writer 对象，由该对象处理输出
@@ -336,7 +336,7 @@ flush 属性用于指定输出缓存是否转移到被导入的文件中；如�
 - 在 WEB-INF 目录下（或其任意子目录下）建立一个`*.tld`文件（标签库定义 / 配置文件：用于将自定义标签和对应的标签类关联起来，实质上是 xml 文件，Java Web 会自动加载该文件），每个*.tld 文件对应一个标签库，每个标签库可包含多个标签；
 
   标签库定义文件（tld 文件）的编写规范：
-  - 标签库定义文件的根元素是 taglib，它可以包含多个 tag 子元素，每个 tag 子元素都定义一个标签； 
+  - 标签库定义文件的根元素是 taglib，它可以包含多个 tag 子元素，每个 tag 子元素都定义一个标签；
   - taglib 标签主要有以下几个子元素：
     - description：对该 tld 文件的一些描述性的信息；
     - tlib-version：指定该标签库实现的版本，这是一个作为标识的内部版本号，对程序没有太大的作用；
@@ -397,7 +397,7 @@ flush 属性用于指定输出缓存是否转移到被导入的文件中；如�
   ```
 - 在 JSP 文件中使用自定义标签；
   - 导入标签库；使用 taglib 编译指令导入标签库，就是将标签库和指定前缀关联起来；
-    
+
     例：
 
     `<%@ taglib uri="http://www.jellythink.com/jtlib/" prefix="jt" %>//prefix 即“<jt: 标签名》“中的 jt`
@@ -425,11 +425,11 @@ JSTL 中支持 EL(Expression Language) 语法，也支持使用<%= %>，但都�
 
 在 https://tomcat.apache.org/download-taglibs.cgi 下载 4 个 jar 包：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/63a69721cd9fac475d96de5cd2d6154c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/24/63a69721cd9fac475d96de5cd2d6154c.jpg)
 
 放到项目下 WEB-INF/lib 中；（若使用 Eclipse 开发，需要 copy 到 Eclipse 界面下的 lib 中，否则 Eclipse 会自动清空该目录下的 jar 包）
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/4de6072943471049026516985835ea88.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/1/24/4de6072943471049026516985835ea88.jpg)
 
 在需要使用 JSTL 的每个 jsp 页面中加入 tablib 指令：（需要什么类型的标签加哪个标签库即可)
 ```jsp
@@ -445,20 +445,20 @@ JSTL 中支持 EL(Expression Language) 语法，也支持使用<%= %>，但都�
 https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/
 
 - 核心标签
-  
+
   https://www.cnblogs.com/lihuiyy/archive/2012/02/24/2366806.html
-  
+
   http://peiquan.blog.51cto.com/7518552/1314707
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/768841832512ac5024edd6c9e2a4f773.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/1/24/768841832512ac5024edd6c9e2a4f773.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/1cb05ad4831990be81de577b8f624e3d.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/1/24/1cb05ad4831990be81de577b8f624e3d.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/d50f3f719c5f4673dd6604d51c64d31a.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/1/24/d50f3f719c5f4673dd6604d51c64d31a.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/4f14f749bc038ad2c38a57e56c8f37a6.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/1/24/4f14f749bc038ad2c38a57e56c8f37a6.jpg)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/3ab3c4ad376322d6ebfa7204e860d890.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/1/24/3ab3c4ad376322d6ebfa7204e860d890.jpg)
 
 - 格式化标签
 
@@ -533,16 +533,16 @@ https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/
 
 - 设置在当前 JSP 页面是否禁用 EL 语言：<%@ page isELIgnored ="true|false" %>,TRUE 表示禁止。FALSE 表示不禁止。JSP2.0 中默认的启用 EL 语言；
 
-- 语法格式：${EL 表达式} 
+- 语法格式：${EL 表达式}
 // 当 JSP 编译器在属性中见到"${}"格式后，它会产生代码来计算这个表达式，并且产生一个替代品来代替表达式的值；
 
 - 注意点：
 1）	仅能在 jsp 页面的静态部分中适用，在 java 代码中或在 jsp <% %>中无法被解析；
 2）	JSTL 标签中可使用 EL 表达式，如<c:out value=”${xxxx}”></c:out>；
-3）	
+3）
 
 - 用途：
-  
+
   - 访问 Bean 对象的属性并输出（必须是标准 Bean 对象才可使用，即要保证要取得对象的那个的属性有相应的 setXxx() 和 getXxx() 方法）
     - ${对象名。属性名}：没有指定范围时，容器会依次从 pageContext,request,session,application 范围查找该对象名的对象，假如途中找到 username，就直接回传，不再继续找下去，然后调用该对象的 getXxx 方法访问指定的属性并输出；如果值为 null, 会转换成" "输出（如果是 jsp 输出，<%= %>，会输出“null“）；假如全部的范围都没有找到时，就回传 null，也会转换成“”输出；
     - ${对象名 [“属性名”]}：作用同第一种表示方法，但当一下情况时，只能用这种表示方法而不能用第一种：
@@ -550,10 +550,10 @@ https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/
       - 该对象是一个 map 对象，[“key”] 用来访问指定键（key）的值；
       - 属性名中包含特殊字符，如“.“ 、“-”等，则 ${user.My-Name}应当改为 ${user["My-Name"]}；
       - 属性名为一个变量，需要进行动态取值时，如 ${sessionScope.user[data]}，其中 data 是一个变量；
-  
+
   - 进行简单计算并输出结果
     - 算术运算："+","-","*","/","%"，注意"+"只能进行加法操作，不能进行连接操作；
-      
+
       例：利用 java Bean 对象 box 的已有属性 width 和 height，为新的属性 perimeter 赋值：
       ```jsp
       <jsp:setProperty name="box" property="perimeter" value="${2*box.width+2*box.height}"/>//“”内亦可以被解析
@@ -561,17 +561,17 @@ https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/
     - 关系运算：">",">=","<","<=","==","!="；
     - 逻辑运算："&&","||","!"；
     - empty 运算：当空字符串、空的集合、值为 null、找不到对应的值时，运算结果为 true；
-  
+
   - 访问请求的参数值并输出（POST/GET）
     - `${param.age}:` 等价与 request.getParameter("age");
     - `${paramValues.city}` : 等价与 request.getParameterValues("citys");
-  
+
   - 访问使用 setAttribute 方法设置的普通变量
-    
+
     如：`pageContext.setAttribute(“name”, “123test”);`
-    
+
     则 ${pageScope.name} -> 123test
-		
+
     **注意：无法访问在<% %>或<%! %>中定义的普通局部变量**；
 
 - 操作符
@@ -586,7 +586,7 @@ https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/
 
 - 隐式对象
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/1/24/d2774e0523c3c334f1e38811f86ecb09.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2018/1/24/d2774e0523c3c334f1e38811f86ecb09.jpg)
 
   | 隐式对象             | 说明                                       | 常用示例                                     |
   | ---------------- | ---------------------------------------- | ---------------------------------------- |
@@ -622,7 +622,7 @@ https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs/
   ${ns:func(param1, param2, ...)}
   ```
   ns 指的是命名空间（namespace），func 指的是函数的名称，param1 指的是第一个参数，param2 指的是第二个参数，以此类推。比如，有函数 fn:length，在 JSTL 库中定义；
-  
+
   如可以这样来获取一个字符串的长度：`${fn:length("Get my length")}`
 
 - https://www.cnblogs.com/java-zhao/p/5633881.html

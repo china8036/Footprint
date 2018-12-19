@@ -18,7 +18,7 @@
 
 ## 1. 类谱图
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/3/8c3ebc7143e399d945e528523fea38d9.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/3/8c3ebc7143e399d945e528523fea38d9.jpg)
 
 （注意抽象类和类的区别）
 
@@ -47,7 +47,7 @@ private int capacity;
 - limit 上界：可供读写的最大位置，用于限制 position，position < limit。
 - mark 标记：位置标记，用于记录某一次的读写位置，类似于 IO 流中的 mark，可以通过 reset 重新回到这个位置。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/2/8437155f61dd6f249c375d5fc064dca4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/2/8437155f61dd6f249c375d5fc064dca4.jpg)
 
 ## 3. XxxBuffer 抽象类
 
@@ -82,7 +82,7 @@ Buffer 抽象类没有提供公有构造器，但 Buffer 抽象类的每个子�
 
 Buffer 对象初始化完毕后，其底层数组的结构信息如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/3/a51dbbb61ce682d0f1c6c0db8a95169a.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/3/a51dbbb61ce682d0f1c6c0db8a95169a.jpg)
 
 XxxBuffer 读写操作通过 get 和 put 完成，这两个方法都有重载，既支持进行单个数据的 IO，也支持批量数据的 IO（以数组为参数）；既支持相对位置的 IO（position 按处理元素的个数向后移动），也支持绝对位置的 IO（以 index 为参数，position 不变）。
 - `ByteBuffer	put​(byte b)`: Relative put method  (optional operation).
@@ -151,7 +151,7 @@ class DirectByteBuffer
 
 - HeapByteBuffer:
   - 创建快：
-    
+
     直接在 JVM Heap 中申请一块内存即可，创建成本小。
 
   - IO 效率低：
@@ -218,7 +218,7 @@ class DirectByteBuffer
   - 创建慢：
     ```java
     DirectByteBuffer(int cap) {                   // package-private
-        // ... 
+        // ...
         long base = 0;
         try {
             base = unsafe.allocateMemory(size);  // 申请大小为 size 的堆外内存空间
@@ -243,16 +243,16 @@ class DirectByteBuffer
     // allocate using malloc; will fail if no memory available
     inline char* AllocateHeap(size_t size, MEMFLAGS flags, address pc = 0,
         AllocFailType alloc_failmode = AllocFailStrategy::EXIT_OOM) {
-      // ... 
+      // ...
       char* p = (char*) os::malloc(size, flags, pc); // 分配在 C_HEAP 上并返回指向内存区域的指针
-      // ... 
+      // ...
       return p;
     }
     ```
     需要通过 `unsafe.allocateMemory` 调用 C Runtime 的 malloc 方法在 JVM Heap 外（direct buffer 即 C Heap）申请一块内存，创建成本较大。可见，DirectByteBuffer 只适用于长生存期的 Buffer，而不适用于短生存期、一次用完就丢弃的 Buffer。
-  
+
   - IO 效率高：
-    
+
     存放在 JVM Heap 外内存（C Heap）中，由于 C Heap 仅受 Full GC 的影响，地址相对稳定，因此直接把这个内存地址发给操作系统 kernel 即可。
 
     可见，DirectBuffer 并没有做什么特别的内存优化，只是因为 HeapBuffer 必须多做一次拷贝，才显得 DirectBuffer 更快而已。但在大量的网络交互下，一般速度会比 HeapByteBuffer 要快好几倍。

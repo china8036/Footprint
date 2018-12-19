@@ -62,7 +62,7 @@ IO 操作实际上可以分为两步：
 
 NOTE: **在处理 IO 的时候，阻塞和非阻塞都是同步 IO，只有使用了特殊的 API ( 如 POSIX 的 aio_* 系列函数 ) 才是异步 IO**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/cb68a4980c64f35d6358a290ffbf26e4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/1/cb68a4980c64f35d6358a290ffbf26e4.jpg)
 
 ## 2. IO 模式
 
@@ -94,11 +94,11 @@ Reactor 模型实例：libevent/libev/libuv/Event Library in Redis/ACE/Select/Ep
 Proactor 实现了一个主动的事件分离和分发模型，这种设计允许多个任务并发的执行，从而提高吞吐量，且可执行耗时长的任务（各个任务间互不影响）。适用于**异步**接收和同时处理多个服务请求的事件驱动程序。
 
 一般过程：
-1. 向事件分发器注册事件回调 
-1. 事件发生 
-1. **操作系统读取数据，并放入应用缓冲区，然后通知事件分发器** 
-1. 事件分发器调用之前注册的函数 
-1. 在回调函数中对数据进行后续处理 
+1. 向事件分发器注册事件回调
+1. 事件发生
+1. **操作系统读取数据，并放入应用缓冲区，然后通知事件分发器**
+1. 事件分发器调用之前注册的函数
+1. 在回调函数中对数据进行后续处理
 
 eg: Proactor 调用 aoi_write 后立刻返回，由内核负责写操作，写完后调用相应的回调函数处理后续逻辑。
 
@@ -129,8 +129,8 @@ Proactor 模型实例：Erlang/Skynet/Akka。
 在 UNIX 中，有 5 种可用的 IO 模型：
 - 同步阻塞式 IO (Blocking IO)
 - 同步非阻塞式 IO / 轮询 (Non-blocking IO)
-- 同步非阻塞式 IO / 事件驱动 IO / IO 多路复用 (IO Multiplexing) 
-- 异步非阻塞式 IO / 异步 IO (Asynchronous IO) 
+- 同步非阻塞式 IO / 事件驱动 IO / IO 多路复用 (IO Multiplexing)
+- 异步非阻塞式 IO / 异步 IO (Asynchronous IO)
 - 信号驱动式 IO (Signal Driven IO) (SIGIO)
 
 NOTE: [不存在 “异步阻塞式 IO” 的说法](https://www.zhihu.com/question/65519203/answer/233433548)。
@@ -141,7 +141,7 @@ NOTE: [不存在 “异步阻塞式 IO” 的说法](https://www.zhihu.com/quest
 
 同步阻塞 IO 模型比较简单，操作流程如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/44971233fd8eba6fae383ba9fb5a586c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/1/44971233fd8eba6fae383ba9fb5a586c.jpg)
 
 伪代码：
 ```
@@ -161,7 +161,7 @@ NOTE: [不存在 “异步阻塞式 IO” 的说法](https://www.zhihu.com/quest
 
 同步非阻塞 IO 模型中，用户线程可以在发起 IO 请求后立即返回，操作流程如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/0136acbda8621455165d9c327817cc8e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/1/0136acbda8621455165d9c327817cc8e.jpg)
 
 伪代码：
 ```
@@ -183,7 +183,7 @@ IO 多路复用本质上也属于同步非阻塞 IO，它在其基础上，通�
 
 IO 多路复用的操作流程如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/f8964dea87820cb2414727d92eae61e0.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/1/f8964dea87820cb2414727d92eae61e0.jpg)
 
 伪代码：
 ```
@@ -205,9 +205,9 @@ IO 多路复用的操作流程如下：
 
 IO 多路复用采用 **Reactor 设计模式**（事件驱动模式）:
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/65bad25a2277c4ab4028d661827a4132.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/1/65bad25a2277c4ab4028d661827a4132.jpg)
 
-用户线程需要首先在 Reactor 中注册一个事件处理器，然后 Reactor（相当于上文提到的 Selector）负责轮询各个通道是否有新的数据到来，当有新的数据到来时，Reactor 通过先前注册的事件处理器通知用户线程有数据可读，此时用户线程向内核发起读取 IO 数据的请求，用户线程阻塞直至数据读取完成。 
+用户线程需要首先在 Reactor 中注册一个事件处理器，然后 Reactor（相当于上文提到的 Selector）负责轮询各个通道是否有新的数据到来，当有新的数据到来时，Reactor 通过先前注册的事件处理器通知用户线程有数据可读，此时用户线程向内核发起读取 IO 数据的请求，用户线程阻塞直至数据读取完成。
 
 #### 3.3.1. select
 
@@ -231,14 +231,14 @@ int select(int nfds, fd_set *readfds, fd_set *writefds,
     - `timeout`: 超时等待时间。
 
 - Return Value:
-    
+
     返回描述符集的个数，如果超时返回为 0，错误则返回 -1。
 
 ##### 3.3.1.2. 实现原理
 
 select 的调用过程如下所示：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/9/57875098d36a1f413b5d1a490913004b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/9/57875098d36a1f413b5d1a490913004b.jpg)
 
 执行原理：
 
@@ -301,8 +301,8 @@ struct pollfd {
 #include <errno.h>
 #include <poll.h>
 
-#define MAX_FD_NUM 1024  
-#define MAXLEN 1024  
+#define MAX_FD_NUM 1024
+#define MAXLEN 1024
 
 int buf_len = 0;
 
@@ -320,44 +320,44 @@ int main(int argc,char* argv[])
     const char* ip = argv[1];
     int port = atoi(argv[2]);
 
-    // 创建 socket  (TIP/IP 协议族，流式 socket)  
+    // 创建 socket  (TIP/IP 协议族，流式 socket)
     int server_sockfd = socket(PF_INET,SOCK_STREAM,0);
 
-    //TCP/IP 协议族的 socket 地址结构体  
+    //TCP/IP 协议族的 socket 地址结构体
     struct sockaddr_in server_addr;
     bzero(&server_addr, sizeof(server_addr));
-    server_addr.sin_family = AF_INET;          //TCP/IPv4 的地址族  
-    // 将 IP 地址字符串转换为二进制的整数并赋给 addr.sin_server_addr  
-    inet_pton(AF_INET, ip, &server_addr.sin_addr);      
+    server_addr.sin_family = AF_INET;          //TCP/IPv4 的地址族
+    // 将 IP 地址字符串转换为二进制的整数并赋给 addr.sin_server_addr
+    inet_pton(AF_INET, ip, &server_addr.sin_addr);
     // server_add.sin_addr = inet_addr(ip);
-    // 端口，host to net，将主机字节序（小端）转换为网络字节序（大端）  
-    server_addr.sin_port = htons(port);      
+    // 端口，host to net，将主机字节序（小端）转换为网络字节序（大端）
+    server_addr.sin_port = htons(port);
 
-    // 将文件描述符 sock 和 socket 地址关联，仅服务端需要，客户端自动绑定地址  
-    // 注意需要强制转换为 struct sockaddr*  
-    int ret = bind(server_sockfd, 
+    // 将文件描述符 sock 和 socket 地址关联，仅服务端需要，客户端自动绑定地址
+    // 注意需要强制转换为 struct sockaddr*
+    int ret = bind(server_sockfd,
         (struct sockaddr*)&server_addr, sizeof(server_addr));
     assert(ret != -1);
 
-    // 监听  
+    // 监听
     ret = listen(server_sockfd, MAX_FD_NUM - 1);
     assert(ret != -1);
 
-    // 等待客户端做些连接等相关工作  
+    // 等待客户端做些连接等相关工作
     sleep(3);
 
-    // 客户端地址信息  
+    // 客户端地址信息
     struct sockaddr_in client_addr;
     socklen_t client_addr_len = sizeof(struct sockaddr_in);
 
-    //poll fds  
+    //poll fds
     struct pollfd pollfdArry[MAX_FD_NUM];
     for (i = 0; i < MAX_FD_NUM; ++i)
     {
         pollfdArry[i].fd = -1;
     }
 
-    //insert the server socket fd  
+    //insert the server socket fd
     pollfdArry[0].fd = server_sockfd;
     pollfdArry[0].events = POLLIN;
 
@@ -368,7 +368,7 @@ int main(int argc,char* argv[])
     {
         int nready = poll(pollfdArry, cur_fd_num, -1);
 
-        //server socket fd  
+        //server socket fd
         if(pollfdArry[0].revents & POLLIN)
         {
             if(cur_fd_num > MAX_FD_NUM)
@@ -377,8 +377,8 @@ int main(int argc,char* argv[])
             }
             else
             {
-                // 接受连接，并将被接受的远端 sock 地址信息保存在第二个参数中  
-                // 只是从监听队列取出连接，即使客户端已经断开网络连接也会 accept 成功  
+                // 接受连接，并将被接受的远端 sock 地址信息保存在第二个参数中
+                // 只是从监听队列取出连接，即使客户端已经断开网络连接也会 accept 成功
                 int client_sockfd = accept(server_sockfd,
                     (struct sockaddr*)&client_addr,&client_addr_len);
 
@@ -388,7 +388,7 @@ int main(int argc,char* argv[])
                 }
                 else
                 {
-                    //inet_ntoa(struct addr_in) 将 IP 地址转换为字符串并返回  
+                    //inet_ntoa(struct addr_in) 将 IP 地址转换为字符串并返回
                     printf("accept client_addr %s\n",
                         inet_ntoa(client_addr.sin_addr));
 
@@ -455,7 +455,7 @@ int main(int argc,char* argv[])
             else if (pollfdArry[i].revents & POLLOUT)
             {
                 //!> 读出来的写进去
-                write(pollfdArry[i].fd, buf, buf_len);        
+                write(pollfdArry[i].fd, buf, buf_len);
             }
 
             if(--nready)
@@ -465,7 +465,7 @@ int main(int argc,char* argv[])
         }
     }
 
-    // 关闭连接，实际只是 socket 的引用 -1, 必须引用为 0 才会真正关闭  
+    // 关闭连接，实际只是 socket 的引用 -1, 必须引用为 0 才会真正关闭
     for(i=0;i<MAX_FD_NUM;++i)
     {
         if(pollfdArry[i].fd != -1)
@@ -491,16 +491,16 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 - epoll_create
     ```c
     #include <sys/epoll.h>
-    int epoll_create(int size); 
+    int epoll_create(int size);
     ```
     创建一个 epoll 的句柄，size 用来告诉内核这个监听的数目一共有多大，它并不是限制了 epoll 所能监听的描述符最大个数，只是对内核初始分配内部数据结构的一个建议。
-    
+
     需要注意的是，当创建好 epoll 句柄后，它就是会占用一个 fd 值，在 Linux 下如果查看 /proc/ 进程 id/fd/，是能够看到这个 fd 的，所以在使用完 epoll 后，必须调用 close() 关闭，否则可能导致 fd 被耗尽。
 
 - epoll_ctl
     ```c
     #include <sys/epoll.h>
-    int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event); 
+    int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
     ```
     epoll_ctl 是 epoll 的事件注册函数。
     - Parameter Description:
@@ -534,7 +534,7 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
             - `EPOLLONESHOT`: 只监听一次事件，当监听完这次事件之后，如果还需要继续监听这个 socket 的话，需要再次把这个 socket 加入到 EPOLL 队列里。
 
     - Return Value
-        
+
         When successful, epoll_ctl() returns zero. When an error occurs, epoll_ctl() returns -1 and errno is set appropriately.
 
 - epoll_wait
@@ -544,11 +544,11 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
                                 int maxevents, int timeout);
     ```
     等待事件的产生。参数 events 用来从内核得到事件的集合，maxevents 告之内核这个 events 有多大，这个 maxevents 的值不能大于创建 epoll_create() 时的 size，参数 timeout 是超时时间（毫秒，0 会立即返回，-1 是永久阻塞）。
-    
+
     该函数返回需要处理的事件数目，如返回 0 表示已超时。
 
-    - Return 
-        
+    - Return
+
         When successful, epoll_wait() returns the number of file descriptors ready for the requested I/O, or zero if no file descriptor became ready during the requested timeout milliseconds. When an error occurs, epoll_wait() returns -1 and errno is set appropriately.
 
 ##### 3.3.3.2. 实现原理
@@ -637,8 +637,8 @@ LT, ET 这件事怎么做到的呢？当一个 socket 句柄上有事件时，�
 #include <errno.h>
 #include <sys/epoll.h>
 
-#define MAX_FD_NUM 1024  
-#define MAXLEN 1024  
+#define MAX_FD_NUM 1024
+#define MAXLEN 1024
 
 int buf_len = 0;
 
@@ -749,7 +749,7 @@ int main(int argc,char* argv[])
 
 异步 IO 模型由 POSIX 规范定义，需要操作系统更强的支持，它采用 **Proactor 设计模式**，操作流程如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/76a2c346cbf2a69a4a50e39a0f8a4c20.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/1/76a2c346cbf2a69a4a50e39a0f8a4c20.jpg)
 
 伪代码：
 ```
@@ -771,7 +771,7 @@ void UserCompletionHandler::handle_event(buffer) {
 
 TODO:
 - POSIX AIO
-    
+
     [使用异步 I/O 大大提高应用程序的性能](https://www.ibm.com/developerworks/cn/linux/l-async/index.html)
 
 - libevent
@@ -784,7 +784,7 @@ TODO:
 
 信号驱动式 IO 模型用得比较少，操作流程如下：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/11c13a199d218fe184ceb2e4d42002bd.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/1/11c13a199d218fe184ceb2e4d42002bd.jpg)
 
 为了使用该 I/O 模型，需要开启套接字的信号驱动 I/O 功能，并通过 sigaction 系统调用安装一个信号处理函数。sigaction 函数立即返回，我们的进程继续工作，即进程没有被阻塞。当数据报准备好时，内核会为该进程产生一个 SIGIO 信号，这样我们可以在信号处理函数中调用 recvfrom 读取数据报，也可以在主循环中读取数据报。无论如何处理 SIGIO 信号，这种模型的优势在于等待数据报到达期间不被阻塞。
 
@@ -792,7 +792,7 @@ TODO:
 
 ### 3.6. 比较
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/1/17891efd2acda172e74d6be8764685be.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/1/17891efd2acda172e74d6be8764685be.jpg)
 
 ## 4. Refer Links
 

@@ -29,7 +29,7 @@
 ## 1. CSS属性
 
 - transform
-  
+
   用法：
   > transform: none|transform-functions;
 
@@ -48,23 +48,23 @@
 
   例：`transform-origin: 50px 70px;` 则中心点位置有中间移到了距离左侧 50 像素，顶部 70 像素的地方：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/f783c1dff9c4a41421bdd82ebbf40231.jpg)
-  
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/6/f783c1dff9c4a41421bdd82ebbf40231.jpg)
 
-- transform-style	
- 
+
+- transform-style
+
   规定被嵌套元素如何在 3D 空间中显示。
 
-- perspective	
- 
-  规定 3D 元素的透视效果。	
+- perspective
 
-- perspective-origin	
+  规定 3D 元素的透视效果。
 
-  规定 3D 元素的底部位置。	
+- perspective-origin
 
-- backface-visibility	
-  
+  规定 3D 元素的底部位置。
+
+- backface-visibility
+
   定义元素在不面对屏幕时是否可见。
 
 ## 2. D 转换
@@ -149,7 +149,7 @@ div {
   - 目标：要实现元素本来`skew(90deg)`，也就是“视觉上消失”，当鼠标 hover 时通过再次`skew(90deg)`让元素累计`skew(180deg)`从而“现身”
 
     坑点：当 hover 触发时，skew 变换不会**累计**，也就是说当鼠标 hover 时通过再次`skew(90deg)`时，元素也就才`skew(90deg)`，依旧是“视觉上消失”。因此要实现目标效果，应使得 hover 时`skew(180deg)`.
-    
+
 #### 2.4.1. skewX(angle)
 
 定义 2D 倾斜转换，沿着 X 轴。
@@ -164,11 +164,11 @@ matrix(a,b,c,d,e,f) 方法把所有 2D 转换方法组合在一起，使用六�
 
 - matrix 方法中的 6 个参数对应的矩阵：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/ef8adbd97daab0e6ce809d54041c26f8.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/6/ef8adbd97daab0e6ce809d54041c26f8.jpg)
 
   当对坐标为 (x, y) 的元素进行转换时，实际上会进行以下计算：
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/6/aca1e4b2948caf6d29be96c2111c4b89.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/6/aca1e4b2948caf6d29be96c2111c4b89.jpg)
 
   其中，ax+cy+e 表示变换后的水平坐标，bx+dy+f 表示变换后的垂直位置。
 

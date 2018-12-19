@@ -23,19 +23,19 @@
   - BFC 就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素，反之亦然。
 
   - 计算 BFC 的高度时，浮动元素也参与计算。
-  
+
   通俗地来说：**创建了 BFC 的元素就是一个独立的盒子，BFC是页面元素里一个独立存在作用块，它不影响它外面的布局，外面的元素也不会影响到BFC里面的布局，同时 BFC 任然属于文档中的普通流。**
 
 - 如何触发 BFC？在以下情况都可以创建 BFC：
 
-  - float 除了 none 以外的值 
-  
-  - overflow 除了 visible 以外的值（hidden，auto，scroll ） 
-  
-  - display (table-cell，table-caption，inline-block) 
-  
-  - position（absolute，fixed） 
-  
+  - float 除了 none 以外的值
+
+  - overflow 除了 visible 以外的值（hidden，auto，scroll ）
+
+  - display (table-cell，table-caption，inline-block)
+
+  - position（absolute，fixed）
+
   - fieldset 元素
 
 ## 2. 应用
@@ -59,7 +59,7 @@ p {
   margin: 50px;
 }
 ```
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/8e4c84929f07cc35913db875539c2197.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/8e4c84929f07cc35913db875539c2197.jpg)
 
 三 P 每个 p 之间的距离为 50px，发生了外边距叠加。 要解决这个叠加问题，即使得每个 P 之间是 100px，我们可以通过可以给 p 元素添加一个父元素，让它新建一个 BFC。如下：
 ```html
@@ -68,7 +68,7 @@ p {
     hello world
     </p>
 </div>
- 
+
 <p>
     hello world
 </p>
@@ -86,7 +86,7 @@ p{
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/1c7077e778f4425aaec36904f39c9765.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/1c7077e778f4425aaec36904f39c9765.jpg)
 
 ### 2.2. 用于不重叠的 float 布局
 
@@ -112,7 +112,7 @@ body {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/7fb3fdae15b132ff3e8d568d1d3ce652.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/7fb3fdae15b132ff3e8d568d1d3ce652.jpg)
 
 从图中我们会发现上面 BFC 的第三个特性，就是元素的左外边距会触碰到包含块容器的做外边框，就算存在浮动也会如此。那么我们如何解决这个问题呢？看上面 BFC 第四个特性，BFC 不会与浮动盒子叠加，那么我们可以用`overflow:hidden`触发 main 元素的 BFC 来解决这个问题呢？
 
@@ -139,7 +139,7 @@ body {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/e3ac09dc897ae4a6850e884a2f1a3f60.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/e3ac09dc897ae4a6850e884a2f1a3f60.jpg)
 
 ### 2.3. 解决浮动的高度塌陷问题
 
@@ -163,7 +163,7 @@ body {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/ca0b3f7d6fdbb38010effa855433bd58.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/ca0b3f7d6fdbb38010effa855433bd58.jpg)
 
 我们发现由于里面两个子元素浮动的关系，两个box已经脱离了父元素的包含块，父元素高度已经塌陷，我们需要让父元素包含两个box子元素，这样计算高度时，两个浮动子元素就会参与，所以我们可以通过`overflow:hidden`，触发父元素的BFC来闭合浮动：
 
@@ -188,7 +188,7 @@ body {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/5/bad7e40b5ccf4cdbce66e96a711ce4e4.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/5/bad7e40b5ccf4cdbce66e96a711ce4e4.jpg)
 
 ## 3. Refer Links
 

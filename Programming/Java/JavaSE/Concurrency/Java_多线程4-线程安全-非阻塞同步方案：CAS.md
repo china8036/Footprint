@@ -127,7 +127,7 @@ jdk.internal.misc.Unsafe 类中几乎所有方法都是 native 修饰的，也�
   ```java
   // 第一个参数 o 为给定对象，offset 为对象内存的偏移量，通过这个偏移量迅速定位字段并设置或获取该字段的值
   //expected 表示期望值，x 表示要设置的值，下面 3 个方法都通过 CAS 原子指令执行操作
-  public final native boolean compareAndSwapObject(Object o, long offset,Object expected, Object x);                                                                                                  
+  public final native boolean compareAndSwapObject(Object o, long offset,Object expected, Object x);
   public final native boolean compareAndSwapInt(Object o, long offset,int expected,int x);
 
   public final native boolean compareAndSwapLong(Object o, long offset,long expected,long x);
@@ -227,17 +227,17 @@ jdk.internal.misc.Unsafe 类中几乎所有方法都是 native 修饰的，也�
   ```
 - 与原生代码和其他 JVM 进行互操作
   ```java
-  // 获取本机内存的页数，这个值永远都是 2 的幂次方  
-  public native int pageSize();  
+  // 获取本机内存的页数，这个值永远都是 2 的幂次方
+  public native int pageSize();
 
-  // 告诉虚拟机定义了一个没有安全检查的类，默认情况下这个类加载器和保护域来着调用者类  
-  public native Class defineClass(String name, byte[] b, int off, int len, ClassLoader loader, ProtectionDomain protectionDomain);  
+  // 告诉虚拟机定义了一个没有安全检查的类，默认情况下这个类加载器和保护域来着调用者类
+  public native Class defineClass(String name, byte[] b, int off, int len, ClassLoader loader, ProtectionDomain protectionDomain);
 
   // 加载一个匿名类
   public native Class defineAnonymousClass(Class hostClass, byte[] data, Object[] cpPatches);
   // 判断是否需要加载一个类
   public native boolean shouldBeInitialized(Class<?> c);
-  // 确保类一定被加载 
+  // 确保类一定被加载
   public native  void ensureClassInitialized(Class<?> c);
   // 传入一个对象的 class 并创建该实例对象，但不会调用构造方法
   public native Object allocateInstance(Class cls) throws InstantiationException;
@@ -273,11 +273,11 @@ jdk.internal.misc.Unsafe 类中几乎所有方法都是 native 修饰的，也�
 - 对高级锁的支持（线程挂起与恢复）
   ```java
   // Java 对线程的挂起操作被封装在 java.util.concurrent.locks.LockSupport 类中，LockSupport 类中有各种版本 pack 方法，其底层实现最终还是使用 Unsafe.park() 方法和 Unsafe.unpark() 方法
-  // 线程调用该方法，线程将一直阻塞直到超时，或者是中断条件出现。  
-  public native void park(boolean isAbsolute, long time);  
+  // 线程调用该方法，线程将一直阻塞直到超时，或者是中断条件出现。
+  public native void park(boolean isAbsolute, long time);
 
-  // 终止挂起的线程，恢复正常 
-  public native void unpark(Object thread); 
+  // 终止挂起的线程，恢复正常
+  public native void unpark(Object thread);
   ```
 
 ## 3. 原子操作类
@@ -324,7 +324,7 @@ public class AtomicIntegerDemo {
         // 开启 10 条线程同时执行 i 的自增操作
         for (int k=0;k<10;k++)
             ts[k]=new Thread(new AddThread());
-        
+
         // 启动线程
         for (int k=0;k<10;k++)
             ts[k].start();
@@ -366,7 +366,7 @@ public class AtomicInteger extends Number implements java.io.Serializable {
     }
     public AtomicInteger() {
     }
-    
+
     // 获取当前最新值，
     public final int get() {
         return value;
@@ -434,7 +434,7 @@ public class AtomicReferenceDemo2 {
         User updateUser = new User("Shine", 25);
         atomicUserRef.compareAndSet(user, updateUser);
         // 执行结果：User{name='Shine', age=25}
-      	System.out.println(atomicUserRef.get().toString());  
+      	System.out.println(atomicUserRef.get().toString());
     }
 
     static class User {
@@ -530,7 +530,7 @@ public class AtomicIntegerArrayDemo {
         // 创建 10 条线程
         for(int k=0;k<10;k++)
             ts[k]=new Thread(new AddThread());
-        
+
         // 启动 10 条线程
         for(int k=0;k<10;k++)
             ts[k].start();
@@ -595,8 +595,8 @@ public class AtomicIntegerArray implements java.io.Serializable {
     public final int getAndAdd(int i, int delta) {
         return unsafe.getAndAddInt(array, checkedByteOffset(i), delta);
     }
-    
-    // 省略其他代码。.....    
+
+    // 省略其他代码。.....
 }
 ```
 
@@ -611,7 +611,7 @@ public class AtomicIntegerArray implements java.io.Serializable {
 
   即前导零数为 29，也就是 shift=2，然后利用 shift 来定位数组中的内存位置，在数组不越界时，计算出前 3 个数组元素内存地址
   ```java
-  // 第一个数组元素，index=0 ， 其中 base 为起始地址，4 代表 int 类型占用的字节数 
+  // 第一个数组元素，index=0 ， 其中 base 为起始地址，4 代表 int 类型占用的字节数
   address = base + 0 * 4 即 address= base + 0 << 2
   // 第二个数组元素，index=1
   address = base + 1 * 4 即 address= base + 1 << 2
@@ -709,7 +709,7 @@ public abstract class AtomicIntegerFieldUpdater<T> {
     @CallerSensitive
     public static <U> AtomicIntegerFieldUpdater<U> newUpdater(Class<U> tclass,
                                                               String fieldName) {
-         // 实际实现类 AtomicIntegerFieldUpdaterImpl                                          
+         // 实际实现类 AtomicIntegerFieldUpdaterImpl
         return new AtomicIntegerFieldUpdaterImpl<U>
             (tclass, fieldName, Reflection.getCallerClass());
     }
@@ -781,7 +781,7 @@ CAS 操作虽然简洁有效，但显然这种操作无法涵盖同步的所有�
 
 > 假设这样一种场景，当第一个线程执行 CAS(V,E,U) 操作，在获取到当前变量 V，准备修改为新值 U 前，另外两个线程已连续修改了两次变量 V 的值，使得该值从旧值 A 变为新值 B 又恢复为旧值 A，这样的话，我们就无法正确判断这个变量是否已被修改过。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/2/643ef64a67cc1cc48c939f1b46f5abce.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/2/643ef64a67cc1cc48c939f1b46f5abce.jpg)
 
 这就是典型的 CAS 的 **ABA 问题**。
 
@@ -916,7 +916,7 @@ public class ABADemo {
         }
     });
 
-    public static  void  main(String[] args) throws InterruptedException {        
+    public static  void  main(String[] args) throws InterruptedException {
         t5.start();t5.join();
         t6.start();t6.join();
         t7.start();

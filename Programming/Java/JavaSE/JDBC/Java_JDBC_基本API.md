@@ -243,7 +243,7 @@ public interface Connection  extends Wrapper, AutoCloseable {
 
     // 创建执行存储过程的 callableStatement 对象，用于调用存储过程
     CallableStatement prepareCall(String sql) throws SQLException;
-    
+
     // Converts the given SQL statement into the system's native SQL grammar.
     String nativeSQL(String sql) throws SQLException;
 
@@ -263,8 +263,8 @@ public interface Connection  extends Wrapper, AutoCloseable {
     void rollback() throws SQLException;
 		void rollback​(Savepoint savepoint) throws SQLException;
 
-    // ...    
-		
+    // ...
+
 		/* JDK7 新增 */
 		// 控制 / 获取该 Connection 对象访问的数据库 Schema
 		void setSchema​(String schema) throws SQLException;
@@ -273,7 +273,7 @@ public interface Connection  extends Wrapper, AutoCloseable {
 		void setNetworkTimeout​(Executor executor, int milliseconds) throws SQLException;
 		int	getNetworkTimeout​() throws SQLException;
 
-    // ...    
+    // ...
 }
 
 public interface Wrapper {
@@ -308,7 +308,7 @@ public interface Statement extends Wrapper, AutoCloseable {
     void addBatch( String sql ) throws SQLException;
     int[] executeBatch() throws SQLException; // 返回一个 int[] 数组，该数组代表各句 SQL 的返回值
 		void clearBatch() throws SQLException;
-		
+
 		/* JDK7 新增 */
 		// 当所有依赖于该 Statement 对象的 ResultSet 关闭后，该 Statement 对象会自动关闭
 		void closeOnCompletion​() throws SQLException;
@@ -325,7 +325,7 @@ public interface Statement extends Wrapper, AutoCloseable {
     // ...
 }
 ```
-		
+
 ### 4.1. PreparedStatement 接口
 
 [PreparedStatement](https://docs.oracle.com/javase/9/docs/api/java/sql/PreparedStatement.html) 接口由 Statement 接口扩展而来，是一个预编译的 Statement 对象，允许数据库预编译 SQL 语句（通常带有参数），以后每次只改变 SQL 语句的参数即可重复使用。
@@ -384,7 +384,7 @@ public interface PreparedStatement extends Statement {
 
 - PreparedStatement 对象支持对大文本 Clob、二进制 Blob 数据进行处理，而 Statement 对象不支持。
 
-- 提高了代码的可读性和可维护性。将参数与 SQL 语句分离出来，这样就可以方便对程序的更改和扩展，同时避免了对字符串参数的多次拼接，可以减少不必要的错误。 
+- 提高了代码的可读性和可维护性。将参数与 SQL 语句分离出来，这样就可以方便对程序的更改和扩展，同时避免了对字符串参数的多次拼接，可以减少不必要的错误。
 
 因此，通常推荐使用 PreperedStatement 而不是 Statement 接口对象来执行 SQL 语句。
 
@@ -396,11 +396,11 @@ https://blog.csdn.net/c929833623lvcha/article/details/44517245
 
 MySQL 官网在 Connector/J 5.0.5 的变更中有如下内容：
 > Important change: Due to a number of issues with the use of server-side prepared statements, Connector/J 5.0.5 has disabled their use by default. The disabling of server-side prepared statements does not affect the operation of the connector in any way.
-> 
+>
 > To enable server-side prepared statements, add the following configuration property to your connector string:
-> 
+>
 > useServerPrepStmts=true
-> 
+>
 > The default value of this property is false (that is, Connector/J does not use server-side prepared statements).
 
 MySQL 服务端是在 Connector/J 4.1 版本之后才开始支持预编译的，之后的版本都默认开启预编译。但从 Connector/J 5.05 版本开始，默认情况下 useServerPrepStmts 的值是 false，即默认关闭了服务端预编译。因此，**若我们使用的 MySQL JDBC 驱动是 5.05 之后的版本，要打开预编译功能需要在 JDBC 连接 URL 中设置 useServerPrepStmts 参数值为 true，否则即使客户端使用 PreparedStatement 来执行 SQL 语句，最终到了服务端同样没有预编译的效果**。
@@ -427,14 +427,14 @@ MySQL 服务端是在 Connector/J 4.1 版本之后才开始支持预编译的，
 - `void setXxx​(int parameterIndex, Xxx value)`: 类似 PreparedStatement 接口中的参数赋值方法，CallableStatement 中同样通过该系列方法将指定类型的传入值根据参数索引赋值给 SQL 语句中指定位置的参数。若不确定参数的数据类型，可使用`setObject()`方法进行赋值，由 PreparedStatement 对象负责类型转换。
 
 - `void	registerOutParameter​(int parameterIndex, int sqlType)`: 若参数是 out 类型，需要在执行存储过程之前进行注册。
-	
+
 	例：
 	```java
 	callableStatement.registerOutParameter(2, Types.VARCHAR);
 	```
 
 - `boolean execute() throws SQLException;`: 调用该方法执行存储过程。
-	
+
 - `Xxx getXxx​(int parameterIndex)`: 执行完毕后，可通过该方法获取指定传出参数的值（必须在存储过程调用之前注册过才能获取）。
 
 例：
@@ -496,7 +496,7 @@ ResultSet 接口的实现类对象具有以下 2 个特性：
 		- ResultSet.TYPE_FORWARD_ONLY: 该常量控制记录指针只能向前移动。
     - ResultSet.TYPE_SCROLL_INSENSITIVE: 该常量控制记录指针可以自由移动，但底层数据的改变不会影响 ResultSet 的内容。
 		- ResultSet.TYPE_SCROLL_SENSITIVE: 该常量控制记录指针可以自由移动，且底层数据的改变会影响 ResultSet 的内容。
-		
+
 	- resultSetConcurrency: 控制 ResultSet 的并发类型，可取以下 2 个值：
 		- ResultSet.CONCUR_READ_ONLY: 该常量指示 ResultSet 是只读的并发模式（默认）。
     - ResultSet.CONCUR_UPDATABLE: 该常量指示 ResultSet 是可更新的并发模式。
@@ -592,23 +592,23 @@ DatabaseMetaData getMetaData() throws SQLException;
 javax.sql.[RowSet](https://docs.oracle.com/javase/9/docs/api/javax/sql/RowSet.html) 接口继承自 ResultSet 接口，并在 javax.sql.rowset 包下包含了多个常用子接口，主要包括 CachedRowSet，WebRowSet，FilteredRowSet，JoinRowSet 和 JdbcRowSet。其中，除了 JdbcRowSet 需要保持与数据源的连接之外，其余四个都是离线 RowSet，即无须保持与数据库的连接。
 
 - 发展历史
-	
+
 	RowSet 接口及 javax.sql.rowset 包中的子接口自 JDK 1.4 引入，从 JDK 5.0 开始在 com.sun.rowset 包下提供了参考实现，但由于这些参考实现属于内部 API，且可能在未来版本中删除，若使用会导致代码与 JDK 版本的高度耦合，RowSet 系列接口一直得不到广泛应用。
-	
-	从 JDK7 开始，新增了 [RowSetProvider](https://docs.oracle.com/javase/9/docs/api/javax/sql/rowset/RowSetProvider.html) 类和 [RowSetFactory](https://docs.oracle.com/javase/9/docs/api/javax/sql/rowset/RowSetFactory.html) 接口，通过工厂设计模式将程序与 RowSet 实现类分离开，避免直接使用非公开的实现类，有利于后期升级和维护，从而使得 RowSet 系列接口得以广泛使用。 
+
+	从 JDK7 开始，新增了 [RowSetProvider](https://docs.oracle.com/javase/9/docs/api/javax/sql/rowset/RowSetProvider.html) 类和 [RowSetFactory](https://docs.oracle.com/javase/9/docs/api/javax/sql/rowset/RowSetFactory.html) 接口，通过工厂设计模式将程序与 RowSet 实现类分离开，避免直接使用非公开的实现类，有利于后期升级和维护，从而使得 RowSet 系列接口得以广泛使用。
 
 - RowSet 规范的接口类图：
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/16/6f06a5e694b29ffc34472dfd91f9a73a.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/5/16/6f06a5e694b29ffc34472dfd91f9a73a.jpg)
 
 - 与 ResultSet 接口的区别：
-	
+
 	- RowSet 默认是可滚动、可更新、可序列化的结果集，且可作为 JavaBean 使用，因而能方便地在网络上进行传输，用于同步两端的数据。
-	
+
 	- 在使用 ResultSet 的时代，程序查询到 ResultSet 之后必须立即读取或处理它包含了记录，否则一旦 Connection 关闭，就无法再通过 ResultSet 读取记录。在这种模式下，JDBC 编程中对 ResultSet 的处理通常有以下 2 种方式：
 		- 直接将 ResultSet 传到视图层 / 逻辑层进行处理，但要求底层 Connection 必须保持打开状态，否则会导致异常。这种方式不仅不安全，对性能也有很大影响。
 		- 迭代访问 ResultSet 中的记录，并将这些记录转换成 JavaBean，再将多个 JavaBean 封装为一个 List 集合。转换完成后才可以关闭 Connection 等资源，之后将 JavaBean 集合传到视图层 / 逻辑层进行进一步的业务处理。这种方式比较安全，但非常繁琐。
-		
+
 		对于离线 RowSet ( CachedRowSet 接口及其子接口 ) 而言，程序在创建 RowSet 对象时已将数据从底层数据库读取到了内存中，封装成 RowSet 对象，从而可以充分利用计算机内存，降低与数据库服务器保持长连接的负载消耗，提高程序性能。而且，RowSet 对象可以直接作为 JavaBean 使用，因此不仅安全，且编程十分简洁方便。
 
 - 创建 RowSet 对象
@@ -662,7 +662,7 @@ https://github.com/mysql/mysql-connector-j/tree/release/8.0
 ConnectionImpl 类是 MySQL 连接的直接封装类。数据库连接的本质其实就是客户端维持了一个和远程 MySQL 服务器的一个 **TCP 长连接**，并且在此连接上维护了一些信息。
 ```java
 public class ConnectionImpl implements JdbcConnection, SessionEventListener, Serializable {
-    // ... 
+    // ...
     public ConnectionImpl(HostInfo hostInfo) throws SQLException {
         try {
             // Stash away for later, used to clone this connection for Statement.cancel and Statement.setQueryTimeout().

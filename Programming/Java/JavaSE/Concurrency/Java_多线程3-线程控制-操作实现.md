@@ -27,8 +27,8 @@
 ### 1.1. 继承 Thread 类
 
 通过继承 Thread 类来创建并启动多线程的步骤如下：
-1. 定义 Thread 类的子类，并重写该类的 run 方法，该 run 方法的方法体就代表了线程要完成的任务，因此把 run() 方法称为执行体。 
-1. 创建 Thread 子类的实例，即创建了线程对象。 
+1. 定义 Thread 类的子类，并重写该类的 run 方法，该 run 方法的方法体就代表了线程要完成的任务，因此把 run() 方法称为执行体。
+1. 创建 Thread 子类的实例，即创建了线程对象。
 1. 调用线程对象的 start() 方法来启动该线程。
 
 i.e.
@@ -46,7 +46,7 @@ public class FirstMethod extends Thread {
     }
 }
 
-```      
+```
 
 ### 1.2. 实现 Runnable
 
@@ -96,15 +96,15 @@ public class Test {
         FutureTask<Integer> futureTask = new FutureTask<>(task);
         Thread thread = new Thread(futureTask);
         thread.start();
-         
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e1) {
             e1.printStackTrace();
         }
-         
+
         System.out.println("主线程在执行任务");
-         
+
         try {
             System.out.println("task 运行结果" + futureTask.get());
         } catch (InterruptedException e) {
@@ -112,7 +112,7 @@ public class Test {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-         
+
         System.out.println("所有任务执行完毕");
     }
 }
@@ -128,15 +128,15 @@ public class Test {
         Task task = new Task();
         Future<Integer> result = executor.submit(task);
         executor.shutdown();
-         
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e1) {
             e1.printStackTrace();
         }
-         
+
         System.out.println("主线程在执行任务");
-         
+
         try {
             System.out.println("task 运行结果"+result.get());
         } catch (InterruptedException e) {
@@ -144,7 +144,7 @@ public class Test {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-         
+
         System.out.println("所有任务执行完毕");
     }
 }
@@ -179,7 +179,7 @@ task 运行结果 4950
 		- 接口创建线程可以实现资源共享，比如多个线程可以共享一个 Runnable 资源。从而将 CPU、代码和数据分开，形成清晰的模型，充分体现了面向对象的思想。
 		- 接口创建线程可以避免由于 Java 的单继承特性而带来的局限。
 	- 缺点
-		- 编程稍微复杂，如果需要访问当前线程，必须调用 Thread.currentThread() 方法。 
+		- 编程稍微复杂，如果需要访问当前线程，必须调用 Thread.currentThread() 方法。
 
 - 继承 Thread 的优缺点：
 	- 优点
@@ -225,7 +225,7 @@ P.S.
 自 JDK5 开始，在 Thread 类中定义了 State 内部枚举类，**JVM 中的线程必须只能是以下 6 种状态的一种，且这些状态属于 JVM 状态，并不能和操作系统的线程状态互相映射**：
 ```java
 public enum State {
-    NEW,          // 线程刚创建，还未调用 start 方法 
+    NEW,          // 线程刚创建，还未调用 start 方法
     RUNNABLE,     // 已就绪可运行的状态，已调用 start 方法。处于此状态的线程是正在 JVM 中运行的，但可能在等待操作系统级别的资源，例如 CPU 时间片
     BLOCKED,      // 阻塞等待监视器锁。处于此状态的线程正在阻塞等待监视器锁，以进入一个同步块 / 方法，或者在执行完 wait() 方法后重入同步块 / 方法
     WAITING,      // 等待。执行完 Object.wait 无超时参数操作，或者 Thread.join 无超时参数操作（进入等待指定的线程执行结束），或者 LockSupport.park 操作后，线程进入等待状态
@@ -235,10 +235,10 @@ public enum State {
 }
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/3/fd64c1b3421cff8698cbc4aece2e8c75.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/3/fd64c1b3421cff8698cbc4aece2e8c75.jpg)
 
 - NEW
-	
+
 	当使用 new 关键字创建一个线程之后，该线程处于 NEW 状态，而不会立即进入 RUNNABLE 状态。此时仅由 JVM 为其分配内存，并初始化成员变量的值，但此时该线程对象并未表现出任何线程的动态特征，程序也不会执行线程的线程执行体。
 
 - RUNNABLE
@@ -268,10 +268,10 @@ public enum State {
 - TIMED_WAITING
 
 	当线程在运行时，发生以下情况之一，则线程进入 TIMED_WAITING 状态：
-	- 线程调用了 Thread.sleep 方法 
+	- 线程调用了 Thread.sleep 方法
 	- 线程调用了 Object.wait 带超时时间操作
 	- 线程调用了 Thread.join 带超时时间操作
-	- 线程调用了 LockSupport.parkNanos 方法 
+	- 线程调用了 LockSupport.parkNanos 方法
 	- 线程调用了 LockSupport.parkUntil 方法
 	进入 TIMED_WAITING 状态的线程会在合适的时候重新进入 RUNNABLE 状态，再次等待获取 CPU 资源才能运行。
 
@@ -335,7 +335,7 @@ private native void setPriority0(int newPriority);
 
 Thread.sleep() 方法可使线程睡眠，交出 CPU，让 CPU 去执行其他的任务，相当于让线程进入阻塞状态。**sleep 方法不会释放锁，也就是说如果当前线程持有对某个对象的锁，则即使调用 sleep 方法，其他线程也无法访问这个对象**。
 ```java
-public static native void sleep(long millis) throws InterruptedException;	
+public static native void sleep(long millis) throws InterruptedException;
 
 public static void sleep(long millis, int nanos)
 	throws InterruptedException {

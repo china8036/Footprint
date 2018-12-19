@@ -55,9 +55,9 @@ eg:
 	}
 	foo(sb); // sb 被改变了，变成了"iphone4"。
 	```
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/808284be05008851d3bea1dc9e061a9a.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/5/11/808284be05008851d3bea1dc9e061a9a.jpg)
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/cdffce0a9c92fa18cfb9b73f6cbe9508.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/5/11/cdffce0a9c92fa18cfb9b73f6cbe9508.jpg)
 
 - 提供了改变自身方法的引用类型，但是不使用，而是使用赋值运算符
 	```java
@@ -67,15 +67,15 @@ eg:
 	}
 	foo(sb); // sb 没有被改变，还是 "iphone"。
 	```
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/808284be05008851d3bea1dc9e061a9a.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/5/11/808284be05008851d3bea1dc9e061a9a.jpg)
 
-	![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/5/11/86242c7bf0f630043bddcd62ce642b0f.jpg)
+	![image](http://img.cdn.firejq.com/jpg/2018/5/11/86242c7bf0f630043bddcd62ce642b0f.jpg)
 
 ### 3.2. 静态方法
 
 ### 3.3. 静态域
 
-TODO: 
+TODO:
 
 http://www.cnblogs.com/jerry007/archive/2013/01/18/java%E4%B8%AD%E5%9F%9F.html
 

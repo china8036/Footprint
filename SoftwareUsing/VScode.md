@@ -11,10 +11,10 @@ https://jeasonstudio.gitbooks.io/vscode-cn-doc/content/
 ## Plugin ##
 - Settings Sync:同步 vscode 设置
   - 使用教程：http://www.bijishequ.com/detail/513176
-  - 在 GitHub 中 new 一个 personal access token：https://github.com/settings/tokens/new；    
-  勾选 gist 后生成 personal access token     
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/28/960d0ae37fa3affbb2a4793c2120fdd9.jpg)  
-  复制生成的 token，在 VS code 中按下 alt + shift + u，输入 token 后 enter 即完成 settings 的上传/更新；   
+  - 在 GitHub 中 new 一个 personal access token：https://github.com/settings/tokens/new；
+  勾选 gist 后生成 personal access token
+  ![image](http://img.cdn.firejq.com/jpg/2017/9/28/960d0ae37fa3affbb2a4793c2120fdd9.jpg)
+  复制生成的 token，在 VS code 中按下 alt + shift + u，输入 token 后 enter 即完成 settings 的上传/更新；
   需要同步时，在 ctrl + shift + p 中输入 `sync`，选择 download 即可；
 
 - TODO HIGHLIGHT
@@ -34,7 +34,7 @@ https://jeasonstudio.gitbooks.io/vscode-cn-doc/content/
 
 
 ## Key map ##
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/9/28/5adbfc65263aebefb11b54ca3e40c5df.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/9/28/5adbfc65263aebefb11b54ca3e40c5df.jpg)
 
 
 

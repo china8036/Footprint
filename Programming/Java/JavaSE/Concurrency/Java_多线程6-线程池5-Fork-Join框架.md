@@ -37,11 +37,11 @@
 
 JDK1.7 在 J.U.C 包中提供了 Fork-Join 框架，且在 JDK1.8 中得到进一步改进。Fork-Join 框架可以递归地将一个大的任务拆分成多个子任务进行并行处理，最后将子任务结果合并成最后的计算结果，并进行输出。Fork-Join 框架的总体设计参考了为英特尔 Cilk 语言设计的 work-stealing 框架。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/12/1435b58cb0a13b100b382554b9d374ae.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/12/1435b58cb0a13b100b382554b9d374ae.jpg)
 
 Fork-Join 框架主要包括：
 - ForkJoinTask 抽象类：表示一个可以拆分、合并、并行的任务，是一种能在 Fork/Join 框架中运行的特定任务。提供了在任务中执行 fork() 和 join() 操作的机制，并且这两个方法控制任务的状态。
-- ForkJoinTask 扩展抽象类 RecursiveTask: 表示一个有返回值的任务。 
+- ForkJoinTask 扩展抽象类 RecursiveTask: 表示一个有返回值的任务。
 - ForkJoinTask 扩展抽象类 RecursiveAction: 表示一个没有返回值的任务。
 - ForkJoinWorkerThread 实现类：是一种在 Fork/Join 框架中运行的特性线程，它除了具有普通线程的特性外，最主要的特点是每一个 ForkJoinWorkerThread 线程都具有一个独立的任务等待队列（work queue），这个任务队列用于存储在本线程中被拆分的若干子任务。
 - ForkJoinPool 核心实现类：执行 ForkJoin 任务的线程池，实现了 ExecutorService 接口和 work-stealing 算法，用于管理工作线程、提供关于任务的状态和它们执行的信息。
@@ -145,7 +145,7 @@ public class ForkJoinDemo {
 
 但是随着待排序集合中数据规模继续增大，普通的归并算法实现就有一些力不从心了，对上亿条随机数集合进行排序时，耗时已到达分钟级别。因此，**我们可以充分利用多核 CPU，使用 Fork/Join 框架来优化归并算法的执行性能，将拆分后的子任务实例化成多个 ForkJoinTask 任务放入待执行队列，并由 Fork/Join 框架在多个 ForkJoinWorkerThread 线程间调度这些任务**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/12/cf7640df405402c95bdc2ab7ff009741.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/12/cf7640df405402c95bdc2ab7ff009741.jpg)
 
 ```java
 public class Merge2 {
@@ -159,7 +159,7 @@ public class Merge2 {
         ......
     }
 
-    public static void main(String[] args) throws Exception {   
+    public static void main(String[] args) throws Exception {
         // 正式开始
         long beginTime = System.currentTimeMillis();
         ForkJoinPool pool = new ForkJoinPool();
@@ -171,7 +171,7 @@ public class Merge2 {
             e.printStackTrace(System.out);
         }
         long endTime = System.currentTimeMillis();
-        System.out.println("耗时 =" + (endTime - beginTime));      
+        System.out.println("耗时 =" + (endTime - beginTime));
     }
 
     /**
@@ -205,7 +205,7 @@ public class Merge2 {
                 int result2[] = task2.join();
                 int mer[] = joinInts(result1 , result2);
                 return mer;
-            } 
+            }
             // 否则说明集合中只有一个或者两个元素，可以进行这两个元素的比较排序了
             else {
                 // 如果条件成立，说明数组中只有一个元素，或者是数组中的元素都已经排列好位置了
@@ -240,13 +240,13 @@ Fork/Join 框架中提供的 fork 方法和 join 方法，可以说是该框架�
 - `final ForkJoinTask<V> fork()`: Arranges to asynchronously execute this task in the pool the current task is running in, if applicable, or using the ForkJoinPool.commonPool() if not inForkJoinPool().
 
   fork() 方法会启动一个新的并行 Fork/Join 子任务，并将新创建的子任务放入当前线程的 work queue 队列中。
-  
+
   Fork/Join 框架将根据当前正在并发执行 ForkJoinTask 任务的 ForkJoinWorkerThread 线程状态，决定是让这个任务在队列中等待，还是创建一个新的 ForkJoinWorkerThread 线程运行它，又或者是唤起其它正在等待任务的 ForkJoinWorkerThread 线程运行它。
 
 - `final V join()`: Returns the result of the computation when it is done.
 
   join() 方法用于让当前线程阻塞，直到对应任务的所有子任务完成运行并返回执行结果。
-  
+
   如果这个子任务存在于当前线程的任务等待队列（work queue）中，则取出这个子任务进行“递归”执行。其目的是尽快得到当前子任务的运行结果，然后继续执行。
 
 	 `static void	invokeAll​(ForkJoinTask<?>... tasks)`: Forks the given tasks, returning when isDone holds for each task or an (unchecked) exception is encountered, in which case the exception is rethrown.
@@ -473,7 +473,7 @@ public abstract class RecursiveAction extends ForkJoinTask<Void> {
 
 [ForkJoinWorkerThread](https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ForkJoinWorkerThread.html) 线程是一种在 Fork/Join 框架中运行的特性线程，它除了具有普通线程的特性外，最主要的特点是每一个 ForkJoinWorkerThread 线程都具有一个独立的任务等待队列（work queue），这个任务队列用于存储在本线程中被拆分的若干子任务。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/4/12/340f100f12e90caf2a8ea72e48077f6d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/4/12/340f100f12e90caf2a8ea72e48077f6d.jpg)
 
 ## 8. ForkJoinPool
 
@@ -486,25 +486,25 @@ https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ForkJoinPool.html
 #### 8.2.1. 构造方法
 
 - `ForkJoinPool(int parallelism, ForkJoinWorkerThreadFactory factory, UncaughtExceptionHandler handler, boolean asyncMode)`
-  
+
   参数说明：
-  - parallelism: 
-    
+  - parallelism:
+
     可并行级别，Fork/Join 框架将依据这个并行级别的设定，决定框架内并行执行的线程数量。
 
     推荐基于当前操作系统可以使用的 CPU 内核数作为 Fork/Join 框架内最大并行任务数量，这样可以保证 CPU 在处理并行任务时，尽量少发生任务线程间的运行状态切换。
-  
-  - factory: 
-    
+
+  - factory:
+
     当 Fork/Join 框架创建一个新的线程时，同样会用到线程创建工厂。只不过这个线程工厂不再需要实现 ThreadFactory 接口，而是需要实现 ForkJoinWorkerThreadFactory 接口。
-    
+
     ForkJoinWorkerThreadFactory 接口是一个函数式接口，只需要实现一个名叫 newThread 的方法。在 Fork/Join 框架中有一个默认的 ForkJoinWorkerThreadFactory 接口实现：DefaultForkJoinWorkerThreadFactory。
-  
-  - handler: 
+
+  - handler:
 
     异常捕获处理器。当执行的任务中出现异常，并从任务中被抛出时，就会被 handler 捕获。
 
-  - asyncMode: 
+  - asyncMode:
 
     Fork/Join 框架中为每一个独立工作的线程准备了对应的待执行任务队列，这个任务队列是使用数组进行组合的双向队列。当 asyncMode 设置为 ture 的时候，队列采用先进先出方式工作；反之则是采用后进先出的方式工作，该值默认为 false。
 
@@ -514,12 +514,12 @@ https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/ForkJoinPool.html
 
 #### 8.2.2. 关键方法
 
-- `static ForkJoinPool commonPool()`: 
+- `static ForkJoinPool commonPool()`:
 
   JDK1.8 新增的方法，返回一个通用池实例。通用池的运行状态不会受 shutdown() 或 shutdownNow() 方法的影响。当然，若程序直接通过 `System.exit(0)` 来退出 JVM，通用池以及通用池中正在执行的任务都会被终止。
 
   在 ForkJoinPool 主类的注释说明中，有这样一句话：
-  > A static commonPool() is available and appropriate for most applications. The common pool is used by any ForkJoinTask that is not explicitly submitted to a specified pool. 
+  > A static commonPool() is available and appropriate for most applications. The common pool is used by any ForkJoinTask that is not explicitly submitted to a specified pool.
   > Using the common pool normally reduces resource usage (its threads are slowly reclaimed during periods of non-use, and reinstated upon subsequent use).
 
   即静态方法 commonPool() 所获得的 ForkJoinPools 实例是由整个应用进程共享的，并且它适合绝大多数的应用系统场景。使用 commonPool 通常可以帮助应用程序中多种需要进行归并计算的任务共享计算资源，从而使后者发挥最大作用。因此，**这种获取 ForkJoinPool 实例的方式，才是 Doug Lea 推荐的使用方式**。
@@ -801,7 +801,7 @@ static {
             (new java.security.PrivilegedAction<ForkJoinPool>() {
                 public ForkJoinPool run() { return makeCommonPool(); }});
   // report 1 even if threads disabled
-  int par = common.config & SMASK; 
+  int par = common.config & SMASK;
   commonParallelism = par > 0 ? par : 1;
   // ......
 }
@@ -819,7 +819,7 @@ private static ForkJoinPool makeCommonPool() {
        // ignore exceptions in accessing/parsing properties
        String pp =
        System.getProperty("java.util.concurrent.ForkJoinPool.common.parallelism");
-       String fp = 
+       String fp =
        System.getProperty("java.util.concurrent.ForkJoinPool.common.threadFactory");
        String hp =
        System.getProperty("java.util.concurrent.ForkJoinPool.common.exceptionHandler");
@@ -838,7 +838,7 @@ private static ForkJoinPool makeCommonPool() {
        // 它是 java.util.concurrent.ForkJoinPool.DefaultForkJoinWorkerThreadFactory 这个类的实例
        if (System.getSecurityManager() == null)
            factory = defaultForkJoinWorkerThreadFactory;
-       else 
+       else
            // use security-managed default
            factory = new InnocuousForkJoinWorkerThreadFactory();
    }

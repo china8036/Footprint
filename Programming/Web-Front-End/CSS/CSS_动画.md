@@ -30,7 +30,7 @@ Transition 的变换基于连续变化的属性，例如，transition 对 opacit
 - 哪些属性适合做动画？
 
   不是所有的 CSS 属性都适合添加动画，原因在于性能问题。因此，动画改变的属性应该只引起浏览器重绘而不会引起重排。例如，opacity 不改变布局，只引起浏览器重绘，因此适合添加动画。而 font-size、padding、margin 等属性，由于改变了布局，将会引起浏览器的重新布局，不适合添加动画。
-  
+
 
 ### 1.1. transition
 
@@ -130,7 +130,7 @@ http://joveyzheng.com/2016/03/16/css-cubic-bezier/
 
 timing-function 属性的取值中，支持使用 cubic-bezier 函数，自定义[三次贝塞尔曲线](http://cubic-bezier.com)-- 即速度变化曲线：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/de8db216df9f16f33170b67a94403338.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/4/de8db216df9f16f33170b67a94403338.jpg)
 
 - 横轴表示时间轴，纵轴表示速度大小；
 
@@ -141,7 +141,7 @@ timing-function 属性的取值中，支持使用 cubic-bezier 函数，自定�
   - P3：默认值 (1, 1)
 
   需要关注的是 P1 和 P2 两点的取值，而其中 X 轴的取值范围是 0 到 1，当取值超出范围时 cubic-bezier 将失效；Y 轴的取值没有规定，当然也毋须过大。
-  
+
   最直接的理解是，将以一条直线放在范围只有 1 的坐标轴中，并从中间拿出两个点来拉扯（X 轴的取值区间是 [0, 1]，Y 轴任意），最后形成的曲线就是动画的速度曲线。
 
 #### 1.3.2. steps()
@@ -154,14 +154,14 @@ steps 函数指定了一个阶跃函数，第一个参数指定了时间函数�
 
 例：
 - steps(3, start)
-  
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/fe52b0a39db06512e4c1e5733846d241.jpg)
+
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/4/fe52b0a39db06512e4c1e5733846d241.jpg)
 
   steps() 第一个参数将动画分割成三段。当指定跃点为 start 时，动画在每个计时周期的起点发生阶跃（即图中空心圆 → 实心圆）。由于第一次阶跃发生在第一个计时周期的起点处（0s），所以我们看到的第一步动画（初态）就为 1/3 的状态，因此在视觉上动画的过程为 1/3 → 2/3 → 1。
 
 - steps(3, end)
 
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/4/ec5d83197347b743a264dbc5a2583e4c.jpg)
+  ![image](http://img.cdn.firejq.com/jpg/2017/11/4/ec5d83197347b743a264dbc5a2583e4c.jpg)
 
   当指定跃点为 end，动画则在每个计时周期的终点发生阶跃（即图中空心圆 → 实心圆）。由于第一次阶跃发生在第一个计时周期结束时（1s），所以我们看到的初态为 0% 的状态；而在整个动画周期完成处（3s），虽然发生阶跃跳到了 100% 的状态，但同时动画结束，所以 100% 的状态不可视。因此在视觉上动画的过程为 0 → 1/3 → 2/3（回忆一下数电里的异步清零，当所有输出端都为高电平的时候触发清零，所以全为高电平是暂态）。
 
@@ -304,14 +304,14 @@ animation-fill-mode 属性规定动画在播放之前或之后，其动画效果
 - [打字机动画](http://dabblet.com/gist/1745856)
   ```css
   /**
-  * Typing animation with pure CSS. 
+  * Typing animation with pure CSS.
   * Works best in browsers supporting the ch unit.
   */
 
   @keyframes typing { from { width: 0; } }
   @keyframes blink-caret { 50% { border-color: transparent; } }
 
-  h1 { 
+  h1 {
     font: bold 200% Consolas, Monaco, monospace;
     border-right: .1em solid;
     width: 16.5em; /* fallback */

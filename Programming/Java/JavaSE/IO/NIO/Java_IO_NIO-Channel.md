@@ -34,7 +34,7 @@
 
 ## 1. 类谱图
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/3/1567af06fe34a963056f434e893649b6.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/3/1567af06fe34a963056f434e893649b6.jpg)
 
 java.nio.channels.[Channel](https://docs.oracle.com/javase/9/docs/api/java/nio/channels/Channel.html) 是所有通道的公共接口：
 ```java
@@ -192,7 +192,7 @@ try ( FileChannel fromChannel = new RandomAccessFile("fromFile.txt", "rw").getCh
     long count = fromChannel.size();
     fromChannel.transferTo(position, count, toChannel);
     // toChannel.transferFrom​(toChannel, position, count);
-}    
+}
 ```
 
 #### 3.2.2. 实现分析
@@ -221,7 +221,7 @@ public long transferTo(long position, long count,
     // Slow path for untrusted targets
     return transferToArbitraryChannel(position, icount, target);
 }
-    
+
 private long transferToDirectly(long position, int icount,
                                 WritableByteChannel target)
     throws IOException
@@ -237,9 +237,9 @@ private long transferToDirectly(long position, int icount,
         do {
             n = transferTo0(thisFDVal, position, icount, targetFDVal); // native method
         } while ((n == IOStatus.INTERRUPTED) && isOpen());
-        
+
         // 省略一些代码
-        
+
         return IOStatus.normalize(n);
     } finally {
         threads.remove(ti);
@@ -257,7 +257,7 @@ Java_sun_nio_ch_FileChannelImpl_transferTo0(JNIEnv *env, jobject this,
 {
 #if defined(__linux__)
     off64_t offset = (off64_t)position;
-    
+
     jlong n = sendfile64(dstFD, srcFD, &offset, (size_t)count); // transferTo0 最终调用了 sendfile64 函数
     if (n < 0) {
         if (errno == EAGAIN)
@@ -278,17 +278,17 @@ Java_sun_nio_ch_FileChannelImpl_transferTo0(JNIEnv *env, jobject this,
 ```
 在传统的文件拷贝操作中，Java 程序需要通过系统调用 read，先将文件数据从磁盘拷贝到内核态内存空间中，再进一步从内核态内存拷贝到用户态内存，同样，写入数据也是如此。也就是说，Java 程序与磁盘文件的 IO 交互都需要通过内核态内存进行数据中转。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/3/baf0b77df2980afa11f4731568cb4bc2.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/3/baf0b77df2980afa11f4731568cb4bc2.jpg)
 
 从上述代码可知，Java NIO 中 FileChannel 的 transferTo 方法与传统文件 IO 方式不同，该方法底层基于 sendfile64（Linux 平台下）系统调用实现。sendfile64 会直接在内核空间内进行数据拷贝，免去了内核往用户空间拷贝，用户空间再往内核空间拷贝这两步操作，因此提高了效率。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/3/5e744ede243c4df816d6d29f648878aa.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/3/5e744ede243c4df816d6d29f648878aa.jpg)
 
 ### 3.3. 内存映射
 
 **内存映射文件 (memory map)**是使部分或整个磁盘文件与内存空间中的一个缓冲区建立映射关系，然后当从缓冲区中取数据，就相当于读文件中的相应字节；而将数据存入缓冲区，就相当于写文件中的相应字节。虽然最终内存里的数据还是要写到文件里，但这一步操作交给了操作系统去控制，从而提高了 IO 效率。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/4/b1cdad416bf78da0927d153e1e529856.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/4/b1cdad416bf78da0927d153e1e529856.jpg)
 
 #### 3.3.1. API
 
@@ -584,7 +584,7 @@ channel.bind(new InetSocketAddress(9999));
   - `DatagramChannel	connect​(SocketAddress remote)`: Connects this channel's socket.
   - `int	read​(ByteBuffer dst)`: Reads a datagram from this channel.
   - `int	write​(ByteBuffer src)`: Writes a datagram to this channel.
-  
+
   eg:
   ```java
   channel.connect(new InetSocketAddress("192.168.1.100", 80));
@@ -603,7 +603,7 @@ public abstract class Pipe
 extends Object
 ```
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/6/4/e5ba69734d38231f105ed88c34d0d99b.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/6/4/e5ba69734d38231f105ed88c34d0d99b.jpg)
 
 eg:
 ```java
@@ -620,7 +620,7 @@ while(buf.hasRemaining()) {
     sinkChannel.write(buf);
 }
 
-// 从管道读取数据 
+// 从管道读取数据
 Pipe.SourceChannel sourceChannel = pipe.source();
 ByteBuffer buf = ByteBuffer.allocate(48);
 int bytesRead = sourceChannel.read(buf);

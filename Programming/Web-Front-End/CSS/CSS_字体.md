@@ -14,9 +14,9 @@ CSS 的 font-family 命令，指定了网页元素所使用的字体。
 
 例：
 ```css
-font-family: Georgia, "Times New Roman", 
-             "Microsoft YaHei", "微软雅黑", 
-             STXihei, "华文细黑", 
+font-family: Georgia, "Times New Roman",
+             "Microsoft YaHei", "微软雅黑",
+             STXihei, "华文细黑",
              serif;
 ```
 选择规则：
@@ -36,13 +36,13 @@ font-family: Georgia, "Times New Roman",
 ## 2. 字体分类
 
 - 衬线字体（Serif Fonts）
-  
+
   eg：Georgia, Times New Roman, Times, serif；
 
   衬线字体指的是笔画的末端带有衬线的字体，例如“宋体”，“仿宋体”，“楷体”。这类字体，开始和结束的地方有装饰，更为醒目，适合印刷字体，也可以用作文章的标题如图。
 
 - 非衬线字体（Sans-Serif Fonts）
-  
+
   eg：Arial, Verdana, Geneva, Helvetica, sans-serif；
 
   非衬线字体这些字体是没有上下短线的，清晰度好，往往用于正文，更适合在 web 中显示。例如“微软雅黑”，“黑体”，都是无线衬字体。
@@ -88,10 +88,10 @@ font-family: Georgia, "Times New Roman",
 ## 4. 兼容情况
 
 移动端：
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/9/2b914871a29c3cc6be5adc9a9194511d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/9/2b914871a29c3cc6be5adc9a9194511d.jpg)
 
 PC 端：
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/9/fe4a7fe02fbbc7e490fac89b52c2f86c.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/9/fe4a7fe02fbbc7e490fac89b52c2f86c.jpg)
 
 ## 5. 中文字体
 
@@ -114,7 +114,7 @@ PC 端：
   ```
 
 - 仿宋（FangSong）
-  
+
   这种字体是衬线体，比宋体的装饰性更强。如果字号太小，会影响清晰度，所以只有在字号大于 14px 的情况下，才可以考虑这种字体。
 
   ```css
@@ -122,7 +122,7 @@ PC 端：
   ```
 
 - 楷体（KaiTi）
-  
+
   楷体也是衬线体，装饰性与仿宋体接近，但是宽度更大，笔画更清楚一些。这种字体也应该在大于 14px 的情况下才使用。
 
   ```css

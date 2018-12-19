@@ -38,7 +38,7 @@ NOTE：如果使用了 "display: none"，则无法增加计数。如使用 "visi
 
 使用 CSS 计数器之前，必须重置一个值，默认是 0。
 
-使用 **counter()** 函数来给元素增加计数器。 
+使用 **counter()** 函数来给元素增加计数器。
 
 ```css
 body {
@@ -58,7 +58,7 @@ h3:before {
 
 效果：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/7/6ee47ba39e035e695eafdbff7b699c4d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/7/6ee47ba39e035e695eafdbff7b699c4d.jpg)
 
 ### 2.2. 使用嵌套计数器
 
@@ -107,7 +107,7 @@ li:before {
 
 效果：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/7/73f2b13765a45f963ce60bf93da5940d.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/7/73f2b13765a45f963ce60bf93da5940d.jpg)
 
 ### 2.3. 复选框计数器
 
@@ -140,7 +140,7 @@ li:before {
 
 效果：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/11/7/7e8747f62ac52ea671b89d78f9def810.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/11/7/7e8747f62ac52ea671b89d78f9def810.jpg)
 
 
 ## 3. Refer Links

@@ -8,7 +8,7 @@
 
 1. 安装[VirtualBox及其扩展包](https://www.virtualbox.org/wiki/Downloads)：
 
-    ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/31/49232922487e7380d278b0806141c253.jpg)
+    ![image](http://img.cdn.firejq.com/jpg/2017/10/31/49232922487e7380d278b0806141c253.jpg)
 
 2. 安装[Vagrant](https://www.vagrantup.com/downloads.html)
 

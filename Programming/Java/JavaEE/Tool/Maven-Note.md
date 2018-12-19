@@ -1,14 +1,14 @@
 - [Maven Note](#maven-note)
-	- [1. 概念](#1-%E6%A6%82%E5%BF%B5)
-	- [2. maven 标准目录结构](#2-maven-%E6%A0%87%E5%87%86%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84)
-	- [3. 依赖坐标](#3-%E4%BE%9D%E8%B5%96%E5%9D%90%E6%A0%87)
-	- [4. 仓库](#4-%E4%BB%93%E5%BA%93)
-	- [5. 命令](#5-%E5%91%BD%E4%BB%A4)
-	- [6. 生命周期](#6-%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+	- [1. 概念](#1-概念)
+	- [2. maven 标准目录结构](#2-maven-标准目录结构)
+	- [3. 依赖坐标](#3-依赖坐标)
+	- [4. 仓库](#4-仓库)
+	- [5. 命令](#5-命令)
+	- [6. 生命周期](#6-生命周期)
 	- [7. pom.xml](#7-pomxml)
-	- [8. 依赖范围](#8-%E4%BE%9D%E8%B5%96%E8%8C%83%E5%9B%B4)
-	- [9. 依赖传递](#9-%E4%BE%9D%E8%B5%96%E4%BC%A0%E9%80%92)
-	- [10. 聚合和继承](#10-%E8%81%9A%E5%90%88%E5%92%8C%E7%BB%A7%E6%89%BF)
+	- [8. 依赖范围](#8-依赖范围)
+	- [9. 依赖传递](#9-依赖传递)
+	- [10. 聚合和继承](#10-聚合和继承)
 
 # Maven Note
 
@@ -16,13 +16,13 @@
 
 Apache Maven，是一个软件（特别是 Java 软件）项目管理及自动构建工具，由 Apache 软件基金会所提供。基于项目对象模型（缩写：POM）概念，Maven 利用一个中央信息片断能管理一个项目的构建、报告和文档等步骤。
 
-**依赖查询**：https://mvnrepository.com 
+**依赖查询**：https://mvnrepository.com
 
 ## 2. maven 标准目录结构
 
-https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html 
+https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html
 
-https://www.cnblogs.com/now-fighting/p/4858982.html 
+https://www.cnblogs.com/now-fighting/p/4858982.html
 
 ```
 ----src                               	// 包含构建项目的所有源材料
@@ -58,8 +58,9 @@ https://www.cnblogs.com/now-fighting/p/4858982.html
 
 3)	version：构建版本；
 
-例：      
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/7ae73481bc4eb8339d76dfdcb4e9cdfc.jpg)
+例：
+
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/7ae73481bc4eb8339d76dfdcb4e9cdfc.jpg)
 
 ## 4. 仓库
 
@@ -68,14 +69,15 @@ https://www.cnblogs.com/now-fighting/p/4858982.html
 - 远程仓库（maven 中央仓库）
   在本地仓库中找不到时就会去远程中央仓库中查找依赖；
 
-  在 maven 根目录下的 lib 文件夹中，用解压软件打开 maven-model-builder-xxx.jar，可以找到 pom-4.0.0.xml，这是 maven 的超级 pom 文件，所有 pom 文件都会继承于该文件，在该文件中可以看到 maven 的远程中央仓库地址如下：    
-  ![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/2d5a99f0f5d9b36f3d05c0c24a948062.jpg)
+  在 maven 根目录下的 lib 文件夹中，用解压软件打开 maven-model-builder-xxx.jar，可以找到 pom-4.0.0.xml，这是 maven 的超级 pom 文件，所有 pom 文件都会继承于该文件，在该文件中可以看到 maven 的远程中央仓库地址如下：
+
+  ![image](http://img.cdn.firejq.com/jpg/2017/10/28/2d5a99f0f5d9b36f3d05c0c24a948062.jpg)
 
 - 镜像仓库
-  maven 的中央仓库在国内访问速度不理想，因此可以配置 maven 使用国内的镜像仓库，加快 maven 项目的构建速度；
-  在{maven 根目录}/conf/settings.xml 文件中，在<mirrors>标签体中添加镜像仓库地址；
-  例：      
-  使用阿里云的 maven 镜像仓库：
+
+	maven 的中央仓库在国内访问速度不理想，因此可以配置 maven 使用国内的镜像仓库，加快 maven 项目的构建速度；在{maven 根目录}/conf/settings.xml 文件中，在<mirrors>标签体中添加镜像仓库地址；
+
+  例：使用阿里云的 maven 镜像仓库：
   ```
   <mirrors>
     <mirror>
@@ -109,16 +111,16 @@ mvn -v			// 查看 maven 版本号
 
 clean、compile、test、package、install；
 
-完整的项目构建过程包括：      
+完整的项目构建过程包括：
 清理、编译、测试、打包、集成测试、验证、部署；
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/5abecf81202a765a5e298708d224a0ed.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/5abecf81202a765a5e298708d224a0ed.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/4940f2371233e7143de95c866239779e.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/4940f2371233e7143de95c866239779e.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/7e1523ebcf89866f8f92a18454fe35bc.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/7e1523ebcf89866f8f92a18454fe35bc.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2017/10/28/4310c965efe75a9edcc116d5084224ca.jpg)
+![image](http://img.cdn.firejq.com/jpg/2017/10/28/4310c965efe75a9edcc116d5084224ca.jpg)
 
 ## 7. pom.xml
 
@@ -136,7 +138,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 	<developers></developers>// 开发者
 	<licenses></licenses>// 许可证信息（一般开源项目都会有）
 	<organzation></organization>// 组织者信息
-	
+
 
   	<dependencies>// 依赖列表，标签体可包含多个依赖项
     		<dependency>// 确定依赖所在坐标
@@ -152,7 +154,7 @@ runtime：在测试和运行时有效；
 test：只在 test 下有效；
 system：与本机系统相关联，可移植性差；
 import：只可使用在 dependencyManagement 中，表示从其它的 pom 中导入 dependency 的配置；
-			
+
 */
 <type></type>
 			<optional></optional>// 设置依赖是否可选，默认为 false

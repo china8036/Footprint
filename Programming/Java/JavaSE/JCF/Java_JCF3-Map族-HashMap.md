@@ -122,7 +122,7 @@ k2：0000 0000， 0000 0000， 0000 0000， 0001 1111 = 31 = 15 + 16
 
 **如果扩容后新增的位是 0，那么 rehash 索引不变，否则才会改变，并且变为 `原来的索引 + 旧 hash 表的长度`，故我们只需看原 hash 表长新增的 bit 是 1 还是 0，如果是 0，索引不变，如果是 1，索引变成原索引 + 旧表长，根本不用像 JDK 7 那样 rehash，省去了重新计算 hash 值的时间**。
 
-而且新增的 bit 是 0 还是 1 可以认为是随机的，因此 resize 的过程，还能均匀的把之前的冲突节点分散。 
+而且新增的 bit 是 0 还是 1 可以认为是随机的，因此 resize 的过程，还能均匀的把之前的冲突节点分散。
 
 ### 3.2. 存储结构
 
@@ -134,9 +134,9 @@ k2：0000 0000， 0000 0000， 0000 0000， 0001 1111 = 31 = 15 + 16
 
 **从 JDK 8 开始，当一个桶的链表长度达到阈值 8 时，会自动将链表转换为红黑树，以提升查询、插入效率**。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/12/09c33c48612692ac86eb2e9880219389.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/12/09c33c48612692ac86eb2e9880219389.jpg)
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/12/beb26cb90e5cd32b250b03020b43f1b8.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/12/beb26cb90e5cd32b250b03020b43f1b8.jpg)
 
 ### 3.3. 类定义
 
@@ -190,7 +190,7 @@ transient Node<K,V>[] table;
       V value;
       // 指向下一个节点的引用
       Node<K,V> next;
-      
+
       // 省略部分实现代码
 
       // 使用键值对计算 hashcode 的值：将 key 的 hashCode 和 value 的 hashCode 执行异或运算得到一个节点的 hashcode 值
@@ -268,7 +268,7 @@ public HashMap(Map<? extends K, ? extends V> m) {
 ```
 
 ```java
-// 根据期望容量 cap，返回 2 的 n 次方形式的哈希桶的实际容量 length。返回值一般不小于 cap 
+// 根据期望容量 cap，返回 2 的 n 次方形式的哈希桶的实际容量 length。返回值一般不小于 cap
 static final int tableSizeFor(int cap) {
     // 经过下面的或运算和位移运算，n 最终各位都是 1
     int n = cap - 1;
@@ -360,7 +360,7 @@ final Node<K,V>[] resize() {
         newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
                   (int)ft : Integer.MAX_VALUE);
     }
-    // 更新阈值 
+    // 更新阈值
     threshold = newThr;
     @SuppressWarnings({"rawtypes","unchecked"})
     // 根据新的容量 构建新的哈希桶
@@ -444,7 +444,7 @@ final Node<K,V>[] resize() {
 
 ```java
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
-    // tab 存放 当前的哈希桶，p 用作临时链表节点  
+    // tab 存放 当前的哈希桶，p 用作临时链表节点
     Node<K,V>[] tab; Node<K,V> p; int n, i;
     // 首先判断当前 HashMap 的数组是否为空
     if ((tab = table) == null || (n = tab.length) == 0)
@@ -462,11 +462,11 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
         if (p.hash == hash &&
             ((k = p.key) == key || (key != null && key.equals(k))))
             e = p;
-        
+
         // 如果 tab[i] 的 key 不是我们传入的 key，首先要判断 p 这个 Node 是不是红黑树，如果是红黑树，则直接向红黑树新增一个数据即可
         else if (p instanceof TreeNode)
             e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
-        
+
         // 如果 tab[i] 的 key 不是我们传入的 key，且 p 这个 Node 不是红黑树，说明 p 是单向链表，因此遍历链表，找到链表的尾部，将节点新增到尾部即可
         else {
             // 遍历链表
@@ -515,7 +515,7 @@ Node<K,V> newNode(int hash, K key, V value, Node<K,V> next) {
 
 流程图：
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/3/12/346b09ee79f8343df3d5287eeed67304.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/3/12/346b09ee79f8343df3d5287eeed67304.jpg)
 
 若执行结果是插入了一个新的节点，返回 null；若执行结果是覆盖了旧 value，返回旧 value。
 
@@ -710,7 +710,7 @@ abstract class HashIterator {
 
 由迭代器的实现可以看出，遍历 HashMap 时，顺序是按照哈希桶从低到高，链表从前往后遍历的。因此，HashMap 的遍历顺序与元素的添加顺序无关，属于无序遍历。
 
-P.S. 
+P.S.
 
 - 在遍历 HashMap 时（toString() 或 entrySet().iterator()），[为什么输出结果是有序的](https://www.zhihu.com/question/28414001)？
 

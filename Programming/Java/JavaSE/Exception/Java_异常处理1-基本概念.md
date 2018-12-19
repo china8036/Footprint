@@ -28,7 +28,7 @@
 
 Java 把所有非正常情况分为 2 种：异常 (Exception) 和错误 (Error)，它们都继承于 Throwable 父类。
 
-![image](http://otaivnlxc.bkt.clouddn.com/jpg/2018/9/20/747051acc8bb14c96dea6b8150a30730.jpg)
+![image](http://img.cdn.firejq.com/jpg/2018/9/20/747051acc8bb14c96dea6b8150a30730.jpg)
 
 其中：
 - Error 一般指与 JVM 有关的问题，如系统崩溃、JVM 错误、动态链接失败等，这类错误无法恢复或不可能捕获，必将导致程序中断。因此，不应试图通过 try...catch 结构来捕获或通过 throws 来抛出这类错误。
