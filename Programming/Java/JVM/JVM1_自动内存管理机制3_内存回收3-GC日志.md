@@ -1,15 +1,26 @@
 - [JVM 内存回收：GC 日志](#jvm-内存回收gc-日志)
-    - [1. 日志设置](#1-日志设置)
-    - [2. 日志说明](#2-日志说明)
-        - [2.1. 关注点](#21-关注点)
-        - [2.2. 实例说明](#22-实例说明)
-    - [3. Refer Links](#3-refer-links)
+  - [1. 日志打印](#1-日志打印)
+  - [2. 日志格式](#2-日志格式)
+    - [2.1. 关注点](#21-关注点)
+    - [2.2. 实例说明](#22-实例说明)
+  - [3. 日志分析](#3-日志分析)
+    - [3.1. gceasy.io](#31-gceasyio)
+    - [3.2. GCViewer](#32-gcviewer)
+  - [4. Refer Links](#4-refer-links)
 
 # JVM 内存回收：GC 日志
 
-## 1. 日志设置
+## 1. 日志打印
 
-Eclipse 设置 GC 日志输出：
+GC 日志打印的相关参数：
+- `-XX:+PrintGCDetails`
+- `-XX:+PrintGCTimeStamps`
+- `-XX:+PrintGCDateStamps`
+- `-Xloggc:$CATALINA_HOME/logs/gc.log`
+- `-XX:+PrintHeapAtGC`
+- `-XX:+PrintTenuringDistribution`
+
+i.e. Eclipse 设置 GC 日志输出：
 1. 在 eclipse 根目录下的 eclipse.ini 配置文件中添加以下参数：
     ```
     -verbose:gc （开启打印垃圾回收日志）
@@ -23,7 +34,7 @@ Eclipse 设置 GC 日志输出：
 
 1. 添加 JVM 监控参数 `-Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.port=6688 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false`.
 
-## 2. 日志说明
+## 2. 日志格式
 
 **每一种收集器的日志格式都不一样，但虚拟机设计者为了方便用户阅读，将各个收集器的日志都维持了一定的共性**。
 
@@ -92,4 +103,18 @@ GC 日志说明：
 
 通过上面日志分析得出，PSYoungGen、ParOldGen、PSPermGen 属于 Parallel 收集器。其中 PSYoungGen 表示 gc 回收前后年轻代的内存变化；ParOldGen 表示 gc 回收前后老年代的内存变化；PSPermGen 表示 gc 回收前后永久区的内存变化。young gc 主要是针对年轻代进行内存回收比较频繁，耗时短；full gc 会对整个堆内存进行回城，耗时长，因此一般尽量减少 full gc 的次数。
 
-## 3. Refer Links
+## 3. 日志分析
+
+### 3.1. gceasy.io
+
+[GC 日志在线分析工具](http://gceasy.io/)
+
+### 3.2. GCViewer
+
+[GCViewer](https://github.com/chewiebug/GCViewer)
+
+## 4. Refer Links
+
+[CMS 日志格式](https://blogs.oracle.com/poonam/understanding-cms-gc-logs)
+
+[G1 日志格式](https://blogs.oracle.com/poonam/understanding-g1-gc-logs)

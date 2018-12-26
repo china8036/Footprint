@@ -118,10 +118,22 @@ XX 参数，同样属于非标准化参数，在 JVM 的不同版本中可能会
 - Java Heap Options
   - `-XX:InitialHeapSize=<size>` / `-Xms<size>`: 设置堆的初始值。
   - `-XX:MaxHeapSize=<size>` / `-Xmx<size>`: 设置堆的最大值。
-  - `-XX:NewSize=<size>`: 设置堆中年轻代大小。
-  - `-XX:MaxPermSize=<size>`: 设置堆中持久代大小。
+  - `-XX:NewSize=<size>`: 设置堆中年轻代大小的初始值。
+  - `-XX:MaxNewSize=<size>`: 设置堆中年轻代大小的最大值。
   - `-XX:NewRatio=n`: 设置年轻代和年老代的比值。如：`-XX:NewRatio=3`，表示年轻代与年老代比值为 1:3，年轻代占整个年轻代年老代和的 1/4。
   - `-XX:SurvivorRatio=n`: 设置年轻代中 Eden 区与两个 Survivor 区的比值。注意 Survivor 区有两个，如：`-XX:SurvivorRatio=3` 表示 `Eden:Survivor=3:2`，即一个 Survivor 区占整个年轻代的 1/5。
+
+- Method Area / No-Heap Area Options
+  - 适用于 JDK <= 1.7
+    - `-XX:PermSize=<size>`: 设置非堆区中永久代大小的初始值。
+    - `-XX:MaxPermSize=<size>`: 设置非堆区中永久代大小的最大值。
+  - 适用于 JDK >= 1.8
+    - `-XX:MetaspaceSize=<size>`: 设置非堆区中元数据区大小的初始值。
+    - `-XX:MaxMetaspaceSize=<size>`: 设置非堆区中元数据区大小的最大值。
+    - `-XX:+UseCompressedClassPointers`: 启用压缩类指针，启用后会在 Metaspace 中产生 CCS 区域（不启用则 CCS 区域大小为 0）。
+    - `-XX:CompressedClassSpaceSize=<size>`: 设置 Metaspace 中 CCS 区域大小的初始值。
+    - `-XX:InitialCodeCacheSize=<size>`: 设置 Metaspace 中 Code Cache 区域大小的初始值。
+    - `-XX:ReservedCodeCacheSize=<size>`: 设置 Metaspace 中 Code Cache 区域大小的最大值。
 
 - Direct Memory Options
   - `-XX:MaxDirectMemorySize=<size>` 限制直接内存的大小。例如，`java -Xmx20M -XX:MaxDirectMemorySize=10M`。

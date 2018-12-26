@@ -5,7 +5,7 @@
   - [4. Tomcat 容器等级](#4-tomcat-容器等级)
   - [5. tomcat 安装](#5-tomcat-安装)
     - [5.1. windows 安装 Tomcat](#51-windows-安装-tomcat)
-    - [5.2. Ubuntu安装 Tomcat](#52-ubuntu安装-tomcat)
+    - [5.2. Ubuntu 安装 Tomcat](#52-ubuntu-安装-tomcat)
     - [5.3. 常见问题](#53-常见问题)
       - [5.3.1. JDK 环境变量的设置问题导致 tomcat 无法启动](#531-jdk-环境变量的设置问题导致-tomcat-无法启动)
         - [5.3.1.1. 在 windows 下配置 Tomcat](#5311-在-windows-下配置-tomcat)
@@ -25,6 +25,10 @@
   - [12. Tomcat 配置 Https](#12-tomcat-配置-https)
     - [12.1. 使用本地证书](#121-使用本地证书)
     - [12.2. 使用授权证书](#122-使用授权证书)
+  - [13. Tomcat 远程监控](#13-tomcat-远程监控)
+    - [13.1. Tomcat Mananger](#131-tomcat-mananger)
+    - [13.2. psi-probe](#132-psi-probe)
+  - [14. Refer Links](#14-refer-links)
 
 # Tomcat Base Note
 
@@ -99,7 +103,7 @@ Tomcat 容器分为四个等级：
 
     ![image](http://img.cdn.firejq.com/jpg/2018/1/24/34d519576be07441c70ff84a6ef847b2.jpg)
 
-### 5.2. Ubuntu安装 Tomcat
+### 5.2. Ubuntu 安装 Tomcat
 
 http://zyjustin9.iteye.com/blog/2177291
 
@@ -429,7 +433,7 @@ Tomcat 默认端口：
 
 [Tomcat 安全配置与性能优化](https://netkiller.github.io/journal/tomcat.html)
 
-- 删除 /usr/local/tomcat/webapps 下的所有预设目录；
+- 删除 /usr/local/tomcat/webapps 下的所有预设目录
 
   还有涉及管理页面的 2 个配置文件 host-manager.xml 和 manager.xml 也需要一并删掉。这两个文件存放在 Tomcat 安装目录下的 conf/Catalina/localhost 目录下。
 
@@ -460,9 +464,14 @@ Tomcat 默认端口：
   - 服务器上根本不需要编译器，代码应该在 Release 服务器上完成编译打包工作；
   - 一旦服务器被控制，可以防止在其服务器上编译其他恶意代码并植入到你的程序中；
 
-- maxThreads 连接数限制
+- 连接数限制 / 线程优化
 
-  maxThreads 是 Tomcat 所能接受最大连接数。一般设置不要超过 8000 以上，如果你的网站访问量非常大可能使用运行多个 Tomcat 实例的方法，即在一个服务器上启动多个 tomcat 然后做负载均衡处理。
+  参数：
+  - maxConnections: Tomcat 所能接受客户请求最大连接数，默认值是 10000。如果你的网站访问量非常大，可以使用运行多个 Tomcat 实例的方法，即在一个服务器上启动多个 tomcat 然后做负载均衡处理。
+  - acceptCount: The maximum queue length for incoming connection requests when all posible requests processing threads are in use.
+  - maxThreads: 最大工作线程数，默认值是 200。
+  - minSpareThreads: 最小空闲工作线程数。
+  - maxSpareThreads: 最大空闲工作线程数。
 
   conf/server.xml:
   ```xml
@@ -472,10 +481,6 @@ Tomcat 默认端口：
     enableLookups="false" redirectPort="8181" acceptCount="100"
     connectionTimeout="20000" disableUploadTimeout="true" />
   ```
-  参数：
-  - maxThreads：客户请求最大线程数
-  - minSpareThreads：初始化时创建的 socket 线程数
-  - maxSpareThreads：连接器的最大空闲 socket 线程数
 
 - 不使用 Tomcat 虚拟主机
 
@@ -535,7 +540,7 @@ Tomcat 默认端口：
 
 - 关闭 war 自动部署
 
-  防止被植入木马等恶意程序，应关闭 war 包的自动部署和加载；
+  防止被植入木马等恶意程序，应关闭 war 包的自动部署和加载。autoDeploy 属性默认为 true，因此在生产环境中要手动更改为 false：
 
   conf/server.xml：
   ```xml
@@ -646,3 +651,11 @@ Tomcat 部署 Let’s Encrypt 免费 SSL 证书 && 自动续期：https://my.osc
     参数说明：
     - certificateKeystorePassword 为 jks 密码；
     - certificateKeyAlias 为 jks 别名，没有特殊情况的别名就是 1。
+
+## 13. Tomcat 远程监控
+
+### 13.1. Tomcat Mananger
+
+### 13.2. psi-probe
+
+## 14. Refer Links
