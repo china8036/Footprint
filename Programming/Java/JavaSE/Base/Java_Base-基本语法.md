@@ -7,7 +7,8 @@
     - [2.2. 安装 JDK](#22-安装-jdk)
       - [2.2.1. Windows](#221-windows)
       - [2.2.2. Ubuntu](#222-ubuntu)
-    - [2.3. 获取源码包](#23-获取源码包)
+    - [2.3. JDK Document](#23-jdk-document)
+    - [2.4. 获取源码包](#24-获取源码包)
   - [3. Java 程序： Application 与 Applet 的区别](#3-java-程序-application-与-applet-的区别)
     - [3.1. Application](#31-application)
     - [3.2. Applet](#32-applet)
@@ -60,6 +61,8 @@ Java 是一种半编译半解释的强类型的语言。
 - 2011 年 7 月 28 日，Oracle 公司发布 Java SE 7
 - 2014 年 3 月 18 日，Oracle 公司发表 Java SE 8
 - 2017 年 9 月 21 日，Oracle 公司发表 Java SE 9
+- 2018 年 3 月 21 日，Oracle 公司发表 Java SE 10
+- 2018 年 9 月 25 日，Java SE 11 发布
 
 ### 1.2. 语言特性
 
@@ -194,7 +197,19 @@ javac 9.0.1
   ```
   测试：`java -version`；
 
-### 2.3. 获取源码包
+### 2.3. JDK Document
+
+- [JDK 7 Documentation](https://docs.oracle.com/javase/7/docs/index.html)
+
+- [JDK 8 Documentation](https://docs.oracle.com/javase/8/)
+
+- [JDK 9 Documentation](https://docs.oracle.com/javase/9/)
+
+- [JDK 10 Documentation](https://docs.oracle.com/javase/10/)
+
+- [JDK 11 Documentation](https://docs.oracle.com/en/java/javase/11/)
+
+### 2.4. 获取源码包
 
 库源文件在 JDK 中以一个压缩文件 src.zip 的形式发布，若想获取编译器、虚拟机、本地方法、私有辅助类的源代码，可在[这里](http://jdk.java.net/9/) 获取。
 
