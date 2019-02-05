@@ -1,16 +1,16 @@
-- [Anaconda 踏坑总结](#anaconda-%E8%B8%8F%E5%9D%91%E6%80%BB%E7%BB%93)
-  - [1. 概述](#1-%E6%A6%82%E8%BF%B0)
-    - [1.1. 介绍](#11-%E4%BB%8B%E7%BB%8D)
-    - [1.2. 安装](#12-%E5%AE%89%E8%A3%85)
+  - [Anaconda 踏坑总结](#anaconda-踏坑总结)
+  - [1. 概述](#1-概述)
+    - [1.1. 介绍](#11-介绍)
+    - [1.2. 安装](#12-安装)
       - [1.2.1. Windows](#121-windows)
       - [1.2.2. Linux](#122-linux)
   - [2. conda](#2-conda)
-    - [2.1. 环境管理](#21-%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86)
-      - [2.1.1. 使用 powershell 操作的坑](#211-%E4%BD%BF%E7%94%A8-powershell-%E6%93%8D%E4%BD%9C%E7%9A%84%E5%9D%91)
+    - [2.1. 环境管理](#21-环境管理)
+      - [2.1.1. 使用 powershell 操作的坑](#211-使用-powershell-操作的坑)
         - [2.1.1.1. PowerShell Execution Policy](#2111-powershell-execution-policy)
-        - [2.1.1.2. 在 powershell 中 active 和 deactive 失效](#2112-%E5%9C%A8-powershell-%E4%B8%AD-active-%E5%92%8C-deactive-%E5%A4%B1%E6%95%88)
-    - [2.2. 包管理](#22-%E5%8C%85%E7%AE%A1%E7%90%86)
-    - [2.3. 更改镜像源](#23-%E6%9B%B4%E6%94%B9%E9%95%9C%E5%83%8F%E6%BA%90)
+        - [2.1.1.2. 在 powershell 中 active 和 deactive 失效](#2112-在-powershell-中-active-和-deactive-失效)
+    - [2.2. 包管理](#22-包管理)
+    - [2.3. 更改镜像源](#23-更改镜像源)
 
 # Anaconda 踏坑总结
 
@@ -22,9 +22,9 @@ Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux、Mac、
 
 Anaconda 利用工具 / 命令 conda 来进行 package 和 environment 的管理，解决了官方 Python 的两大痛点：
 
-  第一：提供了包管理功能，Windows 平台安装第三方包经常失败的场景得以解决；
+- 第一：提供了包管理功能，Windows 平台安装第三方包经常失败的场景得以解决；
 
-  第二：提供环境管理的功能，功能类似 Virtualenv，解决了多版本 Python 并存、切换的问题；
+- 第二：提供环境管理的功能，功能类似 Virtualenv，解决了多版本 Python 并存、切换的问题；
 
 ### 1.2. 安装
 
@@ -69,7 +69,7 @@ $ conda create --name python36 python=3.6
 激活 / 进入此环境
 ```
 $ activate python36  # windows
-# surce activate python36 # linux/mac
+# source activate python36 # linux/mac
 ```
 检查 python 版本
 ```
@@ -86,7 +86,7 @@ $ conda remove -n python36 --all
 # conda env remove  -n python36
 ```
 
-用户安装的不同版本 Python 环境都会放在目录~/ananconda2/envs 下，查看所有已安装的环境（当前被激活的环境会显示有一个星号)
+用户安装的不同版本 Python 环境都会放在目录 ~/ananconda2/envs 下，查看所有已安装的环境（当前被激活的环境会显示有一个星号)
 ```
 $ conda info -e
 python36              *  D:\Programs\Anaconda3\envs\python36
@@ -165,8 +165,7 @@ conda update python
 conda create -n python35 python=3.5 anaconda
 ```
 
-NOTE：
-安装 Anaconda 后，只是提供多了一个包管理工具 conda，python 自带的 pip 依旧可以使用；
+NOTE：安装 Anaconda 后，只是提供多了一个包管理工具 conda，python 自带的 pip 依旧可以使用。
 
 ### 2.3. 更改镜像源
 

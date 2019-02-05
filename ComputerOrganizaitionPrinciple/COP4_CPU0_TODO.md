@@ -1,105 +1,63 @@
 - [CPU](#cpu)
-  - [1. 基本概念](#1-基本概念)
-    - [1.1. 物理 CPU](#11-物理-cpu)
-    - [1.2. CPU 物理核 (cpu cores)](#12-cpu-物理核-cpu-cores)
-    - [1.3. CPU 逻辑核 (processor)](#13-cpu-逻辑核-processor)
-    - [1.4. CPU 虚拟核 (vCPU)](#14-cpu-虚拟核-vcpu)
-  - [2. CPU 参数](#2-cpu-参数)
-    - [2.1. CPU 基本参数](#21-cpu-基本参数)
-    - [2.2. Linux 查看 CPU 参数](#22-linux-查看-cpu-参数)
-    - [2.3. Windows 查看 CPU 参数](#23-windows-查看-cpu-参数)
-  - [3. CPU 架构](#3-cpu-架构)
-    - [3.1. SMP(Symmetric Multi-Processors) / UMA(Uniform Memory Access)](#31-smpsymmetric-multi-processors--umauniform-memory-access)
-    - [3.2. NUMA(Non-Uniform Memory Access)](#32-numanon-uniform-memory-access)
-    - [3.3. MPP(Massive Parallel Processing)](#33-mppmassive-parallel-processing)
-  - [4. Refer Links](#4-refer-links)
+    - [1.1. CPU 基本参数](#11-cpu-基本参数)
+    - [1.2. Linux 查看 CPU 参数](#12-linux-查看-cpu-参数)
+    - [1.3. Windows 查看 CPU 参数](#13-windows-查看-cpu-参数)
+  - [2. CPU 架构](#2-cpu-架构)
+    - [2.1. SMP(Symmetric Multi-Processors) / UMA(Uniform Memory Access)](#21-smpsymmetric-multi-processors--umauniform-memory-access)
+    - [2.2. NUMA(Non-Uniform Memory Access)](#22-numanon-uniform-memory-access)
+    - [2.3. MPP(Massive Parallel Processing)](#23-mppmassive-parallel-processing)
+  - [3. Refer Links](#3-refer-links)
 
 # CPU
-
-## 1. 基本概念
-
-### 1.1. 物理 CPU
-
-物理 CPU 是相对于虚拟 CPU 而言的概念，指实际存在的处理器，即实际主板插槽上的 CPU。
-
-在 /proc/cpuinfo 中，有多少个不同的 physical id 就有多少个物理 CPU：
-```bash
-$ cat /proc/cpuinfo |grep "physical id"|sort |uniq|wc -l
-2
-```
-
-### 1.2. CPU 物理核 (cpu cores)
-
-cpu 物理核指的是物理 CPU 上封装的处理数据的芯片组的数量，在每一个 CPU 上，都可能有多个核（core），每一个核中都有独立的一套 ALU、FPU、Cache 等组件。如 i5 760，是双核心四线程的 CPU，而 i5 2250 是四核心四线程的 CPU。
-
-一般来说，`逻辑 CPU 个数 = 物理 CPU 个数 × 每颗核数`，如果不相等的话，则表示服务器的 CPU 支持超线程技术 (Hyper-Threading)。
-
-每个 CPU 核心在同一时间只能执行一个线程，因此在单核 CPU 下的多线程其实都只是并发，不是并行。
-
-P.S.  为什么非得把 CPU 核心封装到一块芯片中呢？不能通过简单得增加 CPU 个数来达到同样效果吗？
-
-答：多核 CPU，资源共享（共享缓存），沟通方便（CPU 内数据传输速度远大于总线速度）。
-
-在 /proc/cpuinfo 中，cpu cores 记录了对应的物理 CPU（以该条目中的 physical id 标识）有多少个物理核：
-```bash
-$ cat /proc/cpuinfo |grep "cores"|uniq
-6
-```
-
-### 1.3. CPU 逻辑核 (processor)
-
-CPU 逻辑核主要用在 Intel 超线程的环境下，将原本的一个物理核心虚拟成多个核心，从而实现单物理核心并行的调度多个线程。当有多个计算任务时，可以让其中一个计算任务使用 ALU 的时候，另一个则去使用 FPU，从而充分利用物理核中的各个部件，使得同一个物理核中也可以并行处理多个计算任务。
-
-因此在开启超线程时，`CPU 线程数 = 总逻辑 CPU 数 = 物理 CPU 个数 × 每颗物理 CPU 的核数 × 超线程数`。
-
-eg: Intel i5 4200H CPU
-
-![image](http://img.cdn.firejq.com/jpg/2018/8/21/497195ab2d2c12bf24c24b26c06bfb64.jpg)
-
-即表示有 2 个物理核心，使用 HT 超线程数为 2，使线程数为 2 x 2 = 4。
-
-而 AMD CPU 没有超线程技术，物理核心数就等于 CPU 线程数，也因此对于 AMD 的 CPU 来说，只有核心数的概念，没有线程数的概念。
-
-在 /proc/cpuinfo 中，processor 指的就是 CPU 逻辑核数。
-```bash
-$ cat /proc/cpuinfo |grep "processor"|wc -l
-24 # 2 个物理 CPU，每个 CPU 有 6 个 core，同时支持超线程，因此共 24 个逻辑 CPU
-```
-使用 top 查看负载时，按 1，看到的 CPU0~CPUn 也是 processor number。在 Windows 系统下看到的 CPU 数量实际上也是逻辑 CPU 数量。
-
-VM 虚拟机中的 CPU 选择的核心数实际上指的是 CPU 逻辑核。
-
-在设置线程数时，对于计算密集型的任务，一般建议将线程数设置为物理核数而不是逻辑核数。因为计算密集任务一般对各个计算部件（FPU\ALU）的使用并不是均匀的，一般 ALU 的使用占大头，FPU 的使用只占小部分，所以超线程技术并不能带来很大的并行度提升。而这一点点提升，也被线程切换带来的消耗所抵消了。最终导致“超线程”技术，并没有像理论中的那样加大并行度，从而提高吞吐量。
-
-### 1.4. CPU 虚拟核 (vCPU)
-
-虚拟 cpu 是在做虚拟化时利用虚拟化技术虚拟出来的 CPU。讨论 vCPU 离不开 VM，因此 vCPU 的讨论都是在虚拟化时候，划分 cpu 才会讨论的问题。通常一个物理 CPU 按照 1:4 ~ 1：10 的比例划分，假如我们有 4 个 8 物理核心的 CPU 按照 1:5 的比例划分，可以得到 4 x 8 x 5 = 160 vCPU。
-
-## 2. CPU 参数
 
 [CPU 性能天梯图](http://www.mydrivers.com/zhuanti/tianti/cpu/)
 
 [CPU 性能对比](https://www.cpu-monkey.com/en/)
 
-### 2.1. CPU 基本参数
+### 1.1. CPU 基本参数
 
 - 型号
 
-  以 Intel CPU 为例，CPU 分为高中低端，最低端的是 G 系列，其次是低端 i3 系列，然后是中端 i5 系列，高端 i7 系列和至尊 i9 系列。这个命名就和汽车一样，比如宝马 3 系，宝马 5 系，宝马 7 系。但要注意的是，Intel 的命名可不止就是 i3、i5、i7，如常见的 i7 8700K、i5 8400、i7 7700HQ、i3 8100，i3、i5、i7 只是代表 CPU 中高低端产品线而不是代表具体产品型号。
+  以 Intel CPU 为例，CPU 分为高中低端，最低端的是 G 系列，其次是低端 i3 系列，然后是中端 i5 系列，高端 i7 系列和至尊 i9 系列。这个命名就和汽车一样，比如宝马 3 系，宝马 5 系，宝马 7 系。但要注意的是，Intel 的命名可不止就是 i3、i5、i7，如常见的 i7 8700K、i5 8400、i7 7700HQ、i3 8100，**i3、i5、i7 只是代表 CPU 中高低端产品线而不是代表具体产品型号**。
 
   ![image](http://img.cdn.firejq.com/jpg/2018/10/29/bc537d5ebd0d0ee0ec7b21507a122b0b.jpg)
 
-  其中，i7 代表了他属于高端系列产品，7700，第一个数字 7 代表了他是第 7 代产品，后面的 700 基本就代表了他处于什么样的性能等级，后缀 K 代表着他的功率水平和特殊功能。
+  其中，i7 代表了它属于高端系列产品，7700，第一个数字 7 代表了他是第 7 代产品，后面的 700 基本就代表了他处于什么样的性能等级，后缀 K 代表着他的功率水平和特殊功能。
 
-  Intel 更新 CPU 型号的时候是 i3 6100、i3 7100、i3 8100，也就是不断更新“代”，而不是不断更新 i3、i5、i7、i9、i11。什么意思？就是 intel 每次发布新的 CPU 就会 i3、i5、i7，全部发布一套，下一次升级就再发布一套新的 i3、i5、i7。
+  Intel 更新 CPU 的时候是 i3 6100、i3 7100、i3 8100，也就是不断更新“代”，而不是不断更新 i3、i5、i7、i9、i11。什么意思？就是 intel 每次发布新的 CPU 就会 i3、i5、i7，全部发布一套，下一次升级就再发布一套新的 i3、i5、i7。
 
   ![image](http://img.cdn.firejq.com/jpg/2018/10/29/702497e333f9758cb7f1c6dfe7031612.jpg)
 
-- 架构
+  CPU 代数（架构系列）是保证 CPU 性能最主要的因素，如果不是相隔代数过多来比较其他参数完全没有意义。例如 zen+ 架构下的 2600，和推土机架构下的 fx8300，论核心 fx8300 是八核，2600 只是六核，论主频 8300 单核心最大 4.2ghz，2600 只有 3.9ghz, 但是由于 zen+ 相比推土机架构领先太多太多，2600 甚至性能超 fx8300 两倍多。
 
-  Intel CPU 架构包括了 sandy bridge、ivy bridge、haswell、broadwell、skylake 等。
+  Intel CPU 主要系列：
+  - Generation 3 / Sandy Bridge
+  - Generation 4 / Ivy Bridge
+  - Generation 5 / Haswell
+  - Generation 6 / Broadwell / Skylake
+  - Generation 7 / Kaby Lake
+  - Generation 8 / Coffee Lake
 
-  架构是保证 CPU 性能最主要的因素，如果不是相似架构比较其他参数完全没必要。例如 zen+ 架构下的 2600，和推土机架构下的 fx8300，论核心 fx8300 是八核，2600 只是六核，论主频 8300 单核心最大 4.2ghz，2600 只有 3.9ghz, 但是由于 zen+ 相比推土机架构领先太多太多，2600 甚至性能超 fx8300 两倍多。而 intel 方面，除了初代，从二代开始架构提升并不明显，每代平均 5% 左右，也就是说其他参数一样，3 代酷睿和 2 代酷睿差距也就 5%，4 代比 3 代强 5%。但是积小成多，每代挤牙膏，也过了 6 代了，8 代和 2 代的差距也是非常大的了，一般来说越新的架构越强。
+  其中除了初代，从二代开始架构提升并不明显，每代平均 5% 左右，也就是说其他参数一样，3 代酷睿和 2 代酷睿差距也就 5%，4 代比 3 代强 5%。但是积小成多，每代挤牙膏，也过了 6 代了，8 代和 2 代的差距也是非常大的了，一般来说越新的架构越强。
+
+- CPU ID
+
+  CPU ID 是 CPU 生产厂家为识别不同类型的 CPU，而为 CPU 制订的不同的单一的代码，通常以十六进制表示。如 “0F24”（Inter 处理器）、“681H”（AMD 处理器），根据这些数字代码即可判断 CPU 属于哪种类型。
+
+  不同厂家的 CPU，其 CPU ID 定义也是不同的：
+  - Inter
+
+    Intel CPU 的 CPU ID 一般包含四个十六进制数字，如“0F24”，从左至右分别表示 Type（类型）、Family（系列）、Mode（型号）和 Stepping（步进编号）。从 CPUID 为“068X”的处理器开始，Inter 另外加了 Brand ID（品种标识）用来辅助应用程序识别 CPU 的类型，因此根据“068X”CPUID 还不能正确判别 Pentium 和 Celerom 处理器，必须配合 Brand ID 来进行细分。
+    - **CPU Type**（类型）: 类型标识，用来区别 Intel CPU 的适合应用场景（数字“1”标识所测试的微处理器是用于由用户安装的；数字“0”标识所测试的微处理器是用于由专业 PC 系统集成商、服务公司或制作商安装的）。我们通常使用的 Intel CPU 类型标识都是“0”，如“0F24”。**Intel 酷睿处理器 i3、i5、i7 指的就是 CPU Type**。
+    - **CPU Family**（系列）: 产品系列标识，用来确定处理器是属于哪一代的产品。**Intel 酷睿处理器 Sandy Bridge、Ivy Bridge、Haswell 等指的就是 CPU Family**。
+    - **CPU Mode**（型号）: 型号与系列通常是相互配合使用的，用以确定 CPU 是属于处理器系列中的哪一种特定类型。
+    - **CPU Stepping**（步进编号）: 更新版本标识。
+    - **CPU Brand_id**（品种标识）:
+    - **CPU Vendor_id**（制造商标识）:
+
+  - AMD
+
+    AMD CPU 的 CPUID 一般包含三位十六进制数字，如“681”，从左至右分别表示为 Family（系列）、Mode（型号）和 Stepping（步进编号）。
 
 - 主频
 
@@ -154,6 +112,13 @@ VM 虚拟机中的 CPU 选择的核心数实际上指的是 CPU 逻辑核。
 
   指令集越新效率越高，越多性能越强，与软件契合度越高。如 G4600 主频核心缓存都和 i3 6100 接近，但是它缺少部分指令集，性能就稍微弱一点。
 
+- 字长
+
+  i.e. 16 位 CPU / 字长为 16 位：
+  - 运算器一次最多可以处理 16 位的数据。字长越大，计算精度越高。
+  - 寄存器的最大宽度为 16 位。
+  - 寄存器和运算器之间的传输通路为 16 位。
+
 - 其它
   - CPU 的性能还和主板支持的技术有关例如 amd 的 Precision Boost 2，AMD 的 400 系主板的 bios 会采用更激进的电压和温控策略对 cpu 在多核使用情况下进行睿频，甚至在某些情况下全核都能达到单核心最大的频率，目前也只有 X470 支持。
 
@@ -173,7 +138,7 @@ i3-8100 参数说明：
 - 集成显卡	Intel UHD Graphics 630
 - 超线程技术	不支持
 
-### 2.2. Linux 查看 CPU 参数
+### 1.2. Linux 查看 CPU 参数
 
 Linux 中查看 CPU 参数一般通过 `/proc/cpuinfo` 来查看。在 `/proc/cpuinfo` 中，具有相同 physical id 的 CPU 是同一个物理 CPU 封装的物理核，具有相同 core id 的 CPU 是同一个物理核的多个超线程（逻辑核）：
 ```shell
@@ -210,7 +175,7 @@ power management:
 .....
 ```
 
-### 2.3. Windows 查看 CPU 参数
+### 1.3. Windows 查看 CPU 参数
 
 在 CMD 命令中输入 `wmic`，然后在出现的新窗口中分别输入：
 - `cpu get Name`: 查看物理 CPU 数
@@ -219,14 +184,14 @@ power management:
 
 ![image](http://img.cdn.firejq.com/jpg/2018/8/21/6fa069a6de19417f5a6cb09cee1a8a80.jpg)
 
-## 3. CPU 架构
+## 2. CPU 架构
 
 从系统架构来看，目前商用服务器的 CPU 架构大体可以分为三类：
 - 对称多处理器结构 (SMP：Symmetric Multi-Processor)
 - 非一致存储访问结构 (NUMA：Non-Uniform Memory Access)
 - 海量并行处理结构 (MPP：Massive Parallel Processing)
 
-### 3.1. SMP(Symmetric Multi-Processors) / UMA(Uniform Memory Access)
+### 2.1. SMP(Symmetric Multi-Processors) / UMA(Uniform Memory Access)
 
 **SMP（对称多处理器结构）是指服务器中多个 CPU 对称工作，无主次或从属关系**。各 CPU 共享相同的物理内存，每个 CPU 访问内存中的任何地址所需时间是相同的，因此 SMP 也被称为一致存储器访问结构 (UMA：Uniform Memory Access)。
 
@@ -234,7 +199,7 @@ power management:
 
 **SMP 服务器的主要特征是共享，系统中所有资源 (CPU、内存、I/O 等) 都是共享的**。也正是由于这种特征，导致了 SMP 服务器的主要问题，那就是**它的扩展能力非常有限**。对于 SMP 服务器而言，每一个共享的环节都可能造成 SMP 服务器扩展时的瓶颈，而最受限制的则是内存。由于每个 CPU 必须通过相同的内存总线访问相同的内存资源，因此随着 CPU 数量的增加，内存访问冲突将迅速增加，最终会造成 CPU 资源的浪费，使 CPU 性能的有效性大大降低。实验证明，**SMP 服务器 CPU 利用率最好的情况是 2 至 4 个 CPU**。
 
-### 3.2. NUMA(Non-Uniform Memory Access)
+### 2.2. NUMA(Non-Uniform Memory Access)
 
 由于 SMP 在扩展能力上的限制，人们开始探究如何进行有效地扩展从而构建大型系统的技术，NUMA 就是这种努力下的结果之一。**利用 NUMA 技术，可以把几十个 CPU（甚至上百个 CPU) 组合在一个服务器内**。
 
@@ -244,7 +209,7 @@ power management:
 
 **但 NUMA 技术同样有一定缺陷，由于访问远地内存的延时远远超过本地内存，因此当 CPU 数量增加时，系统性能无法线性增加**。如 HP 公司发布 Superdome 服务器时，曾公布了它与 HP 其它 UNIX 服务器的相对性能值，结果发现，64 路 CPU 的 Superdome (NUMA 结构) 的相对性能值是 20，而 8 路 N4000（共享的 SMP 结构) 的相对性能值是 6.3。从这个结果可以看到，8 倍数量的 CPU 换来的只是 3 倍性能的提升。
 
-### 3.3. MPP(Massive Parallel Processing)
+### 2.3. MPP(Massive Parallel Processing)
 
 ![image](http://img.cdn.firejq.com/jpg/2018/9/18/eb96144523d1e2dbe021fd9fe3127264.jpg)
 
@@ -254,7 +219,7 @@ power management:
 
 但是 MPP 服务器需要一种复杂的机制来调度和平衡各个节点的负载和并行处理过程。目前一些基于 MPP 技术的服务器往往通过系统级软件（如数据库) 来屏蔽这种复杂性。举例来说，NCR 的 Teradata 就是基于 MPP 技术的一个关系数据库软件，基于此数据库来开发应用时，不管后台服务器由多少个节点组成，开发人员所面对的都是同一个数据库系统，而不需要考虑如何调度其中某几个节点的负载。
 
-## 4. Refer Links
+## 3. Refer Links
 
 [线程数与多核 CPU 的关系](https://mp.weixin.qq.com/s?__biz=MzIzODQyNjE1NA==&mid=2247484150&idx=1&sn=9a67dc870e59b2baf4b1dc8adb2e7722&chksm=e938c3b3de4f4aa561cd4c5068c304852c63ea802792188362dfd9bfe29118c4f4d1ea030683&mpshare=1&scene=1&srcid=0818XnRIhSKLDRPKYaXqpMvy#rd)
 
@@ -267,3 +232,5 @@ power management:
 [如何看懂电脑参数——CPU 篇](https://zhuanlan.zhihu.com/p/20495438)
 
 [百度百科：CPU 主频](https://baike.baidu.com/item/%E4%B8%BB%E9%A2%91/103191?fromtitle=CPU%E4%B8%BB%E9%A2%91&fromid=3519849)
+
+[CPU Family, Model, Stepping 以及 CPU ID, DisplayFamily_DisplayModel](http://blog.sina.com.cn/s/blog_605f5b4f010180st.html)

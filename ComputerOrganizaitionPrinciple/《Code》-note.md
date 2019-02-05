@@ -23,20 +23,6 @@
 
 - P274, P276
 
-  继电器 → 真空管 → 晶体管（半导体硅）
-
-  微处理器 (microprocessor):
-  - 世界上第一个可商用的微处理器: (1971.11) **Intel 4004**: 4-bit
-  - 改变世界的 2 款 microprocessor:
-    - 世界上第一个 8 位微处理器 (1974.4) **Intel 8008**: 8-bit, 2 MHz, 14-bit address bus that could address 16 KB of memory
-    - (1974.8) **Motorola 6800**: 8-bit, 1 MHz, 14-bit address bus that could address 16 KB of memory
-  - Other
-    - (1974) **Intel 8080**: 8-bit
-    - (1976) **Intel 8085**: 8-bit
-    - (1978) **Intel 8086**: 16-bit. The 8086 gave rise to the x86 architecture, which eventually became Intel's most successful line of processors.
-    - (1979) **Intel 8088**: 16-bit
-    - (1979) **Motorola 68000**: 16/32-bit
-
   字节序
   - little-endian: Intel
   - big-endian: Motorola

@@ -9,7 +9,7 @@
 
 - 启动新会话：
   ```shell
-  tmux [new -s 会话名 -n 窗口名』
+  tmux [ new -s 会话名 -n 窗口名 ]
   ```
 - 恢复会话：
   ```shell

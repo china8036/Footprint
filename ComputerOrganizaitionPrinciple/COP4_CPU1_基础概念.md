@@ -1,25 +1,35 @@
 - [计算机组成原理：CPU - 基础概念](#计算机组成原理cpu---基础概念)
-  - [1. 基本概念](#1-基本概念)
-    - [1.1. 主要功能](#11-主要功能)
-    - [1.2. 发展历史](#12-发展历史)
-  - [2. 基本组成](#2-基本组成)
-    - [2.1. 主要寄存器](#21-主要寄存器)
-    - [2.2. 操作控制器](#22-操作控制器)
-    - [2.3. 时序产生器](#23-时序产生器)
-  - [3. 运作模式](#3-运作模式)
-  - [4. Refer Links](#4-refer-links)
+  - [1. 发展历史](#1-发展历史)
+  - [2. 主要功能](#2-主要功能)
+  - [3. 基本组成](#3-基本组成)
+    - [3.1. 主要寄存器](#31-主要寄存器)
+    - [3.2. 操作控制器](#32-操作控制器)
+    - [3.3. 时序产生器](#33-时序产生器)
+  - [5. Refer Links](#5-refer-links)
 
 # 计算机组成原理：CPU - 基础概念
 
-## 1. 基本概念
+## 1. 发展历史
 
-### 1.1. 主要功能
+- 晶体管（继电器 → 真空管 → 晶体管 / 半导体硅）的应用和集成工艺的提升，孕育了微处理器的诞生。
 
-### 1.2. 发展历史
+- 1971 年 11 月，Intel 推出 Intel 4004 (4-bit)。这是第一个将 CPU 的所有元件都放入同一块芯片内的产品，也是世界上第一个可商用的微处理器。
 
-## 2. 基本组成
+- 1972 年 4 月，Intel 推出 Intel 8008 (8-bit, 2 MHz, 14-bit address bus that could address 16 KB of memory)，这是世界上第一个 8 位微处理器，它比 4004 复杂一倍；同年 8 月，Motorola 推出了 Motorola 6800 (8-bit, 1 MHz, 14-bit address bus that could address 16 KB of memory)，也是一个 8 位的微处理器。这 2 个 CPU 被称为改变世界的 2 款 microprocessor。
 
-### 2.1. 主要寄存器
+- 1974 年，Intel 推出了 Intel 8080 (8-bit)，这是世界上第一个为通用微机而设计的微处理器（4004 和 8008 是为特殊用途而设计的）。
+
+- 1976 年，Intel 推出了 Intel 8085 (8-bit)。
+
+- 1978 年，Intel 推出了 Intel 8086 (16-bit)，由于 Intel 8086 在 3 年后被 IBM PC 所选用，因此 **x86 成为了 PC 的标准平台，成为了历来最成功的 CPU 指令集架构体系**。
+
+- 1985 年，Intel 推出了 Intel 80386 (32-bit)，其保护模式是当今 x86 处理器主要的工作模式。
+
+## 2. 主要功能
+
+## 3. 基本组成
+
+### 3.1. 主要寄存器
 
 <!-- ----- -->
 
@@ -80,92 +90,11 @@
 
 <!-- ----- -->
 
-### 2.2. 操作控制器
+### 3.2. 操作控制器
 
-### 2.3. 时序产生器
+### 3.3. 时序产生器
 
-## 3. 运作模式
-
-https://zh.wikipedia.org/wiki/X86#%E9%81%8B%E4%BD%9C%E6%A8%A1%E5%BC%8F
-
-https://zh.wikipedia.org/wiki/%E7%9C%9F%E5%AF%A6%E6%A8%A1%E5%BC%8F
-
-https://blog.csdn.net/trochiluses/article/details/8954527
-
-https://blog.csdn.net/yang_yulei/article/details/22613327
-
-https://www.kancloud.cn/digest/linuxnotes/161268
-
-https://www.cnblogs.com/bethunebtj/articles/4839781.html
-
-https://www.cnblogs.com/chengxuyuancc/archive/2013/05/12/3073738.html
-
-- 实模式
-
-  DOS 工作在实模式下
-
-- 保护模式
-
-  Windows/Linux 工作在保护模式下
-
-- 虚拟 x86 模式
-
-<!-- ------------------ -->
-
-这里的运作模式只针对 x86 架构的 CPU
-
-TODO: 看**基本组成**的内容是不是也只针对 x86，考虑独立出去
-
-## 4. Refer Links
-
-<!-- -------------- -->
-
-Intel CPU 产品
-
-![image](http://img.cdn.firejq.com/jpg/2019/1/6/5317555c1806c5055ec361952a146033.jpg)
-
-<!-- -------------- -->
-
-- Intel 8086
-
-  [Wikipedia: Intel 8086](https://en.wikipedia.org/wiki/Intel_8086)
-
-  > Intel 8086 (iAPX 86) is a 16-bit microprocessor chip designed by Intel between early 1976 and June 8, 1978, when it was released. The 8086 gave rise to the x86 architecture, which eventually became Intel's most successful line of processors.
-  >
-  >  On June 5, 2018, Intel released a limited edition CPU celebrating the anniversary of the Intel 8086, called the Intel Core i7-8086K.
-
-  - 晶体管：大约 20,000 个
-  - 制造工艺（制程）：3.2 μm
-  - 主频：5 MHz
-  - 指令集：x86-16 （迄今 Intel 8086 的指令集仍然是 PC 机与服务器的基本指令集）
-  - 字长：16 bits
-  - 寄存器宽度：16 bits
-  - Data Bus 宽度：16 bits
-  - Control Bus 宽度：16 bits
-  - Inner Address Bus 宽度：16 bits
-  - External Address Bus 宽度：20 bits（物理定址空间为 2^20 bit = 1 MB）
-
-  ![image](http://img.cdn.firejq.com/jpg/2019/1/6/7535badeb63e5a14d0f7b61ca312c1a4.jpg)
-
-  8086 有 8 个 16 bits 的寄存器，包括栈寄存器 SP 与 BP，但不包括指令寄存器 IP、控制寄存器 FLAGS 以及四个段寄存器。AX, BX, CX, DX, 这四个寄存器可以按照字节访问；但 BP, SI, DI, SP, 这四个地址寄存器只能按照 16 位宽访问。
-
-  - 外部总线作为数据与地址的复用，降低了 CPU 的性能。8086 的后继处理器的内存访问性能大大增强了。80186 与 80286 有专门的地址计算硬件，节约了很多时间周期。80286 的外部地址总线与数据总线是分开各自专用的。
-  - 8086/8088 可以连接上专用的数学协处理器以增加浮点计算性能。标准的数学协处理是 Intel 8087，执行 80 位浮点数运算。
-
-  外设：
-  - Intel 8237：直接存储器存取（DMA）控制器
-  - Intel 8251：USART
-  - Intel 8253：可编程间隔定时器
-  - Intel 8255：可编程序外围接口
-  - Intel 8259：可编程中断控制器
-  - Intel 8279：键盘 / 显示控制器
-  - Intel 8282/8283：8 位锁存器
-  - Intel 8284：时钟发生器
-  - Intel 8286/8287：双向 8 位驱动
-  - Intel 8288：总线控制器
-  - Intel 8289：总线仲裁器
-
-<!-- ----- -->
+## 5. Refer Links
 
 TODO:
 

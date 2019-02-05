@@ -7,6 +7,7 @@
     - [2.2. 安装 JDK](#22-安装-jdk)
       - [2.2.1. Windows](#221-windows)
       - [2.2.2. Ubuntu](#222-ubuntu)
+      - [2.2.3. MacOS](#223-macos)
     - [2.3. JDK Document](#23-jdk-document)
     - [2.4. 获取源码包](#24-获取源码包)
   - [3. Java 程序： Application 与 Applet 的区别](#3-java-程序-application-与-applet-的区别)
@@ -196,6 +197,32 @@ javac 9.0.1
   echo $JAVA_HOME
   ```
   测试：`java -version`；
+
+#### 2.2.3. MacOS
+
+[JDK 8 Installation for OS X](https://docs.oracle.com/javase/8/docs/technotes/guides/install/mac_jdk.html)
+
+在 Oracle 官网下载 JDK 并安装，在 MacOS 下会自动安装到 `/Library/Java/JavaVirtualMachines/` 下。
+
+[How can I change Mac OS's default Java VM returned from /usr/libexec/java_home?](https://stackoverflow.com/questions/17885494/how-can-i-change-mac-oss-default-java-vm-returned-from-usr-libexec-java-home)
+
+[java_home and JAVA_HOME on macOS](https://medium.com/notes-for-geeks/java-home-and-java-home-on-macos-f246cab643bd)
+
+[管理多个 Java 版本](http://mclspace.com/2015/03/10/mac_java_home/)
+
+在 `.zshrc` 中添加：
+```
+#java
+#use jdk8
+export JAVA_8_HOME=`/usr/libexec/java_home -v '1.8*'`
+#use jdk11
+export JAVA_11_HOME=`/usr/libexec/java_home -v '11*'`
+#default use jdk8
+export JAVA_HOME=$JAVA_8_HOME
+#change version alias
+alias jdk8="export JAVA_HOME=$JAVA_8_HOME"
+alias jdk11="export JAVA_HOME=$JAVA_11_HOME"
+```
 
 ### 2.3. JDK Document
 
