@@ -1,82 +1,82 @@
 - [Scapy](#scapy)
-	- [1. 概述](#1-概述)
-		- [1.1. 介绍](#11-介绍)
-		- [1.2. 主要功能](#12-主要功能)
-		- [1.3. 安装](#13-安装)
-			- [1.3.1. Kali](#131-kali)
-			- [1.3.2. ubuntu](#132-ubuntu)
-			- [1.3.3. Windows](#133-windows)
-			- [1.3.4. 可选包的安装](#134-可选包的安装)
-	- [2. 基本使用](#2-基本使用)
-		- [2.1. ls()](#21-ls)
-		- [2.2. lsc()](#22-lsc)
-		- [2.3. conf](#23-conf)
-		- [2.4. help()](#24-help)
-		- [2.5. show()](#25-show)
-		- [2.6. sprintf()](#26-sprintf)
-	- [3. 创建、发送、接收数据包](#3-创建发送接收数据包)
-		- [3.1. 创建数据包](#31-创建数据包)
-			- [3.1.1. 基本操作](#311-基本操作)
-			- [3.1.2. 组合创建](#312-组合创建)
-			- [3.1.3. 类型转换](#313-类型转换)
-			- [3.1.4. 随机化默认值](#314-随机化默认值)
-			- [3.1.5. 读写 pcap 文件](#315-读写-pcap-文件)
-				- [3.1.5.1. wrpcap()](#3151-wrpcap)
-				- [3.1.5.2. rdpcap()](#3152-rdpcap)
-			- [3.1.6. 图形转储](#316-图形转储)
-		- [3.2. 发送、接收数据包](#32-发送接收数据包)
-			- [3.2.1. 三层数据包](#321-三层数据包)
-				- [3.2.1.1. send()](#3211-send)
-				- [3.2.1.2. sr()](#3212-sr)
-				- [3.2.1.3. sr1()](#3213-sr1)
-				- [3.2.1.4. srloop()](#3214-srloop)
-			- [3.2.2. 二层数据包](#322-二层数据包)
-				- [3.2.2.1. sendp()](#3221-sendp)
-				- [3.2.2.2. srp()](#3222-srp)
-				- [3.2.2.3. srp1()](#3223-srp1)
-				- [3.2.2.4. srploop()](#3224-srploop)
-	- [4. 数据嗅探与过滤](#4-数据嗅探与过滤)
-		- [4.1. sniff()](#41-sniff)
-		- [4.2. filter](#42-filter)
-		- [4.3. sniff HTTP Package](#43-sniff-http-package)
-	- [5. Scanning](#5-scanning)
-		- [5.1. ping](#51-ping)
-			- [5.1.1. ICMP Ping](#511-icmp-ping)
-			- [5.1.2. ARP Ping](#512-arp-ping)
-			- [5.1.3. TCP SYN Ping](#513-tcp-syn-ping)
-			- [5.1.4. UDP Ping](#514-udp-ping)
-		- [5.2. IP Scanning](#52-ip-scanning)
-		- [5.3. Ports Scanning](#53-ports-scanning)
-			- [5.3.1. TCP Connect Scans](#531-tcp-connect-scans)
-			- [5.3.2. TCP SYN Scans](#532-tcp-syn-scans)
-			- [5.3.3. TCP XmasTres Scans](#533-tcp-xmastres-scans)
-			- [5.3.4. TCP FIN Scans](#534-tcp-fin-scans)
-			- [5.3.5. TCP NULL Scans](#535-tcp-null-scans)
-			- [5.3.6. TCP ACK Scans](#536-tcp-ack-scans)
-			- [5.3.7. TCP WIN Scans](#537-tcp-win-scans)
-			- [5.3.8. UDP Scans](#538-udp-scans)
-			- [5.3.9. 多路 Scans](#539-多路-scans)
-	- [6. OS Fingerprinting](#6-os-fingerprinting)
-		- [6.1. ISN](#61-isn)
-	- [7. nmap_fp](#7-nmap_fp)
-		- [7.1. pf](#71-pf)
-	- [8. Route Traceroute](#8-route-traceroute)
-		- [8.1. TCP SYN traceroute](#81-tcp-syn-traceroute)
-		- [8.2. UDP traceroute](#82-udp-traceroute)
-		- [8.3. DNS traceroute](#83-dns-traceroute)
-	- [9. Classic Attrack Achieve](#9-classic-attrack-achieve)
-		- [9.1. Maiformed packets](#91-maiformed-packets)
-		- [9.2. Ping of Death](#92-ping-of-death)
-		- [9.3. Nestea attack](#93-nestea-attack)
-		- [9.4. Land attack](#94-land-attack)
-	- [10. ARP attack](#10-arp-attack)
-		- [10.1. ARP Cache Poisoning](#101-arp-cache-poisoning)
-		- [10.2. ARP Spoofing Attack](#102-arp-spoofing-attack)
-	- [11. DDos](#11-ddos)
-		- [11.1. SYN Flood Attack](#111-syn-flood-attack)
-		- [11.2. DNS Amplification Attack](#112-dns-amplification-attack)
-	- [12. Wireless frame injection](#12-wireless-frame-injection)
-	- [13. Refer Links](#13-refer-links)
+  - [1. 概述](#1-概述)
+    - [1.1. 介绍](#11-介绍)
+    - [1.2. 主要功能](#12-主要功能)
+    - [1.3. 安装](#13-安装)
+      - [1.3.1. Kali](#131-kali)
+      - [1.3.2. ubuntu](#132-ubuntu)
+      - [1.3.3. Windows](#133-windows)
+      - [1.3.4. 可选包的安装](#134-可选包的安装)
+  - [2. 基本使用](#2-基本使用)
+    - [2.1. ls()](#21-ls)
+    - [2.2. lsc()](#22-lsc)
+    - [2.3. conf](#23-conf)
+    - [2.4. help()](#24-help)
+    - [2.5. show()](#25-show)
+    - [2.6. sprintf()](#26-sprintf)
+  - [3. 创建、发送、接收数据包](#3-创建发送接收数据包)
+    - [3.1. 创建数据包](#31-创建数据包)
+      - [3.1.1. 基本操作](#311-基本操作)
+      - [3.1.2. 组合创建](#312-组合创建)
+      - [3.1.3. 类型转换](#313-类型转换)
+      - [3.1.4. 随机化默认值](#314-随机化默认值)
+      - [3.1.5. 读写 pcap 文件](#315-读写-pcap-文件)
+        - [3.1.5.1. wrpcap()](#3151-wrpcap)
+        - [3.1.5.2. rdpcap()](#3152-rdpcap)
+      - [3.1.6. 图形转储](#316-图形转储)
+    - [3.2. 发送、接收数据包](#32-发送接收数据包)
+      - [3.2.1. 三层数据包](#321-三层数据包)
+        - [3.2.1.1. send()](#3211-send)
+        - [3.2.1.2. sr()](#3212-sr)
+        - [3.2.1.3. sr1()](#3213-sr1)
+        - [3.2.1.4. srloop()](#3214-srloop)
+      - [3.2.2. 二层数据包](#322-二层数据包)
+        - [3.2.2.1. sendp()](#3221-sendp)
+        - [3.2.2.2. srp()](#3222-srp)
+        - [3.2.2.3. srp1()](#3223-srp1)
+        - [3.2.2.4. srploop()](#3224-srploop)
+  - [4. 数据嗅探与过滤](#4-数据嗅探与过滤)
+    - [4.1. sniff()](#41-sniff)
+    - [4.2. filter](#42-filter)
+    - [4.3. sniff HTTP Package](#43-sniff-http-package)
+  - [5. Scanning](#5-scanning)
+    - [5.1. ping](#51-ping)
+      - [5.1.1. ICMP Ping](#511-icmp-ping)
+      - [5.1.2. ARP Ping](#512-arp-ping)
+      - [5.1.3. TCP SYN Ping](#513-tcp-syn-ping)
+      - [5.1.4. UDP Ping](#514-udp-ping)
+    - [5.2. IP Scanning](#52-ip-scanning)
+    - [5.3. Ports Scanning](#53-ports-scanning)
+      - [5.3.1. TCP Connect Scans](#531-tcp-connect-scans)
+      - [5.3.2. TCP SYN Scans](#532-tcp-syn-scans)
+      - [5.3.3. TCP XmasTres Scans](#533-tcp-xmastres-scans)
+      - [5.3.4. TCP FIN Scans](#534-tcp-fin-scans)
+      - [5.3.5. TCP NULL Scans](#535-tcp-null-scans)
+      - [5.3.6. TCP ACK Scans](#536-tcp-ack-scans)
+      - [5.3.7. TCP WIN Scans](#537-tcp-win-scans)
+      - [5.3.8. UDP Scans](#538-udp-scans)
+      - [5.3.9. 多路 Scans](#539-多路-scans)
+  - [6. OS Fingerprinting](#6-os-fingerprinting)
+    - [6.1. ISN](#61-isn)
+  - [7. nmap_fp](#7-nmap_fp)
+    - [7.1. pf](#71-pf)
+  - [8. Route Traceroute](#8-route-traceroute)
+    - [8.1. TCP SYN traceroute](#81-tcp-syn-traceroute)
+    - [8.2. UDP traceroute](#82-udp-traceroute)
+    - [8.3. DNS traceroute](#83-dns-traceroute)
+  - [9. Classic Attrack Achieve](#9-classic-attrack-achieve)
+    - [9.1. Maiformed packets](#91-maiformed-packets)
+    - [9.2. Ping of Death](#92-ping-of-death)
+    - [9.3. Nestea attack](#93-nestea-attack)
+    - [9.4. Land attack](#94-land-attack)
+  - [10. ARP attack](#10-arp-attack)
+    - [10.1. ARP Cache Poisoning](#101-arp-cache-poisoning)
+    - [10.2. ARP Spoofing Attack](#102-arp-spoofing-attack)
+  - [11. DDos](#11-ddos)
+    - [11.1. SYN Flood Attack](#111-syn-flood-attack)
+    - [11.2. DNS Amplification Attack](#112-dns-amplification-attack)
+  - [12. Wireless frame injection](#12-wireless-frame-injection)
+  - [13. Refer Links](#13-refer-links)
 
 # Scapy
 
@@ -113,7 +113,7 @@ $ pip install scapy
 
 #### 1.3.3. Windows
 
-https://scapy.readthedocs.io/en/latest/installation.html#windows    
+https://scapy.readthedocs.io/en/latest/installation.html#windows
 
 Scapy 主要是为类 Unix 系统开发的，并且在这些平台上能正常工作，而在 Windows 下 scapy 需要安装一些额外的依赖包：
 - [Python](http://www.python.org/): [python-2.7.13.amd64.msi](https://www.python.org/ftp/python/2.7.13/python-2.7.13.amd64.msi) (64bits) or [python-2.7.13.msi](https://www.python.org/ftp/python/2.7.13/python-2.7.13.msi) (32bits). After installation, add the Python installation directory and its Scripts subdirectory to your PATH. Depending on your Python version, the defaults would be `C:\Python27` and `C:\Python27\Scriptsrespectively`.
@@ -124,7 +124,7 @@ Scapy 主要是为类 Unix 系统开发的，并且在这些平台上能正常�
 
 #### 1.3.4. 可选包的安装
 
-https://scapy.readthedocs.io/en/latest/installation.html#optional-packages 
+https://scapy.readthedocs.io/en/latest/installation.html#optional-packages
 ```
 pip install numpy pyx graphviz vpython cryptography
 ```
@@ -139,35 +139,35 @@ scapy 支持两种使用方式：
 
 ### 2.1. ls()
 
-ls() 函数显示 scapy 支持的所有协议；     
+ls() 函数显示 scapy 支持的所有协议；
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/9cf9dead7895dcc563cb2a4e27c35229.jpg)
 
-ls() 函数的参数还可以是上面支持的协议中的任意一个的类型属性，也可以是任何一个具体的数据包，如 ls(TCP),ls(newpacket) 等；     
+ls() 函数的参数还可以是上面支持的协议中的任意一个的类型属性，也可以是任何一个具体的数据包，如 ls(TCP),ls(newpacket) 等；
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/521839b3d93efdd63d47f27ce4ff8b3d.jpg)
 
 ### 2.2. lsc()
 
-lsc() 列出 scapy 支持的所有的命令；     
+lsc() 列出 scapy 支持的所有的命令；
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/f03037083219b2144844cd19ff2d17cb.jpg)
 
 ### 2.3. conf
 
-conf 变量保存了 scapy 的配置信息，可显示所有的配置信息；     
+conf 变量保存了 scapy 的配置信息，可显示所有的配置信息；
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/57c2f20652d1f6c3a12e639cc417db07.jpg)
 
 ### 2.4. help()
 
-help() 显示某一命令的使用帮助，如 help(sniff)：     
+help() 显示某一命令的使用帮助，如 help(sniff)：
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/dcf82802685db07ff4adc32d131b8d71.jpg)
 
 ### 2.5. show()
 
-show() 显示指定数据包的详细信息；     
+show() 显示指定数据包的详细信息；
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/1d4311cd12ebeecf4adf2de77bb0016f.jpg)
 
@@ -186,7 +186,7 @@ sprintf() 输出某一层某个参数的取值，如果不存在就输出”??�
 - layer: 协议层的名字，如 Ether、IP、Dot11、TCP 等；
 - filed: 需要显示的参数；
 - nb: 当有两个协议层有相同的参数名时，nb 用于到达你想要的协议层；
-- r: 是一个标志；当使用 r 标志时，意味着显示的是参数的原始值。例如，TCP 标志中使用人类可阅读的字符串’SA’表示 SYN 和 ACK 标志，而其原始值是 18；     
+- r: 是一个标志；当使用 r 标志时，意味着显示的是参数的原始值。例如，TCP 标志中使用人类可阅读的字符串’SA’表示 SYN 和 ACK 标志，而其原始值是 18；
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/23ce616bf3ddd858c8feb3e4ee2b4256.jpg)
 
@@ -246,7 +246,7 @@ Scapy 的数据包创建是按照 TCP/IP 四层参考模型， Scapy 为每一�
   \options\
 ```
 
-修改对象属性 / 数据包字段（没有修改的字段 / 属性则使用默认值）     
+修改对象属性 / 数据包字段（没有修改的字段 / 属性则使用默认值）
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/a80e14abbe2679316ac52478b4501a96.jpg)
 
@@ -292,7 +292,7 @@ In [3]: package.show()
 
 #### 3.1.3. 类型转换
 
-https://scapy.readthedocs.io/en/latest/usage.html#importing-and-exporting-data 
+https://scapy.readthedocs.io/en/latest/usage.html#importing-and-exporting-data
 
 每一个数据包都可以被建立或分解，转换数据类型。
 
@@ -331,7 +331,7 @@ FA 97 00 14 00 50 00 00 00 00 00 00 00 00 50 02  .....P........P.
 
 # 使用 hide_defaults() 方法可以不显示具有默认值的字段：
 >>> c.hide_defaults()
->>> c 
+>>> c
 <Ether dst=00:0f:66:56:fa:d2 src=00:ae:f3:52:aa:d1 type=0x800 |<IP ihl=5L len=67
  frag=0 proto=TCP chksum=0x783c src=192.168.5.21 dst=66.35.250.151 |<TCP dataofs=5L
  chksum=0xbb39 options=[] |<Raw load='GET /index.html HTTP/1.0 \n\n' |>>>>
@@ -363,7 +363,7 @@ wrpcap(“xxxx.pcap”, packages)
 <Sniffed: TCP:1 UDP:0 ICMP:0 Other:3>
 >>> wrpcap("re.pcap", re)
 >>> exit()
-root@kali:~# ls -l re.pcap 
+root@kali:~# ls -l re.pcap
 -rw-r--r-- 1 root root 380 Sep 13 21:39 re.pcap
 ```
 
@@ -389,11 +389,11 @@ rdpcap() 函数用于读取本地的 pcap 文件，以 package_list 存储到内
 0003 Ether / fe80::3096:3c7c:d704:ac61 > ff02::fb (0) / IPv6ExtHdrHopByHop / ICMPv6MLReport
 
 >>> read_data[3].show()
-###[ Ethernet ]### 
+###[ Ethernet ]###
   dst= 33:33:00:00:00:fb
   src= 28:c2:dd:27:90:2f
   type= 0x86dd
-###[ IPv6 ]### 
+###[ IPv6 ]###
      version= 6L
      tc= 0L
      fl= 0L
@@ -402,20 +402,20 @@ rdpcap() 函数用于读取本地的 pcap 文件，以 package_list 存储到内
      hlim= 1
      src= fe80::3096:3c7c:d704:ac61
      dst= ff02::fb
-###[ IPv6 Extension Header - Hop-by-Hop Options Header ]### 
+###[ IPv6 Extension Header - Hop-by-Hop Options Header ]###
         nh= ICMPv6
         len= 0
         autopad= On
         \options\
-         |###[ Router Alert ]### 
+         |###[ Router Alert ]###
          |  otype= Router Alert [00: skip, 0: Don't change en-route]
          |  optlen= 2
          |  value= Datagram contains a MLD message
-         |###[ PadN ]### 
+         |###[ PadN ]###
          |  otype= PadN [00: skip, 0: Don't change en-route]
          |  optlen= 0
          |  optdata= ''
-###[ MLD - Multicast Listener Report ]### 
+###[ MLD - Multicast Listener Report ]###
            type= MLD Report
            code= 0
            cksum= 0x8db7
@@ -426,9 +426,9 @@ rdpcap() 函数用于读取本地的 pcap 文件，以 package_list 存储到内
 
 #### 3.1.6. 图形转储
 
-如果安装了 PyX，可以转换为数据包对象为 PostScript / PDF 文件；   
+如果安装了 PyX，可以转换为数据包对象为 PostScript / PDF 文件；
 
-https://scapy.readthedocs.io/en/latest/usage.html#graphical-dumps-pdf-ps 	
+https://scapy.readthedocs.io/en/latest/usage.html#graphical-dumps-pdf-ps
 
 ### 3.2. 发送、接收数据包
 
@@ -440,7 +440,7 @@ https://scapy.readthedocs.io/en/latest/usage.html#graphical-dumps-pdf-ps
 
 send() 发送三层数据包，没有接收响应的功能。
 
-例：     
+例：
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/d8d25ec5be11e0e26a911cdfe96b6b45.jpg)
 
@@ -448,25 +448,25 @@ send() 发送三层数据包，没有接收响应的功能。
 
 sr() 即 send and receive，用于发送三层数据包，并等待接收一个或多个的数据包响应，返回一个包含两个列表的 tuple：第一个就是发送的数据包及其应答组成的列表，第二个是无应答数据包组成的列表。
 
-sr() 返回结果的数据结构：     
+sr() 返回结果的数据结构：
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/500154f307d65dbde0d438f66a70c3aa.jpg)
 
 sr() 返回一个 tuple：
 ```python
 (
-	[	
+	[
 		( 收到响应的请求包 1，收到响应的响应包 1 ),
  		( 收到响应的请求包 2，收到响应的响应包 2 ), ...
 	],
-	[ 
+	[
 		未收到响应的请求包1,
 		未收到响应的请求包2...
 	]
 )
 ```
 
-例：向 www.baidu.org 发送 ttl 分别由 5 到 10 的 6 个 ICMP 数据包     
+例：向 www.baidu.org 发送 ttl 分别由 5 到 10 的 6 个 ICMP 数据包
 
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/fed39859c616ca34e6058c2dabb0f8e4.jpg)
 
@@ -604,7 +604,7 @@ Sent 2 packets, received 2 packets. 100.0% hits.
 
 sendp() 发送二层数据包，没有响应接收功能。
 
-例：     
+例：
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/94cbed730665b36703245cf42f731910.jpg)
 
 ##### 3.2.2.2. srp()
@@ -615,14 +615,14 @@ srp() 用于发送二层数据包（如 Ethernet、802.3），并等待接收一
 
 srp1() 用于发送二层数据包（如 Ethernet、802.3），并等待接收一个响应数据包。
 
-例：     
+例：
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/90e60f3fbba41ff1e02e16b26106355a.jpg)
 
 ##### 3.2.2.4. srploop()
 
 srploop() 用于循环发送二层数据包，并等待接收响应数据包。
 
-例：     
+例：
 ![image](http://img.cdn.firejq.com/jpg/2017/9/19/f8620aeb8bc5e50d8819b7b628132d4f.jpg)
 
 ## 4. 数据嗅探与过滤
@@ -715,11 +715,11 @@ sniff() 中的数据过滤主要通过 filter 参数实现。
 >>> receive[0]
 <Ether  dst=1c:b7:2c:13:ee:51 src=00:0c:29:78:8d:ae type=0x800 |<IP  version=4L ihl=5L tos=0x0 len=84 id=63122 flags=DF frag=0L ttl=64 proto=icmp chksum=0x354f src=192.168.1.150 dst=119.75.213.61 options=[] |<ICMP  type=echo-request code=0 chksum=0x961d id=0x5f2 seq=0x1 |<Raw  load='\x1fN\xb9Y\x00\x00\x00\x00\xb8t\x0c\x00\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&\'()*+,-./01234567' |>>>>
 >>> receive[0].show()
-###[ Ethernet ]### 
+###[ Ethernet ]###
   dst= 1c:b7:2c:13:ee:51
   src= 00:0c:29:78:8d:ae
   type= 0x800
-###[ IP ]### 
+###[ IP ]###
      version= 4L
      ihl= 5L
      tos= 0x0
@@ -733,19 +733,19 @@ sniff() 中的数据过滤主要通过 filter 参数实现。
      src= 192.168.1.150
      dst= 119.75.213.61
      \options\
-###[ ICMP ]### 
+###[ ICMP ]###
         type= echo-request
         code= 0
         chksum= 0x961d
         id= 0x5f2
         seq= 0x1
-###[ Raw ]### 
+###[ Raw ]###
            load= '\x1fN\xb9Y\x00\x00\x00\x00\xb8t\x0c\x00\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&\'()*+,-./01234567'
 ```
 
-在第 0 个数据包中，我们可以分析获得以下几点信息： 
+在第 0 个数据包中，我们可以分析获得以下几点信息：
 - 数据链路层：源主机的 MAC 地址为 08:00:27:24:b8:a3，而 目标主机的 MAC 地址为 5c:dd:70:97:4a:a8。且类型为 0x800（IPv4）。
-- 网络层：网络协议的版本为 4L、IP 报文头部长度 = IHL * 4、IP 数据包在计算机网络中可以转发的最大跳数为 64、使用的网络协议为 ICMP 等。 
+- 网络层：网络协议的版本为 4L、IP 报文头部长度 = IHL * 4、IP 数据包在计算机网络中可以转发的最大跳数为 64、使用的网络协议为 ICMP 等。
 - ICMP 传输的数据为：
 	```
 	d\x9a\x0cW\x00\x00\x00\x00\tF\x07\x00\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !”#$%&\’()*+,-./01234567
@@ -754,7 +754,7 @@ sniff() 中的数据过滤主要通过 filter 参数实现。
 <!-- TODO: -->
 ### 4.3. sniff HTTP Package
 
-http://www.jinglingshu.org/?p=10390 
+http://www.jinglingshu.org/?p=10390
 
 由于 scapy 提供的协议层只到 TCP 层，没有实现 HTTP 层，因此 scapy 不支持对 HTTP 数据包的嗅探和捕获（由于 TCP 数据包的重组，HTTP 数据包可能在多个 TCP 数据包中，单一数据包往往没有实际意义）。
 
@@ -972,7 +972,7 @@ elif stealth_scan_resp.haslayer(TCP):
     if stealth_scan_resp.getlayer(TCP).flags == 0x12:
         send_rst = sr(IP(dst=dst_ip)/TCP(sport=src_port, dport=dst_port, flags="R"), timeout=10) 		# RST
         print("Open")
-    elif stealth_scan_resp.getlayer(TCP).flags == 0x14:	
+    elif stealth_scan_resp.getlayer(TCP).flags == 0x14:
         print("Closed")
 elif stealth_scan_resp.haslayer(ICMP):
 	# 如果服务器返回了一个 ICMP 数据包，其中包含 ICMP 目标不可达错误类型 3 以及 ICMP 状态码为 1，2，3，9，10 或 13，则说明目标端口被过滤了无法确定是否处于开放状态
@@ -1153,7 +1153,7 @@ print udp_scan(dst_ip,dst_port,dst_timeout)
 
 例：
 
-https://github.com/interference-security/Multiport/blob/master/multiport.py 
+https://github.com/interference-security/Multiport/blob/master/multiport.py
 
 使用
 ```
@@ -1236,10 +1236,10 @@ Route Traceroute 用于追踪出发点到目的地所经过的路径，即信息
 ```python
 # coding=utf-8
 
-from scapy.all import *  
-  
+from scapy.all import *
+
 ans, unans=sr(IP(dst="www.baidu.com", ttl=(2,25), id=RandShort())/TCP(flags=0x2), timeout=50)
-for snd,rcv in ans:  
+for snd,rcv in ans:
     print snd.ttl,rcv.src,isinstance(rcv.payload,TCP)
 ```
 
@@ -1376,10 +1376,11 @@ ping of death 是一种向目标电脑发送错误封包的或恶意的 ping 指
 
 ### 10.2. ARP Spoofing Attack
 
-https://juejin.im/entry/588478d5128fe1006c380ec1 
+https://juejin.im/entry/588478d5128fe1006c380ec1
 ARP 欺骗攻击，通过向局域网中发送大量伪造了 MAC 和 IP 地址的 ARP 包，诱骗局域网中其它主机将本机当作默认网关，而将其数据发送到本机；
 
 例：
+
 将本机流量转发到默认网关，才能不影响其它主机连接外网：
 ```
 vim /etc/sysctl.conf
@@ -1426,15 +1427,15 @@ def synFlood(tgt,dPort):
         index = random.randrange(4)
         ipLayer = IP(src=srcList[index], dst=tgt)
         tcpLayer = TCP(sport=sPort, dport=dPort,flags="S")
-        packet = ipLayer / tcpLayer 
+        packet = ipLayer / tcpLayer
         send(packet)
 ```
 
 ### 11.2. DNS Amplification Attack
 
 DNS 放大攻击 / DNS 杠杆攻击：
-利用 DNS 回复包比 DNS 查询包大的特点（放大流量），伪造请求包的源 IP 地址，将应答包引向被攻击的目标，以达到对目标服务器 DDoS 的效果；
-要实现 DNS 放大，需要使用的 DNS 服务器支持递归查询；
+- 利用 DNS 回复包比 DNS 查询包大的特点（放大流量），伪造请求包的源 IP 地址，将应答包引向被攻击的目标，以达到对目标服务器 DDoS 的效果；
+- 要实现 DNS 放大，需要使用的 DNS 服务器支持递归查询；
 
 例：
 ```python
@@ -1475,14 +1476,14 @@ $ ifconfig wlan0ap up
 
 ## 13. Refer Links
 
-官方文档：https://scapy.readthedocs.io/en/latest  
+官方文档：https://scapy.readthedocs.io/en/latest
 
-中文文档：https://wizardforcel.gitbooks.io/scapy-docs/content/3.html   
+中文文档：https://wizardforcel.gitbooks.io/scapy-docs/content/3.html
 
-参考：   
+参考：
 
-http://www.jinglingshu.org/?p=10390    
+http://www.jinglingshu.org/?p=10390
 
-http://blog.csdn.net/lemon_tree12138/article/details/51141440    
+http://blog.csdn.net/lemon_tree12138/article/details/51141440
 
 http://blog.csdn.net/lemon_tree12138/article/details/51198116
