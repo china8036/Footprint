@@ -31,7 +31,7 @@
 1. 创建 Thread 子类的实例，即创建了线程对象。
 1. 调用线程对象的 start() 方法来启动该线程。
 
-i.e.
+e.g.
 ```java
 public class FirstMethod extends Thread {
     @Override

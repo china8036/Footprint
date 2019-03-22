@@ -23,11 +23,11 @@
 ## 1. 安装
 
 - Windows
-  
+
   在 https://git-scm.com/ 下载 git for windows，安装即可。
 
 - Ubuntu
-  ``` 
+  ```
   apt install git
   ```
 
@@ -52,14 +52,14 @@ Home 目录下会新建一个 `.gitconfig` 文件，配置信息就保存于这�
     系统会提示 key 的保存位置（一般是~/.ssh 目录）和指定口令，保持默认，连续三次回车即可。
 
 1. Copy SSH Key
-    
+
     然后用 vim 打开 id_rsa.pub 文件内的内容，粘帖到 github 帐号管理的添加 SSH key 界面中。
     ```
     vim ~/.ssh/id_rsa.pub
     ```
 
 1. 添加到 GitHub
-    
+
     登录 github-> Accounting settings 图标 -> SSH key-> Add SSH key-> 填写 SSH key 的名称（可以起一个自己容易区分的），然后将拷贝的 `~/.ssh/id_rsa.pub` 文件内容粘帖 -> add key”按钮添加。
 
 1. 测试
@@ -69,9 +69,9 @@ Home 目录下会新建一个 `.gitconfig` 文件，配置信息就保存于这�
 
 ### 2.3. 设置换行符
 
-http://kuanghy.github.io/2017/03/19/git-lf-or-crlf 
+http://kuanghy.github.io/2017/03/19/git-lf-or-crlf
 
-https://github.com/cssmagic/blog/issues/22 
+https://github.com/cssmagic/blog/issues/22
 
 ```
 git config --global core.autocrlf input
@@ -158,8 +158,8 @@ git config –global core.quotepath off  // 避免 git status 显示中文乱码
 [廖雪峰 Git 教程：忽略特殊文件](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013758404317281e54b6f5375640abbb11e67be4cd49e0000)
 
 介绍：
-- `.gitignore` 配置文件用于配置不需要加入版本管理的文件，配置好该文件可以为我们的版本管理带来很大的便利。 
-- 不需要从头写。gitignore 文件，GitHub 已经为我们准备了各种配置文件，只需要组合一下就可以使用了。所有配置文件可以直接在线浏览：https://github.com/github/gitignore。  
+- `.gitignore` 配置文件用于配置不需要加入版本管理的文件，配置好该文件可以为我们的版本管理带来很大的便利。
+- 不需要从头写。gitignore 文件，GitHub 已经为我们准备了各种配置文件，只需要组合一下就可以使用了。所有配置文件可以直接在线浏览：https://github.com/github/gitignore。
 
 应用场景：
 - 忽略操作系统自动生成的文件，比如缩略图等。
@@ -177,7 +177,7 @@ git config –global core.quotepath off  // 避免 git status 显示中文乱码
 - 若想将 `.gitignore` 中配置匹配的忽略文件强制 commit，可以用 `-f` 强制添加到 Git：`$ git add -f App.class`。
 - 可以用 git check-ignore 命令检查匹配的规则：`$ git check-ignore -v App.class`，Git 会显示。gitignore 的第 3 行规则忽略了该文件。
 
-i.e.
+e.g.
 - 规则：
   ```
   fd1/*
@@ -201,11 +201,11 @@ i.e.
 
 ### 2.9. .editorconfig 文件配置
 
-https://www.zhihu.com/question/19960028 
+https://www.zhihu.com/question/19960028
 
-https://github.com/editorconfig/editorconfig/wiki 
+https://github.com/editorconfig/editorconfig/wiki
 
-http://www.alloyteam.com/2014/12/editor-config/ 
+http://www.alloyteam.com/2014/12/editor-config/
 
 [Crete A Plugin for yourself](https://github.com/editorconfig/editorconfig/wiki/Plugin-How-To)
 
@@ -256,7 +256,7 @@ insert_final_newline = true
 # Set default charset
 charset = utf-8
 # 2 space indentation
-indent_style = space 
+indent_style = space
 indent_size = 2
 ```
 
@@ -480,7 +480,7 @@ indent_size = 2
     ![image](http://img.cdn.firejq.com/jpg/2018/11/2/2f9a513a4f227edd2aaa4c05f318ba8e.jpg)
 
   - 删除远程仓库中的指定分支
-    
+
     可使用 push 的 hack 用法：将冒号“:”左边的分支设置为空，将删除`:`右边的远程分支。
     ```
     $ git push origin :patch-1 # 删除远程分支 patch-1
@@ -614,10 +614,10 @@ IdentityFile// 对应的密钥的本地路径
 
 ## 5. Refer Links
 
-[简明 Git 命令速查表](http://www.codeceo.com/article/git-command-guide.html) 
+[简明 Git 命令速查表](http://www.codeceo.com/article/git-command-guide.html)
 
-[git 常用命令及常见问题](https://xianyulaodi.github.io/2017/03/31/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/)  
+[git 常用命令及常见问题](https://xianyulaodi.github.io/2017/03/31/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93/)
 
 [Git 的奇技淫巧](https://github.com/521xueweihan/git-tips)
 
-[Angular git commit 规范](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit)  
+[Angular git commit 规范](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit)

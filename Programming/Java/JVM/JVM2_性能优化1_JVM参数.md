@@ -12,7 +12,7 @@
 
 标准参数在 JVM 的不同版本中基本保持不变，相对比较稳定。
 
-i.e.
+e.g.
 - `-help`
 - `-server`
 - `-client`
@@ -67,7 +67,7 @@ X 参数，属于非标准化参数 (extra options)，在 JVM 的不同版本中
 - `-Xcomp`: 编译模式 (compiled mode)，第一次使用就编译成本地代码。
 - `-Xmixed`: 混合模式 (mixed mode)（默认），JVM 自己决定是否编译成本地代码。
 
-i.e.
+e.g.
 ```shell
 λ  java -version
     java version "9.0.1"

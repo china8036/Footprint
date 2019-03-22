@@ -498,7 +498,7 @@ public class DeadLockDemo {
 
     /*
      * * This method also requests same two lock but in exactly * Opposite order
-     * i.e. first Integer and then String. * This creates potential deadlock, if
+     * e.g. first Integer and then String. * This creates potential deadlock, if
      * one thread holds String lock * and other holds Integer lock and they wait
      * for each other, forever.
      */

@@ -41,7 +41,7 @@
 
 这样的话，就多出一个步骤，要把这些文字指令翻译成二进制，这个步骤就称为 assembling，完成这个步骤的程序就叫做 assembler。它处理的文本，自然就叫做 aseembly code。标准化以后，称为 assembly language，缩写为 asm，中文译为汇编语言。**汇编语言的主体是汇编指令。汇编指令和机器指令和差别在于指令的表示方式上，汇编指令是机器指令便于记忆的书写格式**。
 
-i.e. 寄存器 BX 的内容送到 AX 中：
+e.g. 寄存器 BX 的内容送到 AX 中：
 - 机器指令：`1000100111011000`
 - 汇编指令：`mov ax, bx`
 
@@ -107,7 +107,7 @@ assume 指令假设某一段寄存器和程序中的某一个段相关联。通�
 
 db (define byte) 用于在编译期间开辟字节空间并定义字节型数据；dw (define word) 用于在编译期间开辟字空间并定义字型数据；dd (define double word) 用于在编译期间开辟双字空间并定义双字型数据。
 
-i.e.
+e.g.
 ```asm
 assume cs:code
 code segment
@@ -134,7 +134,7 @@ end
 
 dup 双和 db、dw、dd 等数据定义伪指令相配合使用的，用于进行数据的重复定义。
 
-i.e.
+e.g.
 - 定义 3 个字节，值都为 0:
   ```
   dp 3 dup (0)
@@ -156,7 +156,7 @@ i.e.
 
 offset的功能是取得标号的偏移地址。
 
-i.e.
+e.g.
 ```
 start:mov ax,offset start
     s:mov ax,offset s
@@ -166,7 +166,7 @@ start:mov ax,offset start
 
 汇编源程序中，有一些可以用来指代地址的标号。
 
-i.e.
+e.g.
 ```asm
 assume cs:codesg
 
@@ -214,7 +214,7 @@ end
 - 远程转移指令和远程子调用指令的操作码，在 AT&T 汇编格式中为 "ljump" 和 "lcall"，而在 Intel 汇编格式中则为 "jmp far" 和 "call far"。
 - 在 AT&T 汇编格式中，内存操作数的寻址方式是 `section:disp(base, index, scale)`；而在 Intel 汇编格式中，内存操作数的寻址方式为 `section:[base + index*scale + disp]`。
 
-i.e.
+e.g.
 - AT&T 格式
   ```asm
   #hello.s
@@ -273,7 +273,7 @@ C 语言简洁易读，容易组织规模较大的代码，而汇编效率高，
 
 但一般来讲，在 C 代码中嵌入汇编语句要比"纯粹"的汇编语言代码复杂得多，因为需要解决如何分配寄存器，以及如何与 C 代码中的变量相结合等问题。
 
-i.e.
+e.g.
 ```c
 /* inline.c */
 int main()

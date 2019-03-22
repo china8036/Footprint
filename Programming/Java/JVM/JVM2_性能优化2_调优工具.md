@@ -83,7 +83,7 @@ jstat -<option> [-t] [-h<lines>] <vmid> [<interval> [<count>]]
     - `-compiler`: 输入 JIT 编译器编译过的方法，耗时等信息。
     - `-printcompilation`: 输出已经被 JIT 编译的方法。
 
-i.e.
+e.g.
 - 每 2 秒查询一次进程 2764 垃圾收集情况，一共查询 20 次：
   ```
   $ jstat -gc 2764 2000 20
@@ -165,7 +165,7 @@ Options:
 - `-sysprops`：查看 java 系统参数。
 - `<no option>`：在不给定任何选项时，打印出以上所有的 JVM 参数。
 
-i.e.
+e.g.
 ```
 $ jinfo -flag MaxHeapSize 23432
   -XX:MaxHeapSize=268435456
@@ -208,7 +208,7 @@ Options:
 - `-permstat`: 以 ClassLoader 为统计口径显示永久代内存状态，只在 Linux/Solaris 平台有效。
 - `-F`: 当虚拟机进程对 `-dump` 选项没有响应时，可使用这个选项强制生成 dump 快照，只在 Linux/Solaris 平台有效。
 
-i.e.
+e.g.
 - 使用 jmap 在当前目录下导出堆转储快照
   ```
   $ jmap -dump:format=b,file=heap.hprof 2432
@@ -274,7 +274,7 @@ i.e.
 
 jhat (JVM Heap Analysis Tool) 虚拟机堆转储快照分析工具，**一般与 jmap 搭配使用，用于分析 heapdump 文件**。**jhat 会建立一个 HTTP/HTML 服务器，让用户可以在浏览器上查看分析结果**。
 
-i.e. `jhat idea.bin`.
+e.g. `jhat idea.bin`.
 
 NOTE:
 - jhat 是基于命令行的分析工具，分析功能比较简陋。
@@ -338,7 +338,7 @@ P.S.
   </html>
   ```
 
-i.e. **使用 jstack 分析 CPU 高占用问题**
+e.g. **使用 jstack 分析 CPU 高占用问题**
 
 [关于 JVM CPU 资源占用过高的问题排查](https://my.oschina.net/shipley/blog/52006)2
 
@@ -379,7 +379,7 @@ Options:
 - `-verbose`: 输出栈大小，方法参数的个数。
 - `-constants`: 输出静态 final 常量。
 
-i.e. 对于 Java 类：
+e.g. 对于 Java 类：
 ```java
 public class DocFooter extends Applet {
     String date;

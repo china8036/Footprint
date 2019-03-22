@@ -13,7 +13,7 @@
   ```
 - 恢复会话：
   ```shell
-  tmux at [-t 会话名』
+  tmux at [ -t 会话名 ]
   ```
 - 列出所有会话：
   ```shell

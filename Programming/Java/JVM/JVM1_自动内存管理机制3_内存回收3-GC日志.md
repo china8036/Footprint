@@ -20,7 +20,7 @@ GC 日志打印的相关参数：
 - `-XX:+PrintHeapAtGC`
 - `-XX:+PrintTenuringDistribution`
 
-i.e. Eclipse 设置 GC 日志输出：
+e.g. Eclipse 设置 GC 日志输出：
 1. 在 eclipse 根目录下的 eclipse.ini 配置文件中添加以下参数：
     ```
     -verbose:gc （开启打印垃圾回收日志）

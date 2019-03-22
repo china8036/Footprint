@@ -62,7 +62,7 @@ http        {
 
 ### 1.1. main 模块
 
-i.e.
+e.g.
 ```
 user nobody nobody;
 worker_processes 2;
@@ -84,7 +84,7 @@ worker_rlimit_nofile 1024;
 
 events 模块来用指定 nginx 的工作模式和工作模式及连接数上限。
 
-i.e.
+e.g.
 ```
 events {
     use kqueue; #mac 平台
@@ -101,7 +101,7 @@ events {
 
 **http 模块是 Nginx 配置中最核心的模块，它负责 HTTP 服务器相关属性的配置**。
 
-i.e.
+e.g.
 ```
 http{
     include       mime.types;
@@ -145,7 +145,7 @@ http{
 
 sever 模块是 http 的子模块，它用来定一个虚拟主机。
 
-i.e.
+e.g.
 ```
 server {
     listen       8080;
@@ -190,7 +190,7 @@ location / {
 
 正则匹配：location 还有一种方式就是正则匹配，开启正则匹配这样：`location ~`。
 
-i.e.
+e.g.
 ```
 location ~ \.php$ {
             root           /Users/yangyi/www;
@@ -208,7 +208,7 @@ location 还有其他用法。
 
 upstream 模块负债负载均衡模块，通过一个简单的调度算法来实现客户端 IP 到后端服务器的负载均衡。
 
-i.e.
+e.g.
 ```
 upstream iyangyi.com{
     ip_hash;
@@ -407,7 +407,7 @@ Nginx 的负载均衡模块目前支持 4 种调度算法：
 
 Nginx 虚拟主机分为基于 IP、基于域名、基于端口的虚拟主机。
 
-i.e.
+e.g.
 1. 在 server 模块下边再添加两个（自定义多少个）server 模块，如下：
     ```
     #virtualhost_1 blog.firejq.me

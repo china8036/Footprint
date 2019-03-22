@@ -119,7 +119,7 @@
 - 中断和同步总线
 - 公用线
 
-i.e. Pentium 计算机主板的总线结构是一个三层次的多总线结构，即 CPU 总线、PCI 总线和 ISA 总线：
+e.g. Pentium 计算机主板的总线结构是一个三层次的多总线结构，即 CPU 总线、PCI 总线和 ISA 总线：
 
 ![image](http://img.cdn.firejq.com/1-1Q113194332O4.gif)
 

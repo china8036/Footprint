@@ -36,7 +36,7 @@
 
 ![image](http://img.cdn.firejq.com/jpg/2018/6/11/998cd85fa2d23e888b107af706a6bd4b.jpg)
 
->  IP is to provide a Best-Efforts (i.e., not guaranteed) way to transport datagrams (packet) from source to destination.
+>  IP is to provide a Best-Efforts (e.g., not guaranteed) way to transport datagrams (packet) from source to destination.
 
 Internet Protocol 在设计之初就把网络互联作为目标，其任务是**提供一种尽力传送 (Best-Efforts) 的方法（不提供任何保证），将数据报从源端传送到目的端**，使用者无须考虑这些机器是否在同一个网络，也不必关心它们之间是否还有其它网络。
 

@@ -35,7 +35,7 @@
     " Plugin 'L9'
     " Git plugin not hosted on GitHub
     Plugin 'git://git.wincent.com/command-t.git'
-    " git repos on your local machine (i.e. when working on your own plugin)
+    " git repos on your local machine (e.g. when working on your own plugin)
     Plugin 'file:///home/gmarik/path/to/plugin'
     " The sparkup vim script is in a subdirectory of this repo called vim.
     " Pass the path to set the runtimepath properly.
@@ -76,7 +76,7 @@
     1. 在 `.vimrc` 中添加：`Plugin 'Valloric/YouCompleteMe'`.
     1. 安装依赖：`sudo apt install build-essential cmake python3-dev`
     1. 编译安装 YCM：`cd ~/.vim/bundle/YouCompleteMe && sudo python3 install.py --clang-completer`
-    
+
     The following additional language support options are available:
     - C# support: install Mono and add --cs-completer when calling install.py.
     - Go support: install Go and add --go-completer when calling install.py.

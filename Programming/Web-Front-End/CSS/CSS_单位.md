@@ -158,7 +158,7 @@ ex和ch单位，与em和rem相似，依赖于当前字体和字体大小。然�
 
 ### 2.2. Viewport-percentage lengths
 
-Viewport-percentage lengths define the `<length>` value relative to the size of the viewport, i.e., the visible portion of the document. Viewport lengths are invalid in `@page` declaration blocks.
+Viewport-percentage lengths define the `<length>` value relative to the size of the viewport, e.g., the visible portion of the document. Viewport lengths are invalid in `@page` declaration blocks.
 
 #### 2.2.1. vh & vw
 
