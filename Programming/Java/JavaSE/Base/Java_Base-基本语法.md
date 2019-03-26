@@ -236,6 +236,8 @@ alias jdk11="export JAVA_HOME=$JAVA_11_HOME"
 
 - [JDK 11 Documentation](https://docs.oracle.com/en/java/javase/11/)
 
+- [JDK 12 Documentation](https://docs.oracle.com/en/java/javase/12/)
+
 ### 2.4. 获取源码包
 
 库源文件在 JDK 中以一个压缩文件 src.zip 的形式发布，若想获取编译器、虚拟机、本地方法、私有辅助类的源代码，可在[这里](http://jdk.java.net/9/) 获取。
