@@ -1,32 +1,32 @@
 - [Design Pattern 结构型模式 - 代理模式](#design-pattern-结构型模式---代理模式)
-    - [1. 基本概念](#1-基本概念)
-    - [2. 代理类型](#2-代理类型)
-    - [3. 静态代理](#3-静态代理)
-        - [3.1. 继承方式](#31-继承方式)
-        - [3.2. 聚合方式](#32-聚合方式)
-        - [3.3. 比较](#33-比较)
-    - [4. 动态代理](#4-动态代理)
-        - [4.1. JDK 动态代理](#41-jdk-动态代理)
-            - [4.1.1. API 说明](#411-api-说明)
-            - [4.1.2. 使用示例](#412-使用示例)
-            - [4.1.3. 优缺点](#413-优缺点)
-        - [4.2. Cglib 动态代理](#42-cglib-动态代理)
-            - [4.2.1. 基本概念](#421-基本概念)
-            - [4.2.2. 原理分析](#422-原理分析)
-            - [4.2.3. API 说明](#423-api-说明)
-            - [4.2.4. 使用示例](#424-使用示例)
-            - [4.2.5. 与 JDK 动态代理的比较](#425-与-jdk-动态代理的比较)
-            - [4.2.6. 应用](#426-应用)
-        - [4.3. 模拟 JDK Proxy 实现动态代理](#43-模拟-jdk-proxy-实现动态代理)
-        - [4.4. JAVAASSIST 动态代理](#44-javaassist-动态代理)
-        - [4.5. AspectJ 动态代理](#45-aspectj-动态代理)
-        - [4.6. 动态代理应用](#46-动态代理应用)
-            - [4.6.1. AOP](#461-aop)
-            - [4.6.2. 数据库连接池](#462-数据库连接池)
-            - [4.6.3. 事务管理](#463-事务管理)
-            - [4.6.4. 单元测试动态 mock 对象](#464-单元测试动态-mock-对象)
-    - [5. 适用场景](#5-适用场景)
-    - [6. Refer Links](#6-refer-links)
+  - [1. 基本概念](#1-基本概念)
+  - [2. 代理类型](#2-代理类型)
+  - [3. 静态代理](#3-静态代理)
+    - [3.1. 继承方式](#31-继承方式)
+    - [3.2. 聚合方式](#32-聚合方式)
+    - [3.3. 比较](#33-比较)
+  - [4. 动态代理](#4-动态代理)
+    - [4.1. JDK 动态代理](#41-jdk-动态代理)
+      - [4.1.1. API 说明](#411-api-说明)
+      - [4.1.2. 使用示例](#412-使用示例)
+      - [4.1.3. 优缺点](#413-优缺点)
+    - [4.2. Cglib 动态代理](#42-cglib-动态代理)
+      - [4.2.1. 基本概念](#421-基本概念)
+      - [4.2.2. 原理分析](#422-原理分析)
+      - [4.2.3. API 说明](#423-api-说明)
+      - [4.2.4. 使用示例](#424-使用示例)
+      - [4.2.5. 与 JDK 动态代理的比较](#425-与-jdk-动态代理的比较)
+      - [4.2.6. 应用](#426-应用)
+    - [4.3. 模拟 JDK Proxy 实现动态代理](#43-模拟-jdk-proxy-实现动态代理)
+    - [4.4. JAVAASSIST 动态代理](#44-javaassist-动态代理)
+    - [4.5. AspectJ 动态代理](#45-aspectj-动态代理)
+    - [4.6. 动态代理应用](#46-动态代理应用)
+      - [4.6.1. AOP](#461-aop)
+      - [4.6.2. 数据库连接池](#462-数据库连接池)
+      - [4.6.3. 事务管理](#463-事务管理)
+      - [4.6.4. 单元测试动态 mock 对象](#464-单元测试动态-mock-对象)
+  - [5. 适用场景](#5-适用场景)
+  - [6. Refer Links](#6-refer-links)
 
 # Design Pattern 结构型模式 - 代理模式
 
@@ -44,23 +44,23 @@
 
 在实际开发过程中，代理类的实现相当复杂，代理模式根据其目的和实现方式不同可分为很多种类，其中常用的几种代理模式简要说明如下：
 - 远程代理 (Remote Proxy)
-  
+
   为一个位于不同的地址空间的对象提供一个本地的代理对象，这个不同的地址空间可以是在同一台主机中，也可是在另一台主机中，远程代理又称为大使 (Ambassador)。
 
 - 虚拟代理 (Virtual Proxy)
-  
+
   如果需要创建一个资源消耗较大的对象，先创建一个消耗相对较小的对象来表示，真实对象只在需要时才会被真正创建。
 
 - 保护代理 (Protect Proxy)
-  
+
   控制对一个对象的访问，可以给不同的用户提供不同级别的使用权限。
 
 - 缓冲代理 (Cache Proxy)
-  
+
   为某一个目标操作的结果提供临时的存储空间，以便多个客户端可以共享这些结果。
 
 - 智能引用代理 (Smart Reference Proxy)
-  
+
   当一个对象被引用时，提供一些额外的操作，例如将对象被调用的次数记录下来等。
 
 在这些常用的代理模式中，有些代理类的设计非常复杂，例如远程代理类，它封装了底层网络通信和对远程对象的调用，其实现较为复杂。代理模式类型较多，其中远程代理、虚拟代理、保护代理等在软件开发中应用非常广泛。
@@ -310,7 +310,7 @@ public class ProxyTest {
 
           ep.play();
       }
-  } 
+  }
   ```
 
 如果我们需要能够在代理时多样化各个动作执行的顺序（如广播广告环境 / 广告广播环境 / 环境广告广播 ...）
@@ -345,20 +345,20 @@ public class ProxyTest {
 
 Proxy 类是所有动态代理类的父类，它提供了用于创建动态代理类和动态代理对象的静态方法：
 - `static Class<?> getProxyClass​(ClassLoader loader, Class<?>... interfaces)`
-    
+
     创建一个动态代理类，返回类所对应的 Class 对象，但该方法官方文档不推荐使用。
-    
+
     > Constructor.newInstance will throw IllegalAccessException when it is called on an inaccessible proxy class. Use newProxyInstance(ClassLoader, Class[], InvocationHandler) to create a proxy instance instead.
 
 - `static Object newProxyInstance​(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)`
 
     直接创建一个动态代理对象，官方推荐使用此方法。
-  
+
   参数说明：
   - 第一个参数指定该代理对象的类加载器。
   - 第二个参数指定该代理对象要实现的多个**interface**，JDK 动态代理只能为**interface**（不可以是 class）创建动态代理。
   - 第三个参数指定该代理对象的 InvocationHandler 对象，执行代理对象的每个方法时都会被替换成执行 InvocationHandler 对象的 invoke 方法。
-  
+
 InvocationHandler 接口是由代理实例的调用处理程序实现的接口，调用代理对象的所有方法时都会被替换成调用该接口的 invoke 方法并返回结果：
 - `Object invoke​(Object proxy, Method method, Object[] args) throws Throwable`
     - proxy：动态代理的对象实例。
@@ -394,7 +394,7 @@ public class Wuliangye implements SellWine {
 public class GuitaiA implements InvocationHandler {
 
     private Object pingpai;
-    
+
     public GuitaiA(Object pingpai) {
         this.pingpai = pingpai;
     }
@@ -452,7 +452,7 @@ public class Test {
 
 #### 4.2.1. 基本概念
 
-> cglib is a powerful, high performance and quality Code Generation Library, It is used to extend JAVA classes and implements interfaces at runtime. 
+> cglib is a powerful, high performance and quality Code Generation Library, It is used to extend JAVA classes and implements interfaces at runtime.
 
 [cglib](https://github.com/cglib/cglib)，即 Code Generation Library，是一个强大、高性能、高质量的字节码生成类库，它可以在运行期扩展 Java 类与创建 Java 接口的实现。
 
@@ -492,15 +492,15 @@ Cglib 库的代码量不多，但是由于缺乏文档导致学习起来比较�
             - Method method: 被调用的被代理方法引用对象。
             - Object[] params: 被调用方法的参数值列表。
             - MethodProxy proxy: 代理类对方法的代理引用对象，原始类里每一个方法都会在动态的子类里有一个对应的 MethodProxy。
-                
+
                 我们一般使用 `proxy.invokeSuper(obj,args)` 方法，这个很好理解，就是执行原始类的方法。还有一个方法 `proxy.invoke(obj,args)`，这是执行生成子类的方法，但如果传入的 obj 就是子类的话，会发生内存溢出，因为子类的方法不停地进入 intercept 方法，而这个方法又去调用子类的方法，两个方法直接循环调用了。
 
                 一个 MethodProxy 又对应了两个动态生成的 FastClass 类，一个是对应原始方法，一个对应新生成的子类，MethodProxy.invokeSuper 就是交给对应原始方法那个 FastClass，MethodProxy.invoke 交给另一个。
-    
+
     - `FixedValue`接口：扩展自 Callback 接口，用于实现一个锁定方法返回值的回调过滤器，即无论被代理类的方法返回什么值，回调方法都返回固定值。实现该接口需要实现 loadObject() 方法：
         - `Object loadObject() throws Exception`
 
-    - [`NoOp.INSTANCE`对象](http://cglib.sourceforge.net/apidocs/net/sf/cglib/proxy/NoOp.html)：扩展自 Callback 接口，NoOp.INSTANCE 对象表示一个没有任何操作的拦截器。NoOp 表示 no operator，即什么操作也不做。 
+    - [`NoOp.INSTANCE`对象](http://cglib.sourceforge.net/apidocs/net/sf/cglib/proxy/NoOp.html)：扩展自 Callback 接口，NoOp.INSTANCE 对象表示一个没有任何操作的拦截器。NoOp 表示 no operator，即什么操作也不做。
       > Methods using this Enhancer callback will delegate directly to the default (super) implementation in the base class.
 
 - `CallbackFilter` 接口：用于实现一个回调过滤器，可以在回调时指定对不同方法使用不同的回调拦截器，或者根本不执行回调。
@@ -514,88 +514,88 @@ Cglib 库的代码量不多，但是由于缺乏文档导致学习起来比较�
 
 ```java
 // 被代理类
-public class TargetObject {  
-    public String method1(String paramName) {  
-        return paramName;  
-    }  
-    public int method2(int count) {  
-        return count;  
-    }  
-    public int method3(int count) {  
-        return count;  
-    }  
+public class TargetObject {
+    public String method1(String paramName) {
+        return paramName;
+    }
+    public int method2(int count) {
+        return count;
+    }
+    public int method3(int count) {
+        return count;
+    }
 }
 
 // 实现一个回调拦截器
-public class TargetInterceptor implements MethodInterceptor {  
-    // 重写方法拦截在方法前和方法后加入业务  
-    @Override  
-    public Object intercept(Object obj, Method method, Object[] params,  
-            MethodProxy proxy) throws Throwable {  
-        System.out.println("调用前");  
+public class TargetInterceptor implements MethodInterceptor {
+    // 重写方法拦截在方法前和方法后加入业务
+    @Override
+    public Object intercept(Object obj, Method method, Object[] params,
+            MethodProxy proxy) throws Throwable {
+        System.out.println("调用前");
         Object result = proxy.invokeSuper(obj, params);  // 执行原始类的方法
         // Object result = method.invoke(conn, params); // 执行生成子类的方法，obj 是调用该方法的对象
-        System.out.println(" 调用后"+result);  
-        return result;  
-    }  
-}  
+        System.out.println(" 调用后"+result);
+        return result;
+    }
+}
 
 // 实现一个锁定方法返回值的回调拦截器
-public class TargetResultFixed implements FixedValue{  
-    /**  
-     * 锁定回调值为 999  
+public class TargetResultFixed implements FixedValue{
+    /**
+     * 锁定回调值为 999
      * CallbackFilter 中定义的使用 FixedValue 型回调的方法为 getConcreteMethodFixedValue，该方法返回值为整型
-     */  
-    @Override  
-    public Object loadObject() throws Exception {  
-        System.out.println("锁定结果");  
-        Object obj = 999;  
-        return obj;  
-    }  
-  
-}  
+     */
+    @Override
+    public Object loadObject() throws Exception {
+        System.out.println("锁定结果");
+        Object obj = 999;
+        return obj;
+    }
+
+}
 
 // 实现一个拦截过滤器
-public class TargetMethodCallbackFilter implements CallbackFilter {  
-    /** 
-     * 过滤方法 
+public class TargetMethodCallbackFilter implements CallbackFilter {
+    /**
+     * 过滤方法
      * 返回的值为数字，代表了 Callback 数组中的索引位置所对于的 Callback 对象
-     */  
-    @Override  
-    public int accept(Method method) {  
-        if(method.getName().equals("method1")){  
-            System.out.println("filter method1 ==0");  
-            return 0;  
-        }  
-        if(method.getName().equals("method2")){  
-            System.out.println("filter method2 ==1");  
-            return 1;  
-        }  
-        if(method.getName().equals("method3")){  
-            System.out.println("filter method3 ==2");  
-            return 2;  
-        }  
-        return 0;  
-    }  
-}  
+     */
+    @Override
+    public int accept(Method method) {
+        if(method.getName().equals("method1")){
+            System.out.println("filter method1 ==0");
+            return 0;
+        }
+        if(method.getName().equals("method2")){
+            System.out.println("filter method2 ==1");
+            return 1;
+        }
+        if(method.getName().equals("method3")){
+            System.out.println("filter method3 ==2");
+            return 2;
+        }
+        return 0;
+    }
+}
 
 // 测试代码
-public static void main(String args[]) {  
-        Enhancer enhancer = new Enhancer();  
-        enhancer.setSuperclass(TargetObject.class);  
+public static void main(String args[]) {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(TargetObject.class);
         enhancer.setCallbacks(new Callback[] {
-                new TargetInterceptor(), 
-                NoOp.INSTANCE, 
+                new TargetInterceptor(),
+                NoOp.INSTANCE,
                 new TargetResultFixed()
-        });  
-        enhancer.setCallbackFilter(new TargetMethodCallbackFilter());  
+        });
+        enhancer.setCallbackFilter(new TargetMethodCallbackFilter());
 
-        TargetObject targetProxy = (TargetObject)enhancer.create();  
-        System.out.println(targetObject2.method1("mmm1"));  
-        System.out.println(targetObject2.method2(100));  
-        System.out.println(targetObject2.method3(100));  
-        System.out.println(targetObject2.method3(200));  
-} 
+        TargetObject targetProxy = (TargetObject)enhancer.create();
+        System.out.println(targetObject2.method1("mmm1"));
+        System.out.println(targetObject2.method2(100));
+        System.out.println(targetObject2.method3(100));
+        System.out.println(targetObject2.method3(200));
+}
 ```
 
 #### 4.2.5. 与 JDK 动态代理的比较
@@ -613,7 +613,7 @@ public static void main(String args[]) {
     - 相同情况下，Cglib 两种实现方式，`invokeSuper` 和 `setSuperClass` 组合实现方式永远比 `invoke` 和 `setInterfaces` 组合实现方式**慢**。
     - Cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在代理方法数量较少、函数平均调用的情况下，执行速度比 JDK Proxy 快。但随着代理方法的数量增多，优势越来越不明显，到达某个数量级速度比 JDK Proxy 慢。
     - Cglib 中的 `invoke` 和 `setInterfaces` 组合实现方式在调用特定函数（在 switch 中靠后的 case) 会比 JDK Proxy 慢。
-    
+
 - 使用限制
     - JDK 动态代理的使用前提，必须是目标类基于统一的接口。如果没有上述前提，JDK 动态代理不能应用。由此可以看出，JDK 动态代理有一定的局限性。
     - 相比之下 Cglib 由于采用字节码生成代理对象，实现的动态代理没有多余限制，应用更加广泛。
@@ -693,7 +693,7 @@ public class MyInvocationHandler implements InvocationHandler {
     // 通过反射以 target 作为主调来执行 target 对象的原有的方法 method
     Object result = method.invoke(this.target, args);
     DogUtil.method2();
-    
+
     return result;
   }
 }

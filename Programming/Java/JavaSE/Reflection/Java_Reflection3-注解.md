@@ -1,32 +1,32 @@
-- [Java 注解](#java-%E6%B3%A8%E8%A7%A3)
-    - [1. 基本概念](#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-        - [1.1. 定义](#11-%E5%AE%9A%E4%B9%89)
-        - [1.2. 分类](#12-%E5%88%86%E7%B1%BB)
-    - [2. JDK 注解](#2-jdk-%E6%B3%A8%E8%A7%A3)
-        - [2.1. 基本注解](#21-%E5%9F%BA%E6%9C%AC%E6%B3%A8%E8%A7%A3)
-            - [2.1.1. 限定重写父类方法 @Override](#211-%E9%99%90%E5%AE%9A%E9%87%8D%E5%86%99%E7%88%B6%E7%B1%BB%E6%96%B9%E6%B3%95-override)
-            - [2.1.2. 标示已过时 @Deprecated](#212-%E6%A0%87%E7%A4%BA%E5%B7%B2%E8%BF%87%E6%97%B6-deprecated)
-            - [2.1.3. 抑制编译器警告 @SuppressWarnings](#213-%E6%8A%91%E5%88%B6%E7%BC%96%E8%AF%91%E5%99%A8%E8%AD%A6%E5%91%8A-suppresswarnings)
-            - [2.1.4. 堆污染”警告 @SafeVarargs](#214-%E5%A0%86%E6%B1%A1%E6%9F%93%E2%80%9D%E8%AD%A6%E5%91%8A-safevarargs)
-            - [2.1.5. 函数式接口 @FunctionalInterface](#215-%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3-functionalinterface)
-        - [2.2. 元注解](#22-%E5%85%83%E6%B3%A8%E8%A7%A3)
-            - [2.2.1. @Retention](#221-retention)
-            - [2.2.2. @Target](#222-target)
-            - [2.2.3. @Documented](#223-documented)
-            - [2.2.4. @Inherited](#224-inherited)
-            - [2.2.5. @Repeatable](#225-repeatable)
-    - [3. 自定义注解](#3-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3)
-        - [3.1. 注解的定义](#31-%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%AE%9A%E4%B9%89)
-            - [3.1.1. @interface](#311-interface)
-            - [3.1.2. 成员属性](#312-%E6%88%90%E5%91%98%E5%B1%9E%E6%80%A7)
-        - [3.2. 注解的解析](#32-%E6%B3%A8%E8%A7%A3%E7%9A%84%E8%A7%A3%E6%9E%90)
-            - [3.2.1. 相关接口](#321-%E7%9B%B8%E5%85%B3%E6%8E%A5%E5%8F%A3)
-            - [3.2.2. 一般步骤](#322-%E4%B8%80%E8%88%AC%E6%AD%A5%E9%AA%A4)
-    - [4. 应用实例](#4-%E5%BA%94%E7%94%A8%E5%AE%9E%E4%BE%8B)
-        - [4.1. 自定义简单测试注解](#41-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%AE%80%E5%8D%95%E6%B5%8B%E8%AF%95%E6%B3%A8%E8%A7%A3)
-        - [4.2. JUnit](#42-junit)
-        - [4.3. Retrofit](#43-retrofit)
-    - [5. Refer Links](#5-refer-links)
+- [Java 注解](#java-注解)
+  - [1. 基本概念](#1-基本概念)
+    - [1.1. 定义](#11-定义)
+    - [1.2. 分类](#12-分类)
+  - [2. JDK 注解](#2-jdk-注解)
+    - [2.1. 基本注解](#21-基本注解)
+      - [2.1.1. 限定重写父类方法 @Override](#211-限定重写父类方法-override)
+      - [2.1.2. 标示已过时 @Deprecated](#212-标示已过时-deprecated)
+      - [2.1.3. 抑制编译器警告 @SuppressWarnings](#213-抑制编译器警告-suppresswarnings)
+      - [2.1.4. 堆污染”警告 @SafeVarargs](#214-堆污染警告-safevarargs)
+      - [2.1.5. 函数式接口 @FunctionalInterface](#215-函数式接口-functionalinterface)
+    - [2.2. 元注解](#22-元注解)
+      - [2.2.1. @Retention](#221-retention)
+      - [2.2.2. @Target](#222-target)
+      - [2.2.3. @Documented](#223-documented)
+      - [2.2.4. @Inherited](#224-inherited)
+      - [2.2.5. @Repeatable](#225-repeatable)
+  - [3. 自定义注解](#3-自定义注解)
+    - [3.1. 注解的定义](#31-注解的定义)
+      - [3.1.1. @interface](#311-interface)
+      - [3.1.2. 成员属性](#312-成员属性)
+    - [3.2. 注解的解析](#32-注解的解析)
+      - [3.2.1. 相关接口](#321-相关接口)
+      - [3.2.2. 一般步骤](#322-一般步骤)
+  - [4. 应用实例](#4-应用实例)
+    - [4.1. 自定义简单测试注解](#41-自定义简单测试注解)
+    - [4.2. JUnit](#42-junit)
+    - [4.3. Retrofit](#43-retrofit)
+  - [5. Refer Links](#5-refer-links)
 
 # Java 注解
 
@@ -149,9 +149,9 @@ public interface Runnable {
 
 Retention 意为保留期，当 @Retention 应用到一个注解上的时候，它解释说明了这个注解的的存活时间。
 
-@Retention 取值如下： 
-- `RetentionPolicy.SOURCE`：注解只在源码阶段保留，在编译器进行编译时它将被丢弃忽视。 
-- `RetentionPolicy.CLASS`：注解只被保留到编译进行的时候，它并不会被加载到 JVM 中。 
+@Retention 取值如下：
+- `RetentionPolicy.SOURCE`：注解只在源码阶段保留，在编译器进行编译时它将被丢弃忽视。
+- `RetentionPolicy.CLASS`：注解只被保留到编译进行的时候，它并不会被加载到 JVM 中。
 - `RetentionPolicy.RUNTIME`：注解可以保留到程序运行的时候，它会被加载进入到 JVM 中，所以在程序运行时可以获取到它们。
 
 ```java
@@ -306,11 +306,11 @@ NOTE:
 **注解通过反射机制获取和解析，由于反射比较慢，因此注解使用时也需要谨慎计较时间成本。**
 
 - [Annotation](https://docs.oracle.com/javase/9/docs/api/java/lang/annotation/package-summary.html) 接口
-  
+
   Java 中使用 `Annotation` 接口来代表程序元素前面的注解，是所有注解的父接口。
 
 - [AnnotatedElement](https://docs.oracle.com/javase/9/docs/api/java/lang/reflect/AnnotatedElement.html) 接口
-  
+
   `java.lang.reflect` 包下的 `AnnotatedElement` 接口代表程序中可以接受注解的程序元素，是所有程序元素的父接口。
   - 该接口主要有以下几个实现类：
     - Class：类定义
@@ -324,7 +324,7 @@ NOTE:
     - `Annotation[]	getAnnotations​()`: 返回该程序元素上存在的所有注解。
     - `Annotation[]	getDeclaredAnnotations​()`: Returns annotations that are directly present on this element.
     - `default boolean	isAnnotationPresent​(Class<? extends Annotation> annotationClass)`: 判断该程序元素上是否包含指定类型的注解，存在则返回 true，否则返回 false。
-    
+
 #### 3.2.2. 一般步骤
 
 1. 首先可以通过 Class 对象的 isAnnotationPresent() 方法判断它是否应用了某个注解：
@@ -410,7 +410,7 @@ NOTE: 如果一个注解要在运行时被成功提取，那么 `@Retention(Rete
 
 ## 4. 应用实例
 
-注解有许多用处，主要如下： 
+注解有许多用处，主要如下：
 - 提供信息给编译器：编译器可以利用注解来探测错误和警告信息。
 - 编译阶段时的处理：软件工具可以用来利用注解信息来生成代码、HTML 文档或者做其它相应处理。
 - 运行时的处理：某些注解可以在程序运行的时候接受代码的提取。
@@ -490,7 +490,7 @@ public class TestTool {
                     // 记录测试过程中，发生的异常的具体信息
                     log.append(e.getCause().getMessage());
                     log.append("\n\r");
-                } 
+                }
             }
         }
 
@@ -532,7 +532,7 @@ public class Main {
 		Retrofit retrofit = new Retrofit.Builder()
 				.baseUrl("https://api.github.com/")
 				.build();
-	
+
 		GitHubService service = retrofit.create(GitHubService.class);
 	}
 }
