@@ -1,4 +1,4 @@
-- [Git](#git)
+- [Git 常用操作](#git-常用操作)
   - [1. 安装](#1-安装)
   - [2. 配置](#2-配置)
     - [2.1. 设置当前用户的用户名和 email](#21-设置当前用户的用户名和-email)
@@ -8,8 +8,9 @@
     - [2.5. 配置提交日志模版](#25-配置提交日志模版)
     - [2.6. 配置命令别名](#26-配置命令别名)
     - [2.7. 其它常用配置](#27-其它常用配置)
-    - [2.8. .gitignore 文件配置](#28-gitignore-文件配置)
-    - [2.9. .editorconfig 文件配置](#29-editorconfig-文件配置)
+    - [2.8. 中文显示配置](#28-中文显示配置)
+    - [2.9. .gitignore 文件配置](#29-gitignore-文件配置)
+    - [2.10. .editorconfig 文件配置](#210-editorconfig-文件配置)
   - [3. 基本命令](#3-基本命令)
   - [4. 常用操作](#4-常用操作)
     - [4.1. 手动创建一个项目](#41-手动创建一个项目)
@@ -30,8 +31,16 @@
   ```
   apt install git
   ```
+- MacOS
+  ```
+  brew install git
+  ```
 
 ## 2. 配置
+
+[git-config(1) Manual Page](https://git-scm.com/docs/git-config)
+
+[《Pro Git》8.1 Customizing Git - Git Configuration](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration)
 
 ### 2.1. 设置当前用户的用户名和 email
 
@@ -69,18 +78,50 @@ Home 目录下会新建一个 `.gitconfig` 文件，配置信息就保存于这�
 
 ### 2.3. 设置换行符
 
-http://kuanghy.github.io/2017/03/19/git-lf-or-crlf
+[Git 多平台换行符问题 (LF or CRLF)](http://kuanghy.github.io/2017/03/19/git-lf-or-crlf)
 
-https://github.com/cssmagic/blog/issues/22
+[GitHub 第一坑：换行符自动转换](https://github.com/cssmagic/blog/issues/22)
 
+[GitHub Help: Dealing with line endings](https://help.github.com/en/articles/dealing-with-line-endings)
+
+假如你正在 Windows 上写程序，又或者你正在和其他人合作，他们在 Windows 上编程，而你却在其他系统上，在这些情况下，你可能会遇到行尾结束符问题。这是因为在不同平台上文本文件使用不同的换行符来表示一行的结束：
+- Windows: CRLF
+- UNIX/Linux: LF
+- MacOS: CR
+
+相关 Git 配置选项：
+- core.autocrlf
+
+  Git can handle this by **auto-converting CRLF line endings into LF** when you add a file to the index, and **vice versa** when it checks out code onto your filesystem. You can turn on this functionality with the `core.autocrlf` setting.
+
+  - `git config --global core.autocrlf false`: 关闭自动转换功能。
+  - `git config --global core.autocrlf true`: 适用于 Windows, this **converts LF endings into CRLF when you check out code**. 即只在从 Git 服务器 check out 代码到本地时，将 LF 转换为 CRLF。
+  - `git config --global core.autocrlf input`: 适用于 Linux or macOS, this **converts CRLF to LF on commit but not the other way**. This setup should leave you with CRLF endings in Windows checkouts, but LF endings on macOS and Linux systems and in the repository. 即只在将代码从本地 commit 到 Git 服务器时（所谓的 "input"），将 CRLF 转换为 LF。
+
+- core.safecrlf
+
+  该选项用于检查文件是否包含混合换行符，其有三个可选项：
+  - true: 拒绝提交包含混合换行符的文件。
+  - false: 允许提交包含混合换行符的文件。
+  - warn: 提交包含混合换行符的文件时给出警告。
+  ```
+  git config --global core.safecrlf true   // 禁止提交混合换行符
+  ```
+
+常用 Git 相关配置搭配：
 ```
 git config --global core.autocrlf input
 git config --global core.safecrlf false
 ```
 
-### 2.4. 设置代理
+P.S.
 
-http://www.jianshu.com/p/5e64135eb5c5
+使用 dos2unix 命令行工具将代码仓库中的所有文件转换为 LF 换行符并保持原文件的修改时间不变：
+```
+find . -name "*.md" | xargs dos2unix -k
+```
+
+### 2.4. 设置代理
 
 设置针对个别 URL 的代理：
 ```
@@ -141,19 +182,41 @@ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Crese
 ### 2.7. 其它常用配置
 
 ```
-git config --global credential.helper store // 操作一次后，会在 ~/ 目录下生成。config 和。git-credentials 两个文件
-
-git config --global core.safecrlf true   // 禁止提交混合换行符
-
-git config –global core.autocrlf false  // 让 git 不管换行符问题
-// git config --global core.autocrlf input  // 换行符使用 LF
-
-git config –global gui.encoding utf-8  // 避免 git gui 中中文乱码
-
-git config –global core.quotepath off  // 避免 git status 显示中文乱码
+git config --global credential.helper store // 操作一次后，会在 ~/ 目录下生成 .config 和 .git-credentials 两个文件
 ```
 
-### 2.8. .gitignore 文件配置
+### 2.8. 中文显示配置
+
+[Git 中文显示问题解决](https://xstarcd.github.io/wiki/shell/git_chinese.html)
+
+- 避免 git gui 中中文乱码
+  ```
+  git config –global gui.encoding utf-8
+  ```
+
+- 避免 git status 显示中文乱码
+  ```
+  git status
+  On branch master
+  Your branch is up to date with 'origin/master'.
+
+  Changes to be committed:
+    (use "git reset HEAD <file>..." to unstage)
+
+    renamed:    "PenetrationTesting/Steganography/DigitalWatermarking/DW_\345\237\272\347\241\200.md" -> "PenetrationTesting/Steganography/DigitalWatermarking_\345\237\272\347\241\200.md"
+    new file:   Programming/Matlab/Matlab Prime.pdf
+    new file:   "Programming/Matlab/Matlab_Script1_\345\237\272\346\234\254\350\257\255\346\263\225.md"
+    new file:   "Programming/Matlab/Matlab_Script2_VC\346\267\267\347\274\226.md"
+    new file:   "Programming/Matlab/Matlab_\345\270\270\347\224\250\346\223\215\344\275\234.md"
+    new file:   "Programming/Matlab/matlab\345\205\245\351\227\250\346\225\231\347\250\213.pdf"
+  ```
+  解决方法：
+  ```
+  # 不对 0x80 以上的字符进行 quote，解决 git status/commit 时中文文件名乱码
+  git config –global core.quotepath off
+  ```
+
+### 2.9. .gitignore 文件配置
 
 [廖雪峰 Git 教程：忽略特殊文件](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013758404317281e54b6f5375640abbb11e67be4cd49e0000)
 
@@ -199,7 +262,7 @@ e.g.
   ```
   说明：忽略全部内容，但是不忽略 .gitignore 文件、根目录下的 /fw/bin/ 和 /fw/sf/ 目录。
 
-### 2.9. .editorconfig 文件配置
+### 2.10. .editorconfig 文件配置
 
 https://www.zhihu.com/question/19960028
 
@@ -323,6 +386,7 @@ indent_size = 2
   ```
   $ git commit --amend
   ```
+  <!-- TODO: git commit 规范 -->
 
 - checkout
 
@@ -528,6 +592,8 @@ indent_size = 2
 
 ### 4.2. 提交本地修改到远程仓库
 
+![image](http://img.cdn.firejq.com/jpg/2019/4/5/ca96904842d5c3cf9a69ec52be241267.jpg)
+
 1. git clone 已存在 GitHub 上的 Repository（在新建的~/MyTestFolder 目录中）:
     ```
     git clone https://github.com/zhchnchn/ZhchnchnTest.git
@@ -586,6 +652,7 @@ IdentityFile// 对应的密钥的本地路径
 
 克隆远程仓库到本地
 1. 先 cd 到某个文件夹下（在该文件夹下生成克隆仓库）
+
 1. ![image](http://img.cdn.firejq.com/jpg/2018/11/2/dd78634f3883c98126756b17f42bace4.jpg)
 
     如果没有在 config 文件中配置 shabby 的 host，shabby 要改成 github.com（远程仓库主机地址）。
@@ -613,6 +680,8 @@ IdentityFile// 对应的密钥的本地路径
 1. 推送最新代码到自己的远程仓库：`git push origin`
 
 ## 5. Refer Links
+
+[git Reference](https://git-scm.com/docs)
 
 [简明 Git 命令速查表](http://www.codeceo.com/article/git-command-guide.html)
 
