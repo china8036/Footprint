@@ -1,6 +1,8 @@
 - [计算机视觉 - 三维模型：OpenMesh](#计算机视觉---三维模型openmesh)
 	- [1. 基本概念](#1-基本概念)
 	- [2. 安装配置](#2-安装配置)
+		- [2.1. 源码编译安装](#21-源码编译安装)
+		- [2.2. 二进制安装包安装](#22-二进制安装包安装)
 	- [3. 基本操作](#3-基本操作)
 		- [3.1. 迭代器 (Iterator)](#31-迭代器-iterator)
 		- [3.2. 循环器 (Circulator)](#32-循环器-circulator)
@@ -13,7 +15,7 @@
 
 > OpenMesh is a generic and efficient library that offers data structures for representing and manipulating polygonal meshes. It is a powerful tool for handling polygonal meshes.
 
-[OpenMesh](https://www.openmesh.org/media/Documentations/OpenMesh-Doc-Latest/index.html) 是一个提供了用于表示和操作多边形网格数据结构的通用且高效率的库，用户可以根据应用的需要定制网格类型，还可以提供自定义的表示点、边和面的数据结构或可以方便地使用 OpenMesh 中预定义的结构。
+[OpenMesh](https://www.openmesh.org/) 是一个提供了用于表示和操作多边形网格数据结构的通用且高效率的库，用户可以根据应用的需要定制网格类型，还可以提供自定义的表示点、边和面的数据结构或可以方便地使用 OpenMesh 中预定义的结构。
 
 OpenMesh 使用半边数据结构 (Halfedge Data Structure) 来存储和管理网格元素（点、边、面）和它们之间的连接关系。
 
@@ -27,6 +29,14 @@ OpenMesh 的实现和内部结构，使得其具有以下特点和功能：
 
 e.g.
 ```cpp
+#include <iostream>
+
+// −−−−−−−−−−−−−−−−−−−− OpenMesh
+#include <OpenMesh/Core/IO/MeshIO.hh>
+#include <OpenMesh/Core/Mesh/PolyMesh_ArrayKernelT.hh>
+
+using namespace std;
+
 // 先定义一个 MyMesh 类
 typedef OpenMesh::TriMesh_ArrayKernelT<> MyMesh;
 ...
@@ -55,6 +65,50 @@ bool flag = mesh.is_boundary(fh);// vh 是某个面的句柄
 ```
 
 ## 2. 安装配置
+
+OpenMesh 支持在以下平台和编译器中使用：
+- Linux (gcc and clang)
+- Windows
+	- Microsoft Visual Studio 2015,2017
+	- MinGW
+- MacOS X
+
+### 2.1. 源码编译安装
+
+[OpenMesh Document: Compiling OpenMesh](https://www.openmesh.org/media/Documentations/OpenMesh-Doc-Latest/a04067.html)
+
+### 2.2. 二进制安装包安装
+
+在 Windows 平台上，最简单的安装方式是使用针对 Visual Studio 编译的二进制安装包进行安装（以下例子使用静态链接文件，可省去配置系统环境变量的步骤）：
+
+![image](http://img.cdn.firejq.com/jpg/2019/4/11/d5a2446e1784bda35b8abe95528b35d8.jpg)
+
+NOTE：选择二进制安装包时，VS 的版本需要与实际开发使用的 VS 版本相对应，否则在运行代码时会出现很多编译器错误。
+
+项目配置过程：
+1. 添加包含目录和库目录：
+
+		![image](http://img.cdn.firejq.com/jpg/2019/4/10/467129f0840336ac5669a6ee5b5e559b.jpg)
+
+		![image](http://img.cdn.firejq.com/jpg/2019/4/10/0b85bcf2d58e18ccc5e18925e4ef1b1f.jpg)
+
+1. 添加附加依赖项：
+
+		```
+		OpenMeshCored.lib
+		OpenMeshToolsd.lib
+		```
+
+		![image](http://img.cdn.firejq.com/jpg/2019/4/10/c86e579ca8de1fbd3525023d1159ddb6.jpg)
+
+1. 添加预处理器定义：
+
+		```
+		_USE_MATH_DEFINES
+		OM_STATIC_BUILD
+		```
+
+		![image](http://img.cdn.firejq.com/jpg/2019/4/10/094224d0de8cedecc8d7b6fa85c33977.jpg)
 
 ## 3. 基本操作
 
@@ -254,6 +308,8 @@ int main() {
 ```
 
 ## 4. Refer Links
+
+[OpenMesh Document](https://www.openmesh.org/media/Documentations/OpenMesh-Doc-Latest/index.html)
 
 TODO:
 
