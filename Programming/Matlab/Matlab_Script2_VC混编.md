@@ -39,7 +39,12 @@ MATLAB 具有着很高的计算性能，一些算法用 MATLAB 很容易实现�
 
     ![image](http://img.cdn.firejq.com/jpg/2019/4/4/7c8016a214b2ee50cdf24c7776ef286b.jpg)
 
-1. 在链接器中添加附加依赖项：`libeng.lib`, `libmx.lib` 和 `libmat.lib`
+1. 在链接器中添加附加依赖项：
+		```
+		libeng.lib
+		libmx.lib
+		libmat.lib
+		```
 
     ![image](http://img.cdn.firejq.com/jpg/2019/4/4/55f18eb818e19b70a9569d669fb4ab11.jpg)
 

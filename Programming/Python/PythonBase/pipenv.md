@@ -2,7 +2,7 @@
   - [1. 基础概念](#1-基础概念)
   - [2. 安装和配置](#2-安装和配置)
   - [3. 使用](#3-使用)
-  - [4. Refer Links](#4-refer-links)
+  - [4. Refer Links](#4-Refer-Links)
 
 # pipenv
 
@@ -31,9 +31,37 @@ brew install pipenv
 
   也可以通过 WORKON_HOME 环境变量来自定义存储路径。
 
+- 更换国内源
+
+  在项目目录下的 Pipfile 中将 url 设置为国内地址即可：
+  - 阿里云：http://mirrors.aliyun.com/pypi/simple/
+  - 豆瓣：http://pypi.douban.com/simple/
+  - 清华大学：https://pypi.tuna.tsinghua.edu.cn/simple/
+  - 中国科学技术大学：https://pypi.mirrors.ustc.edu.cn/simple/
+
 ## 3. 使用
 
 [Python 实践 32-PyCharm 里使用 pipenv 创建的环境](https://zhuanlan.zhihu.com/p/33407501)
+
+- 创建项目目录
+  ```
+  mkdir newproject
+  cd newproject
+  pipenv install （耐心等待)
+  pipenv shell # 进入新环境
+  Shell for /Users/zyt/.local/share/virtualenvs/new-cRH-55u9 already activated.
+  pipenv install requests # 安装第三方包
+  exit # 退出
+  ```
+
+- 配置 PyCharm 使用 pipenv 环境
+
+  1. 启动 PyCharm，打开名称为 new 的项目
+  1. 进入项目设置，搜索 Project Interpreter
+  1. 在 Project Interpreter 的右上角配置按钮上选择 Add Local
+  1. 选择 VirtualEnv Environment
+  1. 复制刚才的环境路径"/Users/zyt/.local/share/virtualenvs/new-cRH-55u9/bin/python"到粘贴板，粘贴到 existing environment 的 interpreter 下面，点击确定。
+  1. 这样，你就可以在 PyCharm 里用为 new 专门创建的 python 环境了
 
 ## 4. Refer Links
 

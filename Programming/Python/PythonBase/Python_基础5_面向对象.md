@@ -1,4 +1,4 @@
-- [Python 基础：面向对象](#python-基础面向对象)
+- [Python 基础：面向对象](#Python-基础面向对象)
   - [1. 数据封装](#1-数据封装)
     - [1.1. 类定义](#11-类定义)
     - [1.2. 属性](#12-属性)
@@ -29,8 +29,7 @@
   - [2. 多态](#2-多态)
     - [2.1. “开闭”原则](#21-开闭原则)
     - [2.2. 鸭子类型](#22-鸭子类型)
-  - [3. Refer Links](#3-refer-links)
-
+  - [3. Refer Links](#3-Refer-Links)
 
 # Python 基础：面向对象
 
@@ -178,7 +177,7 @@ http://blog.csdn.net/cc7756789w/article/details/46480829
 
 **每个类的实例属性互不相同，因此每个类的每个实例属性都占有一块属于自己的内存空间；**
 
-**而当一个类定义了一个类属性，该属性在内存中只占有一块空间，无论创建了多少个实例，每个实例的该属性都是这块内存空间的引用而已；直到某个类实例对该类的某个类属性进行了重新赋值的操作，则 python 就会为该实例创建一块新的内存空间，即原类属性的副本（初始值相同），然后再执行赋值操作，也就是说，执行完赋值操作后实例的类属性事实上已经与原来的类属性脱离了关系，相当于转换成了实例属性；**
+**而当一个类定义了一个类属性，该属性在内存中只占有一块空间，无论创建了多少个实例，每个实例的该属性都是这块内存空间的引用而已；直到某个类实例对该类的某个类属性进行了重新赋值的操作，则 python 就会为该实例创建一块新的内存空间，即原类属性的副本（初始值相同），然后再执行赋值操作，也就是说，执行完赋值操作后实例的类属性事实上已经与原来的类属性脱离了关系，相当于转换成了实例属性**。
 
 验证：
 ```python
@@ -210,31 +209,57 @@ print obj1.__dict__, obj2.__dict__, AAA.__dict__
 
 因此，好的习惯是：
 
-- 尽量把需要用户传入的属性作为实例属性，而把同类都一样的属性作为类属性。实例属性在每创造一个实例时都会初始化一遍。不同的实例的实例属性可能不同，不同实例的类属性都相同，从而节省内存的使用；
+- 尽量把需要用户传入的属性作为实例属性，而把同类都一样的属性作为类属性。实例属性在每创造一个实例时都会初始化一遍。也就是说，要使得**不同的实例的实例属性可能不同，不同实例的类属性都相同**，从而节省内存的使用；
 
-- 实例属性最好在 `__init__()` 中初始化（每次创建实例都会调用），内部调用时都需要加上 self，外部调用时用`instancename.propertyname`；
+- 实例属性最好在 `__init__()` 中初始化（每次创建实例都会调用），内部调用时都需要加上 self，外部调用时用 `instancename.propertyname`；
 
   类属性最好在 `__init__()` 外初始化（不会每次创建实例都调用），在内部用 classname. 类属性名调用，外部用 classname. 类属性名调用（虽然既可以用 classname. 类属性名又可以用 instancename. 类属性名来调用）；
 
 #### 1.2.4. @property
 
-@property 装饰器可以为属性创建 setter 和 getter 方法；
+[廖雪峰的 python 教程：使用 @property](https://www.liaoxuefeng.com/wiki/897692888725344/923030547069856)
 
-例：
+在绑定属性时：
+- 如果直接把属性暴露出去，虽然写起来很简单，但却没办法检查参数，导致可以被随意更改：
+  ```python
+  s = Student()
+  s.score = 9999
+  ```
+- 如果为了限制 score 的范围，可以通过一个 set_score() 方法来设置成绩，再通过一个 get_score() 来获取成绩，虽然可以对 setter 函数进行限制，但又过于繁琐：
+  ```python
+  class Student(object):
+      def get_score(self):
+          return self._score
+
+      def set_score(self, value):
+          if not isinstance(value, int):
+              raise ValueError('score must be an integer!')
+          if value < 0 or value > 100:
+              raise ValueError('score must between 0 ~ 100!')
+          self._score = value
+  ```
+
+因此，针对这一场景，python 提供了 @property 装饰器来便捷地为属性创建 setter 和 getter 方法；
 ```python
 class Student(object):
-@property
-# 绑定一个实例属性 score，同时为其添加了 getter 方法
+    @property
+    # 绑定一个实例属性 score，同时为其定义了 getter 方法
     def score(self):
         return self.__score
-@score.setter
-# 使用 @property 后，@property 本身又创建了另一个装饰器 @score.setter，负责创建一个 setter 方法
+
+    @score.setter
+    # 使用 @property 后，@property 本身又创建了装饰器 @score.setter，负责定义一个 setter 方法
     def score(self, value):
         if not isinstance(value, int):
             raise ValueError('score must be an integer!')
         if value < 0 or value > 100:
             raise ValueError('score must between 0 ~ 100!')
         self.__score = value
+
+    @score.deleter
+    # 使用 @property 后，@property 本身又创建了装饰器 @score.deleter，负责定义一个 deleter 方法
+    def score(self):
+        del self.score
 ```
 使用
 ```python
@@ -247,7 +272,52 @@ Traceback (most recent call last):
   ...
 ValueError: score must between 0 ~ 100!
 ```
-若只定义 getter 方法，不定义 setter 方法就是设置一个只读属性；
+
+P.S.
+- 若只定义 getter 方法，不定义 setter 方法就是设置一个只读属性：
+  ```python
+  class Student(object):
+      # 以下的 birth 是可读写属性，而 age 就是一个只读属性，因为 age 可以根据 birth 和当前时间计算出来
+      @property
+      def birth(self):
+          return self._birth
+
+      @birth.setter
+      def birth(self, value):
+          self._birth = value
+
+      @property
+      def age(self):
+          return 2014 - self._birth
+  ```
+
+- 装饰器 @property 的实现实际上是调用了 property() 函数：
+  ```python
+  class property([fget[, fset[, fdel[, doc]]]])
+  ```
+  - fget: 获取属性值的函数
+  - fset: 设置属性值的函数
+  - fdel: 删除属性值函数
+  - doc: 属性描述信息
+
+  e.g.
+  ```python
+  class C(object):
+      def __init__(self):
+          self._x = None
+
+      def getx(self):
+          return self._x
+
+      def setx(self, value):
+          self._x = value
+
+      def delx(self):
+          del self._x
+
+      x = property(getx, setx, delx, "I'm the 'x' property.")
+  ```
+
 
 ### 1.3. 方法
 
@@ -308,7 +378,7 @@ wilber.printInstanceInfo()
 
 #### 1.3.2. 类方法
 
-类方法定义时使用装饰器 @classmethod；
+类方法定义时使用装饰器 `@classmethod`；
 
 类方法是只在类中运行而不在实例中运行的方法；
 
@@ -463,12 +533,12 @@ wilber.printClassInfo()
   75025
   ```
 
-
 - [其它](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000 )
 
 #### 1.3.3. 静态方法
 
 与实例方法和类方法不同，静态方法没有参数限制（既不需要实例参数，也不需要类参数），定义的时候使用装饰器 @staticmethod；
+
 静态方法与类相关但是不依赖类与实例；
 
 - 使用场景？意义何在？
@@ -546,7 +616,7 @@ Python 中没有访问控制的关键字，例如 private、protected 等等。�
 
   在 Python 中，通过单下划线"`_`"来实现模块级别的私有化，一般约定以单下划线"`_`"开头的变量、函数为模块私有的，也就是说"from moduleName import *"将不会引入以单下划线"_"开头的变量、函数，如果访问将会抛出异常：xx is not defined；
 
-  可以理解为以单下划线开头的表示的是 protected 类型的变量 / 方法，即保护类型只能允许其本身与子类进行访问，不能用于 from module import *；
+  可以理解为以单下划线开头的表示的是 **protected** 类型的变量 / 方法，即保护类型只能允许其本身与子类进行访问，不能用于 from module import *；
 
 - 双下划线"__"
 
@@ -560,9 +630,9 @@ Python 中没有访问控制的关键字，例如 private、protected 等等。�
   >>> print wilber._Student__address
   Shanghai
   ```
-  需要注意：不同版本的 Python 解释器可能会把__address 改成不同的变量名；
+  需要注意：不同版本的 Python 解释器可能会把 __address 改成不同的变量名；
 
-因此，可以看到，python 中下划线"_"和" __"的使用，更多的是一种规范 / 约定，而不是像 cpp、Java 那样真正实现访问权限控制。
+因此，可以看到，**python 中下划线"_"和" __"的使用，更多的是一种规范 / 约定，而不是像 cpp、Java 那样真正实现访问权限控制**。
 
 ### 1.5. 获取类的信息
 
@@ -725,7 +795,7 @@ Enum 可以把一组相关常量定义在一个 class 中，且 class 不可变�
 ```python
 class SubClassName (ParentClass1[, ParentClass2, ...]):
    'Optional class documentation string'
-   class_suite
+   class_suit
 ```
 
 在 python 中继承中特点：

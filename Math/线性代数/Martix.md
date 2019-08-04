@@ -28,7 +28,7 @@
     - [7.3. 奇异矩阵](#73-奇异矩阵)
     - [7.4. 图矩阵](#74-图矩阵)
       - [7.4.1. 邻接矩阵 (Adjacency matrix)](#741-邻接矩阵-adjacency-matrix)
-      - [7.4.2. 度矩阵 (Degree atrix)](#742-度矩阵-degree-atrix)
+      - [7.4.2. 度矩阵 (Degree matrix)](#742-度矩阵-degree-matrix)
       - [7.4.3. 拉普拉斯矩阵 (Laplacian matrix)](#743-拉普拉斯矩阵-laplacian-matrix)
         - [7.4.3.1. 定义](#7431-定义)
         - [7.4.3.2. 性质](#7432-性质)
@@ -155,7 +155,7 @@ e.g.
 
 ![image](http://img.cdn.firejq.com/jpg/2019/4/10/135a719fde35f0bd964148ade3b34606.jpg)
 
-#### 7.4.2. 度矩阵 (Degree atrix)
+#### 7.4.2. 度矩阵 (Degree matrix)
 
 e.g.
 

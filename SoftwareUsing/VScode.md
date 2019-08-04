@@ -1,8 +1,8 @@
-- [VS code](#vs-code)
-  - [1. Plugin](#1-plugin)
-  - [2. Key](#2-key)
-  - [3. macOS mojave 字体发虚](#3-macos-mojave-字体发虚)
-  - [4. Refer Links](#4-refer-links)
+- [VS code](#VS-code)
+  - [1. Plugin](#1-Plugin)
+  - [2. Key](#2-Key)
+  - [3. macOS mojave 字体发虚](#3-macOS-mojave-字体发虚)
+  - [4. Refer Links](#4-Refer-Links)
 
 # VS code
 

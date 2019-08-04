@@ -1,8 +1,9 @@
 
-- [计算机组成原理：外部 I/O - I/O 接口](#计算机组成原理外部-io---io-接口)
-  - [1. 并行 I/O 标准接口](#1-并行-io-标准接口)
-  - [2. 串行 I/O 标准接口](#2-串行-io-标准接口)
-  - [3. Refer Links](#3-refer-links)
+- [计算机组成原理：外部 I/O - I/O 接口](#计算机组成原理外部-IO---IO-接口)
+  - [1. 并行 I/O 标准接口](#1-并行-IO-标准接口)
+  - [2. 串行 I/O 标准接口](#2-串行-IO-标准接口)
+  - [3. 主流接口规格与传输协议](#3-主流接口规格与传输协议)
+  - [4. Refer Links](#4-Refer-Links)
 
 # 计算机组成原理：外部 I/O - I/O 接口
 
@@ -20,4 +21,34 @@
 
 - 体积小易安装，连接方便：1394 使用 6 芯电缆，直径约为 6mm，插座也小。而 SCSI 使用 50 芯或 68 芯电缆，插座体积也大。 在当前个人机要连接的设备越来越多、主机箱的体积越显窄小情况下，电缆细、插座小的 1394 是很有吸引力的，尤其对笔记本电脑一类机器。1394 的电缆不 需要与电缆阻抗匹配的终端，而且电缆上的设备随时可从插座重拔出或插入， 即具有热插入能力。这对用户安装和使用 1394 设备很有利。
 
-## 3. Refer Links
+## 3. 主流接口规格与传输协议
+
+[2019 年 iPhone 会不会放弃闪电（Lightning）接口并使用 USB-C？](https://www.zhihu.com/question/301893026)
+
+[Lightning 和 USB Type-C 设计上各有什么优劣？](https://www.zhihu.com/question/24845265)
+
+[简单说说雷电接口有哪些用途？](https://www.zhihu.com/question/35562114)
+
+- 传输协议：
+
+  雷电 3（Thunderbolt™3，由 Intel 发布）和 USB 3.1 是数据传输协议。不同传输标准区别主要在于传输速率。就拿 USB3.1 来说，还分为 USB3.1 Gen1 和 USB3.1 Gen2，USB3.1 Gen1 最大传输速率为 5 Gb/s，USB3.1 Gen2 最大传输速率为 10 Gb/s。
+
+- 接口规格：
+
+  USB Type C (USB-C) 是一种接口规格，此外还有 USB Type A (USB-A)、USB Type B (USB-B) 以及 Lightning（苹果独家）等其他接口规格。USB-C 接口在 Macbook 系列设备上被大量使用（MBP2015 及之前版本使用的是 Mini DisplayPort 接口），而 Lightning 接口在 iphone、ipad 上被广泛使用（2019Ipad 已经换成了 USB-C 接口）。
+
+  目前的雷电 3 接口统一都是 Type-C 标准，但并不是所有的 Type-C 接口都支持雷电 3 标准。雷电 3 可以说是 USB Type-C 的最顶级呈现。
+
+  - USB Type 系列：
+
+    ![image](http://img.cdn.firejq.com/jpg/2019/7/12/e9931d4814c5a3967fd7e5dc4a475055.jpg)
+
+  - Mini DisplayPort
+
+    ![image](http://img.cdn.firejq.com/jpg/2019/7/12/bce0c2f0154371875cb860e105d83f6c.jpg)
+
+  - Lightning
+
+    ![image](http://img.cdn.firejq.com/jpg/2019/7/12/5013b8cae66f4343256316f9ba427e21.jpg)
+
+## 4. Refer Links
