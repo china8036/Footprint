@@ -1,4 +1,4 @@
-- [Python 基础：面向对象](#Python-基础面向对象)
+- [Python 基础：面向对象](#python-基础面向对象)
   - [1. 数据封装](#1-数据封装)
     - [1.1. 类定义](#11-类定义)
     - [1.2. 属性](#12-属性)
@@ -29,7 +29,7 @@
   - [2. 多态](#2-多态)
     - [2.1. “开闭”原则](#21-开闭原则)
     - [2.2. 鸭子类型](#22-鸭子类型)
-  - [3. Refer Links](#3-Refer-Links)
+  - [3. Refer Links](#3-refer-links)
 
 # Python 基础：面向对象
 
@@ -261,7 +261,7 @@ class Student(object):
     def score(self):
         del self.score
 ```
-使用
+使用:
 ```python
 >>> s = Student()
 >>> s.score = 60 # 实际转化为 s.set_score(60)
@@ -614,7 +614,7 @@ Python 中没有访问控制的关键字，例如 private、protected 等等。�
 
 - 单下划线"`_`"
 
-  在 Python 中，通过单下划线"`_`"来实现模块级别的私有化，一般约定以单下划线"`_`"开头的变量、函数为模块私有的，也就是说"from moduleName import *"将不会引入以单下划线"_"开头的变量、函数，如果访问将会抛出异常：xx is not defined；
+  在 Python 中，通过单下划线"`_`"来实现模块级别的私有化，一般约定以单下划线"`_`"开头的变量、函数为模块私有的，也就是说"from moduleName import *"将不会引入以单下划线"_"开头的变量、函数，如果访问将会抛出异常：`xx is not defined`；
 
   可以理解为以单下划线开头的表示的是 **protected** 类型的变量 / 方法，即保护类型只能允许其本身与子类进行访问，不能用于 from module import *；
 

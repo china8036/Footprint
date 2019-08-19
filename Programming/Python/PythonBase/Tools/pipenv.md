@@ -2,7 +2,7 @@
   - [1. 基础概念](#1-基础概念)
   - [2. 安装和配置](#2-安装和配置)
   - [3. 使用](#3-使用)
-  - [4. Refer Links](#4-Refer-Links)
+  - [4. Refer Links](#4-refer-links)
 
 # pipenv
 
@@ -49,7 +49,6 @@ brew install pipenv
   cd newproject
   pipenv install （耐心等待)
   pipenv shell # 进入新环境
-  Shell for /Users/zyt/.local/share/virtualenvs/new-cRH-55u9 already activated.
   pipenv install requests # 安装第三方包
   exit # 退出
   ```

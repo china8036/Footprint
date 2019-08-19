@@ -1,12 +1,12 @@
 - [SublimeText Note](#sublimetext-note)
-	- [PackageControl](#packagecontrol)
-	- [安装插件](#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6)
-	- [配置文件](#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
-	- [快捷键](#%E5%BF%AB%E6%8D%B7%E9%94%AE)
+	- [1. 安装 PackageControl](#1-安装-packagecontrol)
+	- [2. 安装插件](#2-安装插件)
+	- [3. 配置文件](#3-配置文件)
+	- [4. 快捷键](#4-快捷键)
 
 # SublimeText Note
 
-## PackageControl
+## 1. 安装 PackageControl
 
 https://packagecontrol.io/installation
 
@@ -20,7 +20,7 @@ import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe0
 
 ![image](http://img.cdn.firejq.com/jpg/2017/10/28/a46a273a72d3cd88ca192804ba01357a.jpg)
 
-## 安装插件
+## 2. 安装插件
 
 - CodeIntel：自动补全 + 成员 / 方法提示；
 
@@ -76,20 +76,20 @@ chrome 中扩展程序设置：
     设置选项：
     ![image](http://img.cdn.firejq.com/jpg/2017/10/28/fc471eaeadbcbf67fd95beac8ee25265.jpg)
 
-## 配置文件
+## 3. 配置文件
 
 ```
 {
+	"draw_minimap_border": true,
 	"always_show_minimap_viewport": true,
 	"caret_style": "phase",
 	"color_scheme": "Packages/User/SublimeLinter/Monokai (SL).tmTheme",
 	"default_encoding": "UTF-8",
 	"dpi_scale": 1.0,
-	"draw_minimap_border": true,
 	"fade_fold_buttons": true,
 	"fold_buttons": true,
 	"font_face": "Consolas",
-	"font_size": 15.0,
+	"font_size": 16.0,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
@@ -108,12 +108,13 @@ chrome 中扩展程序设置：
 	"tanslate_tabs_to_spaces": false,
 	"trim_automatic_white_space": true,
 	"update_check": false,
-	"word_wrap": true
+	"word_wrap": true,
+	"save_on_focus_lost": true,
 }
 
 ```
 
-## 快捷键
+## 4. 快捷键
 
 ```
 Ctrl+Shift+P：打开命令面板

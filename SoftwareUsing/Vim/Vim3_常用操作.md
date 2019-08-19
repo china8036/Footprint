@@ -354,6 +354,7 @@ eg:
 - `:vertical res[ize] +n`: 批量增加当前的水平窗口的尺寸
 - `:vertical res[ize] -n`: 批量减少当前的水平窗口的尺寸
 - `Ctrl` + `w` + `<direction>` 在多个窗口中进行切换，direction 可以是 `hjkl` 或 `←↓↑→` 中的一个
+- `Ctrl` + `w` + `HJKL` 移动窗口位置
 - `:q` / `Ctrl` + `w` + `q` 关闭当前窗口
 
 ## 19. 多标签 (Tab) 操作
@@ -599,7 +600,6 @@ eg:
 1. 定义 `:command TT pyx print("123")`
 1. 执行 `:TT`，显示 `123`
 
-
 ## 28. 自定义函数操作
 
 通过 `:function` 命令可以在 vim 中自定义函数：
@@ -648,3 +648,5 @@ TODO:
 [所需即所获：像 IDE 一样使用 vim](https://github.com/yangyangwithgnu/use_vim_as_ide)
 
 [VIM 下的跳转练习](http://www.cnblogs.com/moiyer/archive/2010/04/01/1952681.html)
+
+[高效使用 vim](https://www.cnblogs.com/hyddd/archive/2010/04/08/1706863.html)

@@ -7,10 +7,11 @@
     - [2.4. 设置代理](#24-设置代理)
     - [2.5. 配置提交日志模版](#25-配置提交日志模版)
     - [2.6. 配置命令别名](#26-配置命令别名)
-    - [2.7. 其它常用配置](#27-其它常用配置)
-    - [2.8. 中文显示配置](#28-中文显示配置)
-    - [2.9. .gitignore 文件配置](#29-gitignore-文件配置)
-    - [2.10. .editorconfig 文件配置](#210-editorconfig-文件配置)
+    - [2.7. 配置代理](#27-配置代理)
+    - [2.8. 其它常用配置](#28-其它常用配置)
+    - [2.9. 中文显示配置](#29-中文显示配置)
+    - [2.10. .gitignore 文件配置](#210-gitignore-文件配置)
+    - [2.11. .editorconfig 文件配置](#211-editorconfig-文件配置)
   - [3. 基本命令](#3-基本命令)
   - [4. 常用操作](#4-常用操作)
     - [4.1. 手动创建一个项目](#41-手动创建一个项目)
@@ -179,19 +180,45 @@ git config --global alias.last 'log -1'
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
 
-### 2.7. 其它常用配置
+### 2.7. 配置代理
+
+[git 代理配置](https://www.jianshu.com/p/27365d2542d7)
+
+```
+git config --global https.proxy https://proxyuser:proxypassword@ip/domain:port
+git config --global http.proxy http://proxyuser:proxypassword@ip/domain:port
+```
+
+配置全局代理：
+```
+git config --global http.proxy http://127.0.0.1:1080
+
+git config --global https.proxy https://127.0.0.1:1080
+
+git config --global --unset http.proxy
+
+git config --global --unset https.proxy
+```
+
+配置局部代理：
+```
+git conifg --global http.https://git.code.xx.com http://127.0.0.1:1080
+git conifg --global http.http://git.code.xx.com http://127.0.0.1:1080
+```
+
+### 2.8. 其它常用配置
 
 ```
 git config --global credential.helper store // 操作一次后，会在 ~/ 目录下生成 .config 和 .git-credentials 两个文件
 ```
 
-### 2.8. 中文显示配置
+### 2.9. 中文显示配置
 
 [Git 中文显示问题解决](https://xstarcd.github.io/wiki/shell/git_chinese.html)
 
 - 避免 git gui 中中文乱码
   ```
-  git config –global gui.encoding utf-8
+  git config --global gui.encoding utf-8
   ```
 
 - 避免 git status 显示中文乱码
@@ -213,10 +240,10 @@ git config --global credential.helper store // 操作一次后，会在 ~/ 目�
   解决方法：
   ```
   # 不对 0x80 以上的字符进行 quote，解决 git status/commit 时中文文件名乱码
-  git config –global core.quotepath off
+  git config --global core.quotepath off
   ```
 
-### 2.9. .gitignore 文件配置
+### 2.10. .gitignore 文件配置
 
 [廖雪峰 Git 教程：忽略特殊文件](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013758404317281e54b6f5375640abbb11e67be4cd49e0000)
 
@@ -262,7 +289,7 @@ e.g.
   ```
   说明：忽略全部内容，但是不忽略 .gitignore 文件、根目录下的 /fw/bin/ 和 /fw/sf/ 目录。
 
-### 2.10. .editorconfig 文件配置
+### 2.11. .editorconfig 文件配置
 
 https://www.zhihu.com/question/19960028
 
