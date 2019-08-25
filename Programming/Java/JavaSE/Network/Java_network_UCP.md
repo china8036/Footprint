@@ -1,8 +1,8 @@
-- [Java 网络编程：UDP 编程](#java-udp)
-	- [1. DatagramSocket](#1-datagramsocket)
-	- [2. DatagramPacket](#2-datagrampacket)
-	- [3. MulticastSocket](#3-multicastsocket)
-	- [4. Refer Links](#4-refer-links)
+- [Java 网络编程：UDP 编程](#java-网络编程udp-编程)
+  - [1. DatagramSocket](#1-datagramsocket)
+  - [2. DatagramPacket](#2-datagrampacket)
+  - [3. MulticastSocket](#3-multicastsocket)
+  - [4. Refer Links](#4-refer-links)
 
 # Java 网络编程：UDP 编程
 
@@ -34,9 +34,9 @@ DatagramPacket 提供了以下构造器：
 NOTE: UDP 数据报文一次传送的最大数据为**65507**个字节，因此接收方应该提供一个有足够大的缓存空间的 DatagramPacket 实例，以完整地存放调用 receive() 方法时应用程序协议所允许的最大长度的消息。
 
 DatagramPacket 还提供了以下方法来获取 DatagramPacket 对象的关键信息：
-- `InetAddress	getAddress​()`: 若程序准备发送此数据报，该方法返回此数据报的目标主机的 IP 地址。若程序刚接收该数据报，该方法返回该数据报发送主机的 IP 地址。
-- `int	getPort​()`: 若程序准备发送此数据报，该方法返回此数据报的目标主机的端口。若程序刚接收该数据报，该方法返回该数据报发送主机的端口。
-- `SocketAddress	getSocketAddress​()`: 若程序准备发送此数据报，该方法返回此数据报的目标主机的 SocketAddress 对象。若程序刚接收该数据报，该方法返回该数据报发送主机的 SocketAddress 对象。
+- `InetAddress getAddress​()`: 若程序准备发送此数据报，该方法返回此数据报的目标主机的 IP 地址。若程序刚接收该数据报，该方法返回该数据报发送主机的 IP 地址。
+- `int getPort​()`: 若程序准备发送此数据报，该方法返回此数据报的目标主机的端口。若程序刚接收该数据报，该方法返回该数据报发送主机的端口。
+- `SocketAddress getSocketAddress​()`: 若程序准备发送此数据报，该方法返回此数据报的目标主机的 SocketAddress 对象。若程序刚接收该数据报，该方法返回该数据报发送主机的 SocketAddress 对象。
 
 ## 3. MulticastSocket
 
@@ -72,30 +72,30 @@ MulticastSocket​对象增加了以下方法：
 eg:
 ```java
 try {
-    String message[] = {"这是一条广播信息"}; 
-    int port = 9876; // 组播的端口  
+    String message[] = {"这是一条广播信息"};
+    int port = 9876; // 组播的端口
     InetAddress group = InetAddress.getByName("230.198.112.0"); // 设置广播组地址 224.0.0.0 ~ 239.255.255.255
-    MulticastSocket mutiSocket = new MulticastSocket(port); // 广播套接字将在 port 端口广播  
-    mutiSocket.setTimeToLive(1); // 可省略  
-    mutiSocket.joinGroup(group); // 加入组播地址 
+    MulticastSocket mutiSocket = new MulticastSocket(port); // 广播套接字将在 port 端口广播
+    mutiSocket.setTimeToLive(1); // 可省略
+    mutiSocket.joinGroup(group); // 加入组播地址
 } catch (Exception e) {
-    System.out.println("Error:" + e);  
-}  
-     
-while (true) {  
-    try {  
-        DatagramPacket packet = null;  
+    System.out.println("Error:" + e);
+}
+
+while (true) {
+    try {
+        DatagramPacket packet = null;
         for (String msg : message) { // 循环发送每条广播信息
-            byte buff[] = msg.getBytes();  
-            packet = new DatagramPacket(buff, buff.length,group,port);  
-            System.out.println(new String(buff));  
-            mutiSocket.send(packet);  
-            sleep(2000);  
-        }  
-    } catch (Exception e) {  
-        System.out.println("Error:" + e);  
-    }  
-}  
+            byte buff[] = msg.getBytes();
+            packet = new DatagramPacket(buff, buff.length,group,port);
+            System.out.println(new String(buff));
+            mutiSocket.send(packet);
+            sleep(2000);
+        }
+    } catch (Exception e) {
+        System.out.println("Error:" + e);
+    }
+}
 ```
 
 eg: 当开发一个群聊系统时，可通过 MulticastSocket 周期性向广播地址发送在线信息，并且将所有用户的 MulticastSocket 加入到该广播地址中，则每个用户都可以接收到其它用户广播的在线信息。如果系统经过一段时间没有收到某个用户广播的在线信息，就从用户列表中将该用户删除。

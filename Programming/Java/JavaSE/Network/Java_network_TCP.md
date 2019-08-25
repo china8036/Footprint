@@ -1,10 +1,10 @@
-- [Java 网络编程：TCP 编程](#java-tcp)
-    - [1. 基本 API](#1--api)
-        - [1.1. ServerSocket](#11-serversocket)
-        - [1.2. Socket](#12-socket)
-    - [2. 加入多线程](#2)
-    - [3. 非阻塞通信](#3)
-    - [4. Refer Links](#4-refer-links)
+- [Java 网络编程：TCP 编程](#java-网络编程tcp-编程)
+  - [1. 基本 API](#1-基本-api)
+    - [1.1. ServerSocket](#11-serversocket)
+    - [1.2. Socket](#12-socket)
+  - [2. 加入多线程](#2-加入多线程)
+  - [3. 非阻塞通信](#3-非阻塞通信)
+  - [4. Refer Links](#4-refer-links)
 
 # Java 网络编程：TCP 编程
 
@@ -31,7 +31,7 @@ ServerSocket 包含以下构造器，如果 ServerSocket 构造方法没有抛�
 - `ServerSocket()`: 创建非绑定服务器的套接字。
 
 ServerSocket 使用以下方法来监听客户端的连接请求：
-- `Socket	accept​()`: 该方法将一直阻塞当前线程，直到接收到一个来自客户端 Socket 的连接请求时，该方法不再阻塞并返回一个与客户端 Socket 对应的 Socket 引用对象。
+- `Socket accept​()`: 该方法将一直阻塞当前线程，直到接收到一个来自客户端 Socket 的连接请求时，该方法不再阻塞并返回一个与客户端 Socket 对应的 Socket 引用对象。
 
 当不再需要监听 Socket 连接时，可调用以下方法关闭 ServerSocket，断开应用程序与指定端口的绑定：
 - `void	close​()`
@@ -65,7 +65,7 @@ java.net.[Socket](https://docs.oracle.com/javase/9/docs/api/java/net/Socket.html
     程序可通过以下方法判断 Socket 连接是否处于半关闭状态：
     - `boolean	isInputShutdown​()`: 判断该 Socket 连接是否处于半读状态。
     - `boolean	isOutputShutdown​()`: 判断该 Socket 连接是否处于半写状态。
-    NOTE: 
+    NOTE:
     - 即使先后调用了 Socket 对象的 shutdownInput​ 和 shutdownOutput​ 方法，该 Socket 实例依然没有关闭，只是既无法输出数据也不能读取数据而已。
     - 当调用 Socket 对象的 shutdownInput​和 shutdownOutput​方法后，该 Socket 就无法再次打开输入流 / 输出流，因此这种做法通常不适合保持持久通信状态的交互式应用（如 RTMP 协议），只适用于一站式的通信协议（如 HTTP 协议）。
 
