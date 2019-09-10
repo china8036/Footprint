@@ -24,4 +24,11 @@ Eigen is being successfully used with the following compilers:
 
 Regarding performance, Eigen performs best with compilers based on GCC or LLVM/Clang.
 
+
+- Linux (gcc and clang)
+- Windows
+	- Microsoft Visual Studio 2015,2017
+	- MinGW
+- MacOS X
+
 ## 3. Refer Links

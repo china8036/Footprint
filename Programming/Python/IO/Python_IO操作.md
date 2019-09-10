@@ -1,9 +1,9 @@
-- [Python IO 操作](#Python-IO-操作)
+- [Python IO 操作](#python-io-操作)
   - [1. 文件操作](#1-文件操作)
     - [1.1. 读文件](#11-读文件)
     - [1.2. 写文件](#12-写文件)
     - [1.3. 批量文件读写](#13-批量文件读写)
-  - [2. Refer Links](#2-Refer-Links)
+  - [2. Refer Links](#2-refer-links)
 
 # Python IO 操作
 

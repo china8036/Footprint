@@ -1,5 +1,9 @@
 - [常见问题](#常见问题)
-  - [1. 素数判断](#1-素数判断)
+  - [1. 素数问题](#1-素数问题)
+    - [1.1. 判断是否是素数](#11-判断是否是素数)
+    - [1.2. 找出所有素数](#12-找出所有素数)
+      - [暴力遍历](#暴力遍历)
+      - [素数筛法](#素数筛法)
   - [2. 进制转换](#2-进制转换)
     - [2.1. 二进制转化为十进制](#21-二进制转化为十进制)
     - [2.2. 十进制转二进制](#22-十进制转二进制)
@@ -39,7 +43,9 @@
 
 # 常见问题
 
-## 1. 素数判断
+## 1. 素数问题
+
+### 1.1. 判断是否是素数
 
 基于以下理论：
 - 判断一个数是否为素数只需判断从 2 到 sqrt(n) 是否存在其约数。
@@ -59,6 +65,156 @@ public boolean isPrime(int n) {
     return true;
 }
 ```
+
+### 1.2. 找出所有素数
+
+<!--
+TODO:
+
+求十亿内所有质数的和，怎么做最快？https://www.zhihu.com/question/29580448
+
+如何编程最快速度求出两百万以内素数个数（不限语言和算法）？ - 赵扶风的回答 - https://www.zhihu.com/question/24942373/answer/29587434
+
+-->
+
+> Q: 给出一个正整数 n，求出所有从 1~n 的素数（即质数），返回它们的异或结果。
+
+#### 暴力遍历
+
+遍历从这 n 个数，逐个判断是否是素数即可。
+- 时间复杂度：最优时间复杂度为 O(nlogn)，但实际速度还是太慢。 <!--  TODO: 怎么做到 ologn 的？ -->
+- 空间复杂度：O(n)
+
+#### 素数筛法
+
+- [埃拉托斯特尼筛法 (sieve of Eratosthenes)](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)
+
+  Eratosthenes 算法的核心思想是“素数的倍数一定不是素数”，因此用一个长度为 N+1 的数组保存信息（0 表示素数，1 表示非素数）：
+  1. 首先假设所有的数都是素数（将整个数组初始化为 0）。
+  1. 用第一个素数 2 开始筛，**从 2 的平方开始**，把 2 的倍数都标记为非素数（置为 1）进行剔除，直到 2 的倍数大于 N 为止。
+  1. 然后进行下一趟，用 2 后面的下一个素数（标记为 0 的数） 3 去筛选，**从 3 的平方开始**，把 3 的倍数都标记为非素数（置为 1）进行剔除，直到 3 的倍数大于 N 为止。
+  1. 重复上一步骤，直到**用来筛选的素数（标记为 0 的数）大于 sqrt(n) 时**，标记结束，此时数组中依然为 0 的数即为素数。
+
+  NOTE
+  - 每次筛选只需要筛到 sqrt(n) 即可，因为如果 n 在 2 ~ sqrt(n) 中无因数，即为素数。
+  - 每次筛选不必从 `i*2` 开始筛，因为在 `i=2` 时筛过；也不必在 `i*3` 时开始，因为在 `i=3` 时筛过；也不必从 `i*(i-1)` 时开始，因为在 `i=i-1` 时筛过，因此直接从 `i*i` 开始筛即可。
+
+  e.g. N=120 时，演示如下图：
+
+  ![image](http://img.cdn.firejq.com/Sieve_of_Eratosthenes_animation%20%281%29.gif)
+
+  - 时间复杂度：计算量为 n/2+n/3+n/4+...（调和级数），因此时间复杂度为 O(nloglogn)
+  - 空间复杂度：O(n)
+
+  代码实现：
+  ```cpp
+  unsigned long eratosthenes(unsigned long n) {
+      bool * flag = new bool[n+1];  // 0:prime 1:no prime
+      flag[0] = flag[1] = 1; // exclude 0 and 1
+
+      for (unsigned long i = 2; i * i <= n; i++)
+          if (!flag[i]) // if i is prime number
+              for (unsigned long j = i * i; j <= n; j += i)
+                  flag[j] = 1;
+
+      unsigned long res = 2
+      for (unsigned long i = 3; i <= n; i++)
+          if (!flag[i])
+              res ^= i;
+
+      return res;
+  }
+  ```
+
+  - 优化
+    - 直接跳过所有偶数，位移长度为 2
+      <!-- TODO: 直接跳过 10、2、5 的倍数，只筛 1、3、7、9 的倍数 -->
+      ```cpp
+      unsigned long eratosthenes(unsigned long n) {
+          bool * flag = new bool[n+1];  // 0:prime 1:no prime
+          flag[0] = flag[1] = 1; // exclude 0 and 1
+
+          for (unsigned long i = 3; i * i <= n; i += 2)
+              if (!flag[i]) // if i is prime number
+                  for (unsigned long j = i * i; j <= n; j += i)
+                      flag[j] = 1;
+
+          unsigned long res = 2
+          for (unsigned long i = 3; i <= n; i += 2)
+              if (!flag[i])
+                  res ^= i;
+
+          return res;
+      }
+      ```
+
+    - [使用位数组进行优化](https://www.cnblogs.com/haippy/archive/2013/05/27/3102630.html)
+
+      一个 bool 占用 1 字节内存。而 1 个字节有 8 个比特，每个比特可以表示 0 或 1。所以，当你使用按位存储的方式，一个字节可以拿来当 8 个布尔型使用。所以，达到此境界的程序猿，会构造一个定长的 byte 数组，数组的每个 byte 存储 8 个布尔值。空间性能相比境界 2，提高 8 倍（对于 C++ 而言）。如果某种语言使用 4 字节表示布尔型，那么境界 3 比境界 2，空间利用率提高 32 倍。
+      ```cpp
+      unsigned long eratosthenes(unsigned long n) {
+      #include <climits>        /* for CHAR_BIT */
+
+      #define BITMASK(b) (1 << ((b) % CHAR_BIT))
+      #define BITSLOT(b) ((b) / CHAR_BIT)
+      #define BITSET(a, b) ((a)[BITSLOT(b)] |= BITMASK(b))
+      #define BITCLEAR(a, b) ((a)[BITSLOT(b)] &= ~BITMASK(b))
+      #define BITTEST(a, b) ((a)[BITSLOT(b)] & BITMASK(b))
+      #define BITNSLOTS(nb) ((nb + CHAR_BIT - 1) / CHAR_BIT)
+
+          char *flag = new char[BITNSLOTS(n + 1)];  // 0:prime 1:no prime
+          BITSET(flag, 0);  // exclude 0 and 1
+          BITSET(flag, 1);
+
+          for (unsigned long i = 3; i * i <= n; i += 2)
+              if (!BITTEST(flag, i)) // if i is prime number
+                  for (unsigned long j = i * i; j <= n; j += i)
+                      BITSET(flag, j);
+
+          unsigned long res = 2;
+          for (unsigned long i = 3; i <= n; i += 2)
+              if (!BITTEST(flag, i))
+                  res ^= i;
+
+          return res;
+      }
+      ```
+
+    - 空间复用优化
+
+      即便是使用了位数组，但当 n 过大时，内存还是会成为瓶颈。
+
+- 欧拉筛法 / 线性筛法
+
+  <!-- TODO: -->
+
+  在 eratosthenes 筛法中，很多合数被标了很多很多次，比如 `36=2*18=3*12=4*9=6*6`，能不能让所有素数都被筛到一次呢？换一种思路，我们用 prime 数组记下所有素数。接下来枚举 prime 数组里的素数的倍数就可以了。
+
+  快速线性筛法没有冗余，不会重复筛除一个数，所以“几乎”是线性的 O(n)。
+  ```cpp
+  void BuildPrime() {
+      vis[1]=false;
+      for (int i=2;i<=N;i++){
+          if (vis[i]) prime[++prime[0]]=i;
+          for (int j=1;j<=prime[0];j++){
+              if (i*prime[j]>N)
+                  break;
+              vis[i*prime[j]]=false;
+              if (i%prime[j]==0)
+                  break; // 这是欧拉筛法的精髓，如果再往后，prime[j] 就不是 i*prime[j] 的最小质因子了，所以不需要继续了
+          }
+      }
+  }
+  ```
+
+- 素数筛法 + 并行计算
+
+  Refer: [使用多线程计算1到100000内质数的个数 4cpu 能使用埃氏筛选法么？](https://www.oschina.net/question/2709988_2302694)
+
+  假设开始 d 个线程进行计算，那么算法流程分成 2 次筛：
+  1. 第 1 次，使用单线程筛出 sqrt(n/d) 以内的所有素数。
+  1. 第 2 次，使用 d 个线程筛，各个线程使用第 1 步得到的素数表，来筛选 `(0, n/d]`、`(n/d, n/d*2]`、`(n/d*2, n/d*3]`、`(n/d*3, n/d*4]`... `(n/d*(d-1), n]` 各个分段内的素数（即：遍历小的素数表，对于素数表内的素数 i，找到当前分段内第一个 i 的倍数，再按 i 为步长在分段内进行合数标记），最后分别回传各个分段内的素数异或结果。
+  1. 将所有线程返回的异或结果再次异或，即可得到最终结果。
 
 ## 2. 进制转换
 
@@ -1216,6 +1372,8 @@ public void shuffle(int [] a) {
 ```
 
 ## 13. Refer Links
+
+[Eratosthenes 筛法](https://blog.csdn.net/Binary_Heap/article/details/77651298)
 
 [O(n) 时间快速选择](http://www.shadowxh.com/?p=598)
 

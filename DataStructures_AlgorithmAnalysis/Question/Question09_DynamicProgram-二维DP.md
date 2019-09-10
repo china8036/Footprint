@@ -13,17 +13,20 @@
   - [3. LCSs 问题](#3-lcss-问题)
     - [3.1. 最长公共子序列问题](#31-最长公共子序列问题)
     - [3.2. 最长公共子串问题](#32-最长公共子串问题)
-  - [4. 矩阵系列问题](#4-矩阵系列问题)
-    - [4.1. 矩阵内的不同路径](#41-矩阵内的不同路径)
-      - [4.1.1. Unique Paths](#411-unique-paths)
-      - [4.1.2. Unique Paths II](#412-unique-paths-ii)
-    - [4.2. 直方图内的最大覆盖矩阵](#42-直方图内的最大覆盖矩阵)
-    - [4.3. 矩阵内的最大全一长方形](#43-矩阵内的最大全一长方形)
-    - [4.4. 矩阵内的最大全一正方形](#44-矩阵内的最大全一正方形)
-    - [4.5. 矩阵内的最大加号](#45-矩阵内的最大加号)
-    - [4.6. 矩阵内的最大和](#46-矩阵内的最大和)
-  - [5. 字母交换](#5-字母交换)
-  - [6. Refer Links](#6-refer-links)
+  - [4. 巴比伦塔问题](#4-巴比伦塔问题)
+  - [5. 数塔问题](#5-数塔问题)
+  - [6. 矩阵系列问题](#6-矩阵系列问题)
+    - [6.1. 矩阵内的不同路径](#61-矩阵内的不同路径)
+      - [6.1.1. Unique Paths](#611-unique-paths)
+      - [6.1.2. Unique Paths II](#612-unique-paths-ii)
+    - [6.2. Rule Thirty 最短路径问题](#62-rule-thirty-最短路径问题)
+    - [6.3. 直方图内的最大覆盖矩阵](#63-直方图内的最大覆盖矩阵)
+    - [6.4. 矩阵内的最大全一长方形](#64-矩阵内的最大全一长方形)
+    - [6.5. 矩阵内的最大全一正方形](#65-矩阵内的最大全一正方形)
+    - [6.6. 矩阵内的最大加号](#66-矩阵内的最大加号)
+    - [6.7. 矩阵内的最大和](#67-矩阵内的最大和)
+  - [7. 字母交换](#7-字母交换)
+  - [8. Refer Links](#8-refer-links)
 
 # Dynamic programming 二维 DP
 
@@ -366,11 +369,21 @@ public:
 
 ### 3.2. 最长公共子串问题
 
-## 4. 矩阵系列问题
+## 4. 巴比伦塔问题
 
-### 4.1. 矩阵内的不同路径
+TODO: https://www.cnblogs.com/GodA/p/5257707.html
 
-#### 4.1.1. Unique Paths
+https://blog.csdn.net/CABI_ZGX/article/details/52470870
+
+## 5. 数塔问题
+
+TODO: [HDU 2084](http://acm.hdu.edu.cn/showproblem.php?pid=2084)
+
+## 6. 矩阵系列问题
+
+### 6.1. 矩阵内的不同路径
+
+#### 6.1.1. Unique Paths
 
 [62. Unique Paths](https://leetcode.com/problems/unique-paths/description/)
 
@@ -423,7 +436,7 @@ public:
   }
   ```
 
-#### 4.1.2. Unique Paths II
+#### 6.1.2. Unique Paths II
 
 [63. Unique Paths II](https://leetcode.com/problems/unique-paths-ii/description/)
 
@@ -459,7 +472,83 @@ public:
   }
   ```
 
-### 4.2. 直方图内的最大覆盖矩阵
+### 6.2. Rule Thirty 最短路径问题
+
+- Question
+  > 根据 [Rule30](http://mathworld.wolfram.com/Rule30.html) 生成一个 (2N+1) * N 的黑白二维图像，可以通过黑点往下移动（代价为 1）、往左下移动（代价为 2）以及往右下移动（代价为 2），那么：从起点 (N+1, 1) 移动到终点 (N+1, N) 的最小代价是多少？要求求出 N=10001 和 N=1000003 的代价。
+  >
+  > 例如，N=10 时，最小代价为 15，如下图：
+
+  ![image](http://img.cdn.firejq.com/jpg/2019/8/29/6a2b743400c2d31591422b86431c7735.jpg)
+
+- Solution
+
+  1. 由于每计算一行，都只和上一行有关，因此使用2个 `N*2` 的数组来分别表示图和代价，而不是`N*N`，空间复杂度从 O(n^2) 降为 O(n)。
+  1. 一边生成图一边计算代价，缩短遍历时间。
+  1. 可以发现，黑色区域的两侧是有规律的，因此可以每行都只遍历黑色区域，总体缩短一半遍历时间。
+  1. 另外有个启发式剪枝，可以大幅度缩短时间，就是搜的过程中剪掉两边不可能走到的路或者 DP 比起中间过大的道路，金字塔式向下扩展。
+
+  TODO:
+  ```python
+  def search(n):
+      m = [[0] * (2 * n + 1) for _ in range(2)]
+      m[0][n] = m[1][n - 1] = m[1][n] = m[1][n + 1] = 1
+
+      cost = [[-1] * (2 * n + 1) for _ in range(2)]
+      cost[0][n] = 0
+      cost[1][n - 1] = cost[1][n + 1] = 2
+      cost[1][n] = 1
+
+      for i in range(2, n):
+          if i % int(n / 10) == 0:
+              print(i)
+
+          prev = (i - 1) % 2
+          cur = i % 2
+          for j in range(n - i, n + i + 1):
+              if j == 0 and (m[prev][j] == 1 or m[prev][j + 1] == 1):
+                  m[cur][j] = 1
+              elif j == 2 * n and (m[prev][j] == 1 or m[prev][j - 1] == 1):
+                  m[cur][j] = 1
+              elif (m[prev][j - 1] == 1 and m[prev][j] == 0 and m[prev][
+                  j + 1] == 0) or \
+                      (m[prev][j - 1] == 0 and m[prev][j] == 1 and m[prev][
+                          j + 1] == 1) or \
+                      (m[prev][j - 1] == 0 and m[prev][j] == 1 and m[prev][
+                          j + 1] == 0) or \
+                      (m[prev][j - 1] == 0 and m[prev][j] == 0 and m[prev][
+                          j + 1] == 1):
+                  m[cur][j] = 1
+              else:
+                  m[cur][j] = 0
+
+          for j in range(n - i, n + i + 1):
+              if m[cur][j] == 1:
+                  tmp = []
+                  if m[prev][j - 1] == 1:
+                      tmp.append(cost[prev][j - 1] + 2)
+                  if m[prev][j + 1] == 1:
+                      tmp.append(cost[prev][j + 1] + 2)
+                  if m[prev][j] == 1:
+                      tmp.append(cost[prev][j] + 1)
+                  cost[cur][j] = min(tmp)
+              else:
+                  cost[cur][j] = -1
+
+      print(cost[(n - 1) % 2][n])
+
+
+  if __name__ == '__main__':
+      # search(102)  # 145
+      # print('--------------')
+      # search(10001)  # 14228
+      # exit()
+      print('--------------')
+      search(10000003)
+  ```
+
+
+### 6.3. 直方图内的最大覆盖矩阵
 
 [POJ 2559 Largest Rectangle in a Histogram](http://poj.org/problem?id=2559)
 
@@ -541,7 +630,7 @@ public:
     }
     ```
 
-### 4.3. 矩阵内的最大全一长方形
+### 6.4. 矩阵内的最大全一长方形
 
 [85. Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/)
 
@@ -594,7 +683,7 @@ public:
     ```
   - 辅助栈：实际上可以把这道题看作是 [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) 的扩展，**对每一行，把它上面的所有行往下做投影**，即依次把每一行都当成一个柱形图的底，然后就可以直接采用 85 题的思路了。
 
-### 4.4. 矩阵内的最大全一正方形
+### 6.5. 矩阵内的最大全一正方形
 
 [221. Maximal Square](https://leetcode.com/problems/maximal-square/)
 
@@ -705,7 +794,7 @@ public:
   }
   ```
 
-### 4.5. 矩阵内的最大加号
+### 6.6. 矩阵内的最大加号
 
 [764. Largest Plus Sign](https://leetcode.com/problems/largest-plus-sign/)
 
@@ -762,7 +851,7 @@ public:
 
 - Solution
 
-### 4.6. 矩阵内的最大和
+### 6.7. 矩阵内的最大和
 
 TODO:
 
@@ -776,7 +865,7 @@ TODO:
   - 动态规划，时间复杂度为 O(N^4)
   - 进一步优化，时间复杂度为 O(N^3)
 
-## 5. 字母交换
+## 7. 字母交换
 
 [字母交换](https://www.nowcoder.com/questionTerminal/43488319efef4edabada3ca481068762)
 
@@ -826,7 +915,7 @@ TODO:
   }
   ```
 
-## 6. Refer Links
+## 8. Refer Links
 
 [LCSs——最长公共子序列和最长公共子串](https://www.cnblogs.com/maybe2030/p/5469877.html)
 

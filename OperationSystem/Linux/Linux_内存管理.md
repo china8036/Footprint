@@ -19,6 +19,10 @@ https://www.kernel.org/doc/Documentation/x86/x86_64/mm.txt
 
 http://blog.codinglabs.org/articles/a-malloc-tutorial.html#21-linux%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86
 
+TODO:
+
+https://github.com/shigh1005/pdf_book/blob/master/Linux%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86--Linux%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98%E4%B8%89%E7%BA%A7%E6%9E%B6%E6%9E%84.pdf
+
 ## 1. 基本概念
 
 https://blog.csdn.net/u012398613/article/details/52903296
@@ -78,13 +82,13 @@ BBS 即 Block Started by Symbol，通常是指用来存放程序中未初始化�
 栈作为内存中存储结构，通常存放:
 - **程序临时创建的局部变量**。
 - **函数调用时其形参**。
-- **函数调用后的返回值**。 
+- **函数调用后的返回值**。
 
 栈是**由到高地址向低地址扩展**的数据结构，即依次定义两个局部变量，首先定义的变量的地址是高地址，其次变量的地址是低地址。
 
 栈还具有“小内存、自动化、可能会溢出”的特点。栈顶的地址和栈的最大容量一般是系统预先规定好的，通常不会太大。由于栈中主要存放的是局部变量，而局部变量的占用的内存空间是其所在的代码段或函数段结束时由系统回收重新利用，所以栈的空间是循环利用自动管理的，一般不需要人为操作。如果某次局部变量申请的空间超过栈的剩余空间时就有可能出现 “栈的溢出”，进而导致意想不到的后果。所以一般不宜在栈中申请过大的空间，比如长度很大的数组、递归调用重复次数很多的函数等等。
 
-TODO: [系统默认的栈大小限制](https://blog.csdn.net/woshiyuanlei/article/details/45059417) 
+TODO: [系统默认的栈大小限制](https://blog.csdn.net/woshiyuanlei/article/details/45059417)
 
 ### 2.5. 堆内存
 

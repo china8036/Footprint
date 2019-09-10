@@ -1,10 +1,10 @@
-- [Linux 环境编程基础](#linux-%E7%8E%AF%E5%A2%83%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80)
-  - [1. Windows 下进行 Linux 编程](#1-windows-%E4%B8%8B%E8%BF%9B%E8%A1%8C-linux-%E7%BC%96%E7%A8%8B)
+- [Linux 环境编程基础](#linux-环境编程基础)
+  - [1. Windows 下进行 Linux 编程](#1-windows-下进行-linux-编程)
     - [1.1. Cygwin](#11-cygwin)
     - [1.2. MinGW](#12-mingw)
       - [1.2.1. MSYS](#121-msys)
-      - [1.2.2. MinGW 和 Cygwin 的区别](#122-mingw-%E5%92%8C-cygwin-%E7%9A%84%E5%8C%BA%E5%88%AB)
-  - [2. 自动化编译工具](#2-%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7)
+      - [1.2.2. MinGW 和 Cygwin 的区别](#122-mingw-和-cygwin-的区别)
+  - [2. 自动化编译工具](#2-自动化编译工具)
     - [2.1. Cmake](#21-cmake)
 
 # Linux 环境编程基础
@@ -47,7 +47,7 @@ MinGW 和 Cygwin 同样是在 Windows 仲模拟 unix 环境，两者有什么区
   - Cygwin 是用一个 dll 模拟 linux 环境来“欺骗”应用程序，好像自己运行在 linux 环境下。
   - MinGW 是在编译时提供 linux 到 windows 必要代码的“翻译”转换，用到的还是 windows 运行时库。
 
-- 从目标上说 
+- 从目标上说
   - MinGW 是让 Windows 用户可以用上 GNU 工具，比如 GCC，有点像用 Linux 开发环境开发 Windows 程序。
   - Cygwin 提供完整的类 Unix 环境，Windows 用户不仅可以使用 GNU 工具，还可以调用 Unix 的系统函数，理论上 Linux 上的程序只要用 Cygwin 重新编译，就可以在 Windows 上运行。Cygwin 是运行在 Windows 下的，但是它使用的是 Unix 系统的函数和思想。
 
@@ -55,7 +55,7 @@ MinGW 和 Cygwin 同样是在 Windows 仲模拟 unix 环境，两者有什么区
   - 如果程序只用到 C/C++ 标准库，可以用 MinGW 或 Cygwin 编译。
   - 如果程序还用到了 POSIX API，则只能用 Cygwin 编译。
 
-- 从依赖上说 
+- 从依赖上说
   - 程序经 MinGW 编译后可以直接在 Windows 上面运行。
   - 程序经 Cygwin 编译后运行，需要依赖安装时附带的 cygwin1.dll。
 
@@ -63,10 +63,10 @@ MinGW 和 Cygwin 同样是在 Windows 仲模拟 unix 环境，两者有什么区
 
 ## 2. 自动化编译工具
 
-文本形式的代码到可执行文件生成无论在什么平台大致分为以下几个部分： 
-- 用编辑器编写源代码，如。c 文件。 
-- 用编译器编译代码生成目标文件，如。o。 
-- 用链接器连接目标代码生成可执行文件，如。exe 和。out。 
+文本形式的代码到可执行文件生成无论在什么平台大致分为以下几个部分：
+- 用编辑器编写源代码，如。c 文件。
+- 用编译器编译代码生成目标文件，如。o。
+- 用链接器连接目标代码生成可执行文件，如。exe 和。out。
 
 Linux 平台下，编译和链接一般通过 gcc 或 g++ 来完成（g++ 默认链接 c++ 库，所以一般情况下用 gcc 编译 c 文件，而 g++ 编译 cpp 文件。当然 g++ 也可以编译 c 文件，而 gcc 编译 cpp 文件则需要在后面加上参数 -lstdc++，作用就是链接 c++ 库），但是如果编译和链接的阶段如果源文件太多，一个一个编译时就会特别麻烦，因此就产生了自动化编译工具 make，来批处理编译源文件。
 

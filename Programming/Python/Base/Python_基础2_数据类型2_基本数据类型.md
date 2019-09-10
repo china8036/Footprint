@@ -299,6 +299,8 @@ Python 解释器会打印出它们对应的十进制整数。
 ### 3.3. 字符串编码
 
 
+
+
 #### python2
 
 在 Python 2 下进行中文输入输出是个危机四伏的事，特别是在你的代码里混合使用 str 与 unicode 时。
@@ -309,4 +311,12 @@ Python 解释器会打印出它们对应的十进制整数。
 
 ## 4. Refer Links
 
+TODO:
+
 [也谈 Python 的中文编码处理](https://www.iteye.com/blog/in355hz-1860787)
+
+https://sanyuesha.com/2016/11/06/python-string-unicode/
+
+https://blog.csdn.net/y396397735/article/details/47807145
+
+https://blog.csdn.net/qq_24342335/article/details/84561341
