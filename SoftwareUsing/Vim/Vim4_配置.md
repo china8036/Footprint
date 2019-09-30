@@ -302,7 +302,12 @@ set pastetoggle=<F12>
   "Scancode Map"=hex:00,00,00,00,00,00,00,00,02,00,00,00,01,00,3a,00,00,00,00,00
   ```
   保存以上脚本为 reg 文件，直接运行后重启即可。
+
 - Linux
+
+- Mac
+
+  通过 Karabiner-Elements 进行键位映射修改
 
 ## 5. Refer Links
 

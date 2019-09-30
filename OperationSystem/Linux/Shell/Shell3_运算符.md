@@ -36,6 +36,8 @@ NOTE
   - `expr length str` 求字符串长度。
   - `expr index str1 str2` 求 str2 在 str1 中的索引。
   - `expr match string regex` 检查 string 是否能被正则表达式匹配。
+- `bc`
+  <!-- - TODO: expr 不支持浮点数运算，需要使用bc/awk -->
 - 对于 `*`、`>`、`>=`、`<`、`<=`，在使用时必须加转义符或使用单引号括起来，如 `expr 10 \* 3`、`expr 10 '*' 3`。
 
 ## 2. 关系运算符
@@ -97,7 +99,7 @@ eg:
 ### 6.2. 双小括号
 
 - 可在 `(())` 中执行符合 C 语言语法规则的代码
-  
+
   eg1:
   ```shell
   for ((var=1; var <= 5; var++));do ...;done

@@ -1,4 +1,4 @@
-- [Python 多任务：多进程](#python-多任务多进程)
+- [Python 并发：多进程](#python-并发多进程)
   - [1. os.fork() 系统调用](#1-osfork-系统调用)
   - [2. multiprocessing 模块](#2-multiprocessing-模块)
     - [2.1. Process 类](#21-process-类)
@@ -19,7 +19,9 @@
     - [2.6. managers 子模块](#26-managers-子模块)
   - [3. Refer Links](#3-refer-links)
 
-# Python 多任务：多进程
+# Python 并发：多进程
+
+https://docs.python.org/zh-cn/3/library/ipc.html
 
 ## 1. os.fork() 系统调用
 
@@ -385,6 +387,8 @@ Producer append an element
 ### 2.4. 进程间通信 (IPC) 类
 
 Process 之间肯定是需要通信的，操作系统提供了很多机制来实现进程间的通信。Python 的 multiprocessing 模块包装了底层的机制，提供了 Queue、Pipes 等多种方式来交换数据。
+
+https://docs.python.org/zh-cn/3/library/ipc.html
 
 #### 2.4.1. Queue 类
 

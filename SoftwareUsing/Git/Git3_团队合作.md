@@ -6,7 +6,9 @@
     - [4.1. Fork 方式](#41-fork-方式)
     - [4.2. 组织](#42-组织)
     - [4.3. 合作者](#43-合作者)
-  - [5. Refer Links](#5-refer-links)
+  - [5. Git 规范](#5-git-规范)
+    - [5.1. commit 规范](#51-commit-规范)
+  - [6. Refer Links](#6-refer-links)
 
 # Git 使用 GitHub 进行团队合作开发
 
@@ -44,7 +46,7 @@ GitHub 的各项功能都非常简单，就是因为在实际的软件开发中�
 
 ## 4. GitHub 多人协作开发的三种方式
 
-https://gist.github.com/belm/6989341 
+https://gist.github.com/belm/6989341
 
 ### 4.1. Fork 方式
 
@@ -70,6 +72,15 @@ Accounts Settings => Organizations =>Create new Organizations 新建一个组织
 
 上传完成后，可使用 Tower(Mac 下 Git 管理工具）clone remote Repository 使用 SSH 方式登录（这里的私钥使用刚才生成的） 这样，其他合作者就可以正常的 push 代码了。
 
-## 5. Refer Links
+## 5. Git 规范
+
+### 5.1. commit 规范
+
+- bugfix: 线上功能 Bug
+- sprintfix: 未上线代码修改（功能模块未上线部分 Bug）
+- minor: 不重要的修改（换行、拼写错误等）
+- feature: 新功能说明
+
+## 6. Refer Links
 
 《Github 入门与实践》

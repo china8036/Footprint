@@ -1141,6 +1141,7 @@ public class MyStack {
 
 ```java
 // 使用辗转相除法求最大公因数 (Greatest common divisor)(a < b)
+// 辗转相除法基于如下原理，两个整数的最大公约数等于其中较小的数和两数的差的最大公约数
 public int gcd(int a, int b) {
     if (b == 0)
         return a;

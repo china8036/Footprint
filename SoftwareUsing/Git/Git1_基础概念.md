@@ -6,6 +6,7 @@
       - [2.2.1. 智能 (smart) HTTP 协议](#221-智能-smart-http-协议)
       - [2.2.2. 哑 (dumb) HTTP 协议](#222-哑-dumb-http-协议)
     - [2.3. SSH 协议](#23-ssh-协议)
+    - [Git Member](#git-member)
     - [2.4. Git 协议](#24-git-协议)
   - [3. 环境变量](#3-环境变量)
   - [4. Refer Links](#4-refer-links)
@@ -87,6 +88,18 @@ $ git clone ssh://user@server/project.git
 $ git clone user@server:project.git
 ```
 若不指定用户，Git 会使用当前登录的用户名。
+
+### Git Member
+
+Git系统中包含了6种角色：
+- owner: Git系统管理员
+- master: Git项目管理员
+- developer: Git项目开发人员
+- reporter: Git项目测试人员
+- follower: 跟随者
+- Guest: 访客
+
+![image](http://img.cdn.firejq.com/jpg/2019/9/17/e0821c33522983707deb20bba37ffd74.jpg)
 
 ### 2.4. Git 协议
 

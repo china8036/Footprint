@@ -65,15 +65,31 @@
   - **CSMA/CD 只工作在“半双工”的情况下**，因为为了避免冲突，只能由一边发送数据，发送的时候不能接收数据，所以是半双工模式的。
   - **以太网 (IEEE 802.3) 采用的就是 CSMA/CD 介质访问控制方式**。
 
+  https://blog.csdn.net/dog250/article/details/91878388
+
+  http://hugnew.com/?p=814
+
+  https://blog.csdn.net/weixin_30909575/article/details/98097377
+
+  https://blog.csdn.net/dog250/article/details/90340322
+
+  https://blog.csdn.net/qq_40307919/article/details/80832130
+
+  https://blog.csdn.net/chdhust/article/details/48524511
+
+  https://blog.csdn.net/u012829763/article/details/79684858
+
+  <!-- 冲突窗口是互联网通讯领域的术语，是指从数据发送开始到网络上最远的两个站之间信号传播时延的两倍值的时间区间 -->
+
 ## 2. 无冲突协议 / 受控访问协议 (Controlled Access)
 
 特点：站点被分配占用信道，无冲突。
 - Bit-Map 协议（位图）
-  
+
   也叫预留协议，如有 N 个站点共享信道，编号为 0 ~N-1，其竞争周期将分为 N 个时隙，每个站点占有一个时隙，如某站准备发送，则可在属于它的时隙内填入 1，一个竞争周期后，则将按顺序发送，不会产生冲突。
 
 - Binary Countdown （二进制倒计数）
-  
+
   站号按相同长度的二进制数编号，需要发送的站逐个按高位到低位在争用周期开始时发送，凡低序号的站点发现有高序号站点也希望发送，则退出竞争，即： 高序号站点优先。
 
 ## 3. Refer Links

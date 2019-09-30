@@ -1,4 +1,4 @@
-- [Python 多任务：协程](#python-多任务协程)
+- [Python 并发：协程](#python-并发协程)
   - [1. asyncio 模块](#1-asyncio-模块)
     - [1.1. 版本差异](#11-版本差异)
     - [1.2. 使用](#12-使用)
@@ -6,7 +6,7 @@
   - [2. aiohttp 模块](#2-aiohttp-模块)
   - [3. Refer Links](#3-refer-links)
 
-# Python 多任务：协程
+# Python 并发：协程
 
 Python 对协程的支持经历了很长的一段发展历程，其大概经历了如下阶段：
 - python2.x：最初的生成器变形 yield/send，实现了协程的一部分但不完全

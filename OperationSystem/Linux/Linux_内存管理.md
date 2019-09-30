@@ -47,9 +47,11 @@ SHR 是 share（共享）的缩写，它表示的是进程占用的共享内存�
 
 ## 2. 内存模型
 
-以 Linux 64 位系统为例。理论上，64bit 内存地址可用空间为 0x0000000000000000 ~ 0xFFFFFFFFFFFFFFFF，这是个相当庞大的空间，Linux 实际上只用了其中一小部分（256T）。
+对于 Linux 32 位系统，最大寻址范围为 2^32 (4G) 的线性地址空间。Linux 简化了分段机制，使得虚拟地址与线性地址总是一致的，即一般把这个 4G 的地址空间划分为两个部分：
+- 0～3G 为用户程序地址空间，虚地址 0x00000000 到 0xBFFFFFFF，供各个进程使用。
+- 3G～4G 为内核的地址空间，虚拟地址 0xC0000000 到 0xFFFFFFFF, 供内核使用（ARM 架构不是 3G/1G 划分的，而是 2G/2G 划分。这里以 3G/1G 划分作讲解）。Linux 内核采用了最简单的映射方式来映射物理内存，即把物理地址＋PAGE_OFFSET 按照线性关系直接映射到内核空间（PAGE_OFFSET 大小为 0xC0000000）. 但是 linux 内核并没有把整个 1G 空间用于线性映射，而只映射了最多 896M 物理内存，预留了最高端的 128M 虚拟地址空间给 IO 设备和其他用途。当系统物理内存较大时，超过 896M 的内存区域，内核就无法直接通过线性映射直接访问了。这部分内存被称作 high memory。相应的可以映射的低端物理内存称为 Low memory。
 
-**根据 Linux 内核相关文档描述，Linux 64 位操作系统中实际用到的地址空间为 0x0000000000000000 ~ 0x00007FFFFFFFFFFF 和 0xFFFF800000000000 ~ 0xFFFFFFFFFFFFFFFF，其中前面为用户空间（User Space），后者为内核空间（Kernel Space）。**
+对于 Linux 64 位系统，理论上 64bit 内存地址可用空间为 0x0000000000000000 ~ 0xFFFFFFFFFFFFFFFF，这是个相当庞大的空间，Linux 实际上只用了其中一小部分（256T）。**根据 Linux 内核相关文档描述，Linux 64 位操作系统中实际用到的地址空间为 0x0000000000000000 ~ 0x00007FFFFFFFFFFF 和 0xFFFF800000000000 ~ 0xFFFFFFFFFFFFFFFF，其中前面为用户空间（User Space），后者为内核空间（Kernel Space）。**
 
 ![image](http://img.cdn.firejq.com/jpg/2018/7/29/87790219e8780320da56b2e47b879af2.jpg)
 
@@ -79,7 +81,7 @@ BBS 即 Block Started by Symbol，通常是指用来存放程序中未初始化�
 
 ### 2.4. 栈内存
 
-栈作为内存中存储结构，通常存放:
+栈作为内存中存储结构，通常存放：
 - **程序临时创建的局部变量**。
 - **函数调用时其形参**。
 - **函数调用后的返回值**。
@@ -134,3 +136,5 @@ int main() {
 [张洋：如何实现一个 malloc](http://blog.codinglabs.org/articles/a-malloc-tutorial.html)
 
 [用户空间与内核空间，进程上下文与中断上下文](https://www.cnblogs.com/Anker/p/3269106.html)
+
+[关于 linux kernel 里的 high memory](http://blog.sina.com.cn/s/blog_6488248f0100wu6v.html)

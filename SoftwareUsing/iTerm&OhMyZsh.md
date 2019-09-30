@@ -125,13 +125,10 @@ P.S. 卸载 oh my zsh：`uninstall_oh_my_zsh`.
 
 在 ～/.ssh/ 中创建文件：~/.ssh/remembered_hosts/example.exp，内容如下：
 
-```shellwget https://raw.githubusercontent.com/mmastrac/iterm2-zmodem/master/iterm2-send-zmodem.sh
+```shell
+wget https://raw.githubusercontent.com/mmastrac/iterm2-zmodem/master/iterm2-send-zmodem.sh
 wget https://raw.githubusercontent.com/mmastrac/iterm2-zmodem/master/iterm2-recv-zmodem.sh
 
-作者：wait4friend
-链接：https://juejin.im/post/5b016ae6f265da0b82631177
-来源：掘金
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 #!/usr/bin/expect
 set host 服务器 IP
 set port 服务器 ssh 端口

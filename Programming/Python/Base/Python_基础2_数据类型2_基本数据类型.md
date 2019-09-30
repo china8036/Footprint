@@ -9,8 +9,9 @@
     - [3.1. 字符串操作](#31-字符串操作)
     - [3.2. 字符串方法](#32-字符串方法)
     - [3.3. 字符串编码](#33-字符串编码)
-      - [python2](#python2)
-      - [python3](#python3)
+      - [3.3.1. python](#331-python)
+      - [3.3.2. python](#332-python)
+    - [3.4. 字符串格式化](#34-字符串格式化)
   - [4. Refer Links](#4-refer-links)
 
 # Python 基础：数据类型 - 基本数据类型
@@ -298,16 +299,17 @@ Python 解释器会打印出它们对应的十进制整数。
 
 ### 3.3. 字符串编码
 
-
-
-
-#### python2
+#### 3.3.1. python
 
 在 Python 2 下进行中文输入输出是个危机四伏的事，特别是在你的代码里混合使用 str 与 unicode 时。
 
-#### python3
+#### 3.3.2. python
 
 在 Python 3 已经取消了 str，让所有的字符串都是 unicode。
+
+### 3.4. 字符串格式化
+
+https://www.cnblogs.com/zhaopanpan/p/8875765.html
 
 ## 4. Refer Links
 

@@ -1,5 +1,5 @@
 
-- [Python 基础：代码结构](#Python-基础代码结构)
+- [Python 基础：代码结构](#python-基础代码结构)
   - [1. 流程控制](#1-流程控制)
     - [1.1. if、 elif 和 else](#11-if-elif-和-else)
     - [1.2. while、else](#12-whileelse)
@@ -40,10 +40,7 @@
     - [6.4. 包](#64-包)
       - [6.4.1. 包结构](#641-包结构)
       - [6.4.2. `__init__.py`](#642-__init__py)
-    - [6.5. 异常控制](#65-异常控制)
-      - [6.5.1. try、except](#651-tryexcept)
-      - [6.5.2. 自定义异常](#652-自定义异常)
-  - [7. Refer Links](#7-Refer-Links)
+  - [7. Refer Links](#7-refer-links)
 
 # Python 基础：代码结构
 
@@ -257,6 +254,8 @@ range（start, stop, step）返回在特定区间的自然数可迭代序列，�
 一个函数可以接受任何数量（包括 0）的任何类型的值作为输入变量，并且返回任何数量（包括 0）的任何类型的结果。如果函数不显式调用 return 函数，那么会默认返回 None；
 
 ### 3.1. 参数
+
+TODO: 函数参数传值、传引用：http://winterttr.me/2015/10/24/python-passing-arguments-as-value-or-reference/
 
 #### 3.1.1. 位置参数
 
@@ -605,7 +604,6 @@ Program arguments: ['test2.py', 'tra', 'la', 'la']
 
   - 内建模块（使用 C 编写并已链接到 Python 解释器中）
 
-
 - 模块通常为单独的。py 文件，可以用 import 直接引用，可以作为模块的文件类型有。py、.pyo、.pyc、.pyd、.so、.dll；
 
 - import 语句可以在程序的任何位置使用，你可以在程序中多次导入同一个模块，但模块中的代码仅仅在该模块被首次导入时执行。后面的 import 语句只是简单的创建一个到模块名字空间的引用而已；
@@ -637,6 +635,13 @@ Program arguments: ['test2.py', 'tra', 'la', 'la']
   2)	在新创建的命名空间中执行源代码文件。
 
   3)	创建一个名为源代码文件的对象，该对象引用模块的名字空间，这样就可以通过这个对象访问模块中的函数及变量
+
+TODO: https://www.jianshu.com/p/4bb742d7d672
+
+import glovar 和 from comon import glovar 的命名空间是一样的，key 都是 glovar
+
+from common.glovar import x 则不一样，test.py 中这样 from import，就相当于在 test.py 文件中写了一行代码 x = 1,
+此时 x 就是 test 自己命名空间中的变量。所以 x 只在 test.py 中有效，无聊自己如何对 x 修改，都无法影响 glovar 中的 x
 
 ### 6.3. 模块
 
@@ -759,51 +764,5 @@ package
       for number, outlook in enumerate(weekly.forecast(), 1):
         print(number, outlook)
       ```
-
-### 6.5. 异常控制
-
-Python 使用异常，它是一段只有错误发生时执行的代码。
-
-#### 6.5.1. try、except
-
-例：
-```python
-try:
-  position = int(value)
-  print(short_list[position])
-except IndexError as err:
-  print('Bad index:', position)
-except Exception as other:
-  print('Something else broke:', other)
-```
-
-#### 6.5.2. 自定义异常
-
-一个异常是一个类，即类 Exception 的一个子类
-
-例：编写异常 UppercaseException，在一个字符串中碰到大写字母会被抛出。
-```python
->>> class UppercaseException(Exception):
-...   pass
-...
-# 即使没有定义 UppercaseException 的行为（注意到只使用 pass），也可以通过继承其父类 Exception 在抛出异常时输出错误提示
->>> words = ['eeenie', 'meenie', 'miny', 'MO']
->>> for word in words:
-... 	if word.isupper():
-... 		raise UppercaseException(word)
-...
-Traceback (most recent call last):
-File "<stdin>", line 3, in <module>
-__main__.UppercaseException: MO
-```
-访问异常对象本身，并且输出它：
-```python
->>> try:
-... 	raise OopsException('panic')
-... except OopsException as exc:
-... 	print(exc)
-...
-panic
-```
 
 ## 7. Refer Links

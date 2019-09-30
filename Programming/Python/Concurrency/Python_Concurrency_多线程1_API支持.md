@@ -1,32 +1,92 @@
-- [Python 多任务：多线程](#python-多任务多线程)
-  - [1. threading 模块](#1-threading-模块)
-    - [1.1. Thread 类](#11-thread-类)
-      - [1.1.1. 构造方法](#111-构造方法)
-      - [1.1.2. 方法](#112-方法)
-      - [1.1.3. 自定义 Thread 类](#113-自定义-thread-类)
-    - [1.2. 进程间同步](#12-进程间同步)
-      - [1.2.1. Lock 类](#121-lock-类)
-      - [1.2.2. RLock 类](#122-rlock-类)
-      - [1.2.3. Condition 类](#123-condition-类)
-      - [1.2.4. Semaphore 类 / BoundedSemaphore 类](#124-semaphore-类--boundedsemaphore-类)
-      - [1.2.5. ThreadLocal 类](#125-threadlocal-类)
-      - [1.2.6. 其它方法](#126-其它方法)
-    - [1.3. multiprocessing.dummy 模块](#13-multiprocessingdummy-模块)
-    - [1.4. multiprocessing.pool.ThreadPool 模块](#14-multiprocessingpoolthreadpool-模块)
-    - [1.5. GIL 全局解释器锁](#15-gil-全局解释器锁)
-  - [2. Refer Links](#2-refer-links)
+- [Python 并发：多线程](#python-并发多线程)
+  - [1. 底层实现模块：thread / _thread](#1-底层实现模块thread--_thread)
+    - [1.1. thread](#11-thread)
+    - [1.2. _thread](#12-_thread)
+  - [2. 高级封装模块：threading](#2-高级封装模块threading)
+    - [2.1. 模块方法](#21-模块方法)
+    - [2.2. Thread 类](#22-thread-类)
+      - [2.2.1. 构造方法](#221-构造方法)
+      - [2.2.2. 方法](#222-方法)
+      - [2.2.3. 自定义 Thread 类](#223-自定义-thread-类)
+    - [2.3. 线程间同步](#23-线程间同步)
+      - [2.3.1. Lock 类](#231-lock-类)
+      - [2.3.2. RLock 类](#232-rlock-类)
+      - [2.3.3. Condition 类](#233-condition-类)
+      - [2.3.4. Semaphore 类 / BoundedSemaphore 类](#234-semaphore-类--boundedsemaphore-类)
+      - [2.3.5. ThreadLocal 类](#235-threadlocal-类)
+  - [3. dummy 模块：dummy_thread / _dummy_thread / dummy_threading](#3-dummy-模块dummy_thread--_dummy_thread--dummy_threading)
+  - [4. multiprocessing 线程模块](#4-multiprocessing-线程模块)
+    - [4.1. threading 封装模块：multiprocessing.dummy](#41-threading-封装模块multiprocessingdummy)
+    - [4.2. 线程池模块：multiprocessing.pool.ThreadPool](#42-线程池模块multiprocessingpoolthreadpool)
+  - [5. Refer Links](#5-refer-links)
 
-# Python 多任务：多线程
+# Python 并发：多线程
 
-Python 的线程是真正的 Posix Thread，而不是模拟出来的线程。
+## 1. 底层实现模块：thread / _thread
 
-Python 的标准库提供了两个模块：_thread 和 threading._thread 是低级模块，threading 是高级模块，对_thread 进行了封装。绝大多数情况下，我们只需要使用 threading 这个高级模块。
+`thread`(python 2.7) / `_thread`(Python3.7) 是一个 build-in 的模块，在解释器（如 cpython）中由底层代码（如 C++）实现，提供了多线程操作底层 API 的具体实现。
 
-## 1. threading 模块
+Python 的多线程是真正的 Posix Thread，底层基于 pthread 创建线程，而不是模拟出来的用户态线程。
 
-### 1.1. Thread 类
+### 1.1. thread
 
-#### 1.1.1. 构造方法
+```
+This module provides primitive operations to write multi-threaded programs.
+    The 'threading' module provides a more convenient interface.
+
+    __builtin__.object
+        lock
+    exceptions.Exception(exceptions.BaseException)
+        error
+```
+
+### 1.2. _thread
+
+https://docs.python.org/3/library/_thread.html
+
+```
+This module provides primitive operations to write multi-threaded programs.
+    The 'threading' module provides a more convenient interface.
+
+    builtins.object
+        RLock
+        lock
+```
+<!-- TODO: 相比 thread 增加了读写锁？ -->
+
+## 2. 高级封装模块：threading
+
+threading 是对 `thread`(python 2.7) / `_thread`(Python3.7) 模块的高级封装，实现了 Java 线程模型的子集。在绝大多数情况下，我们只需要使用 threading 这个高级模块即可实现多线程开发。
+
+```
+threading - Thread module emulating a subset of Java's threading model.
+    Higher-level threading interface
+
+    builtins.Exception(builtins.BaseException)
+        builtins.RuntimeError
+            BrokenBarrierError
+    builtins.object
+        _thread._local
+        Barrier
+        Condition
+        Event
+        Semaphore
+            BoundedSemaphore
+        Thread
+            Timer
+```
+
+### 2.1. 模块方法
+
+- `currentThread()`: 返回当前的线程变量。
+
+- `enumerate()`: 返回一个包含正在运行的线程的 list。正在运行指线程启动后、结束前，不包括启动前和终止后的线程。
+
+- `activeCount()`: 返回正在运行的线程数量，与 len(threading.enumerate()) 有相同的结果。
+
+### 2.2. Thread 类
+
+#### 2.2.1. 构造方法
 
 ```python
 Thread([group [, target [, name [, args [, kwargs]]]]])
@@ -38,7 +98,7 @@ Thread([group [, target [, name [, args [, kwargs]]]]])
 # group 分组，实际上不使用
 ```
 
-#### 1.1.2. 方法
+#### 2.2.2. 方法
 
 - `start(self)`: 开始线程执行。
 
@@ -83,7 +143,7 @@ Thread([group [, target [, name [, args [, kwargs]]]]])
   print(f.get_result())
   ```
 
-#### 1.1.3. 自定义 Thread 类
+#### 2.2.3. 自定义 Thread 类
 
 与 multiprocessing 模块相同，除了使用构造方法创建一个新的进程 / 线程，还可以通过继承 Thread 类，来创建一个新的线程。
 
@@ -102,9 +162,9 @@ if __name__ == "__main__":
         t.start()
 ```
 
-### 1.2. 进程间同步
+### 2.3. 线程间同步
 
-#### 1.2.1. Lock 类
+#### 2.3.1. Lock 类
 
 e.g.
 ```python
@@ -164,7 +224,7 @@ def run_thread(n):
 
 锁的好处就是确保了某段关键代码只能由一个线程从头到尾完整地执行，坏处当然也很多，首先是阻止了多线程并发执行，包含锁的某段代码实际上只能以单线程的串行模式执行，效率就大大地下降了。其次，由于可以存在多个锁，不同的线程持有不同的锁，并试图获取对方持有的锁时，可能会造成死锁，导致多个线程全部挂起，既不能执行，也无法结束，只能靠操作系统强制终止。
 
-#### 1.2.2. RLock 类
+#### 2.3.2. RLock 类
 
 RLock（可重入锁）是一个可以被同一个线程请求多次的同步指令。RLock 使用了“拥有的线程”和“递归等级”的概念，处于锁定状态时，RLock 被某个线程拥有。拥有 RLock 的线程可以再次调用 acquire()，释放锁时需要调用 release() 相同次数。
 
@@ -204,11 +264,11 @@ t2.start()
 t3.start()
 ```
 
-#### 1.2.3. Condition 类
+#### 2.3.3. Condition 类
 
 https://www.cnblogs.com/huxi/archive/2010/06/26/1765808.html
 
-#### 1.2.4. Semaphore 类 / BoundedSemaphore 类
+#### 2.3.4. Semaphore 类 / BoundedSemaphore 类
 
 信号量 Semaphore 对象维护着一个内部计数器，调用 acquire() 方法时该计数器减 1，调用 release() 方法时该计数器加 1，适用于需要控制特定资源的并发访问线程数量的场合，如连接池，控制线程最大运行数目。
 
@@ -239,7 +299,7 @@ for i in range(10):
     t.start()
 ```
 
-#### 1.2.5. ThreadLocal 类
+#### 2.3.5. ThreadLocal 类
 
 在多线程环境下，每个线程都有自己的数据。一个线程使用自己的局部变量比使用全局变量好，因为局部变量只有线程自己能看见，不会影响其他线程，而全局变量的修改必须加锁。
 
@@ -279,15 +339,72 @@ t2.join()
 应用：
 ThreadLocal 最常用的地方就是为每个线程绑定一个数据库连接，HTTP 请求，用户身份信息等，这样一个线程的所有调用到的处理函数都可以非常方便地访问这些资源。
 
-#### 1.2.6. 其它方法
+## 3. dummy 模块：dummy_thread / _dummy_thread / dummy_threading
 
-1)	current_thread()：返回当前的线程对象；
+- dummy_thread(Python2.7)
+  ```
+  dummy_thread — Drop-in replacement for the thread module
 
-### 1.3. multiprocessing.dummy 模块
+  Meant to be used as a brain-dead substitute so that threaded code does
+      not need to be rewritten for when the thread module is not present.
 
-multiprocessing 在 python 中是一个多进程模块，而 multiprocessing.dummy 则是一个多线程模块。
+      Suggested usage is::
 
-### 1.4. multiprocessing.pool.ThreadPool 模块
+          try:
+              import thread
+          except ImportError:
+              import dummy_thread as thread
+
+      __builtin__.object
+              LockType
+          exceptions.Exception(exceptions.BaseException)
+              error
+  ```
+
+- _dummy_thread(Python 3.7)
+  ```
+  _dummy_thread - Drop-in replacement for the thread module.
+
+  Meant to be used as a brain-dead substitute so that threaded code does
+      not need to be rewritten for when the thread module is not present.
+
+      Suggested usage is::
+
+          try:
+              import _thread
+          except ImportError:
+              import _dummy_thread as _thread
+
+      builtins.Exception(builtins.BaseException)
+              builtins.RuntimeError
+          builtins.object
+              LockType
+                  RLock
+  ```
+
+- dummy_threading
+  ```
+  dummy_threading — Drop-in replacement for the threading module.
+      Faux ``threading`` version using ``dummy_thread`` instead of ``thread``.
+
+      The module ``_dummy_threading`` is added to ``sys.modules`` in order
+      to not have ``threading`` considered imported.  Had ``threading`` been
+      directly imported it would have made all subsequent imports succeed
+      regardless of whether ``thread`` was available which is not desired.
+
+  ```
+
+## 4. multiprocessing 线程模块
+
+> This package is intended to duplicate the functionality (and much of the API) of threading.py but uses processes instead of threads.
+
+### 4.1. threading 封装模块：multiprocessing.dummy
+
+> A subpackage 'multiprocessing.dummy' has the same API but is a simple wrapper for 'threading'.
+
+multiprocessing 在 python 中是一个多进程模块，而 multiprocessing.dummy 则是一个多线程模块，它是对 threading 模块的简单封装。
+
+### 4.2. 线程池模块：multiprocessing.pool.ThreadPool
 
 线程池，用法类似 multiprocessing.Pool 进程池。
 
@@ -305,42 +422,14 @@ pool.close()
 pool.join()
 ```
 
-### 1.5. GIL 全局解释器锁
+## 5. Refer Links
 
-https://www.zhihu.com/question/56170408
+[Python Docs: 并发](https://docs.python.org/zh-cn/3/library/concurrency.html)
 
-GIL 的全称是 Global Interpreter Lock（全局解释器锁)，来源是 python 设计之初的考虑，为了数据安全所做的决定。
+[菜鸟教程：Python 多线程](https://www.runoob.com/python/python-multithreading.html)
 
-Python 的线程虽然是真正的线程，但解释器执行代码时，有一个 GIL 锁：Global Interpreter Lock（全局解释器锁)，任何 Python 线程执行前，必须先获得 GIL 锁，然后，当计时器超时后，解释器就自动释放 GIL 锁，让别的线程有机会执行。这个 GIL 全局锁实际上把所有线程的执行代码都给上了锁，所以，多线程在 Python 中只能交替执行，即使 100 个线程跑在 100 核 CPU 上，也只能用到 1 个核。
+TODO:
 
-在 Python 多线程下，每个线程的执行方式：
-1. 获取 GIL
-1. 执行代码直到 sleep 或者是 python 虚拟机将其挂起。
-1. 释放 GIL
+ThreadLocal： https://www.liaoxuefeng.com/wiki/1016959663602400/1017630786314240
 
-验证：
-
-用 Python 写个死循环：
-```python
-def loop():
-    x = 0
-    while True:
-        x = x ^ 1
-
-for i in range(multiprocessing.cpu_count()):
-    t = threading.Thread(target=loop)
-    t.start()
-```
-启动与 CPU 核心数量相同的 N 个线程，在 4 核 CPU 上可以监控到 CPU 占用率仅有 102%，也就是仅使用了一核。
-
-GIL 是 Python 解释器设计的历史遗留问题，通常我们用的解释器是官方实现的 CPython，要真正利用多核，除非重写一个不带 GIL 的解释器。
-
-所以，在 Python 中，可以使用多线程，但不要指望能有效利用多核。如果一定要通过多线程利用多核，那只能通过 C 扩展来实现，不过这样就失去了 Python 简单易用的特点。
-
-Python 虽然不能利用多线程实现多核任务，但可以通过多进程实现多核任务。多个 Python 进程有各自独立的 GIL 锁，互不影响。
-
-由于 GIL 的存在，python 中的多线程其实并不是真正的多线程，并不能做到充分利用多核 CPU 资源。
-
-在 Python 中，线程不能加速受 CPU 限制的任务，原因是标准 Python 系统中使用了全局解释器锁（GIL）。 GIL 的作用是避免 Python 解释器中的线程问题，但是实际上会让多线程程序运行速度比对应的单线程版本甚至是多进程版本更慢。
-
-## 2. Refer Links
+concurrent.futures.ThreadPoolExecutor 和 ProcessPoolExecutor
