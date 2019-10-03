@@ -1,4 +1,4 @@
-- [Python 并发：多线程](#python-并发多线程)
+- [Python 并发：多线程 - 相关模块](#python-并发多线程---相关模块)
   - [1. 底层实现模块：thread / _thread](#1-底层实现模块thread--_thread)
     - [1.1. thread](#11-thread)
       - [1.1.1. 基本概念](#111-基本概念)
@@ -12,24 +12,26 @@
     - [2.2. 版本差异](#22-版本差异)
     - [2.3. 辅助方法](#23-辅助方法)
     - [2.4. Thread Objects](#24-thread-objects)
-    - [2.5. 线程间通信 (communication)](#25-线程间通信-communication)
-      - [2.5.1. Event Objects](#251-event-objects)
-    - [2.6. 线程间同步 (synchronization)](#26-线程间同步-synchronization)
-      - [2.6.1. Lock Objects](#261-lock-objects)
-      - [2.6.2. RLock Objects](#262-rlock-objects)
-      - [2.6.3. Condition Objects](#263-condition-objects)
-      - [2.6.4. Semaphore Objects](#264-semaphore-objects)
-      - [2.6.5. BoundedSemaphore Objects](#265-boundedsemaphore-objects)
-      - [2.6.6. Barrier Objects](#266-barrier-objects)
-    - [2.7. Thread-Local Data](#27-thread-local-data)
-    - [2.8. Timer](#28-timer)
+    - [2.5. 线程间同步 (synchronization)](#25-线程间同步-synchronization)
+      - [2.5.1. Lock Objects](#251-lock-objects)
+      - [2.5.2. RLock Objects](#252-rlock-objects)
+      - [2.5.3. Condition Objects](#253-condition-objects)
+      - [2.5.4. Semaphore Objects](#254-semaphore-objects)
+      - [2.5.5. BoundedSemaphore Objects](#255-boundedsemaphore-objects)
+      - [2.5.6. Event Objects](#256-event-objects)
+      - [2.5.7. Barrier Objects](#257-barrier-objects)
+    - [2.6. Thread-Local Data](#26-thread-local-data)
+    - [2.7. Timer](#27-timer)
   - [3. dummy 模块：dummy_thread / _dummy_thread / dummy_threading](#3-dummy-模块dummy_thread--_dummy_thread--dummy_threading)
   - [4. threading 封装模块：multiprocessing.dummy](#4-threading-封装模块multiprocessingdummy)
   - [5. 同步阻塞队列模块：Queue / queue](#5-同步阻塞队列模块queue--queue)
   - [6. 周期性调度模块：sched](#6-周期性调度模块sched)
-  - [7. Refer Links](#7-refer-links)
+  - [7. 线程池支持模块](#7-线程池支持模块)
+    - [7.1. multiprocessing.pool.ThreadPool](#71-multiprocessingpoolthreadpool)
+    - [7.2. concurrent.futures.ThreadPoolExecutor](#72-concurrentfuturesthreadpoolexecutor)
+  - [8. Refer Links](#8-refer-links)
 
-# Python 并发：多线程
+# Python 并发：多线程 - 相关模块
 
 ## 1. 底层实现模块：thread / _thread
 
@@ -357,29 +359,7 @@ NOTE
           t.start()
   ```
 
-### 2.5. 线程间通信 (communication)
-
-在同一个进程内，多个线程共享该进程的内存地址空间，因此在 Python 多线程程序中，只需要把变量定义为全局变量，即可让多个线程共享访问。尽管如此，threading 模块还提供了简化多线程通信的便捷操作类。
-
-#### 2.5.1. Event Objects
-
-> This is one of the simplest mechanisms for communication between threads: one thread signals an event and other threads wait for it.
-
-An event object manages an internal flag that can be set to true with the `set()` method and reset to false with the `clear()` method. The `wait()` method blocks until the flag is true.
-
-- CONSTRUCTION
-  - py2: `threading.Event()`: A factory function that returns a new event object.
-  - py3: `class threading.Event`: Class implementing event objects.
-
-- API
-
-  The internal flag is initially false.
-  - `is_set()` / `isSet()`: Return true if and only if the internal flag is true.
-  - `set()`: Set the internal flag to true. **All threads waiting for it to become true are awakened**. Threads that call `wait()` once the flag is true will not block at all.
-  - `clear()`: Reset the internal flag to false. Subsequently, threads calling `wait()` will block until `set()` is called to set the internal flag to true again.
-  - `wait([timeout])`: Block until the internal flag is true. This method returns the internal flag on exit, so it will always return True except if a timeout is given and the operation times out.
-
-### 2.6. 线程间同步 (synchronization)
+### 2.5. 线程间同步 (synchronization)
 
 All of the objects provided by this module that have acquire() and release() methods can be used as context managers for a with statement. The acquire() method will be called when the block is entered, and release() will be called when the block is exited.
 
@@ -392,7 +372,7 @@ with some_rlock:
     print "some_rlock is locked while this executes"
 ```
 
-#### 2.6.1. Lock Objects
+#### 2.5.1. Lock Objects
 
 Once a thread has acquired it, subsequent attempts to acquire it block, until it is released; any thread may release it.
 
@@ -459,7 +439,7 @@ Locks also support the context management protocol.
   ```
   当多个线程同时执行 lock.acquire() 时，只有一个线程能成功地获取锁，然后继续执行代码，其他线程就继续等待直到获得锁为止。获得锁的线程用完后一定要释放锁，否则那些苦苦等待锁的线程将永远等待下去，成为死线程。为防止资源占用的操作出异常后 release 无法调用，而导致其它线程一直等待解锁而成为“死线程”，需要用 try...finally 来确保锁一定会被释放。
 
-#### 2.6.2. RLock Objects
+#### 2.5.2. RLock Objects
 
 A reentrant lock must be released by the thread that acquired it. Once a thread has acquired a reentrant lock, the same thread may acquire it again without blocking; the thread must release it once for each time it has acquired it.
 
@@ -540,7 +520,7 @@ RLock（可重入锁）是一个可以被同一个线程请求多次的同步指
   t3.start()
   ```
 
-#### 2.6.3. Condition Objects
+#### 2.5.3. Condition Objects
 
 A condition variable is always associated with some kind of lock; this can be passed in or one will be created by default. (Passing one in is useful when several condition variables must share the same lock.)
 
@@ -583,7 +563,7 @@ A condition variable is always associated with some kind of lock; this can be pa
   cv.release()
   ```
 
-#### 2.6.4. Semaphore Objects
+#### 2.5.4. Semaphore Objects
 
 > A semaphore manages a counter representing the number of release() calls minus the number of acquire() calls, plus an initial value. The acquire() method blocks if necessary until it can return without making the counter negative. If not given, value defaults to 1.
 
@@ -618,7 +598,7 @@ Semaphores also support the context management protocol.
       t.start()
   ```
 
-#### 2.6.5. BoundedSemaphore Objects
+#### 2.5.5. BoundedSemaphore Objects
 
 > A bounded semaphore checks to make sure its current value doesn’t exceed its initial value. If it does, ValueError is raised. In most situations semaphores are used to guard resources with limited capacity. If the semaphore is released too many times it’s a sign of a bug. If not given, value defaults to 1.
 
@@ -641,7 +621,25 @@ Semaphores also support the context management protocol.
           conn.close()
   ```
 
-#### 2.6.6. Barrier Objects
+#### 2.5.6. Event Objects
+
+> This is one of the simplest mechanisms for communication between threads: one thread signals an event and other threads wait for it.
+
+An event object manages an internal flag that can be set to true with the `set()` method and reset to false with the `clear()` method. The `wait()` method blocks until the flag is true.
+
+- CONSTRUCTION
+  - py2: `threading.Event()`: A factory function that returns a new event object.
+  - py3: `class threading.Event`: Class implementing event objects.
+
+- API
+
+  The internal flag is initially false.
+  - `is_set()` / `isSet()`: Return true if and only if the internal flag is true.
+  - `set()`: Set the internal flag to true. **All threads waiting for it to become true are awakened**. Threads that call `wait()` once the flag is true will not block at all.
+  - `clear()`: Reset the internal flag to false. Subsequently, threads calling `wait()` will block until `set()` is called to set the internal flag to true again.
+  - `wait([timeout])`: Block until the internal flag is true. This method returns the internal flag on exit, so it will always return True except if a timeout is given and the operation times out.
+
+#### 2.5.7. Barrier Objects
 
 **Barrier is new in version py3.2**.
 
@@ -684,7 +682,7 @@ The barrier can be reused any number of times for the same number of threads.
           process_client_connection(connection)
   ```
 
-### 2.7. Thread-Local Data
+### 2.6. Thread-Local Data
 
 在多线程环境下，每个线程都有自己的数据。一个线程使用自己的局部变量比使用全局变量好，因为局部变量只有线程自己能看见，不会影响其他线程，而全局变量的修改必须加锁。
 
@@ -727,7 +725,7 @@ The barrier can be reused any number of times for the same number of threads.
 
   Thread-Local Data 最常用的地方就是为每个线程绑定一个数据库连接，HTTP 请求，用户身份信息等，这样一个线程的所有调用到的处理函数都可以非常方便地访问这些资源。
 
-### 2.8. Timer
+### 2.7. Timer
 
 This class represents an action that should be run only after a certain amount of time has passed — a timer. **Timer is a subclass of Thread** and as such also functions as an example of creating custom threads.
 
@@ -895,22 +893,133 @@ The `Queue` (py2) / `queue` (py3) module implements multi-producer, multi-consum
 
 ## 6. 周期性调度模块：sched
 
-TODO: https://blog.csdn.net/Leonard_wang/article/details/54017537
-
 Docs：
 - https://docs.python.org/2.7/library/sched.html
 - https://docs.python.org/3/library/sched.html
 
+> The sched module defines a class which implements a general purpose event scheduler.
 
+sched 模块实现了一个时间调度程序，该调度程序可以通过单线程执行来处理按照时间尺度进行调度的事件。有时候你想只一个线程每过一段时间执行一个任务（函数)，但是又不想使用 while 循环加 time.sleep()，可以使用 sched 模块实现，能提供良好的可扩展性。
 
-## 7. Refer Links
+- CONSTRUCTION
+
+  `class sched.scheduler(timefunc, delayfunc)`: The scheduler class defines a generic interface to scheduling events. It needs two functions to actually deal with the “outside world”
+
+    （第一个参数是一个可以返回时间戳的函数，第二个参数可以在定时未到达之前阻塞）
+    - timefunc should be callable without arguments, and return a number (the “time”, in any units whatsoever).
+    - delayfunc function should be callable with one argument, compatible with the output of timefunc, and should delay that many time units. delayfunc will also be called with the argument 0 after each event is run to allow other threads an opportunity to run in multi-threaded applications.
+
+    Changed in version 3.3: `scheduler` class can be safely used in multi-threaded environments
+
+- API
+  - `scheduler.enterabs(time, priority, action, argument)`: Schedule a new event. The time argument should be a numeric type compatible with the return value of the timefunc function passed to the constructor. Events scheduled for the same time will be executed in the order of their priority. A lower number represents a higher priority.
+
+  - `scheduler.enter(delay, priority, action, argument)`: Schedule an event for delay more time units. Other than the relative time, the other arguments, the effect and the return value are the same as those for enterabs().
+
+  - `scheduler.cancel(event)`: Remove the event from the queue. If event is not an event currently in the queue, this method will raise a ValueError.
+
+  - `scheduler.empty()`: Return true if the event queue is empty.
+
+  - `scheduler.run()`: Run all scheduled events. This function will wait (using the delayfunc() function passed to the constructor) for the next event, then execute it and so on until there are no more scheduled events.
+
+  - `scheduler.queue`: Read-only attribute returning a list of upcoming events in the order they will be run. Each event is shown as a named tuple with the following fields: time, priority, action, argument.
+
+- e.g.1
+
+  ```python
+  >>> import sched, time
+  >>> s = sched.scheduler(time.time, time.sleep)
+  >>> def print_time(a='default'):
+  ...     print("From print_time", time.time(), a)
+  ...
+  >>> def print_some_times():
+  ...     print(time.time())
+  ...     s.enter(10, 1, print_time)
+  ...     s.enter(5, 2, print_time, argument=('positional',))
+  ...     s.enter(5, 1, print_time, kwargs={'a': 'keyword'})
+  ...     s.run()
+  ...     print(time.time())
+  ...
+  >>> print_some_times()
+  930343690.257
+  From print_time 930343695.274 positional
+  From print_time 930343695.275 keyword
+  From print_time 930343700.273 default
+  930343700.276
+  ```
+
+  e.g.2
+  ```python
+  import time,sched
+
+  s = sched.scheduler(time.time,time.sleep)
+
+  #被周期性调度触发的函数
+  def event_func1():
+      print "func1 Time:",time.time()
+
+  def perform1(inc):
+      s.enter(inc,0,perform1,(inc,))
+      event_func1()
+
+  def event_func2():
+      print "func2 time:",time.time()
+
+  def perform2(inc):
+      s.enter(inc,0,perform2,(inc,))
+      event_func2()
+
+  def mymain(func,inc=2):
+      if func == '1':
+          s.enter(0,0,perform1,(10,))#每 10 秒钟执行 perform1
+      if func == '2':
+          s.enter(0,0,perform2,(20,))#每 20 秒执行 perform2
+
+  if __name__ == "__main__":
+      mymain('1')
+      mymain('2')
+  ```
+
+## 7. 线程池支持模块
+
+TODO:
+
+### 7.1. multiprocessing.pool.ThreadPool
+
+线程池，用法类似 multiprocessing.Pool 进程池。
+
+e.g.
+```python
+import urllib2
+from multiprocessing.dummy import Pool as ThreadPool
+urls = [
+        ...
+		...
+        ]
+pool = ThreadPool(4)
+results = pool.map(urllib2.urlopen, urls)
+pool.close()
+pool.join()
+```
+
+### 7.2. concurrent.futures.ThreadPoolExecutor
+
+## 8. Refer Links
 
 [Python Docs: 并发](https://docs.python.org/zh-cn/3/library/concurrency.html)
 
 [菜鸟教程：Python 多线程](https://www.runoob.com/python/python-multithreading.html)
 
-[Python线程指南](https://www.cnblogs.com/huxi/archive/2010/06/26/1765808.html)
+[Python 线程指南](https://www.cnblogs.com/huxi/archive/2010/06/26/1765808.html)
 
 TODO:
 
-concurrent.futures.ThreadPoolExecutor 和 ProcessPoolExecutor
+[【CPython3.6 源码分析】Python 多线程机制](https://he11olx.com/2018/08/04/1.CPython3.6%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/1.13.Python%20%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%9C%BA%E5%88%B6/)
+
+[Python 中关于 Thread 的一点小知识](https://zhuanlan.zhihu.com/p/39211871)
+
+https://www.google.com/search?q=concurrent.futures
+
+http://lovesoo.org/analysis-of-asynchronous-concurrent-python-module-concurrent-futures.html?lwdkry=laqpw&medqri=iqeqw
+
+https://juejin.im/post/5b1e36476fb9a01e4a6e02e4#heading-2
