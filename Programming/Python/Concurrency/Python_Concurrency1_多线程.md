@@ -340,7 +340,7 @@ NOTE
   print(f.get_result())
   ```
 
-- 自定义 Thread 类
+- Customized Thread
 
   与 multiprocessing 模块相同，除了使用构造方法创建一个新的进程 / 线程，还可以通过继承 Thread 类并 override 其中的 `__init__()` and `run()` methods，来创建一个新的线程。
 
@@ -810,8 +810,8 @@ Timers are started, as with threads, by calling their start() method. The timer 
 ## 4. threading 封装模块：multiprocessing.dummy
 
 > This package is intended to duplicate the functionality (and much of the API) of threading.py but uses processes instead of threads.
-
-> A subpackage 'multiprocessing.dummy' has the same API but is a simple wrapper for 'threading'.
+>
+> multiprocessing.dummy replicates the API of multiprocessing but is no more than a wrapper around the threading module.
 
 multiprocessing 在 python 中是一个多进程模块，而 multiprocessing.dummy 则是一个多线程模块，它是对 threading 模块的简单封装。
 
@@ -890,6 +890,59 @@ The `Queue` (py2) / `queue` (py3) module implements multi-producer, multi-consum
   for t in threads:
       t.join()
   ```
+
+NOTE:
+- 在使用同步阻塞队列时，应注意考虑代码是否可能会产生 deadlock。
+
+  e.g.1
+  ```python
+  import Queue
+  import threading
+
+  queue = Queue.Queue()
+
+  def test(q):
+      while True:
+          if q.qsize() != 0:
+              d = q.get()
+              print d
+          else:
+              break
+
+  def main():
+      global queue
+      n = 100
+      for i in range(66):
+          queue.put(i)
+
+      threads = []
+      for i in range(n)
+          threads.append(threading.Thread(target=test, args = (queue,)))
+
+      for i in range(n):
+          threads[i].start()
+      for i in range(n):
+          threads[i].join()
+  ```
+  在上边的代码中，如果在 q 只剩一个数据的时候，有 3 个线程都运行到 `if q.qsize() != 0:`，那么这 3 个线程都会满足此条件。从而继续运行。然后，在 `d = q.get()` 处，只有一个线程能够取到数据，此后队列为空，另外两个线程无法取得数据，从而锁死在此处。解决方法：实际上阻塞队列 `queue` 的 put/get 操作都包含了 empty/full 的检测，因此完全没必要再执行 `if q.qsize() != 0:`，直接删除即可。
+
+  e.g.2
+  ```python
+  def f(q):
+      q.put('X' * 1000000)
+
+  if __name__ == '__main__':
+      queue = Queue()
+      p = threading.Thread(target=f, args=(queue,))
+      p.start()
+      p.join()                    # this deadlocks
+      obj = queue.get()
+  ```
+  在方法 f 中，当 put 方法将 queue 的缓冲区填满后，put 方法会阻塞等待 queue 再次 not full；而主线程在调用 queue.get() 之前调用了 join 方法，阻塞等待 p 线程的返回，因此造成了死锁。解决方法：
+  - 直接删除 `p.join()`。
+  - 调换最后两行的顺序即可避免死锁。
+
+  > whenever you use a queue you need to make sure that all items which have been put on the queue will eventually be removed before the process is joined. Otherwise you cannot be sure that processes which have put items on the queue will terminate. Remember also that non-daemonic processes will be joined automatically.
 
 ## 6. 周期性调度模块：sched
 
@@ -993,16 +1046,51 @@ e.g.
 import urllib2
 from multiprocessing.dummy import Pool as ThreadPool
 urls = [
-        ...
+    ...
 		...
-        ]
+]
 pool = ThreadPool(4)
 results = pool.map(urllib2.urlopen, urls)
 pool.close()
 pool.join()
 ```
 
+source code:
+```python
+# multiprocessing/dummy/__init__.py
+def Pool(processes=None, initializer=None, initargs=()):
+    from multiprocessing.pool import ThreadPool
+    return ThreadPool(processes, initializer, initargs)
+
+# multiprocessing/pool.py
+class ThreadPool(Pool):
+
+    from .dummy import Process
+
+    def __init__(self, processes=None, initializer=None, initargs=()):
+        Pool.__init__(self, processes, initializer, initargs)
+
+    def _setup_queues(self):
+        self._inqueue = Queue.Queue()
+        self._outqueue = Queue.Queue()
+        self._quick_put = self._inqueue.put
+        self._quick_get = self._outqueue.get
+
+    @staticmethod
+    def _help_stuff_finish(inqueue, task_handler, size):
+        # put sentinels at head of inqueue to make workers finish
+        inqueue.not_empty.acquire()
+        try:
+            inqueue.queue.clear()
+            inqueue.queue.extend([None] * size)
+            inqueue.not_empty.notify_all()
+        finally:
+            inqueue.not_empty.release()
+```
+
 ### 7.2. concurrent.futures.ThreadPoolExecutor
+
+New in version 3.2.
 
 ## 8. Refer Links
 

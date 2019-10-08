@@ -15,14 +15,21 @@
       - [2.5.7. Barrier Objects](#257-barrier-objects)
     - [2.6. 进程间通信 (IPC)](#26-进程间通信-ipc)
       - [2.6.1. 阻塞同步队列：Queue Objects](#261-阻塞同步队列queue-objects)
-      - [2.6.2. 阻塞同步管道：Pipe Objects](#262-阻塞同步管道pipe-objects)
-      - [2.6.3. Shared memory 模块：Value / Array / sharedctypes](#263-shared-memory-模块value--array--sharedctypes)
-      - [2.6.4. Server process 模块：Manager](#264-server-process-模块manager)
+      - [2.6.2. 管道：Pipe Objects](#262-管道pipe-objects)
+      - [2.6.3. Shared memory](#263-shared-memory)
+        - [2.6.3.1. multiprocessing.Value Object](#2631-multiprocessingvalue-object)
+        - [2.6.3.2. multiprocessing.Array Object](#2632-multiprocessingarray-object)
+        - [2.6.3.3. multiprocessing.SharedMemory Modules](#2633-multiprocessingsharedmemory-modules)
+      - [2.6.4. Server process: Manager](#264-server-process-manager)
   - [3. subprocess 模块](#3-subprocess-模块)
-  - [4. 进程池支持模块](#4-进程池支持模块)
-    - [4.1. multiprocessing.Pool](#41-multiprocessingpool)
-    - [4.2. concurrent.futures.ProcessPoolExecutor](#42-concurrentfuturesprocesspoolexecutor)
-  - [5. Refer Links](#5-refer-links)
+  - [4. signal 模块](#4-signal-模块)
+  - [5. mmap 模块](#5-mmap-模块)
+  - [6. socket 模块](#6-socket-模块)
+  - [7. ssl 模块](#7-ssl-模块)
+  - [8. 进程池支持模块](#8-进程池支持模块)
+    - [8.1. multiprocessing.Pool](#81-multiprocessingpool)
+    - [8.2. concurrent.futures.ProcessPoolExecutor](#82-concurrentfuturesprocesspoolexecutor)
+  - [9. Refer Links](#9-refer-links)
 
 # Python 并发：多进程
 
@@ -30,9 +37,15 @@
 
 `_multiprocessing` 模块是 Python 中 build-in 的多进程底层实现模块，在解释器（如 cpython）中由底层代码（如 C++）实现。
 
+`/multiprocessing/forking.py` 、`/multiprocessing/queues.py`、 `/multiprocessing/synchronize.py` 等子模块都引用了 `_multiprocessing` build-in 模块作为底层实现。
+
 source code: cpython/Modules/_multiprocessing/multiprocessing.c
 
 ## 2. 高级封装模块：multiprocessing 模块
+
+Docs:
+- https://docs.python.org/2.7/library/multiprocessing.html
+- https://docs.python.org/3/library/multiprocessing.html
 
 ### 2.1. 基本概念
 
@@ -41,10 +54,6 @@ source code: cpython/Modules/_multiprocessing/multiprocessing.c
 `multiprocessing` 模块是一个跨平台的多进程模块，底层基于 `_multiprocessing` 模块实现，提供了对 both local and remote concurrency 的支持。`multiprocessing` 模块包含绝大部分 `threading` 模块中的 API 的“进程”版本，但比 `threading` 模块中支持更多特性（如 Pool 支持）。
 
 此外，`multiprocessing` 模块中的 `multiprocessing.dummy` 子模块是对 `threading` 模块的简单封装，因此也就是说，**`multiprocessing` 模块一定程度上“屏蔽”了 `threading` 模块，可以通过 `multiprocessing` 模块实现包括多线程和多进程的多种并发操作**。
-
-Docs:
-- https://docs.python.org/2.7/library/multiprocessing.html
-- https://docs.python.org/3/library/multiprocessing.html
 
 ### 2.2. 进程上下文 / 启动模式
 
@@ -94,11 +103,26 @@ NOTE:
 
 ### 2.3. 辅助方法
 
-- `multiprocessing.active_children()`：以 Process 对象的 list 返回目前所有的运行的进程。
+- `multiprocessing.active_children()`：以 list 结构返回目前所有的运行的 Process 对象。
 
-- `multiprocessing.cpu_count()`：返回当前机器的逻辑 CPU 核心数量，即物理核数 x cpu 数量 x 超线程数。
+- `multiprocessing.cpu_count()`：返回当前机器的逻辑 CPU 核心数量，即物理核数 x cpu 数量 x 超线程数。May raise NotImplementedError.
 
 - `multiprocessing.current_process()`：返回当前的进程对象。
+
+- `multiprocessing.freeze_support()`: Add support for when a program which uses multiprocessing has been frozen to produce a Windows executable. (Has been tested with py2exe, PyInstaller and cx_Freeze.)
+  ```python
+  from multiprocessing import Process, freeze_support
+
+  def f():
+      print 'hello world!'
+
+  if __name__ == '__main__':
+      freeze_support()
+      Process(target=f).start()
+  ```
+  If the `freeze_support()` line is omitted then trying to run the frozen executable will raise RuntimeError.
+
+- `multiprocessing.set_executable()`: Sets the path of the Python interpreter to use when starting a child process. (By default sys.executable is used). Embedders will probably need to do some thing like
 
 ### 2.4. Process Objects
 
@@ -108,13 +132,13 @@ NOTE:
 
   ```python
   Process([group [, target [, name [, args [, kwargs]]]]])
-  # 参数说明：
-  # target 表示调用对象，你可以传入函数名
-  # args 表示被调用对象的位置参数元组，比如 target 是函数 a，他有两个参数 m，n，那么 args 就传入 (m, n) 即可
-  # kwargs 表示调用对象的字典
-  # name 是别名，相当于给这个进程取一个名字，如果不起名字 Python 就自动给线程命名为 Process-1，Process-2……
-  # group 分组，实际上不使用
   ```
+  Options:
+  - `target`: 表示调用对象，你可以传入函数名。
+  - `args`: 表示被调用对象的位置参数元组，比如 target 是函数 a，他有两个参数 m，n，那么 args 就传入 (m, n) 即可。
+  - `kwargs`: 表示调用对象的字典。
+  - `name`: 是别名，相当于给这个进程取一个名字，如果不起名字 Python 就自动给线程命名为 Process-1，Process-2 等。
+  - `group`: 分组，实际上不使用。
 
   e.g.
   ```python
@@ -151,26 +175,120 @@ NOTE:
 
   - `name`: 进程名
 
-  - `pid`: 进程 id
+  - `pid`: Return the process ID. Before the process is spawned, this will be None.
 
-  - `deamon`: 默认为 False；每个线程都可以单独设置它的属性，如果设置为 True，当父进程结束后，子进程会自动被终止。这样可以有效防止无控制地生成子进程。如果这样写了，你在关闭这个主程序运行时，就无需额外担心子进程有没有被关闭了
+  - `deamon`: 默认为 False；如果设置子进程为 True，当父进程结束后，子进程会自动被终止。可以有效的防止孤儿进程。
 
-  - `start()`：<!-- TODO: 在父进程所有代码执行完毕后 -->，开始执行 Process 对象的进程；每个进程最多调用一次；进程执行完毕后自动销毁然后返回父进程。
+  - `exitcode`: The child’s exit code. This will be None if the process has not yet terminated. A negative value -N indicates that the child was terminated by signal N.
 
-  - `join([timeout])`：阻塞父进程，直到调用 join 方法的那个子进程执行完，再继续执行当前进程，通常用于进程间的同步。
+  - `start()`：开始执行 Process 对象的进程，进程执行完毕后自动销毁然后返回父进程。
 
+    source code:
+
+    multiprocessing/process.py
+    ```python
+    def _cleanup():
+        # check for processes which have finished
+        # Hint: All completed processes which have not yet been joined will be joined. Avoid a zombie process
+        for p in list(_current_process._children):
+            if p._popen.poll() is not None:
+                _current_process._children.discard(p)
+    class Process:
+        def start(self):
+            '''
+            Start child process
+            '''
+            assert self._popen is None, 'cannot start a process twice'
+            assert self._parent_pid == os.getpid(), \
+                  'can only start a process object created by current process'
+            assert not _current_process._daemonic, \
+                  'daemonic processes are not allowed to have children'
+            _cleanup()  # Avoid a zombie process
+            if self._Popen is not None:
+                Popen = self._Popen
+            else:
+                from .forking import Popen
+            self._popen = Popen(self)  # 通过 Popen 对象来创建子进程并执行 run 方法
+            # Avoid a refcycle if the target function holds an indirect
+            # reference to the process object (see bpo-30775)
+            del self._target, self._args, self._kwargs
+            _current_process._children.add(self)
+
+        def _bootstrap(self):
+            from . import util
+            global _current_process
+
+            try:
+                self._children = set()
+                self._counter = itertools.count(1)
+                try:
+                    sys.stdin.close()
+                    sys.stdin = open(os.devnull)
+                except (OSError, ValueError):
+                    pass
+                _current_process = self
+                util._finalizer_registry.clear()
+                util._run_after_forkers()
+                util.info('child process calling self.run()')
+                try:
+                    self.run()  # 此处调用了 run 方法，执行子进程的逻辑
+                    exitcode = 0
+                finally:
+                    util._exit_function()
+            except SystemExit, e:
+              # ......
+    ```
+    multiprocessing/forking.py
+    ```python
+    class Popen(object):
+        # Popen 对象封装了在不同平台中创建子进程的具体实现
+        def __init__(self, process_obj):
+            sys.stdout.flush()
+            sys.stderr.flush()
+            self.returncode = None
+
+            self.pid = os.fork()
+            if self.pid == 0:
+                if 'random' in sys.modules:
+                    import random
+                    random.seed()
+                code = process_obj._bootstrap()
+                sys.stdout.flush()
+                sys.stderr.flush()
+                os._exit(code)
+    ```
     NOTE
-    - 一旦某一个子进程调用了 join 方法，将父进程阻塞了，此时所有已经调用 start 的子进程都会开始并行执行，直到调用 join 的子进程返回了，主进程才继续执行（此时若其它子进程还没执行完毕，则主进程会与它们并行执行）。
-    - 若不调用 join 方法，会将父进程的所有代码执行完毕后，再并行的执行所有已经调用了 start 方法的子进程。
+    - 同一个进程不能调用多次 start()，否则会 raise Exception。
+    - 只能在当前进程内创建新的子进程，而不能在子进程中再创建子进程。
+    - 只有非 daemon 进程才运行创建子进程。
 
-  - `terminate()`：强制终止调用该方法的子进程，通常用于子进程死循环的终止。
+  - `join([timeout])`：阻塞当前进程，直到调用 join 方法的 Process Object 执行完，再继续执行当前进程。
+
+    source code: multiprocessing/process.py
+    ```python
+    class Process:
+        def join(self, timeout=None):
+            '''
+            Wait until child process terminates
+            '''
+            assert self._parent_pid == os.getpid(), 'can only join a child process
+
+            assert self._popen is not None, 'can only join a started process'
+            res = self._popen.wait(timeout)
+            if res is not None:
+                _current_process._children.discard(self)
+    ```
+    NOTE: 对于所有调用了 `start()` 的 Process 对象，good practice 是为每个 Process 对象都调用 `join()` 方法。
+
+    > On Unix when a process finishes but has not been joined it becomes a zombie. There should never be very many because **each time a new process starts (or `active_children()` is called) all completed processes which have not yet been joined will be joined. Also calling a finished process’s `Process.is_alive` will join the process**. Even so it is probably good practice to explicitly join all the processes that you start.
+
+  - `terminate()`：Terminate the process. On Unix this is done using the `SIGTERM` signal; on Windows `TerminateProcess()` is used. Note that exit handlers and finally clauses, etc., will not be executed.
 
     NOTE
     - 如果在调用 terminate 前没有调用 join 方法先将主进程阻塞，可能会导致子进程还未执行就被 terminate。
     - 当调用这个函数的时候，子进程运行逻辑中的 exit 和 finally 代码段将不会执行。
     - 若有嵌套子进程，会导致调用该方法的进程的的子孙进程不会被终结，而是成为孤儿进程。
-
-    <!-- TODO: 思考 -- 待确认是否正确：执行顺序的问题：真的是父进程所有代码执行过一遍之后，再开始并行执行调用了 start 的子进程？或者说主进程是和所有子进程并行执行的，造成这种错觉的原因是因为创建核开始执行子进程需要时间开销，所以在调用了 start 之后，时间开销还没结束，还没真正开始执行之前，主进程就已经运行完所有代码了？所以，正因为这样，才需要调用 join 方法先将主进程阻塞？ -->
+    - 若调用 terminate 方法的子进程使用了 shared resources，会造成这部分 resources 不再可用，可能会影响相关进程的作业，因此 it is probably best to only consider **using Process.terminate on processes which never use any shared resources**.
 
   - `is_alive()`：返回该进程是否存活。
 
@@ -178,7 +296,7 @@ NOTE:
 
   - `cpu_count()`：返回当前机器的 CPU 核心数量。
 
-  - 自定义 Process 类
+  - Customized Process
 
     通过继承 Process 类，可以对进程类进行自定义，只需将要在进程中执行的代码放在 run() 方法的实现即可。同时，可以把一些方法独立的写在每个类里封装好，等用的时候直接初始化一个类运行即可。
 
@@ -202,6 +320,57 @@ NOTE:
             p.join() # 父进程结束后会等待子进程执行完毕后再终止子进程
         print 'Main process Ended!'
     ```
+
+NOTE
+- On Unix a child process can make use of a shared resource created in a parent process using a global resource. However, **it is better to pass the object as an argument to the constructor for the child process**. Apart from making the code (potentially) **compatible with Windows** this also ensures that as long as **the child process is still alive the object will not be garbage collected in the parent process**. This might be important if some resource is freed when the object is garbage collected in the parent process.
+
+  ```python
+  from multiprocessing import Process, Lock
+
+  def f():
+      ... do something using "lock" ...
+
+  if __name__ == '__main__':
+      lock = Lock()
+      for i in range(10):
+          Process(target=f).start()
+  ```
+  should be rewritten as
+  ```python
+  from multiprocessing import Process, Lock
+
+  def f(l):
+      ... do something using "l" ...
+
+  if __name__ == '__main__':
+      lock = Lock()
+      for i in range(10):
+          Process(target=f, args=(lock,)).start()
+  ```
+
+- 在 Windows 平台上，以下代码会 raise RuntimeError:
+  ```python
+  from multiprocessing import Process
+
+  def foo():
+      print 'hello'
+
+  p = Process(target=foo)
+  p.start()
+  ```
+  Instead one should protect the “entry point” of the program by using `if __name__ == '__main__':` as follows:
+  ```python
+  from multiprocessing import Process, freeze_support
+
+  def foo():
+      print 'hello'
+
+  if __name__ == '__main__':
+      freeze_support()  # can be omitted if the program will be run normally instead of frozen
+      p = Process(target=foo)
+      p.start()
+  ```
+  This allows the newly spawned Python interpreter to safely import the module and then run the module’s `foo()` function. Similar restrictions apply if a pool or manager is created in the main module.
 
 ### 2.5. 进程间同步 (synchronization)
 
@@ -315,7 +484,9 @@ Producer append an element
 
 Process 之间肯定是需要通信的，操作系统提供了很多机制来实现进程间的通信。Python 的 multiprocessing 模块包装了底层的机制，提供了 Queue、Pipes 等多种方式来交换数据。
 
-https://docs.python.org/zh-cn/3/library/ipc.html
+NOTE:
+- 在实际的应用开发中，应尽可能的避免在多个进程之间传递大量的数据。
+- 在需要 IPC 的场景中，应尽可能的使用 queues or pipes，而不是直接使用来自 `threading` 模块的底层 synchronization primitives。
 
 #### 2.6.1. 阻塞同步队列：Queue Objects
 
@@ -379,7 +550,7 @@ if __name__ == '__main__':
     pr.terminate()
 ```
 
-#### 2.6.2. 阻塞同步管道：Pipe Objects
+#### 2.6.2. 管道：Pipe Objects
 
 Pipe 管道可以是单向 (half-duplex)，也可以是双向 (duplex)。我们通过 mutiprocessing.Pipe(duplex=False) 创建单向管道 （默认为双向)。一个进程从 PIPE 一端输入对象，然后被 PIPE 另一端的进程接收，单向管道只允许管道一端的进程输入，而双向管道则允许从两端输入。
 
@@ -420,18 +591,452 @@ Consumer Received: Producer Words
 Ended!
 ```
 
-#### 2.6.3. Shared memory 模块：Value / Array / sharedctypes
+#### 2.6.3. Shared memory
 
+TODO:
 
-#### 2.6.4. Server process 模块：Manager
+https://docs.python.org/2.7/library/multiprocessing.html#shared-ctypes-objects
 
-http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431929340191970154d52b9d484b88a7b343708fcc60000
+https://my.oschina.net/dragondjf/blog/169321
+
+https://blog.csdn.net/kongxx/article/details/77764878
+
+https://zhuanlan.zhihu.com/p/41172891
+
+##### 2.6.3.1. multiprocessing.Value Object
+
+使用 Value Objects 可以将一个值存放在共享内存中。
+
+- CONSTRUCTION
+
+  `multiprocessing.Value(typecode_or_type, *args[, lock])`: Return a `ctypes` object allocated from shared memory. By default the return value is actually a synchronized wrapper for the object.
+
+  Options:
+  - `typecode_or_type`: determines the type of the returned object: it is either a `ctypes` type or a one character typecode of the kind used by the [`array`](https://docs.python.org/3/library/array.html) module.
+
+    | Type code | C Type             | Python Type       | Minimum size in bytes |
+    | --------- | ------------------ | ----------------- | --------------------- |
+    | `'b'`     | signed char        | int               | 1                     |
+    | `'B'`     | unsigned char      | int               | 1                     |
+    | `'u'`     | Py_UNICODE         | Unicode character | 2                     |
+    | `'h'`     | signed short       | int               | 2                     |
+    | `'H'`     | unsigned short     | int               | 2                     |
+    | `'i'`     | signed int         | int               | 2                     |
+    | `'I'`     | unsigned int       | int               | 2                     |
+    | `'l'`     | signed long        | int               | 4                     |
+    | `'L'`     | unsigned long      | int               | 4                     |
+    | `'q'`     | signed long long   | int               | 8                     |
+    | `'Q'`     | unsigned long long | int               | 8                     |
+    | `'f'`     | float              | float             | 4                     |
+    | `'d'`     | double             | float             | 8                     |
+
+  - `*args`: is passed on to the constructor for the type.
+
+  - `lock`:
+    - **If lock is True (the default)** then a new recursive lock object is created to synchronize access to the value. If lock is a Lock or RLock object then that will be used to synchronize access to the value.
+    - If lock is False then access to the returned object will not be automatically protected by a lock, so it will not necessarily be “process-safe”.
+
+- e.g.
+
+  ```python
+  from multiprocessing import Process, Value
+  import time
+  import random
+
+  def save_money(money):
+      for i in range(100):
+          time.sleep(0.1)
+          money.value += random.randint(1,200)
+
+  def take_money(money):
+      for i in range(100):
+          time.sleep(0.1)
+          money.value -= random.randint(1,150)
+
+  if __name__ == '__main__':
+      # money 为共享内存对象，给他一个初始值 2000，类型为 int 型“i”，相当于开辟了一个空间，同时绑定值 2000
+      money = Value('i',2000)
+      d = Process(target=save_money,args=(money,))
+      w = Process(target=take_money,args=(money,))
+      d.start()
+      w.start()
+      d.join()
+      w.join()
+
+      print(money.value)
+  ```
+
+- IMPLEMENT
+
+  `multiprocessing/__init__.py`
+  ```python
+  def Value(typecode_or_type, *args, **kwds):
+      '''
+      Returns a synchronized shared object
+      '''
+      from multiprocessing.sharedctypes import Value
+      return Value(typecode_or_type, *args, **kwds)
+  ```
+
+  `multiprocessing/sharedctypes.py`
+  ```python
+  prop_cache = {}
+  template = '''
+  def get%s(self):
+      self.acquire()
+      try:
+          return self._obj.%s
+      finally:
+          self.release()
+  def set%s(self, value):
+      self.acquire()
+      try:
+          self._obj.%s = value
+      finally:
+          self.release()
+  %s = property(get%s, set%s)
+  '''
+
+  def make_property(name):
+      try:
+          return prop_cache[name]
+      except KeyError:
+          d = {}
+          exec template % ((name,)*7) in d
+          prop_cache[name] = d[name]
+          return d[name]
+
+  # Synchronized wrapper
+  class SynchronizedBase(object):
+      def __init__(self, obj, lock=None):
+          self._obj = obj
+          self._lock = lock or RLock()
+          self.acquire = self._lock.acquire
+          self.release = self._lock.release
+      def __reduce__(self):
+          assert_spawning(self)
+          return synchronized, (self._obj, self._lock)
+      def get_obj(self):
+          return self._obj
+      def get_lock(self):
+          return self._lock
+      def __repr__(self):
+          return '<%s wrapper for %s>' % (type(self).__name__, self._obj)
+  class Synchronized(SynchronizedBase):
+      value = make_property('value')
+
+  def synchronized(obj, lock=None):
+      assert not isinstance(obj, SynchronizedBase), 'object already synchronized'
+
+      if isinstance(obj, ctypes._SimpleCData):
+          return Synchronized(obj, lock)
+      elif isinstance(obj, ctypes.Array):
+          if obj._type_ is ctypes.c_char:
+              return SynchronizedString(obj, lock)
+          return SynchronizedArray(obj, lock)
+      else:
+          cls = type(obj)
+          try:
+              scls = class_cache[cls]
+          except KeyError:
+              names = [field[0] for field in cls._fields_]
+              d = dict((name, make_property(name)) for name in names)
+              classname = 'Synchronized' + cls.__name__
+              scls = class_cache[cls] = type(classname, (SynchronizedBase,), d)
+          return scls(obj, lock)
+
+  def _new_value(type_):
+      size = ctypes.sizeof(type_)
+      wrapper = heap.BufferWrapper(size)
+      return rebuild_ctype(type_, wrapper, None)
+
+  def RawValue(typecode_or_type, *args):
+      '''
+      Returns a ctypes object allocated from shared memory
+      '''
+      type_ = typecode_to_type.get(typecode_or_type, typecode_or_type)
+      obj = _new_value(type_)
+      ctypes.memset(ctypes.addressof(obj), 0, ctypes.sizeof(obj))
+      obj.__init__(*args)
+      return obj
+
+  def Value(typecode_or_type, *args, **kwds):
+      '''
+      Return a synchronization wrapper for a Value
+      '''
+      lock = kwds.pop('lock', None)
+      if kwds:
+          raise ValueError('unrecognized keyword argument(s): %s' % kwds.keys())
+      obj = RawValue(typecode_or_type, *args)
+      if lock is False:
+          return obj
+      if lock in (True, None):  # 此处可见，Value 对象默认带 lock，除非指定 lock=False
+          lock = RLock()
+      if not hasattr(lock, 'acquire'):
+          raise AttributeError("'%r' has no method 'acquire'" % lock)
+      return synchronized(obj, lock)
+  ```
+
+  `multiprocessing/heap.py`
+  ```python
+  class Heap(object):
+      # ......
+      def _malloc(self, size):
+        # returns a large enough block -- it might be much larger
+        i = bisect.bisect_left(self._lengths, size)
+        if i == len(self._lengths):
+            length = self._roundup(max(self._size, size), mmap.PAGESIZE)
+            self._size *= 2
+            info('allocating a new mmap of length %d', length)
+            arena = Arena(length)
+            self._arenas.append(arena)
+            return (arena, 0, length)
+        else:
+            length = self._lengths[i]
+            seq = self._len_to_seq[length]
+            block = seq.pop()
+            if not seq:
+                del self._len_to_seq[length], self._lengths[i]
+
+        (arena, start, stop) = block
+        del self._start_to_block[(arena, start)]
+        del self._stop_to_block[(arena, stop)]
+        return block
+      def malloc(self, size):
+          # return a block of right size (possibly rounded up)
+          assert 0 <= size < sys.maxint
+          if os.getpid() != self._lastpid:
+              self.__init__()                     # reinitialize after fork
+          self._lock.acquire()
+          self._free_pending_blocks()
+          try:
+              size = self._roundup(max(size,1), self._alignment)
+              (arena, start, stop) = self._malloc(size)
+              new_stop = start + size
+              if new_stop < stop:
+                  self._free((arena, new_stop, stop))
+              block = (arena, start, new_stop)
+              self._allocated_blocks.add(block)
+              return block
+          finally:
+              self._lock.release()
+
+  class BufferWrapper(object):
+      _heap = Heap()
+      def __init__(self, size):
+          assert 0 <= size < sys.maxint
+          block = BufferWrapper._heap.malloc(size)
+          self._state = (block, size)
+          Finalize(self, BufferWrapper._heap.free, args=(block,))
+
+  ```
+  可见，`Value` 所创建的共享内存在底层实现是调用了 `mmap` 模块进行内存的分配。
+
+##### 2.6.3.2. multiprocessing.Array Object
+
+使用 Array Objects 可以将多个数据存放在内存中，但要求数据类型一致。
+
+- CONSTRUCTION
+
+  `multiprocessing.Array(typecode_or_type, size_or_initializer, *, lock=True)`: Return a `ctypes` array allocated from shared memory. By default the return value is actually a synchronized wrapper for the array.
+
+  Option:
+  - `typecode_or_type`: determines the type of the elements of the returned array: it is either a ctypes type or a one character typecode of the kind used by the array module.
+  - `size_or_initializer`:
+    - If size_or_initializer is an integer, then it determines the length of the array, and the array will be initially zeroed.
+    - Otherwise, size_or_initializer is a sequence which is used to initialize the array and whose length determines the length of the array.
+  - `lock`:
+    - **If lock is True (the default)** then a new lock object is created to synchronize access to the value. If lock is a Lock or RLock object then that will be used to synchronize access to the value.
+    - If lock is False then access to the returned object will not be automatically protected by a lock, so it will not necessarily be “process-safe”.
+
+  NOTE
+  ```python
+  array = mp.Array('i', [1, 2, 3, 4])
+  ```
+  这里的 Array 和 numpy 中的不同，它只能是一维的，不能是多维的。同样和 Value 一样，需要定义数据形式，否则会报错。
+
+  错误形式
+  ```python
+  array = mp.Array('i', [[1, 2], [3, 4]]) # 2 维 list
+  ```
+  运行结果：
+  """
+  TypeError: an integer is required
+  """
+
+- e.g.
+  ```python
+  from multiprocessing import Process,Array
+  import time
+
+  def fun(m,n):
+      for i in range(n):
+          m[i]=i
+
+  m = Array('i',5)
+
+  p = Process(target= fun,args=(m,5))
+  p.start()
+
+  time.sleep(1)
+  for i in m:
+      print(i)
+
+  p.join()
+  ```
+
+##### 2.6.3.3. multiprocessing.SharedMemory Modules
+
+Python 在 2019-02-25 释出了 python 3.8 早期预览版 `3.8.0a2`，其中新增了 `multiprocessing.SharedMemory` 用以支持共享内存，大大提高多进程之间通信效率。
+
+#### 2.6.4. Server process: Manager
+
+> Managers provide a way to create data which can be shared between different processes.
+>
+> A manager object controls a server process which manages shared objects. Other processes can access the shared objects by using proxies.
+
+`Managers` 模块是对进程间共享数据的高级封装，支持 `dict` / `list` / `Lock` / `Value` / `Array` / `Semaphore` 等多种共享数据类型。
+
+- CONSTRUCTION
+
+  `multiprocessing.Manager()`: Returns a started `SyncManager` object which can be used for sharing objects between processes. The returned manager object corresponds to a spawned child process and has methods which will create shared objects and return corresponding proxies. Manager processes will be shutdown as soon as they are garbage collected or their parent process exits.
+
+- API
+  - `class multiprocessing.managers.BaseManager([address[, authkey]])`: Create a BaseManager object.
+    - Options:
+      - `address` is the address on which the manager process listens for new connections. If address is None then an arbitrary one is chosen.
+      - `authkey` is the authentication key which will be used to check the validity of incoming connections to the server process. If authkey is None then current_process().authkey. Otherwise authkey is used and it must be a string.
+
+    - `start([initializer[, initargs]])`: Start a subprocess to start the manager. If initializer is not None then the subprocess will call initializer(*initargs) when it starts.
+    - `get_server()`: Returns a Server object which represents the actual server under the control of the Manager.
+    - `connect()`: Connect a local manager object to a remote manager process.
+    - `shutdown()`: Stop the process used by the manager.
+    - `register(typeid[, callable[, proxytype[, exposed[, method_to_typeid[, create_method]]]]])`: A classmethod which can be used for registering a type or callable with the manager class.
+
+  - `class multiprocessing.managers.SyncManager`: A subclass of BaseManager which can be used for the synchronization of processes. Objects of this type are returned by `multiprocessing.Manager()`.
+    - `BoundedSemaphore([value])`: Create a shared threading.BoundedSemaphore object and return a proxy for it.
+    - `Condition([lock])`: Create a shared threading.Condition object and return a proxy for it.
+    - `Event()`: Create a shared threading.Event object and return a proxy for it.
+    - `Lock()`: Create a shared threading.Lock object and return a proxy for it.
+    - `Namespace()`: Create a shared Namespace object and return a proxy for it.
+    - `Queue([maxsize])`: Create a shared Queue.Queue object and return a proxy for it.
+    - `RLock()`: Create a shared threading.RLock object and return a proxy for it.
+    - `Semaphore([value])`: Create a shared threading.Semaphore object and return a proxy for it.
+    - `Array(typecode, sequence)`: Create an array and return a proxy for it.
+    - `Value(typecode, value)`: Create an object with a writable value attribute and return a proxy for it.
+    - `dict()` / `dict(mapping)` / `dict(sequence)`: Create a shared dict object and return a proxy for it.
+    - `list()` / `list(sequence)`: Create a shared list object and return a proxy for it.
+
+      NOTE: Modifications to mutable values or items in dict and list proxies will not be propagated through the manager, because **the proxy has no way of knowing when its values or items are modified**. To modify such an item, you can re-assign the modified object to the container proxy:
+      ```python
+      # create a list proxy and append a mutable object (a dictionary)
+      lproxy = manager.list()
+      lproxy.append({})
+      # now mutate the dictionary
+      d = lproxy[0]
+      d['a'] = 1
+      d['b'] = 2
+      # at this point, the changes to d are not yet synced, but by reassigning the dictionary, the proxy is notified of the change
+      lproxy[0] = d
+      ```
+
+  - `class multiprocessing.managers.Namespace`: A type that can register with SyncManager. A namespace object has no public methods, but does have writable attributes. Its representation shows the values of its attributes.
+
+  - Customized managers
+
+    To create one’s own manager, one creates a subclass of BaseManager and uses the register() classmethod to register new types or callables with the manager class.
+    ```python
+    from multiprocessing.managers import BaseManager
+
+    class MathsClass(object):
+        def add(self, x, y):
+            return x + y
+        def mul(self, x, y):
+            return x * y
+
+    class MyManager(BaseManager):
+        pass
+
+    MyManager.register('Maths', MathsClass)
+
+    if __name__ == '__main__':
+        manager = MyManager()
+        manager.start()
+        maths = manager.Maths()
+        print maths.add(4, 3)         # prints 7
+        print maths.mul(7, 8)         # prints 56
+    ```
+
+  - Remote manager
+
+    It is possible to run a manager server on one machine and have clients use it from other machines (assuming that the firewalls involved allow it).
+
+- e.g.
+  ```python
+  from multiprocessing import Process, Manager
+
+  def f1(ns, l):
+      ns.x += 1
+      l.append(2)
+
+  def f2(ns, l):
+      ns.x -= 2
+      l.append(3)
+
+  if __name__ == '__main__':
+      manager = Manager()
+      ns = manager.Namespace()
+      l = manager.list([1])
+      ns.x = 0
+      p1 = Process(target=f1, args=(ns, l))
+      p2 = Process(target=f2, args=(ns, l))
+      p1.start()
+      p2.start()
+      p1.join()
+      p2.join()
+      print(ns, l)
+  ```
+  打印结果：
+  ```
+  Namespace(x=-1) [1, 2, 3]
+  ```
+
+- IMPLEMENT
+
+  `multiprocessing/__init__.py`
+  ```python
+  def Manager():
+      '''
+      Returns a manager associated with a running server process
+
+      The managers methods such as `Lock()`, `Condition()` and `Queue()`
+      can be used to create shared objects.
+      '''
+      from multiprocessing.managers import SyncManager
+      m = SyncManager()
+      m.start()
+      return m
+  ```
+  `multiprocessing/managers.py`
+  ```python
+
+  ```
 
 ## 3. subprocess 模块
 
-## 4. 进程池支持模块
+## 4. signal 模块
 
-### 4.1. multiprocessing.Pool
+## 5. mmap 模块
+
+## 6. socket 模块
+
+## 7. ssl 模块
+
+## 8. 进程池支持模块
+
+### 8.1. multiprocessing.Pool
+
+> One can create a pool of processes which will carry out tasks submitted to it with the Pool class.
 
 在利用 Python 进行系统管理的时候，特别是同时操作多个文件目录，或者远程控制多台主机，并行操作可以节约大量的时间。当被操作对象数目不大时，可以直接利用 multiprocessing 中的 Process 动态成生多个进程，十几个还好，但如果是上百个，上千个目标，手动的去限制进程数量却又太过繁琐，此时可以发挥进程池的功效。
 
@@ -440,13 +1045,18 @@ Pool 可以提供指定数量的进程，供用户调用，**当有新的请求�
 Pool 的用法有阻塞和非阻塞两种方式。
 
 -  CONSTRUCTION
-  ```python
-  pool = Pool(processes=3)
-  # processes 参数指定进程池的最大进程数，默认大小是 CPU 的核数
-  ```
+
+  `class multiprocessing.Pool([processes[, initializer[, initargs[, maxtasksperchild]]]])`: A process pool object which controls a pool of worker processes to which jobs can be submitted. It supports asynchronous results with timeouts and callbacks and has a parallel map implementation.
+
+  Options:
+  - `processes`: is the number of worker processes to use. If processes is None then the number returned by `cpu_count()` is used.
+  - `initializer`: If initializer is not None then each worker process will call `initializer(*initargs)` when it starts.
+  - `maxtasksperchild`: is the number of tasks a worker process can complete before it will exit and be replaced with a fresh worker process, to enable unused resources to be freed. The default maxtasksperchild is None, which means worker processes will live as long as the pool.
+
+    NOTE: A frequent pattern found in other systems (such as Apache, mod_wsgi, etc) to free resources held by workers is **to allow a worker within a pool to complete only a set amount of work before being exiting**, being cleaned up and a new process spawned to replace the old one.
 
 - API
-  - `apply_async(func[, args[, kwds[, callback]]])` 向进程池中添加进程，它是非阻塞的，即能同时运行多个进程，同时运行的最大进程数在创建进程池时指定，如果池中的正在运行的进程数已经达到最大值，那么还没有执行的进程就会等待，直到池中有进程结束，才能进入进程池运行；
+  - `apply_async(func[, args[, kwds[, callback]]])` 向进程池中添加进程，它是非阻塞的，即能同时运行多个进程，同时运行的最大进程数在创建进程池时指定，如果池中的正在运行的进程数已经达到最大值，那么还没有执行的进程就会等待，直到池中有进程结束，才能进入进程池运行。 If callback is specified then it should be a callable which accepts a single argument. When the result becomes ready callback is applied to it (unless the call failed).
 
     e.g.
     ```python
@@ -479,7 +1089,46 @@ Pool 的用法有阻塞和非阻塞两种方式。
     Subprocess done.
     ```
 
-  - `apply(func[, args[, kwds]])` 向进程池中添加进程，它是阻塞的，即需要串行的运行每个进程。
+    e.g. 把耗时间（阻塞）的任务放到进程池中，然后指定回调函数（主进程负责执行）
+    ```python
+    from multiprocessing import Pool
+    import requests
+    import json
+    import os
+
+    def get_page(url):
+        print('《进程 %s> get %s' %(os.getpid(),url))
+        respone=requests.get(url)
+        if respone.status_code == 200:
+            return {'url':url,'text':respone.text}
+
+    def pasrse_page(res):
+        print('《进程 %s> parse %s' %(os.getpid(),res['url']))
+        parse_res='url:<%s> size:[%s]\n' %(res['url'],len(res['text']))
+        with open('db.txt','a') as f:
+            f.write(parse_res)
+
+    if __name__ == '__main__':
+        urls=[
+            'https://www.baidu.com',
+            'https://www.python.org',
+            'https://www.openstack.org',
+            'https://help.github.com/',
+            'http://www.sina.com.cn/'
+        ]
+
+        p=Pool(3)
+        res_l=[]
+        for url in urls:
+            res=p.apply_async(get_page,args=(url,),callback=pasrse_page)
+            res_l.append(res)
+
+        p.close()
+        p.join()
+        print([res.get() for res in res_l]) # 拿到的是 get_page 的结果，其实完全没必要拿该结果，该结果已经传给回调函数处理了
+    ```
+
+  - `apply(func[, args[, kwds]])` 向进程池中添加进程，它是阻塞的，即需要串行的运行每个进程。`apply_async()` is better suited for performing work in parallel.
 
     e.g.
     ```python
@@ -492,7 +1141,6 @@ Pool 的用法有阻塞和非阻塞两种方式。
         pool = Pool(processes=3)
         for i in range(4):
             pool.apply(function, (i,)) # 每个线程被添加到线程池后即执行
-
         print("Started processes")
         pool.close()
         pool.join()
@@ -512,17 +1160,9 @@ Pool 的用法有阻塞和非阻塞两种方式。
     Subprocess done.
     ```
 
-  - `close()` 关闭 pool，使其不在接受新的任务。
+  - `map(func, iterable[, chunksize])` It blocks until the result is ready. 会使主进程阻塞直到最后一个子进程返回结果。在进程池中添加非阻塞进程，将 iterable 中的各个元素分别作为参数在每个进程中调用 fun 函数，也就是说，iterable 对象有几个元素，就会创建几个进程。
 
-    调用 join() 之前必须先调用 close()，调用 close() 之后就不能继续添加新的 Process 了
-
-  - `terminate()` 结束工作进程，不在处理未完成的任务。
-
-  - `join()` 主进程阻塞，等待子进程的退出， join 方法要在 close 或 terminate 之后使用。
-
-    对 Pool 对象调用 join() 方法会等待所有子进程执行完毕
-
-  - `map(func, iterable)` 会使主进程阻塞直到最后一个子进程返回结果。在进程池中添加非阻塞进程，将 iterable 中的各个元素分别作为参数在每个进程中调用 fun 函数，也就是说，iterable 对象有几个元素，就会创建几个进程。
+    This method chops the iterable into a number of chunks which it submits to the process pool as separate tasks. The (approximate) size of these chunks can be specified by setting chunksize to a positive integer.
 
     P.S. 虽然 iterable 是一个迭代器，但在实际使用中，必须在整个队列都就绪后，程序才会开始运行子进程。
 
@@ -550,6 +1190,76 @@ Pool 的用法有阻塞和非阻塞两种方式。
     End process 4
     ```
 
-### 4.2. concurrent.futures.ProcessPoolExecutor
+    - `map_async(func, iterable[, chunksize[, callback]])`: A variant of the `map()` method which returns a result object. If callback is specified then it should be a callable which accepts a single argument. When the result becomes ready callback is applied to it (unless the call failed). callback should complete immediately since otherwise the thread which handles the results will get blocked.
 
-## 5. Refer Links
+    NOTE:
+    <!-- TODO: https://stackoverflow.com/questions/8533318/multiprocessing-pool-when-to-use-apply-apply-async-or-map -->
+    - pool.apply(f, args)：f仅在池中的一个工作程序中执行。因此，池中的一个进程将运行f(args)。
+    - pool.map(f, iterable)：此方法将iterable切换为多个块，并将其作为单独的任务提交给进程池。因此，您可以利用池中的所有进程。
+
+    - `imap(func, iterable[, chunksize])`: A lazier version of map(). The chunksize argument is the same as the one used by the map() method. For very long iterables using a large value for chunksize can make the job complete much faster than using the default value of 1.
+
+    - `imap_unordered(func, iterable[, chunksize])`: The same as imap() except that the ordering of the results from the returned iterator should be considered arbitrary. (Only when there is only one worker process is the order guaranteed to be “correct”.)
+
+  - `close()`: Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed the worker processes will exit. 调用 join() 之前必须先调用 close()，调用 close() 之后就不能继续添加新的 Process 了。
+
+  - `terminate()`: Stops the worker processes immediately without completing outstanding work. When the pool object is garbage collected terminate() will be called immediately.
+
+  - `join()`: Wait for the worker processes to exit. One must call close() or terminate() before using join().
+
+  - `class multiprocessing.pool.AsyncResult`: The class of the result returned by `Pool.apply_async()` and `Pool.map_async()`.
+
+    - `get([timeout])`: Return the result when it arrives. If timeout is not None and the result does not arrive within timeout seconds then multiprocessing.TimeoutError is raised. If the remote call raised an exception then that exception will be reraised by get().
+
+    - `wait([timeout])`: Wait until the result is available or until timeout seconds pass.
+
+    - `ready()`: Return whether the call has completed.
+
+    - `successful()`: Return whether the call completed without raising an exception. Will raise AssertionError if the result is not ready.
+
+    e.g.
+    ```python
+    from multiprocessing import Pool
+    import time
+
+    def f(x):
+        return x*x
+
+    if __name__ == '__main__':
+        pool = Pool(processes=4)              # start 4 worker processes
+
+        result = pool.apply_async(f, (10,))   # evaluate "f(10)" asynchronously in a single process
+        print result.get(timeout=1)           # prints "100" unless your computer is *very* slow
+
+        print pool.map(f, range(10))          # prints "[0, 1, 4,..., 81]"
+
+        it = pool.imap(f, range(10))
+        print it.next()                       # prints "0"
+        print it.next()                       # prints "1"
+        print it.next(timeout=1)              # prints "4" unless your computer is *very* slow
+
+        result = pool.apply_async(time.sleep, (10,))
+        print result.get(timeout=1)           # raises multiprocessing.TimeoutError
+    ```
+
+### 8.2. concurrent.futures.ProcessPoolExecutor
+
+New in version 3.2.
+
+## 9. Refer Links
+
+[莫烦：共享内存 shared memory](https://morvanzhou.github.io/tutorials/python-basic/multiprocessing/6-shared-memory/)
+
+[python 基于 mmap 模块的 jsonmmap 实现本地多进程内存共享](https://my.oschina.net/dragondjf/blog/169321)
+
+[python 学习笔记——多进程中共享内存 Value & Array](https://www.cnblogs.com/gengyi/p/8661235.html)
+
+[Why is communication via shared memory so much slower than via queues?](https://stackoverflow.com/questions/25271723/why-is-communication-via-shared-memory-so-much-slower-than-via-queues)
+
+[廖雪峰：python 分布式多进程](http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431929340191970154d52b9d484b88a7b343708fcc60000)
+
+[Python 程序中的进程操作 - 进程池 (multiprocess.Pool）](https://www.cnblogs.com/nickchen121/p/11130258.html)
+
+TODO:
+
+[How does multiprocessing.Manager() work in python?](https://stackoverflow.com/questions/9436757/how-does-multiprocessing-manager-work-in-python)

@@ -1,9 +1,9 @@
 - [Python 基础：异常处理](#python-基础异常处理)
   - [1. 标准异常](#1-标准异常)
   - [2. 自定义异常](#2-自定义异常)
-  - [3. try/except/finally](#3-tryexceptfinally)
-  - [4. raise](#4-raise)
-  - [5. assert](#5-assert)
+  - [3. 捕获异常：try/except/finally 语句块](#3-捕获异常tryexceptfinally-语句块)
+  - [4. 抛出异常：raise 语句](#4-抛出异常raise-语句)
+  - [5. 断言：assert 语句](#5-断言assert-语句)
   - [6. 最佳实践](#6-最佳实践)
   - [7. Refer Links](#7-refer-links)
 
@@ -127,7 +127,7 @@ NOTE:
 
 - 自定义异常类通常模仿 the standard exceptions 的命名方式，end in “Error”。
 
-## 3. try/except/finally
+## 3. 捕获异常：try/except/finally 语句块
 
 在 Python 中，和大部分高级语言一样，使用了 try/except/finally 语句块来处理异常。
 
@@ -168,7 +168,7 @@ def temp_convert(var):
 temp_convert("xyz")
 ```
 
-## 4. raise
+## 4. 抛出异常：raise 语句
 
 通过 raise 语句可以在程序中主动抛出异常，等同于 C#和 Java 中的 `throw`：
 ```python
@@ -205,7 +205,26 @@ NOTE:
   ```
   在 Python2.4 以前是可以接受的做法，但是没有指定异常类型有可能会让下游没办法正确捕获并处理这个异常，从而导致你的程序难以维护。
 
-## 5. assert
+## 5. 断言：assert 语句
+
+断言被用作你接下来的程序执行，如果后面程序依赖于前面的程序，后面的程序又很重要，就是后面的程序执行肯定不能出错，所以在执行之前要做检查工作。
+
+**若 assert 判断为 False，则抛出 AssertionError 异常**。
+
+NOTE:
+- 使用 if 语句也可以实现完全相同的效果，但相比之下 assert 更加优雅。
+- 异常和断言
+  - **assert 捕获的是程序员自己的错误，处理的是程序的开发期错误，assert 语句应满足在 release 代码中可以全部直接移除而不影响程序的执行。**
+  - **exception 捕获的是用户或环境的错误，处理的是程序的运行期错误**。
+  - 对于一个函数：
+    - 在开始执行该函数之前，是需要满足一系列条件的，这些条件被称为“前条件”或者“先验条件”，如：参数不为空，某全局变量应该为 1 等。不满足前条件，是不能调用此函数的，如果出现了前条件不满足仍然调用了此函数，可以认为这是一个设计错误。检查前条件，应该使用 ASSERT 来处理。
+    - 在开始执行该函数之后，也会满足一系列条件，这些条件被称为“后条件”或者“后验条件”，如：返回值满足什么关系，某全局变量设置为什么值等。这应该是函数执行的结果，在前条件满足的情况下，后条件如果没有满足是一种不正常的情况，那么应该使用异常来处理。
+
+TODO:
+
+[怎样解释 Design by Contract （契约式设计)?](https://www.zhihu.com/question/19864652)
+
+《代码大全 2》第八章：防御式编程
 
 ## 6. 最佳实践
 
@@ -269,3 +288,5 @@ NOTE:
 [Python 工匠： 异常处理的三个好习惯](https://www.zlovezl.cn/articles/three-rituals-of-exceptions-handling/)
 
 [Python 工匠：让函数返回结果的技巧](https://www.zlovezl.cn/articles/function-returning-tips/)
+
+[什么时候用异常，什么时候用断言？](https://www.zhihu.com/question/24461924)
