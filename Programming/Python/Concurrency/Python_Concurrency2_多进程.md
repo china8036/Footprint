@@ -1049,7 +1049,7 @@ Pool 的用法有阻塞和非阻塞两种方式。
   `class multiprocessing.Pool([processes[, initializer[, initargs[, maxtasksperchild]]]])`: A process pool object which controls a pool of worker processes to which jobs can be submitted. It supports asynchronous results with timeouts and callbacks and has a parallel map implementation.
 
   Options:
-  - `processes`: is the number of worker processes to use. If processes is None then the number returned by `cpu_count()` is used.
+  - `processes`: is the number of worker processes to use. If processes is None then the number returned by `cpu_count()` is used. **在 Pool 对象创建时，就会把 processes 个进程全部创建好**。
   - `initializer`: If initializer is not None then each worker process will call `initializer(*initargs)` when it starts.
   - `maxtasksperchild`: is the number of tasks a worker process can complete before it will exit and be replaced with a fresh worker process, to enable unused resources to be freed. The default maxtasksperchild is None, which means worker processes will live as long as the pool.
 
@@ -1071,7 +1071,7 @@ Pool 的用法有阻塞和非阻塞两种方式。
             pool.apply_async(function, (i,))
 
         print("Started processes")
-        pool.close() # 调用 close() 后，才开始执行线程池中的线程
+        pool.close()
         pool.join()
         print("Subprocess done.")
     ```
@@ -1130,6 +1130,17 @@ Pool 的用法有阻塞和非阻塞两种方式。
 
   - `apply(func[, args[, kwds]])` 向进程池中添加进程，它是阻塞的，即需要串行的运行每个进程。`apply_async()` is better suited for performing work in parallel.
 
+    source code:
+    ```python
+    # multiprocessing/pool.py
+    def apply(self, func, args=(), kwds={}):
+        '''
+        Equivalent of `apply()` builtin
+        '''
+        assert self._state == RUN
+        return self.apply_async(func, args, kwds).get()
+    ```
+
     e.g.
     ```python
     def function(index):
@@ -1160,9 +1171,22 @@ Pool 的用法有阻塞和非阻塞两种方式。
     Subprocess done.
     ```
 
+    P.S. 在 Python 语言设计之初，需要通过 build-in 方法 apply 来调用用户自定义的函数：`apply(f,args,kwargs)`，随着语言的完善，后来才支持了直接使用函数名来调用函数：`f(*args,**kwargs)`。因此，multiprocessing.Pool 模块的 apply 方法实际上是 tries to provide a similar interface.
+
+  - `map_async(func, iterable[, chunksize[, callback]])`: A variant of the `map()` method which returns a result object. If callback is specified then it should be a callable which accepts a single argument. When the result becomes ready callback is applied to it (unless the call failed). callback should complete immediately since otherwise the thread which handles the results will get blocked.
+
   - `map(func, iterable[, chunksize])` It blocks until the result is ready. 会使主进程阻塞直到最后一个子进程返回结果。在进程池中添加非阻塞进程，将 iterable 中的各个元素分别作为参数在每个进程中调用 fun 函数，也就是说，iterable 对象有几个元素，就会创建几个进程。
 
-    This method chops the iterable into a number of chunks which it submits to the process pool as separate tasks. The (approximate) size of these chunks can be specified by setting chunksize to a positive integer.
+    source code:
+    ```python
+    # multiprocessing/pool.py
+    def map(self, func, iterable, chunksize=None):
+        '''
+        Equivalent of `map()` builtin
+        '''
+        assert self._state == RUN
+        return self.map_async(func, iterable, chunksize).get()
+    ```
 
     P.S. 虽然 iterable 是一个迭代器，但在实际使用中，必须在整个队列都就绪后，程序才会开始运行子进程。
 
@@ -1190,16 +1214,13 @@ Pool 的用法有阻塞和非阻塞两种方式。
     End process 4
     ```
 
-    - `map_async(func, iterable[, chunksize[, callback]])`: A variant of the `map()` method which returns a result object. If callback is specified then it should be a callable which accepts a single argument. When the result becomes ready callback is applied to it (unless the call failed). callback should complete immediately since otherwise the thread which handles the results will get blocked.
+    NOTE: **map 和 apply 的比较**：
+    - `pool.apply(f, args)`: f is only **executed in ONE of the workers of the pool**. So ONE of the processes in the pool will run f(args).
+    - `pool.map(f, iterable)`: This method chops the iterable into a number of chunks which it submits to the process pool as separate tasks. So you **take advantage of all the processes in the pool**.
 
-    NOTE:
-    <!-- TODO: https://stackoverflow.com/questions/8533318/multiprocessing-pool-when-to-use-apply-apply-async-or-map -->
-    - pool.apply(f, args)：f仅在池中的一个工作程序中执行。因此，池中的一个进程将运行f(args)。
-    - pool.map(f, iterable)：此方法将iterable切换为多个块，并将其作为单独的任务提交给进程池。因此，您可以利用池中的所有进程。
+  - `imap(func, iterable[, chunksize])`: A lazier version of map(). The chunksize argument is the same as the one used by the map() method. For very long iterables using a large value for chunksize can make the job complete much faster than using the default value of 1.
 
-    - `imap(func, iterable[, chunksize])`: A lazier version of map(). The chunksize argument is the same as the one used by the map() method. For very long iterables using a large value for chunksize can make the job complete much faster than using the default value of 1.
-
-    - `imap_unordered(func, iterable[, chunksize])`: The same as imap() except that the ordering of the results from the returned iterator should be considered arbitrary. (Only when there is only one worker process is the order guaranteed to be “correct”.)
+  - `imap_unordered(func, iterable[, chunksize])`: The same as imap() except that the ordering of the results from the returned iterator should be considered arbitrary. (Only when there is only one worker process is the order guaranteed to be “correct”.)
 
   - `close()`: Prevents any more tasks from being submitted to the pool. Once all the tasks have been completed the worker processes will exit. 调用 join() 之前必须先调用 close()，调用 close() 之后就不能继续添加新的 Process 了。
 
@@ -1259,6 +1280,8 @@ New in version 3.2.
 [廖雪峰：python 分布式多进程](http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431929340191970154d52b9d484b88a7b343708fcc60000)
 
 [Python 程序中的进程操作 - 进程池 (multiprocess.Pool）](https://www.cnblogs.com/nickchen121/p/11130258.html)
+
+[multiprocessing.Pool: When to use apply, apply_async or map?](https://stackoverflow.com/questions/8533318/multiprocessing-pool-when-to-use-apply-apply-async-or-map)
 
 TODO:
 

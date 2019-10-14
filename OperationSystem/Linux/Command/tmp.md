@@ -1,6 +1,4 @@
-## xargs
 
-https://www.google.com/search?q=xargs
 
 ## TODO:
 
@@ -28,8 +26,3 @@ eg:
   md5sum testfile -c testfile.md5
   ```
 
-## sysctl
-
-https://www.google.com/search?q=linux+%E4%BF%AE%E6%94%B9%E5%86%85%E6%A0%B8%E5%8F%82%E6%95%B0
-
-http://blog.51cto.com/netlin/1167446

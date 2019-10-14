@@ -1,130 +1,34 @@
 - [IO 模型](#io-模型)
-  - [1. 基本概念](#1-基本概念)
-    - [1.1. 阻塞和非阻塞](#11-阻塞和非阻塞)
-    - [1.2. 同步和异步](#12-同步和异步)
-  - [2. IO 模式](#2-io-模式)
-    - [2.1. Reactor 模式](#21-reactor-模式)
-    - [2.2. Proactor 模式](#22-proactor-模式)
-    - [2.3. Actor 模式](#23-actor-模式)
-  - [3. IO 模型](#3-io-模型)
-    - [3.1. 同步阻塞式 IO](#31-同步阻塞式-io)
-    - [3.2. 同步非阻塞式 IO](#32-同步非阻塞式-io)
-    - [3.3. 同步非阻塞式 IO / 事件驱动 IO / IO 多路复用](#33-同步非阻塞式-io--事件驱动-io--io-多路复用)
-      - [3.3.1. select](#331-select)
-        - [3.3.1.1. API](#3311-api)
-        - [3.3.1.2. 实现原理](#3312-实现原理)
-        - [3.3.1.3. 缺陷](#3313-缺陷)
-      - [3.3.2. poll](#332-poll)
-        - [3.3.2.1. API](#3321-api)
-        - [3.3.2.2. 使用示例](#3322-使用示例)
-      - [3.3.3. epoll](#333-epoll)
-        - [3.3.3.1. API](#3331-api)
-        - [3.3.3.2. 实现原理](#3332-实现原理)
-          - [3.3.3.2.1. 存储结构](#33321-存储结构)
-          - [3.3.3.2.2. 解决拷贝问题](#33322-解决拷贝问题)
-          - [3.3.3.2.3. 解决遍历问题](#33323-解决遍历问题)
-          - [3.3.3.2.4. 实现流程](#33324-实现流程)
-        - [3.3.3.3. 工作模式](#3333-工作模式)
-          - [3.3.3.3.1. Level Triggered 模式](#33331-level-triggered-模式)
-          - [3.3.3.3.2. Edge Triggered 模式](#33332-edge-triggered-模式)
-          - [3.3.3.3.3. 实现原理](#33333-实现原理)
-        - [3.3.3.4. 使用示例](#3334-使用示例)
-      - [3.3.4. /dev/pool](#334-devpool)
-      - [3.3.5. kqueue](#335-kqueue)
-    - [3.4. 异步非阻塞式 IO / 异步 IO](#34-异步非阻塞式-io--异步-io)
-    - [3.5. 信号驱动式 IO](#35-信号驱动式-io)
-    - [3.6. 比较](#36-比较)
+  - [1. 同步阻塞式 IO](#1-同步阻塞式-io)
+  - [2. 同步非阻塞式 IO](#2-同步非阻塞式-io)
+  - [3. 同步非阻塞式 IO / 事件驱动 IO / IO 多路复用](#3-同步非阻塞式-io--事件驱动-io--io-多路复用)
+    - [3.1. select](#31-select)
+      - [3.1.1. API](#311-api)
+      - [3.1.2. 实现原理](#312-实现原理)
+      - [3.1.3. 缺陷](#313-缺陷)
+    - [3.2. poll](#32-poll)
+        - [3.2.1. API](#321-api)
+      - [3.3.2.2. 使用示例](#3322-使用示例)
+    - [3.3.3. epoll](#333-epoll)
+      - [3.3.3.1. API](#3331-api)
+      - [3.3.3.2. 实现原理](#3332-实现原理)
+        - [3.3.3.2.1. 存储结构](#33321-存储结构)
+        - [3.3.3.2.2. 解决拷贝问题](#33322-解决拷贝问题)
+        - [3.3.3.2.3. 解决遍历问题](#33323-解决遍历问题)
+        - [3.3.3.2.4. 实现流程](#33324-实现流程)
+      - [3.3.3.3. 工作模式](#3333-工作模式)
+        - [3.3.3.3.1. Level Triggered 模式](#33331-level-triggered-模式)
+        - [3.3.3.3.2. Edge Triggered 模式](#33332-edge-triggered-模式)
+        - [3.3.3.3.3. 实现原理](#33333-实现原理)
+      - [3.3.3.4. 使用示例](#3334-使用示例)
+    - [3.3.4. /dev/pool](#334-devpool)
+    - [3.3.5. kqueue](#335-kqueue)
+  - [3.4. 异步非阻塞式 IO / 异步 IO](#34-异步非阻塞式-io--异步-io)
+  - [3.5. 信号驱动式 IO](#35-信号驱动式-io)
+  - [3.6. 比较](#36-比较)
   - [4. Refer Links](#4-refer-links)
 
 # IO 模型
-
-## 1. 基本概念
-
-IO 操作实际上可以分为两步：
-1. 发起 IO 请求（即查询目标资源就绪状态）。
-1. 实际的 IO 操作（即从内核向进程复制数据）。
-
-### 1.1. 阻塞和非阻塞
-
-**如果在第一步发起 IO 请求时发生阻塞，那么这个 IO 就可以说阻塞的，否则是非阻塞的**。
-
-阻塞和非阻塞描述的是用户线程调用内核 IO 操作的方式，是指在用户程序查询 IO 就绪状态时（比如查询 IO 是否有数据），用户程序对 IO 不同的就绪状态所表现出来的不同形式。以读取数据为例，当 IO 没有数据可供读取时，如果是阻塞 IO，程序会一直阻塞直至 IO 有数据，如果是非阻塞 IO，程序会直接返回错误码说当前没有数据，请稍后再来查询。
-
-你打电话问书店老板有没有《分布式系统》这本书，你如果是阻塞式调用，你会一直把自己“挂起”，直到得到这本书有没有的结果，如果是非阻塞式调用，你不管老板有没有告诉你，你自己先一边去玩了， 当然你也要偶尔过几分钟 check 一下老板有没有返回结果。
-
-### 1.2. 同步和异步
-
-**如果在第二步实际 IO 操作时发生阻塞，那么这个 IO 就是同步的，否则就是异步的**。
-
-同步和异步描述的是用户线程与内核的交互方式，是由在进行实际的 IO 操作时，用户程序是否等待数据操作完成来决定。还是以读取数据为例，如果是同步 IO，用户程序会等待读取数据完成，在此期间这个线程什么也不做，如果是异步 IO，用户程序可以去作别的事情，内核在完成数据读取后，会以回调的方式通知用户程序。
-
-你打电话问书店老板有没有《分布式系统》这本书，如果是同步通信机制，书店老板会说，你稍等，”我查一下"，然后开始查啊查，等查好了（可能是 5 秒，也可能是一天）告诉你结果（返回结果）。而异步通信机制，书店老板直接告诉你我查一下啊，查好了打电话给你，然后直接挂电话了（不返回结果）。然后查好了，他会主动打电话给你。在这里老板通过“回电”这种方式来回调。
-
-NOTE: **在处理 IO 的时候，阻塞和非阻塞都是同步 IO，只有使用了特殊的 API ( 如 POSIX 的 aio_* 系列函数 ) 才是异步 IO**。
-
-![image](http://img.cdn.firejq.com/jpg/2018/6/1/cb68a4980c64f35d6358a290ffbf26e4.jpg)
-
-## 2. IO 模式
-
-### 2.1. Reactor 模式
-
-Reactor 实现了一个被动的事件分离和分发模型，服务等待请求事件的到来，再通过不受间断的同步处理事件，从而做出反应。适用于同时接收多个服务请求，并且依次**同步**的处理它们的事件驱动程序。
-
-一般过程：
-1. 向事件分发器注册事件回调
-1. 事件发生
-1. 事件分发器调用之前注册的函数
-1. 在回调函数中读取数据，对数据进行后续处理
-
-eg: Reactor 将 handle 放到 select()，等待可写就绪，然后调用 `write()` 写入数据，写完处理后续逻辑。
-
-Reactor 模型实例：libevent/libev/libuv/Event Library in Redis/ACE/Select/Epoll/ZeroMQ。
-
-优点：
-- Reactor 实现相对简单，对于耗时短的处理场景处理高效。
-- 操作系统可以在多个事件源上等待，并且避免了多线程编程相关的性能开销和编程复杂性。
-- 事件的串行化对应用是透明的，可以顺序的同步执行而不需要加锁。
-- 事务分离，将与应用无关的多路分解和分配机制和与应用相关的回调函数分离开来。
-
-缺点：
-- Reactor 处理耗时长的操作会造成事件分发的阻塞，影响到后续事件的处理。
-
-### 2.2. Proactor 模式
-
-Proactor 实现了一个主动的事件分离和分发模型，这种设计允许多个任务并发的执行，从而提高吞吐量，且可执行耗时长的任务（各个任务间互不影响）。适用于**异步**接收和同时处理多个服务请求的事件驱动程序。
-
-一般过程：
-1. 向事件分发器注册事件回调
-1. 事件发生
-1. **操作系统读取数据，并放入应用缓冲区，然后通知事件分发器**
-1. 事件分发器调用之前注册的函数
-1. 在回调函数中对数据进行后续处理
-
-eg: Proactor 调用 aoi_write 后立刻返回，由内核负责写操作，写完后调用相应的回调函数处理后续逻辑。
-
-Proactor 模型实例：Boost.Asio/IOCP。
-
-优点：
-- 相比 Reactor，Proactor 性能更高，能够处理耗时长的并发场景。
-
-缺点：
-- Proactor 实现逻辑复杂，依赖操作系统对异步的支持，但目前实现了纯异步操作的操作系统少，其中如 windows IOCP，但由于其 windows 系统用于服务器的局限性，目前应用范围较小；而 Unix/Linux 系统对纯异步的支持有限，因此应用事件驱动的主流还是通过 select/epoll 来实现。
-
-### 2.3. Actor 模式
-
-Actor 模型是一个概念模型，被称为高并发事务的终极解决方案。它定义了一系列系统组件应该如何动作和交互的通用规则，实体之通过消息通讯，各自处理自己的数据，适用于处理并发计算的场景。
-
-Actors 一大重要特征在于 actors 之间相互隔离，它们并不互相共享内存。这点区别于上述的对象。也就是说，一个 actor 能维持一个私有的状态，并且这个状态不可能被另一个 actor 所改变。
-
-```
-Actor 模型 = 数据 + 行为 + 消息。
-```
-
-**Actor 模型内部的状态由自己的行为维护，外部线程不能直接调用对象的行为，必须通过消息才能激发行为，这样就保证 Actor 内部数据只有被自己修改**。
-
-Proactor 模型实例：Erlang/Skynet/Akka。
-
-## 3. IO 模型
 
 在 UNIX 中，有 5 种可用的 IO 模型：
 - 同步阻塞式 IO (Blocking IO)
@@ -135,7 +39,7 @@ Proactor 模型实例：Erlang/Skynet/Akka。
 
 NOTE: [不存在 “异步阻塞式 IO” 的说法](https://www.zhihu.com/question/65519203/answer/233433548)。
 
-### 3.1. 同步阻塞式 IO
+## 1. 同步阻塞式 IO
 
 同步阻塞 IO 模型是最简单的 IO 模型，默认情况下创建的所有 socket 都是阻塞的。
 
@@ -155,7 +59,7 @@ NOTE: [不存在 “异步阻塞式 IO” 的说法](https://www.zhihu.com/quest
 
 在整个 IO 请求的过程中，用户线程是被阻塞的，这导致用户在发起 IO 请求时，不能做任何事情，对 CPU 的资源利用率很低。
 
-### 3.2. 同步非阻塞式 IO
+## 2. 同步非阻塞式 IO
 
 同步非阻塞 IO 模型，在同步阻塞 IO 的基础上，将 socket 设置为 NONBLOCK。
 
@@ -175,7 +79,7 @@ NOTE: [不存在 “异步阻塞式 IO” 的说法](https://www.zhihu.com/quest
 
 在整个 IO 操作的过程中，虽然用户线程每次发起 IO 请求后可以立即返回，但是为了等到数据，仍需要不断地轮询、重复请求，消耗了大量的 CPU 的资源。一般很少直接使用这种模型，而是在其他 IO 模型中使用非阻塞 IO 这一特性。
 
-### 3.3. 同步非阻塞式 IO / 事件驱动 IO / IO 多路复用
+## 3. 同步非阻塞式 IO / 事件驱动 IO / IO 多路复用
 
 IO 多路复用是最常用的 IO 模型，像 Nginx，lighttd 等服务器软件都选用该模型。
 
@@ -209,13 +113,13 @@ IO 多路复用采用 **Reactor 设计模式**（事件驱动模式）:
 
 用户线程需要首先在 Reactor 中注册一个事件处理器，然后 Reactor（相当于上文提到的 Selector）负责轮询各个通道是否有新的数据到来，当有新的数据到来时，Reactor 通过先前注册的事件处理器通知用户线程有数据可读，此时用户线程向内核发起读取 IO 数据的请求，用户线程阻塞直至数据读取完成。
 
-#### 3.3.1. select
+### 3.1. select
 
 [select](https://linux.die.net/man/2/select) 是用于 IO 多路复用的一个系统调用函数，**几乎所有平台都提供了该系统调用**。在 C 程序中，它定义于 sys/select.h 或 unistd.h 中。
 
 **select() 的时间复杂度为 O(n)。随着监控的 socket 集合的增加性能线性下降，因此 select 并不适合用于大并发场景**。
 
-##### 3.3.1.1. API
+#### 3.1.1. API
 
 ```c
 #include <sys/select.h>
@@ -234,7 +138,7 @@ int select(int nfds, fd_set *readfds, fd_set *writefds,
 
     返回描述符集的个数，如果超时返回为 0，错误则返回 -1。
 
-##### 3.3.1.2. 实现原理
+#### 3.1.2. 实现原理
 
 select 的调用过程如下所示：
 
@@ -254,7 +158,7 @@ select 的调用过程如下所示：
 
 1. **把 fd_set 从内核空间拷贝到用户空间**。
 
-##### 3.3.1.3. 缺陷
+#### 3.1.3. 缺陷
 
 select 实现了对 IO 多路复用的支持，但其存在以下缺陷：
 
@@ -264,13 +168,13 @@ select 实现了对 IO 多路复用的支持，但其存在以下缺陷：
 
 - 性能问题：每次调用 select 都需要在内核**遍历**所有传递进来的 fd，这个开销在 fd 很多时也会很大。
 
-#### 3.3.2. poll
+### 3.2. poll
 
 对于 select 遗留的 3 个问题，[poll](https://linux.die.net/man/2/poll) 函数只解决了文件描述符的限制问题。poll 通过改变 fds 集合的描述方式，使用 pollfd 结构而不是 select 中的 fd_set 结构，使得 poll 支持的 fds 集合限制远大于 select 的 1024。
 
 **poll() 的时间复杂度与 select() 相同，都为 O(n)。随着监控的 socket 集合的增加性能线性下降，因此 poll 同样不适合用于大并发场景**。
 
-##### 3.3.2.1. API
+##### 3.2.1. API
 
 ```c
 #include <sys/poll. h>
@@ -287,7 +191,7 @@ struct pollfd {
 ```
 每一个 pollfd 结构体指定了一个被监视的文件描述符，可以传递多个结构体，指示 poll() 监视多个文件描述符。每个结构体的 events 域是监视该文件描述符的事件掩码，由用户来设置这个域。revents 域是文件描述符的操作结果事件掩码。内核在调用返回时设置这个域。events 域中请求的任何事件都可能在 revents 域中返回。
 
-##### 3.3.2.2. 使用示例
+#### 3.3.2.2. 使用示例
 
 ```c
 #include <sys/socket.h>
@@ -478,82 +382,82 @@ int main(int argc,char* argv[])
 }
 ```
 
-#### 3.3.3. epoll
+### 3.3.3. epoll
 
 epoll 从 **Linux 2.5.44** 开始引入，是 select/poll 的升级版本，其**设计目的旨在取代原有的 POSIX select() 与 poll() 系统调用，解决 select/poll 中存在的缺陷**。
 
 **epoll 函数的时间复杂度都为 O(logn)**。
 
-##### 3.3.3.1. API
+#### 3.3.3.1. API
 
 epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](https://linux.die.net/man/2/epoll_create)、[epoll_ctl](https://linux.die.net/man/2/epoll_ctl) 和 [epoll_wait](https://linux.die.net/man/2/epoll_wait)。
 
 - epoll_create
-    ```c
-    #include <sys/epoll.h>
-    int epoll_create(int size);
-    ```
-    创建一个 epoll 的句柄，size 用来告诉内核这个监听的数目一共有多大，它并不是限制了 epoll 所能监听的描述符最大个数，只是对内核初始分配内部数据结构的一个建议。
+  ```c
+  #include <sys/epoll.h>
+  int epoll_create(int size);
+  ```
+  创建一个 epoll 的句柄，size 用来告诉内核这个监听的数目一共有多大，它并不是限制了 epoll 所能监听的描述符最大个数，只是对内核初始分配内部数据结构的一个建议。
 
-    需要注意的是，当创建好 epoll 句柄后，它就是会占用一个 fd 值，在 Linux 下如果查看 /proc/ 进程 id/fd/，是能够看到这个 fd 的，所以在使用完 epoll 后，必须调用 close() 关闭，否则可能导致 fd 被耗尽。
+  需要注意的是，当创建好 epoll 句柄后，它就是会占用一个 fd 值，在 Linux 下如果查看 /proc/ 进程 id/fd/，是能够看到这个 fd 的，所以在使用完 epoll 后，必须调用 close() 关闭，否则可能导致 fd 被耗尽。
 
 - epoll_ctl
-    ```c
-    #include <sys/epoll.h>
-    int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
-    ```
-    epoll_ctl 是 epoll 的事件注册函数。
-    - Parameter Description:
-        - 第一个参数是 epoll_create() 的返回值。
-        - 第二个参数表示动作，用三个宏来表示：
-            - `EPOLL_CTL_ADD`: 注册新的 fd 到 epfd 中。
-            - `EPOLL_CTL_MOD`: 修改已经注册的 fd 的监听事件。
-            - `EPOLL_CTL_DEL`: 从 epfd 中删除一个 fd。
-        - 第三个参数是需要监听的 fd，就是我们的 socket。
-        - 第四个参数是告诉内核需要监听什么事，struct epoll_event 结构如下：
-            ```c
-            typedef union epoll_data {
-                    void *ptr;
-                    int fd;
-                    __uint32_t u32;
-                    __uint64_t u64;
-            } epoll_data_t;
+  ```c
+  #include <sys/epoll.h>
+  int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
+  ```
+  epoll_ctl 是 epoll 的事件注册函数。
+  - Parameter Description:
+    - 第一个参数是 epoll_create() 的返回值。
+    - 第二个参数表示动作，用三个宏来表示：
+      - `EPOLL_CTL_ADD`: 注册新的 fd 到 epfd 中。
+      - `EPOLL_CTL_MOD`: 修改已经注册的 fd 的监听事件。
+      - `EPOLL_CTL_DEL`: 从 epfd 中删除一个 fd。
+    - 第三个参数是需要监听的 fd，就是我们的 socket。
+    - 第四个参数是告诉内核需要监听什么事，struct epoll_event 结构如下：
+      ```c
+      typedef union epoll_data {
+              void *ptr;
+              int fd;
+              __uint32_t u32;
+              __uint64_t u64;
+      } epoll_data_t;
 
-            struct epoll_event {
-                    __uint32_t events; /* Epoll events */
-                    epoll_data_t data; /* User data variable */
-            };
-            ```
-            events 可以是以下几个宏的集合：（前三种是最常见的)
-            - `EPOLLIN`: 表示对应的文件描述符可以读（包括对端 SOCKET 正常关闭）。
-            - `EPOLLOUT`: 表示对应的文件描述符可以写。
-            - `EPOLLERR`: 表示对应的文件描述符发生错误。
-            - `EPOLLPRI`: 表示对应的文件描述符有紧急的数据可读（这里应该表示有带外数据到来）。
-            - `EPOLLHUP`: 表示对应的文件描述符被挂断。
-            - `EPOLLET`: 将 EPOLL 设为边缘触发 (Edge Triggered) 模式，这是相对于水平触发 (Level Triggered) 来说的。
-            - `EPOLLONESHOT`: 只监听一次事件，当监听完这次事件之后，如果还需要继续监听这个 socket 的话，需要再次把这个 socket 加入到 EPOLL 队列里。
+      struct epoll_event {
+              __uint32_t events; /* Epoll events */
+              epoll_data_t data; /* User data variable */
+      };
+      ```
+      events 可以是以下几个宏的集合：（前三种是最常见的)
+      - `EPOLLIN`: 表示对应的文件描述符可以读（包括对端 SOCKET 正常关闭）。
+      - `EPOLLOUT`: 表示对应的文件描述符可以写。
+      - `EPOLLERR`: 表示对应的文件描述符发生错误。
+      - `EPOLLPRI`: 表示对应的文件描述符有紧急的数据可读（这里应该表示有带外数据到来）。
+      - `EPOLLHUP`: 表示对应的文件描述符被挂断。
+      - `EPOLLET`: 将 EPOLL 设为边缘触发 (Edge Triggered) 模式，这是相对于水平触发 (Level Triggered) 来说的。
+      - `EPOLLONESHOT`: 只监听一次事件，当监听完这次事件之后，如果还需要继续监听这个 socket 的话，需要再次把这个 socket 加入到 EPOLL 队列里。
 
-    - Return Value
+  - Return Value
 
-        When successful, epoll_ctl() returns zero. When an error occurs, epoll_ctl() returns -1 and errno is set appropriately.
+    When successful, epoll_ctl() returns zero. When an error occurs, epoll_ctl() returns -1 and errno is set appropriately.
 
 - epoll_wait
-    ```c
-    #include <sys/epoll.h>
-    int epoll_wait(int epfd, struct epoll_event *events,
-                                int maxevents, int timeout);
-    ```
-    等待事件的产生。参数 events 用来从内核得到事件的集合，maxevents 告之内核这个 events 有多大，这个 maxevents 的值不能大于创建 epoll_create() 时的 size，参数 timeout 是超时时间（毫秒，0 会立即返回，-1 是永久阻塞）。
+  ```c
+  #include <sys/epoll.h>
+  int epoll_wait(int epfd, struct epoll_event *events,
+                              int maxevents, int timeout);
+  ```
+  等待事件的产生。参数 events 用来从内核得到事件的集合，maxevents 告之内核这个 events 有多大，这个 maxevents 的值不能大于创建 epoll_create() 时的 size，参数 timeout 是超时时间（毫秒，0 会立即返回，-1 是永久阻塞）。
 
-    该函数返回需要处理的事件数目，如返回 0 表示已超时。
+  该函数返回需要处理的事件数目，如返回 0 表示已超时。
 
-    - Return
+  - Return
 
-        When successful, epoll_wait() returns the number of file descriptors ready for the requested I/O, or zero if no file descriptor became ready during the requested timeout milliseconds. When an error occurs, epoll_wait() returns -1 and errno is set appropriately.
+    When successful, epoll_wait() returns the number of file descriptors ready for the requested I/O, or zero if no file descriptor became ready during the requested timeout milliseconds. When an error occurs, epoll_wait() returns -1 and errno is set appropriately.
 
-##### 3.3.3.2. 实现原理
+#### 3.3.3.2. 实现原理
 
-###### 3.3.3.2.1. 存储结构
+##### 3.3.3.2.1. 存储结构
 
 为解决 select/poll 遗留的性能问题，epoll 模块中主要定义了 2 种结构：
 - 存放文件资源描述符 (fds) 的数据结构：**哈希表 (Linux < 2.6); 红黑树 (Linux > 2.6)**.
@@ -563,7 +467,7 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 - 在 linux 2.6.8 之前的内核，epoll 使用 HashTable 来组织 fds 集合，因此在创建 epoll fd 的时候，epoll 需要初始化 hash 的大小。于是 epoll_create(int size) 有一个参数 size，以便内核根据 size 的大小来分配 hash 的大小。
 - 在 linux 2.6.8 之后的内核中，epoll 使用红黑树来组织监控的 fds 集合，因此 `epoll_create(int size)` 的参数 size 实际上已经没有意义了。TODO: 为什么要用红黑树代替哈希表？
 
-###### 3.3.3.2.2. 解决拷贝问题
+##### 3.3.3.2.2. 解决拷贝问题
 
 对于 IO 多路复用，有两件事是必须要做的（对于监控可读事件而言)：
 1. 准备好需要监控的 fds 集合。
@@ -575,7 +479,7 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 - 对于 epoll_ctl 调用，通过 (EPOLL_CTL_ADD、EPOLL_CTL_MOD、EPOLL_CTL_DEL) 三个操作来分散对需要监控的 fds 集合的修改，做到了有变化才变更，**将 select 或 poll 高频、大块内存拷贝（集中处理) 变成 epoll_ctl 的低频、小块内存的拷贝（分散处理)，避免了大量的内存拷贝**。
 - 对于 epoll_wait 调用，针对高频的可读就绪的 fd 集合返回的拷贝问题，**epoll 通过内核与用户空间 mmap（内存映射) 同一块内存来解决，使得这块物理内存对内核和对用户均可见，减少用户态和内核态之间的数据交换**。
 
-###### 3.3.3.2.3. 解决遍历问题
+##### 3.3.3.2.3. 解决遍历问题
 
 在 select/poll 函数中，每次返回后我们都需要遍历所有注册的文件描述符，来获取其中的少数就绪 fd，大量消耗了性能。为了做到只遍历就绪的 fd，我们需要有个地方来组织那些已经就绪的 fd。
 
@@ -585,7 +489,7 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 - **当我们执行 epoll_create 时，在创建红黑树 / 哈希表的同时还创建了就绪链表**。
 - **当我们执行 epoll_ctl 时**，除了把 socket 放到 epoll 文件系统里文件对象对应的哈希表 / 红黑树上之外，还**会给内核中断处理程序注册一个回调函数，告诉内核，如果这个句柄的中断到了，就把它放到准备就绪链表里**。因此，当一个 socket 上有数据到了，内核在把网卡上的数据 copy 到内核中后就来把 socket 插入到准备就绪链表里了。TODO:
 
-###### 3.3.3.2.4. 实现流程
+##### 3.3.3.2.4. 实现流程
 
 1. 执行 epoll_create 时，创建了哈希表 / 红黑树和就绪链表。
 
@@ -593,9 +497,9 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 
 1. 执行 epoll_wait 时，检查准备就绪链表里的数据，有数据就直接返回；没有数据就 sleep，等到 timeout 时间到后即使链表没数据也返回。
 
-##### 3.3.3.3. 工作模式
+#### 3.3.3.3. 工作模式
 
-###### 3.3.3.3.1. Level Triggered 模式
+##### 3.3.3.3.1. Level Triggered 模式
 
 **LT 模式（水平触发模式）下，若一个句柄上的事件一次没有处理完，会在以后调用 epoll_wait 时每一次都返回这个句柄**。
 
@@ -605,7 +509,7 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 
 - 符合思维习惯，epoll_wait 返回的事件就是 socket 的状态。
 
-###### 3.3.3.3.2. Edge Triggered 模式
+##### 3.3.3.3.2. Edge Triggered 模式
 
 **ET 模式（边缘触发模式）下，若一个句柄上的事件一次没有处理完，在以后调用 epoll_wait 时不会再返回这个句柄**。
 
@@ -617,13 +521,13 @@ epoll 实际上是一个模块，由 3 个系统调用组成：[epoll_create](ht
 
 **ET 模式在很大程度上减少了 epoll 事件被重复触发的次数，因此效率要比 LT 模式高**。epoll 工作在 ET 模式的时候，必须使用非阻塞套接口，以避免由于一个文件句柄的阻塞读 / 阻塞写操作把处理多个文件描述符的任务饿死。
 
-###### 3.3.3.3.3. 实现原理
+##### 3.3.3.3.3. 实现原理
 
 TODO:
 
 LT, ET 这件事怎么做到的呢？当一个 socket 句柄上有事件时，内核会把该句柄插入上面所说的准备就绪 list 链表，这时我们调用 epoll_wait，会把准备就绪的 socket 拷贝到用户态内存，然后清空准备就绪 list 链表，最后，epoll_wait 干了件事，就是检查这些 socket，如果不是 ET 模式（就是 LT 模式的句柄了），并且这些 socket 上确实有未处理的事件时，又把该句柄放回到刚刚清空的准备就绪链表了。所以，非 ET 的句柄，只要它上面还有事件，epoll_wait 每次都会返回。而 ET 模式的句柄，除非有新中断到，即使 socket 上的事件没有处理完，也是不会次次从 epoll_wait 返回的。（从上面这段，可以看出，LT 还有个回放的过程，低效了）
 
-##### 3.3.3.4. 使用示例
+#### 3.3.3.4. 使用示例
 
 ```c
 #include <sys/socket.h>
@@ -737,15 +641,15 @@ int main(int argc,char* argv[])
 }
 ```
 
-#### 3.3.4. /dev/pool
+### 3.3.4. /dev/pool
 
 以 Solaris 平台为主
 
-#### 3.3.5. kqueue
+### 3.3.5. kqueue
 
 以 BSD 平台为主
 
-### 3.4. 异步非阻塞式 IO / 异步 IO
+## 3.4. 异步非阻塞式 IO / 异步 IO
 
 异步 IO 模型由 POSIX 规范定义，需要操作系统更强的支持，它采用 **Proactor 设计模式**，操作流程如下：
 
@@ -780,7 +684,7 @@ TODO:
 
   [基于 Proactor 模式的 IOCP 和基于 Reactor 模式的 epoll/kqueue 哪个效率更高？](https://www.zhihu.com/question/27008712)
 
-### 3.5. 信号驱动式 IO
+## 3.5. 信号驱动式 IO
 
 信号驱动式 IO 模型用得比较少，操作流程如下：
 
@@ -790,7 +694,7 @@ TODO:
 
 相比异步 IO 模型，信号驱动 IO 是由内核通知用线程何时可以启动一个 IO 操作，而异步 IO 模型是由内核通知用户线程 IO 操作何时已完成。
 
-### 3.6. 比较
+## 3.6. 比较
 
 ![image](http://img.cdn.firejq.com/jpg/2018/6/1/17891efd2acda172e74d6be8764685be.jpg)
 
