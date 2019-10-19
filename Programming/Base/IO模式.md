@@ -42,6 +42,10 @@ NOTE: **在处理 IO 的时候，阻塞和非阻塞都是同步 IO，只有使�
 
 ### 2.1. Reactor 模式
 
+TODO:
+
+https://pdfs.semanticscholar.org/3d9f/fc7669ab488ea74841181e9b1be9d10d5cea.pdf
+
 Reactor 实现了一个被动的事件分离和分发模型，服务等待请求事件的到来，再通过不受间断的同步处理事件，从而做出反应。适用于同时接收多个服务请求，并且依次**同步**的处理它们的事件驱动程序。
 
 一般过程：
@@ -65,6 +69,10 @@ Reactor 模型实例：libevent/libev/libuv/Event Library in Redis/ACE/Select/Ep
 
 ### 2.2. Proactor 模式
 
+TODO:
+
+https://www.dre.vanderbilt.edu/~schmidt/PDF/proactor.pdf
+
 Proactor 实现了一个主动的事件分离和分发模型，这种设计允许多个任务并发的执行，从而提高吞吐量，且可执行耗时长的任务（各个任务间互不影响）。适用于**异步**接收和同时处理多个服务请求的事件驱动程序。
 
 一般过程：
@@ -85,6 +93,10 @@ Proactor 模型实例：Boost.Asio/IOCP。
 - Proactor 实现逻辑复杂，依赖操作系统对异步的支持，但目前实现了纯异步操作的操作系统少，如 windows IOCP，但由于其 windows 系统用于服务器的局限性，目前应用范围较小；而 Unix/Linux 系统对纯异步的支持有限，因此应用事件驱动的主流还是通过 select/epoll 来实现。
 
 ### 2.3. Actor 模式
+
+TODO:
+
+http://www.yeolar.com/note/2012/12/15/io-design-patterns/
 
 Actor 模型是一个概念模型，被称为高并发事务的终极解决方案。它定义了一系列系统组件应该如何动作和交互的通用规则，实体之通过消息通讯，各自处理自己的数据，适用于处理并发计算的场景。
 

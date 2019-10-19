@@ -322,6 +322,30 @@ NOTE:
     ```
 
 NOTE
+- 获取进程返回值
+
+  由于进程间内存空间相互独立，因此要获取子进程的执行返回值需要通过进程间通信来完成。例：
+  ```python
+  def worker(procnum, return_dict):
+      '''worker function'''
+      print str(procnum) + ' represent!'
+      return_dict[procnum] = procnum
+
+  if __name__ == '__main__':
+      manager = Manager()
+      return_dict = manager.dict()
+      jobs = []
+      for i in range(5):
+          p = multiprocessing.Process(target=worker, args=(i,return_dict))
+          jobs.append(p)
+          p.start()
+
+      for proc in jobs:
+          proc.join()
+      # 最后的结果是多个进程返回值的集合
+      print return_dict.values()
+  ```
+
 - On Unix a child process can make use of a shared resource created in a parent process using a global resource. However, **it is better to pass the object as an argument to the constructor for the child process**. Apart from making the code (potentially) **compatible with Windows** this also ensures that as long as **the child process is still alive the object will not be garbage collected in the parent process**. This might be important if some resource is freed when the object is garbage collected in the parent process.
 
   ```python
@@ -1056,37 +1080,30 @@ Pool 的用法有阻塞和非阻塞两种方式。
     NOTE: A frequent pattern found in other systems (such as Apache, mod_wsgi, etc) to free resources held by workers is **to allow a worker within a pool to complete only a set amount of work before being exiting**, being cleaned up and a new process spawned to replace the old one.
 
 - API
-  - `apply_async(func[, args[, kwds[, callback]]])` 向进程池中添加进程，它是非阻塞的，即能同时运行多个进程，同时运行的最大进程数在创建进程池时指定，如果池中的正在运行的进程数已经达到最大值，那么还没有执行的进程就会等待，直到池中有进程结束，才能进入进程池运行。 If callback is specified then it should be a callable which accepts a single argument. When the result becomes ready callback is applied to it (unless the call failed).
+  - `apply_async(func[, args[, kwds[, callback]]])`:
+    - 向进程池中添加进程，它是非阻塞的，即能同时运行多个进程，同时运行的最大进程数在创建进程池时指定，如果池中的正在运行的进程数已经达到最大值，那么还没有执行的进程就会等待，直到池中有进程结束，才能进入进程池运行。
+    - 返回值：如果在函数 func 中返回一个值，那么 `apply_async(func, (msg, ))` 的返回值 func 返回值的 ApplyResult 对象（注意是对象，不是值本身）。
+    - Callback: If callback is specified then it should be a callable which accepts a single argument. When the result becomes ready callback is applied to it (unless the call failed).
 
     e.g.
     ```python
-    def function(index):
-        print('Start process: ', index)
-        time.sleep(3)
-        print('End process', index)
+    import multiprocessing
+    import time
 
-    if __name__ == '__main__':
-        pool = Pool(processes=3)
-        for i in range(4):
-            pool.apply_async(function, (i,))
+    def func(msg):
+        return multiprocessing.current_process().name + '-' + msg
 
-        print("Started processes")
-        pool.close()
-        pool.join()
-        print("Subprocess done.")
-    ```
-    输出结果：
-    ```
-    Started processes
-    Start process:  0
-    Start process:  1
-    Start process:  2
-    End process 0
-    Start process:  3
-    End process 1
-    End process 2
-    End process 3
-    Subprocess done.
+    if __name__ == "__main__":
+        pool = multiprocessing.Pool(processes=4) # 创建 4 个进程
+        results = []
+        for i in xrange(10):
+            msg = "hello %d" %(i)
+            results.append(pool.apply_async(func, (msg, )))
+        pool.close() # 关闭进程池，表示不能再往进程池中添加进程，需要在 join 之前调用
+        pool.join() # 等待进程池中的所有进程执行完毕
+        print ("Sub-process(es) done.")
+        for res in results:
+            print (res.get())
     ```
 
     e.g. 把耗时间（阻塞）的任务放到进程池中，然后指定回调函数（主进程负责执行）
@@ -1103,7 +1120,7 @@ Pool 的用法有阻塞和非阻塞两种方式。
             return {'url':url,'text':respone.text}
 
     def pasrse_page(res):
-        print('《进程 %s> parse %s' %(os.getpid(),res['url']))
+        print('< 进程 %s> parse %s' %(os.getpid(),res['url']))
         parse_res='url:<%s> size:[%s]\n' %(res['url'],len(res['text']))
         with open('db.txt','a') as f:
             f.write(parse_res)
@@ -1112,11 +1129,8 @@ Pool 的用法有阻塞和非阻塞两种方式。
         urls=[
             'https://www.baidu.com',
             'https://www.python.org',
-            'https://www.openstack.org',
-            'https://help.github.com/',
             'http://www.sina.com.cn/'
         ]
-
         p=Pool(3)
         res_l=[]
         for url in urls:
@@ -1173,9 +1187,12 @@ Pool 的用法有阻塞和非阻塞两种方式。
 
     P.S. 在 Python 语言设计之初，需要通过 build-in 方法 apply 来调用用户自定义的函数：`apply(f,args,kwargs)`，随着语言的完善，后来才支持了直接使用函数名来调用函数：`f(*args,**kwargs)`。因此，multiprocessing.Pool 模块的 apply 方法实际上是 tries to provide a similar interface.
 
-  - `map_async(func, iterable[, chunksize[, callback]])`: A variant of the `map()` method which returns a result object. If callback is specified then it should be a callable which accepts a single argument. When the result becomes ready callback is applied to it (unless the call failed). callback should complete immediately since otherwise the thread which handles the results will get blocked.
+  - `map_async(func, iterable[, chunksize[, callback]])`: A variant of the `map()` method which returns a result object.
+    - 向进程池中添加进程，会将 iterable 中的各个元素作为参数分别传给每个进程的 func。它是阻塞的，即只能同时运行一个进程，还没有执行的进程就会等待，直到池中有进程结束，才能进入进程池运行。
+    - 返回值：如果在函数 func 中返回一个值，那么 `apply_async(func, (msg, ))` 的返回值 func 返回值的 MapResult 对象（注意是对象，不是值本身）。
+    - Callback: If callback is specified then it should be a callable which accepts a single argument. When the result becomes ready callback is applied to it (unless the call failed). callback should complete immediately since otherwise the thread which handles the results will get blocked.
 
-  - `map(func, iterable[, chunksize])` It blocks until the result is ready. 会使主进程阻塞直到最后一个子进程返回结果。在进程池中添加非阻塞进程，将 iterable 中的各个元素分别作为参数在每个进程中调用 fun 函数，也就是说，iterable 对象有几个元素，就会创建几个进程。
+  - `map(func, iterable[, chunksize])` It blocks until the result is ready.
 
     source code:
     ```python

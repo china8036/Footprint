@@ -315,30 +315,30 @@ A class that represents a thread of control. This class can be safely subclassed
 NOTE
 - 获取线程返回值
 
-  有时候，我们往往需要获取每个子线程的返回值。然而通过调用普通函数，获取 return 值的方式在多线程中并不适用。因此需要一种新的方式去获取子线程返回值。
+  由于多个线程之间共享全局变量，因此可以通过以下方法来获取线程的返回值：
+  - 用类包装线程
+    ```python
+    import threading
 
-  e.g.
-  ```python
-  import threading
+    class test(threading.Thread):
+        def __init__(self):
+            threading.Thread.__init__(self)
 
-  class test(threading.Thread):
-      def __init__(self):
-          threading.Thread.__init__(self)
+        def run(self):
+            self.tag = 1
 
-      def run(self):
-          self.tag = 1
-
-      def get_result(self):
-          if self.tag == 1:
-              return True
-          else:
-              return False
-  f = test()
-  f.start()
-  while f.isAlive():
-      continue
-  print(f.get_result())
-  ```
+        def get_result(self):
+            if self.tag == 1:
+                return True
+            else:
+                return False
+    f = test()
+    f.start()
+    while f.isAlive():
+        continue
+    print(f.get_result())
+    ```
+  - TODO: 使用 Queue 等全局队列
 
 - Customized Thread
 

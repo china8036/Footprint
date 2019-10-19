@@ -413,6 +413,44 @@ dict_keys(['green', 'red', 'yellow'])
 
 每一个键值对以元组的形式返回。
 
+NOTE：
+- 对于 Python < 3.6，遍历字典时，键值对的返回顺序与存储顺序是不同的。Python 不关心键值对的顺序，而只关心键和值之间的映射关系。
+
+  e.g.
+  ```python
+  user_0 = {
+      'username':'efermi',
+      'first':'enrico',
+      'last':'fermi'
+  }
+
+  for key,value in user_0.items():
+      print("\nKey:" + key)
+      print("Value:" + value)
+  ```
+  运行结果：
+  ```
+  Key：last
+  Value：fermi
+
+  Key：first
+  Value：enrico
+
+  Key：username
+  Value：efermi
+  ```
+  若需要根据字典的插入顺序进行遍历，可通过 collections.OrderedDict 来实现。e.g.
+  ```python
+  d = collections.OrderedDict()
+      d['f'] = 0
+      d['w'] = 1
+      d['a'] = 2
+  for key, value in d.items():
+      print key, value
+  ```
+
+- 根据 [PEP 468](https://legacy.python.org/dev/peps/pep-0468/)，Python 3.6 改写了 dict 的内部算法，因此 3.6 的 dict 是有序的。
+
 #### 3.6.7. 使用 = 赋值， 使用 copy() 复制
 
 ## 4. 集合
