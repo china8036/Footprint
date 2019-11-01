@@ -5,6 +5,8 @@
     - [2.2. inspect 模块](#22-inspect-模块)
     - [2.3. ipython 环境中使用 `??`](#23-ipython-环境中使用-)
     - [2.4. __file__ 属性](#24-__file__-属性)
+    - [2.5. build-in function / type 源码](#25-build-in-function--type-源码)
+    - [2.6. Object 源码](#26-object-源码)
   - [3. Refer Links](#3-refer-links)
 
 # TODO
@@ -96,6 +98,21 @@ e.g.
 '/usr/lib/python2.7/string.pyc'
 ```
 
+### 2.5. build-in function / type 源码
+
+https://stackoverflow.com/questions/8608587/finding-the-source-code-for-built-in-python-functions
+
+https://github.com/python/cpython/blob/master/Python/bltinmodule.c
+
+### 2.6. Object 源码
+
+cpython/Objects:
+
+e.g.
+- list: https://github.com/python/cpython/blob/master/Objects/listobject.c
+- dict: https://github.com/python/cpython/blob/master/Objects/dictobject.c
+- enum: https://github.com/python/cpython/blob/master/Objects/enumobject.c
+
 ## 3. Refer Links
 
 [CPython 是什么？PyPy 是什么？Python 和这两个东西有什么关系呢？Python 的底层使用什么语言实现？学习 Python 需要学习底层实现吗？](https://www.zhihu.com/question/20005950)
@@ -104,4 +121,12 @@ e.g.
 
 [廖雪峰：Python 解释器](https://www.liaoxuefeng.com/wiki/897692888725344/966138843228672)
 
-TODO: [Your Guide to the CPython Source Code](https://realpython.com/cpython-source-code-guide/)
+TODO:
+
+[Your Guide to the CPython Source Code](https://realpython.com/cpython-source-code-guide/)
+
+[CPython internals: A ten-hour codewalk through the Python interpreter source code](http://pgbovine.net/cpython-internals.htm)
+
+Built-in Source: https://github.com/python/cpython/blob/master/Python/bltinmodule.c
+
+For Built-in Types: https://github.com/python/cpython/tree/master/Objects

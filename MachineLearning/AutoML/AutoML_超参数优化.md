@@ -21,9 +21,10 @@
       - [5.1.2. 算法流程](#512-算法流程)
     - [5.2. 基于种群的训练 (Population Based Training，PBT)](#52-基于种群的训练-population-based-trainingpbt)
   - [6. 粒子群优化 (Paticle Swarm Optimization)](#6-粒子群优化-paticle-swarm-optimization)
-  - [7. TPE](#7-tpe)
+  - [7. TPE (tree of parzen estimators)](#7-tpe-tree-of-parzen-estimators)
   - [8. SMAC](#8-smac)
-  - [9. Refer Links](#9-refer-links)
+  - [9. 现有框架](#9-现有框架)
+  - [10. Refer Links](#10-refer-links)
 
 # 超参数优化 (Hyper parameter optimization, HPO)
 
@@ -285,13 +286,11 @@ NOTE
 
 ### 5.2. 基于种群的训练 (Population Based Training，PBT)
 
-2017年，DeepMind 在 [Population Based Training of Neural Networks](https://arxiv.org/pdf/1711.09846.pdf) 中提出了基于遗传算法改进的 PBT 算法。
-
+2017 年，DeepMind 在 [Population Based Training of Neural Networks](https://arxiv.org/pdf/1711.09846.pdf) 中提出了基于遗传算法改进的 PBT 算法。
 
 从结果上讲他是找到了一个训练过程（一个阶段一组超参数)，而不是一组最优超参数：
 
 ![image](http://img.cdn.firejq.com/jpg/2019/8/27/f3a73e08bc0835d9201ff643d8f1ab91.jpg)
-
 
 种群优化算法框架：
 1. 初始化种群（随机产生 N 组超参数）
@@ -304,11 +303,33 @@ NOTE
 
 ## 6. 粒子群优化 (Paticle Swarm Optimization)
 
-## 7. TPE
+## 7. TPE (tree of parzen estimators)
+
+Hyperopt & HPOLib 都实现了该算法。
 
 ## 8. SMAC
 
-## 9. Refer Links
+基于序列模型的算法配置 (SMAC)
+
+[Spearmint](https://github.com/JasperSnoek/spearmint
+
+RoBO- 鲁棒的贝叶斯优化框架 (Robust Bayesian Optimization framework)
+
+SMAC3 - SMAC 算法的 python 实现
+
+## 9. 现有框架
+
+HyperOpt, Spearmint, and HPOLib (Snoek et al. (2012); Eggensperger et al. (2013)) are distributed model selection tools that manage both the search and evaluation of the model, implementing search techniques such as random search and tree of parzen estimators (TPE). However, both frameworks are tightly coupled to the search algorithm structure and requires manual management of computational resources across a cluster. Further, systems such as Spearmint, HyperOpt, and TuPAQ (MLBase) (Sparks et al. (2015)) treat a full trial execution as an atomic unit, which does not allow for intermediate control of trial execution. This inhibits eﬃcient usage of cluster resources and also does not provide the expressivity needed to support algorithms such as HyperBand.
+
+Google Vizier (Golovin et al. (2017)) is a Google-internal service that provides model selection capabilities. Similar to Tune, Vizier provides parallel evaluation of trials, hosts many state-of-the-art optimization algorithms, provides functionality for performance analysis. However, it is ﬁrst and foremost a service and is tied to closed-source infrastructure.
+
+Mistique (Vartak et al. (2018)) is also a system that addresses model selection. However, rather than focusing on the execution of the selection process, Mistique focuses on model debugging, emphasizing iterative procedures and memory footprint minimization.
+
+Finally, Auto-SKLearn (Feurer et al. (2015)) and Auto-WEKA (Thornton et al. (2013)) are systems for automating model selection, integrating meta learning and ensembling into a single system. The focus of these systems is at the execution layer rather than the algorithmic level. This implies that in principle, it would be possible to implement AutoWEKA and Auto-SKLearn on top of Tune, providing distributed execution of these AutoML components. Further, both Auto-SKLearn and Auto-WEKA are tied to Scikit-Learn and WEKA respectively as the only machine learning frameworks supported.
+
+Ray.Tune
+
+## 10. Refer Links
 
 [超参数优化](https://www.cnblogs.com/yifdu25/p/8202811.html)
 

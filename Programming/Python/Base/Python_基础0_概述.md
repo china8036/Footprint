@@ -100,6 +100,8 @@ Python 3.7.4
 
 [管理 Mac 的 Python 环境](https://www.jianshu.com/p/28e0c23bff84)
 
+[Python 进阶路线](https://stackoverflow.com/questions/2573135/python-progression-path-from-apprentice-to-guru)
+
 TODO:
 
 https://blog.csdn.net/The_Time_Runner/article/details/89352464

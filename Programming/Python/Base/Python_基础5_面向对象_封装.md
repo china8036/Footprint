@@ -1,41 +1,30 @@
-- [Python 基础：面向对象](#python-基础面向对象)
-  - [1. 数据封装](#1-数据封装)
-    - [1.1. 类定义](#11-类定义)
-    - [1.2. 属性](#12-属性)
-      - [1.2.1. 实例属性](#121-实例属性)
-      - [1.2.2. 类属性](#122-类属性)
-        - [1.2.2.1. 内置类属性](#1221-内置类属性)
-      - [1.2.3. 实例属性和类属性的关系](#123-实例属性和类属性的关系)
-      - [1.2.4. @property](#124-property)
-    - [1.3. 方法](#13-方法)
-      - [1.3.1. 实例方法](#131-实例方法)
-      - [1.3.2. 类方法](#132-类方法)
-        - [1.3.2.1. 魔法方法](#1321-魔法方法)
-      - [1.3.3. 静态方法](#133-静态方法)
-      - [1.3.4. 实例、静态、类方法辨析](#134-实例静态类方法辨析)
-    - [1.4. 访问控制](#14-访问控制)
-    - [1.5. 获取类的信息](#15-获取类的信息)
-      - [1.5.1. type()](#151-type)
-      - [1.5.2. isinstance()](#152-isinstance)
-      - [1.5.3. dir()](#153-dir)
-      - [1.5.4. getattr()、setattr()、hasattr()](#154-getattrsetattrhasattr)
-    - [1.6. 枚举类](#16-枚举类)
-      - [1.6.1. 元类](#161-元类)
-  - [2. 继承](#2-继承)
-    - [2.1. 方法重写](#21-方法重写)
-      - [2.1.1. 基础重写方法](#211-基础重写方法)
-      - [2.1.2. 运算符重载](#212-运算符重载)
-    - [2.2. 多重继承](#22-多重继承)
-  - [3. 多态](#3-多态)
-    - [3.1. “开闭”原则](#31-开闭原则)
-    - [3.2. 鸭子类型](#32-鸭子类型)
-  - [4. Refer Links](#4-refer-links)
+- [Python 基础：面向对象 - 封装](#python-基础面向对象---封装)
+  - [1. 类定义](#1-类定义)
+  - [2. 属性](#2-属性)
+    - [2.1. 实例属性](#21-实例属性)
+    - [2.2. 类属性](#22-类属性)
+      - [2.2.1. 内置类属性](#221-内置类属性)
+    - [2.3. 实例属性和类属性的关系](#23-实例属性和类属性的关系)
+    - [2.4. @property](#24-property)
+  - [3. 方法](#3-方法)
+    - [3.1. 实例方法](#31-实例方法)
+    - [3.2. 类方法](#32-类方法)
+      - [3.2.1. 魔法方法 (Magic Method)](#321-魔法方法-magic-method)
+    - [3.3. 静态方法](#33-静态方法)
+    - [3.4. 实例、静态、类方法辨析](#34-实例静态类方法辨析)
+  - [4. 访问控制](#4-访问控制)
+  - [5. 获取类的信息](#5-获取类的信息)
+    - [5.1. type()](#51-type)
+    - [5.2. isinstance()](#52-isinstance)
+    - [5.3. dir()](#53-dir)
+    - [5.4. getattr()、setattr()、hasattr()](#54-getattrsetattrhasattr)
+  - [6. 枚举类](#6-枚举类)
+    - [6.1. 元类](#61-元类)
+  - [7. Refer Links](#7-refer-links)
 
-# Python 基础：面向对象
+# Python 基础：面向对象 - 封装
 
-## 1. 数据封装
-
-### 1.1. 类定义
+## 1. 类定义
 
 类 (Class): 用来描述具有相同的属性和方法的对象的集合。它定义了该集合中每个对象所共有的属性和方法。对象是类的实例。
 
@@ -50,7 +39,7 @@ class ClassName:
 
 - 创建实例是通过类名 +() 实现的；
 
-### 1.2. 属性
+## 2. 属性
 
 例：
 ```python
@@ -64,7 +53,7 @@ pass
 ```
 通过内建函数 dir()，或者访问类的字典属性__dict__，这两种方式都可以查看类有哪些属性；
 
-#### 1.2.1. 实例属性
+### 2.1. 实例属性
 
 在上述例子中，`self.__name`和`self.__age`属于实例属性；
 
@@ -74,7 +63,7 @@ pass
 
 通过定义 `__init__(self, xxx, xxx)` 方法，可以强制使得在创建类实例的时候就绑定一些属性，有了`__init__`方法，在创建实例的时候，就必须传入与__init__方法匹配的参数，但 self 不需要传，Python 解释器自己会把实例变量传进去；
 
-#### 1.2.2. 类属性
+### 2.2. 类属性
 
 在上述例子中，count、books 都属于类属性；
 
@@ -106,7 +95,7 @@ Student
 Student
 ```
 
-##### 1.2.2.1. 内置类属性
+#### 2.2.1. 内置类属性
 
 对于所有的类，都有一组特殊的属性：
 
@@ -171,7 +160,7 @@ Student
   ```
   从而通过 if __name__ == '__main__'来判断是否是在直接运行该。py 文件，即若该文件作为脚本入口被 python 直接运行时，执行 if __name__ == '__main__' 中的代码；若该文件被视为模块导入到其它 py 文件时，不执行 if __name__ == '__main__' 中的代码；
 
-#### 1.2.3. 实例属性和类属性的关系
+### 2.3. 实例属性和类属性的关系
 
 http://blog.csdn.net/cc7756789w/article/details/46480829
 
@@ -215,7 +204,7 @@ print obj1.__dict__, obj2.__dict__, AAA.__dict__
 
   类属性最好在 `__init__()` 外初始化（不会每次创建实例都调用），在内部用 classname. 类属性名调用，外部用 classname. 类属性名调用（虽然既可以用 classname. 类属性名又可以用 instancename. 类属性名来调用）；
 
-#### 1.2.4. @property
+### 2.4. @property
 
 [廖雪峰的 python 教程：使用 @property](https://www.liaoxuefeng.com/wiki/897692888725344/923030547069856)
 
@@ -318,9 +307,9 @@ P.S.
       x = property(getx, setx, delx, "I'm the 'x' property.")
   ```
 
-### 1.3. 方法
+## 3. 方法
 
-#### 1.3.1. 实例方法
+### 3.1. 实例方法
 
 实例方法是类中最常用的方法类型；
 
@@ -375,7 +364,7 @@ wilber.printInstanceInfo()
   25
   ```
 
-#### 1.3.2. 类方法
+### 3.2. 类方法
 
 类方法定义时使用装饰器 `@classmethod`；
 
@@ -431,9 +420,9 @@ wilber.printClassInfo()
 99
 ```
 
-##### 1.3.2.1. 魔法方法
+#### 3.2.1. 魔法方法 (Magic Method)
 
-命名为 __xxx__() 形式的类方法在 Python 中都是有特殊用途的，因此也被称为 “魔法方法”；
+命名为 `__xxx__()` 形式的类方法在 Python 中都是有特殊用途的，因此也被称为 “魔法方法”；
 
 - `__len__()`
 
@@ -532,9 +521,15 @@ wilber.printClassInfo()
   75025
   ```
 
-- [其它](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000 )
+TODO:
 
-#### 1.3.3. 静态方法
+https://www.tutorialsteacher.com/python/magic-methods-in-python
+
+https://juejin.im/post/59828c2f6fb9a03c56319baa
+
+https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000
+
+### 3.3. 静态方法
 
 与实例方法和类方法不同，静态方法没有参数限制（既不需要实例参数，也不需要类参数），定义的时候使用装饰器 @staticmethod；
 
@@ -575,7 +570,7 @@ wilber.printClassAttr()
 
 - 静态方法与类方法都可以通过类或者实例来调用，都不能够调用实例属性；
 
-#### 1.3.4. 实例、静态、类方法辨析
+### 3.4. 实例、静态、类方法辨析
 
 https://www.zhihu.com/question/20021164
 
@@ -607,7 +602,7 @@ Static: ()
 Class: (<class '__main__.Kls'>,)
 ```
 
-### 1.4. 访问控制
+## 4. 访问控制
 
 Python 中没有访问控制的关键字，例如 private、protected 等等。但是，在 Python 编码中，有一些约定来进行访问控制；
 
@@ -633,13 +628,13 @@ Python 中没有访问控制的关键字，例如 private、protected 等等。�
 
 因此，可以看到，**python 中下划线"_"和" __"的使用，更多的是一种规范 / 约定，而不是像 cpp、Java 那样真正实现访问权限控制**。
 
-### 1.5. 获取类的信息
+## 5. 获取类的信息
 
-#### 1.5.1. type()
+### 5.1. type()
 
 使用 type() 返回对应的 Class 类型；
 
-#### 1.5.2. isinstance()
+### 5.2. isinstance()
 
 使用 isinstance() 可以判断 class 的继承关系，例：
 
@@ -672,7 +667,7 @@ True
 True
 ```
 
-#### 1.5.3. dir()
+### 5.3. dir()
 
 如果要获得一个对象的所有属性和方法，可以使用`dir()`函数，它返回一个包含字符串的 list，比如，获得一个 str 对象的所有属性和方法：
 ```python
@@ -680,7 +675,7 @@ True
 ['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
 ```
 
-#### 1.5.4. getattr()、setattr()、hasattr()
+### 5.4. getattr()、setattr()、hasattr()
 
 如果试图获取不存在的属性，会抛出 AttributeError 的错误：
 ```python
@@ -714,7 +709,7 @@ sum = obj.x + obj.y
 sum = getattr(obj, 'x') + getattr(obj, 'y')
 ```
 
-### 1.6. 枚举类
+## 6. 枚举类
 
 Python 提供了 Enum 类来实现枚举类；
 
@@ -782,321 +777,8 @@ Enum 可以把一组相关常量定义在一个 class 中，且 class 不可变�
 
   ```
 
-#### 1.6.1. 元类
+### 6.1. 元类
 
 [参考原文](http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319106919344c4ef8b1e04c48778bb45796e0335839000 )
 
-## 2. 继承
-
-<!-- TODO:
-
-[Python 中既然可以直接通过父类名调用父类方法为什么还会存在 super 函数？](https://www.zhihu.com/question/20040039)
-
-[全世界公认的对 super 讲解最透彻的一篇文章：Python’s super() considered super!](https://link.zhihu.com/?target=https%3A//rhettinger.wordpress.com/2011/05/26/super-considered-super/)
-
- -->
-
-类的继承是面向对象的三大特性之一；
-
-在 python 中实现类继承的语法：基类名写在括号（即继承元组）里，若多重继承（继承了多个类），则将多个基类写个括号里
-```python
-class SubClassName (ParentClass1[, ParentClass2, ...]):
-   'Optional class documentation string'
-   class_suit
-```
-
-在 python 中继承中特点：
-
-- 所有类最终都会继承 Object 类；
-
-- 在继承中基类的构造（`__init__()`方法）不会被自动调用，它需要在其派生类的构造中使用`super()`方法获取父类定义，`super().__init__(xxx)`；
-
-- 在调用基类的方法时，需要加上基类的类名前缀，且需要带上 self 参数变量。区别于在类中调用普通函数时并不需要带上 self 参数；
-
-- Python 总是首先查找对应类型的方法，如果它不能在派生类中找到对应的方法，它才开始到基类中逐个查找。（先在本类中查找调用的方法，找不到才去基类中找）；
-
-### 2.1. 方法重写
-
-如果父类方法的功能不能满足子类的需求，可以在子类重写父类的方法；
-
-例：
-```python
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
-
-class Parent:        # 定义父类
-   def myMethod(self):
-      print('调用父类方法')
-
-class Child(Parent): # 定义子类
-   def myMethod(self):
-      print('调用子类方法')
-
-c = Child()          # 子类实例
-c.myMethod()         # 子类调用重写方法
-```
-
-#### 2.1.1. 基础重写方法
-
-[参考原文](http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000 )
-
-- `__init__ ( self [,args...] )`
-
-  构造函数；
-
-  简单的调用方法：obj = className(args)；
-
-- `__del__( self )`
-
-  析构方法，删除一个对象；
-
-  简单的调用方法 : dell obj；
-
-- `__repr__( self )`
-
-  转化为供解释器读取的形式；
-
-  简单的调用方法 : repr(obj)；
-
-  例：
-  ```python
-  class Student(object):
-      def __init__(self, name):
-          self.name = name
-      def __repr__(self):
-          return 'Student object (name=%s)' % self.name
-  >>>Student('Michael')
-  Student object (name: Michael)
-
-  ```
-
-- `__str__( self )`
-
-  用于将值转化为适于阅读的形式；
-
-  简单的调用方法 : str(obj)；
-
-  eg:
-  ```python
-  >>> class Student(object):
-  ...     def __init__(self, name):
-  ...         self.name = name
-  ...     def __str__(self):
-  ...         return 'Student object (name: %s)' % self.name
-  ...
-  >>> print(Student('Michael'))
-  Student object (name: Michael)
-
-  ```
-
-- `__cmp__ ( self, x )`
-
-  对象比较；
-
-  简单的调用方法 : cmp(obj, x)；
-
-- `__iter__ (self)`
-
-  如果一个类想被用于 for ... in 循环，类似 list 或 tuple 那样，就必须实现一个__iter__() 方法，该方法返回一个迭代对象，然后，Python 的 for 循环就会不断调用该迭代对象的__next__() 方法拿到循环的下一个值，直到遇到 StopIteration 错误时退出循环
-
-  以斐波那契数列为例，写一个 Fib 类，可以作用于 for 循环：
-  ```python
-  class Fib(object):
-      def __init__(self):
-          self.a, self.b = 0, 1 # 初始化两个计数器 a，b
-
-      def __iter__(self):
-          return self # 实例本身就是迭代对象，故返回自己
-
-      def __next__(self):
-          self.a, self.b = self.b, self.a + self.b # 计算下一个值
-          if self.a > 100000: # 退出循环的条件
-              raise StopIteration()
-          return self.a # 返回下一个值
-  ```
-  使用
-  ```python
-  >>> for n in Fib():
-  ...     print(n)
-  ```
-
-- `__getitem__(self, n)`
-
-  使用索引下表查找元素（像 list[0]）
-
-  eg:
-  ```python
-  class Fib(object):
-      def __getitem__(self, n):
-          a, b = 1, 1
-          for x in range(n):
-              a, b = b, a + b
-          return a
-  ```
-  使用
-  ```python
-  >>> f = Fib()
-  >>> f[0]
-  1
-  >>> f[1]
-  1
-  >>> f[2]
-  2
-  >>> f[100]
-  573147844013817084101
-  ```
-
-- `__getattr__`
-
-- `__call__`
-
-#### 2.1.2. 运算符重载
-
-可以使用 Python 的特殊方法（special method），有时也被称作魔术方法（magic method），来实现运算 / 比较操作符的功能。
-
-- 比较运算符重载
-
-  | 方法名                 | 使用            |
-  | ------------------- | ------------- |
-  | __eq__(self, other) | self == other |
-  | __ne__(self, other) | self != other |
-  | __lt__(self, other) | self < other  |
-  | __gt__(self, other) | self > other  |
-  | __le__(self, other) | self <= other |
-  | __ge__(self, other) | self >= other |
-
-- 数学运算符重载
-
-  | 方法名                       | 使用            |
-  | ------------------------- | ------------- |
-  | __add__(self, other)      | self + other  |
-  | __sub__(self, other)      | self - other  |
-  | __mul__(self, other)      | self * other  |
-  | __floordiv__(self, other) | self // other |
-  | __truediv__(self, other)  | self / other  |
-  | __mod__(self, other)      | self % other  |
-  | __pow__(self, other)      | self ** other |
-
-例：重载 + 运算符
-```python
-#!/usr/bin/python
-
-class Vector:
-   def __init__(self, a, b):
-      self.a = a
-      self.b = b
-
-   def __str__(self):
-      return 'Vector (%d, %d)' % (self.a, self.b)
-
-   def __add__(self,other):
-      return Vector(self.a + other.a, self.b + other.b)
-
-v1 = Vector(2,10)
-v2 = Vector(5,-2)
-print v1 + v2
-```
-
-### 2.2. 多重继承
-
-通过多重继承，一个子类就可以同时获得多个父类的所有功能。
-
-例：
-```python
-class Bat(Mammal, Flyable):
-    pass
-```
-
-## 3. 多态
-
-例：
-```python
-class Animal(object):
-    def run(self):
-        print('Animal is running...')
-class Dog(Animal):
-
-    def run(self):
-        print('Dog is running...')
-
-class Cat(Animal):
-
-    def run(self):
-        print('Cat is running...')
-
-def run_twice(animal):
-    animal.run()
-```
-当我们传入 Animal 的实例时：
-```python
->>> run_twice(Animal())
-Animal is running...
-```
-当我们传入 Dog 的实例时：
-```python
->>> run_twice(Dog())
-Dog is running...
-```
-当我们传入 Cat 的实例时：
-```python
->>> run_twice(Cat())
-Cat is running...
-```
-
-### 3.1. “开闭”原则
-
-比如：
-```python
-class Animal(object):
-    def run(self):
-        print('Animal is running...')
-
-class Dog(Animal):
-
-    def run(self):
-        print('Dog is running...')
-
-class Cat(Animal):
-
-    def run(self):
-        print('Cat is running...')
-```
-
-多态的好处就是，当我们需要传入 Dog、Cat、Tortoise……时，我们只需要接收 Animal 类型就可以了，因为 Dog、Cat、Tortoise……都是 Animal 类型，然后，按照 Animal 类型进行操作即可。由于 Animal 类型有 run() 方法，因此，传入的任意类型，只要是 Animal 类或者子类，就会自动调用实际类型的 run() 方法，这就是多态的意思：
-
-对于一个变量，我们只需要知道它是 Animal 类型，无需确切地知道它的子类型，就可以放心地调用 run() 方法，而具体调用的 run() 方法是作用在 Animal、Dog、Cat 还是 Tortoise 对象上，由运行时该对象的确切类型决定，这就是多态真正的威力：调用方只管调用，不管细节，而当我们新增一种 Animal 的子类时，只要确保 run() 方法编写正确，不用管原来的代码是如何调用的。
-
-这就是著名的“开闭”原则：
-
-1)	对扩展开放：允许新增 Animal 子类；
-
-2)	对修改封闭：不需要修改依赖 Animal 类型的 run_twice() 等函数；
-
-### 3.2. 鸭子类型
-
-对于静态语言（例如 Java）来说，如果需要传入 Animal 类型，则传入的对象必须是 Animal 类型或者它的子类，否则，将无法调用 run() 方法。
-
-对于 Python 这样的动态语言来说，则不一定需要传入 Animal 类型。我们只需要保证传入的对象有一个 run() 方法就可以了：
-```python
-class Timer(object):
-    def run(self):
-        print('Start...')
-```
-这就是动态语言的“鸭子类型”，它并不要求严格的继承体系，一个对象只要“看起来像鸭子，走起路来像鸭子”，那它就可以被看做是鸭子。
-
-<!-- TODO: 理解：看有没有操作的方法，而不看类的类型是什么 -- 弱化了类型的概念和限制 -- 动态语言的特点 -- “看实力，不看学历” -->
-
-Python 的 “file-like object“ 就是一种鸭子类型。对真正的文件对象，它有一个 read() 方法，返回其内容。但是，许多对象，只要有 read() 方法，都被视为 “file-like object“。许多函数接收的参数就是“file-like object“，你不一定要传入真正的文件对象，完全可以传入任何实现了 read() 方法的对象。
-
-例如：
-
-要实现一个读取图像的功能：
-```python
-def readImage(fp):
-    if hasattr(fp, 'read'):
-        return readData(fp)
-return None
-```
-根据鸭子类型，有 read() 方法，不代表该 fp 对象就是一个文件流，它也可能是网络流，也可能是内存中的一个字节流，但只要 read() 方法返回的是有效的图像数据，就不影响读取图像的功能；
-
-## 4. Refer Links
+## 7. Refer Links

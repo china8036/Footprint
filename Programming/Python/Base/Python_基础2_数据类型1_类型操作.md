@@ -12,9 +12,12 @@
   - [2. 类型判断](#2-类型判断)
     - [2.1. 基本类型](#21-基本类型)
     - [2.2. 引用类型](#22-引用类型)
-  - [3. Refer Links](#3-refer-links)
+  - [3. 类型提示](#3-类型提示)
+  - [4. Refer Links](#4-refer-links)
 
 # Python 基础：数据类型 - 类型操作
+
+The principal built-in types are numerics, sequences, mappings, classes, instances and exceptions.
 
 ## 1. 类型转换
 
@@ -234,4 +237,10 @@ True
 True
 ```
 
-## 3. Refer Links
+## 3. 类型提示
+
+TODO:
+
+[全面理解 Python 中的类型提示（Type Hints）](https://sikasjc.github.io/2018/07/14/type-hint-in-python/)
+
+## 4. Refer Links
